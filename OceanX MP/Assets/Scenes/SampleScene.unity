@@ -901,14 +901,14 @@ MonoBehaviour:
   fishCount: 20
   spawnRadius: 2
   settings:
-    SpeedMultipliyer: 15
+    SpeedMultipliyer: 20
     ViewRadius: 1
-    OptDistance: 0.4
-    AligmentForcePart: 0.03
-    TotalForceMultipliyer: 15
+    OptDistance: 0.6
+    AligmentForcePart: 0.01
+    TotalForceMultipliyer: 25
     Inertness: 0.7
-    VerticalPriority: 0.6
-    AttractrionForce: 0.02
+    VerticalPriority: 1
+    AttractrionForce: 0.06
   debugSettings:
     enableDrawing: 0
     obstaclesAvoidanceDraw: 0

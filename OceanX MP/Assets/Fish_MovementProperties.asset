@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b7bd9ccc97a8a458c646ba2137d171, type: 3}
+  m_Name: Fish_MovementProperties
+  m_EditorClassIdentifier: Assembly-CSharp::BoidMovementProperties
+  CruisingSpeed: 1.75
+  MaxSpeed: 12
+  WaterFriction: 0.45
+  Deceleration: 15
+  MaxAcceleration: 20
+  MovementJerk: 1000
+  MaxAngularVelocity: 180
+  AngularVelocityReduction: 200
+  MaxAngularAcceleration: 85
+  AngularDeceleration: 30
+  AngularJerk: 1600
+  RotationEffectOnSpeed: 0.05

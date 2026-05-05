@@ -30,6 +30,14 @@ public class SpatialPartition3D<T>
         RemoveFromCell(cell, obj);
     }
 
+    // Safe remove using the stored cell — use this when the object's position
+    // may have changed or become unreliable (e.g. after deactivation).
+    public void Remove(T obj)
+    {
+        if (_cellMap.TryGetValue(obj, out Vector3Int cell))
+            RemoveFromCell(cell, obj);
+    }
+
     public void UpdateObjectCell(Vector3 newPosition, T obj)
     {
         Vector3Int newCell = CellOf(newPosition);

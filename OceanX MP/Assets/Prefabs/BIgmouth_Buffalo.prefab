@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4380877383843440859}
   - component: {fileID: 5886618199633235631}
   m_Layer: 0
-  m_Name: Fish (CPU)
+  m_Name: BIgmouth_Buffalo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

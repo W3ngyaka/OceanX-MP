@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ff4724189052f4eb91b8ed1caf369b, type: 3}
+  m_Name: Bigmouth_Buffalo
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesDefinition
+  SpeciesName: Bigmouth_Buffalo
+  Role: 1
+  Prefab: {fileID: 0}
+  DefaultPopulation: 30
+  SpawnRadius: 10
+  SchoolProperties: {fileID: 0}
+  BehaviorProperties: {fileID: 0}
+  PreySpecies: []
+  PredatorSpecies: []
+  RuntimeId: -1

@@ -97,7 +97,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DensityMultiplier: 0.9
-    - _DensityThreshold: 0.14
+    - _DensityThreshold: 0.78
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -130,7 +130,7 @@ Material:
     - _Color: {r: 0.21359915, g: 0.3875853, b: 0.4528302, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FogSpeed: {r: 0, g: 0, b: 0, a: 0}
-    - _LightContribution: {r: 0.28279635, g: 0.48349056, b: 0.38807857, a: 1}
+    - _LightContribution: {r: 1.1311854, g: 1.9339622, b: 1.5523143, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

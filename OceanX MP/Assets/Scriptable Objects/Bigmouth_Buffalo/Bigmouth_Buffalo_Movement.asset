@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77b7bd9ccc97a8a458c646ba2137d171, type: 3}
-  m_Name: Fish_MovementProperties
+  m_Name: Bigmouth_Buffalo_Movement
   m_EditorClassIdentifier: Assembly-CSharp::BoidMovementProperties
   CruisingSpeed: 1.75
   MaxSpeed: 12

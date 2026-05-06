@@ -2,7 +2,7 @@ using UnityEngine;
 
 // Tuning data for how a species behaves in the ecosystem — fleeing from predators,
 // hunting prey, and managing hunger. Attach to a SpeciesDefinition asset.
-[CreateAssetMenu(fileName = "SpeciesBehaviorProperties", menuName = "OceanX/Species/Behavior Properties")]
+[CreateAssetMenu(fileName = "Species_Behavior", menuName = "OceanX/Species Behavior Properties")]
 public class SpeciesBehaviorProperties : ScriptableObject
 {
     [Header("Prey Behavior — Fleeing")]

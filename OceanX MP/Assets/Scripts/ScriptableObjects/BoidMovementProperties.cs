@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BoidMovementProperties", menuName = "OceanX/Boid Movement Properties")]
+[CreateAssetMenu(fileName = "Fish_Movement", menuName = "OceanX/Fish Movement Properties")]
 public class BoidMovementProperties : ScriptableObject
 {
     [Header("Speed")]

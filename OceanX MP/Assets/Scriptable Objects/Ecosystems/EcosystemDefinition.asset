@@ -15,5 +15,6 @@ MonoBehaviour:
   EcosystemName: Coral Reef
   Species:
   - {fileID: 11400000, guid: 1738a2853bbfafc46993de87177c843a, type: 2}
+  - {fileID: 11400000, guid: 6449c0357c819c847bbeaa3b9147688c, type: 2}
   SimulationCenter: {x: 0, y: 0, z: 0}
-  SimulationSize: {x: 100, y: 40, z: 100}
+  SimulationSize: {x: 100, y: 40, z: 50}

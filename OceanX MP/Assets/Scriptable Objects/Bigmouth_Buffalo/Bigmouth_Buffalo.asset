@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesDefinition
   SpeciesName: Bigmouth_Buffalo
   Role: 1
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 7845636506367658633, guid: ae93713dcb70a23448cca227b6a8e765, type: 3}
   DefaultPopulation: 30
   SpawnRadius: 10
-  SchoolProperties: {fileID: 0}
-  BehaviorProperties: {fileID: 0}
+  SchoolProperties: {fileID: 11400000, guid: 33729cef6b78d914abf65b149a2f6b85, type: 2}
+  BehaviorProperties: {fileID: 11400000, guid: b4570d8fcd695884780e6f0976a08984, type: 2}
   PreySpecies: []
   PredatorSpecies: []
-  RuntimeId: -1
+  RuntimeId: 0

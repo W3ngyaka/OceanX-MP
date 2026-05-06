@@ -23,6 +23,10 @@ public class SpeciesDefinition : ScriptableObject
     [Tooltip("Radius around the spawn point to scatter individuals.")]
     [Range(1f, 100f)] public float SpawnRadius = 10f;
 
+    [Header("Behaviour Style")]
+    [Tooltip("If true, this species ignores flocking and patrols alone. Use for apex predators like sharks.")]
+    public bool IsSolitary = false;
+
     [Header("Behavior")]
     [Tooltip("Flocking ranges and weights for this species.")]
     public BoidSchoolProperties    SchoolProperties;

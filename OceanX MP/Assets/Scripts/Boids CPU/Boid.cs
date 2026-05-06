@@ -223,10 +223,12 @@ public class Boid : MonoBehaviour
                 : _boidInfo.MovementDirection;
             shouldAccelerate = true;
         }
-        else // Schooling
+        else // Schooling or solitary wandering
         {
-            desiredDir       = CalculateFlockingDirection(currentPos, flockCount, sepCount,
-                                   separation, alignmentSum, cohesionSum, affecters);
+            desiredDir = _speciesDef != null && _speciesDef.IsSolitary
+                ? CalculateWanderDirection()
+                : CalculateFlockingDirection(currentPos, flockCount, sepCount,
+                      separation, alignmentSum, cohesionSum, affecters);
             shouldAccelerate = false;
         }
 
@@ -289,6 +291,14 @@ public class Boid : MonoBehaviour
         }
 
         _boidInfo.BehaviorState = BoidBehaviorState.Schooling;
+    }
+
+    // Slowly drifts the current direction by a small random offset each frame,
+    // giving a natural solo patrol feel without snapping or straight-line movement.
+    private Vector3 CalculateWanderDirection()
+    {
+        Vector3 randomOffset = Random.insideUnitSphere * 0.15f;
+        return (_boidInfo.MovementDirection + randomOffset).normalized;
     }
 
     // Computes the final schooling direction from pre-accumulated sums —

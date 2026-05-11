@@ -11,6 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 13964, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
+  m_EditorClassIdentifier: 
   m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.PackageManager.UI.Internal.PackageManagerProjectSettings
   m_EnablePreReleasePackages: 0
   m_AdvancedSettingsExpanded: 1
@@ -18,6 +19,7 @@ MonoBehaviour:
   m_SeeAllPackageVersions: 0
   m_DismissPreviewPackagesInUse: 0
   oneTimeWarningShown: 0
+  oneTimePackageErrorsPopUpShown: 1
   oneTimePackageErrorsPopUpShown: 0
   m_Registries:
   - m_Id: main
@@ -35,6 +37,8 @@ MonoBehaviour:
   m_RegistryInfoDraft:
     m_Modified: 0
     m_ErrorMessage: 
+    m_UserModificationsInstanceId: -896
+    m_OriginalInstanceId: -898
     m_UserModificationsInstanceId: -898
     m_OriginalInstanceId: -900
   m_LoadAssets: 0

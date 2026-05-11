@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BoidSchoolProperties", menuName = "OceanX/Boid School Properties")]
+[CreateAssetMenu(fileName = "Fish_School", menuName = "OceanX/Fish School Properties")]
 public class BoidSchoolProperties : ScriptableObject
 {
     [Header("Flocking Ranges")]

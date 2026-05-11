@@ -6,7 +6,7 @@ public enum SpeciesRole { Predator, Prey, Neutral }
 // Master data asset for a single species.
 // Create one asset per species via Assets > Create > OceanX > Species Definition.
 // Assign it to an EcosystemDefinition to include it in the simulation.
-[CreateAssetMenu(fileName = "SpeciesDefinition", menuName = "OceanX/Species Definition")]
+[CreateAssetMenu(fileName = "Species_Definition", menuName = "OceanX/Species Definition")]
 public class SpeciesDefinition : ScriptableObject
 {
     [Header("Identity")]

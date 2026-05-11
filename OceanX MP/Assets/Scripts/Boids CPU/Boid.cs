@@ -194,7 +194,7 @@ public class Boid : MonoBehaviour
         if (avoidingObstacle)
         {
             desiredDir       = obstacleEscape;
-            shouldAccelerate = true;
+            shouldAccelerate = false;
         }
         else if (_boidInfo.BehaviorState == BoidBehaviorState.Fleeing)
         {

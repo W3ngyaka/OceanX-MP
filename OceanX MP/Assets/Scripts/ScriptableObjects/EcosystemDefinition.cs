@@ -5,7 +5,7 @@ using UnityEngine;
 // how many there are, and the size of the simulation area.
 // Create via Assets > Create > OceanX > Ecosystem Definition.
 // Assign one to an EcosystemSimulation component to run the simulation.
-[CreateAssetMenu(fileName = "EcosystemDefinition", menuName = "OceanX/Ecosystem Definition")]
+[CreateAssetMenu(fileName = "Ecosystem_Definition", menuName = "OceanX/Ecosystem Definition")]
 public class EcosystemDefinition : ScriptableObject
 {
     [Header("Identity")]

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeffc396a2a2c474abc9ea526ba9eb47, type: 3}
+  m_Name: Fish_Motion_Render_Properties_Yellowtail_Snapper
+  m_EditorClassIdentifier: 
+  MinSwimPlaybackSpeed: 1.5
+  MaxSwimPlaybackSpeed: 5
+  MinSideToSideAmplitude: 0.2
+  MaxSideToSideAmplitude: 0.4
+  MinYawRotationAmplitude: 0.004
+  MaxYawRotationAmplitude: 0.009
+  MinRollRotationAmplitude: 0.03
+  MaxRollRotationAmplitude: 0.06
+  MinPanningYawAmplitude: 0.012
+  MaxPanningYawAmplitude: 0.032

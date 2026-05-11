@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea515cf7ff883e43a388de93c907d69, type: 3}
+  m_Name: Fish_Movement_Properties_Clownfish
+  m_EditorClassIdentifier: 
+  CruisingSpeed: 0.8
+  MaxSpeed: 6
+  WaterFriction: 0.45
+  Deceleration: 15
+  MaxAcceleration: 20
+  MovementJerk: 350
+  MaxAngularVelocity: 270
+  AngularVelocityReduction: 450
+  MaxAngularAcceleration: 500
+  AngularDeceleration: 400
+  AngularJerk: 500
+  RotationEffectOnSpeed: 0.01

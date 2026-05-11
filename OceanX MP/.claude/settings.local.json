@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Unity FIles\\\\Underwater_Fish_Simulation_Unity_6\" -Directory)",
+      "Bash(Select-Object Name)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Unity FIles\\\\OceanX-MP\\\\OceanX MP\\\\Assets\\\\Shaders\" -Recurse -File | ForEach-Object { $_.FullName })"
+    ]
+  }
+}

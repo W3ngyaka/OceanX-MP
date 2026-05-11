@@ -109,7 +109,7 @@ Material:
     - _DecalMeshBiasType: 0
     - _DecalMeshDepthBias: 0
     - _DecalMeshViewBias: 0
-    - _Density: 5
+    - _Density: 0.22
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DrawOrder: 0
@@ -121,9 +121,9 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _Offset: 4
+    - _Offset: 2
     - _Parallax: 0.005
-    - _Power: 4
+    - _Power: 7.11
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12896b1716abdbf4b84f5a1d7de3c13b, type: 3}
+  m_Name: Fish_School_Settings_Giant_Trevally_Swirl
+  m_EditorClassIdentifier: 
+  VisionRange: 15
+  ObstacleAvoidanceRange: 8
+  SeparationRange: 2
+  CohesionWeight: 0.4
+  AlignmentWeight: 1.25
+  SeparationWeight: 1.95
+  TargetWeight: 2
+  MovementProperties: {fileID: 11400000, guid: 6eec03afb02a58e469b02dca4ef7d14b, type: 2}
+  MotionRenderProperties: {fileID: 11400000, guid: 785a04b654b8ebd4c8f5817d73ef7d76,
+    type: 2}

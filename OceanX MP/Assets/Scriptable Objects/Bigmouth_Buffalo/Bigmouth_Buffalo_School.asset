@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BoidSchoolProperties
   VisionRange: 10
   ObstacleAvoidanceRange: 5
-  SeparationRange: 5
+  SeparationRange: 10
   CohesionWeight: 0.5
   AlignmentWeight: 0.7
   SeparationWeight: 0.9

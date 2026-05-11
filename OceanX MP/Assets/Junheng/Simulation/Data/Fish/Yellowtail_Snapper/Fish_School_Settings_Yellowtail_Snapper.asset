@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12896b1716abdbf4b84f5a1d7de3c13b, type: 3}
+  m_Name: Fish_School_Settings_Yellowtail_Snapper
+  m_EditorClassIdentifier: 
+  VisionRange: 15
+  ObstacleAvoidanceRange: 3
+  SeparationRange: 0.5
+  CohesionWeight: 0.2
+  AlignmentWeight: 0.4
+  SeparationWeight: 0.75
+  TargetWeight: 0.65
+  MovementProperties: {fileID: 11400000, guid: 4f5688ac380230d449b16fea02baca8d, type: 2}
+  MotionRenderProperties: {fileID: 11400000, guid: fb8ab0c13cb1b9f4681b2101e4d95367,
+    type: 2}

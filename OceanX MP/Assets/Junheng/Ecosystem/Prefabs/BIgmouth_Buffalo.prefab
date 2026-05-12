@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1043271752507262117}
   - component: {fileID: 4380877383843440859}
   - component: {fileID: 5886618199633235631}
-  - component: {fileID: 417308706150576726}
   m_Layer: 0
   m_Name: BIgmouth_Buffalo
   m_TagString: Untagged
@@ -68,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8674cb4c5412e5045b3768418dd5b12d, type: 2}
+  - {fileID: -876546973899608171, guid: 3c359824163bf394ea50515c1f1d3e70, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,18 +114,3 @@ MonoBehaviour:
     Hunger: 0
     PanicTimer: 0
   _groupId: -1
---- !u!114 &417308706150576726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7845636506367658633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07800d130214a6542a77618ede10e102, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishProceduralAnimation
-  IntensityLerpRate: 5
-  FleeingMinIntensity: 0.7
-  HuntingMinIntensity: 0.5

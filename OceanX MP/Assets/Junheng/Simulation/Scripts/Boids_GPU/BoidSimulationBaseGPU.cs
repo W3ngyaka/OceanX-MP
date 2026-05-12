@@ -1,0 +1,297 @@
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+namespace OceanX.BoidsGPU
+{
+    /// <summary>
+    /// Abstract base class for all boid simulation controller that execute their logic on the GPU.
+    /// It expands the <see cref="BoidSimulationBase"/> with additional helper methods for transferring
+    /// the data from the CPU format to the GPU one.
+    /// </summary>
+    public abstract class BoidSimulationBaseGPU : BoidSimulationBase
+    {
+        [Header("References: ")]
+        [SerializeField] protected ComputeShader _boidsComputeShader = null;
+
+        protected List<FishSchoolProperties> _boidsSchools = new List<FishSchoolProperties>();
+        protected List<SimulationAffecter> _affecters = new List<SimulationAffecter>();
+        protected int _boidsKernelId = 0;
+        protected int _boidsCount = 0;
+
+        protected ComputeBuffer _boidsComputeBuffer = null;
+        protected ComputeBuffer _boidsSchoolsComputeBuffer = null;
+        protected ComputeBuffer _affectersComputeBuffer = null;
+
+        protected BoidInfoGPU[] _boidsInfos = null;
+        protected BoidSchoolInfoGPU[] _boidSchoolsInfos = null;
+        protected AffecterGPU[] _affectersInfos = null;
+
+        /// <summary>
+        /// Function initializes additional data structures required for instanced rendering of
+        /// boids on the GPU. If the boid simulation uses normal rendering, this function doesn't
+        /// need to do anything.
+        /// </summary>
+        protected abstract void InitializeRenderProperties();
+
+        /// <inheritdoc/>
+        protected override void InitializeBoidsSimulation()
+        {
+            base.InitializeBoidsSimulation();
+
+            // Collect all simulation affecters into one collection. They differentiate on their boid group ID.
+            BoidSpawnerBase[] boidSpawners = GetBoidSpawners();
+
+            // Sort the GPU spawners based on their fish size.
+            List<BoidSpawnerGPU> sortedGpuBoidSpawners = new List<BoidSpawnerGPU>();
+            for (int currentDesiredIndex = 0; currentDesiredIndex < boidSpawners.Length; currentDesiredIndex++)
+            {
+                for (int i = 0; i < boidSpawners.Length; i++)
+                {
+                    BoidSpawnerGPU boidSpawner = (BoidSpawnerGPU)boidSpawners[i];
+                    if (boidSpawner.BoidGroupId == currentDesiredIndex)
+                    {
+                        sortedGpuBoidSpawners.Add(boidSpawner);
+                        break;
+                    }
+                }
+            }
+
+            // Use the sorted GPU spawners to calculate the offsets of each fish species in the final fish array.
+            int currentOffset = 0;
+            List<BoidInfoGPU> spawnedBoids = new List<BoidInfoGPU>();
+            for (int i = 0; i < sortedGpuBoidSpawners.Count; i++)
+            {
+                BoidSpawnerGPU boidSpawner = sortedGpuBoidSpawners[i];
+                boidSpawner.SetRenderingOffset(currentOffset);
+
+                // Add all spawned boids to the final collection of boids, but also update their
+                // original index for correct rendering since their original index was in their local array
+                // of boids and not in the global one.
+                BoidInfoGPU[] spawnedBoidsByThisSpawner = boidSpawner.Boids;
+                int boidsSpawnedByThisSpawner = spawnedBoidsByThisSpawner.Length;
+                for (int boidIndex = 0; boidIndex < boidsSpawnedByThisSpawner; boidIndex++)
+                {
+                    BoidInfoGPU spawnedBoid = spawnedBoidsByThisSpawner[boidIndex];
+                    spawnedBoid.OriginalIndex += currentOffset;
+                    spawnedBoids.Add(spawnedBoid);
+                }
+                currentOffset += boidsSpawnedByThisSpawner;
+            }
+
+            // Cache all boids and total boids count.
+            _boidsCount = currentOffset;
+            _boidsInfos = spawnedBoids.ToArray();
+
+            // Re-order the GPU boid spawners to have them correctly ordered throughout the rest of the simulation.
+            boidSpawners = sortedGpuBoidSpawners.ToArray();
+
+            // Collect all simulation affecters into one collection. They differentiate on their boid group ID.
+            foreach (BoidSpawnerGPU gpuBoidSpawner in boidSpawners)
+            {
+                SimulationAffecter[] targets = gpuBoidSpawner.Targets;
+                if(targets != null && targets.Length > 0)
+                {
+                    _affecters.AddRange(targets);
+                }
+
+                SimulationAffecter[] obstacles = gpuBoidSpawner.Obstacles;
+                if (obstacles != null && obstacles.Length > 0)
+                {
+                    _affecters.AddRange(obstacles);
+                }
+            }
+
+            // Include global affecters in the simulation.
+            foreach(SimulationAffecterComponent globalAffecter in _globalAffecters)
+            {
+                _affecters.Add(globalAffecter.Affecter);
+            }
+
+            // Initialize data structures for instanced rendering of boids on the GPU.
+            InitializeRenderProperties();
+
+            // Initialize the compute shader and assign the required data for simulation on the GPU.
+            InitializeComputeShaderData();
+        }
+
+        /// <inheritdoc/>
+        protected virtual void OnDestroy()
+        {
+            CleanUpComputeBuffer(ref _boidsComputeBuffer);
+            CleanUpComputeBuffer(ref _boidsSchoolsComputeBuffer);
+            CleanUpComputeBuffer(ref _affectersComputeBuffer);
+        }
+
+        /// <summary>
+        /// Function releases the referenced compute buffer.
+        /// </summary>
+        /// <param name="computeBuffer">Reference to the compute buffer that should be released.</param>
+        protected virtual void CleanUpComputeBuffer(ref ComputeBuffer computeBuffer)
+        {
+            computeBuffer?.Release();
+            computeBuffer?.Dispose();
+            computeBuffer = null;
+        }
+
+        /// <summary>
+        /// Function initializes the data required for execution of the boids compute shader.
+        /// </summary>
+        protected virtual void InitializeComputeShaderData()
+        {
+            // Initialize the kernel ID for the boids simulation.
+            _boidsKernelId = _boidsComputeShader.FindKernel("BoidSimulationKernel");
+
+            // Boids compute buffer initialization.
+            _boidsComputeBuffer = new ComputeBuffer(_boidsCount, BoidInfoGPU.Size);
+            _boidsComputeBuffer.SetData(_boidsInfos);
+
+            // Boids schools compute buffer initialization.
+            int boidSchoolsCount = _boidsSchools.Count;
+            _boidsSchoolsComputeBuffer = new ComputeBuffer(boidSchoolsCount, BoidSchoolInfoGPU.Size);
+            _boidSchoolsInfos = new BoidSchoolInfoGPU[boidSchoolsCount];
+            for (int i = 0; i < boidSchoolsCount; i++)
+            {
+                _boidSchoolsInfos[i] = ExtractBoidSchoolInfo(_boidsSchools[i]);
+            }
+            _boidsSchoolsComputeBuffer.SetData(_boidSchoolsInfos);
+
+            // Affecters compute buffer initialization.
+            int affectersCount = _affecters.Count;
+            _affectersComputeBuffer = new ComputeBuffer(affectersCount, AffecterGPU.Size);
+            _affectersInfos = new AffecterGPU[affectersCount];
+            for (int i = 0; i < affectersCount; i++)
+            {
+                _affectersInfos[i] = ExtractAffecterInfo(_affecters[i]);
+            }
+            _affectersComputeBuffer.SetData(_affectersInfos);
+
+            // Bind all compute buffers to the compute shader.
+            _boidsComputeShader.SetBuffer(_boidsKernelId, "_Boids", _boidsComputeBuffer);
+            _boidsComputeShader.SetBuffer(_boidsKernelId, "_BoidSchools", _boidsSchoolsComputeBuffer);
+            _boidsComputeShader.SetBuffer(_boidsKernelId, "_Affecters", _affectersComputeBuffer);
+
+            // Initialize other simulation properties that need to be passed to the compute shader.
+            _boidsComputeShader.SetInt("_TotalBoidCount", _boidsCount);
+            _boidsComputeShader.SetInt("_TotalAffectersCount", affectersCount);
+            _boidsComputeShader.SetFloat("_TimeDelta", Time.deltaTime);
+            _boidsComputeShader.SetVector("_SimulationAreaCenter", _simulationAreaBounds.center);
+            _boidsComputeShader.SetVector("_SimulationAreaSize", _simulationAreaBounds.size);
+        }
+
+        /// <summary>
+        /// Function updates the position and size of each simulation affecter in the simulation.
+        /// </summary>
+        /// <param name="boidSpawners">Reference to the array of <see cref="BoidSpawnerBase"/> 
+        /// that are included in the current simulation.</param>
+        protected virtual void UpdateSimulationAffecters(BoidSpawnerBase[] boidSpawners)
+        {
+            _affecters.Clear();
+            foreach (BoidSpawnerBase gpuBoidSpawner in boidSpawners)
+            {
+                SimulationAffecter[] targets = gpuBoidSpawner.Targets;
+                if (targets != null && targets.Length > 0)
+                {
+                    _affecters.AddRange(targets);
+                }
+
+                SimulationAffecter[] obstacles = gpuBoidSpawner.Obstacles;
+                if (obstacles != null && obstacles.Length > 0)
+                {
+                    _affecters.AddRange(obstacles);
+                }
+            }
+
+            // Include global affecters in the simulation.
+            foreach (SimulationAffecterComponent globalAffecter in _globalAffecters)
+            {
+                _affecters.Add(globalAffecter.Affecter);
+            }
+
+            int affectersCount = _affecters.Count;
+            for (int i = 0; i < affectersCount; i++)
+            {
+                _affectersInfos[i] = ExtractAffecterInfo(_affecters[i]);
+            }
+            _affectersComputeBuffer.SetData(_affectersInfos);
+        }
+
+        /// <summary>
+        /// Function extracts the properties for one fish school from the provided <paramref name="fishSchoolProperties"/>
+        /// and stores it into a GPU-readable struct type.
+        /// </summary>
+        /// <param name="fishSchoolProperties">Reference to the <see cref="FishSchoolProperties"/> scriptable 
+        /// object containing properties describing the behavior of one fish school.</param>
+        /// <returns>Reference to the <see cref="BoidSchoolInfoGPU"/> structure containing those properties
+        /// in a GPU-readable format.</returns>
+        protected virtual BoidSchoolInfoGPU ExtractBoidSchoolInfo(FishSchoolProperties fishSchoolProperties)
+        {
+            return new BoidSchoolInfoGPU
+            {
+                VisionRangeSquared = Mathf.Pow(fishSchoolProperties.VisionRange, 2.0f),
+                ObstacleAvoidanceRangeSquared = Mathf.Pow(fishSchoolProperties.ObstacleAvoidanceRange, 2.0f),
+                SeparationRangeSquared = Mathf.Pow(fishSchoolProperties.SeparationRange, 2.0f),
+                SeparationWeight = fishSchoolProperties.SeparationWeight,
+                CohesionWeight = fishSchoolProperties.CohesionWeight,
+                AlignmentWeight = fishSchoolProperties.AlignmentWeight,
+                TargetFollowWeight = fishSchoolProperties.TargetWeight,
+                CruisingSpeed = fishSchoolProperties.MovementProperties.CruisingSpeed,
+                MaxSpeed = fishSchoolProperties.MovementProperties.MaxSpeed,
+                WaterFriction = fishSchoolProperties.MovementProperties.WaterFriction,
+                Deceleration = fishSchoolProperties.MovementProperties.Deceleration,
+                MaxAcceleration = fishSchoolProperties.MovementProperties.MaxAcceleration,
+                MovementJerk = fishSchoolProperties.MovementProperties.MovementJerk,
+                MaxAngularVelocity = fishSchoolProperties.MovementProperties.MaxAngularVelocity,
+                AngularVelocityReduction = fishSchoolProperties.MovementProperties.AngularVelocityReduction,
+                MaxAngularAcceleration = fishSchoolProperties.MovementProperties.MaxAngularAcceleration,
+                AngularDeceleration = fishSchoolProperties.MovementProperties.AngularDeceleration,
+                AngularJerk = fishSchoolProperties.MovementProperties.AngularJerk,
+                RotationEffectOnSpeed = fishSchoolProperties.MovementProperties.RotationEffectOnSpeed,
+                EmptyFiller = 0f
+            };
+        }
+
+        /// <summary>
+        /// Function extracts the properties for one simulation affecter from the provided <paramref name="simulationAffecter"/>
+        /// and stores it into a GPU-readable type struct.
+        /// </summary>
+        /// <param name="simulationAffecter">Instance of the <see cref="SimulationAffecter"/> struct containing
+        /// properties in a CPU-readable format for one simulation affecter.</param>
+        /// <returns>Instance of the <see cref="AffecterGPU"/> struct that contains the stored properties of 
+        /// the provided <paramref name="simulationAffecter"/> in a GPU-readable type.</returns>
+        protected virtual AffecterGPU ExtractAffecterInfo(SimulationAffecter simulationAffecter)
+        {
+            return new AffecterGPU
+            {
+                Position = simulationAffecter.Position,
+                Radius = simulationAffecter.Radius,
+                AffecterType = (float)((int)simulationAffecter.Type),
+                BoidGroupId = simulationAffecter.BoidGroupId,
+                BoidSubGroupId = simulationAffecter.BoidSubGroupId,
+                EmptyFiller = 0f
+            };
+        }
+
+        /// <summary>
+        /// Function extracts the properties for one fish species from the provided <paramref name="fishMotionRenderProperties"/>
+        /// and stores it into a GPU-readable type struct.
+        /// </summary>
+        /// <param name="fishMotionRenderProperties">Reference to the <see cref="FishMotionRenderProperties"/> scriptable object
+        /// that contains render properties in a CPU-readable format for one fish species.</param>
+        /// <returns>Instance of the <see cref="BoidRenderInfoGPU"/> struct that contains the stored properties of 
+        /// the provided <paramref name="fishMotionRenderProperties"/> in a GPU-readable type.</returns>
+        protected virtual BoidRenderInfoGPU ExtractBoidSchoolRenderInfo(FishMotionRenderProperties fishMotionRenderProperties)
+        {
+            return new BoidRenderInfoGPU
+            {
+                MinSideToSideAmplitude = fishMotionRenderProperties.MinSideToSideAmplitude,
+                MaxSideToSideAmplitude = fishMotionRenderProperties.MaxSideToSideAmplitude,
+                MinYawRotationAmplitude = fishMotionRenderProperties.MinYawRotationAmplitude,
+                MaxYawRotationAmplitude = fishMotionRenderProperties.MaxYawRotationAmplitude,
+                MinRollRotationAmplitude = fishMotionRenderProperties.MinRollRotationAmplitude,
+                MaxRollRotationAmplitude = fishMotionRenderProperties.MaxRollRotationAmplitude,
+                MinPanningYawAmplitude = fishMotionRenderProperties.MinPanningYawAmplitude,
+                MaxPanningYawAmplitude = fishMotionRenderProperties.MaxPanningYawAmplitude
+            };
+        }
+    }
+}

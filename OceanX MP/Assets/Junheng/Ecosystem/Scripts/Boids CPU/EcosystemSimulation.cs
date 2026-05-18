@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,10 @@ public class EcosystemSimulation : MonoBehaviour
     [Header("Spawn Entry")]
     [Tooltip("How far outside the boundary fish spawn before swimming in.")]
     public float SpawnOffsetDistance = 8f;
+
+    [Header("Population Tick")]
+    [Tooltip("Seconds between each population growth/death calculation. Lower = faster cascade.")]
+    public float PopulationTickInterval = 3f;
 
     [Header("Global Affecters (optional)")]
     public BoidAffecter[] GlobalAffecters;
@@ -56,6 +61,7 @@ public class EcosystemSimulation : MonoBehaviour
         AssignRuntimeIds();
         BuildSpatialPartition();  // must exist before AddSpecies tries to add to it
         SpawnAllSpecies();
+        StartCoroutine(PopulationTick());
     }
 
     private void Update()
@@ -262,6 +268,109 @@ public class EcosystemSimulation : MonoBehaviour
                 _grid.Remove(dead);
                 Destroy(dead.gameObject);
             }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Population dynamics
+    // -------------------------------------------------------------------------
+
+    private IEnumerator PopulationTick()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(PopulationTickInterval);
+
+            foreach (SpeciesDefinition species in Ecosystem.Species)
+            {
+                if (species == null) continue;
+
+                int currentPop = CountLiving(species);
+
+                // Logistic growth — slows as population approaches carrying capacity.
+                int births = currentPop > 0
+                    ? Mathf.RoundToInt(currentPop * species.ReproductionRate
+                      * Mathf.Max(0f, 1f - (float)currentPop / species.CarryingCapacity))
+                    : 0;
+
+                // Baseline mortality independent of predation.
+                int naturalDeaths = Mathf.RoundToInt(currentPop * species.NaturalDeathRate);
+
+                // Starvation — triggers when any prey species drops below the threshold.
+                int starvationDeaths = 0;
+                if (species.PreySpecies != null)
+                {
+                    foreach (SpeciesDefinition prey in species.PreySpecies)
+                    {
+                        if (prey == null || prey.CarryingCapacity <= 0) continue;
+                        float preyRatio = (float)CountLiving(prey) / prey.CarryingCapacity;
+                        if (preyRatio < species.StarvationThreshold)
+                        {
+                            starvationDeaths = Mathf.RoundToInt(currentPop * species.StarvationDeathRate);
+                            break;
+                        }
+                    }
+                }
+
+                // Ratio pressure — extra deaths applied when a predator's count is too
+                // high relative to this species. Severity scales with how far off the
+                // ratio is and the predator's RatioPressureStrength.
+                int ratioPressureDeaths = 0;
+                if (currentPop > 0)
+                {
+                    foreach (SpeciesDefinition predator in Ecosystem.Species)
+                    {
+                        if (predator == null || predator.PreySpecies == null) continue;
+                        if (!predator.PreySpecies.Contains(species)) continue;
+                        if (predator.HealthyPreyRatio <= 0f) continue;
+
+                        int   predPop        = CountLiving(predator);
+                        float currentRatio   = predPop / (float)currentPop;
+                        float ratioDeviation = currentRatio / predator.HealthyPreyRatio;
+
+                        if (ratioDeviation > 1f)
+                        {
+                            float excess   = ratioDeviation - 1f;
+                            float pressure = excess * predator.RatioPressureStrength;
+                            ratioPressureDeaths += Mathf.RoundToInt(currentPop * pressure);
+                        }
+                    }
+                }
+
+                int toSpawn  = births;
+                int toRemove = Mathf.Min(currentPop, naturalDeaths + starvationDeaths + ratioPressureDeaths);
+
+                if (toSpawn  > 0) SpawnAdditional(species, toSpawn);
+                if (toRemove > 0) KillRandom(species, toRemove);
+            }
+        }
+    }
+
+    // Spawns additional fish up to the species' carrying capacity.
+    private void SpawnAdditional(SpeciesDefinition species, int count)
+    {
+        int room        = species.CarryingCapacity - CountLiving(species);
+        int actualSpawn = Mathf.Min(count, Mathf.Max(0, room));
+        if (actualSpawn > 0) AddSpecies(species, actualSpawn);
+    }
+
+    // Removes a random selection of living fish from a species.
+    private void KillRandom(SpeciesDefinition species, int count)
+    {
+        _killCandidates.Clear();
+        for (int i = 0; i < _allBoids.Count; i++)
+        {
+            Boid b = _allBoids[i];
+            if (b != null && b.IsAlive && !b.IsExiting && b.GroupId == species.RuntimeId)
+                _killCandidates.Add(b);
+        }
+
+        int killCount = Mathf.Min(count, _killCandidates.Count);
+        for (int i = 0; i < killCount; i++)
+        {
+            int j = Random.Range(i, _killCandidates.Count);
+            (_killCandidates[i], _killCandidates[j]) = (_killCandidates[j], _killCandidates[i]);
+            _killCandidates[i].TryKill();
         }
     }
 

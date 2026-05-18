@@ -326,9 +326,9 @@ public class Boid : MonoBehaviour
             return;
         }
 
-        // Predator species that is hungry and can see prey
+        // Apex and Mesopredator species hunt when hungry and prey is in range
         if (_speciesDef != null &&
-            _speciesDef.Role == SpeciesRole.Predator &&
+            (_speciesDef.Role == SpeciesRole.Apex || _speciesDef.Role == SpeciesRole.Mesopredator) &&
             _boidInfo.Hunger >= _behaviorProps.HuntThreshold &&
             closestPrey != null &&
             preyDist <= _behaviorProps.DetectionRange)

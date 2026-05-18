@@ -44,10 +44,10 @@ public class EcosystemDefinition : ScriptableObject
 
             Debug.Log($"  [{i}] {s.SpeciesName} ({s.Role}) — prefab:{prefabStatus} school:{schoolStatus} — {behaviorNote}");
 
-            if (s.Role == SpeciesRole.Predator && s.PreySpecies.Count == 0)
-                Debug.LogWarning($"  [{i}] {s.SpeciesName} is a Predator but has no prey assigned.");
+            if ((s.Role == SpeciesRole.Apex || s.Role == SpeciesRole.Mesopredator) && s.PreySpecies.Count == 0)
+                Debug.LogWarning($"  [{i}] {s.SpeciesName} is a hunter but has no prey assigned.");
 
-            if ((s.Role == SpeciesRole.Prey || s.Role == SpeciesRole.Neutral) && s.PredatorSpecies.Count == 0)
+            if ((s.Role == SpeciesRole.Prey || s.Role == SpeciesRole.Mesopredator) && s.PredatorSpecies.Count == 0)
                 Debug.Log($"  [{i}] {s.SpeciesName} has no predators — it will never flee.");
         }
 

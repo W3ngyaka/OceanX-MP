@@ -3,7 +3,11 @@
     "allow": [
       "Bash(Get-ChildItem -Path \"C:\\\\Unity FIles\\\\Underwater_Fish_Simulation_Unity_6\" -Directory)",
       "Bash(Select-Object Name)",
-      "PowerShell(Get-ChildItem -Path \"C:\\\\Unity FIles\\\\OceanX-MP\\\\OceanX MP\\\\Assets\\\\Shaders\" -Recurse -File | ForEach-Object { $_.FullName })"
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Unity FIles\\\\OceanX-MP\\\\OceanX MP\\\\Assets\\\\Shaders\" -Recurse -File | ForEach-Object { $_.FullName })",
+      "Bash(Get-ChildItem -Path \"C:\\\\Unity FIles\\\\OceanX-MP\\\\OceanX MP\\\\Assets\" -Recurse -Filter \"*.cs\")",
+      "Bash(Select-String -Pattern \"\\(network|multiplayer|client|server|sync|rpc|ip\\\\s|port|connection|photon|netcode|mirror\\)\" -List)",
+      "Bash(Select-Object Path)",
+      "Bash(Sort-Object -Unique)"
     ]
   }
 }

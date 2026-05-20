@@ -43,6 +43,36 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             CleanUpComputeBuffer(ref _boidSchoolsRenderInfoBuffer);
         }
 
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Tears down all GPU compute buffers (derived class, base class, and spatial partition),
+        /// clears the cached boid data on every spawner, then re-runs the full initialization
+        /// chain. Call this after changing a spawner's InitialGroupsCount at runtime so the GPU
+        /// reflects the new group configuration.
+        /// </summary>
+        public void ReinitializeBuffers()
+        {
+            // Release this class's buffers.
+            CleanUpComputeBuffer(ref _sortedBoidsComputeBuffer);
+            CleanUpComputeBuffer(ref _boidSchoolsRenderInfoBuffer);
+            _boidSchoolsRenderInfos    = null;
+            _sortedBoidsBufferIsOutput = false;
+
+            // Release the base-class compute buffers and reset cached collections.
+            CleanupBaseGPUBuffers();
+
+            // Release spatial partition buffers so InitializeGrid() can run again.
+            _spatialPartitionGPU.CleanupGrid();
+
+            // Release each spawner's draw-argument buffer and boid array so SpawnBoids() can recreate them.
+            foreach (BoidSpawnerGPU spawner in _gpuBoidSpawners)
+                spawner.CleanupSpawnData();
+
+            // Re-run the full initialization chain: SpawnBoids → sort by size → assign IDs →
+            // InitializeRenderProperties → InitializeComputeShaderData → InitializeGrid.
+            InitializeBoidsSimulation();
+        }
+
         /// <inheritdoc/>
         public override BoidSpawnerBase[] GetBoidSpawners()
         {

@@ -97,6 +97,19 @@ namespace OceanX.BoidsGPU
             Graphics.RenderMeshIndirect(renderParams, _boidSpawnData.BoidMesh, _drawArgumentsBuffer);
         }
 
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Releases the draw arguments buffer and clears the cached boid array so that
+        /// SpawnBoids() can be called again cleanly during a buffer rebuild.
+        /// </summary>
+        public void CleanupSpawnData()
+        {
+            _drawArgumentsBuffer?.Dispose();
+            _drawArgumentsBuffer?.Release();
+            _drawArgumentsBuffer = null;
+            _boids = null;
+        }
+
         /// <inheritdoc/>
         protected override void UpdateBoidGroupId(int boidGroupId)
         {

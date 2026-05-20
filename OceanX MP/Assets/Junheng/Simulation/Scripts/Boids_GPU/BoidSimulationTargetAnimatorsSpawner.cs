@@ -24,6 +24,8 @@ namespace OceanX.BoidsGPU
             "for animating targets. Increasing safe zone reduces the available area for animations but " +
             "increases safety of fish going outside of simulation area.")]
         [SerializeField] private float _boundsSafeZoneSize = 2f;
+        [Tooltip("Uniformly scales all spawned shape dimensions (line length, circle radius, rectangle width/length).")]
+        [SerializeField, Range(0.01f, 1f)] private float _globalScale = 1f;
 
         /// <summary>
         /// Function deletes all spawned targets and target animators.
@@ -136,7 +138,7 @@ namespace OceanX.BoidsGPU
 
             // Calculate the size of the line on which the transform will be moved.
             float lineMaxLength = Mathf.Min(simulationAreaBounds.size.x, simulationAreaBounds.size.z) - _boundsSafeZoneSize;
-            float lineLength = Random.Range(lineMaxLength * 0.5f, lineMaxLength);
+            float lineLength = Random.Range(lineMaxLength * 0.5f, lineMaxLength) * _globalScale;
 
             // Setup the transform animator based on the calculated properties.
             transformAnimator.transform.position = new Vector3(simulationAreaBounds.center.x, lineHeight, simulationAreaBounds.center.z);
@@ -153,7 +155,7 @@ namespace OceanX.BoidsGPU
 
             // Calculate the radius of the circle on which the transform will be moved.
             float circleMaxRadius = Mathf.Min(simulationAreaBounds.extents.x, simulationAreaBounds.extents.z) - _boundsSafeZoneSize;
-            float circleRadius = Random.Range(circleMaxRadius * 0.5f, circleMaxRadius);
+            float circleRadius = Random.Range(circleMaxRadius * 0.5f, circleMaxRadius) * _globalScale;
 
             // Initial angle of the circle, used for additional randomization.
             float initialAngle = Random.Range(0f, 180f);
@@ -174,8 +176,8 @@ namespace OceanX.BoidsGPU
 
             // Calculate the size of the rectangle.
             float sizeMultiplier = Random.Range(0.5f, 1.0f);
-            float rectangleWidth = sizeMultiplier * simulationAreaBounds.size.x;
-            float rectangleLength = sizeMultiplier * simulationAreaBounds.size.z;
+            float rectangleWidth  = sizeMultiplier * simulationAreaBounds.size.x * _globalScale;
+            float rectangleLength = sizeMultiplier * simulationAreaBounds.size.z * _globalScale;
 
             // Setup the transform animator based on the calculated properties.
             transformAnimator.transform.position = new Vector3(simulationAreaBounds.center.x, rectangleHeight, simulationAreaBounds.center.z);

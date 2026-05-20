@@ -323,6 +323,21 @@ namespace OceanX.BoidsGPU
             _spatialPartitionComputeShader.DispatchThreads(_rearrangeBoidsKernelID, _totalBoidsCount);
         }
 
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Releases all spatial partition compute buffers and resets visualisation state so that
+        /// InitializeGrid() can be safely called again after a buffer rebuild.
+        /// </summary>
+        public void CleanupGrid()
+        {
+            CleanUpComputeBuffer(ref _boidsCellInfoBuffer);
+            CleanUpComputeBuffer(ref _cellOccupancyBuffer);
+            CleanUpComputeBuffer(ref _cellsGlobalOffsetBuffer);
+            CleanUpComputeBuffer(ref _threadGroupsGlobalOffsetBuffer);
+            CleanUpComputeBuffer(ref _threadGroupsGlobalOffsetHelperBuffer);
+            _cellsOccupancyVisualization = null;
+        }
+
         public void SetSpatialPartitionProperties(ComputeShader computeShader, int kernelID)
         {
             computeShader.SetBuffer(kernelID, "_CellsOffsetsBuffer", _cellsGlobalOffsetBuffer);

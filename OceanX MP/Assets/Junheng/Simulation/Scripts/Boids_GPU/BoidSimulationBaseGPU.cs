@@ -114,6 +114,29 @@ namespace OceanX.BoidsGPU
             InitializeComputeShaderData();
         }
 
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>Total number of boids currently tracked by the simulation.</summary>
+        public int BoidsCount => _boidsCount;
+
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Releases all base-class GPU compute buffers and resets cached boid data so that
+        /// InitializeBoidsSimulation() can be called again cleanly. Called by ReinitializeBuffers()
+        /// on the derived BoidSimulationGPU.
+        /// </summary>
+        protected void CleanupBaseGPUBuffers()
+        {
+            CleanUpComputeBuffer(ref _boidsComputeBuffer);
+            CleanUpComputeBuffer(ref _boidsSchoolsComputeBuffer);
+            CleanUpComputeBuffer(ref _affectersComputeBuffer);
+            _boidsCount      = 0;
+            _boidsInfos      = null;
+            _boidSchoolsInfos = null;
+            _affectersInfos  = null;
+            _boidsSchools.Clear();
+            _affecters.Clear();
+        }
+
         /// <inheritdoc/>
         protected virtual void OnDestroy()
         {

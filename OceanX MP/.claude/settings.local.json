@@ -7,7 +7,10 @@
       "Bash(Get-ChildItem -Path \"C:\\\\Unity FIles\\\\OceanX-MP\\\\OceanX MP\\\\Assets\" -Recurse -Filter \"*.cs\")",
       "Bash(Select-String -Pattern \"\\(network|multiplayer|client|server|sync|rpc|ip\\\\s|port|connection|photon|netcode|mirror\\)\" -List)",
       "Bash(Select-Object Path)",
-      "Bash(Sort-Object -Unique)"
+      "Bash(Sort-Object -Unique)",
+      "Bash(mkdir -p \"C:\\\\Unity FIles\\\\OceanX-MP\\\\OceanX MP\\\\prototype\" && ls \"C:\\\\Unity FIles\\\\OceanX-MP\\\\OceanX MP\\\\\")",
+      "Bash(mkdir -p '/mnt/c/Unity FIles/OceanX-MP/OceanX MP/prototype')",
+      "Bash(mkdir -p ~/oceanx-prototype)"
     ]
   }
 }

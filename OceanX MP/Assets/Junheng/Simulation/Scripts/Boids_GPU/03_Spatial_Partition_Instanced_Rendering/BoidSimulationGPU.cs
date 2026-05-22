@@ -1,4 +1,5 @@
-﻿using OceanX.BoidsCPU;
+﻿using System;
+using OceanX.BoidsCPU;
 using UnityEngine;
 
 namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
@@ -52,6 +53,41 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         /// </summary>
         public void ReinitializeBuffers()
         {
+            // Before tearing anything down, read the live boid positions back from the GPU
+            // so each spawner can restore its fish to where they currently are instead of
+            // teleporting them to fresh spawn positions.
+            //
+            // Two subtleties:
+            //   1. Read from the buffer that was the LAST render output, which alternates each
+            //      frame. After each UpdateSimulation the flag is toggled, so the last output is
+            //      in _boidsComputeBuffer when the flag is now false, and in
+            //      _sortedBoidsComputeBuffer when it is now true.
+            //   2. Use spawner.Boids.Length (the live local array) for the slice size — NOT
+            //      SpawnData.BoidsCount, which may already reflect the new target count because
+            //      EcosystemSimulationGPU calls SetBoidsCount BEFORE ReinitializeBuffers.
+            if (_boidsComputeBuffer != null && _boidsInfos != null)
+            {
+                ComputeBuffer readBuffer = _sortedBoidsBufferIsOutput
+                    ? _sortedBoidsComputeBuffer
+                    : _boidsComputeBuffer;
+
+                if (readBuffer != null)
+                {
+                    readBuffer.GetData(_boidsInfos);
+                    foreach (BoidSpawnerGPU spawner in _gpuBoidSpawners)
+                    {
+                        BoidInfoGPU[] oldBoids = spawner.Boids;
+                        if (oldBoids == null) continue;
+                        int offset = spawner.RenderingOffset;
+                        int count  = oldBoids.Length;
+                        if (offset + count > _boidsInfos.Length) continue;
+                        BoidInfoGPU[] slice = new BoidInfoGPU[count];
+                        Array.Copy(_boidsInfos, offset, slice, 0, count);
+                        spawner.StorePreservedBoids(slice);
+                    }
+                }
+            }
+
             // Release this class's buffers.
             CleanUpComputeBuffer(ref _sortedBoidsComputeBuffer);
             CleanUpComputeBuffer(ref _boidSchoolsRenderInfoBuffer);

@@ -20,6 +20,13 @@ namespace OceanX.BoidsGPU
         protected GraphicsBuffer _drawArgumentsBuffer = null;
         protected GraphicsBuffer.IndirectDrawIndexedArgs[] _drawArguments = null;
 
+        // Live GPU positions read back just before a buffer rebuild, so existing fish
+        // keep their current positions instead of teleporting to spawn positions.
+        private BoidInfoGPU[] _preservedBoids = null;
+
+        /// <summary>Global offset of this spawner's slice in the shared boids compute buffer.</summary>
+        public int RenderingOffset => _renderingOffset;
+
         /// <summary>
         /// Reference to the collection of all <see cref="BoidInfoGPU"/> structures that were
         /// initialized by this boid spawner.
@@ -42,6 +49,21 @@ namespace OceanX.BoidsGPU
         public override void SpawnBoids(Bounds simulationAreaBounds)
         {
             InitializeBoidsSpawnData(simulationAreaBounds);
+
+            // Restore positions and directions of fish that existed before this rebuild so they
+            // don't teleport. New fish (indices beyond the preserved count) keep their spawn positions.
+            if (_preservedBoids != null)
+            {
+                int copyCount = Mathf.Min(_preservedBoids.Length, _boids.Length);
+                for (int i = 0; i < copyCount; i++)
+                {
+                    BoidInfoGPU b = _boids[i];
+                    b.Position  = _preservedBoids[i].Position;
+                    b.Direction = _preservedBoids[i].Direction;
+                    _boids[i]   = b;
+                }
+                _preservedBoids = null;
+            }
 
             // Initialize the draw arguments buffer for indirect issuing of draw calls for rendering fish.
             _drawArgumentsBuffer = new GraphicsBuffer(GraphicsBuffer.Target.IndirectArguments, 1, GraphicsBuffer.IndirectDrawIndexedArgs.size);
@@ -95,6 +117,17 @@ namespace OceanX.BoidsGPU
             renderParams.worldBounds = simulationAreaBounds;
 
             Graphics.RenderMeshIndirect(renderParams, _boidSpawnData.BoidMesh, _drawArgumentsBuffer);
+        }
+
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Stores a snapshot of live GPU boid data for this spawner's slice of the global
+        /// buffer. Call this before CleanupSpawnData() so that SpawnBoids() can restore
+        /// positions of existing fish instead of teleporting them to spawn positions.
+        /// </summary>
+        public void StorePreservedBoids(BoidInfoGPU[] preserved)
+        {
+            _preservedBoids = preserved;
         }
 
         // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove

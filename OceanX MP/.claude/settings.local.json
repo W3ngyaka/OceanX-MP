@@ -10,7 +10,9 @@
       "Bash(Sort-Object -Unique)",
       "Bash(mkdir -p \"C:\\\\Unity FIles\\\\OceanX-MP\\\\OceanX MP\\\\prototype\" && ls \"C:\\\\Unity FIles\\\\OceanX-MP\\\\OceanX MP\\\\\")",
       "Bash(mkdir -p '/mnt/c/Unity FIles/OceanX-MP/OceanX MP/prototype')",
-      "Bash(mkdir -p ~/oceanx-prototype)"
+      "Bash(mkdir -p ~/oceanx-prototype)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

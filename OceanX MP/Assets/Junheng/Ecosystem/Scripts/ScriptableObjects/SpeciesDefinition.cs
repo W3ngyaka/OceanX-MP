@@ -1,13 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SpeciesRole
-{
-    Apex,           // Top of the chain — solitary, hunts freely, not hunted (e.g. Tiger Shark)
-    Mesopredator,   // Middle tier — flocks, hunts smaller species, gets hunted by apex (e.g. Grouper, Barracuda)
-    Prey,           // Bottom tier — flocks, does not hunt (e.g. Surgeonfish, Parrotfish)
-    Neutral         // No predator/prey role — decorative or ambient species
-}
+public enum SpeciesRole { Predator, Prey, Neutral }
 
 // Master data asset for a single species.
 // Create one asset per species via Assets > Create > OceanX > Species Definition.
@@ -58,13 +52,6 @@ public class SpeciesDefinition : ScriptableObject
 
     [Tooltip("Species this animal flees from. Only relevant if Role = Prey or Neutral.")]
     public List<SpeciesDefinition> PredatorSpecies = new List<SpeciesDefinition>();
-
-    [Header("Ratio Pressure (Predators Only)")]
-    [Tooltip("Healthy predator-to-prey ratio. E.g. 0.1 = 1 predator per 10 prey. Leave at 0 for prey/neutral species.")]
-    [Range(0f, 1f)] public float HealthyPreyRatio = 0.1f;
-
-    [Tooltip("How hard the cascade hits when the ratio is off. Higher = faster, more dramatic population swings.")]
-    [Range(0f, 5f)] public float RatioPressureStrength = 1.0f;
 
     // Assigned at runtime by EcosystemSimulation — do not set manually.
     [HideInInspector] public int RuntimeId = -1;

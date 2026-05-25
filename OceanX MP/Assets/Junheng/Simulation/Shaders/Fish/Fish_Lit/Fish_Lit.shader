@@ -1,4 +1,4 @@
-Shader "OceanX/Fish_Lit"
+Shader "GameDevBuddies/Fish_Lit"
 {
     Properties
     {

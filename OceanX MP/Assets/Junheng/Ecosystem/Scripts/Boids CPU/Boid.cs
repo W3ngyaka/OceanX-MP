@@ -20,10 +20,6 @@ public class Boid : MonoBehaviour
     private int[] _preyIds;
     private int[] _predatorIds;
 
-    // Enter / exit behaviour
-    private Vector3 _enterTarget;    // world position to swim toward when entering
-    private Vector3 _exitDirection;  // direction to swim when exiting
-
     // -------------------------------------------------------------------------
     // Public API
     // -------------------------------------------------------------------------
@@ -32,7 +28,6 @@ public class Boid : MonoBehaviour
     public Vector3 Position          => _boidInfo.Position;
     public Vector3 MovementDirection => _boidInfo.MovementDirection;
     public bool    IsAlive           => _boidInfo.BehaviorState != BoidBehaviorState.Dead;
-    public bool    IsExiting         => _boidInfo.BehaviorState == BoidBehaviorState.Exiting;
 
     public Transform CachedTransform
     {
@@ -91,25 +86,6 @@ public class Boid : MonoBehaviour
         return true;
     }
 
-    // Call after spawning outside the boundary — boid swims toward targetInside
-    // and switches to normal behaviour once it crosses inside.
-    public void SetEntering(Vector3 targetInside)
-    {
-        _enterTarget            = targetInside;
-        _boidInfo.BehaviorState = BoidBehaviorState.Entering;
-    }
-
-    // Tells the boid to swim outward. Once it crosses outside the boundary
-    // UpdateBoid marks it Dead for the next cleanup pass.
-    public void BeginExit(Bounds bounds)
-    {
-        Vector3 awayFromCenter = _boidInfo.Position - bounds.center;
-        _exitDirection          = awayFromCenter == Vector3.zero
-            ? Random.onUnitSphere
-            : awayFromCenter.normalized;
-        _boidInfo.BehaviorState = BoidBehaviorState.Exiting;
-    }
-
     // -------------------------------------------------------------------------
     // Per-frame update — called by the simulation manager
     // -------------------------------------------------------------------------
@@ -117,29 +93,6 @@ public class Boid : MonoBehaviour
     public void UpdateBoid(List<Boid> nearbyBoids, float timeDelta,
         Bounds simulationBounds, BoidAffecter[] affecters)
     {
-        // ---- Entering: swim toward interior target, switch to normal once inside ----
-        if (_boidInfo.BehaviorState == BoidBehaviorState.Entering)
-        {
-            Vector3 toTarget = (_enterTarget - _boidInfo.Position).normalized;
-            BoidSwimmingUtility.UpdateMovementDirection(toTarget, timeDelta, _moveProps, ref _boidInfo);
-            BoidSwimmingUtility.UpdateMovementSpeed(false, timeDelta, _moveProps, ref _boidInfo);
-            BoidSwimmingUtility.UpdatePositionAndRotation(timeDelta, CachedTransform, ref _boidInfo);
-            if (simulationBounds.Contains(_boidInfo.Position))
-                _boidInfo.BehaviorState = BoidBehaviorState.Schooling;
-            return;
-        }
-
-        // ---- Exiting: swim outward, die once past the boundary ----
-        if (_boidInfo.BehaviorState == BoidBehaviorState.Exiting)
-        {
-            BoidSwimmingUtility.UpdateMovementDirection(_exitDirection, timeDelta, _moveProps, ref _boidInfo);
-            BoidSwimmingUtility.UpdateMovementSpeed(false, timeDelta, _moveProps, ref _boidInfo);
-            BoidSwimmingUtility.UpdatePositionAndRotation(timeDelta, CachedTransform, ref _boidInfo);
-            if (!simulationBounds.Contains(_boidInfo.Position))
-                TryKill();
-            return;
-        }
-
         Vector3 currentPos = _boidInfo.Position;
 
         // ------------------------------------------------------------------
@@ -326,9 +279,9 @@ public class Boid : MonoBehaviour
             return;
         }
 
-        // Apex and Mesopredator species hunt when hungry and prey is in range
+        // Predator species that is hungry and can see prey
         if (_speciesDef != null &&
-            (_speciesDef.Role == SpeciesRole.Apex || _speciesDef.Role == SpeciesRole.Mesopredator) &&
+            _speciesDef.Role == SpeciesRole.Predator &&
             _boidInfo.Hunger >= _behaviorProps.HuntThreshold &&
             closestPrey != null &&
             preyDist <= _behaviorProps.DetectionRange)

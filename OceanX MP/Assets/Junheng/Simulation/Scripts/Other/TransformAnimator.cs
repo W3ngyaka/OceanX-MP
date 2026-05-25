@@ -30,6 +30,7 @@ namespace OceanX
         public float AnimationSpeedMultiplier = 1.0f;
         public float EdgeReachingDistance = 0.5f;
         public bool MovingClockwise = false;
+
         [Header("Rectangle Shape Settings: ")]
         public float RectangleWidth = 20f;
         public float RectangleLength = 10f;
@@ -51,10 +52,10 @@ namespace OceanX
         // Line movement pattern properties.
         private Vector3 _nextLineTargetPoint = Vector3.zero;
 
-        private Vector3 RectangleBottomLeft  { get => transform.position - transform.right * RectangleWidth * 0.5f - transform.forward * RectangleLength * 0.5f; }
+        private Vector3 RectangleBottomLeft { get => transform.position - transform.right * RectangleWidth * 0.5f - transform.forward * RectangleLength * 0.5f; }
         private Vector3 RectangleBottomRight { get => transform.position + transform.right * RectangleWidth * 0.5f - transform.forward * RectangleLength * 0.5f; }
-        private Vector3 RectangleTopLeft     { get => transform.position - transform.right * RectangleWidth * 0.5f + transform.forward * RectangleLength * 0.5f; }
-        private Vector3 RectangleTopRight    { get => transform.position + transform.right * RectangleWidth * 0.5f + transform.forward * RectangleLength * 0.5f; }
+        private Vector3 RectangleTopLeft { get => transform.position - transform.right * RectangleWidth * 0.5f + transform.forward * RectangleLength * 0.5f; }
+        private Vector3 RectangleTopRight { get => transform.position + transform.right * RectangleWidth * 0.5f + transform.forward * RectangleLength * 0.5f; }
 
         private void OnDrawGizmosSelected()
         {
@@ -96,7 +97,7 @@ namespace OceanX
                     _nextRectangleTargetPoint = MovingClockwise ? RectangleBottomLeft : RectangleTopRight;
                     break;
                 case PositionAnimationShape.Circle:
-                    // Initialize movement by placing the target transform at the top point of the circle and setting the
+                    // Initialize movement by placing the target transform at the top point of the circle and setting the 
                     // destination point at the same point so it would be automatically updated to the next when the simulation starts.
                     TargetTransform.position = shapeCenter + shapeRightAxis * CircleRadius;
                     _nextCircleTargetPoint = shapeCenter + shapeRightAxis * CircleRadius;
@@ -153,10 +154,13 @@ namespace OceanX
             switch (AnimationShape)
             {
                 case PositionAnimationShape.Rectangle:
+                    // Initial position of the rectangle is on its right bottom corner.
                     return shapeCenter + shapeRightAxis * RectangleWidth * 0.5f - shapeForwardAxis * RectangleLength * 0.5f;
                 case PositionAnimationShape.Circle:
+                    // Initial position of the circle shape is on the right axis of the circle transform.
                     return shapeCenter + shapeRightAxis * CircleRadius;
                 case PositionAnimationShape.Line:
+                    // Initial position of the line shape is on the left edge of the line.
                     return shapeCenter - shapeRightAxis * LineLength * 0.5f;
                 default:
                     return shapeCenter;

@@ -29,32 +29,6 @@ Users add/remove marine species and watch cascading effects in real time, learni
 | `Assets/Scripts/ScriptableObjects/BoidSchoolProperties.cs` | Flocking weights and ranges |
 | `Assets/Scripts/ScriptableObjects/SpeciesBehaviorProperties.cs` | Predator/prey AI settings |
 
-## GPU Ecosystem Layer (active simulation — Boids_Demo scene)
-All files: `Assets/Junheng/Simulation/Scripts/Boids_GPU/Ecosystem/`
-Namespace: `OceanX.BoidsGPU.Ecosystem`
-
-| File | Purpose |
-|------|---------|
-| `EcosystemSimulationGPU.cs` | Runtime add/remove/tick — runs in Awake before BoidSimulationGPU.Start |
-| `EcosystemDefinitionGPU.cs` | Top-level asset — species list + simulation bounds |
-| `SpeciesDataGPU.cs` | Per-species data (Role, SchoolProperties, prey/predator lists, pop dynamics) |
-| `SpeciesBehaviorPropertiesGPU.cs` | Flee/hunt/hunger settings |
-| `WanderingAffecterGPU.cs` | Randomly wandering target used for Apex species sub-groups |
-| `EcosystemUIAdapterGPU.cs` | Bridges UI (CPU SpeciesDefinition) → GPU layer; same API surface as CPU version |
-| `BoidSimulationGPU.cs` (03_Spatial_Partition) | GPU simulation + `ReinitializeBuffers()` |
-| `BoidSpawnerGPU.cs` | GPU spawner — now holds position-preservation logic for buffer rebuilds |
-
-### Runtime add/remove flow
-`EcosystemSimulationGPU.AddSpecies / RemoveSpecies` →
-`spawner.SetBoidsCount(newCount)` → `_simulation.ReinitializeBuffers()`
-
-`ReinitializeBuffers()` sequence:
-1. Read live GPU positions back to CPU (from correct ping-pong buffer)
-2. Slice per spawner using `spawner.Boids.Length` (old count, not new)
-3. Call `spawner.StorePreservedBoids(slice)` on each spawner
-4. Tear down all GPU buffers (derived → base → spatial partition → spawners)
-5. Re-run full init chain — `SpawnBoids` restores old positions, only new fish get fresh spawn positions
-
 ## Population dynamics (how the cascade works)
 `EcosystemSimulation` runs a coroutine every `PopulationTickInterval` seconds (default 5s).
 
@@ -77,7 +51,7 @@ The cascade is emergent — no hardcoded chain reaction logic.
 1. `FishAnimationProperties.cs` + `FishAnimator.cs` — procedural swimming animation (field already added to SpeciesDefinition)
 2. Ecosystem health score + state machine (`Healthy / Unstable / Critical / Collapsing / Recovering`)
 3. C# event system — fires on population change, health change, state change (bridge to UI team)
-4. ~~Runtime add/remove species API~~ ✅ Done — `EcosystemSimulationGPU.AddSpecies/RemoveSpecies`, position preservation on rebuild fixed
+4. Runtime add/remove species API (for UI buttons)
 5. Preset scenarios (Balanced Ocean, Shark Removed, Overpopulation, Collapse, Recovery)
 
 ## Team structure

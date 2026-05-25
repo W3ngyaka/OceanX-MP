@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.\\(cs\\)$\")",
+      "Bash(npx skills *)",
+      "mcp__mcp-registry__search_mcp_registry",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\Admin\\\\Downloads\\\\claude-skills-main\" | ForEach-Object { $_.FullName })"
+    ]
+  }
+}

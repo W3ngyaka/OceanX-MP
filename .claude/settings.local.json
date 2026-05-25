@@ -4,7 +4,12 @@
       "Bash(grep -E \"\\\\.\\(cs\\)$\")",
       "Bash(npx skills *)",
       "mcp__mcp-registry__search_mcp_registry",
-      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\Admin\\\\Downloads\\\\claude-skills-main\" | ForEach-Object { $_.FullName })"
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\Admin\\\\Downloads\\\\claude-skills-main\" | ForEach-Object { $_.FullName })",
+      "Bash(dir /S /B \"C:\\\\TP Projects\\\\OceanX-MP\\\\OceanX MP\\\\Assets\\\\Junheng\\\\*.cs\")",
+      "Skill(anthropic-skills:code-reviewer)",
+      "Skill(anthropic-skills:code-reviewer:*)",
+      "Bash(Get-ChildItem -Recurse -Filter \"*.cs\" \"C:\\\\TP Projects\\\\OceanX-MP\\\\OceanX MP\\\\Assets\\\\Junheng\")",
+      "Bash(Select-Object FullName)"
     ]
   }
 }

@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>OceanX — Tablet Prototype</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── IMPORT MONOSPACE FONT ─── */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap');
+
+:root {
+  --cyan:    #00d8ff;
+  --cyan-dim:#007a9e;
+  --cyan-lo: rgba(0,216,255,0.12);
+  --cyan-glow: rgba(0,216,255,0.5);
+  --seafoam: #00ffb3;
+  --seafoam-lo: rgba(0,255,179,0.1);
+  --gold:    #ffe066;
+  --red:     #ff4040;
+  --red-lo:  rgba(255,64,64,0.12);
+  --orange:  #ff8c00;
+  --bg:      #010a12;
+  --panel:   rgba(0,18,34,0.55);
+  --panel-dark: rgba(0,10,20,0.7);
+  --border:  rgba(0,216,255,0.22);
+  --border-hi: rgba(0,216,255,0.55);
+  --txt:     #c8eaf5;
+  --txt-hi:  #e8f8ff;
+  --muted:   rgba(150,210,230,0.6);
+  --divider: rgba(0,216,255,0.12);
+  --locked-bg: rgba(0,8,16,0.75);
+  --mono: 'Share Tech Mono', 'Courier New', monospace;
+  --ui:   'Exo 2', 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+  background: radial-gradient(ellipse at 50% 0%, #001828 0%, #010a12 60%);
+  font-family: var(--ui);
+  color: var(--txt);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 14px;
+}
+
+/* ─── LABEL ─── */
+.proto-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--cyan-dim);
+}
+
+/* ─── CORNER BRACKET MIXIN (applied via .bracketed class) ─── */
+.bracketed { position: relative; }
+.bracketed::before, .bracketed::after,
+.bracketed .br-bl, .bracketed .br-tr {
+  content: '';
+  position: absolute;
+  width: 10px; height: 10px;
+  pointer-events: none;
+  z-index: 2;
+}
+/* top-left */
+.bracketed::before {
+  top: -1px; left: -1px;
+  border-top: 1.5px solid var(--cyan);
+  border-left: 1.5px solid var(--cyan);
+  box-shadow: -2px -2px 8px var(--cyan-glow);
+}
+/* bottom-right */
+.bracketed::after {
+  bottom: -1px; right: -1px;
+  border-bottom: 1.5px solid var(--cyan);
+  border-right: 1.5px solid var(--cyan);
+  box-shadow: 2px 2px 8px var(--cyan-glow);
+}
+
+/* ─── TABLET DEVICE ─── */
+.tablet {
+  width: 860px;
+  height: 540px;
+  background: var(--bg);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow:
+    0 0 0 1px rgba(0,216,255,0.04),
+    0 0 60px rgba(0,100,160,0.3),
+    0 0 120px rgba(0,50,100,0.2),
+    inset 0 0 80px rgba(0,0,0,0.7);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scanline overlay */
+.tablet::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.07) 3px,
+    rgba(0,0,0,0.07) 4px
+  );
+  pointer-events: none;
+  z-index: 200;
+}
+
+/* fold lines */
+.fold-l, .fold-r {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+  z-index: 100;
+  pointer-events: none;
+}
+.fold-l { left: 286px; }
+.fold-r { left: 572px; }
+
+canvas#bg { position:absolute; inset:0; z-index:0; pointer-events:none; }
+
+/* ─── OVERLAY SCREENS ─── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.45s ease;
+  background: rgba(1,10,18,0.92);
+  backdrop-filter: blur(4px);
+}
+.overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ══════════════════════════
+   OVERLAY 1 — INTRO
+══════════════════════════ */
+#o-intro {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 18px;
+  padding: 40px 80px;
+}
+.intro-warn {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--red); display:flex; gap:8px; align-items:center;
+  animation: blink 1.8s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+.intro-ocean { font-size:60px; animation: bob 3.5s ease-in-out infinite; filter: drop-shadow(0 0 16px rgba(0,216,255,.4)); }
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+.intro-title {
+  font-size: 28px; font-weight: 700; line-height: 1.2;
+  color: var(--txt-hi);
+  text-shadow: 0 0 30px var(--cyan-glow), 0 0 60px rgba(0,100,200,.4);
+  letter-spacing: 1px;
+}
+.intro-sub { font-size:13px; color:var(--muted); line-height:1.8; max-width:380px; }
+
+.hbar-wrap {
+  background: rgba(0,0,0,.6);
+  border: 1px solid var(--border);
+  height: 6px; overflow: hidden; width: 100%;
+  position: relative;
+}
+.hbar { height:100%; transition:width 2s ease; position:relative; }
+.hbar::after { content:''; position:absolute; top:0;right:0;bottom:0;width:6px; background:rgba(255,255,255,.4); filter:blur(2px); }
+.hbar.crit { background: linear-gradient(90deg,#ff2020,#ff8c00); width:47%; box-shadow:0 0 10px rgba(255,80,0,.5); }
+.hbar.full { background: linear-gradient(90deg,#00ffb3,#00d8ff);  width:82%; box-shadow:0 0 10px rgba(0,216,255,.4); }
+
+.health-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 14px 24px; width: 340px;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+.health-box label { font-family:var(--mono); font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--cyan-dim); display:block; margin-bottom:8px; }
+.health-val { font-family:var(--mono); font-size:11px; color:var(--orange); text-align:right; margin-top:6px; }
+
+/* ══════════════════════════
+   OVERLAY 2 — TUTORIAL
+══════════════════════════ */
+#o-tutorial { padding: 0; }
+.tut-top { padding:22px 32px 8px; border-bottom:1px solid var(--divider); }
+.tut-top h2 { font-size:15px; font-weight:600; color:var(--cyan); letter-spacing:1px; text-shadow:0 0 12px var(--cyan-glow); }
+.tut-top p  { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:3px; letter-spacing:1px; }
+.card-track { display:flex; transition:transform .4s cubic-bezier(.4,0,.2,1); flex:1; min-height:0; overflow:hidden; }
+.tut-slide  { width:860px; flex-shrink:0; min-height:0; padding:12px 28px 16px; display:flex; gap:14px; align-items:stretch; overflow:hidden; }
+.tut-main   {
+  flex:2; min-height:0; overflow-y:auto;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 22px 24px;
+  display:flex; flex-direction:column; gap:12px;
+  scrollbar-width:thin; scrollbar-color:var(--cyan-dim) transparent;
+  position: relative;
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+}
+.tut-side   { flex:1; display:flex; flex-direction:column; gap:10px; }
+.tut-side-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 12px; flex:1;
+  position: relative;
+}
+.tut-side-card::before { content:''; position:absolute; top:-1px;left:-1px; width:8px;height:8px; border-top:1px solid var(--cyan);border-left:1px solid var(--cyan); }
+.tut-side-card::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:8px;height:8px; border-bottom:1px solid var(--cyan);border-right:1px solid var(--cyan); }
+.tut-side-card h4 { font-size:11px; margin-bottom:5px; color:var(--cyan); display:flex; align-items:center; gap:6px; text-shadow:0 0 8px var(--cyan-glow); }
+.tut-side-card p  { font-size:11px; color:var(--muted); line-height:1.6; }
+.tut-emoji  { font-size:46px; filter:drop-shadow(0 0 10px rgba(0,216,255,.3)); }
+.role-badge {
+  font-family: var(--mono); font-size:9px; letter-spacing:3px; text-transform:uppercase;
+  background: var(--cyan-lo); color:var(--cyan); border:1px solid var(--border);
+  padding:3px 12px; width:fit-content;
+  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+.tut-main h3 { font-size:20px; font-weight:700; color:var(--txt-hi); text-shadow:0 0 16px var(--cyan-glow); }
+.tut-main p  { font-size:12px; color:var(--muted); line-height:1.75; }
+.chain-row  {
+  display:flex; align-items:center; gap:8px;
+  background: rgba(0,216,255,0.05);
+  border: 1px solid var(--divider);
+  padding: 9px 14px; font-size:12px; flex-wrap:wrap;
+}
+.chain-arr  { color:var(--cyan); font-size:11px; }
+.dot-row    { display:flex; gap:8px; justify-content:center; padding:6px 0; }
+.dot        { width:20px; height:3px; background:rgba(255,255,255,.15); cursor:pointer; transition:all .25s; }
+.dot.on     { background:var(--cyan); box-shadow:0 0 6px var(--cyan-glow); }
+.tut-nav    { display:flex; justify-content:space-between; align-items:center; padding:0 28px 16px; }
+
+/* ══════════════════════════
+   MAIN DUAL-PANEL LAYOUT
+══════════════════════════ */
+.main-ui {
+  flex: 1; display: flex; flex-direction: column;
+  position: relative; z-index: 1; transition: opacity .5s;
+}
+.main-ui.dimmed { opacity: .15; pointer-events: none; }
+
+/* ── TOP STATUS BAR ── */
+.top-bar {
+  display: flex; align-items: center; gap: 14px;
+  padding: 8px 16px 7px;
+  border-bottom: 1px solid var(--divider);
+  flex-shrink: 0;
+  background: rgba(0,10,20,0.4);
+}
+.top-bar .logo {
+  font-family: var(--mono); font-size:13px; font-weight:400;
+  color:var(--cyan); flex-shrink:0;
+  text-shadow: 0 0 12px var(--cyan-glow);
+  letter-spacing: 2px;
+}
+.top-bar .logo span { color:var(--muted); font-size:10px; margin-left:8px; letter-spacing:1px; }
+.state-pill {
+  font-family:var(--mono); font-size:9px; padding:3px 10px;
+  letter-spacing:2px; font-weight:400; flex-shrink:0;
+  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+.state-pill.unstable { background:rgba(255,100,0,.12); color:var(--orange); border:1px solid rgba(255,100,0,.3); }
+.state-pill.stable   { background:var(--seafoam-lo); color:var(--seafoam); border:1px solid rgba(0,255,179,.3); text-shadow:0 0 8px rgba(0,255,179,.5); }
+.hbar-wrap.slim { flex:1; height:5px; }
+.hnum { font-family:var(--mono); font-size:11px; font-weight:400; flex-shrink:0; letter-spacing:1px; }
+.hnum.lo { color:var(--orange); text-shadow:0 0 8px rgba(255,140,0,.5); }
+.hnum.hi { color:var(--seafoam); text-shadow:0 0 8px rgba(0,255,179,.5); }
+
+/* ── PANELS ROW ── */
+.panels { flex:1; display:flex; min-height:0; }
+
+/* ─ LEFT PANEL: OCEAN ─ */
+.panel-ocean {
+  width: 572px; flex-shrink:0; min-height:0;
+  border-right: 1px solid var(--divider);
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+}
+
+.ocean-view {
+  flex:1; position:relative; overflow:hidden;
+  background: radial-gradient(ellipse at 50% 100%, #001828 0%, #010a12 100%);
+}
+/* depth light rays */
+.ocean-view::before {
+  content:'';
+  position:absolute; inset:0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0px, transparent 60px,
+    rgba(0,100,160,0.03) 60px, rgba(0,100,160,0.03) 62px
+  );
+  pointer-events:none;
+}
+
+.fish-entity {
+  position:absolute; font-size:16px;
+  animation: swim linear infinite;
+  white-space:nowrap; user-select:none;
+  filter: drop-shadow(0 0 4px rgba(0,200,255,.2));
+}
+@keyframes swim  { 0%{transform:translateX(-50px)}  100%{transform:translateX(620px)} }
+.fish-entity.left { animation-name: swimL; }
+@keyframes swimL { 0%{transform:translateX(620px) scaleX(-1)} 100%{transform:translateX(-50px) scaleX(-1)} }
+
+.plankton-layer {
+  position:absolute; bottom:0; left:0; right:0; height:40px;
+  display:flex; flex-wrap:wrap; padding:4px 8px;
+  align-content:flex-end; pointer-events:none;
+}
+.pdot {
+  width:3px; height:3px; background:var(--seafoam);
+  border-radius:50%; margin:2px;
+  animation: twinkle 2s infinite; transition:all 1s;
+  box-shadow: 0 0 4px var(--seafoam);
+}
+@keyframes twinkle { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+/* alert strip */
+.alert-strip {
+  margin: 5px 8px;
+  padding: 7px 12px;
+  font-size: 11px;
+  display: flex; align-items:flex-start; gap:8px;
+  flex-shrink:0; transition:all .6s;
+  position: relative;
+}
+.alert-strip::before { content:''; position:absolute; top:-1px;left:-1px; width:6px;height:6px; }
+.alert-strip::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:6px;height:6px; }
+.alert-strip.warn {
+  background:var(--red-lo); border:1px solid rgba(255,64,64,.25);
+}
+.alert-strip.warn::before { border-top:1px solid var(--red);border-left:1px solid var(--red); }
+.alert-strip.warn::after  { border-bottom:1px solid var(--red);border-right:1px solid var(--red); }
+.alert-strip.ok {
+  background:var(--seafoam-lo); border:1px solid rgba(0,255,179,.25);
+}
+.alert-strip.ok::before { border-top:1px solid var(--seafoam);border-left:1px solid var(--seafoam); }
+.alert-strip.ok::after  { border-bottom:1px solid var(--seafoam);border-right:1px solid var(--seafoam); }
+.alert-strip p   { color:var(--muted); line-height:1.5; }
+.alert-strip p b { color:var(--txt-hi); }
+
+/* species chips */
+.chips-row {
+  display:flex; gap:6px; padding:4px 8px 7px;
+  overflow-x:auto; flex-shrink:0;
+  scrollbar-width:thin; scrollbar-color:var(--cyan-dim) transparent;
+}
+.chips-row::-webkit-scrollbar       { height:2px; }
+.chips-row::-webkit-scrollbar-thumb { background:var(--cyan-dim); }
+.chip {
+  display:flex; align-items:center; gap:5px;
+  background: rgba(0,216,255,0.06);
+  border: 1px solid var(--border);
+  padding: 3px 10px; font-size:10px;
+  white-space:nowrap; flex-shrink:0;
+  cursor:default; transition:all .3s;
+  font-family: var(--mono);
+  clip-path: polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);
+}
+.chip.absent { background:rgba(255,64,64,.05); border-color:rgba(255,64,64,.2); opacity:.6; }
+.chip .cpop  { color:var(--cyan); }
+.chip .cred  { color:var(--red); }
+.chip.popped { background:var(--seafoam-lo); border-color:rgba(0,255,179,.35); opacity:1; }
+.chip.popped .cpop { color:var(--seafoam); text-shadow:0 0 6px rgba(0,255,179,.5); }
+
+/* ─ RIGHT PANEL: FOOD WEB ─ */
+.panel-fw {
+  flex:1; min-width:0; min-height:0;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.fw-title-row {
+  padding: 8px 12px 5px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0; border-bottom:1px solid var(--divider);
+  background: rgba(0,10,20,0.3);
+}
+.fw-title-row h3 {
+  font-family:var(--mono); font-size:11px; font-weight:400;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--cyan); text-shadow:0 0 10px var(--cyan-glow);
+}
+.fw-hint {
+  margin: 5px 8px;
+  background: rgba(255,224,102,0.06);
+  border: 1px solid rgba(255,224,102,.2);
+  padding: 6px 10px; font-size:10px;
+  color: var(--gold); flex-shrink:0;
+  font-family: var(--mono); letter-spacing:.5px;
+}
+
+.fw-body {
+  flex:1; min-height:0; overflow-y:scroll;
+  padding:0 8px 8px;
+  scrollbar-width:thin; scrollbar-color:var(--cyan-dim) rgba(0,216,255,.04);
+  display:flex; flex-direction:column; gap:3px;
+}
+.fw-body::-webkit-scrollbar       { width:3px; }
+.fw-body::-webkit-scrollbar-track { background:rgba(0,216,255,.04); }
+.fw-body::-webkit-scrollbar-thumb { background:var(--cyan-dim); }
+
+.tier-label {
+  font-family:var(--mono); font-size:8px; letter-spacing:3px;
+  text-transform:uppercase; color:rgba(0,216,255,.3);
+  padding:5px 2px 2px;
+}
+.tier-cards { display:flex; gap:5px; }
+.arrow-row  { display:flex; padding:0 2px; gap:5px; }
+.arr-seg    { flex:1; text-align:center; font-size:10px; color:rgba(0,216,255,.25); line-height:1; }
+
+/* species card */
+.sc {
+  flex:1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 8px 5px 7px;
+  text-align:center; cursor:pointer;
+  transition: transform .2s, box-shadow .2s, border-color .2s, background .3s;
+  min-height: 70px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:3px; position:relative; user-select:none;
+  backdrop-filter: blur(4px);
+}
+/* corner brackets on cards */
+.sc::before { content:''; position:absolute; top:-1px;left:-1px; width:7px;height:7px; border-top:1px solid var(--cyan);border-left:1px solid var(--cyan); opacity:.6; }
+.sc::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:7px;height:7px; border-bottom:1px solid var(--cyan);border-right:1px solid var(--cyan); opacity:.6; }
+.sc:hover:not(.locked) { transform:translateY(-2px); box-shadow:0 0 16px rgba(0,216,255,.15); border-color:var(--cyan); }
+.sc:hover:not(.locked)::before, .sc:hover:not(.locked)::after { opacity:1; }
+.sc.locked { background:var(--locked-bg); border-color:rgba(0,216,255,.07); }
+.sc.locked::before, .sc.locked::after { border-color:rgba(0,216,255,.15); }
+.sc.locked:hover { border-color:rgba(255,224,102,.3); box-shadow:0 0 12px rgba(255,224,102,.08); }
+.sc.unlocked-anim { animation:unlockBounce .55s cubic-bezier(.34,1.56,.64,1); border-color:var(--seafoam) !important; box-shadow:0 0 20px rgba(0,255,179,.3) !important; }
+@keyframes unlockBounce { 0%{transform:scale(.85)} 60%{transform:scale(1.08)} 100%{transform:scale(1)} }
+.sc.present { border-color:rgba(0,255,179,.3); background:var(--seafoam-lo); }
+.sc.present::before, .sc.present::after { border-color:var(--seafoam); opacity:.5; }
+.sc .sc-emoji { font-size:20px; filter:drop-shadow(0 0 4px rgba(0,216,255,.3)); }
+.sc .sc-name  { font-family:var(--mono); font-size:9px; font-weight:400; line-height:1.3; letter-spacing:.5px; color:var(--txt); }
+.sc .sc-pop   { font-family:var(--mono); font-size:8px; color:var(--cyan); }
+.sc .sc-pop.bad { color:var(--orange); text-shadow:0 0 6px rgba(255,140,0,.4); }
+.sc .lock-ico { font-size:16px; opacity:.2; }
+.sc .lock-tip { font-family:var(--mono); font-size:8px; color:rgba(0,216,255,.3); line-height:1.4; }
+
+/* ══════════════════════════
+   UNLOCK POPUP
+══════════════════════════ */
+.popup-overlay {
+  position:absolute; inset:0;
+  background:rgba(0,5,12,0.8);
+  backdrop-filter:blur(10px);
+  z-index:90; display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.popup-overlay.show { opacity:1; pointer-events:all; }
+.popup {
+  background: rgba(0,18,34,0.92);
+  border: 1px solid var(--border);
+  padding: 28px 26px; text-align:center; width:300px;
+  box-shadow: 0 0 40px rgba(0,216,255,.1), inset 0 0 40px rgba(0,0,0,.4);
+  animation: popIn .4s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+}
+/* corner brackets on popup */
+.popup::before { content:''; position:absolute; top:-1px;left:-1px; width:14px;height:14px; border-top:1.5px solid var(--cyan);border-left:1.5px solid var(--cyan); box-shadow:-3px -3px 10px var(--cyan-glow); }
+.popup::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:14px;height:14px; border-bottom:1.5px solid var(--cyan);border-right:1.5px solid var(--cyan); box-shadow:3px 3px 10px var(--cyan-glow); }
+@keyframes popIn { 0%{transform:scale(.78);opacity:0} 100%{transform:scale(1);opacity:1} }
+.popup .p-stars  { font-size:16px; letter-spacing:6px; margin-bottom:6px; color:var(--gold); }
+.popup .p-badge  { font-family:var(--mono); font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:12px; }
+.popup .p-emoji  { font-size:46px; margin:6px 0 10px; filter:drop-shadow(0 0 12px rgba(0,216,255,.4)); }
+.popup h3        { font-size:17px; font-weight:700; margin-bottom:6px; color:var(--txt-hi); text-shadow:0 0 14px var(--cyan-glow); }
+.popup p         { font-size:11px; color:var(--muted); line-height:1.7; margin-bottom:18px; }
+.popup .p-btns   { display:flex; gap:10px; }
+
+.hint-popup { border-color: var(--border); box-shadow: 0 0 30px rgba(0,216,255,.08); }
+.hint-popup::before { box-shadow:-2px -2px 8px var(--cyan-glow); }
+.hint-popup::after  { box-shadow:2px 2px 8px var(--cyan-glow); }
+
+/* ══════════════════════════
+   BUTTONS
+══════════════════════════ */
+.btn {
+  border:none; cursor:pointer; font-family:var(--ui);
+  font-size:12px; font-weight:600;
+  padding:10px 18px; letter-spacing:.5px;
+  transition:transform .15s, filter .15s, box-shadow .15s;
+  clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.btn:hover  { filter:brightness(1.2); }
+.btn:active { transform:scale(.95); }
+.btn-primary {
+  background: rgba(0,216,255,0.12);
+  color: var(--cyan); flex:1;
+  border: 1px solid var(--border);
+  text-shadow: 0 0 8px var(--cyan-glow);
+  box-shadow: 0 0 16px rgba(0,216,255,.1), inset 0 0 20px rgba(0,216,255,.05);
+}
+.btn-primary:hover { background:rgba(0,216,255,.2); box-shadow:0 0 24px rgba(0,216,255,.2); }
+.btn-gold {
+  background: rgba(255,224,102,0.12);
+  color: var(--gold); flex:1;
+  border: 1px solid rgba(255,224,102,.3);
+  text-shadow: 0 0 8px rgba(255,224,102,.5);
+  box-shadow: 0 0 16px rgba(255,224,102,.08);
+}
+.btn-gold:hover { background:rgba(255,224,102,.22); }
+.btn-ghost {
+  background:transparent; color:var(--muted);
+  border:1px solid rgba(255,255,255,.1);
+}
+.btn-ghost:hover { border-color:var(--border); color:var(--txt); }
+.btn-sm   { font-size:10px; padding:7px 13px; }
+.btn-icon {
+  background:rgba(0,216,255,.07); color:var(--cyan);
+  width:32px; height:32px; padding:0; font-size:14px;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  border:1px solid var(--border);
+  clip-path: polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);
+}
+.btn-icon:hover { background:rgba(0,216,255,.15); }
+
+/* ══════════════════════════
+   RESTORED OVERLAY
+══════════════════════════ */
+#o-restored {
+  align-items:center; justify-content:flex-start; text-align:center;
+  gap:16px; padding:28px 60px;
+  overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--cyan-dim) transparent;
+}
+.restored-badge {
+  font-family:var(--mono); font-size:10px; letter-spacing:4px; text-transform:uppercase;
+  color:var(--seafoam); display:flex; gap:8px; align-items:center; justify-content:center;
+  text-shadow:0 0 10px rgba(0,255,179,.5);
+}
+.restored-title {
+  font-size:26px; font-weight:700;
+  color:var(--txt-hi); letter-spacing:2px;
+  text-shadow:0 0 20px var(--cyan-glow), 0 0 40px rgba(0,100,200,.4);
+}
+.tally-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; width:100%; }
+.tally-item {
+  background:var(--panel); border:1px solid var(--border);
+  padding:12px 8px; display:flex; flex-direction:column; align-items:center; gap:4px;
+  position:relative;
+}
+.tally-item::before { content:''; position:absolute; top:-1px;left:-1px; width:6px;height:6px; border-top:1px solid var(--cyan);border-left:1px solid var(--cyan); }
+.tally-item::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:6px;height:6px; border-bottom:1px solid var(--cyan);border-right:1px solid var(--cyan); }
+.tally-item .te { font-size:24px; filter:drop-shadow(0 0 6px rgba(0,216,255,.3)); }
+.tally-item .tn { font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:1px; }
+.tally-item .tp { font-family:var(--mono); font-size:15px; color:var(--cyan); text-shadow:0 0 8px var(--cyan-glow); }
+.lesson-box {
+  background:var(--panel); border:1px solid var(--border);
+  padding:14px 18px; font-size:12px; color:var(--muted);
+  line-height:1.7; font-style:italic; max-width:520px; position:relative;
+}
+.lesson-box::before { content:''; position:absolute; top:-1px;left:-1px; width:10px;height:10px; border-top:1px solid var(--cyan);border-left:1px solid var(--cyan); }
+.lesson-box::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:10px;height:10px; border-bottom:1px solid var(--cyan);border-right:1px solid var(--cyan); }
+.lesson-box b { color:var(--txt-hi); font-style:normal; }
+
+/* ══════════════════════════
+   SCREEN NAV TABS
+══════════════════════════ */
+.screen-tabs { display:flex; gap:8px; justify-content:center; }
+.stab {
+  font-family:var(--mono); font-size:10px; padding:6px 16px;
+  background:rgba(0,216,255,.04); border:1px solid var(--border);
+  color:var(--muted); cursor:pointer; transition:all .2s;
+  letter-spacing:2px; text-transform:uppercase;
+  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+.stab:hover  { background:rgba(0,216,255,.1); color:var(--txt); }
+.stab.active { background:rgba(0,216,255,.14); color:var(--cyan); border-color:rgba(0,216,255,.5); text-shadow:0 0 8px var(--cyan-glow); box-shadow:0 0 12px rgba(0,216,255,.1); }
+</style>
+</head>
+<body>
+
+<div class="proto-label">OceanX — Interactive Tablet Prototype</div>
+
+<!-- ════════════════════════
+     TABLET DEVICE
+════════════════════════ -->
+<div class="tablet">
+  <canvas id="bg"></canvas>
+  <div class="fold-l"></div>
+  <div class="fold-r"></div>
+
+  <!-- ── MAIN DUAL-PANEL UI (always underneath) ── -->
+  <div class="main-ui dimmed" id="mainUI">
+
+    <!-- TOP STATUS BAR -->
+    <div class="top-bar">
+      <div class="logo">🌊 OceanX <span>Ecosystem Sim</span></div>
+      <div class="hbar-wrap slim">
+        <div class="hbar crit" id="mainHBar"></div>
+      </div>
+      <span class="hnum lo" id="mainHNum">47%</span>
+      <div class="state-pill unstable" id="mainState">⚠ UNSTABLE</div>
+    </div>
+
+    <!-- PANELS -->
+    <div class="panels">
+
+      <!-- LEFT: OCEAN VIEW -->
+      <div class="panel-ocean">
+        <div class="ocean-view" id="oceanView">
+          <div class="plankton-layer" id="planktonLayer"></div>
+        </div>
+
+        <div class="alert-strip warn" id="alertStrip">
+          <span>⚠️</span>
+          <p id="alertText"><b>Overpopulation detected.</b> Small fish are devouring all the plankton. The food web is collapsing from the bottom up.</p>
+        </div>
+
+        <div class="chips-row" id="chipsRow">
+          <div class="chip absent" id="chip-shark"><span>🦈</span> Bull Shark <span class="cred">✕</span></div>
+          <div class="chip absent" id="chip-grouper"><span>🐠</span> Grouper <span class="cred">✕</span></div>
+          <div class="chip absent" id="chip-tuna"><span>🐡</span> Tuna <span class="cred">✕</span></div>
+          <div class="chip" id="chip-smallfish"><span>🐟</span> Small Fish <span class="cpop">×52</span></div>
+          <div class="chip" id="chip-plankton"><span>🌿</span> Plankton <span class="cpop">×18</span></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: FOOD WEB -->
+      <div class="panel-fw">
+        <div class="fw-title-row">
+          <div>
+            <h3>🕸 Food Web</h3>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-ghost btn-sm" onclick="showRestored()">✨ Skip to end</button>
+          </div>
+        </div>
+
+        <div class="fw-hint" id="fwHint">💡 Tap a 🔒 slot to see how to unlock it</div>
+
+        <div class="fw-body">
+
+          <!-- TIER 3 -->
+          <div class="tier-label">Tier 3 — Apex</div>
+          <div class="tier-cards">
+            <div class="sc locked" id="sc-shark" onclick="tapCard('shark')">
+              <div class="lock-ico">🔒</div>
+              <div class="lock-tip">Needs large<br/>predators first</div>
+            </div>
+          </div>
+
+          <div class="arrow-row"><div class="arr-seg">↑ eats</div></div>
+
+          <!-- TIER 2 -->
+          <div class="tier-label">Tier 2 — Secondary</div>
+          <div class="tier-cards">
+            <div class="sc locked" id="sc-grouper" onclick="tapCard('grouper')">
+              <div class="lock-ico">🔒</div>
+              <div class="lock-tip">Add Humphead<br/>Wrasse first</div>
+            </div>
+            <div class="sc present" id="sc-wrasse" onclick="tapCard('wrasse')">
+              <div class="sc-emoji">🐠</div>
+              <div class="sc-name">Humphead<br/>Wrasse</div>
+              <div class="sc-pop">×8</div>
+            </div>
+            <div class="sc locked" id="sc-tuna" onclick="tapCard('tuna')">
+              <div class="lock-ico">🔒</div>
+              <div class="lock-tip">Small fish<br/>&gt;30 required</div>
+            </div>
+          </div>
+
+          <div class="arrow-row">
+            <div class="arr-seg">↑</div>
+            <div class="arr-seg">↑</div>
+            <div class="arr-seg">↑</div>
+          </div>
+
+          <!-- TIER 1 -->
+          <div class="tier-label">Tier 1 — Primary</div>
+          <div class="tier-cards">
+            <div class="sc present" id="sc-smallfish" onclick="tapCard('smallfish')">
+              <div class="sc-emoji">🐟</div>
+              <div class="sc-name">Small Fish</div>
+              <div class="sc-pop bad">×52 ⚠ too many</div>
+            </div>
+            <div class="sc locked" id="sc-shrimp" onclick="tapCard('shrimp')">
+              <div class="lock-ico">🔒</div>
+              <div class="lock-tip">Plankton &gt;50<br/>required</div>
+            </div>
+          </div>
+
+          <div class="arrow-row">
+            <div class="arr-seg">↑</div>
+            <div class="arr-seg">↑</div>
+          </div>
+
+          <!-- TIER 0 -->
+          <div class="tier-label">Tier 0 — Producers</div>
+          <div class="tier-cards">
+            <div class="sc present" id="sc-plankton" onclick="tapCard('plankton')">
+              <div class="sc-emoji">🌿</div>
+              <div class="sc-name">Plankton</div>
+              <div class="sc-pop bad">×18 ⚠ low</div>
+            </div>
+            <div class="sc locked" id="sc-algae" onclick="tapCard('algae')">
+              <div class="lock-ico">🔒</div>
+              <div class="lock-tip">Health &gt;60%<br/>required</div>
+            </div>
+          </div>
+
+        </div><!-- fw-body -->
+      </div><!-- panel-fw -->
+    </div><!-- panels -->
+  </div><!-- main-ui -->
+
+  <!-- ════════════
+       OVERLAY: INTRO
+  ════════════ -->
+  <div class="overlay" id="o-intro">
+    <div class="intro-ocean">🌊</div>
+    <div class="intro-warn">⚠&nbsp; ECOSYSTEM ALERT</div>
+    <h1 class="intro-title">The ocean is out of balance.</h1>
+    <p class="intro-sub">Species are disappearing. Food chains are breaking. Can you restore the balance before it's too late?</p>
+    <div class="health-box">
+      <label>Current Ecosystem Health</label>
+      <div class="hbar-wrap"><div class="hbar crit"></div></div>
+      <div class="health-val">47% — Unstable ⚠</div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:4px;">
+      <button class="btn btn-ghost btn-sm" onclick="goOverlay('main')">Skip intro</button>
+      <button class="btn btn-primary" style="padding:12px 32px;" onclick="goOverlay('tutorial')">Begin →</button>
+    </div>
+  </div>
+
+  <!-- ════════════
+       OVERLAY: TUTORIAL
+  ════════════ -->
+  <div class="overlay hidden" id="o-tutorial">
+    <div class="tut-top">
+      <h2>How the ocean works</h2>
+      <p>Learn each role before you play</p>
+    </div>
+
+    <div style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;">
+      <div class="card-track" id="cardTrack">
+
+        <!-- slide 1 -->
+        <div class="tut-slide">
+          <div class="tut-main">
+            <div class="tut-emoji">🦈</div>
+            <div class="role-badge">Apex Predator</div>
+            <h3>Sharks</h3>
+            <p>Keep prey populations from exploding. Without apex predators the entire food web collapses from the top down — a process called a trophic cascade.</p>
+            <div class="chain-row"><span>🦈</span><span class="chain-arr">eats</span><span>🐠</span><span class="chain-arr">which keeps</span><span>🐟</span><span class="chain-arr">in check</span></div>
+          </div>
+          <div class="tut-side">
+            <div class="tut-side-card"><h4>🌊 Trophic Cascade</h4><p>Removing one apex predator triggers a chain reaction that affects every level of the food web.</p></div>
+            <div class="tut-side-card"><h4>📊 In OceanX</h4><p>Sharks have a low carrying capacity (×10 max) but dramatically reduce small fish overpopulation.</p></div>
+          </div>
+        </div>
+
+        <!-- slide 2 -->
+        <div class="tut-slide">
+          <div class="tut-main">
+            <div class="tut-emoji">🐠</div>
+            <div class="role-badge">Secondary Consumer</div>
+            <h3>Large Fish</h3>
+            <p>Humphead Wrasse, Grouper, Tuna — they bridge the gap between tiny prey and apex predators. Crucial for a stable mid-tier.</p>
+            <div class="chain-row"><span>🐟</span><span class="chain-arr">→</span><span>🐠</span><span class="chain-arr">→</span><span>🦈</span><span class="chain-arr">balanced chain</span></div>
+          </div>
+          <div class="tut-side">
+            <div class="tut-side-card"><h4>🔒 Unlock System</h4><p>Some species only appear when their prey is present in the ecosystem.</p></div>
+            <div class="tut-side-card"><h4>📊 In OceanX</h4><p>Grouper is unlocked by adding Humphead Wrasse. Tuna by having enough small fish.</p></div>
+          </div>
+        </div>
+
+        <!-- slide 3 -->
+        <div class="tut-slide">
+          <div class="tut-main">
+            <div class="tut-emoji">🐟</div>
+            <div class="role-badge">Primary Consumer</div>
+            <h3>Small Fish</h3>
+            <p>They eat plankton and get eaten by everything above them. Too many small fish and plankton collapse — triggering a starvation cascade.</p>
+            <div class="chain-row"><span>🌿</span><span class="chain-arr">eaten by</span><span>🐟×52</span><span class="chain-arr">→</span><span>plankton crash!</span></div>
+          </div>
+          <div class="tut-side">
+            <div class="tut-side-card"><h4>⚠ Right now</h4><p>The ecosystem has 52 small fish with no predators — plankton are being wiped out.</p></div>
+            <div class="tut-side-card"><h4>🎯 Your goal</h4><p>Add predators to reduce small fish, restore plankton, and rebuild the food web.</p></div>
+          </div>
+        </div>
+
+        <!-- slide 4 -->
+        <div class="tut-slide">
+          <div class="tut-main">
+            <div class="tut-emoji">🌿</div>
+            <div class="role-badge">Producer</div>
+            <h3>Plankton</h3>
+            <p>The base of everything. If plankton collapse, every species above starves. Protecting plankton means protecting the whole ocean.</p>
+            <div class="chain-row"><span>☀️</span><span class="chain-arr">→</span><span>🌿</span><span class="chain-arr">feeds all life →</span><span>🐟🐠🦈</span></div>
+          </div>
+          <div class="tut-side">
+            <div class="tut-side-card"><h4>📈 Logistic growth</h4><p>Plankton regrow naturally — but only if small fish aren't eating them faster than they reproduce.</p></div>
+            <div class="tut-side-card"><h4>✅ Ready?</h4><p>The food web is on the right. Tap locked slots to discover how to restore each species!</p></div>
+          </div>
+        </div>
+
+      </div><!-- card-track -->
+
+      <div class="dot-row" id="dotRow">
+        <div class="dot on" onclick="goCard(0)"></div>
+        <div class="dot"    onclick="goCard(1)"></div>
+        <div class="dot"    onclick="goCard(2)"></div>
+        <div class="dot"    onclick="goCard(3)"></div>
+      </div>
+
+      <div class="tut-nav">
+        <button class="btn btn-ghost btn-sm" id="tutBack" onclick="tutStep(-1)" style="visibility:hidden;">← Back</button>
+        <button class="btn btn-primary btn-sm" id="tutNext" onclick="tutStep(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════
+       OVERLAY: RESTORED
+  ════════════ -->
+  <div class="overlay hidden" id="o-restored">
+    <div class="restored-badge">✅ Balance Restored</div>
+    <h1 class="restored-title">Ecosystem Healthy!</h1>
+    <div style="width:100%;max-width:500px;">
+      <div class="hbar-wrap" style="height:12px;background:rgba(0,0,0,.35);border-radius:100px;overflow:hidden;">
+        <div class="hbar full" id="restoredBar"></div>
+      </div>
+      <div style="text-align:right;font-size:11px;color:var(--green);margin-top:5px;">82% — Stable ✅</div>
+    </div>
+    <div class="tally-grid">
+      <div class="tally-item"><div class="te">🦈</div><div class="tn">Bull Shark</div><div class="tp">×4</div></div>
+      <div class="tally-item"><div class="te">🐠</div><div class="tn">Grouper</div><div class="tp">×11</div></div>
+      <div class="tally-item"><div class="te">🐟</div><div class="tn">Small Fish</div><div class="tp">×34</div></div>
+      <div class="tally-item"><div class="te">🌿</div><div class="tn">Plankton</div><div class="tp">×120</div></div>
+    </div>
+    <div class="lesson-box">
+      "Every species plays a role — even the ones you can't see. <b>Apex predators aren't just killers — they're the architects of a healthy ocean.</b>"
+    </div>
+    <div style="display:flex;gap:12px;margin-top:4px;">
+      <button class="btn btn-ghost btn-sm" onclick="resetAll()">↺ Play again</button>
+      <button class="btn btn-primary" style="padding:11px 28px;" onclick="alert('More scenarios coming soon!')">Next scenario →</button>
+    </div>
+  </div>
+
+  <!-- ════════════
+       UNLOCK POPUP
+  ════════════ -->
+  <div class="popup-overlay" id="unlockOverlay">
+    <div class="popup">
+      <div class="p-stars">✦ ✦ ✦</div>
+      <div class="p-badge">New Species Found!</div>
+      <div class="p-emoji" id="uEmoji">🐠</div>
+      <h3 id="uName">Malabar Grouper</h3>
+      <p id="uDesc">Feeds on Humphead Wrasse — adding Wrasse drew this predator in!</p>
+      <div class="p-btns">
+        <button class="btn btn-ghost btn-sm" onclick="closePopup('unlock')">Not yet</button>
+        <button class="btn btn-gold btn-sm" id="uAddBtn" onclick="confirmAdd()">Add it! →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════
+       HINT POPUP
+  ════════════ -->
+  <div class="popup-overlay" id="hintOverlay">
+    <div class="popup hint-popup">
+      <div class="p-emoji" id="hEmoji">🔒</div>
+      <h3 id="hName">Locked</h3>
+      <p id="hDesc">...</p>
+      <button class="btn btn-primary btn-sm" style="width:100%;" onclick="closePopup('hint')">Got it</button>
+    </div>
+  </div>
+
+</div><!-- tablet -->
+
+<!-- SCREEN TABS -->
+<div class="screen-tabs">
+  <div class="stab active" id="tab-intro"    onclick="goOverlay('intro')">1 · Intro</div>
+  <div class="stab"        id="tab-tutorial" onclick="goOverlay('tutorial')">2 · Tutorial</div>
+  <div class="stab"        id="tab-main"     onclick="goOverlay('main')">3 · Main Game</div>
+  <div class="stab"        id="tab-restored" onclick="showRestored()">4 · Restored</div>
+</div>
+
+<script>
+/* ═══════════════════════════════
+   SPECIES DATA
+═══════════════════════════════ */
+const SPECIES = {
+  shark:     { emoji:'🦈', name:'Bull Shark',       canUnlock:false, hint:'Sharks appear once the Grouper predator tier is established. Unlock Grouper first!' },
+  grouper:   { emoji:'🐠', name:'Malabar Grouper',  canUnlock:true,  unlockDesc:'Humphead Wrasse is already in the ecosystem — the Malabar Grouper has been drawn in to hunt!' },
+  tuna:      { emoji:'🐡', name:'Yellowfin Tuna',   canUnlock:true,  unlockDesc:'Small fish population is very high — Yellowfin Tuna are moving in to feed!' },
+  wrasse:    { emoji:'🐠', name:'Humphead Wrasse',  canUnlock:false, hint:'Humphead Wrasse is already present! Tap it to see its details.' },
+  smallfish: { emoji:'🐟', name:'Small Fish',       canUnlock:false, hint:'Small fish are already in the ecosystem — 52 of them! Try adding predators to bring this number down.' },
+  plankton:  { emoji:'🌿', name:'Plankton',         canUnlock:false, hint:'Plankton are present but low (×18). They will recover once small fish are controlled by predators.' },
+  shrimp:    { emoji:'🦐', name:'Mantis Shrimp',    canUnlock:false, hint:'Shrimp need abundant plankton (×50+) to appear. Restore plankton levels first.' },
+  algae:     { emoji:'🌊', name:'Sea Algae',         canUnlock:false, hint:'Sea Algae appear when overall ecosystem health reaches 60%. Keep restoring the web!' },
+};
+
+// track which species have been added
+const addedSpecies = new Set(['wrasse','smallfish','plankton']);
+let pendingSpecies = null;
+
+/* ═══════════════════════════════
+   OVERLAY NAVIGATION
+═══════════════════════════════ */
+const ALL_OVERLAYS = ['intro','tutorial','restored'];
+const ALL_TABS     = ['intro','tutorial','main','restored'];
+
+function goOverlay(name) {
+  // hide all overlays
+  ALL_OVERLAYS.forEach(id => {
+    document.getElementById('o-'+id).classList.add('hidden');
+  });
+  // dim/undim main UI
+  const mainUI = document.getElementById('mainUI');
+  if (name === 'main') {
+    mainUI.classList.remove('dimmed');
+  } else {
+    mainUI.classList.add('dimmed');
+    if (name !== 'restored') {
+      document.getElementById('o-'+name).classList.remove('hidden');
+    } else {
+      document.getElementById('o-restored').classList.remove('hidden');
+      mainUI.classList.remove('dimmed');
+    }
+  }
+  // update tabs
+  ALL_TABS.forEach(t => document.getElementById('tab-'+t).classList.remove('active'));
+  const tabEl = document.getElementById('tab-'+name);
+  if (tabEl) tabEl.classList.add('active');
+}
+
+function showRestored() {
+  goOverlay('restored');
+  // animate health bar
+  setTimeout(() => {
+    const bar = document.getElementById('restoredBar');
+    if (bar) { bar.style.width = '0%'; setTimeout(() => bar.style.width = '82%', 100); }
+  }, 200);
+}
+
+function resetAll() {
+  goOverlay('intro');
+  // reset card states
+  ['grouper','tuna','shark','shrimp','algae'].forEach(id => {
+    const el = document.getElementById('sc-'+id);
+    if (!el) return;
+    const s = SPECIES[id];
+    el.className = 'sc locked';
+    el.innerHTML = `<div class="lock-ico">🔒</div><div class="lock-tip">${getLockTip(id)}</div>`;
+    el.onclick = () => tapCard(id);
+  });
+  addedSpecies.clear();
+  addedSpecies.add('wrasse'); addedSpecies.add('smallfish'); addedSpecies.add('plankton');
+  updateHealthDisplay(47, false);
+  // reset chips
+  ['shark','grouper','tuna'].forEach(id => {
+    const c = document.getElementById('chip-'+id);
+    if (c) { c.className='chip absent'; c.innerHTML=`<span>${SPECIES[id].emoji}</span> ${SPECIES[id].name} <span class="cred">✕</span>`; }
+  });
+  document.getElementById('alertStrip').className = 'alert-strip warn';
+  document.getElementById('alertText').innerHTML = '<b>Overpopulation detected.</b> Small fish are devouring all the plankton. The food web is collapsing from the bottom up.';
+  document.getElementById('fwHint').textContent = '💡 Tap a 🔒 slot to see how to unlock it';
+}
+
+function getLockTip(id) {
+  const tips = {
+    shark:'Needs large<br/>predators first',
+    grouper:'Add Humphead<br/>Wrasse first',
+    tuna:'Small fish<br/>&gt;30 required',
+    shrimp:'Plankton &gt;50<br/>required',
+    algae:'Health &gt;60%<br/>required',
+  };
+  return tips[id] || 'Conditions<br/>not met yet';
+}
+
+/* ═══════════════════════════════
+   TUTORIAL CARDS
+═══════════════════════════════ */
+let tutIdx = 0;
+function goCard(n) {
+  tutIdx = n;
+  document.getElementById('cardTrack').style.transform = 'translateX(-'+(860*n)+'px)';
+  document.querySelectorAll('#dotRow .dot').forEach((d,i) => d.classList.toggle('on', i===n));
+  document.getElementById('tutBack').style.visibility = n===0 ? 'hidden' : 'visible';
+  document.getElementById('tutNext').textContent = n===3 ? 'Start Game →' : 'Next →';
+}
+function tutStep(dir) {
+  const next = tutIdx + dir;
+  if (next > 3) { goOverlay('main'); return; }
+  if (next < 0) return;
+  goCard(next);
+}
+
+/* ═══════════════════════════════
+   FOOD WEB CARD TAPS
+═══════════════════════════════ */
+function tapCard(id) {
+  const s = SPECIES[id];
+  if (!s) return;
+  if (addedSpecies.has(id)) {
+    // already present — show info
+    showHint(s.emoji, s.name, `${s.name} is already in the ecosystem and contributing to the food web. Watch how it affects population balance over time.`);
+    return;
+  }
+  // locked card
+  if (s.canUnlock) {
+    showUnlock(id);
+  } else {
+    showHint(s.emoji, s.name, s.hint);
+  }
+}
+
+/* ═══════════════════════════════
+   UNLOCK FLOW
+═══════════════════════════════ */
+function showUnlock(id) {
+  const s = SPECIES[id];
+  pendingSpecies = id;
+  document.getElementById('uEmoji').textContent = s.emoji;
+  document.getElementById('uName').textContent  = s.name;
+  document.getElementById('uDesc').textContent  = s.unlockDesc;
+  // animate the card
+  const card = document.getElementById('sc-'+id);
+  if (card) card.classList.add('unlocked-anim');
+  document.getElementById('unlockOverlay').classList.add('show');
+}
+
+function confirmAdd() {
+  const id = pendingSpecies;
+  if (!id) return;
+  const s = SPECIES[id];
+  addedSpecies.add(id);
+
+  // update the food web card
+  const card = document.getElementById('sc-'+id);
+  if (card) {
+    card.className = 'sc present';
+    card.innerHTML = `
+      <div class="sc-emoji">${s.emoji}</div>
+      <div class="sc-name">${s.name}</div>
+      <div class="sc-pop">×1 — spawning</div>
+    `;
+    card.onclick = () => tapCard(id);
+  }
+
+  // update the chip in the ocean panel
+  const chip = document.getElementById('chip-'+id);
+  if (chip) {
+    chip.className = 'chip popped';
+    chip.innerHTML = `<span>${s.emoji}</span> ${s.name} <span class="cpop">×1</span>`;
+  }
+
+  closePopup('unlock');
+
+  // check if unlock unlocks more
+  checkCascade(id);
+  updateHealthAfterAdd(id);
+}
+
+function checkCascade(id) {
+  // adding grouper unlocks shark hint
+  if (id === 'grouper') {
+    const sharkCard = document.getElementById('sc-shark');
+    if (sharkCard) {
+      sharkCard.querySelector('.lock-tip').textContent = 'Grouper added! Shark\ncan now appear →';
+    }
+    document.getElementById('fwHint').textContent = '🦈 Grouper added! Shark conditions are now met — tap it!';
+    // make shark unlockable
+    SPECIES.shark.canUnlock = true;
+    SPECIES.shark.unlockDesc = 'With Grouper now present, Bull Sharks have been drawn into the ecosystem to hunt!';
+  }
+  if (id === 'shark') {
+    document.getElementById('fwHint').textContent = '✅ Apex predator restored! Watch ecosystem health rise.';
+    setTimeout(() => updateHealthDisplay(74, false), 1000);
+    setTimeout(() => updateHealthDisplay(82, true),  3000);
+  }
+  if (id === 'tuna') {
+    setTimeout(() => updateHealthDisplay(65, false), 800);
+  }
+}
+
+function updateHealthAfterAdd(id) {
+  const scores = { grouper:55, tuna:60, shark:82 };
+  if (scores[id]) {
+    setTimeout(() => updateHealthDisplay(scores[id], scores[id] >= 70), 600);
+  }
+}
+
+function updateHealthDisplay(pct, isHealthy) {
+  document.getElementById('mainHBar').style.width = pct+'%';
+  document.getElementById('mainHBar').className   = 'hbar '+(isHealthy?'full':'crit');
+  document.getElementById('mainHNum').textContent  = pct+'%';
+  document.getElementById('mainHNum').className    = 'hnum '+(isHealthy?'hi':'lo');
+  document.getElementById('mainState').textContent = isHealthy ? '✅ STABLE' : '⚠ UNSTABLE';
+  document.getElementById('mainState').className   = 'state-pill '+(isHealthy?'stable':'unstable');
+  if (isHealthy) {
+    document.getElementById('alertStrip').className = 'alert-strip ok';
+    document.getElementById('alertText').innerHTML  = '<b>Ecosystem stabilising.</b> Predators are controlling small fish populations. Plankton are recovering.';
+  }
+}
+
+/* ═══════════════════════════════
+   POPUPS
+═══════════════════════════════ */
+function showHint(emoji, name, desc) {
+  document.getElementById('hEmoji').textContent = emoji;
+  document.getElementById('hName').textContent  = name;
+  document.getElementById('hDesc').textContent  = desc;
+  document.getElementById('hintOverlay').classList.add('show');
+}
+
+function closePopup(type) {
+  if (type === 'unlock') {
+    document.getElementById('unlockOverlay').classList.remove('show');
+    // remove animation class from any card
+    document.querySelectorAll('.sc.unlocked-anim').forEach(c => c.classList.remove('unlocked-anim'));
+    pendingSpecies = null;
+  } else {
+    document.getElementById('hintOverlay').classList.remove('show');
+  }
+}
+
+/* ═══════════════════════════════
+   BUBBLE / FISH ANIMATION
+═══════════════════════════════ */
+(function bubbles() {
+  const c = document.getElementById('bg');
+  const ctx = c.getContext('2d');
+  c.width = 860; c.height = 540;
+  const bs = Array.from({length:22}, () => ({
+    x: Math.random()*860, y: 540+Math.random()*200,
+    r: 1+Math.random()*2.5, spd: .25+Math.random()*.5,
+    op: .08+Math.random()*.15,
+  }));
+  function draw() {
+    ctx.clearRect(0,0,860,540);
+    bs.forEach(b => {
+      b.y -= b.spd; b.x += Math.sin(b.y*.018)*.4;
+      if (b.y < -8) { b.y = 548; b.x = Math.random()*860; }
+      ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+      ctx.strokeStyle = `rgba(30,184,240,${b.op})`; ctx.lineWidth=1; ctx.stroke();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+(function spawnFish() {
+  const view = document.getElementById('oceanView');
+  const types = [
+    {e:'🐟', count:10, yRange:[10,70], sRange:[5,10], dur:[7,13]},
+    {e:'🐠', count:2,  yRange:[20,60], sRange:[6,10], dur:[9,15]},
+  ];
+  types.forEach(t => {
+    for (let i=0; i<t.count; i++) {
+      const el   = document.createElement('div');
+      el.className = 'fish-entity' + (Math.random()>.5?' left':'');
+      el.textContent = t.e;
+      const top  = t.yRange[0] + Math.random()*(t.yRange[1]-t.yRange[0]);
+      const size = t.sRange[0] + Math.random()*(t.sRange[1]-t.sRange[0]);
+      const dur  = t.dur[0]    + Math.random()*(t.dur[1]-t.dur[0]);
+      el.style.cssText = `top:${top}%;font-size:${size}px;animation-duration:${dur}s;animation-delay:${(-Math.random()*dur)}s;`;
+      view.appendChild(el);
+    }
+  });
+  // plankton dots
+  const layer = document.getElementById('planktonLayer');
+  for (let i=0; i<18; i++) {
+    const d = document.createElement('div'); d.className='pdot';
+    d.style.animationDelay = (Math.random()*2)+'s';
+    layer.appendChild(d);
+  }
+})();
+</script>
+</body>
+</html>

@@ -7,7 +7,9 @@ public enum BoidBehaviorState
     Fleeing   = 1,  // running from a predator
     Hunting   = 2,  // chasing prey
     Idle      = 3,  // slow drift, no active steering
-    Dead      = 4   // removed from simulation next cleanup pass
+    Dead      = 4,  // removed from simulation next cleanup pass
+    Entering  = 5,  // swimming inward from outside the boundary
+    Exiting   = 6   // swimming outward — destroyed once past the boundary
 }
 
 [Serializable]

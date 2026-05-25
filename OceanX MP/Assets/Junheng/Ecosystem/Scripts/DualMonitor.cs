@@ -1,19 +1,20 @@
 using UnityEngine;
 
+// Activates Display 2 (iPad via Spacedesk) on startup.
+// Attach to any GameObject in the scene.
+// Point a Camera and/or Canvas to Target Display: Display 2 to control what shows there.
 public class DualMonitor : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        if(Display.displays.Length > 1)
+        if (Display.displays.Length > 1)
         {
             Display.displays[1].Activate();
+            Debug.Log("[DualMonitor] Display 2 activated.");
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        else
+        {
+            Debug.LogWarning("[DualMonitor] Display 2 not detected. Make sure Spacedesk is connected before pressing Play.");
+        }
     }
 }

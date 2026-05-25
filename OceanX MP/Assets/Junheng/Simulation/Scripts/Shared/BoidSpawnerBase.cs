@@ -109,6 +109,24 @@ namespace OceanX
             _boidSpawnData.Targets = null;
         }
 
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>Sets the number of initial boid sub-groups on this spawner. Minimum 1.</summary>
+        public void SetInitialGroupsCount(int count) => _initialGroupsCount = Mathf.Max(1, count);
+
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>Sets the total boid count on this spawner. Minimum 1.</summary>
+        public void SetBoidsCount(int count) => _boidSpawnData.BoidsCount = Mathf.Max(1, count);
+
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>Removes a specific target affecter from this spawner's target list.</summary>
+        public virtual void RemoveTarget(SimulationAffecterComponent target)
+        {
+            if (_boidSpawnData.Targets == null || _boidSpawnData.Targets.Length == 0) return;
+            List<SimulationAffecterComponent> targets = _boidSpawnData.Targets.ToList();
+            targets.Remove(target);
+            _boidSpawnData.Targets = targets.ToArray();
+        }
+
         /// <summary>
         /// Function returns an array of all affecters affecting the boids spawned by this boid spawner.
         /// </summary>

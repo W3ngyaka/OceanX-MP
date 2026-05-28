@@ -50,7 +50,9 @@ MonoBehaviour:
   - {fileID: 3348293116908056220}
   - {fileID: -584038610800201486}
   - {fileID: 2003121337478871303}
-  m_RendererFeatureMap: ad6b866f10d7b46c9cae308dd986772ef2302454fa13e5f707f96e523e84cc1b
+  - {fileID: 2267551972625900068}
+  - {fileID: 4890274755848553300}
+  m_RendererFeatureMap: ad6b866f10d7b46c9cae308dd986772ef2302454fa13e5f707f96e523e84cc1b24621a4e81f6771f54c3690cfbbedd43
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -91,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
   m_Name: FullScreenPassRendererFeatureOldGUID
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::FullScreenPassRendererFeature_OldGUID
-  m_Active: 1
+  m_Active: 0
   injectionPoint: 600
   fetchColorBuffer: 1
   requirements: 0
@@ -99,6 +101,37 @@ MonoBehaviour:
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
+--- !u!114 &2267551972625900068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6e585d9d2317e438a403bbb1965d5e, type: 3}
+  m_Name: StylizedWaterRenderFeature
+  m_EditorClassIdentifier: sc.stylizedwater3.runtime::StylizedWater3.StylizedWaterRenderFeature
+  m_Active: 1
+  transparencyRefraction: 0
+  screenSpaceReflectionSettings:
+    allow: 1
+    reflectEverything: 1
+  allowDirectionalCaustics: 1
+  heightPrePassSettings:
+    enable: 1
+    range: 500
+    cellsPerUnit: 4
+    maxResolution: 4096
+    disableInSceneView: 1
+  heightReadbackCS: {fileID: 7200000, guid: 768e0c28dfdbc6b429fd59518fa03f2d, type: 3}
+  heightProcessingShader: {fileID: 4800000, guid: a1cfcf2c2c8140c084fb10845093540e, type: 3}
+  underwaterRenderingSettings:
+    enable: 1
+    renderMethod: 1
+    ignoreSceneView: 0
+  underwaterResources: {fileID: 11400000, guid: 185c96ef53e9cf14bbc913f624752e24, type: 2}
 --- !u!114 &3348293116908056220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,11 +144,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
   m_Name: FullScreenPassRendererFeature
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.FullScreenPassRendererFeature
-  m_Active: 1
+  m_Active: 0
   injectionPoint: 600
   fetchColorBuffer: 1
   requirements: 0
   passMaterial: {fileID: 2100000, guid: 4fd4cd1609da4d946ba2fe6c530b8977, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
+--- !u!114 &4890274755848553300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
+  m_Name: FullScreenPassRendererFeature
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.FullScreenPassRendererFeature
+  m_Active: 0
+  injectionPoint: 600
+  fetchColorBuffer: 1
+  requirements: 0
+  passMaterial: {fileID: 2100000, guid: 47cc359f104ded240a68839a44ec470d, type: 2}
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1

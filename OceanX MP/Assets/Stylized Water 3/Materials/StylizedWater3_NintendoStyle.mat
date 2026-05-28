@@ -159,8 +159,8 @@ Material:
     - _CausticsChromance: 0.754
     - _CausticsDistortion: 0.246
     - _CausticsOn: 1
-    - _CausticsSpeed: 0.1
-    - _CausticsTiling: 0.15000004
+    - _CausticsSpeed: 0.050000012
+    - _CausticsTiling: 0.030000014
     - _ColorAbsorption: 0
     - _CrossPan_IntersectionOn: 0
     - _Cull: 0

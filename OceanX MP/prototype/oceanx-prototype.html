@@ -3,1186 +3,1031 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>OceanX — Tablet Prototype</title>
+<title>OceanX — Balance The Ocean</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap');
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ─── IMPORT MONOSPACE FONT ─── */
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap');
-
 :root {
-  --cyan:    #00d8ff;
-  --cyan-dim:#007a9e;
-  --cyan-lo: rgba(0,216,255,0.12);
-  --cyan-glow: rgba(0,216,255,0.5);
-  --seafoam: #00ffb3;
-  --seafoam-lo: rgba(0,255,179,0.1);
-  --gold:    #ffe066;
-  --red:     #ff4040;
-  --red-lo:  rgba(255,64,64,0.12);
-  --orange:  #ff8c00;
-  --bg:      #010a12;
-  --panel:   rgba(0,18,34,0.55);
-  --panel-dark: rgba(0,10,20,0.7);
-  --border:  rgba(0,216,255,0.22);
-  --border-hi: rgba(0,216,255,0.55);
-  --txt:     #c8eaf5;
-  --txt-hi:  #e8f8ff;
-  --muted:   rgba(150,210,230,0.6);
-  --divider: rgba(0,216,255,0.12);
-  --locked-bg: rgba(0,8,16,0.75);
-  --mono: 'Share Tech Mono', 'Courier New', monospace;
-  --ui:   'Exo 2', 'Segoe UI', system-ui, sans-serif;
+  --cyan:#00d8ff; --cyan-dim:#007a9e; --cyan-lo:rgba(0,216,255,.12); --cyan-glow:rgba(0,216,255,.5);
+  --seafoam:#00ffb3; --seafoam-lo:rgba(0,255,179,.1);
+  --gold:#ffe066; --red:#ff4040; --red-lo:rgba(255,64,64,.12); --orange:#ff8c00;
+  --bg:#010a12; --panel:rgba(0,18,34,.55); --border:rgba(0,216,255,.22); --border-hi:rgba(0,216,255,.55);
+  --txt:#c8eaf5; --txt-hi:#e8f8ff; --muted:rgba(150,210,230,.6); --divider:rgba(0,216,255,.12);
+  --locked-bg:rgba(0,8,16,.75);
+  /* trophic tier colors (darkened for readability on the bright tablet) */
+  --t-keystone:#00a9d8; --t-tertiary:#e8881f; --t-secondary:#13a085; --t-primary:#2f9f8a;
+  /* bright FOODWEB tablet theme */
+  --fw-ink:#0a3d52; --fw-ink-dim:#2f7894; --fw-glow:#3fd8ff;
+  --mono:'Share Tech Mono','Courier New',monospace;
+  --ui:'Exo 2','Segoe UI',system-ui,sans-serif;
 }
-
 body {
   background: radial-gradient(ellipse at 50% 0%, #001828 0%, #010a12 60%);
-  font-family: var(--ui);
-  color: var(--txt);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  gap: 14px;
+  font-family: var(--ui); color: var(--txt);
+  min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:20px; gap:14px;
 }
+.proto-label { font-family:var(--mono); font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--cyan-dim); }
 
-/* ─── LABEL ─── */
-.proto-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--cyan-dim);
-}
-
-/* ─── CORNER BRACKET MIXIN (applied via .bracketed class) ─── */
-.bracketed { position: relative; }
-.bracketed::before, .bracketed::after,
-.bracketed .br-bl, .bracketed .br-tr {
-  content: '';
-  position: absolute;
-  width: 10px; height: 10px;
-  pointer-events: none;
-  z-index: 2;
-}
-/* top-left */
-.bracketed::before {
-  top: -1px; left: -1px;
-  border-top: 1.5px solid var(--cyan);
-  border-left: 1.5px solid var(--cyan);
-  box-shadow: -2px -2px 8px var(--cyan-glow);
-}
-/* bottom-right */
-.bracketed::after {
-  bottom: -1px; right: -1px;
-  border-bottom: 1.5px solid var(--cyan);
-  border-right: 1.5px solid var(--cyan);
-  box-shadow: 2px 2px 8px var(--cyan-glow);
-}
-
-/* ─── TABLET DEVICE ─── */
+/* ─── TABLET ─── */
 .tablet {
-  width: 860px;
-  height: 540px;
-  background: var(--bg);
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  box-shadow:
-    0 0 0 1px rgba(0,216,255,0.04),
-    0 0 60px rgba(0,100,160,0.3),
-    0 0 120px rgba(0,50,100,0.2),
-    inset 0 0 80px rgba(0,0,0,0.7);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  width:880px; height:560px; background:var(--bg);
+  border-radius:10px; border:1px solid var(--border);
+  box-shadow:0 0 0 1px rgba(0,216,255,.04), 0 0 60px rgba(0,100,160,.3), 0 0 120px rgba(0,50,100,.2), inset 0 0 80px rgba(0,0,0,.7);
+  position:relative; overflow:hidden; display:flex; flex-direction:column;
 }
-
-/* Scanline overlay */
 .tablet::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    rgba(0,0,0,0.07) 3px,
-    rgba(0,0,0,0.07) 4px
-  );
-  pointer-events: none;
-  z-index: 200;
+  content:''; position:absolute; inset:0; z-index:200; pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.07) 3px,rgba(0,0,0,.07) 4px);
 }
-
-/* fold lines */
-.fold-l, .fold-r {
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
-  z-index: 100;
-  pointer-events: none;
-}
-.fold-l { left: 286px; }
-.fold-r { left: 572px; }
-
 canvas#bg { position:absolute; inset:0; z-index:0; pointer-events:none; }
 
-/* ─── OVERLAY SCREENS ─── */
-.overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 80;
-  display: flex;
-  flex-direction: column;
-  transition: opacity 0.45s ease;
-  background: rgba(1,10,18,0.92);
-  backdrop-filter: blur(4px);
-}
-.overlay.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.55} }
 
-/* ══════════════════════════
-   OVERLAY 1 — INTRO
-══════════════════════════ */
-#o-intro {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 18px;
-  padding: 40px 80px;
-}
-.intro-warn {
-  font-family: var(--mono);
-  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-  color: var(--red); display:flex; gap:8px; align-items:center;
-  animation: blink 1.8s infinite;
-}
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
-.intro-ocean { font-size:60px; animation: bob 3.5s ease-in-out infinite; filter: drop-shadow(0 0 16px rgba(0,216,255,.4)); }
-@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-.intro-title {
-  font-size: 28px; font-weight: 700; line-height: 1.2;
-  color: var(--txt-hi);
-  text-shadow: 0 0 30px var(--cyan-glow), 0 0 60px rgba(0,100,200,.4);
-  letter-spacing: 1px;
-}
-.intro-sub { font-size:13px; color:var(--muted); line-height:1.8; max-width:380px; }
+/* ─── MAIN LAYOUT ─── */
+.main-ui { flex:1; display:flex; flex-direction:column; position:relative; z-index:1; transition:opacity .5s; }
+.main-ui.dimmed { opacity:.12; pointer-events:none; }
 
-.hbar-wrap {
-  background: rgba(0,0,0,.6);
-  border: 1px solid var(--border);
-  height: 6px; overflow: hidden; width: 100%;
-  position: relative;
-}
-.hbar { height:100%; transition:width 2s ease; position:relative; }
-.hbar::after { content:''; position:absolute; top:0;right:0;bottom:0;width:6px; background:rgba(255,255,255,.4); filter:blur(2px); }
-.hbar.crit { background: linear-gradient(90deg,#ff2020,#ff8c00); width:47%; box-shadow:0 0 10px rgba(255,80,0,.5); }
-.hbar.full { background: linear-gradient(90deg,#00ffb3,#00d8ff);  width:82%; box-shadow:0 0 10px rgba(0,216,255,.4); }
+/* TOP BAR — light glass brand strip */
+.top-bar { display:flex; align-items:center; gap:14px; padding:9px 18px; flex-shrink:0; background:linear-gradient(180deg,rgba(214,242,251,.92),rgba(172,221,239,.85)); border-bottom:1px solid rgba(255,255,255,.55); box-shadow:0 2px 10px rgba(0,60,90,.15); }
+.top-bar .logo { font-family:var(--ui); font-weight:800; font-size:13px; color:#0a3d52; flex-shrink:0; letter-spacing:1px; }
+.top-bar .logo span { color:#2f7894; font-weight:600; font-size:10px; margin-left:8px; letter-spacing:1px; }
+.eh-label { font-family:var(--ui); font-weight:700; font-size:9px; letter-spacing:2px; color:#1f88a8; text-transform:uppercase; flex-shrink:0; }
+.hbar-wrap { background:rgba(255,255,255,.5); border:1px solid rgba(120,200,235,.7); height:9px; border-radius:5px; overflow:hidden; position:relative; flex:1; box-shadow:inset 0 1px 3px rgba(0,60,90,.2); }
+.hbar { height:100%; border-radius:5px; transition:width .6s ease, background .4s; position:relative; }
+.hbar::after { content:''; position:absolute; top:0; right:0; bottom:0; width:5px; background:rgba(255,255,255,.55); filter:blur(2px); }
+.hbar.low  { background:linear-gradient(90deg,#ff5a3c,#ff9a3c); }
+.hbar.mid  { background:linear-gradient(90deg,#ffa83c,#ffd84c); }
+.hbar.high { background:linear-gradient(90deg,#00ffb3,#00c8f0); }
+.hnum { font-family:var(--ui); font-weight:800; font-size:12px; flex-shrink:0; min-width:42px; text-align:right; letter-spacing:.5px; }
+.hnum.low { color:#e8702f; } .hnum.mid { color:#d99a00; } .hnum.high { color:#0a9e6e; }
 
-.health-box {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 14px 24px; width: 340px;
-  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-}
-.health-box label { font-family:var(--mono); font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--cyan-dim); display:block; margin-bottom:8px; }
-.health-val { font-family:var(--mono); font-size:11px; color:var(--orange); text-align:right; margin-top:6px; }
-
-/* ══════════════════════════
-   OVERLAY 2 — TUTORIAL
-══════════════════════════ */
-#o-tutorial { padding: 0; }
-.tut-top { padding:22px 32px 8px; border-bottom:1px solid var(--divider); }
-.tut-top h2 { font-size:15px; font-weight:600; color:var(--cyan); letter-spacing:1px; text-shadow:0 0 12px var(--cyan-glow); }
-.tut-top p  { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:3px; letter-spacing:1px; }
-.card-track { display:flex; transition:transform .4s cubic-bezier(.4,0,.2,1); flex:1; min-height:0; overflow:hidden; }
-.tut-slide  { width:860px; flex-shrink:0; min-height:0; padding:12px 28px 16px; display:flex; gap:14px; align-items:stretch; overflow:hidden; }
-.tut-main   {
-  flex:2; min-height:0; overflow-y:auto;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 22px 24px;
-  display:flex; flex-direction:column; gap:12px;
-  scrollbar-width:thin; scrollbar-color:var(--cyan-dim) transparent;
-  position: relative;
-  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-}
-.tut-side   { flex:1; display:flex; flex-direction:column; gap:10px; }
-.tut-side-card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 12px; flex:1;
-  position: relative;
-}
-.tut-side-card::before { content:''; position:absolute; top:-1px;left:-1px; width:8px;height:8px; border-top:1px solid var(--cyan);border-left:1px solid var(--cyan); }
-.tut-side-card::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:8px;height:8px; border-bottom:1px solid var(--cyan);border-right:1px solid var(--cyan); }
-.tut-side-card h4 { font-size:11px; margin-bottom:5px; color:var(--cyan); display:flex; align-items:center; gap:6px; text-shadow:0 0 8px var(--cyan-glow); }
-.tut-side-card p  { font-size:11px; color:var(--muted); line-height:1.6; }
-.tut-emoji  { font-size:46px; filter:drop-shadow(0 0 10px rgba(0,216,255,.3)); }
-.role-badge {
-  font-family: var(--mono); font-size:9px; letter-spacing:3px; text-transform:uppercase;
-  background: var(--cyan-lo); color:var(--cyan); border:1px solid var(--border);
-  padding:3px 12px; width:fit-content;
-  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
-}
-.tut-main h3 { font-size:20px; font-weight:700; color:var(--txt-hi); text-shadow:0 0 16px var(--cyan-glow); }
-.tut-main p  { font-size:12px; color:var(--muted); line-height:1.75; }
-.chain-row  {
-  display:flex; align-items:center; gap:8px;
-  background: rgba(0,216,255,0.05);
-  border: 1px solid var(--divider);
-  padding: 9px 14px; font-size:12px; flex-wrap:wrap;
-}
-.chain-arr  { color:var(--cyan); font-size:11px; }
-.dot-row    { display:flex; gap:8px; justify-content:center; padding:6px 0; }
-.dot        { width:20px; height:3px; background:rgba(255,255,255,.15); cursor:pointer; transition:all .25s; }
-.dot.on     { background:var(--cyan); box-shadow:0 0 6px var(--cyan-glow); }
-.tut-nav    { display:flex; justify-content:space-between; align-items:center; padding:0 28px 16px; }
-
-/* ══════════════════════════
-   MAIN DUAL-PANEL LAYOUT
-══════════════════════════ */
-.main-ui {
-  flex: 1; display: flex; flex-direction: column;
-  position: relative; z-index: 1; transition: opacity .5s;
-}
-.main-ui.dimmed { opacity: .15; pointer-events: none; }
-
-/* ── TOP STATUS BAR ── */
-.top-bar {
-  display: flex; align-items: center; gap: 14px;
-  padding: 8px 16px 7px;
-  border-bottom: 1px solid var(--divider);
-  flex-shrink: 0;
-  background: rgba(0,10,20,0.4);
-}
-.top-bar .logo {
-  font-family: var(--mono); font-size:13px; font-weight:400;
-  color:var(--cyan); flex-shrink:0;
-  text-shadow: 0 0 12px var(--cyan-glow);
-  letter-spacing: 2px;
-}
-.top-bar .logo span { color:var(--muted); font-size:10px; margin-left:8px; letter-spacing:1px; }
-.state-pill {
-  font-family:var(--mono); font-size:9px; padding:3px 10px;
-  letter-spacing:2px; font-weight:400; flex-shrink:0;
-  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
-}
-.state-pill.unstable { background:rgba(255,100,0,.12); color:var(--orange); border:1px solid rgba(255,100,0,.3); }
-.state-pill.stable   { background:var(--seafoam-lo); color:var(--seafoam); border:1px solid rgba(0,255,179,.3); text-shadow:0 0 8px rgba(0,255,179,.5); }
-.hbar-wrap.slim { flex:1; height:5px; }
-.hnum { font-family:var(--mono); font-size:11px; font-weight:400; flex-shrink:0; letter-spacing:1px; }
-.hnum.lo { color:var(--orange); text-shadow:0 0 8px rgba(255,140,0,.5); }
-.hnum.hi { color:var(--seafoam); text-shadow:0 0 8px rgba(0,255,179,.5); }
-
-/* ── PANELS ROW ── */
 .panels { flex:1; display:flex; min-height:0; }
 
-/* ─ LEFT PANEL: OCEAN ─ */
-.panel-ocean {
-  width: 572px; flex-shrink:0; min-height:0;
-  border-right: 1px solid var(--divider);
-  display: flex; flex-direction: column;
-  position: relative; overflow: hidden;
-}
-
-.ocean-view {
+/* ── LEFT: REEF ── */
+.panel-reef { width:312px; flex-shrink:0; min-height:0; display:flex; flex-direction:column; position:relative; overflow:hidden; }
+.reef-label { position:absolute; top:9px; left:46px; z-index:9; font-family:var(--ui); font-weight:600; font-size:11px; letter-spacing:.5px; color:#eaffff; text-shadow:0 1px 4px rgba(0,40,60,.6); }
+/* ── REEF HABITAT ── */
+.reef-view {
   flex:1; position:relative; overflow:hidden;
-  background: radial-gradient(ellipse at 50% 100%, #001828 0%, #010a12 100%);
+  background:linear-gradient(180deg,
+    #9adde8 0%, #6bbdcc 18%, #4a9db0 42%,
+    #2e7d92 65%, #1a5e72 82%, #0e4256 100%);
 }
-/* depth light rays */
-.ocean-view::before {
-  content:'';
-  position:absolute; inset:0;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent 0px, transparent 60px,
-    rgba(0,100,160,0.03) 60px, rgba(0,100,160,0.03) 62px
-  );
-  pointer-events:none;
+/* surface shimmer */
+.reef-view::before { content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+  background:
+    radial-gradient(ellipse 200% 30% at 50% 0%, rgba(220,250,255,.5) 0%, transparent 55%),
+    repeating-linear-gradient(92deg, transparent 0px, rgba(255,255,255,.04) 2px, transparent 4px); }
+/* god-rays */
+.reef-rays { position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
+.reef-rays::before,.reef-rays::after { content:''; position:absolute; top:-10%; width:60px; height:130%; opacity:.13;
+  background:linear-gradient(180deg,rgba(200,245,255,.9),transparent);
+  animation:ray 7s ease-in-out infinite alternate; border-radius:50%; }
+.reef-rays::before { left:22%; transform:rotate(-6deg); }
+.reef-rays::after  { left:58%; transform:rotate(5deg); width:40px; animation-delay:-3.5s; }
+@keyframes ray { 0%{opacity:.08;transform:rotate(-6deg)} 100%{opacity:.18;transform:rotate(-2deg)} }
+/* depth gradient overlay */
+.reef-depth { position:absolute; bottom:0; left:0; right:0; height:55%; pointer-events:none; z-index:2;
+  background:linear-gradient(0deg, rgba(8,32,48,.52) 0%, rgba(15,48,65,.25) 50%, transparent 100%); }
+/* murk */
+.reef-murk { position:absolute; inset:0; background:rgba(42,58,30,.45); pointer-events:none; transition:opacity 1.2s; z-index:8; }
+/* vertical ECOHEALTH bar */
+.reef-eh { position:absolute; left:8px; top:10px; bottom:10px; width:30px; z-index:10; display:flex; flex-direction:column; align-items:center; gap:6px; }
+.reef-eh-label { width:11px; font-family:var(--ui); font-weight:700; font-size:9px; letter-spacing:1px; line-height:1.15; word-break:break-all; text-align:center; color:#eaffff; text-shadow:0 0 6px rgba(0,90,120,.7); }
+.reef-eh-track { flex:1; width:14px; border-radius:8px; background:rgba(255,255,255,.22); border:1px solid rgba(255,255,255,.55); overflow:hidden; display:flex; flex-direction:column-reverse; box-shadow:inset 0 0 6px rgba(0,50,70,.3); }
+.reef-eh-fill { width:100%; height:0%; border-radius:8px; transition:height .6s ease, background .4s; background:linear-gradient(0deg,#00ffb3,#00c8f0); }
+.reef-eh-fill.low { background:linear-gradient(0deg,#ff5a3c,#ff9a3c); }
+.reef-eh-fill.mid { background:linear-gradient(0deg,#ffa83c,#ffd84c); }
+/* SVG terrain */
+.reef-terrain { position:absolute; bottom:0; left:0; right:0; height:200px; z-index:3; pointer-events:none; }
+/* seaweed sway */
+@keyframes sway { 0%,100%{transform-origin:bottom center;transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
+@keyframes swayB { 0%,100%{transform-origin:bottom center;transform:rotate(4deg)} 50%{transform:rotate(-4deg)} }
+.sw { animation:sway 3.2s ease-in-out infinite; display:inline-block; }
+.swB { animation:swayB 2.8s ease-in-out infinite; display:inline-block; }
+/* emoji flora — full-coverage container, each span self-positions via inline style */
+.reef-flora { position:absolute; inset:0; pointer-events:none; }
+.reef-flora span { position:absolute; line-height:1; transform-origin:bottom center; }
+/* floating particles */
+.reef-particles { position:absolute; inset:0; z-index:2; pointer-events:none; }
+.rp { position:absolute; border-radius:50%; background:rgba(200,240,255,.55); animation:pfloat linear infinite; }
+@keyframes pfloat { 0%{transform:translateY(0) translateX(0); opacity:0} 10%{opacity:1} 90%{opacity:.5} 100%{transform:translateY(-85%) translateX(8px); opacity:0} }
+/* fish */
+.fish-entity { position:absolute; animation:swim linear infinite; white-space:nowrap; user-select:none; z-index:6; filter:drop-shadow(0 1px 3px rgba(0,30,50,.4)); }
+@keyframes swim  { 0%{transform:translateX(-40px)} 100%{transform:translateX(340px)} }
+.fish-entity.left { animation-name:swimL; }
+@keyframes swimL { 0%{transform:translateX(340px) scaleX(-1)} 100%{transform:translateX(-40px) scaleX(-1)} }
+
+/* reset bubble transition — spongebob-style rising from bottom */
+.bubble-rise {
+  position:absolute; border-radius:50%; pointer-events:none; z-index:20;
+  /* soap-bubble look: mostly transparent with white ring + small highlight */
+  background:radial-gradient(circle at 30% 25%,
+    rgba(255,255,255,.7) 0%, rgba(255,255,255,.08) 25%,
+    rgba(180,230,255,.04) 60%, transparent 72%);
+  border:1.5px solid rgba(255,255,255,.78);
+  animation:bubbleUp linear forwards;
+}
+@keyframes bubbleUp {
+  0%   { opacity:0; transform:translateY(0) translateX(0); }
+  5%   { opacity:1; }
+  88%  { opacity:.88; }
+  100% { opacity:0; transform:translateY(var(--by,-620px)) translateX(var(--bx,0px)); }
 }
 
-.fish-entity {
-  position:absolute; font-size:16px;
-  animation: swim linear infinite;
-  white-space:nowrap; user-select:none;
-  filter: drop-shadow(0 0 4px rgba(0,200,255,.2));
-}
-@keyframes swim  { 0%{transform:translateX(-50px)}  100%{transform:translateX(620px)} }
-.fish-entity.left { animation-name: swimL; }
-@keyframes swimL { 0%{transform:translateX(620px) scaleX(-1)} 100%{transform:translateX(-50px) scaleX(-1)} }
+/* first-time species reveal card (big reef screen) */
+.reveal { position:absolute; left:20px; right:14px; top:50%; transform:translateY(-50%) scale(.9); z-index:11; opacity:0; pointer-events:none; transition:opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1); }
+.reveal.show { opacity:1; transform:translateY(-50%) scale(1); pointer-events:auto; cursor:pointer; }
+.reveal-card { position:relative; background:rgba(230,248,253,.93); backdrop-filter:blur(5px); border:2px solid rgba(120,228,255,.9); border-radius:18px; padding:16px 16px 14px; text-align:center; box-shadow:0 12px 32px rgba(0,55,85,.45), 0 0 26px rgba(60,210,255,.45); }
+.reveal-tag { font-family:var(--ui); font-weight:800; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#0c6e90; }
+.reveal-fish { font-size:62px; line-height:1; margin:6px 0 2px; filter:drop-shadow(0 5px 12px rgba(0,40,60,.35)); animation:revealBob 2.6s ease-in-out infinite; }
+@keyframes revealBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+.reveal-name { font-size:18px; font-weight:800; color:#0a3d52; line-height:1.15; }
+.reveal-sci { font-style:italic; font-size:11px; color:#2f7894; margin:2px 0 6px; }
+.reveal-tier { display:inline-block; font-family:var(--ui); font-weight:800; font-size:8px; letter-spacing:2px; text-transform:uppercase; padding:3px 11px; border-radius:12px; border:1.5px solid; margin-bottom:8px; }
+.reveal-desc { font-size:11px; line-height:1.5; color:#2f6478; }
+.reveal-bar { height:3px; border-radius:2px; background:rgba(12,110,144,.18); margin-top:12px; overflow:hidden; }
+.reveal-bar i { display:block; height:100%; background:#0c6e90; transform-origin:left; animation:revealCountdown 5.5s linear forwards; }
+@keyframes revealCountdown { from{transform:scaleX(1)} to{transform:scaleX(0)} }
 
-.plankton-layer {
-  position:absolute; bottom:0; left:0; right:0; height:40px;
-  display:flex; flex-wrap:wrap; padding:4px 8px;
-  align-content:flex-end; pointer-events:none;
-}
-.pdot {
-  width:3px; height:3px; background:var(--seafoam);
-  border-radius:50%; margin:2px;
-  animation: twinkle 2s infinite; transition:all 1s;
-  box-shadow: 0 0 4px var(--seafoam);
-}
-@keyframes twinkle { 0%,100%{opacity:.3} 50%{opacity:1} }
+/* Alucia comms bubble — light translucent (storyboard) */
+.alucia { position:absolute; left:46px; right:12px; bottom:12px; z-index:10; background:rgba(225,245,252,.82); backdrop-filter:blur(3px); border:1.5px solid rgba(255,255,255,.85); border-radius:16px; padding:10px 13px; font-size:11px; display:flex; gap:9px; align-items:flex-start; opacity:0; transform:translateY(8px); transition:opacity .3s, transform .3s; pointer-events:none; box-shadow:0 6px 18px rgba(0,60,90,.3); }
+.alucia.show { opacity:1; transform:translateY(0); pointer-events:all; }
+.alucia.warn { background:rgba(255,238,220,.85); border-color:rgba(255,170,90,.8); }
+.alucia.win  { background:rgba(220,252,240,.88); border-color:rgba(0,220,160,.7); box-shadow:0 0 22px rgba(0,220,160,.3); }
+.alucia .av { font-size:24px; flex-shrink:0; filter:drop-shadow(0 2px 4px rgba(0,40,60,.3)); }
+.alucia .msg { line-height:1.45; color:#0a3d52; }
+.alucia .who { font-family:var(--ui); font-weight:700; font-size:8px; letter-spacing:2px; color:#1f88a8; display:block; margin-bottom:2px; }
+.alucia.warn .who { color:#d2691e; }
+.alucia.win .who { color:#0a9e6e; }
+.alucia .x { margin-left:auto; background:none; border:none; color:#5f93a8; cursor:pointer; font-size:14px; line-height:1; flex-shrink:0; }
 
-/* alert strip */
-.alert-strip {
-  margin: 5px 8px;
-  padding: 7px 12px;
-  font-size: 11px;
-  display: flex; align-items:flex-start; gap:8px;
-  flex-shrink:0; transition:all .6s;
-  position: relative;
-}
-.alert-strip::before { content:''; position:absolute; top:-1px;left:-1px; width:6px;height:6px; }
-.alert-strip::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:6px;height:6px; }
-.alert-strip.warn {
-  background:var(--red-lo); border:1px solid rgba(255,64,64,.25);
-}
-.alert-strip.warn::before { border-top:1px solid var(--red);border-left:1px solid var(--red); }
-.alert-strip.warn::after  { border-bottom:1px solid var(--red);border-right:1px solid var(--red); }
-.alert-strip.ok {
-  background:var(--seafoam-lo); border:1px solid rgba(0,255,179,.25);
-}
-.alert-strip.ok::before { border-top:1px solid var(--seafoam);border-left:1px solid var(--seafoam); }
-.alert-strip.ok::after  { border-bottom:1px solid var(--seafoam);border-right:1px solid var(--seafoam); }
-.alert-strip p   { color:var(--muted); line-height:1.5; }
-.alert-strip p b { color:var(--txt-hi); }
-
-/* species chips */
-.chips-row {
-  display:flex; gap:6px; padding:4px 8px 7px;
-  overflow-x:auto; flex-shrink:0;
-  scrollbar-width:thin; scrollbar-color:var(--cyan-dim) transparent;
-}
-.chips-row::-webkit-scrollbar       { height:2px; }
-.chips-row::-webkit-scrollbar-thumb { background:var(--cyan-dim); }
-.chip {
-  display:flex; align-items:center; gap:5px;
-  background: rgba(0,216,255,0.06);
-  border: 1px solid var(--border);
-  padding: 3px 10px; font-size:10px;
-  white-space:nowrap; flex-shrink:0;
-  cursor:default; transition:all .3s;
-  font-family: var(--mono);
-  clip-path: polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);
-}
-.chip.absent { background:rgba(255,64,64,.05); border-color:rgba(255,64,64,.2); opacity:.6; }
-.chip .cpop  { color:var(--cyan); }
-.chip .cred  { color:var(--red); }
-.chip.popped { background:var(--seafoam-lo); border-color:rgba(0,255,179,.35); opacity:1; }
-.chip.popped .cpop { color:var(--seafoam); text-shadow:0 0 6px rgba(0,255,179,.5); }
-
-/* ─ RIGHT PANEL: FOOD WEB ─ */
+/* ── RIGHT: BRIGHT FOODWEB TABLET ── */
 .panel-fw {
-  flex:1; min-width:0; min-height:0;
-  display:flex; flex-direction:column; overflow:hidden;
+  position:relative; flex:1; min-width:0; min-height:0; margin:12px 12px 12px 6px; display:flex; flex-direction:column; overflow:hidden;
+  border-radius:24px; border:3px solid rgba(120,228,255,.9);
+  background:linear-gradient(165deg,#d2eefb 0%,#a4ddf1 48%,#7fcae9 100%);
+  box-shadow:0 0 22px rgba(60,210,255,.65), 0 0 52px rgba(40,170,235,.4), inset 0 0 34px rgba(255,255,255,.45);
 }
-.fw-title-row {
-  padding: 8px 12px 5px;
-  display:flex; align-items:center; justify-content:space-between;
-  flex-shrink:0; border-bottom:1px solid var(--divider);
-  background: rgba(0,10,20,0.3);
-}
-.fw-title-row h3 {
-  font-family:var(--mono); font-size:11px; font-weight:400;
-  letter-spacing:3px; text-transform:uppercase;
-  color:var(--cyan); text-shadow:0 0 10px var(--cyan-glow);
-}
-.fw-hint {
-  margin: 5px 8px;
-  background: rgba(255,224,102,0.06);
-  border: 1px solid rgba(255,224,102,.2);
-  padding: 6px 10px; font-size:10px;
-  color: var(--gold); flex-shrink:0;
-  font-family: var(--mono); letter-spacing:.5px;
-}
+.panel-fw::after { content:''; position:absolute; }
+.fw-head { position:relative; flex-shrink:0; padding:10px 16px 6px; text-align:center; z-index:2; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.fw-title { font-family:var(--ui); font-weight:700; font-size:17px; letter-spacing:3px; color:var(--fw-ink); text-shadow:0 1px 0 rgba(255,255,255,.5); }
+.fw-chevron { font-size:28px; line-height:1; color:var(--fw-ink-dim); cursor:pointer; padding:2px 22px 0; animation:nudge 1.8s ease-in-out infinite; }
+@keyframes nudge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+.fw-health { position:absolute; top:14px; right:16px; width:88px; height:10px; border-radius:6px; background:rgba(255,255,255,.45); border:1px solid rgba(120,200,235,.7); overflow:hidden; box-shadow:inset 0 1px 3px rgba(0,60,90,.2); }
+.fw-health-fill { height:100%; width:0%; border-radius:6px; transition:width .6s ease, background .4s; background:linear-gradient(90deg,#00ffb3,#00c8f0); }
+.fw-health-fill.low  { background:linear-gradient(90deg,#ff5a3c,#ff9a3c); }
+.fw-health-fill.mid  { background:linear-gradient(90deg,#ffa83c,#ffd84c); }
+.fw-reset { position:absolute; top:10px; left:14px; z-index:3; width:26px; height:26px; border-radius:50%; font-size:14px; line-height:1; color:var(--fw-ink); background:rgba(255,255,255,.4); border:1px solid rgba(120,200,235,.7); cursor:pointer; }
+.fw-reset:hover { background:rgba(255,255,255,.7); }
 
-.fw-body {
-  flex:1; min-height:0; overflow-y:scroll;
-  padding:0 8px 8px;
-  scrollbar-width:thin; scrollbar-color:var(--cyan-dim) rgba(0,216,255,.04);
-  display:flex; flex-direction:column; gap:3px;
-}
-.fw-body::-webkit-scrollbar       { width:3px; }
-.fw-body::-webkit-scrollbar-track { background:rgba(0,216,255,.04); }
-.fw-body::-webkit-scrollbar-thumb { background:var(--cyan-dim); }
+.fw-stage { flex:1; min-height:0; position:relative; overflow:hidden; }
+.fw-svg-wrap { position:absolute; inset:0; }
+.fw-svg-wrap svg { width:100%; height:100%; display:block; }
+.legend { position:absolute; bottom:8px; left:0; right:0; display:flex; gap:14px; flex-wrap:wrap; font-family:var(--ui); font-weight:600; font-size:8.5px; color:var(--fw-ink-dim); justify-content:center; letter-spacing:.5px; z-index:2; }
+.legend i { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:4px; vertical-align:0px; box-shadow:0 0 4px currentColor; }
 
-.tier-label {
-  font-family:var(--mono); font-size:8px; letter-spacing:3px;
-  text-transform:uppercase; color:rgba(0,216,255,.3);
-  padding:5px 2px 2px;
-}
-.tier-cards { display:flex; gap:5px; }
-.arrow-row  { display:flex; padding:0 2px; gap:5px; }
-.arr-seg    { flex:1; text-align:center; font-size:10px; color:rgba(0,216,255,.25); line-height:1; }
+/* SVG bubble-node interactions */
+.node-g { cursor:pointer; }
+.node-g .ring, .node-g .bub { transition:stroke-width .15s, filter .2s; }
+.node-g:hover .ring { stroke-width:4; }
+.node-g:hover .bub { stroke-width:3; }
+.node-g.locked { opacity:.78; }
+.node-name { font-family:var(--ui); font-weight:600; font-size:9.5px; letter-spacing:.2px; fill:var(--fw-ink); }
+.node-sil { filter:brightness(0); opacity:.45; }
+/* overpopulation / underpopulation outline + glow (mirrors Current Organisms) */
+.node-g.over .ring  { stroke:#ff4d4d; stroke-width:4; }
+.node-g.under .ring { stroke:#ff9a3c; stroke-width:4; }
+.node-g.over .bub  { filter:drop-shadow(0 0 5px rgba(255,77,77,.9)); }
+.node-g.under .bub { filter:drop-shadow(0 0 5px rgba(255,154,60,.9)); }
 
-/* species card */
-.sc {
-  flex:1;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 8px 5px 7px;
-  text-align:center; cursor:pointer;
-  transition: transform .2s, box-shadow .2s, border-color .2s, background .3s;
-  min-height: 70px;
+/* Current organisms — trapezoid tank of bubbles */
+.current-view { position:absolute; inset:0; display:none; }
+.current-view.on { display:block; }
+.tank { position:absolute; inset:14px 20px 18px; clip-path:polygon(0 0,100% 0,88% 100%,12% 100%); background:linear-gradient(180deg,rgba(195,240,253,.55),rgba(120,200,235,.32)); border:2px solid rgba(150,225,255,.55); border-top:none; overflow:auto; padding:22px 30px 26px; scrollbar-width:thin; }
+.tank-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(120,200,235,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(120,200,235,.22) 1px,transparent 1px); background-size:32px 32px; pointer-events:none; }
+.tank-bubbles { position:relative; display:flex; flex-wrap:wrap; gap:16px 18px; justify-content:center; align-content:flex-start; }
+.cv-empty { position:relative; font-family:var(--ui); font-weight:600; font-size:12px; color:var(--fw-ink-dim); text-align:center; margin-top:54px; line-height:1.8; }
+.cur-org { display:flex; flex-direction:column; align-items:center; gap:5px; width:82px; }
+.cur-bub { width:70px; height:70px; border-radius:50%; cursor:pointer; position:relative;
+  background:radial-gradient(circle at 38% 30%, rgba(255,255,255,.95), rgba(235,250,255,.45) 40%, rgba(150,215,240,.22));
+  border:2px solid rgba(255,255,255,.8); display:flex; align-items:center; justify-content:center;
+  box-shadow:0 5px 14px rgba(0,60,90,.25); transition:transform .15s; }
+.cur-bub:hover { transform:scale(1.06); }
+.cur-bub.over { border-color:#ff6a6a; box-shadow:0 0 16px rgba(255,80,80,.45); }
+.cur-bub.under { border-color:#ffb04a; box-shadow:0 0 16px rgba(255,150,40,.4); }
+.cur-fish { font-size:30px; }
+.cur-cnt { position:absolute; top:-3px; right:-3px; min-width:22px; height:22px; padding:0 4px; border-radius:11px; background:#00bfe6; border:2px solid #fff; color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.cur-cnt.over { background:#ff4d4d; }
+.cur-cnt.under { background:#ff9a3c; }
+.cur-label { font-family:var(--ui); font-weight:600; font-size:9px; color:var(--fw-ink); text-align:center; line-height:1.1; }
+
+/* ─── MODAL (split: figure left / info right) ─── */
+.modal-host { position:absolute; inset:0; z-index:90; display:none; }
+.modal-host.on { display:block; }
+.modal-bg { position:absolute; inset:0; background:rgba(0,20,40,.45); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:14px; }
+.modal { position:relative; width:100%; max-height:100%; border-radius:18px; overflow:hidden;
+  background:rgba(12,46,76,.95); border:2px solid rgba(95,215,255,.85);
+  box-shadow:0 0 26px rgba(40,190,255,.55), inset 0 0 40px rgba(0,40,80,.5);
+  animation:popIn .3s cubic-bezier(.34,1.56,.64,1); }
+@keyframes popIn { 0%{transform:scale(.88);opacity:0} 100%{transform:scale(1);opacity:1} }
+.m-x { position:absolute; top:6px; right:10px; z-index:3; background:none; border:none; color:#bfe8f7; font-size:19px; line-height:1; cursor:pointer; opacity:.7; }
+.m-x:hover { opacity:1; }
+.m-body { display:flex; align-items:stretch; max-height:100%; }
+.m-left { width:150px; flex-shrink:0; padding:18px 12px 60px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:9px; position:relative; background:linear-gradient(160deg,rgba(40,100,150,.55),rgba(10,40,80,.5)); }
+.m-figure { font-size:58px; filter:drop-shadow(0 5px 12px rgba(0,0,0,.45)); }
+.m-figure.sil { filter:brightness(0); opacity:.55; }
+.m-left .m-name { font-size:14.5px; font-weight:700; color:#cdf2ff; text-shadow:0 0 12px rgba(0,200,255,.6); text-align:center; line-height:1.2; }
+.m-add { position:absolute; left:50%; bottom:14px; transform:translateX(-50%); display:flex; align-items:center; gap:6px; height:36px; padding:0 16px 0 12px; border-radius:18px; background:rgba(0,205,255,.3); border:2px solid #5fe0ff; color:#eafdff; font-size:12px; font-weight:700; letter-spacing:1px; cursor:pointer; box-shadow:0 0 14px rgba(0,200,255,.55); transition:transform .15s, background .15s; white-space:nowrap; }
+.m-add b { font-size:20px; line-height:1; font-weight:400; }
+.m-add:hover { background:rgba(0,205,255,.55); transform:translateX(-50%) scale(1.06); }
+.m-right { flex:1; min-width:0; padding:14px 15px 16px; display:flex; overflow-y:auto; scrollbar-width:thin; }
+.m-panel { flex:1; background:rgba(130,205,245,.12); border:1px solid rgba(130,215,255,.32); border-radius:12px; padding:13px 15px; }
+.m-tier { font-family:var(--ui); font-weight:700; font-size:9.5px; letter-spacing:2px; text-transform:uppercase; margin-bottom:9px; }
+.m-tier.locked { color:#8fb8cc; }
+.m-k { font-family:var(--ui); font-weight:700; font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:#7fd6f0; margin-top:5px; }
+.m-sci { font-style:italic; font-size:11px; color:#bfe2f0; margin:2px 0 4px; }
+.m-desc { font-size:11.5px; line-height:1.5; color:#dcf2fb; margin:2px 0 6px; }
+.m-inplay { font-size:11px; color:#bfe2f0; margin-top:10px; }
+.m-inplay b { color:#5fe0ff; }
+.req-row { font-size:12px; padding:3px 0; display:flex; align-items:center; gap:6px; color:#dcf2fb; }
+.req-row.met { color:#5fffc8; }
+.req-row.miss { color:#ff9a8a; }
+.req-sub { color:#9fc4d4; }
+/* ─── REMOVE popup (Current Organisms) ─── */
+.rm-pop { background:rgba(12,46,76,.96); border:2px solid rgba(95,215,255,.85); border-radius:16px; padding:16px 22px; text-align:center; box-shadow:0 0 26px rgba(40,190,255,.5); animation:popIn .25s cubic-bezier(.34,1.56,.64,1); }
+.rm-h { font-weight:700; letter-spacing:2px; color:#cdf2ff; font-size:14px; margin-bottom:12px; }
+.rm-btns { display:flex; gap:12px; justify-content:center; }
+.rm-btns button { width:52px; height:42px; border-radius:12px; border:2px solid #5fe0ff; background:rgba(0,205,255,.18); color:#eafdff; font-size:13px; font-weight:700; cursor:pointer; }
+.rm-btns button:hover { background:rgba(255,90,90,.3); border-color:#ff6a6a; }
+
+/* ─── BUTTONS ─── */
+.btn { border:none; cursor:pointer; font-family:var(--ui); font-size:12px; font-weight:700; padding:11px 20px; letter-spacing:.4px; border-radius:24px; transition:transform .15s, filter .15s, background .15s; }
+.btn:hover { filter:brightness(1.04); } .btn:active { transform:scale(.95); }
+.btn-primary { background:#ffffff; color:#0a3d52; flex:1; box-shadow:0 6px 18px rgba(0,60,90,.32); }
+.btn-primary:hover { background:#eafdff; }
+.btn-ghost { background:rgba(255,255,255,.16); color:#eaffff; border:1.5px solid rgba(255,255,255,.55); flex:1; }
+.btn-ghost:hover { background:rgba(255,255,255,.3); }
+.btn-sm { font-size:10.5px; padding:8px 16px; }
+
+/* ─── IN-TABLET INTRO ─── */
+.fw-intro {
+  position:absolute; inset:0; z-index:95;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:3px; position:relative; user-select:none;
-  backdrop-filter: blur(4px);
+  gap:14px; padding:28px 26px;
+  background:linear-gradient(160deg,#c8eaf8 0%,#9dd4ed 45%,#6ab8db 100%);
+  border-radius:22px;
+  transition:opacity .45s ease, transform .45s ease;
 }
-/* corner brackets on cards */
-.sc::before { content:''; position:absolute; top:-1px;left:-1px; width:7px;height:7px; border-top:1px solid var(--cyan);border-left:1px solid var(--cyan); opacity:.6; }
-.sc::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:7px;height:7px; border-bottom:1px solid var(--cyan);border-right:1px solid var(--cyan); opacity:.6; }
-.sc:hover:not(.locked) { transform:translateY(-2px); box-shadow:0 0 16px rgba(0,216,255,.15); border-color:var(--cyan); }
-.sc:hover:not(.locked)::before, .sc:hover:not(.locked)::after { opacity:1; }
-.sc.locked { background:var(--locked-bg); border-color:rgba(0,216,255,.07); }
-.sc.locked::before, .sc.locked::after { border-color:rgba(0,216,255,.15); }
-.sc.locked:hover { border-color:rgba(255,224,102,.3); box-shadow:0 0 12px rgba(255,224,102,.08); }
-.sc.unlocked-anim { animation:unlockBounce .55s cubic-bezier(.34,1.56,.64,1); border-color:var(--seafoam) !important; box-shadow:0 0 20px rgba(0,255,179,.3) !important; }
-@keyframes unlockBounce { 0%{transform:scale(.85)} 60%{transform:scale(1.08)} 100%{transform:scale(1)} }
-.sc.present { border-color:rgba(0,255,179,.3); background:var(--seafoam-lo); }
-.sc.present::before, .sc.present::after { border-color:var(--seafoam); opacity:.5; }
-.sc .sc-emoji { font-size:20px; filter:drop-shadow(0 0 4px rgba(0,216,255,.3)); }
-.sc .sc-name  { font-family:var(--mono); font-size:9px; font-weight:400; line-height:1.3; letter-spacing:.5px; color:var(--txt); }
-.sc .sc-pop   { font-family:var(--mono); font-size:8px; color:var(--cyan); }
-.sc .sc-pop.bad { color:var(--orange); text-shadow:0 0 6px rgba(255,140,0,.4); }
-.sc .lock-ico { font-size:16px; opacity:.2; }
-.sc .lock-tip { font-family:var(--mono); font-size:8px; color:rgba(0,216,255,.3); line-height:1.4; }
-
-/* ══════════════════════════
-   UNLOCK POPUP
-══════════════════════════ */
-.popup-overlay {
-  position:absolute; inset:0;
-  background:rgba(0,5,12,0.8);
-  backdrop-filter:blur(10px);
-  z-index:90; display:flex; align-items:center; justify-content:center;
-  opacity:0; pointer-events:none; transition:opacity .3s;
+.fw-intro.hidden { opacity:0; pointer-events:none; transform:scale(.97); }
+.fi-warn {
+  font-family:var(--ui); font-weight:800; font-size:9.5px; letter-spacing:3px;
+  color:#fff; background:rgba(220,70,45,.88); padding:5px 14px;
+  border-radius:20px; box-shadow:0 3px 10px rgba(180,40,20,.35);
+  animation:blink 2s infinite;
 }
-.popup-overlay.show { opacity:1; pointer-events:all; }
-.popup {
-  background: rgba(0,18,34,0.92);
-  border: 1px solid var(--border);
-  padding: 28px 26px; text-align:center; width:300px;
-  box-shadow: 0 0 40px rgba(0,216,255,.1), inset 0 0 40px rgba(0,0,0,.4);
-  animation: popIn .4s cubic-bezier(.34,1.56,.64,1);
-  position:relative;
+.fi-title {
+  font-family:var(--ui); font-weight:800; font-size:30px; line-height:1.05;
+  color:#0a3d52; text-align:center;
+  text-shadow:0 2px 0 rgba(255,255,255,.6), 0 0 24px rgba(90,195,235,.5);
+  letter-spacing:.5px;
 }
-/* corner brackets on popup */
-.popup::before { content:''; position:absolute; top:-1px;left:-1px; width:14px;height:14px; border-top:1.5px solid var(--cyan);border-left:1.5px solid var(--cyan); box-shadow:-3px -3px 10px var(--cyan-glow); }
-.popup::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:14px;height:14px; border-bottom:1.5px solid var(--cyan);border-right:1.5px solid var(--cyan); box-shadow:3px 3px 10px var(--cyan-glow); }
-@keyframes popIn { 0%{transform:scale(.78);opacity:0} 100%{transform:scale(1);opacity:1} }
-.popup .p-stars  { font-size:16px; letter-spacing:6px; margin-bottom:6px; color:var(--gold); }
-.popup .p-badge  { font-family:var(--mono); font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:12px; }
-.popup .p-emoji  { font-size:46px; margin:6px 0 10px; filter:drop-shadow(0 0 12px rgba(0,216,255,.4)); }
-.popup h3        { font-size:17px; font-weight:700; margin-bottom:6px; color:var(--txt-hi); text-shadow:0 0 14px var(--cyan-glow); }
-.popup p         { font-size:11px; color:var(--muted); line-height:1.7; margin-bottom:18px; }
-.popup .p-btns   { display:flex; gap:10px; }
-
-.hint-popup { border-color: var(--border); box-shadow: 0 0 30px rgba(0,216,255,.08); }
-.hint-popup::before { box-shadow:-2px -2px 8px var(--cyan-glow); }
-.hint-popup::after  { box-shadow:2px 2px 8px var(--cyan-glow); }
-
-/* ══════════════════════════
-   BUTTONS
-══════════════════════════ */
-.btn {
-  border:none; cursor:pointer; font-family:var(--ui);
-  font-size:12px; font-weight:600;
-  padding:10px 18px; letter-spacing:.5px;
-  transition:transform .15s, filter .15s, box-shadow .15s;
-  clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+.fi-bubble {
+  display:flex; gap:12px; align-items:flex-start;
+  background:rgba(255,255,255,.78); backdrop-filter:blur(4px);
+  border:1.5px solid rgba(255,255,255,.95); border-radius:16px;
+  padding:12px 15px; width:100%;
+  box-shadow:0 6px 18px rgba(0,55,85,.2);
 }
-.btn:hover  { filter:brightness(1.2); }
-.btn:active { transform:scale(.95); }
-.btn-primary {
-  background: rgba(0,216,255,0.12);
-  color: var(--cyan); flex:1;
-  border: 1px solid var(--border);
-  text-shadow: 0 0 8px var(--cyan-glow);
-  box-shadow: 0 0 16px rgba(0,216,255,.1), inset 0 0 20px rgba(0,216,255,.05);
+.fi-av { font-size:32px; flex-shrink:0; filter:drop-shadow(0 2px 4px rgba(0,40,60,.25)); }
+.fi-who { font-family:var(--ui); font-weight:800; font-size:8.5px; letter-spacing:2px; color:#1f88a8; display:block; margin-bottom:3px; }
+.fi-bubble p { font-size:12px; color:#0a3d52; line-height:1.5; }
+.fi-sub { font-size:11.5px; color:#2f6478; line-height:1.6; text-align:center; max-width:320px; }
+.fi-btn {
+  margin-top:4px; padding:12px 38px; border-radius:24px; border:none; cursor:pointer;
+  font-family:var(--ui); font-weight:800; font-size:13px; letter-spacing:.5px;
+  background:#fff; color:#0a3d52;
+  box-shadow:0 6px 20px rgba(0,60,90,.28); transition:transform .15s, filter .15s;
 }
-.btn-primary:hover { background:rgba(0,216,255,.2); box-shadow:0 0 24px rgba(0,216,255,.2); }
-.btn-gold {
-  background: rgba(255,224,102,0.12);
-  color: var(--gold); flex:1;
-  border: 1px solid rgba(255,224,102,.3);
-  text-shadow: 0 0 8px rgba(255,224,102,.5);
-  box-shadow: 0 0 16px rgba(255,224,102,.08);
-}
-.btn-gold:hover { background:rgba(255,224,102,.22); }
-.btn-ghost {
-  background:transparent; color:var(--muted);
-  border:1px solid rgba(255,255,255,.1);
-}
-.btn-ghost:hover { border-color:var(--border); color:var(--txt); }
-.btn-sm   { font-size:10px; padding:7px 13px; }
-.btn-icon {
-  background:rgba(0,216,255,.07); color:var(--cyan);
-  width:32px; height:32px; padding:0; font-size:14px;
-  display:flex; align-items:center; justify-content:center; flex-shrink:0;
-  border:1px solid var(--border);
-  clip-path: polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);
-}
-.btn-icon:hover { background:rgba(0,216,255,.15); }
-
-/* ══════════════════════════
-   RESTORED OVERLAY
-══════════════════════════ */
-#o-restored {
-  align-items:center; justify-content:flex-start; text-align:center;
-  gap:16px; padding:28px 60px;
-  overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--cyan-dim) transparent;
-}
-.restored-badge {
-  font-family:var(--mono); font-size:10px; letter-spacing:4px; text-transform:uppercase;
-  color:var(--seafoam); display:flex; gap:8px; align-items:center; justify-content:center;
-  text-shadow:0 0 10px rgba(0,255,179,.5);
-}
-.restored-title {
-  font-size:26px; font-weight:700;
-  color:var(--txt-hi); letter-spacing:2px;
-  text-shadow:0 0 20px var(--cyan-glow), 0 0 40px rgba(0,100,200,.4);
-}
-.tally-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; width:100%; }
-.tally-item {
-  background:var(--panel); border:1px solid var(--border);
-  padding:12px 8px; display:flex; flex-direction:column; align-items:center; gap:4px;
-  position:relative;
-}
-.tally-item::before { content:''; position:absolute; top:-1px;left:-1px; width:6px;height:6px; border-top:1px solid var(--cyan);border-left:1px solid var(--cyan); }
-.tally-item::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:6px;height:6px; border-bottom:1px solid var(--cyan);border-right:1px solid var(--cyan); }
-.tally-item .te { font-size:24px; filter:drop-shadow(0 0 6px rgba(0,216,255,.3)); }
-.tally-item .tn { font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:1px; }
-.tally-item .tp { font-family:var(--mono); font-size:15px; color:var(--cyan); text-shadow:0 0 8px var(--cyan-glow); }
-.lesson-box {
-  background:var(--panel); border:1px solid var(--border);
-  padding:14px 18px; font-size:12px; color:var(--muted);
-  line-height:1.7; font-style:italic; max-width:520px; position:relative;
-}
-.lesson-box::before { content:''; position:absolute; top:-1px;left:-1px; width:10px;height:10px; border-top:1px solid var(--cyan);border-left:1px solid var(--cyan); }
-.lesson-box::after  { content:''; position:absolute; bottom:-1px;right:-1px; width:10px;height:10px; border-bottom:1px solid var(--cyan);border-right:1px solid var(--cyan); }
-.lesson-box b { color:var(--txt-hi); font-style:normal; }
-
-/* ══════════════════════════
-   SCREEN NAV TABS
-══════════════════════════ */
-.screen-tabs { display:flex; gap:8px; justify-content:center; }
-.stab {
-  font-family:var(--mono); font-size:10px; padding:6px 16px;
-  background:rgba(0,216,255,.04); border:1px solid var(--border);
-  color:var(--muted); cursor:pointer; transition:all .2s;
-  letter-spacing:2px; text-transform:uppercase;
-  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
-}
-.stab:hover  { background:rgba(0,216,255,.1); color:var(--txt); }
-.stab.active { background:rgba(0,216,255,.14); color:var(--cyan); border-color:rgba(0,216,255,.5); text-shadow:0 0 8px var(--cyan-glow); box-shadow:0 0 12px rgba(0,216,255,.1); }
+.fi-btn:hover { filter:brightness(1.05); transform:scale(1.03); }
 </style>
 </head>
 <body>
 
-<div class="proto-label">OceanX — Interactive Tablet Prototype</div>
+<div class="proto-label">OceanX — Balance The Ocean // Game Loop Prototype</div>
 
-<!-- ════════════════════════
-     TABLET DEVICE
-════════════════════════ -->
 <div class="tablet">
   <canvas id="bg"></canvas>
-  <div class="fold-l"></div>
-  <div class="fold-r"></div>
 
-  <!-- ── MAIN DUAL-PANEL UI (always underneath) ── -->
-  <div class="main-ui dimmed" id="mainUI">
-
-    <!-- TOP STATUS BAR -->
+  <!-- ══ MAIN UI ══ -->
+  <div class="main-ui" id="mainUI">
     <div class="top-bar">
-      <div class="logo">🌊 OceanX <span>Ecosystem Sim</span></div>
-      <div class="hbar-wrap slim">
-        <div class="hbar crit" id="mainHBar"></div>
-      </div>
-      <span class="hnum lo" id="mainHNum">47%</span>
-      <div class="state-pill unstable" id="mainState">⚠ UNSTABLE</div>
+      <div class="logo">⬡ OceanX <span>BALANCE THE OCEAN</span></div>
+      <div class="eh-label">Eco-Health</div>
+      <div class="hbar-wrap"><div class="hbar low" id="ehBar" style="width:0%"></div></div>
+      <div class="hnum low" id="ehNum">0%</div>
     </div>
 
-    <!-- PANELS -->
     <div class="panels">
+      <!-- REEF -->
+      <div class="panel-reef">
+        <div class="reef-view" id="reefView">
+          <div class="reef-label">Coral Reef Ecosystem</div>
+          <div class="reef-eh">
+            <div class="reef-eh-label">ECOHEALTH</div>
+            <div class="reef-eh-track"><div class="reef-eh-fill" id="reefHealthFill" style="height:0%"></div></div>
+          </div>
+          <!-- god rays -->
+          <div class="reef-rays"></div>
+          <!-- depth darkening -->
+          <div class="reef-depth"></div>
 
-      <!-- LEFT: OCEAN VIEW -->
-      <div class="panel-ocean">
-        <div class="ocean-view" id="oceanView">
-          <div class="plankton-layer" id="planktonLayer"></div>
-        </div>
+          <!-- floating particles -->
+          <div class="reef-particles" id="reefParticles"></div>
 
-        <div class="alert-strip warn" id="alertStrip">
-          <span>⚠️</span>
-          <p id="alertText"><b>Overpopulation detected.</b> Small fish are devouring all the plankton. The food web is collapsing from the bottom up.</p>
-        </div>
+          <!-- SVG terrain: 5 hill layers with varied heights -->
+          <svg class="reef-terrain" viewBox="0 0 312 200" preserveAspectRatio="none" style="height:200px">
+            <defs>
+              <linearGradient id="sandGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(85,64,36,.32)"/>
+                <stop offset="100%" stop-color="rgba(40,28,14,.0)"/>
+              </linearGradient>
+              <linearGradient id="floorFade" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="rgba(24,70,88,.92)"/>
+                <stop offset="100%" stop-color="rgba(12,40,54,1)"/>
+              </linearGradient>
+            </defs>
+            <!-- deepest far ridge -->
+            <path d="M0,80 C20,55 50,72 80,58 C110,44 130,68 160,55 C190,42 215,65 245,50 C270,38 292,58 312,45 L312,200 L0,200 Z"
+              fill="rgba(8,36,50,.65)"/>
+            <!-- far hills -->
+            <path d="M0,100 C28,78 52,96 82,80 C108,66 128,88 158,74 C182,62 208,84 238,70 C262,58 288,78 312,65 L312,200 L0,200 Z"
+              fill="rgba(10,45,62,.72)"/>
+            <!-- mid hills -->
+            <path d="M0,122 C18,104 38,118 62,105 C82,94 100,114 128,100 C152,88 168,108 196,96 C220,85 244,106 270,94 C290,85 305,100 312,92 L312,200 L0,200 Z"
+              fill="rgba(13,55,74,.80)"/>
+            <!-- near rolling hill -->
+            <path d="M0,142 C15,128 35,140 58,130 C80,120 98,136 126,124 C150,113 170,132 198,120 C224,109 248,128 276,116 C296,108 308,122 312,115 L312,200 L0,200 Z"
+              fill="rgba(18,65,84,.86)"/>
+            <!-- foreground floor with gradient fill — no sharp edge -->
+            <path d="M0,162 C18,154 38,162 60,156 C82,150 102,160 128,154 C152,148 172,158 198,152 C222,146 248,156 276,150 C295,146 308,154 312,150 L312,200 L0,200 Z"
+              fill="url(#floorFade)"/>
+            <!-- sandy sediment — soft gradient, no rect edge -->
+            <path d="M0,175 C40,170 80,176 120,172 C160,168 200,174 240,170 C270,167 295,172 312,170 L312,200 L0,200 Z"
+              fill="url(#sandGrad)"/>
+            <!-- pebbles — kept subtle -->
+            <ellipse cx="22"  cy="184" rx="8"  ry="3"   fill="rgba(65,48,25,.4)"/>
+            <ellipse cx="72"  cy="182" rx="5"  ry="2.5" fill="rgba(65,48,25,.3)"/>
+            <ellipse cx="130" cy="186" rx="9"  ry="3"   fill="rgba(65,48,25,.38)"/>
+            <ellipse cx="188" cy="183" rx="6"  ry="2.5" fill="rgba(65,48,25,.32)"/>
+            <ellipse cx="244" cy="185" rx="7"  ry="3"   fill="rgba(65,48,25,.36)"/>
+            <ellipse cx="290" cy="182" rx="8"  ry="3"   fill="rgba(65,48,25,.38)"/>
+          </svg>
 
-        <div class="chips-row" id="chipsRow">
-          <div class="chip absent" id="chip-shark"><span>🦈</span> Bull Shark <span class="cred">✕</span></div>
-          <div class="chip absent" id="chip-grouper"><span>🐠</span> Grouper <span class="cred">✕</span></div>
-          <div class="chip absent" id="chip-tuna"><span>🐡</span> Tuna <span class="cred">✕</span></div>
-          <div class="chip" id="chip-smallfish"><span>🐟</span> Small Fish <span class="cpop">×52</span></div>
-          <div class="chip" id="chip-plankton"><span>🌿</span> Plankton <span class="cpop">×18</span></div>
+          <!-- flora layers (inset:0 so each item positions itself with its own bottom value) -->
+          <div class="reef-flora" id="floraBack"  style="inset:0; z-index:2; opacity:.42"></div>
+          <div class="reef-flora" id="floraMid"   style="inset:0; z-index:4; opacity:.85"></div>
+          <div class="reef-flora" id="floraFront" style="inset:0; z-index:5"></div>
+          <div class="reef-flora" id="floraTall"  style="inset:0; z-index:5"></div>
+          <div class="reef-murk" id="reefMurk"></div>
+          <div class="reveal" id="reveal" onclick="hideReveal()"></div>
+          <div class="alucia" id="alucia">
+            <span class="av">🧜‍♀️</span>
+            <div><span class="who">ALUCIA //</span><span class="msg" id="aluciaMsg"></span></div>
+            <button class="x" onclick="hideAlucia()">×</button>
+          </div>
         </div>
       </div>
 
-      <!-- RIGHT: FOOD WEB -->
+      <!-- FOODWEB TABLET -->
       <div class="panel-fw">
-        <div class="fw-title-row">
-          <div>
-            <h3>🕸 Food Web</h3>
+        <div class="fw-head">
+          <button class="fw-reset" onclick="resetGame()" title="Reset">↺</button>
+          <div class="fw-title" id="fwTitle">BALANCE THE OCEAN</div>
+          <div class="fw-health"><div class="fw-health-fill" id="fwHealthFill" style="width:0%"></div></div>
+          <div class="fw-chevron" id="fwChevron" onclick="toggleView()" title="Switch view">⌄</div>
+        </div>
+        <div class="fw-stage">
+          <div class="fw-svg-wrap" id="webView">
+            <svg viewBox="0 0 560 470" id="fwSvg">
+              <defs>
+                <radialGradient id="bubbleGrad" cx="38%" cy="30%" r="75%">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+                  <stop offset="38%" stop-color="#eafaff" stop-opacity="0.5"/>
+                  <stop offset="100%" stop-color="#a9def2" stop-opacity="0.32"/>
+                </radialGradient>
+                <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="rgba(15,95,135,.7)"/>
+                </marker>
+              </defs>
+              <g id="edges" stroke="rgba(20,110,150,.5)" stroke-width="2"></g>
+              <g id="nodes"></g>
+            </svg>
+            <div class="legend">
+              <span style="color:var(--t-keystone)"><i></i>Keystone</span>
+              <span style="color:var(--t-tertiary)"><i></i>Tertiary</span>
+              <span style="color:var(--t-secondary)"><i></i>Secondary</span>
+              <span style="color:var(--t-primary)"><i></i>Primary</span>
+            </div>
           </div>
-          <div style="display:flex;gap:6px;">
-            <button class="btn btn-ghost btn-sm" onclick="showRestored()">✨ Skip to end</button>
-          </div>
+          <div class="current-view" id="curView"></div>
         </div>
 
-        <div class="fw-hint" id="fwHint">💡 Tap a 🔒 slot to see how to unlock it</div>
+        <!-- SPECIES INFO MODAL (contained inside the tablet) -->
+        <div class="modal-host" id="modalHost"></div>
 
-        <div class="fw-body">
-
-          <!-- TIER 3 -->
-          <div class="tier-label">Tier 3 — Apex</div>
-          <div class="tier-cards">
-            <div class="sc locked" id="sc-shark" onclick="tapCard('shark')">
-              <div class="lock-ico">🔒</div>
-              <div class="lock-tip">Needs large<br/>predators first</div>
+        <!-- ══ INTRO (inside the tablet) ══ -->
+        <div class="fw-intro" id="fwIntro">
+          <div class="fi-warn">⚠ REEF STATUS: CRITICAL</div>
+          <div class="fi-title">Balance<br>The Ocean</div>
+          <div class="fi-bubble">
+            <span class="fi-av">🧜‍♀️</span>
+            <div>
+              <span class="fi-who">ALUCIA</span>
+              <p>"Hey! This ecosystem isn't doing too well. Please help me save it!"</p>
             </div>
           </div>
-
-          <div class="arrow-row"><div class="arr-seg">↑ eats</div></div>
-
-          <!-- TIER 2 -->
-          <div class="tier-label">Tier 2 — Secondary</div>
-          <div class="tier-cards">
-            <div class="sc locked" id="sc-grouper" onclick="tapCard('grouper')">
-              <div class="lock-ico">🔒</div>
-              <div class="lock-tip">Add Humphead<br/>Wrasse first</div>
-            </div>
-            <div class="sc present" id="sc-wrasse" onclick="tapCard('wrasse')">
-              <div class="sc-emoji">🐠</div>
-              <div class="sc-name">Humphead<br/>Wrasse</div>
-              <div class="sc-pop">×8</div>
-            </div>
-            <div class="sc locked" id="sc-tuna" onclick="tapCard('tuna')">
-              <div class="lock-ico">🔒</div>
-              <div class="lock-tip">Small fish<br/>&gt;30 required</div>
-            </div>
-          </div>
-
-          <div class="arrow-row">
-            <div class="arr-seg">↑</div>
-            <div class="arr-seg">↑</div>
-            <div class="arr-seg">↑</div>
-          </div>
-
-          <!-- TIER 1 -->
-          <div class="tier-label">Tier 1 — Primary</div>
-          <div class="tier-cards">
-            <div class="sc present" id="sc-smallfish" onclick="tapCard('smallfish')">
-              <div class="sc-emoji">🐟</div>
-              <div class="sc-name">Small Fish</div>
-              <div class="sc-pop bad">×52 ⚠ too many</div>
-            </div>
-            <div class="sc locked" id="sc-shrimp" onclick="tapCard('shrimp')">
-              <div class="lock-ico">🔒</div>
-              <div class="lock-tip">Plankton &gt;50<br/>required</div>
-            </div>
-          </div>
-
-          <div class="arrow-row">
-            <div class="arr-seg">↑</div>
-            <div class="arr-seg">↑</div>
-          </div>
-
-          <!-- TIER 0 -->
-          <div class="tier-label">Tier 0 — Producers</div>
-          <div class="tier-cards">
-            <div class="sc present" id="sc-plankton" onclick="tapCard('plankton')">
-              <div class="sc-emoji">🌿</div>
-              <div class="sc-name">Plankton</div>
-              <div class="sc-pop bad">×18 ⚠ low</div>
-            </div>
-            <div class="sc locked" id="sc-algae" onclick="tapCard('algae')">
-              <div class="lock-ico">🔒</div>
-              <div class="lock-tip">Health &gt;60%<br/>required</div>
-            </div>
-          </div>
-
-        </div><!-- fw-body -->
-      </div><!-- panel-fw -->
-    </div><!-- panels -->
-  </div><!-- main-ui -->
-
-  <!-- ════════════
-       OVERLAY: INTRO
-  ════════════ -->
-  <div class="overlay" id="o-intro">
-    <div class="intro-ocean">🌊</div>
-    <div class="intro-warn">⚠&nbsp; ECOSYSTEM ALERT</div>
-    <h1 class="intro-title">The ocean is out of balance.</h1>
-    <p class="intro-sub">Species are disappearing. Food chains are breaking. Can you restore the balance before it's too late?</p>
-    <div class="health-box">
-      <label>Current Ecosystem Health</label>
-      <div class="hbar-wrap"><div class="hbar crit"></div></div>
-      <div class="health-val">47% — Unstable ⚠</div>
-    </div>
-    <div style="display:flex;gap:12px;margin-top:4px;">
-      <button class="btn btn-ghost btn-sm" onclick="goOverlay('main')">Skip intro</button>
-      <button class="btn btn-primary" style="padding:12px 32px;" onclick="goOverlay('tutorial')">Begin →</button>
-    </div>
-  </div>
-
-  <!-- ════════════
-       OVERLAY: TUTORIAL
-  ════════════ -->
-  <div class="overlay hidden" id="o-tutorial">
-    <div class="tut-top">
-      <h2>How the ocean works</h2>
-      <p>Learn each role before you play</p>
-    </div>
-
-    <div style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;">
-      <div class="card-track" id="cardTrack">
-
-        <!-- slide 1 -->
-        <div class="tut-slide">
-          <div class="tut-main">
-            <div class="tut-emoji">🦈</div>
-            <div class="role-badge">Apex Predator</div>
-            <h3>Sharks</h3>
-            <p>Keep prey populations from exploding. Without apex predators the entire food web collapses from the top down — a process called a trophic cascade.</p>
-            <div class="chain-row"><span>🦈</span><span class="chain-arr">eats</span><span>🐠</span><span class="chain-arr">which keeps</span><span>🐟</span><span class="chain-arr">in check</span></div>
-          </div>
-          <div class="tut-side">
-            <div class="tut-side-card"><h4>🌊 Trophic Cascade</h4><p>Removing one apex predator triggers a chain reaction that affects every level of the food web.</p></div>
-            <div class="tut-side-card"><h4>📊 In OceanX</h4><p>Sharks have a low carrying capacity (×10 max) but dramatically reduce small fish overpopulation.</p></div>
-          </div>
+          <p class="fi-sub">Rebuild the food web one species at a time. Balance the pyramid — too few or too many and the reef suffers.</p>
+          <button class="fi-btn" onclick="beginGame()">Begin →</button>
         </div>
-
-        <!-- slide 2 -->
-        <div class="tut-slide">
-          <div class="tut-main">
-            <div class="tut-emoji">🐠</div>
-            <div class="role-badge">Secondary Consumer</div>
-            <h3>Large Fish</h3>
-            <p>Humphead Wrasse, Grouper, Tuna — they bridge the gap between tiny prey and apex predators. Crucial for a stable mid-tier.</p>
-            <div class="chain-row"><span>🐟</span><span class="chain-arr">→</span><span>🐠</span><span class="chain-arr">→</span><span>🦈</span><span class="chain-arr">balanced chain</span></div>
-          </div>
-          <div class="tut-side">
-            <div class="tut-side-card"><h4>🔒 Unlock System</h4><p>Some species only appear when their prey is present in the ecosystem.</p></div>
-            <div class="tut-side-card"><h4>📊 In OceanX</h4><p>Grouper is unlocked by adding Humphead Wrasse. Tuna by having enough small fish.</p></div>
-          </div>
-        </div>
-
-        <!-- slide 3 -->
-        <div class="tut-slide">
-          <div class="tut-main">
-            <div class="tut-emoji">🐟</div>
-            <div class="role-badge">Primary Consumer</div>
-            <h3>Small Fish</h3>
-            <p>They eat plankton and get eaten by everything above them. Too many small fish and plankton collapse — triggering a starvation cascade.</p>
-            <div class="chain-row"><span>🌿</span><span class="chain-arr">eaten by</span><span>🐟×52</span><span class="chain-arr">→</span><span>plankton crash!</span></div>
-          </div>
-          <div class="tut-side">
-            <div class="tut-side-card"><h4>⚠ Right now</h4><p>The ecosystem has 52 small fish with no predators — plankton are being wiped out.</p></div>
-            <div class="tut-side-card"><h4>🎯 Your goal</h4><p>Add predators to reduce small fish, restore plankton, and rebuild the food web.</p></div>
-          </div>
-        </div>
-
-        <!-- slide 4 -->
-        <div class="tut-slide">
-          <div class="tut-main">
-            <div class="tut-emoji">🌿</div>
-            <div class="role-badge">Producer</div>
-            <h3>Plankton</h3>
-            <p>The base of everything. If plankton collapse, every species above starves. Protecting plankton means protecting the whole ocean.</p>
-            <div class="chain-row"><span>☀️</span><span class="chain-arr">→</span><span>🌿</span><span class="chain-arr">feeds all life →</span><span>🐟🐠🦈</span></div>
-          </div>
-          <div class="tut-side">
-            <div class="tut-side-card"><h4>📈 Logistic growth</h4><p>Plankton regrow naturally — but only if small fish aren't eating them faster than they reproduce.</p></div>
-            <div class="tut-side-card"><h4>✅ Ready?</h4><p>The food web is on the right. Tap locked slots to discover how to restore each species!</p></div>
-          </div>
-        </div>
-
-      </div><!-- card-track -->
-
-      <div class="dot-row" id="dotRow">
-        <div class="dot on" onclick="goCard(0)"></div>
-        <div class="dot"    onclick="goCard(1)"></div>
-        <div class="dot"    onclick="goCard(2)"></div>
-        <div class="dot"    onclick="goCard(3)"></div>
-      </div>
-
-      <div class="tut-nav">
-        <button class="btn btn-ghost btn-sm" id="tutBack" onclick="tutStep(-1)" style="visibility:hidden;">← Back</button>
-        <button class="btn btn-primary btn-sm" id="tutNext" onclick="tutStep(1)">Next →</button>
       </div>
     </div>
   </div>
 
-  <!-- ════════════
-       OVERLAY: RESTORED
-  ════════════ -->
-  <div class="overlay hidden" id="o-restored">
-    <div class="restored-badge">✅ Balance Restored</div>
-    <h1 class="restored-title">Ecosystem Healthy!</h1>
-    <div style="width:100%;max-width:500px;">
-      <div class="hbar-wrap" style="height:12px;background:rgba(0,0,0,.35);border-radius:100px;overflow:hidden;">
-        <div class="hbar full" id="restoredBar"></div>
-      </div>
-      <div style="text-align:right;font-size:11px;color:var(--green);margin-top:5px;">82% — Stable ✅</div>
-    </div>
-    <div class="tally-grid">
-      <div class="tally-item"><div class="te">🦈</div><div class="tn">Bull Shark</div><div class="tp">×4</div></div>
-      <div class="tally-item"><div class="te">🐠</div><div class="tn">Grouper</div><div class="tp">×11</div></div>
-      <div class="tally-item"><div class="te">🐟</div><div class="tn">Small Fish</div><div class="tp">×34</div></div>
-      <div class="tally-item"><div class="te">🌿</div><div class="tn">Plankton</div><div class="tp">×120</div></div>
-    </div>
-    <div class="lesson-box">
-      "Every species plays a role — even the ones you can't see. <b>Apex predators aren't just killers — they're the architects of a healthy ocean.</b>"
-    </div>
-    <div style="display:flex;gap:12px;margin-top:4px;">
-      <button class="btn btn-ghost btn-sm" onclick="resetAll()">↺ Play again</button>
-      <button class="btn btn-primary" style="padding:11px 28px;" onclick="alert('More scenarios coming soon!')">Next scenario →</button>
-    </div>
-  </div>
-
-  <!-- ════════════
-       UNLOCK POPUP
-  ════════════ -->
-  <div class="popup-overlay" id="unlockOverlay">
-    <div class="popup">
-      <div class="p-stars">✦ ✦ ✦</div>
-      <div class="p-badge">New Species Found!</div>
-      <div class="p-emoji" id="uEmoji">🐠</div>
-      <h3 id="uName">Malabar Grouper</h3>
-      <p id="uDesc">Feeds on Humphead Wrasse — adding Wrasse drew this predator in!</p>
-      <div class="p-btns">
-        <button class="btn btn-ghost btn-sm" onclick="closePopup('unlock')">Not yet</button>
-        <button class="btn btn-gold btn-sm" id="uAddBtn" onclick="confirmAdd()">Add it! →</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ════════════
-       HINT POPUP
-  ════════════ -->
-  <div class="popup-overlay" id="hintOverlay">
-    <div class="popup hint-popup">
-      <div class="p-emoji" id="hEmoji">🔒</div>
-      <h3 id="hName">Locked</h3>
-      <p id="hDesc">...</p>
-      <button class="btn btn-primary btn-sm" style="width:100%;" onclick="closePopup('hint')">Got it</button>
-    </div>
-  </div>
-
-</div><!-- tablet -->
-
-<!-- SCREEN TABS -->
-<div class="screen-tabs">
-  <div class="stab active" id="tab-intro"    onclick="goOverlay('intro')">1 · Intro</div>
-  <div class="stab"        id="tab-tutorial" onclick="goOverlay('tutorial')">2 · Tutorial</div>
-  <div class="stab"        id="tab-main"     onclick="goOverlay('main')">3 · Main Game</div>
-  <div class="stab"        id="tab-restored" onclick="showRestored()">4 · Restored</div>
 </div>
 
 <script>
-/* ═══════════════════════════════
-   SPECIES DATA
-═══════════════════════════════ */
+/* ═══════════ SPECIES DATA (from v3) ═══════════ */
 const SPECIES = {
-  shark:     { emoji:'🦈', name:'Bull Shark',       canUnlock:false, hint:'Sharks appear once the Grouper predator tier is established. Unlock Grouper first!' },
-  grouper:   { emoji:'🐠', name:'Malabar Grouper',  canUnlock:true,  unlockDesc:'Humphead Wrasse is already in the ecosystem — the Malabar Grouper has been drawn in to hunt!' },
-  tuna:      { emoji:'🐡', name:'Yellowfin Tuna',   canUnlock:true,  unlockDesc:'Small fish population is very high — Yellowfin Tuna are moving in to feed!' },
-  wrasse:    { emoji:'🐠', name:'Humphead Wrasse',  canUnlock:false, hint:'Humphead Wrasse is already present! Tap it to see its details.' },
-  smallfish: { emoji:'🐟', name:'Small Fish',       canUnlock:false, hint:'Small fish are already in the ecosystem — 52 of them! Try adding predators to bring this number down.' },
-  plankton:  { emoji:'🌿', name:'Plankton',         canUnlock:false, hint:'Plankton are present but low (×18). They will recover once small fish are controlled by predators.' },
-  shrimp:    { emoji:'🦐', name:'Mantis Shrimp',    canUnlock:false, hint:'Shrimp need abundant plankton (×50+) to appear. Restore plankton levels first.' },
-  algae:     { emoji:'🌊', name:'Sea Algae',         canUnlock:false, hint:'Sea Algae appear when overall ecosystem health reaches 60%. Keep restoring the web!' },
+  /* ── Primary Consumers (herbivores / detritivores — available from start) ── */
+  mullet:      { name:'Striped Mullet',        sci:'Mugil cephalus',           tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐟', requires:[],                    minHealth:0,  pos:[50,400],  desc:'Schooling detritivore that grazes algae and sediment. A staple food source for reef predators.' },
+  parrotfish:  { name:'Bullethead Parrotfish', sci:'Chlorurus sordidus',       tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐠', requires:[],                    minHealth:0,  pos:[165,400], desc:'Scrapes algae off coral with a beak-like mouth, producing reef sand. Keeps coral from being smothered.' },
+  convict:     { name:'Convict Surgeonfish',   sci:'Acanthurus triostegus',    tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐟', requires:[],                    minHealth:0,  pos:[280,400], desc:'Striped algae-grazer that feeds in large foraging schools across the reef flat.' },
+  surgeonfish: { name:'Brown Surgeonfish',     sci:'Acanthurus nigrofuscus',   tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐠', requires:[],                    minHealth:0,  pos:[395,400], desc:'Algae-grazer that keeps coral surfaces clean. Travels in loose schools.' },
+  damselfish:  { name:'Reticulated Damselfish',sci:'Dascyllus reticulatus',    tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐠', requires:[],                    minHealth:0,  pos:[510,400], desc:'Tiny planktivore that shelters among branching coral. Abundant prey for mid-level predators.' },
+
+  /* ── Secondary Consumers ── */
+  wrasse:      { name:'Humphead Wrasse',       sci:'Crassilabrus undulatus',   tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐡', requires:['surgeonfish'],       minHealth:20, pos:[70,270],  desc:'Large reef fish that eats surgeonfish, crustaceans and mollusks. Recognizable by its prominent forehead.' },
+  scad:        { name:'Yellowtail Scad',       sci:'Atule mate',               tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐟', requires:['damselfish'],        minHealth:20, pos:[225,270], desc:'Fast-moving schooling predator of plankton and small fish. Hunts in coordinated shoals.' },
+  grunter:     { name:'Crescent Grunter',      sci:'Terapon theraps',          tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐠', requires:['convict'],           minHealth:25, pos:[370,270], desc:'Opportunistic feeder on small fish, crustaceans and worms across sandy reef margins.' },
+  manta:       { name:'Reef Manta Ray',        sci:'Mobula alfredi',           tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐡', requires:['damselfish'],        minHealth:30, pos:[510,270], desc:'Gentle filter-feeder that sweeps plankton from the water column. Indicator of a healthy, productive reef.' },
+
+  /* ── Tertiary Consumers ── */
+  grouper:     { name:'Malabar Grouper',       sci:'Epinephelus malabaricus',  tier:'Tertiary Consumer',  tierVar:'--t-tertiary',  emoji:'🐟', requires:['mullet'],            minHealth:35, pos:[180,160], desc:'Solitary ambush predator. Hunts mullet, wrasse and smaller reef fish from cover.' },
+  barracuda:   { name:'Great Barracuda',       sci:'Sphyraena barracuda',      tier:'Tertiary Consumer',  tierVar:'--t-tertiary',  emoji:'🐠', requires:['scad'],              minHealth:45, pos:[380,160], desc:'Fast pelagic predator. Strikes schooling scad and wrasse with bursts of speed.' },
+
+  /* ── Keystone Species ── */
+  shark:       { name:'Blacktip Reef Shark',   sci:'Carcharhinus melanopterus',tier:'Keystone Species',   tierVar:'--t-keystone',  emoji:'🦈', requires:['mullet','parrotfish'],minHealth:55, pos:[280,55], desc:'KEYSTONE SPECIES. Top predator that regulates the whole reef. Without it, mid-level fish overpopulate, herbivores are wiped out, and the reef collapses.' },
 };
+const EDGES = [
+  ['mullet','grouper'], ['mullet','barracuda'], ['mullet','shark'],
+  ['parrotfish','grouper'], ['parrotfish','shark'],
+  ['convict','wrasse'], ['convict','grunter'],
+  ['surgeonfish','wrasse'], ['surgeonfish','shark'],
+  ['damselfish','scad'], ['damselfish','grunter'], ['damselfish','manta'],
+  ['wrasse','grouper'], ['wrasse','barracuda'],
+  ['scad','barracuda'], ['scad','shark'],
+  ['grunter','shark'], ['manta','shark'],
+  ['grouper','shark'], ['barracuda','shark'],
+];
+const KEYS = Object.keys(SPECIES);
+const TOTAL = KEYS.length;
 
-// track which species have been added
-const addedSpecies = new Set(['wrasse','smallfish','plankton']);
-let pendingSpecies = null;
-
-/* ═══════════════════════════════
-   OVERLAY NAVIGATION
-═══════════════════════════════ */
-const ALL_OVERLAYS = ['intro','tutorial','restored'];
-const ALL_TABS     = ['intro','tutorial','main','restored'];
-
-function goOverlay(name) {
-  // hide all overlays
-  ALL_OVERLAYS.forEach(id => {
-    document.getElementById('o-'+id).classList.add('hidden');
-  });
-  // dim/undim main UI
-  const mainUI = document.getElementById('mainUI');
-  if (name === 'main') {
-    mainUI.classList.remove('dimmed');
-  } else {
-    mainUI.classList.add('dimmed');
-    if (name !== 'restored') {
-      document.getElementById('o-'+name).classList.remove('hidden');
-    } else {
-      document.getElementById('o-restored').classList.remove('hidden');
-      mainUI.classList.remove('dimmed');
-    }
-  }
-  // update tabs
-  ALL_TABS.forEach(t => document.getElementById('tab-'+t).classList.remove('active'));
-  const tabEl = document.getElementById('tab-'+name);
-  if (tabEl) tabEl.classList.add('active');
+/* ── Trophic-pyramid ratio model (no hard caps) ──
+   Each step targets prey:predator = 3:1. A level is OVERPOPULATED when its prey
+   outnumber the predators above it by more than 5:1 — including the case of prey
+   with NO predator at all (unchecked). A level is UNDERPOPULATED when predators
+   are present but prey are scarcer than 1:1 (prey over-eaten / predators starving).
+   The closer every link sits to 3:1, the higher eco-health climbs. */
+const TARGET_RATIO = 3, OVERPOP_RATIO = 5, UNDER_RATIO = 1;
+const BAL_BONUS = 16;   // health per perfectly-balanced link (3 links → +48)
+const IMBALANCE_PEN = 2; // health lost per surplus/missing individual beyond the band
+const TIER_LEVEL = { 'Primary Consumer':1, 'Secondary Consumer':2, 'Tertiary Consumer':3, 'Keystone Species':4 };
+const TIER_NAME  = { 1:'herbivores', 2:'secondary consumers', 3:'tertiary consumers', 4:'sharks' };
+function levelOf(k){ return TIER_LEVEL[SPECIES[k].tier]; }
+function tierTotals(){ const T={1:0,2:0,3:0,4:0}; for(const k of KEYS) T[levelOf(k)] += state.counts[k]; return T; }
+function ratioScore(r){ /* 0 at <=1 or >=5, peak 1 at 3 */
+  if (r<=UNDER_RATIO || r>=OVERPOP_RATIO) return 0;
+  return r<=TARGET_RATIO ? (r-UNDER_RATIO)/(TARGET_RATIO-UNDER_RATIO) : (OVERPOP_RATIO-r)/(OVERPOP_RATIO-TARGET_RATIO);
 }
-
-function showRestored() {
-  goOverlay('restored');
-  // animate health bar
-  setTimeout(() => {
-    const bar = document.getElementById('restoredBar');
-    if (bar) { bar.style.width = '0%'; setTimeout(() => bar.style.width = '82%', 100); }
-  }, 200);
+/* health delta for the link where level L are the prey, level L+1 the predators */
+function linkDelta(L){
+  const T = tierTotals(), prey = T[L], pred = T[L+1];
+  if (prey===0 && pred===0) return 0;
+  if (pred===0) return -IMBALANCE_PEN * Math.max(0, prey - OVERPOP_RATIO); // prey, no predator (free up to 5)
+  if (prey===0) return -IMBALANCE_PEN * pred;                              // predators, no prey (starving)
+  const r = prey/pred;
+  if (r >= OVERPOP_RATIO) return -IMBALANCE_PEN * (prey - pred*OVERPOP_RATIO); // overpopulated prey
+  if (r <= UNDER_RATIO)   return -IMBALANCE_PEN * (pred - prey);               // underpopulated prey
+  return BAL_BONUS * ratioScore(r);                                            // in band → bonus, peak at 3:1
 }
+/* level L (1..3) overpopulated as prey? (too many for the predators above, incl. none) */
+function levelOver(L){ if(L<1||L>3) return false; const T=tierTotals(),prey=T[L],pred=T[L+1];
+  if(prey===0) return false; return pred===0 ? prey>OVERPOP_RATIO : prey/pred>OVERPOP_RATIO; }
+/* level L (1..3) underpopulated as prey? (predators present but prey scarce <1:1) */
+function levelUnder(L){ if(L<1||L>3) return false; const T=tierTotals(),prey=T[L],pred=T[L+1];
+  if(pred===0) return false; return prey/pred < UNDER_RATIO; }
+/* per-species status for badges/warnings */
+function speciesOver(k){ const L=levelOf(k); return levelOver(L) || (L>=2 && levelUnder(L-1)); }
+function speciesUnder(k){ const L=levelOf(k); return levelUnder(L); }
 
-function resetAll() {
-  goOverlay('intro');
-  // reset card states
-  ['grouper','tuna','shark','shrimp','algae'].forEach(id => {
-    const el = document.getElementById('sc-'+id);
-    if (!el) return;
-    const s = SPECIES[id];
-    el.className = 'sc locked';
-    el.innerHTML = `<div class="lock-ico">🔒</div><div class="lock-tip">${getLockTip(id)}</div>`;
-    el.onclick = () => tapCard(id);
-  });
-  addedSpecies.clear();
-  addedSpecies.add('wrasse'); addedSpecies.add('smallfish'); addedSpecies.add('plankton');
-  updateHealthDisplay(47, false);
-  // reset chips
-  ['shark','grouper','tuna'].forEach(id => {
-    const c = document.getElementById('chip-'+id);
-    if (c) { c.className='chip absent'; c.innerHTML=`<span>${SPECIES[id].emoji}</span> ${SPECIES[id].name} <span class="cred">✕</span>`; }
-  });
-  document.getElementById('alertStrip').className = 'alert-strip warn';
-  document.getElementById('alertText').innerHTML = '<b>Overpopulation detected.</b> Small fish are devouring all the plankton. The food web is collapsing from the bottom up.';
-  document.getElementById('fwHint').textContent = '💡 Tap a 🔒 slot to see how to unlock it';
-}
-
-function getLockTip(id) {
-  const tips = {
-    shark:'Needs large<br/>predators first',
-    grouper:'Add Humphead<br/>Wrasse first',
-    tuna:'Small fish<br/>&gt;30 required',
-    shrimp:'Plankton &gt;50<br/>required',
-    algae:'Health &gt;60%<br/>required',
+let state, view = 'web';
+function freshState() {
+  return {
+    counts: Object.fromEntries(KEYS.map(k=>[k,0])),
+    unlocked: Object.fromEntries(KEYS.map(k=>[k, SPECIES[k].requires.length===0])),
+    ever: new Set(), won:false,
   };
-  return tips[id] || 'Conditions<br/>not met yet';
 }
 
-/* ═══════════════════════════════
-   TUTORIAL CARDS
-═══════════════════════════════ */
-let tutIdx = 0;
-function goCard(n) {
-  tutIdx = n;
-  document.getElementById('cardTrack').style.transform = 'translateX(-'+(860*n)+'px)';
-  document.querySelectorAll('#dotRow .dot').forEach((d,i) => d.classList.toggle('on', i===n));
-  document.getElementById('tutBack').style.visibility = n===0 ? 'hidden' : 'visible';
-  document.getElementById('tutNext').textContent = n===3 ? 'Start Game →' : 'Next →';
-}
-function tutStep(dir) {
-  const next = tutIdx + dir;
-  if (next > 3) { goOverlay('main'); return; }
-  if (next < 0) return;
-  goCard(next);
+/* ═══════════ ECO-HEALTH (trophic-pyramid ratio model) ═══════════ */
+function ecohealth() {
+  const distinct = KEYS.filter(k=>state.counts[k]>0).length;
+  let h = distinct * 4;                  // biodiversity / bootstrap (up to 44)
+  for (let L=1; L<=3; L++) h += linkDelta(L);   // ratio balance + over/under penalties
+  if (state.counts.shark>0) h += 8;             // keystone stability bonus
+  return Math.max(0, Math.min(100, Math.round(h)));
 }
 
-/* ═══════════════════════════════
-   FOOD WEB CARD TAPS
-═══════════════════════════════ */
-function tapCard(id) {
-  const s = SPECIES[id];
-  if (!s) return;
-  if (addedSpecies.has(id)) {
-    // already present — show info
-    showHint(s.emoji, s.name, `${s.name} is already in the ecosystem and contributing to the food web. Watch how it affects population balance over time.`);
-    return;
+/* ═══════════ NAV ═══════════ */
+function beginGame() {
+  document.getElementById('fwIntro').classList.add('hidden');
+  document.getElementById('fwTitle').textContent = 'FOODWEB';
+  setTimeout(()=>alucia("Tap a glowing node on the food web to add a species!"), 400);
+}
+
+/* ═══════════ FOOD WEB RENDER ═══════════ */
+function tierColor(k){ return getComputedStyle(document.documentElement).getPropertyValue(SPECIES[k].tierVar).trim(); }
+
+const NODE_R = 34;
+function renderEdges() {
+  let html='';
+  for (const [a,b] of EDGES){
+    const pa=SPECIES[a].pos, pb=SPECIES[b].pos;
+    const dx=pb[0]-pa[0], dy=pb[1]-pa[1], len=Math.hypot(dx,dy)||1, ux=dx/len, uy=dy/len;
+    const x1=pa[0]+ux*(NODE_R+2), y1=pa[1]+uy*(NODE_R+2);
+    const x2=pb[0]-ux*(NODE_R+11), y2=pb[1]-uy*(NODE_R+11);
+    html+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#arrow)"/>`;
   }
-  // locked card
-  if (s.canUnlock) {
-    showUnlock(id);
-  } else {
-    showHint(s.emoji, s.name, s.hint);
-  }
+  document.getElementById('edges').innerHTML = html;
 }
 
-/* ═══════════════════════════════
-   UNLOCK FLOW
-═══════════════════════════════ */
-function showUnlock(id) {
-  const s = SPECIES[id];
-  pendingSpecies = id;
-  document.getElementById('uEmoji').textContent = s.emoji;
-  document.getElementById('uName').textContent  = s.name;
-  document.getElementById('uDesc').textContent  = s.unlockDesc;
-  // animate the card
-  const card = document.getElementById('sc-'+id);
-  if (card) card.classList.add('unlocked-anim');
-  document.getElementById('unlockOverlay').classList.add('show');
+/* split a species name into up to 2 balanced lines for the bubble label */
+function wrapName(name){
+  const w=name.split(' ');
+  if (w.length<2) return [name];
+  let best=0, diff=1e9, full=name.length;
+  for (let i=1;i<w.length;i++){ const l=w.slice(0,i).join(' ').length, d=Math.abs(l-(full-l)); if(d<diff){diff=d;best=i;} }
+  return [w.slice(0,best).join(' '), w.slice(best).join(' ')];
 }
 
-function confirmAdd() {
-  const id = pendingSpecies;
-  if (!id) return;
-  const s = SPECIES[id];
-  addedSpecies.add(id);
-
-  // update the food web card
-  const card = document.getElementById('sc-'+id);
-  if (card) {
-    card.className = 'sc present';
-    card.innerHTML = `
-      <div class="sc-emoji">${s.emoji}</div>
-      <div class="sc-name">${s.name}</div>
-      <div class="sc-pop">×1 — spawning</div>
-    `;
-    card.onclick = () => tapCard(id);
-  }
-
-  // update the chip in the ocean panel
-  const chip = document.getElementById('chip-'+id);
-  if (chip) {
-    chip.className = 'chip popped';
-    chip.innerHTML = `<span>${s.emoji}</span> ${s.name} <span class="cpop">×1</span>`;
-  }
-
-  closePopup('unlock');
-
-  // check if unlock unlocks more
-  checkCascade(id);
-  updateHealthAfterAdd(id);
-}
-
-function checkCascade(id) {
-  // adding grouper unlocks shark hint
-  if (id === 'grouper') {
-    const sharkCard = document.getElementById('sc-shark');
-    if (sharkCard) {
-      sharkCard.querySelector('.lock-tip').textContent = 'Grouper added! Shark\ncan now appear →';
+function renderNodes() {
+  let html='';
+  for (const k of KEYS) {
+    const s=SPECIES[k], unl=state.unlocked[k], [x,y]=s.pos, ct=state.counts[k], col=tierColor(k);
+    const status = (unl && ct>0) ? (speciesOver(k)?'over':speciesUnder(k)?'under':'') : '';
+    html += `<g class="node-g ${unl?'':'locked'} ${status}" onclick="openNode('${k}')">`;
+    // glass bubble
+    html += `<circle class="bub" cx="${x}" cy="${y}" r="${NODE_R}" fill="url(#bubbleGrad)" stroke="rgba(255,255,255,.85)" stroke-width="2"/>`;
+    html += `<circle class="ring" cx="${x}" cy="${y}" r="${NODE_R}" fill="none" stroke="rgba(255,255,255,.82)" stroke-width="2.5" opacity="${unl?1:0.45}" pointer-events="none"/>`;
+    html += `<ellipse cx="${x-9}" cy="${y-12}" rx="9" ry="5" fill="rgba(255,255,255,.7)" pointer-events="none"/>`;
+    if (unl) {
+      html += `<text x="${x}" y="${y+10}" text-anchor="middle" font-size="30" pointer-events="none">${s.emoji}</text>`;
+    } else {
+      html += `<text x="${x}" y="${y+11}" text-anchor="middle" font-size="28" class="node-sil" pointer-events="none">${s.emoji}</text>`;
     }
-    document.getElementById('fwHint').textContent = '🦈 Grouper added! Shark conditions are now met — tap it!';
-    // make shark unlockable
-    SPECIES.shark.canUnlock = true;
-    SPECIES.shark.unlockDesc = 'With Grouper now present, Bull Sharks have been drawn into the ecosystem to hunt!';
+    // name label (2 lines) below bubble
+    const lines = unl ? wrapName(s.name) : ['???'];
+    lines.forEach((ln,i)=>{ html += `<text x="${x}" y="${y+NODE_R+15+i*11}" text-anchor="middle" class="node-name" pointer-events="none">${ln}</text>`; });
+    if (ct>0) {
+      const fill = speciesOver(k)?'#ff4d4d':speciesUnder(k)?'#ff9a3c':'#00bfe6';
+      html += `<circle cx="${x+24}" cy="${y-24}" r="11" fill="${fill}" stroke="#fff" stroke-width="1.5" pointer-events="none"/>`;
+      html += `<text x="${x+24}" y="${y-20}" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold" pointer-events="none">${ct}</text>`;
+    }
+    html += `</g>`;
   }
-  if (id === 'shark') {
-    document.getElementById('fwHint').textContent = '✅ Apex predator restored! Watch ecosystem health rise.';
-    setTimeout(() => updateHealthDisplay(74, false), 1000);
-    setTimeout(() => updateHealthDisplay(82, true),  3000);
-  }
-  if (id === 'tuna') {
-    setTimeout(() => updateHealthDisplay(65, false), 800);
-  }
+  document.getElementById('nodes').innerHTML = html;
 }
 
-function updateHealthAfterAdd(id) {
-  const scores = { grouper:55, tuna:60, shark:82 };
-  if (scores[id]) {
-    setTimeout(() => updateHealthDisplay(scores[id], scores[id] >= 70), 600);
-  }
-}
-
-function updateHealthDisplay(pct, isHealthy) {
-  document.getElementById('mainHBar').style.width = pct+'%';
-  document.getElementById('mainHBar').className   = 'hbar '+(isHealthy?'full':'crit');
-  document.getElementById('mainHNum').textContent  = pct+'%';
-  document.getElementById('mainHNum').className    = 'hnum '+(isHealthy?'hi':'lo');
-  document.getElementById('mainState').textContent = isHealthy ? '✅ STABLE' : '⚠ UNSTABLE';
-  document.getElementById('mainState').className   = 'state-pill '+(isHealthy?'stable':'unstable');
-  if (isHealthy) {
-    document.getElementById('alertStrip').className = 'alert-strip ok';
-    document.getElementById('alertText').innerHTML  = '<b>Ecosystem stabilising.</b> Predators are controlling small fish populations. Plankton are recovering.';
-  }
-}
-
-/* ═══════════════════════════════
-   POPUPS
-═══════════════════════════════ */
-function showHint(emoji, name, desc) {
-  document.getElementById('hEmoji').textContent = emoji;
-  document.getElementById('hName').textContent  = name;
-  document.getElementById('hDesc').textContent  = desc;
-  document.getElementById('hintOverlay').classList.add('show');
-}
-
-function closePopup(type) {
-  if (type === 'unlock') {
-    document.getElementById('unlockOverlay').classList.remove('show');
-    // remove animation class from any card
-    document.querySelectorAll('.sc.unlocked-anim').forEach(c => c.classList.remove('unlocked-anim'));
-    pendingSpecies = null;
+/* ═══════════ CURRENT ORGANISMS ═══════════ */
+function renderCurrent() {
+  const el = document.getElementById('curView');
+  const items = KEYS.filter(k=>state.counts[k]>0);
+  let inner;
+  if (!items.length){
+    inner = `<div class="cv-empty">No organisms yet —<br/>add species from the food web.</div>`;
   } else {
-    document.getElementById('hintOverlay').classList.remove('show');
+    inner = `<div class="tank-bubbles">` + items.map(k=>{
+      const s=SPECIES[k], ct=state.counts[k], over=speciesOver(k), under=speciesUnder(k);
+      const cls = over?'over':under?'under':'';
+      return `<div class="cur-org">
+        <div class="cur-bub ${cls}" onclick="showRemove('${k}')" title="Tap to remove">
+          <span class="cur-fish">${s.emoji}</span>
+          <span class="cur-cnt ${cls}">${ct}</span>
+        </div>
+        <div class="cur-label">${s.name}</div>
+      </div>`;
+    }).join('') + `</div>`;
   }
+  el.innerHTML = `<div class="tank"><div class="tank-grid"></div>${inner}</div>`;
 }
+function showRemove(k){
+  const host=document.getElementById('modalHost');
+  host.innerHTML = `<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="rm-pop"><div class="rm-h">REMOVE?</div><div class="rm-btns"><button onclick="removeOne('${k}');afterRemove('${k}')">−1</button><button onclick="removeAll('${k}');closeModal()">All</button></div></div></div>`;
+  host.classList.add('on');
+}
+function afterRemove(k){ if(state.counts[k]>0) showRemove(k); else closeModal(); }
 
-/* ═══════════════════════════════
-   BUBBLE / FISH ANIMATION
-═══════════════════════════════ */
-(function bubbles() {
-  const c = document.getElementById('bg');
-  const ctx = c.getContext('2d');
-  c.width = 860; c.height = 540;
-  const bs = Array.from({length:22}, () => ({
-    x: Math.random()*860, y: 540+Math.random()*200,
-    r: 1+Math.random()*2.5, spd: .25+Math.random()*.5,
-    op: .08+Math.random()*.15,
-  }));
-  function draw() {
-    ctx.clearRect(0,0,860,540);
-    bs.forEach(b => {
-      b.y -= b.spd; b.x += Math.sin(b.y*.018)*.4;
-      if (b.y < -8) { b.y = 548; b.x = Math.random()*860; }
-      ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
-      ctx.strokeStyle = `rgba(30,184,240,${b.op})`; ctx.lineWidth=1; ctx.stroke();
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-(function spawnFish() {
-  const view = document.getElementById('oceanView');
-  const types = [
-    {e:'🐟', count:10, yRange:[10,70], sRange:[5,10], dur:[7,13]},
-    {e:'🐠', count:2,  yRange:[20,60], sRange:[6,10], dur:[9,15]},
-  ];
-  types.forEach(t => {
-    for (let i=0; i<t.count; i++) {
-      const el   = document.createElement('div');
-      el.className = 'fish-entity' + (Math.random()>.5?' left':'');
-      el.textContent = t.e;
-      const top  = t.yRange[0] + Math.random()*(t.yRange[1]-t.yRange[0]);
-      const size = t.sRange[0] + Math.random()*(t.sRange[1]-t.sRange[0]);
-      const dur  = t.dur[0]    + Math.random()*(t.dur[1]-t.dur[0]);
-      el.style.cssText = `top:${top}%;font-size:${size}px;animation-duration:${dur}s;animation-delay:${(-Math.random()*dur)}s;`;
+/* ═══════════ REEF VISUAL ═══════════ */
+function renderReef() {
+  const view = document.getElementById('reefView');
+  view.querySelectorAll('.fish-entity').forEach(f=>f.remove());
+  let seed=1;
+  for (const k of KEYS) {
+    const s=SPECIES[k];
+    for (let i=0;i<state.counts[k];i++){
+      seed++;
+      const el=document.createElement('div');
+      el.className='fish-entity'+(rand(seed*13)>.5?' left':'');
+      el.textContent=s.emoji;
+      const top=12+rand(seed)*62, size=14+(['shark','barracuda','grouper','manta'].includes(k)?10:0), dur=7+rand(seed*7)*7;
+      el.style.cssText=`top:${top}%; font-size:${size}px; animation-duration:${dur}s; animation-delay:${-rand(seed*3)*dur}s;`;
       view.appendChild(el);
     }
-  });
-  // plankton dots
-  const layer = document.getElementById('planktonLayer');
-  for (let i=0; i<18; i++) {
-    const d = document.createElement('div'); d.className='pdot';
-    d.style.animationDelay = (Math.random()*2)+'s';
-    layer.appendChild(d);
   }
+  // murk clears as health rises
+  const h=ecohealth();
+  document.getElementById('reefMurk').style.opacity = Math.max(0, (70-h)/70*0.5);
+}
+function rand(s){ const x=Math.sin(s)*10000; return x-Math.floor(x); }
+
+/* ═══════════ HABITAT (coral growth + ocean colour) ═══════════ */
+
+/* Flora definitions — th = min eco-health % to appear, sw = sway class */
+/* Flora — each item has its own b (bottom px) so they scatter across the terrain naturally.
+   Terrain heights from reef-view bottom: far hills ~120-155px, mid ~72-108px, near ~36-68px */
+const FLORA_BACK = [
+  // always-present dead reef base (far hills, high up)
+  { th:0,  e:'🪨', l:'14%', b:138, s:11 },
+  { th:0,  e:'🪨', l:'62%', b:145, s:10 },
+  { th:0,  e:'🪨', l:'88%', b:132, s:12 },
+  // early recovery
+  { th:10, e:'🌱', l:'4%',  b:150, s:10, sw:'sw'  },
+  { th:14, e:'🌱', l:'72%', b:142, s:9,  sw:'swB' },
+  { th:20, e:'🌿', l:'28%', b:128, s:11, sw:'sw'  },
+  { th:24, e:'🪸', l:'44%', b:135, s:10, sw:'swB' },
+  { th:30, e:'🌱', l:'56%', b:148, s:9,  sw:'sw'  },
+  // mid recovery
+  { th:38, e:'🌿', l:'8%',  b:122, s:12, sw:'swB' },
+  { th:42, e:'🪸', l:'20%', b:140, s:11, sw:'sw'  },
+  { th:48, e:'🌱', l:'38%', b:152, s:10, sw:'sw'  },
+  { th:54, e:'🪸', l:'66%', b:130, s:11, sw:'swB' },
+  { th:60, e:'🌿', l:'80%', b:125, s:12, sw:'sw'  },
+  // healthy fill
+  { th:66, e:'🪸', l:'34%', b:118, s:12, sw:'swB' },
+  { th:72, e:'🌱', l:'90%', b:144, s:10, sw:'sw'  },
+  { th:78, e:'🪸', l:'50%', b:136, s:11, sw:'swB' },
+  { th:84, e:'🌿', l:'2%',  b:155, s:11, sw:'sw'  },
+  { th:90, e:'🪸', l:'76%', b:120, s:12, sw:'swB' },
+];
+
+const FLORA_MID = [
+  // always-present (mid hills)
+  { th:0,  e:'🪨', l:'10%', b:95,  s:18 },
+  { th:0,  e:'🪨', l:'54%', b:88,  s:16 },
+  { th:0,  e:'🐚', l:'80%', b:100, s:13 },
+  // early
+  { th:8,  e:'🌱', l:'24%', b:104, s:13, sw:'sw'  },
+  { th:12, e:'🌱', l:'68%', b:82,  s:12, sw:'swB' },
+  { th:18, e:'🪸', l:'3%',  b:72,  s:15, sw:'swB' },
+  { th:22, e:'🌿', l:'38%', b:96,  s:14, sw:'sw'  },
+  { th:28, e:'🪸', l:'46%', b:78,  s:16, sw:'swB' },
+  // mid
+  { th:34, e:'🌿', l:'16%', b:88,  s:15, sw:'sw'  },
+  { th:40, e:'🪸', l:'60%', b:106, s:17, sw:'sw'  },
+  { th:44, e:'🌱', l:'30%', b:74,  s:13, sw:'swB' },
+  { th:50, e:'🐚', l:'42%', b:92,  s:15 },
+  { th:56, e:'🌿', l:'74%', b:84,  s:15, sw:'sw'  },
+  { th:62, e:'🪸', l:'87%', b:76,  s:16, sw:'swB' },
+  // healthy dense
+  { th:68, e:'🪸', l:'22%', b:100, s:18, sw:'sw'  },
+  { th:72, e:'🌿', l:'6%',  b:80,  s:15, sw:'swB' },
+  { th:76, e:'🌱', l:'52%', b:94,  s:14, sw:'sw'  },
+  { th:80, e:'🪸', l:'35%', b:72,  s:17, sw:'sw'  },
+  { th:84, e:'🌿', l:'92%', b:108, s:14, sw:'swB' },
+  { th:88, e:'🪸', l:'64%', b:86,  s:16, sw:'swB' },
+  { th:94, e:'🌱', l:'48%', b:102, s:13, sw:'sw'  },
+];
+
+const FLORA_FRONT = [
+  // always — rocks scattered on near hills
+  { th:0,  e:'🪨', l:'22%', b:54,  s:20 },
+  { th:0,  e:'🪨', l:'70%', b:46,  s:18 },
+  { th:0,  e:'🐚', l:'44%', b:40,  s:16 },
+  { th:0,  e:'🪨', l:'88%', b:60,  s:15 },
+  // very early growth
+  { th:5,  e:'🪸', l:'1%',  b:52,  s:18, sw:'sw'  },
+  { th:8,  e:'🌱', l:'12%', b:38,  s:16, sw:'swB' },
+  { th:10, e:'🪸', l:'34%', b:64,  s:20, sw:'sw'  },
+  { th:14, e:'🌿', l:'56%', b:48,  s:18, sw:'swB' },
+  { th:18, e:'🪸', l:'78%', b:58,  s:22, sw:'sw'  },
+  // mid growth
+  { th:24, e:'🌿', l:'6%',  b:66,  s:20, sw:'sw'  },
+  { th:28, e:'🪸', l:'18%', b:44,  s:24, sw:'swB' },
+  { th:32, e:'🌱', l:'30%', b:36,  s:18, sw:'sw'  },
+  { th:36, e:'🪸', l:'50%', b:70,  s:26, sw:'sw'  },
+  { th:40, e:'🌿', l:'62%', b:42,  s:20, sw:'swB' },
+  { th:44, e:'🪸', l:'84%', b:56,  s:24, sw:'sw'  },
+  { th:48, e:'🐚', l:'38%', b:50,  s:18 },
+  // healthy
+  { th:54, e:'🪸', l:'8%',  b:60,  s:28, sw:'swB' },
+  { th:58, e:'🌿', l:'24%', b:40,  s:20, sw:'sw'  },
+  { th:62, e:'🪸', l:'42%', b:68,  s:30, sw:'sw'  },
+  { th:66, e:'🌱', l:'66%', b:44,  s:20, sw:'swB' },
+  { th:70, e:'🪸', l:'90%', b:62,  s:26, sw:'sw'  },
+  { th:74, e:'🌿', l:'14%', b:52,  s:22, sw:'swB' },
+  { th:78, e:'🪸', l:'54%', b:36,  s:28, sw:'swB' },
+  { th:82, e:'🌱', l:'76%', b:58,  s:20, sw:'sw'  },
+  { th:86, e:'🪸', l:'2%',  b:48,  s:24, sw:'sw'  },
+  { th:90, e:'🌿', l:'32%', b:72,  s:22, sw:'swB' },
+  { th:94, e:'🪸', l:'62%', b:54,  s:30, sw:'sw'  },
+  { th:97, e:'🌱', l:'46%', b:42,  s:20, sw:'swB' },
+];
+
+// Tall statement coral — large pieces scattered at various near-hill positions
+const FLORA_TALL = [
+  { th:30, e:'🪸', l:'4%',  b:44,  s:36, sw:'sw'  },
+  { th:36, e:'🪸', l:'86%', b:50,  s:34, sw:'swB' },
+  { th:42, e:'🪸', l:'32%', b:38,  s:40, sw:'sw'  },
+  { th:50, e:'🌿', l:'16%', b:58,  s:32, sw:'swB' },
+  { th:56, e:'🪸', l:'58%', b:42,  s:42, sw:'sw'  },
+  { th:62, e:'🌿', l:'72%', b:54,  s:34, sw:'sw'  },
+  { th:68, e:'🪸', l:'44%', b:64,  s:46, sw:'swB' },
+  { th:74, e:'🪸', l:'10%', b:48,  s:40, sw:'sw'  },
+  { th:78, e:'🌿', l:'80%', b:36,  s:36, sw:'swB' },
+  { th:82, e:'🪸', l:'26%', b:60,  s:44, sw:'sw'  },
+  { th:86, e:'🪸', l:'64%', b:46,  s:42, sw:'swB' },
+  { th:90, e:'🌿', l:'40%', b:52,  s:38, sw:'sw'  },
+  { th:94, e:'🪸', l:'6%',  b:40,  s:46, sw:'swB' },
+  { th:97, e:'🪸', l:'76%', b:56,  s:42, sw:'sw'  },
+];
+
+function buildFlora(items, h) {
+  return items
+    .filter(f => h >= f.th)
+    .map(f => {
+      const sway = f.sw ? ` class="${f.sw}"` : '';
+      const fade = f.th === 0 ? 1 : h < f.th + 10 ? (h - f.th) / 10 : 1;
+      return `<span${sway} style="left:${f.l}; bottom:${f.b}px; font-size:${f.s}px; opacity:${fade.toFixed(2)}">${f.e}</span>`;
+    }).join('');
+}
+
+/* Ocean colour keyframes [health%, topCol, midCol, botCol] */
+const OCEAN_KEYS = [
+  [0,   '#1e4a42', '#153835', '#0c2828'],  // dark swampy teal — broken reef
+  [14,  '#1a5248', '#12403c', '#0a3030'],  // slightly deeper, murky
+  [28,  '#1d5e58', '#154a46', '#0d3838'],  // first hints of clearing
+  [42,  '#226e70', '#185860', '#0e4050'],  // dusky blue-green
+  [56,  '#2d8090', '#1e6272', '#10485a'],  // clearing up, mid teal
+  [70,  '#3c9aaa', '#2a7888', '#185868'],  // healthy teal
+  [85,  '#5ab2be', '#3d9098', '#206070'],  // bright and vibrant
+  [100, '#9adde8', '#4ea0ad', '#1a5e72'],  // full health — vivid cyan
+];
+function lerpHex(a, b, t) {
+  const p = c => parseInt(c,16);
+  const r = (a,b,t) => Math.round(p(a)+(p(b)-p(a))*t).toString(16).padStart(2,'0');
+  return '#'+r(a.slice(1,3),b.slice(1,3),t)+r(a.slice(3,5),b.slice(3,5),t)+r(a.slice(5,7),b.slice(5,7),t);
+}
+function oceanColor(h) {
+  const K = OCEAN_KEYS;
+  for (let i=1; i<K.length; i++) {
+    if (h <= K[i][0]) {
+      const t = (h-K[i-1][0])/(K[i][0]-K[i-1][0]);
+      return { top:lerpHex(K[i-1][1],K[i][1],t), mid:lerpHex(K[i-1][2],K[i][2],t), bot:lerpHex(K[i-1][3],K[i][3],t) };
+    }
+  }
+  const last=K[K.length-1]; return {top:last[1],mid:last[2],bot:last[3]};
+}
+
+function renderHabitat(h) {
+  document.getElementById('floraBack').innerHTML  = buildFlora(FLORA_BACK,  h);
+  document.getElementById('floraMid').innerHTML   = buildFlora(FLORA_MID,   h);
+  document.getElementById('floraFront').innerHTML = buildFlora(FLORA_FRONT, h);
+  document.getElementById('floraTall').innerHTML  = buildFlora(FLORA_TALL,  h);
+  const c = oceanColor(h);
+  document.getElementById('reefView').style.background =
+    `linear-gradient(180deg, ${c.top} 0%, ${c.mid} 42%, ${c.bot} 100%)`;
+}
+
+/* ═══════════ HEALTH BAR ═══════════ */
+function renderHealth() {
+  const h=ecohealth(), bar=document.getElementById('ehBar'), num=document.getElementById('ehNum');
+  const cls = h<35?'low':h<70?'mid':'high';
+  bar.style.width=h+'%'; bar.className='hbar '+cls;
+  num.textContent=h+'%'; num.className='hnum '+cls;
+  const fwFill=document.getElementById('fwHealthFill'); fwFill.style.width=h+'%'; fwFill.className='fw-health-fill '+cls;
+  const rFill=document.getElementById('reefHealthFill'); if(rFill){ rFill.style.height=h+'%'; rFill.className='reef-eh-fill '+cls; }
+  if (h>=100 && !state.won){ state.won=true; alucia("Thanks for saving the ecosystem! The reef is thriving again. 🪸", 'win', true); }
+}
+
+function render(){ renderNodes(); renderCurrent(); renderReef(); renderHealth(); }
+
+/* ═══════════ UNLOCKS ═══════════ */
+function checkUnlocks() {
+  const h=ecohealth();
+  for (const k of KEYS) {
+    if (state.unlocked[k]) continue;
+    const s=SPECIES[k];
+    if (s.requires.every(r=>state.counts[r]>0) && h>=s.minHealth) {
+      state.unlocked[k]=true;
+      setTimeout(()=>alucia(`You unlocked the <b>${s.name}</b>! Tap its node to add it.`), 250);
+    }
+  }
+}
+
+/* ═══════════ UNLOCK HINTS ═══════════ */
+function listJoin(a){ return a.length<=1 ? a.join('') : a.slice(0,-1).join(', ')+' & '+a[a.length-1]; }
+function unlockHint(k){
+  const preds = EDGES.filter(e=>e[0]===k).map(e=>e[1]);
+  if (!preds.length) return `A top predator. Keeping it in balance stabilises everything below.`;
+  const locked = preds.filter(p=>!state.unlocked[p]).sort((a,b)=>SPECIES[a].minHealth-SPECIES[b].minHealth);
+  if (!locked.length) return `Part of a balanced food chain. Watch the ratio above and below it.`;
+  const sp = SPECIES[locked[0]];
+  const needs = sp.requires.map(r=>SPECIES[r].name);
+  const needStr = needs.length ? `Try adding ${listJoin(needs)} and building up the reef a little.` : `Build up the reef health a little more.`;
+  return `Something bigger out there feeds on this species. ${needStr}`;
+  return hint;
+}
+
+/* ═══════════ MODAL ═══════════ */
+function openNode(k) {
+  const s=SPECIES[k], unl=state.unlocked[k], h=ecohealth(), col=tierColor(k);
+  let left = `<div class="m-left"><div class="m-figure ${unl?'':'sil'}">${s.emoji}</div><div class="m-name">${unl?s.name:'???'}</div>`;
+  if (unl) left += `<button class="m-add" onclick="addOne('${k}'); closeModal();" title="Add to ecosystem"><b>+</b> ADD</button>`;
+  left += `</div>`;
+  let right;
+  if (unl) {
+    right = `<div class="m-panel">
+      <div class="m-tier" style="color:${col}">${s.tier}</div>
+      <div class="m-k">Scientific Name</div><div class="m-sci">${s.sci}</div>
+      <div class="m-k">Unlock Hint</div><div class="m-desc">${unlockHint(k)}</div>
+      <div class="m-inplay">In ecosystem: <b>${state.counts[k]}</b>${state.counts[k]>0?(speciesOver(k)?' &nbsp;⚠ overpopulated':speciesUnder(k)?' &nbsp;⚠ underpopulated':' &nbsp;✓ balanced'):''}</div>
+    </div>`;
+  } else {
+    const hMet=h>=s.minHealth;
+    let reqs = `<div class="m-k" style="margin-top:10px">Place its prey to unlock</div>`;
+    if (!s.requires.length) reqs += `<div class="req-row met">✓ no prey needed</div>`;
+    else for (const r of s.requires){ const met=state.counts[r]>0; reqs += `<div class="req-row ${met?'met':'miss'}">${met?'✓':'○'} ${SPECIES[r].name}</div>`; }
+    right = `<div class="m-panel">
+      <div class="m-tier locked">??? Locked</div>
+      <div class="m-k">Scientific Name</div><div class="m-sci">???</div>
+      <div class="m-k">Unlock Requirements</div>
+      <div class="req-row ${hMet?'met':'miss'}">${hMet?'✓':'○'} Eco-health ≥ ${s.minHealth}% <span class="req-sub">(now ${h}%)</span></div>
+      ${reqs}
+    </div>`;
+  }
+  const host=document.getElementById('modalHost');
+  host.innerHTML = `<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><button class="m-x" onclick="closeModal()">×</button><div class="m-body">${left}${right}</div></div></div>`;
+  host.classList.add('on');
+}
+function closeModal(){ const h=document.getElementById('modalHost'); h.classList.remove('on'); h.innerHTML=''; }
+
+/* ═══════════ ADD / REMOVE ═══════════ */
+function addOne(k) {
+  if (!state.unlocked[k]) return;
+  const firstTime = !state.ever.has(k);
+  state.counts[k]++; state.ever.add(k);
+  if (firstTime) showReveal(k);
+  const L = levelOf(k);
+  if (levelOver(L)) {
+    alucia(`Hey! You're overpopulating the <b>${TIER_NAME[L]}</b> — over ${OVERPOP_RATIO}:1 prey per predator. Add a predator above them or remove some.`, 'warn');
+  } else if (L>=2 && levelUnder(L-1)) {
+    alucia(`Too many <b>${TIER_NAME[L]}</b> for the <b>${TIER_NAME[L-1]}</b> below them — the prey will be wiped out. Add more prey or remove a predator.`, 'warn');
+  }
+  checkUnlocks(); render();
+}
+function removeOne(k){ if(state.counts[k]>0){ state.counts[k]--; checkUnlocks(); render(); } }
+function removeAll(k){ if(state.counts[k]>0){ state.counts[k]=0; checkUnlocks(); render(); } }
+
+/* ═══════════ VIEW SWITCH ═══════════ */
+function setView(v) {
+  view=v;
+  document.getElementById('webView').style.display = v==='web'?'block':'none';
+  document.getElementById('curView').classList.toggle('on', v==='cur');
+  document.getElementById('fwTitle').textContent = v==='web'?'FOODWEB':'CURRENT ORGANISMS';
+  document.getElementById('fwChevron').textContent = v==='web'?'⌄':'⌃';
+}
+function toggleView(){ setView(view==='web'?'cur':'web'); }
+
+/* ═══════════ ALUCIA ═══════════ */
+let aTimer;
+function alucia(msg, cls, sticky) {
+  const el=document.getElementById('alucia');
+  document.getElementById('aluciaMsg').innerHTML=msg;
+  el.className='alucia show'+(cls?' '+cls:'');
+  clearTimeout(aTimer);
+  if(!sticky) aTimer=setTimeout(hideAlucia, 5200);
+}
+function hideAlucia(){ document.getElementById('alucia').classList.remove('show'); }
+
+/* ═══════════ FIRST-TIME SPECIES REVEAL (big reef screen) ═══════════ */
+let revealTimer;
+function showReveal(k) {
+  const s=SPECIES[k], col=tierColor(k), host=document.getElementById('reveal');
+  host.innerHTML = `<div class="reveal-card">
+    <div class="reveal-tag">✦ New Species Discovered</div>
+    <div class="reveal-fish">${s.emoji}</div>
+    <div class="reveal-name">${s.name}</div>
+    <div class="reveal-sci">${s.sci}</div>
+    <div class="reveal-tier" style="color:${col}; border-color:${col}">${s.tier}</div>
+    <div class="reveal-desc">${unlockHint(k)}</div>
+    <div class="reveal-bar"><i></i></div>
+  </div>`;
+  host.classList.add('show');
+  clearTimeout(revealTimer);
+  revealTimer=setTimeout(hideReveal, 5500);
+}
+function hideReveal(){ clearTimeout(revealTimer); document.getElementById('reveal').classList.remove('show'); }
+
+/* ═══════════ RESET ═══════════ */
+function resetGame(){
+  hideReveal();
+  const view = document.getElementById('reefView');
+  const W = view.offsetWidth || 312, H = view.offsetHeight || 480;
+
+  // spawn 320 bubbles all from the bottom — SpongeBob transition style
+  const bubbles = [];
+  for (let i = 0; i < 320; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble-rise';
+    // varied sizes: large, medium, small all mixed
+    const size  = i < 40  ? 30 + Math.random() * 38   // big soap bubbles
+                : i < 140 ? 12 + Math.random() * 20   // medium
+                :            4 + Math.random() * 10;   // tiny filler
+    const x     = -size + Math.random() * (W + size * 2); // bleed past edges
+    // all start at the bottom — small vertical jitter so they don't all pop at once
+    const startY = H - size * 0.5 + Math.random() * 40;
+    const dur    = 0.9 + Math.random() * 1.3;  // 0.9–2.2s to cross screen
+    const delay  = Math.random() * 0.9;         // stagger so they flood upward in waves
+    const drift  = ((Math.random() - 0.5) * 28).toFixed(1);
+    // travel distance = from startY all the way past the top (startY + size extra)
+    const travelY = (-(startY + size + 20)).toFixed(0);
+    b.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${startY}px;` +
+      `--bx:${drift}px;--by:${travelY}px;animation-duration:${dur}s;animation-delay:${delay}s;`;
+    view.appendChild(b);
+    bubbles.push(b);
+  }
+
+  // reset state early — while bubbles are still flooding the screen
+  setTimeout(() => {
+    state = freshState(); setView('web'); render();
+    document.getElementById('fwTitle').textContent = 'BALANCE THE OCEAN';
+    document.getElementById('fwIntro').classList.remove('hidden');
+  }, 300);
+
+  // clean up after all bubble animations finish (max delay 0.9 + max dur 2.2 = 3.1s)
+  setTimeout(() => bubbles.forEach(b => b.remove()), 3200);
+
+}
+
+/* ═══════════ INIT ═══════════ */
+state=freshState(); renderEdges(); render();
+
+/* smooth habitat transition — lerps visualH toward real health at ~2s */
+let visualH = 0;
+(function habitatLoop(){
+  const target = ecohealth();
+  visualH += (target - visualH) * 0.033;
+  if (Math.abs(target - visualH) < 0.05) visualH = target;
+  renderHabitat(visualH);
+  requestAnimationFrame(habitatLoop);
+})();
+
+/* bubbles bg (tablet canvas) */
+(function(){ const c=document.getElementById('bg'), ctx=c.getContext('2d'); c.width=880; c.height=560;
+  const bs=Array.from({length:24},()=>({x:Math.random()*880,y:560+Math.random()*200,r:1+Math.random()*2.5,spd:.25+Math.random()*.5,op:.06+Math.random()*.14}));
+  (function d(){ ctx.clearRect(0,0,880,560); bs.forEach(b=>{ b.y-=b.spd; b.x+=Math.sin(b.y*.018)*.4; if(b.y<-8){b.y=568;b.x=Math.random()*880;} ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.strokeStyle=`rgba(0,216,255,${b.op})`; ctx.lineWidth=1; ctx.stroke(); }); requestAnimationFrame(d); })();
+})();
+
+/* reef habitat particles (tiny rising bubbles + motes inside the reef panel) */
+(function(){
+  const host = document.getElementById('reefParticles');
+  const W = 312, H = 480;
+  function spawn(){
+    const el = document.createElement('div');
+    el.className = 'rp';
+    const r = 1 + Math.random()*2.5;
+    const x = 20 + Math.random()*(W-40);
+    const dur = 6 + Math.random()*9;
+    const delay = -Math.random()*dur;
+    el.style.cssText = `width:${r*2}px;height:${r*2}px;left:${x}px;bottom:${Math.random()*30}%;
+      animation-duration:${dur}s; animation-delay:${delay}s;
+      opacity:${.3+Math.random()*.4};`;
+    host.appendChild(el);
+  }
+  for(let i=0;i<18;i++) spawn();
 })();
 </script>
 </body>

@@ -148,6 +148,7 @@ canvas#bg { position:absolute; inset:0; z-index:0; pointer-events:none; }
 .reveal-sci { font-style:italic; font-size:11px; color:#2f7894; margin:2px 0 6px; }
 .reveal-tier { display:inline-block; font-family:var(--ui); font-weight:800; font-size:8px; letter-spacing:2px; text-transform:uppercase; padding:3px 11px; border-radius:12px; border:1.5px solid; margin-bottom:8px; }
 .reveal-desc { font-size:11px; line-height:1.5; color:#2f6478; }
+.reveal-hint { font-size:10.5px; line-height:1.45; color:#0c6e90; font-style:italic; margin-top:5px; padding-top:5px; border-top:1px solid rgba(12,110,144,.15); }
 .reveal-bar { height:3px; border-radius:2px; background:rgba(12,110,144,.18); margin-top:12px; overflow:hidden; }
 .reveal-bar i { display:block; height:100%; background:#0c6e90; transform-origin:left; animation:revealCountdown 5.5s linear forwards; }
 @keyframes revealCountdown { from{transform:scaleX(1)} to{transform:scaleX(0)} }
@@ -190,18 +191,21 @@ canvas#bg { position:absolute; inset:0; z-index:0; pointer-events:none; }
 .legend i { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:4px; vertical-align:0px; box-shadow:0 0 4px currentColor; }
 
 /* SVG bubble-node interactions */
-.node-g { cursor:pointer; }
+.node-g { cursor:pointer; transition:opacity .2s; }
 .node-g .ring, .node-g .bub { transition:stroke-width .15s, filter .2s; }
 .node-g:hover .ring { stroke-width:4; }
 .node-g:hover .bub { stroke-width:3; }
 .node-g.locked { opacity:.78; }
 .node-name { font-family:var(--ui); font-weight:600; font-size:9.5px; letter-spacing:.2px; fill:var(--fw-ink); }
 .node-sil { filter:brightness(0); opacity:.45; }
-/* overpopulation / underpopulation outline + glow (mirrors Current Organisms) */
+/* overpopulation / underpopulation outline + glow */
 .node-g.over .ring  { stroke:#ff4d4d; stroke-width:4; }
 .node-g.under .ring { stroke:#ff9a3c; stroke-width:4; }
 .node-g.over .bub  { filter:drop-shadow(0 0 5px rgba(255,77,77,.9)); }
 .node-g.under .bub { filter:drop-shadow(0 0 5px rgba(255,154,60,.9)); }
+/* connection target: predator highlighted on long press */
+.node-g.conn-target .ring { stroke:rgba(0,215,255,.95) !important; stroke-width:5 !important; }
+.node-g.conn-target .bub  { filter:drop-shadow(0 0 10px rgba(0,200,255,.8)); }
 
 /* Current organisms — trapezoid tank of bubbles */
 .current-view { position:absolute; inset:0; display:none; }
@@ -422,7 +426,7 @@ canvas#bg { position:absolute; inset:0; z-index:0; pointer-events:none; }
                   <path d="M0,0 L10,5 L0,10 z" fill="rgba(15,95,135,.7)"/>
                 </marker>
               </defs>
-              <g id="edges" stroke="rgba(20,110,150,.5)" stroke-width="2"></g>
+              <g id="edges"></g>
               <g id="nodes"></g>
             </svg>
             <div class="legend">
@@ -460,26 +464,31 @@ canvas#bg { position:absolute; inset:0; z-index:0; pointer-events:none; }
 
 <script>
 /* ═══════════ SPECIES DATA (from v3) ═══════════ */
+/* requires is now an OBJECT { speciesKey: minCount } — gate checks counts, not just presence.
+   startUnlocked:true  → available from the very beginning.
+   Primary fish with no requires unlock via eco-health only (low thresholds).          */
 const SPECIES = {
-  /* ── Primary Consumers (herbivores / detritivores — available from start) ── */
-  mullet:      { name:'Striped Mullet',        sci:'Mugil cephalus',           tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐟', requires:[],                    minHealth:0,  pos:[50,400],  desc:'Schooling detritivore that grazes algae and sediment. A staple food source for reef predators.' },
-  parrotfish:  { name:'Bullethead Parrotfish', sci:'Chlorurus sordidus',       tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐠', requires:[],                    minHealth:0,  pos:[165,400], desc:'Scrapes algae off coral with a beak-like mouth, producing reef sand. Keeps coral from being smothered.' },
-  convict:     { name:'Convict Surgeonfish',   sci:'Acanthurus triostegus',    tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐟', requires:[],                    minHealth:0,  pos:[280,400], desc:'Striped algae-grazer that feeds in large foraging schools across the reef flat.' },
-  surgeonfish: { name:'Brown Surgeonfish',     sci:'Acanthurus nigrofuscus',   tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐠', requires:[],                    minHealth:0,  pos:[395,400], desc:'Algae-grazer that keeps coral surfaces clean. Travels in loose schools.' },
-  damselfish:  { name:'Reticulated Damselfish',sci:'Dascyllus reticulatus',    tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐠', requires:[],                    minHealth:0,  pos:[510,400], desc:'Tiny planktivore that shelters among branching coral. Abundant prey for mid-level predators.' },
+  /* ── Primary Consumers: only 2 available at start ── */
+  mullet:      { name:'Striped Mullet',        sci:'Mugil cephalus',           tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐟', startUnlocked:true, requires:{},                            minHealth:0,  pos:[50,400],  desc:'Schooling detritivore that grazes algae and sediment. A staple food source for reef predators.' },
+  damselfish:  { name:'Reticulated Damselfish',sci:'Dascyllus reticulatus',    tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐠', startUnlocked:true, requires:{},                            minHealth:0,  pos:[510,400], desc:'Tiny planktivore that shelters among branching coral. Abundant prey for mid-level predators.' },
 
-  /* ── Secondary Consumers ── */
-  wrasse:      { name:'Humphead Wrasse',       sci:'Crassilabrus undulatus',   tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐡', requires:['surgeonfish'],       minHealth:20, pos:[70,270],  desc:'Large reef fish that eats surgeonfish, crustaceans and mollusks. Recognizable by its prominent forehead.' },
-  scad:        { name:'Yellowtail Scad',       sci:'Atule mate',               tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐟', requires:['damselfish'],        minHealth:20, pos:[225,270], desc:'Fast-moving schooling predator of plankton and small fish. Hunts in coordinated shoals.' },
-  grunter:     { name:'Crescent Grunter',      sci:'Terapon theraps',          tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐠', requires:['convict'],           minHealth:25, pos:[370,270], desc:'Opportunistic feeder on small fish, crustaceans and worms across sandy reef margins.' },
-  manta:       { name:'Reef Manta Ray',        sci:'Mobula alfredi',           tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐡', requires:['damselfish'],        minHealth:30, pos:[510,270], desc:'Gentle filter-feeder that sweeps plankton from the water column. Indicator of a healthy, productive reef.' },
+  /* ── Primary Consumers: unlock via eco-health as reef begins to recover ── */
+  parrotfish:  { name:'Bullethead Parrotfish', sci:'Chlorurus sordidus',       tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐠', startUnlocked:false, requires:{},                           minHealth:5,  pos:[165,400], desc:'Scrapes algae off coral with a beak-like mouth, producing reef sand. Keeps coral from being smothered.' },
+  convict:     { name:'Convict Surgeonfish',   sci:'Acanthurus triostegus',    tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐟', startUnlocked:false, requires:{},                           minHealth:9,  pos:[280,400], desc:'Striped algae-grazer that feeds in large foraging schools across the reef flat.' },
+  surgeonfish: { name:'Brown Surgeonfish',     sci:'Acanthurus nigrofuscus',   tier:'Primary Consumer',   tierVar:'--t-primary',   emoji:'🐠', startUnlocked:false, requires:{},                           minHealth:13, pos:[395,400], desc:'Algae-grazer that keeps coral surfaces clean. Travels in loose schools.' },
 
-  /* ── Tertiary Consumers ── */
-  grouper:     { name:'Malabar Grouper',       sci:'Epinephelus malabaricus',  tier:'Tertiary Consumer',  tierVar:'--t-tertiary',  emoji:'🐟', requires:['mullet'],            minHealth:35, pos:[180,160], desc:'Solitary ambush predator. Hunts mullet, wrasse and smaller reef fish from cover.' },
-  barracuda:   { name:'Great Barracuda',       sci:'Sphyraena barracuda',      tier:'Tertiary Consumer',  tierVar:'--t-tertiary',  emoji:'🐠', requires:['scad'],              minHealth:45, pos:[380,160], desc:'Fast pelagic predator. Strikes schooling scad and wrasse with bursts of speed.' },
+  /* ── Secondary Consumers: unlock when a specific prey species hits a count ── */
+  scad:        { name:'Yellowtail Scad',       sci:'Atule mate',               tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐟', startUnlocked:false, requires:{damselfish:2},                minHealth:0,  pos:[225,270], desc:'Fast-moving schooling predator of plankton and small fish. Hunts in coordinated shoals.' },
+  wrasse:      { name:'Humphead Wrasse',       sci:'Crassilabrus undulatus',   tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐡', startUnlocked:false, requires:{surgeonfish:2},               minHealth:0,  pos:[70,270],  desc:'Large reef fish that eats surgeonfish, crustaceans and mollusks. Recognizable by its prominent forehead.' },
+  grunter:     { name:'Crescent Grunter',      sci:'Terapon theraps',          tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐠', startUnlocked:false, requires:{convict:2},                   minHealth:0,  pos:[370,270], desc:'Opportunistic feeder on small fish, crustaceans and worms across sandy reef margins.' },
+  manta:       { name:'Reef Manta Ray',        sci:'Mobula alfredi',           tier:'Secondary Consumer', tierVar:'--t-secondary', emoji:'🐡', startUnlocked:false, requires:{damselfish:3},                minHealth:22, pos:[510,270], desc:'Gentle filter-feeder that sweeps plankton from the water column. Indicator of a healthy, productive reef.' },
 
-  /* ── Keystone Species ── */
-  shark:       { name:'Blacktip Reef Shark',   sci:'Carcharhinus melanopterus',tier:'Keystone Species',   tierVar:'--t-keystone',  emoji:'🦈', requires:['mullet','parrotfish'],minHealth:55, pos:[280,55], desc:'KEYSTONE SPECIES. Top predator that regulates the whole reef. Without it, mid-level fish overpopulate, herbivores are wiped out, and the reef collapses.' },
+  /* ── Tertiary Consumers: unlock when secondary prey reaches a count ── */
+  grouper:     { name:'Malabar Grouper',       sci:'Epinephelus malabaricus',  tier:'Tertiary Consumer',  tierVar:'--t-tertiary',  emoji:'🐟', startUnlocked:false, requires:{mullet:3, wrasse:1},          minHealth:35, pos:[180,160], desc:'Solitary ambush predator. Hunts mullet, wrasse and smaller reef fish from cover.' },
+  barracuda:   { name:'Great Barracuda',       sci:'Sphyraena barracuda',      tier:'Tertiary Consumer',  tierVar:'--t-tertiary',  emoji:'🐠', startUnlocked:false, requires:{scad:2},                      minHealth:45, pos:[380,160], desc:'Fast pelagic predator. Strikes schooling scad and wrasse with bursts of speed.' },
+
+  /* ── Keystone: needs stable predators + prey across multiple tiers ── */
+  shark:       { name:'Blacktip Reef Shark',   sci:'Carcharhinus melanopterus',tier:'Keystone Species',   tierVar:'--t-keystone',  emoji:'🦈', startUnlocked:false, requires:{mullet:2, surgeonfish:2, grouper:1}, minHealth:55, pos:[280,55], desc:'KEYSTONE SPECIES. Top predator that regulates the whole reef. Without it, mid-level fish overpopulate, herbivores are wiped out, and the reef collapses.' },
 };
 const EDGES = [
   ['mullet','grouper'], ['mullet','barracuda'], ['mullet','shark'],
@@ -495,60 +504,113 @@ const EDGES = [
 const KEYS = Object.keys(SPECIES);
 const TOTAL = KEYS.length;
 
-/* ── Trophic-pyramid ratio model (no hard caps) ──
-   Each step targets prey:predator = 3:1. A level is OVERPOPULATED when its prey
-   outnumber the predators above it by more than 5:1 — including the case of prey
-   with NO predator at all (unchecked). A level is UNDERPOPULATED when predators
-   are present but prey are scarcer than 1:1 (prey over-eaten / predators starving).
-   The closer every link sits to 3:1, the higher eco-health climbs. */
-const TARGET_RATIO = 3, OVERPOP_RATIO = 5, UNDER_RATIO = 1;
-const BAL_BONUS = 16;   // health per perfectly-balanced link (3 links → +48)
-const IMBALANCE_PEN = 2; // health lost per surplus/missing individual beyond the band
-const TIER_LEVEL = { 'Primary Consumer':1, 'Secondary Consumer':2, 'Tertiary Consumer':3, 'Keystone Species':4 };
-const TIER_NAME  = { 1:'herbivores', 2:'secondary consumers', 3:'tertiary consumers', 4:'sharks' };
-function levelOf(k){ return TIER_LEVEL[SPECIES[k].tier]; }
-function tierTotals(){ const T={1:0,2:0,3:0,4:0}; for(const k of KEYS) T[levelOf(k)] += state.counts[k]; return T; }
-function ratioScore(r){ /* 0 at <=1 or >=5, peak 1 at 3 */
-  if (r<=UNDER_RATIO || r>=OVERPOP_RATIO) return 0;
-  return r<=TARGET_RATIO ? (r-UNDER_RATIO)/(TARGET_RATIO-UNDER_RATIO) : (OVERPOP_RATIO-r)/(OVERPOP_RATIO-TARGET_RATIO);
+/* ── Per-species hints ── */
+const HINTS = {
+  mullet:      { added:'Striped mullet help recycle nutrients and support the lower food web.', hint:'Some larger predators hunt small schooling fish — a stable mullet population may attract them.' },
+  parrotfish:  { added:'Bullethead parrotfish are grazing on algae and helping coral recover.', hint:'When herbivore fish become stable, larger reef predators may return.' },
+  convict:     { added:'Convict surgeonfish are helping control algae growth across the reef flat.', hint:'A stable herbivore population supports the next layer of the food web. Add small reef fish or mid-level consumers to continue rebuilding.' },
+  surgeonfish: { added:'Brown surgeonfish are feeding on algae and improving reef balance.', hint:'The reef now needs small fish populations to support larger predators.' },
+  damselfish:  { added:'Reticulated damselfish are filling the prey layer — small but important.', hint:'Small reef fish support predators such as wrasses, groupers, and reef sharks.' },
+  wrasse:      { added:'Humphead wrasse have returned to the reef.', hint:'Larger predators may now follow. Keep prey fish abundant to maintain the balance.' },
+  scad:        { added:'Yellowtail scad are forming schooling groups in open water.', hint:'Schooling fish attract fast predators. A reef predator may be close to returning.' },
+  grunter:     { added:'Crescent grunter have settled into the reef margins.', hint:'Reef predators need small fish prey. The food web is strengthening.' },
+  manta:       { added:'Reef manta rays are filtering plankton from the water column.', hint:'A clean, productive reef can now support larger predators.' },
+  grouper:     { added:'Malabar grouper have taken up ambush positions in the reef.', hint:'Predators are recovering. Continue stabilising the food web.' },
+  barracuda:   { added:'Great barracuda are patrolling the reef edges.', hint:'The food web is nearly complete. A top predator may now be possible.' },
+  shark:       { added:'The blacktip reef shark has returned as the top predator.', hint:'Keep all populations in balance — the shark regulates the whole ecosystem.' },
+};
+
+/* ── Progressive locked hints (3 levels, shown on repeated taps) ── */
+const LOCKED_HINTS = {
+  wrasse:   ['Something higher in the food web is still missing.',
+             'This predator needs enough small reef fish before it can return.',
+             'Add more damselfish or surgeonfish — the wrasse needs a stable prey base.'],
+  scad:     ['A schooling fish is missing from the open water.',
+             'Schooling fish return when the reef has enough food and space.',
+             'Strengthen the lower food web — add more damselfish to bring the scad back.'],
+  grunter:  ['A small reef fish is missing from the margins.',
+             'This fish returns when the lower food web is stable and there is shelter.',
+             'Add damselfish and more primary consumers to restore reef shelter.'],
+  manta:    ['A large filter feeder is missing from the water column.',
+             'Manta rays are filter feeders — they need clean, plankton-rich water.',
+             'Improve overall reef health by balancing the food web. The manta does not eat small fish.'],
+  grouper:  ['A reef predator is missing.',
+             'Groupers need enough small reef fish before they can survive here.',
+             'Add mullet or small reef fish — a stable prey base will bring the grouper back.'],
+  barracuda:['A fast predator is missing from the reef.',
+             'Barracudas return when schooling fish are abundant.',
+             'Add yellowtail scad or striped mullet — schooling fish attract the barracuda.'],
+  shark:    ['The reef is still missing its top predator.',
+             'A shark cannot return to an unstable reef. Restore prey fish and reduce ecosystem stress first.',
+             'Stabilise small fish and at least one reef predator, then bring eco-health above 55%.'],
+};
+
+/* ── Per-species ratio system ──
+   Each species is scored against its OWN direct predators from EDGES.
+   Overpopulated = count[k] / sum(its predators) > 5:1  (or > 5 with zero predators)
+   Underpopulated = predators present but count[k] / sum(predators) < 1:1
+   Health bonus peaks when every prey species sits at 3:1 vs its predators.        */
+const OVERPOP_RATIO  = 8;   // health penalty threshold
+const WARN_RATIO     = 4;   // visual warning (red badge) fires earlier than penalty
+const UNDER_RATIO    = 0.5; // penalise when predators outnumber prey 2:1+
+const IMBALANCE_PEN  = 0.5;
+const PREY_SPECIES   = KEYS.filter(k => k !== 'shark');
+const PREY_BONUS     = 48 / PREY_SPECIES.length;
+
+/* ratioScore: plateau 2:1–5:1 = full 1.0 */
+function ratioScore(r){
+  if (r <= UNDER_RATIO || r >= OVERPOP_RATIO) return 0;
+  const LO = 2, HI = 5;
+  if (r >= LO && r <= HI) return 1;
+  return r < LO ? (r-UNDER_RATIO)/(LO-UNDER_RATIO) : (OVERPOP_RATIO-r)/(OVERPOP_RATIO-HI);
 }
-/* health delta for the link where level L are the prey, level L+1 the predators */
-function linkDelta(L){
-  const T = tierTotals(), prey = T[L], pred = T[L+1];
-  if (prey===0 && pred===0) return 0;
-  if (pred===0) return -IMBALANCE_PEN * Math.max(0, prey - OVERPOP_RATIO); // prey, no predator (free up to 5)
-  if (prey===0) return -IMBALANCE_PEN * pred;                              // predators, no prey (starving)
-  const r = prey/pred;
-  if (r >= OVERPOP_RATIO) return -IMBALANCE_PEN * (prey - pred*OVERPOP_RATIO); // overpopulated prey
-  if (r <= UNDER_RATIO)   return -IMBALANCE_PEN * (pred - prey);               // underpopulated prey
-  return BAL_BONUS * ratioScore(r);                                            // in band → bonus, peak at 3:1
+function predsOf(k){ return EDGES.filter(e=>e[0]===k).map(e=>e[1]); }
+
+/* visual warning: fires at WARN_RATIO (4:1) so red badge shows before big penalty hits */
+function speciesOver(k){
+  const cnt=state.counts[k]; if(!cnt) return false;
+  const predTotal=predsOf(k).reduce((s,p)=>s+state.counts[p],0);
+  return predTotal===0 ? cnt>WARN_RATIO : cnt/predTotal>WARN_RATIO;
 }
-/* level L (1..3) overpopulated as prey? (too many for the predators above, incl. none) */
-function levelOver(L){ if(L<1||L>3) return false; const T=tierTotals(),prey=T[L],pred=T[L+1];
-  if(prey===0) return false; return pred===0 ? prey>OVERPOP_RATIO : prey/pred>OVERPOP_RATIO; }
-/* level L (1..3) underpopulated as prey? (predators present but prey scarce <1:1) */
-function levelUnder(L){ if(L<1||L>3) return false; const T=tierTotals(),prey=T[L],pred=T[L+1];
-  if(pred===0) return false; return prey/pred < UNDER_RATIO; }
-/* per-species status for badges/warnings */
-function speciesOver(k){ const L=levelOf(k); return levelOver(L) || (L>=2 && levelUnder(L-1)); }
-function speciesUnder(k){ const L=levelOf(k); return levelUnder(L); }
+function speciesUnder(k){
+  const cnt=state.counts[k]; if(!cnt) return false;
+  const predTotal=predsOf(k).reduce((s,p)=>s+state.counts[p],0);
+  return predTotal>0 && cnt/predTotal<UNDER_RATIO;
+}
 
 let state, view = 'web';
 function freshState() {
   return {
     counts: Object.fromEntries(KEYS.map(k=>[k,0])),
-    unlocked: Object.fromEntries(KEYS.map(k=>[k, SPECIES[k].requires.length===0])),
+    unlocked: Object.fromEntries(KEYS.map(k=>[k, SPECIES[k].startUnlocked===true])),
     ever: new Set(), won:false,
+    tapCounts: Object.fromEntries(KEYS.map(k=>[k,0])),
   };
 }
 
-/* ═══════════ ECO-HEALTH (trophic-pyramid ratio model) ═══════════ */
-function ecohealth() {
-  const distinct = KEYS.filter(k=>state.counts[k]>0).length;
-  let h = distinct * 4;                  // biodiversity / bootstrap (up to 44)
-  for (let L=1; L<=3; L++) h += linkDelta(L);   // ratio balance + over/under penalties
-  if (state.counts.shark>0) h += 8;             // keystone stability bonus
-  return Math.max(0, Math.min(100, Math.round(h)));
+/* ═══════════ ECO-HEALTH ═══════════
+   Generous diversity base (×6) means having all species gets you to ~74% free.
+   Ratio bonuses stack on top — the formula can exceed 100 internally (~130 max)
+   so reasonable-but-not-perfect ratios push you over 100.
+   All penalties (overpop + underpop) are kept — balance still matters.          */
+function ecohealth(){
+  const distinct=KEYS.filter(k=>state.counts[k]>0).length;
+  let h=distinct*6; // generous diversity base → up to 66 for 11 species
+  for(const k of PREY_SPECIES){
+    const cnt=state.counts[k]; if(!cnt) continue;
+    const preds=predsOf(k);
+    const predTotal=preds.reduce((s,p)=>s+state.counts[p],0);
+    if(predTotal===0){
+      h -= IMBALANCE_PEN*Math.max(0, cnt-OVERPOP_RATIO);
+    } else {
+      const r=cnt/predTotal;
+      if(r>=OVERPOP_RATIO)    h -= IMBALANCE_PEN*(cnt-predTotal*OVERPOP_RATIO);
+      else if(r<=UNDER_RATIO) h -= IMBALANCE_PEN*(predTotal-cnt);
+      else                    h += PREY_BONUS*ratioScore(r);
+    }
+  }
+  if(state.counts.shark>0) h+=8;
+  return Math.max(0,Math.min(100,Math.round(h)));
 }
 
 /* ═══════════ NAV ═══════════ */
@@ -569,7 +631,11 @@ function renderEdges() {
     const dx=pb[0]-pa[0], dy=pb[1]-pa[1], len=Math.hypot(dx,dy)||1, ux=dx/len, uy=dy/len;
     const x1=pa[0]+ux*(NODE_R+2), y1=pa[1]+uy*(NODE_R+2);
     const x2=pb[0]-ux*(NODE_R+11), y2=pb[1]-uy*(NODE_R+11);
-    html+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#arrow)"/>`;
+    // hidden by default — revealed on long press
+    html+=`<g id="edge-${a}-${b}" class="edge-g" style="opacity:0;transition:opacity .2s">
+      <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(0,210,255,.9)" stroke-width="2.5" marker-end="url(#arrow)"/>
+      <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(0,180,255,.25)" stroke-width="7"/>
+    </g>`;
   }
   document.getElementById('edges').innerHTML = html;
 }
@@ -588,7 +654,9 @@ function renderNodes() {
   for (const k of KEYS) {
     const s=SPECIES[k], unl=state.unlocked[k], [x,y]=s.pos, ct=state.counts[k], col=tierColor(k);
     const status = (unl && ct>0) ? (speciesOver(k)?'over':speciesUnder(k)?'under':'') : '';
-    html += `<g class="node-g ${unl?'':'locked'} ${status}" onclick="openNode('${k}')">`;
+    html += `<g class="node-g ${unl?'':'locked'} ${status}" id="node-${k}"
+      onpointerdown="nodeDown('${k}',event)" onpointerup="nodeUp('${k}')"
+      onpointerleave="nodeCancel()" oncontextmenu="return false">`;
     // glass bubble
     html += `<circle class="bub" cx="${x}" cy="${y}" r="${NODE_R}" fill="url(#bubbleGrad)" stroke="rgba(255,255,255,.85)" stroke-width="2"/>`;
     html += `<circle class="ring" cx="${x}" cy="${y}" r="${NODE_R}" fill="none" stroke="rgba(255,255,255,.82)" stroke-width="2.5" opacity="${unl?1:0.45}" pointer-events="none"/>`;
@@ -609,6 +677,53 @@ function renderNodes() {
     html += `</g>`;
   }
   document.getElementById('nodes').innerHTML = html;
+}
+
+/* ═══════════ LONG PRESS — CONNECTION REVEAL ═══════════ */
+let _pressTimer=null, _pressActive=false, _pressKey=null;
+
+function nodeDown(k, e){
+  e.preventDefault();
+  _pressActive=false; _pressKey=k;
+  _pressTimer=setTimeout(()=>{
+    _pressActive=true;
+    showConnections(k);
+  }, 420);
+}
+function nodeUp(k){
+  clearTimeout(_pressTimer);
+  if(!_pressActive) openNode(k);   // short tap → open modal
+  else hideConnections();           // long press released → clear
+  _pressActive=false; _pressKey=null;
+}
+function nodeCancel(){
+  clearTimeout(_pressTimer);
+  if(_pressActive) hideConnections();
+  _pressActive=false; _pressKey=null;
+}
+
+function showConnections(k){
+  // dim ALL nodes
+  KEYS.forEach(id=>{ const g=document.getElementById('node-'+id); if(g) g.style.opacity='0.18'; });
+  // bring THIS node back to full
+  const self=document.getElementById('node-'+k); if(self) self.style.opacity='1';
+  // show edges FROM k (k is prey → predator) and highlight predator nodes
+  const myPreds=predsOf(k);
+  for(const [a,b] of EDGES){
+    if(a!==k) continue;
+    const eg=document.getElementById(`edge-${a}-${b}`); if(eg) eg.style.opacity='1';
+    const pg=document.getElementById('node-'+b); if(pg){ pg.style.opacity='1'; pg.classList.add('conn-target'); }
+  }
+  // also show edges where k is the predator (prey → k) in a softer style
+  for(const [a,b] of EDGES){
+    if(b!==k) continue;
+    const eg=document.getElementById(`edge-${a}-${b}`); if(eg){ eg.style.opacity='0.45'; }
+    const ag=document.getElementById('node-'+a); if(ag) ag.style.opacity='0.55';
+  }
+}
+function hideConnections(){
+  KEYS.forEach(id=>{ const g=document.getElementById('node-'+id); if(g){ g.style.opacity=''; g.classList.remove('conn-target'); } });
+  document.querySelectorAll('.edge-g').forEach(g=>g.style.opacity='0');
 }
 
 /* ═══════════ CURRENT ORGANISMS ═══════════ */
@@ -840,9 +955,13 @@ function checkUnlocks() {
   for (const k of KEYS) {
     if (state.unlocked[k]) continue;
     const s=SPECIES[k];
-    if (s.requires.every(r=>state.counts[r]>0) && h>=s.minHealth) {
+    const reqsMet = Object.entries(s.requires).every(([r,n])=>state.counts[r]>=n);
+    if (reqsMet && h>=s.minHealth) {
       state.unlocked[k]=true;
-      setTimeout(()=>alucia(`You unlocked the <b>${s.name}</b>! Tap its node to add it.`), 250);
+      const msg = s.startUnlocked===false && Object.keys(s.requires).length===0
+        ? `The reef is recovering — <b>${s.name}</b> can now return! Tap its node to add it.`
+        : `<b>${s.name}</b> unlocked! The prey population is stable enough to support it.`;
+      setTimeout(()=>alucia(msg), 250);
     }
   }
 }
@@ -855,36 +974,69 @@ function unlockHint(k){
   const locked = preds.filter(p=>!state.unlocked[p]).sort((a,b)=>SPECIES[a].minHealth-SPECIES[b].minHealth);
   if (!locked.length) return `Part of a balanced food chain. Watch the ratio above and below it.`;
   const sp = SPECIES[locked[0]];
-  const needs = sp.requires.map(r=>SPECIES[r].name);
-  const needStr = needs.length ? `Try adding ${listJoin(needs)} and building up the reef a little.` : `Build up the reef health a little more.`;
+  const needs = Object.entries(sp.requires).map(([r,n])=>`${SPECIES[r].name} ×${n}`);
+  const needStr = needs.length ? `Try getting ${listJoin(needs)} in the reef.` : `Build up the reef health a little more.`;
   return `Something bigger out there feeds on this species. ${needStr}`;
-  return hint;
 }
 
 /* ═══════════ MODAL ═══════════ */
+function aluciaOverpopHint(k) {
+  if (!state.counts[k]) return;
+  if (speciesOver(k)) {
+    const myPreds = predsOf(k);
+    const present = myPreds.filter(p=>state.counts[p]>0).map(p=>SPECIES[p].name);
+    const missing = myPreds.filter(p=>!state.counts[p]).map(p=>SPECIES[p].name);
+    let msg = `There are too many <b>${SPECIES[k].name}</b>!`;
+    if (present.length) msg += ` This is putting pressure on ${listJoin(present)}.`;
+    if (missing.length) msg += ` Try adding ${listJoin(missing)} to control the population.`;
+    else msg += ` Remove some to restore balance.`;
+    setTimeout(()=>alucia(msg,'warn'), 300);
+  } else if (speciesUnder(k)) {
+    const hunters = predsOf(k).filter(p=>state.counts[p]>0).map(p=>SPECIES[p].name);
+    setTimeout(()=>alucia(`<b>${SPECIES[k].name}</b> is being overhunted by ${listJoin(hunters)}. Add more ${SPECIES[k].name} or remove some predators.`,'warn'), 300);
+  }
+}
+
 function openNode(k) {
   const s=SPECIES[k], unl=state.unlocked[k], h=ecohealth(), col=tierColor(k);
+  // fire Alucia overpopulation hint whenever player taps an imbalanced species
+  if (unl && state.counts[k]>0) aluciaOverpopHint(k);
   let left = `<div class="m-left"><div class="m-figure ${unl?'':'sil'}">${s.emoji}</div><div class="m-name">${unl?s.name:'???'}</div>`;
   if (unl) left += `<button class="m-add" onclick="addOne('${k}'); closeModal();" title="Add to ecosystem"><b>+</b> ADD</button>`;
   left += `</div>`;
   let right;
   if (unl) {
+    const statusTxt = state.counts[k]>0 ? (speciesOver(k)?' &nbsp;⚠ overpopulated':speciesUnder(k)?' &nbsp;⚠ underpopulated':' &nbsp;✓ balanced') : '';
+    const hintTxt = HINTS[k] ? `<div class="m-k" style="margin-top:8px">What's next</div><div class="m-desc" style="font-style:italic;color:#7fd6f0">${HINTS[k].hint}</div>` : '';
     right = `<div class="m-panel">
       <div class="m-tier" style="color:${col}">${s.tier}</div>
       <div class="m-k">Scientific Name</div><div class="m-sci">${s.sci}</div>
-      <div class="m-k">Unlock Hint</div><div class="m-desc">${unlockHint(k)}</div>
-      <div class="m-inplay">In ecosystem: <b>${state.counts[k]}</b>${state.counts[k]>0?(speciesOver(k)?' &nbsp;⚠ overpopulated':speciesUnder(k)?' &nbsp;⚠ underpopulated':' &nbsp;✓ balanced'):''}</div>
+      <div class="m-k">Role</div><div class="m-desc">${HINTS[k]?HINTS[k].added:s.desc}</div>
+      ${hintTxt}
+      <div class="m-inplay">In ecosystem: <b>${state.counts[k]}</b>${statusTxt}</div>
     </div>`;
   } else {
-    const hMet=h>=s.minHealth;
-    let reqs = `<div class="m-k" style="margin-top:10px">Place its prey to unlock</div>`;
-    if (!s.requires.length) reqs += `<div class="req-row met">✓ no prey needed</div>`;
-    else for (const r of s.requires){ const met=state.counts[r]>0; reqs += `<div class="req-row ${met?'met':'miss'}">${met?'✓':'○'} ${SPECIES[r].name}</div>`; }
+    // progressive hint — gets more specific each tap
+    const taps = state.tapCounts[k] || 0;
+    state.tapCounts[k] = taps + 1;
+    const lh = LOCKED_HINTS[k] || [];
+    const hintLevel = Math.min(taps, lh.length - 1);
+    const hintText = lh[hintLevel] || 'Restore the species it depends on first.';
+    const hintLabel = taps === 0 ? 'Hint' : taps === 1 ? 'Clearer hint' : 'Almost there';
+    const hMet = h >= s.minHealth;
+    let reqs = '';
+    const reqEntries = Object.entries(s.requires);
+    if (!reqEntries.length) {
+      reqs += `<div class="req-row ${hMet?'met':'miss'}">${hMet?'✓':'○'} Eco-health ≥ ${s.minHealth}% — keep adding species</div>`;
+    } else {
+      for (const [r,n] of reqEntries){ const have=state.counts[r], met=have>=n; reqs+=`<div class="req-row ${met?'met':'miss'}">${met?'✓':'○'} ${SPECIES[r].name} ×${n} <span class="req-sub">(${have} in reef)</span></div>`; }
+    }
     right = `<div class="m-panel">
-      <div class="m-tier locked">??? Locked</div>
-      <div class="m-k">Scientific Name</div><div class="m-sci">???</div>
-      <div class="m-k">Unlock Requirements</div>
-      <div class="req-row ${hMet?'met':'miss'}">${hMet?'✓':'○'} Eco-health ≥ ${s.minHealth}% <span class="req-sub">(now ${h}%)</span></div>
+      <div class="m-tier locked">Species Missing</div>
+      <div class="m-k" style="margin-top:4px">${hintLabel}</div>
+      <div class="m-desc">${hintText}</div>
+      <div class="m-k" style="margin-top:8px">Requirements</div>
+      ${s.minHealth>0?`<div class="req-row ${hMet?'met':'miss'}">${hMet?'✓':'○'} Eco-health ≥ ${s.minHealth}% <span class="req-sub">(now ${h}%)</span></div>`:''}
       ${reqs}
     </div>`;
   }
@@ -900,12 +1052,8 @@ function addOne(k) {
   const firstTime = !state.ever.has(k);
   state.counts[k]++; state.ever.add(k);
   if (firstTime) showReveal(k);
-  const L = levelOf(k);
-  if (levelOver(L)) {
-    alucia(`Hey! You're overpopulating the <b>${TIER_NAME[L]}</b> — over ${OVERPOP_RATIO}:1 prey per predator. Add a predator above them or remove some.`, 'warn');
-  } else if (L>=2 && levelUnder(L-1)) {
-    alucia(`Too many <b>${TIER_NAME[L]}</b> for the <b>${TIER_NAME[L-1]}</b> below them — the prey will be wiped out. Add more prey or remove a predator.`, 'warn');
-  }
+  // Alucia warns if this tips a balance (shared function keeps messages consistent)
+  if (!firstTime) aluciaOverpopHint(k);
   checkUnlocks(); render();
 }
 function removeOne(k){ if(state.counts[k]>0){ state.counts[k]--; checkUnlocks(); render(); } }
@@ -942,7 +1090,8 @@ function showReveal(k) {
     <div class="reveal-name">${s.name}</div>
     <div class="reveal-sci">${s.sci}</div>
     <div class="reveal-tier" style="color:${col}; border-color:${col}">${s.tier}</div>
-    <div class="reveal-desc">${unlockHint(k)}</div>
+    <div class="reveal-desc">${HINTS[k]?HINTS[k].added:s.desc}</div>
+    ${HINTS[k]?`<div class="reveal-hint">💡 ${HINTS[k].hint}</div>`:''}
     <div class="reveal-bar"><i></i></div>
   </div>`;
   host.classList.add('show');

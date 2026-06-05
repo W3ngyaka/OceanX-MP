@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
   m_Name: Bullethead parrotfish_Data
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
-  SpeciesName: Unknown Species
-  ScientificName: Scientific Name
+  SpeciesName: Bullethead parrotfish
+  ScientificName: Chlorurus sordidus
   Role: 2
-  SchoolProperties: {fileID: 0}
-  MovementProperties: {fileID: 0}
-  MotionRenderProperties: {fileID: 0}
-  BehaviorProperties: {fileID: 0}
+  SchoolProperties: {fileID: 11400000, guid: 57f556af62b09bd43a6685bf176c7f70, type: 2}
+  MovementProperties: {fileID: 11400000, guid: 3cd9220e0ea072e40bab1ea284e73399, type: 2}
+  MotionRenderProperties: {fileID: 11400000, guid: b40208d6f34741b4c88e384e2a3e1ba2, type: 2}
+  BehaviorProperties: {fileID: 11400000, guid: f07e0f081bfce9d42964834dc8ba651a, type: 2}
   ReproductionRate: 0.1
   NaturalDeathRate: 0.03
   StarvationDeathRate: 0.25

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
   m_Name: Brown-marbled grouper_Data
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
-  SpeciesName: Unknown Species
-  ScientificName: Scientific Name
-  Role: 2
-  SchoolProperties: {fileID: 0}
-  MovementProperties: {fileID: 0}
-  MotionRenderProperties: {fileID: 0}
-  BehaviorProperties: {fileID: 0}
+  SpeciesName: Brown-marbled grouper
+  ScientificName: Epinephelus fuscoguttatus
+  Role: 1
+  SchoolProperties: {fileID: 11400000, guid: a02bbd14df4f6c44e9e79331a78c8ccf, type: 2}
+  MovementProperties: {fileID: 11400000, guid: 7249505da31bde34a8cbd8191da25c3c, type: 2}
+  MotionRenderProperties: {fileID: 11400000, guid: 63a975c95b47ddd428a657dfdca6926a, type: 2}
+  BehaviorProperties: {fileID: 11400000, guid: 076776ee5f00f3047a0d6d58f7fec7f4, type: 2}
   ReproductionRate: 0.1
   NaturalDeathRate: 0.03
   StarvationDeathRate: 0.25

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
   m_Name: Humphead wrasse_Data
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
-  SpeciesName: Unknown Species
-  ScientificName: Scientific Name
-  Role: 2
-  SchoolProperties: {fileID: 0}
-  MovementProperties: {fileID: 0}
-  MotionRenderProperties: {fileID: 0}
-  BehaviorProperties: {fileID: 0}
+  SpeciesName: Humphead wrasse
+  ScientificName: Cheilinus undulatus
+  Role: 1
+  SchoolProperties: {fileID: 11400000, guid: e5057589a9bfe4340bf4b696e3866375, type: 2}
+  MovementProperties: {fileID: 11400000, guid: 61cb8a283edf7d34995d0b16b19309e5, type: 2}
+  MotionRenderProperties: {fileID: 11400000, guid: b7aec848624c4ee4eb53be1c2f6867f7, type: 2}
+  BehaviorProperties: {fileID: 11400000, guid: 2114e0c85d4c08c45b6af7069b8a0cf3, type: 2}
   ReproductionRate: 0.1
   NaturalDeathRate: 0.03
   StarvationDeathRate: 0.25

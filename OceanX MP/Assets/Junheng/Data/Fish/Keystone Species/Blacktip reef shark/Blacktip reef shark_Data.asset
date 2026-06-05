@@ -23,6 +23,12 @@ MonoBehaviour:
   NaturalDeathRate: 0.03
   StarvationDeathRate: 0.25
   StarvationThreshold: 0.2
-  PreySpecies: []
+  PreySpecies:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   PredatorSpecies: []
   RuntimeId: -1

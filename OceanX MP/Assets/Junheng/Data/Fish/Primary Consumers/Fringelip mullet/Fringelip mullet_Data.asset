@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
   m_Name: Fringelip mullet_Data
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
-  SpeciesName: Unknown Species
-  ScientificName: Scientific Name
+  SpeciesName: Fringelip mullet
+  ScientificName: Crenemugil crenilabis
   Role: 2
-  SchoolProperties: {fileID: 0}
-  MovementProperties: {fileID: 0}
-  MotionRenderProperties: {fileID: 0}
-  BehaviorProperties: {fileID: 0}
+  SchoolProperties: {fileID: 11400000, guid: 008654d59d1d8e54e8790141b6867f96, type: 2}
+  MovementProperties: {fileID: 11400000, guid: f82c0eeb63266cc44b8112c5d63bfe6a, type: 2}
+  MotionRenderProperties: {fileID: 11400000, guid: 6494ee32918ec464484d62b1ae75380e, type: 2}
+  BehaviorProperties: {fileID: 11400000, guid: a5180085060f8a44f9ceaa9fc58e6a29, type: 2}
   ReproductionRate: 0.1
   NaturalDeathRate: 0.03
   StarvationDeathRate: 0.25

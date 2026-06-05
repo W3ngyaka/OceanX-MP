@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
   m_Name: Lined surgeonfish_Data
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
-  SpeciesName: Unknown Species
-  ScientificName: Scientific Name
+  SpeciesName: Lined surgeonfish
+  ScientificName: Acanthurus lineatus
   Role: 2
-  SchoolProperties: {fileID: 0}
-  MovementProperties: {fileID: 0}
-  MotionRenderProperties: {fileID: 0}
-  BehaviorProperties: {fileID: 0}
+  SchoolProperties: {fileID: 11400000, guid: c9c45c868cfbed8458ee38a94a4ce706, type: 2}
+  MovementProperties: {fileID: 11400000, guid: 34f5df41b0005e3468ebfe889d26330c, type: 2}
+  MotionRenderProperties: {fileID: 11400000, guid: 2430225f87b21cf4bb6697e4e9f8aa56, type: 2}
+  BehaviorProperties: {fileID: 11400000, guid: 21535cd6a383e9346ba5831f2c2b7ab9, type: 2}
   ReproductionRate: 0.1
   NaturalDeathRate: 0.03
   StarvationDeathRate: 0.25

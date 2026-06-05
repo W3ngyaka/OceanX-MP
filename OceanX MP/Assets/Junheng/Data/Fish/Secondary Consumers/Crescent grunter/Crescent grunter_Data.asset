@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
   m_Name: Crescent grunter_Data
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
-  SpeciesName: Unknown Species
-  ScientificName: Scientific Name
-  Role: 2
-  SchoolProperties: {fileID: 0}
-  MovementProperties: {fileID: 0}
-  MotionRenderProperties: {fileID: 0}
-  BehaviorProperties: {fileID: 0}
+  SpeciesName: Crescent grunter
+  ScientificName: Terapon jarbua
+  Role: 1
+  SchoolProperties: {fileID: 11400000, guid: 46d3e8b5923c3d1479f33b342f9e9bb8, type: 2}
+  MovementProperties: {fileID: 11400000, guid: ed20c432b0c680d468e77d1b721e8f43, type: 2}
+  MotionRenderProperties: {fileID: 11400000, guid: d9c5bd71b1644ea4db6c1f59ac83dd73, type: 2}
+  BehaviorProperties: {fileID: 11400000, guid: 1610b1e67526f3f4cae92ed850c2d7e2, type: 2}
   ReproductionRate: 0.1
   NaturalDeathRate: 0.03
   StarvationDeathRate: 0.25

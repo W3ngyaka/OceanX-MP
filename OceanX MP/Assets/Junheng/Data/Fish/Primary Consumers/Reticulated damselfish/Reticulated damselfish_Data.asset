@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
   m_Name: Reticulated damselfish_Data
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
-  SpeciesName: Unknown Species
-  ScientificName: Scientific Name
+  SpeciesName: Reticulated damselfish
+  ScientificName: Dascyllus reticulatus
   Role: 2
-  SchoolProperties: {fileID: 0}
-  MovementProperties: {fileID: 0}
-  MotionRenderProperties: {fileID: 0}
-  BehaviorProperties: {fileID: 0}
+  SchoolProperties: {fileID: 11400000, guid: e739b98a03c861d44860eafbb568b102, type: 2}
+  MovementProperties: {fileID: 11400000, guid: 5100c662b694478418605987c8dd2a5a, type: 2}
+  MotionRenderProperties: {fileID: 11400000, guid: 432bdb2122140304ba8a996b1b239639, type: 2}
+  BehaviorProperties: {fileID: 11400000, guid: 1259120d866495344b01c7682ad5c908, type: 2}
   ReproductionRate: 0.1
   NaturalDeathRate: 0.03
   StarvationDeathRate: 0.25

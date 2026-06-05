@@ -13,7 +13,8 @@
       "Bash(mkdir -p ~/oceanx-prototype)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git log *)"
+      "Bash(git log *)",
+      "Bash(xargs grep -l \"Assets/Junheng/Simulation/Shaders\")"
     ]
   }
 }

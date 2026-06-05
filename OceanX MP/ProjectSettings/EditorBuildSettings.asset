@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Junheng/Ecosystem/Scenes/Simple Flock Test.unity
+    path: Assets/Junheng/Scenes/Scenes/Simple Flock Test.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
-    path: Assets/Junheng/Ecosystem/Scenes/Scriptable Object FLocking Test.unity
+    path: Assets/Junheng/Scenes/Scenes/Scriptable Object FLocking Test.unity
     guid: dfb17e31e921e9a47814f6653cf1a783
   - enabled: 0
-    path: Assets/Junheng/Ecosystem/Scenes/Netcode Test.unity
+    path: Assets/Junheng/Scenes/Scenes/Netcode Test.unity
     guid: 6a56bdae7f11e6f4e8d408a7c364802f
   - enabled: 0
     path: Assets/Junheng/Simulation/Scenes/Boids_Demo.unity

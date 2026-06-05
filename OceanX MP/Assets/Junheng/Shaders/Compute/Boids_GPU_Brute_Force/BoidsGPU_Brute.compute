@@ -1,0 +1,353 @@
+﻿#pragma kernel BoidSimulationKernel
+#define THREAD_GROUP_SIZE 256
+#define TARGET_AFFECTER_TYPE 0
+#define OBSTACLE_AFFECTER_TYPE 1
+#define AFFECTS_ALL 255
+
+#include "Assets/Junheng/Shaders/Compute/BoidSimulationData.hlsl"
+#include "Assets/Junheng/Shaders/Compute/Quaternion.hlsl"
+
+// General simulation properties.
+int _TotalBoidCount;
+int _TotalAffectersCount;
+float _TimeDelta;
+float3 _SimulationAreaCenter;
+float3 _SimulationAreaSize;
+
+// Buffer containing all boids in the simulation.
+RWStructuredBuffer<BoidInfo> _Boids;
+// Buffer containing informations about every boid school used in the simulation.
+StructuredBuffer<BoidSchoolInfo> _BoidSchools;
+// Buffer containing all obstacles and targets of the simulation that
+// can affect the behavior of the boids.
+StructuredBuffer<Affecter> _Affecters;
+
+float InverseLerp(float minValue, float maxValue, float value) 
+{
+    return (value - minValue) / (maxValue - minValue);
+}
+
+// Function returns the closest affecter of the specified affecter type to the current boid.
+Affecter GetClosestAffecter(BoidInfo boidInfo, float affecterType)
+{
+    // Initial variables.
+    Affecter closestAffecter;
+    float closestAffecterDistance = -1;
+
+    int rawBoidIdBits = asint(boidInfo.boidID);
+    int boidId = rawBoidIdBits & 0xFF;
+    int boidSubGroupId = (rawBoidIdBits >> 8) & 0xFF;
+
+    // Go through all affecters and find the one closest to the provided boid position.
+    for(int i = 0; i < _TotalAffectersCount; i++)
+    {
+        // Fetch the affecter and check its type. If its type is not the one we're focues on,
+        // just skip over it. 
+        Affecter affecter = _Affecters[i];
+        if(affecter.affecterType != affecterType)
+        {
+            continue;
+        }
+
+        // If the affecter doesn't affect this boid group, skip it.
+        // Also, if the affecter targets specific sub-group inside the boid group, check that as well.
+        int affecterGroupId = (int)affecter.boidGroupId;
+        int affecterSubGroupId = (int)affecter.boidSubGroupId;
+        if((affecterGroupId != AFFECTS_ALL && boidId != affecterGroupId) || 
+           (affecterSubGroupId != AFFECTS_ALL && boidSubGroupId != affecterSubGroupId)) 
+        {
+            continue;
+        }
+
+        // Get the distance between the boid and the affecter and 
+        // cache the affecter if it's the closest one. Or if there isn't a closest 
+        // affecter initialized yet.
+        float3 boidToAffecterVector = (affecter.position - boidInfo.position);
+        float distanceFromAffecter = max(0, length(boidToAffecterVector) - affecter.radius);
+        if(closestAffecterDistance < 0.0 || distanceFromAffecter < closestAffecterDistance) {
+            closestAffecterDistance = distanceFromAffecter;
+            closestAffecter = affecter;
+        }
+    }
+
+    // Return the closest affecter to the boid position.
+    return closestAffecter;
+}
+
+// Update the swim motion time based on the current swimming motion intensity. This time is used by the rendering shader
+// to correctly visualize the swimming motion pattern of this boid.
+void UpdateSwimMotionTime(inout BoidInfo boidInfo) 
+{
+    float swimPlaybackSpeed = lerp(boidInfo.minPlaybackSpeed, boidInfo.maxPlaybackSpeed, boidInfo.swimMotionIntensity);
+    boidInfo.currentSwimTime += _TimeDelta * swimPlaybackSpeed;
+}
+
+// Update the swim motion intensity of the boid based on the current total acceleration. NOTE: The swim intensity
+// is guided by acceleration, not velocity!
+void UpdateSwimMotionIntensity(BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo)
+{
+    float movementIntensity = InverseLerp(0.0, boidSchoolInfo.maxAcceleration, boidInfo.acceleration);
+    float rotationIntensity = InverseLerp(0.0, boidSchoolInfo.maxAngularAcceleration, boidInfo.angularAcceleration);
+    boidInfo.swimMotionIntensity = saturate(max(movementIntensity, rotationIntensity));
+}
+
+// Update the current position of the boid based on the current movement direction, speed and time passed.
+void UpdatePosition(inout BoidInfo boidInfo)
+{
+    float3 newPosition = boidInfo.position + boidInfo.direction * _TimeDelta * boidInfo.speed;
+    boidInfo.position = newPosition;
+}
+
+// Function updates the movement speed and acceleration of the boid based on its need to accelerate this frame or not.
+void UpdateMovementSpeed(bool shouldAccelerate, BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo)
+{
+     // If the boid should accelerate, adde the increase the movement jerk (rate of change in acceleration).
+    float currentJerk = shouldAccelerate ? boidSchoolInfo.movementJerk : 0.0;
+    float deceleration = currentJerk > 0.0 ? 0.0 : boidSchoolInfo.deceleration;
+    // Update the current acceleration and speed.
+    float currentAcceleration = clamp(boidInfo.acceleration + (currentJerk - deceleration) * _TimeDelta, 0.0, boidSchoolInfo.maxAcceleration);
+    float currentMovementSpeed = boidInfo.speed;
+
+    // If the current speed will be lower than the cruising speed that the boid is constantly trying to maintain, increase
+    // the acceleration to correct the movement speed to the desired cruising speed.
+    if((currentMovementSpeed + (currentAcceleration - boidSchoolInfo.waterFriction * currentMovementSpeed) * _TimeDelta) < boidSchoolInfo.cruisingSpeed) 
+    {
+        currentAcceleration = boidSchoolInfo.cruisingSpeed * boidSchoolInfo.waterFriction;
+    }
+
+    // Update the current movement speed and clamp its value between the desired range.
+    currentMovementSpeed += (currentAcceleration - boidSchoolInfo.waterFriction * currentMovementSpeed) * _TimeDelta;
+    currentMovementSpeed = clamp(currentMovementSpeed, boidSchoolInfo.cruisingSpeed, boidSchoolInfo.maxSpeed);
+
+    // Update the boid movement properties.
+    boidInfo.acceleration = currentAcceleration;
+    boidInfo.speed = currentMovementSpeed;
+}
+
+// Function updates the current movement direction of the boid toward the target direction it would like to move
+// based on the current angular acceleration and movement speed.
+void UpdateMovementDirection(float3 targetDirection, BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo) 
+{
+    // Calculate the angle that the fish would need to steer in order to face the desired movement direction.
+    quaternion rotationTowardTarget = LookRotation(targetDirection, float3(0, 1, 0));
+    quaternion currentRotation = LookRotation(boidInfo.direction, float3(0, 1, 0));
+    float angleTowardTarget = Angle(currentRotation, rotationTowardTarget);
+
+    // Based on the angle the fish needs to steer, check if we need to increase the angular acceleration or not.
+    float currentAngularJerk = boidInfo.angularVelocity < angleTowardTarget ? boidSchoolInfo.angularJerk : 0.0;
+    float angularDeceleration = currentAngularJerk > 0.0 ? 0.0 : boidSchoolInfo.angularDeceleration;
+    // Update the current angular acceleration and speed.
+    float currentAngularAcceleration = clamp(boidInfo.angularAcceleration + (currentAngularJerk - angularDeceleration) * _TimeDelta, 0.0, boidSchoolInfo.maxAngularAcceleration);
+    float currentAngularVelocity = clamp(boidInfo.angularVelocity + currentAngularAcceleration * _TimeDelta, 0.0, boidSchoolInfo.maxAngularVelocity);
+
+    // Rotate the direction toward the desired one based on the current angular velocity and the time passed.
+    quaternion newRotation = RotateTowards(currentRotation, rotationTowardTarget, currentAngularVelocity * _TimeDelta);
+
+    // If we haven't increased the angular acceleration this frame, this means that the angular velocity should slowly deteriorate.
+    if(currentAngularJerk <= 0.0)
+    {
+        currentAngularVelocity = clamp(currentAngularVelocity - boidSchoolInfo.angularVelocityReduction * _TimeDelta, 0.0, boidSchoolInfo.maxAngularVelocity);
+    }
+
+    // Update the current movement acceleration based on the percentage of the angular acceleration for this frame. 
+    // This is due to translation of movement energy released while swimming to rotate.
+    float currentAcceleration = boidInfo.acceleration + currentAngularAcceleration * boidSchoolInfo.rotationEffectOnSpeed * _TimeDelta;
+
+    // Calculate the current movement direction based on the current rotation.
+    float3 currentMovementDirection = Multiply(newRotation, float3(0, 0, 1));
+
+    // Update boid movement properties that were changed during these direction updates.
+    boidInfo.acceleration = currentAcceleration;
+    boidInfo.direction = currentMovementDirection;
+    boidInfo.angularVelocity = currentAngularVelocity;
+    boidInfo.angularAcceleration = currentAngularAcceleration;
+}
+
+// Function calculates the separation vector of the boid that will steer it away from the neighboring boid.
+// The closer the boids are, the stronger the separation vector.
+float3 GetSeparationVector(float3 boidPosition, float3 neighborPosition, float inverseSeparationRangeSquared)
+{
+    float3 vectorAwayFromNeighbor = boidPosition - neighborPosition;
+    float distanceSquared = dot(vectorAwayFromNeighbor, vectorAwayFromNeighbor);
+
+    return vectorAwayFromNeighbor * saturate(1.0 - distanceSquared * inverseSeparationRangeSquared);
+}
+
+// Function calculates the new desired movement direction of the boid based on its neighboring boids and the 
+// closest target that the boid is trying to reach. The neighboring boids affect the movement since the 
+// boid is trying to move in the same direction as them, while keeping a safe distance from each boid in the group.
+float3 CalculateSchoolBehaviourDirection(int boidIndex, BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo) 
+{
+    // Initialize parameters for behavior.
+    float3 separation = float3(0,0,0);
+    float3 alignmentDirection = boidInfo.direction;
+    float3 cohesionPosition = boidInfo.position;
+    
+    // Find the closest target to this boid, this is the target that this boid will try to reach.
+    Affecter target = GetClosestAffecter(boidInfo, TARGET_AFFECTER_TYPE);
+    
+    // Caching the inverse of the separation range so that we could use multiplication instead of division
+    // when calculating the separation intensity of each neighboring boid.
+    float inverseSeparationRangeSquared = 1.0 / boidSchoolInfo.separationRangeSquared;
+
+    // Initialize helper variables for averaging directions and their strength.
+    int neighborsCount = 0;
+    int separationNeighborsCount = 0;
+    int thisBoidId = asint(boidInfo.boidID) & 0xFF;
+    int thisBoidSubGroupId = (asint(boidInfo.boidID) >> 8) & 0xFF;  
+
+    // For each boid in the simulation, check its distance and update the cohesion, alignment and separation vectors.
+    for(int i = 0; i < _TotalBoidCount; i++) 
+    {
+        // The boid shouldn't affect itself.
+        if(i == boidIndex) {
+            continue;
+        }
+
+        BoidInfo otherBoidInfo = _Boids[i];
+        int otherBoidID = asint(otherBoidInfo.boidID) & 0xFF;
+        // If the boid is a smaller fish species, it shouldn't affect our behaviour.
+        if(otherBoidID < thisBoidId)
+        {
+            continue;
+        }
+
+        // Check the distance to the other boid and see if its outside our vision distance. This is the distance
+        // each boid uses as a "sensing distance" to feel the presence of other boids.
+        float3 boidToOtherBoidVector = (otherBoidInfo.position - boidInfo.position);
+        float distanceSquared = dot(boidToOtherBoidVector, boidToOtherBoidVector);
+        if(distanceSquared > boidSchoolInfo.visionRangeSquared || distanceSquared <= 0.0) 
+        {
+            continue;
+        }
+
+        // If the neighboring boid is very cloe to us, check if we should start separating from it or not.
+        if(distanceSquared < boidSchoolInfo.separationRangeSquared)
+        {
+            separation += GetSeparationVector(boidInfo.position, otherBoidInfo.position, inverseSeparationRangeSquared);
+            separationNeighborsCount++;
+        }
+
+        // Only calculating cohesion and alignment with the same fish species and the same sub-group inside the fish species. 
+        // Note that the separation was calculated based on the same species as well as for all larger fish.
+        int otherBoidSubGroupId = (asint(otherBoidInfo.boidID) >> 8) & 0xFF; 
+        if(otherBoidID != thisBoidId || otherBoidSubGroupId != thisBoidSubGroupId) 
+        {
+            continue;
+        }
+
+        // Updating alignment and cohesion vectors.
+        alignmentDirection += otherBoidInfo.direction;
+        cohesionPosition += otherBoidInfo.position;
+        neighborsCount++;
+    }
+
+    // Average the alignment direction and cohesion position based on the total number of neighboring boids that were affecting this one.
+    float averagingFactor = neighborsCount == 0 ? 1.0 : 1.0 / neighborsCount;
+    alignmentDirection *= averagingFactor;
+    cohesionPosition *= averagingFactor;
+
+    // Average the separation direction.
+    if(separationNeighborsCount > 0) {
+        separation /= separationNeighborsCount;
+    }
+
+    // If there were no neighbors affecting this boid, the cohesion will be the current direction of movement.
+    float3 cohesionDirection = neighborsCount == 0 ? boidInfo.direction : normalize(cohesionPosition - boidInfo.position);
+
+    // Scale the separation vector based on the distance from the closest neighbor.
+    float separationSquaredLength = dot(separation, separation);
+    float3 separationDirection = separationNeighborsCount > 0 && separationSquaredLength > 0 ? normalize(separation) : boidInfo.direction;
+
+    // Check if the boid has already reached the "reaching" distance from the target. If so, just continue moving in the current direction.
+    float3 boidToTargetVector = target.position - boidInfo.position;
+    float targetWeight = dot(boidToTargetVector, boidToTargetVector) > (target.radius * target.radius) ? boidSchoolInfo.targetFollowWeight : 0.0;
+    float3 directionTowardsTarget = targetWeight > 0.0 ? normalize(boidToTargetVector) : boidInfo.direction;
+
+    // Calculate the final movement direction vector based on the strength of each vectors.
+    float3 newDesiredDirection = 
+        cohesionDirection * boidSchoolInfo.cohesionWeight + 
+        separationDirection * boidSchoolInfo.separationWeight + 
+        alignmentDirection * boidSchoolInfo.alignmentWeight +
+        directionTowardsTarget * targetWeight;
+
+    return normalize(newDesiredDirection);
+}
+
+// Function checks if the boid is currently outside the simulation area or will it leave the area based on
+// current movement direction and speed.
+bool WillLeaveSimulationArea(float3 boidPosition, float3 movementDirection, float speed) 
+{
+    float3 simulationAreaExtents = _SimulationAreaSize * 0.5f;
+    float3 minBound = _SimulationAreaCenter - simulationAreaExtents;
+    float3 maxBound = _SimulationAreaCenter + simulationAreaExtents;
+
+    // Predicting the new position that the boid will have in one second of simulation if he keeps moving in the same direction.
+    float3 newBoidPosition = boidPosition + movementDirection * speed * 0.25;
+    return any(boidPosition < minBound) || any(boidPosition > maxBound) || any(newBoidPosition < minBound) || any(newBoidPosition > maxBound);
+}
+
+// The main kernel of the compute shader, it updates the position, rotation and movement properties for each
+// boid in the simulation based on affecting factors (other boids, obstacles and targets).
+[numthreads(THREAD_GROUP_SIZE, 1, 1)]
+void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
+{
+    // Index of the boid in the _Boids array.
+    int boidIndex = id.x;
+
+    // Making sure we don't execute excess threads.
+    if(boidIndex >= _TotalBoidCount) 
+    {
+        return;
+    }
+
+    // Fetch the information about this boid instance.
+    BoidInfo boidInfo = _Boids[boidIndex];
+    int rawBoidIdBits = asint(boidInfo.boidID);
+    int boidGroupId = rawBoidIdBits & 0xFF;
+    BoidSchoolInfo boidSchoolInfo = _BoidSchools[boidGroupId];
+
+    // Getting the closest obstacle to this boid.
+    Affecter closestObstacle = GetClosestAffecter(boidInfo, OBSTACLE_AFFECTER_TYPE);
+    
+    // Check if the obstacle is close enough to this boid that we need to avoid it.
+    float3 obstacleToBoidVector = (boidInfo.position - closestObstacle.position);
+    float distanceFromObstacleSquared = dot(obstacleToBoidVector, obstacleToBoidVector);
+    bool needToAvoidObstacle = distanceFromObstacleSquared <= (closestObstacle.radius * closestObstacle.radius);
+
+    // If we are in proximity of an obstacle, go in the direction away from that obstacle. Otherwise,
+    // calculate the desired movement direction based on the surrounding fish and targets in the simulation.
+    float3 desiredMovementDirection = needToAvoidObstacle ? 
+        normalize(obstacleToBoidVector) : 
+        CalculateSchoolBehaviourDirection(boidIndex, boidSchoolInfo, boidInfo);
+    
+    // Check if the desired direction will lead to leaving the simulation bounds. 
+    // If so, offset the movement direction towards the center of the simulation area.
+    if(WillLeaveSimulationArea(boidInfo.position, desiredMovementDirection, boidInfo.speed)) 
+    {
+        desiredMovementDirection = normalize(_SimulationAreaCenter - boidInfo.position);
+
+        // Remove the need for speeding when the boid needs to return inside the simulation bounds.
+        needToAvoidObstacle = false;
+    }
+
+    // Steer the boid toward the desired movement direction.
+    UpdateMovementDirection(desiredMovementDirection, boidSchoolInfo, boidInfo);
+
+    // Speed up or slow down based on desired movement direction and obstacle avoidance.
+    UpdateMovementSpeed(needToAvoidObstacle, boidSchoolInfo, boidInfo);
+
+    // After the movement properties have been updated, update the current position of the boid.
+    UpdatePosition(boidInfo);
+
+    // Update the swimming motion properties based on the current acceleration. These properties affect
+    // the movement motion that the rendering shader will visualize.
+    UpdateSwimMotionIntensity(boidSchoolInfo, boidInfo);
+
+    // Based on the swimming motion intensity, update the current time that drives the swimming movement motion.
+    // Basically this is the time that is passed into sine functions to offset the vertices in the vertex shsader.
+    UpdateSwimMotionTime(boidInfo);
+    
+    // Write the updated boid info back to the boids buffer.
+    _Boids[boidIndex] = boidInfo;
+}

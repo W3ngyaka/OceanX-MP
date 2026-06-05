@@ -29,22 +29,20 @@ namespace OceanX.BoidsGPU
         protected override void InitializeBoidsSpawnData(Bounds simulationAreaBounds)
         {
             // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
-            // When a SpeciesDataGPU asset is assigned, pull SchoolProperties from it so
-            // BoidSimulationBaseGPU picks up the correct flocking params via SpawnData.
-            // MovementProperties and MotionRenderProperties are read directly from _speciesData
-            // in the spawn loop below — avoids mutating the FishSchoolProperties ScriptableObject.
+            // When a SpeciesDataGPU asset is assigned, create a runtime copy of SchoolProperties
+            // and inject MovementProperties + MotionRenderProperties from SpeciesDataGPU into it.
+            // This way FishSchoolProperties only holds flocking weights in the Inspector —
+            // movement and render props are set once on SpeciesDataGPU and flow through here automatically.
             if (_speciesData != null && _speciesData.SchoolProperties != null)
-                _boidSpawnData.FishSchoolProperties = _speciesData.SchoolProperties;
+            {
+                FishSchoolProperties runtimeSchool = Instantiate(_speciesData.SchoolProperties);
+                runtimeSchool.MovementProperties    = _speciesData.MovementProperties;
+                runtimeSchool.MotionRenderProperties = _speciesData.MotionRenderProperties;
+                _boidSpawnData.FishSchoolProperties  = runtimeSchool;
+            }
 
-            // Resolve which movement and render properties to use: SpeciesDataGPU fields take
-            // priority; fall back to whatever is set on FishSchoolProperties if not assigned.
-            FishMovementProperties     movementProps = (_speciesData != null && _speciesData.MovementProperties     != null)
-                ? _speciesData.MovementProperties
-                : _boidSpawnData.FishSchoolProperties?.MovementProperties;
-
-            FishMotionRenderProperties renderProps   = (_speciesData != null && _speciesData.MotionRenderProperties != null)
-                ? _speciesData.MotionRenderProperties
-                : _boidSpawnData.FishSchoolProperties?.MotionRenderProperties;
+            FishMovementProperties     movementProps = _boidSpawnData.FishSchoolProperties?.MovementProperties;
+            FishMotionRenderProperties renderProps   = _boidSpawnData.FishSchoolProperties?.MotionRenderProperties;
 
             // If we don't have enough targets for each boid sub-group, just revert to default boid spawning.
             SimulationAffecterComponent[] targets = _boidSpawnData.Targets;

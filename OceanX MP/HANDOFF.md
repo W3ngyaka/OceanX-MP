@@ -12,7 +12,6 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 **What the user does:**
 - Opens a Food Chain view (icon → overlay) and clicks animals to read species info
 - Adds or removes marine species using UI buttons
-- Adjusts biodiversity levels
 - Watches cascading effects unfold in real time
 
 **What they learn:**
@@ -20,7 +19,7 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 - Sharks (apex predators) are critical to maintaining balance
 - Removing one species causes a chain reaction across the food chain
 
-**Core demo moment:** Remove all sharks → medium fish overpopulate → small fish collapse from over-predation → medium fish starve and collapse too.
+**Core demo moment:** Remove the blacktip reef shark → groupers and barracuda overpopulate → primary consumers collapse from over-predation → secondary consumers starve and collapse too.
 
 ---
 
@@ -34,7 +33,7 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 | 4 | Spawning, removal, population tracking | ✅ Done |
 | 5 | Food chain relationships + predator-prey logic | ✅ Done |
 | 6 | Population growth/decline + ecosystem health system | 🔶 Partial — health score not yet built |
-| 7 | Cascading effects + ecosystem state machine | 🔶 Partial — GPU cascade done, state machine not started |
+| 7 | Cascading effects + ecosystem state machine + codebase cleanup | 🔶 Partial — GPU cascade done, state machine not started, dead code removed |
 | 8 | Movement systems — flocking + predator behaviour | ✅ Done (completed Week 5) |
 | 9 | Event system + integration hooks for UI | 🔶 Partial — netcode sync working, C# events not yet wired |
 | 10 | Preset scenarios + complete core system | ❌ Not started |
@@ -43,185 +42,224 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 
 ---
 
+## Species List & Food Chain
+
+### Keystone Species
+| Species | Scientific Name | Preys On | Preyed Upon By |
+|---------|----------------|----------|----------------|
+| Blacktip reef shark | *Carcharhinus melanopterus* | All species below | — |
+
+### Tertiary Consumers
+| Species | Scientific Name | Preys On | Preyed Upon By |
+|---------|----------------|----------|----------------|
+| Brown-marbled grouper | *Epinephelus fuscoguttatus* | All species below | Blacktip reef shark |
+| Great barracuda | *Sphyraena barracuda* | All species below | Blacktip reef shark |
+
+### Secondary Consumers
+| Species | Scientific Name | Preys On | Preyed Upon By |
+|---------|----------------|----------|----------------|
+| Humphead wrasse | *Cheilinus undulatus* | Hard-shelled invertebrates (crown-of-thorns starfish, sea urchins) | Blacktip reef shark, Great barracuda |
+| Bluefin trevally | *Caranx melampygus* | All primary consumers, juvenile bullethead parrotfish | Blacktip reef shark, Brown-marbled grouper, Great barracuda |
+| Crescent grunter | *Terapon jarbua* | Yellowstripe scad, Reticulated damselfish, juvenile surgeonfish | Blacktip reef shark, Brown-marbled grouper, Great barracuda, Bluefin trevally |
+| Yellowstripe scad | *Selaroides leptolepis* | Zooplankton | Blacktip reef shark, Brown-marbled grouper, Great barracuda, Bluefin trevally, Crescent grunter |
+
+### Primary Consumers
+| Species | Scientific Name | Preys On | Preyed Upon By |
+|---------|----------------|----------|----------------|
+| Fringelip mullet | *Crenemugil crenilabis* | Algae and organic detritus | Blacktip reef shark, Brown-marbled grouper, Great barracuda, Bluefin trevally, Crescent grunter |
+| Bullethead parrotfish | *Chlorurus sordidus* | Algae and coral substrate | Blacktip reef shark, Brown-marbled grouper, Great barracuda, Bluefin trevally |
+| Lined surgeonfish | *Acanthurus lineatus* | Filamentous algae | Blacktip reef shark, Brown-marbled grouper, Great barracuda, Bluefin trevally, Crescent grunter |
+| Eyestripe surgeonfish | *Acanthurus dussumieri* | Algae, detritus | Blacktip reef shark, Brown-marbled grouper, Great barracuda, Bluefin trevally |
+| Reticulated damselfish | *Dascyllus reticulatus* | Algae, zooplankton, small invertebrates | Blacktip reef shark, Brown-marbled grouper, Great barracuda, Bluefin trevally, Crescent grunter |
+
+**Total: 12 species** — 1 Keystone, 2 Tertiary, 4 Secondary, 5 Primary
+
+---
+
 ## Codebase Structure
 
-The project has **two separate systems** — the Ecosystem (active product) and the Simulation (older research/prototype). Do not confuse them.
+The dead Ecosystem CPU layer has been removed. The active product runs entirely on the GPU simulation pipeline.
 
 ```
 Assets/Junheng/
-├── Ecosystem/          ← THE ACTIVE PRODUCT
+├── Ecosystem/
 │   └── Scripts/
-│       ├── Boids CPU/
-│       │   ├── EcosystemSimulation.cs   Main manager (CPU)
-│       │   ├── Boid.cs                  Individual fish
-│       │   ├── BoidInfo.cs              Per-boid state struct
-│       │   ├── BoidSwimmingUtility.cs   Physics integration
-│       │   ├── BoidAffecter.cs          Target / obstacle affecters
-│       │   ├── BoidSimulation.cs        Legacy single-species test controller
-│       │   └── SpatialPartition3D.cs    Spatial grid for neighbour queries
-│       ├── ScriptableObjects/
-│       │   ├── EcosystemDefinition.cs   Top-level asset — species list + bounds
-│       │   ├── SpeciesDefinition.cs     Per-species data asset
-│       │   ├── BoidSchoolProperties.cs  Flocking weights + ranges
-│       │   ├── BoidMovementProperties.cs Speed, turn rate, acceleration
-│       │   └── SpeciesBehaviorProperties.cs  Predator/prey AI settings
-│       ├── UI/
-│       │   ├── EcosystemUI.cs           Auto-builds species cards at runtime
-│       │   ├── SpeciesCardUI.cs         Per-species card — +/− buttons, pop count
-│       │   └── Editor/
-│       │       └── EcosystemUIBuilder.cs  One-click scene hierarchy builder (Editor only)
-│       └── Networking/
-│           ├── NetworkBootstrap.cs          Host/Client role setup, starts NGO
-│           ├── EcosystemNetworkManager.cs   CPU — syncs population via NetworkList, RPCs
-│           ├── EcosystemNetworkManagerGPU.cs GPU — syncs GPU school counts via NetworkList, RPCs
-│           ├── TabletEcosystemUI.cs         CPU tablet UI — spawns species cards
-│           ├── TabletEcosystemUIGPU.cs      GPU tablet UI — reads EcosystemDefinitionGPU
-│           ├── TabletSpeciesCardUI.cs       CPU card — add/remove RPC buttons
-│           ├── TabletSpeciesCardUIGPU.cs    GPU card — add/remove RPC buttons
-│           ├── ConnectionScreenUI.cs        Client IP input + connect button
-│           └── HostSpawner.cs              Spawns network manager prefab on server start
+│       ├── DualMonitor.cs           Activates Display 2 (Spacedesk/iPad) on startup
+│       ├── Networking/
+│       │   ├── NetworkBootstrap.cs          Host/Client role setup, starts NGO
+│       │   ├── EcosystemNetworkManagerGPU.cs GPU — syncs school counts via NetworkList, RPCs
+│       │   ├── TabletEcosystemUIGPU.cs      GPU tablet UI — reads EcosystemDefinitionGPU
+│       │   ├── TabletSpeciesCardUIGPU.cs    GPU card — add/remove RPC buttons
+│       │   ├── ConnectionScreenUI.cs        Client IP input + connect button
+│       │   └── HostSpawner.cs              Spawns network manager prefab on server start
+│       └── UI/                      ← Empty, ready for new tablet UI build
 │
-└── Simulation/         ← RESEARCH SYSTEM — GPU boid simulation (also used as active GPU layer)
+├── Shaders/                         ← Reorganised (moved from Simulation/Shaders)
+│   ├── Compute/                     Boid GPU compute shaders
+│   └── Fish/                        Fish_Lit + Fish_Lit_Instanced shaders
+│
+└── Simulation/
     └── Scripts/
         ├── Boids_GPU/
-        │   ├── Ecosystem/                      ← GPU ECOSYSTEM LAYER (new, Week 7)
-        │   │   ├── SpeciesDataGPU.cs           Single source of truth per species (all 4 SOs + pop dynamics)
+        │   ├── Ecosystem/
+        │   │   ├── SpeciesDataGPU.cs           Single source of truth per species
         │   │   ├── EcosystemDefinitionGPU.cs   Species list + simulation bounds asset
         │   │   ├── EcosystemSimulationGPU.cs   Autonomous tick cascade + add/remove API
         │   │   ├── SpeciesBehaviorPropertiesGPU.cs  Flee/hunt/hunger settings SO
-        │   │   ├── WanderingAffecterGPU.cs     Random-wandering target for Apex species
-        │   │   └── EcosystemUIAdapterGPU.cs    Thin wrapper for UI button wiring
-        │   ├── BoidSpawnerGPUMultiTargets.cs   Reads SpeciesDataGPU for all spawn properties
-        │   ├── BoidSimulationTargetAnimatorsSpawner.cs  GlobalScale field added
-        │   ├── BoidSimulationBaseGPU.cs        + CleanupBaseGPUBuffers(), BoidsCount getter
-        │   ├── BoidSpawnerGPU.cs               + CleanupSpawnData()
-        │   └── 03_Spatial_Partition_Instanced_Rendering/
-        │       └── BoidSimulationGPU.cs        + ReinitializeBuffers()
-        ├── Boids_CPU/           CPU boid simulation with BoidSpawner
-        ├── Fish_Swimming_CPU/   Keyboard-controlled single fish
-        ├── Automatic_Fish_Swimming_CPU/  Target-following fish
+        │   │   └── WanderingAffecterGPU.cs     Random-wandering target for Apex species
+        │   ├── 03_Spatial_Partition_Instanced_Rendering/
+        │   │   └── BoidSimulationGPU.cs        Active GPU simulation + ReinitializeBuffers()
+        │   ├── GPU_Spatial_Partition/
+        │   │   └── SpatialPartitionGPU.cs      GPU spatial grid compute shader wrapper
+        │   ├── BoidSimulationBaseGPU.cs
+        │   ├── BoidSimulationTargetAnimatorsSpawner.cs
+        │   ├── BoidSpawnerGPU.cs
+        │   ├── BoidSpawnerGPUMultiTargets.cs
+        │   ├── BoidSwirlSpawnerGPU.cs
+        │   ├── BoidInfoGPU.cs
+        │   ├── BoidRenderInfoGPU.cs
+        │   ├── BoidSchoolInfoGPU.cs
+        │   └── AffecterGPU.cs
+        ├── Boids_CPU/               Only two files remain — used by GPU base classes
+        │   ├── BoidInformation.cs   Per-boid movement state struct (used by FishSwimmingUtility)
+        │   ├── BoidSpawnData.cs     Spawn config struct (used by BoidSpawnerBase)
+        │   ├── BoidSimulationCPU.cs (in Boids_Demo scene — disabled GameObject)
+        │   └── BoidSpawner.cs      (in Boids_Demo scene — disabled GameObject)
+        ├── Automatic_Fish_Swimming_CPU/  (in Boids_Demo scene)
         ├── Other/
-        │   └── TransformAnimator.cs     Animates targets along line/circle/rectangle paths
+        │   ├── TransformAnimator.cs
+        │   ├── TransformFollow.cs
+        │   ├── TransformAnimatorSpeedCorrection.cs
+        │   ├── BoundsComparer.cs
+        │   └── ComputeShaderExtensions.cs
         └── Shared/
-            ├── BoidSpawnerBase.cs              + SetInitialGroupsCount(), SetBoidsCount(), RemoveTarget()
+            ├── BoidSimulationBase.cs
+            ├── BoidSpawnerBase.cs
+            ├── BoidSpawnUtility.cs
             ├── FishSwimmingUtility.cs
-            ├── FishSwimmingMaterialUpdate.cs   ← IMPORTANT: drives shader animation from speed
-            ├── FishMotionRenderProperties.cs   Min/max shader param ranges
-            ├── FishMovementProperties.cs       Speed, turn, acceleration SO
-            └── FishSchoolProperties.cs         Flocking weights SO
+            ├── FishSwimmingMaterialUpdate.cs   ← drives shader animation from speed
+            ├── FishMotionRenderProperties.cs
+            ├── FishMovementProperties.cs
+            ├── FishSchoolProperties.cs
+            ├── GlobalAffectersInjector.cs
+            ├── GroupOfBoidsSpawnData.cs
+            ├── SimulationAffecter.cs
+            └── SimulationAffecterComponent.cs
 ```
 
 ---
 
 ## What Is Currently Working
 
-### CPU Ecosystem (EcosystemSimulation.cs)
-- Initialises spatial partition grid, spawns all species via `AddSpecies`
-- Per-frame: updates grid cells, runs each boid, cleans up dead boids
-- **`AddSpecies(species, count)`** — spawns fish just outside a random boundary face
-- **`RemoveSpecies(species, count)`** — sets fish to `Exiting` state, destroyed at boundary
-- **`CountLiving(species)`** — public, used by UI cards
-
-### GPU Ecosystem Layer (EcosystemSimulationGPU.cs) ← NEW Week 7
-- **`SpeciesDataGPU`** — one asset per species holds all simulation SOs (FishSchoolProperties, FishMovementProperties, FishMotionRenderProperties, SpeciesBehaviorPropertiesGPU) plus population dynamics fields (ReproductionRate, NaturalDeathRate, StarvationDeathRate, StarvationThreshold)
+### GPU Ecosystem (EcosystemSimulationGPU.cs) — Active System
+- **`SpeciesDataGPU`** — one asset per species holds all simulation SOs (FishSchoolProperties, FishMovementProperties, FishMotionRenderProperties, SpeciesBehaviorPropertiesGPU) plus population dynamics fields
 - **Autonomous population cascade** — coroutine ticks every 5s (configurable):
   - Births: logistic growth `reproRate × (1 - current/cap)`, slows near carrying capacity
   - Natural deaths: random chance per tick
   - Starvation: extra death chance when any prey species drops below `StarvationThreshold` fraction of its capacity
-- **Fixed-target model** — targets never change at runtime; add/remove a school by scaling `BoidsCount` by `_boidsPerGroup` (derived from initial `BoidsCount / InitialGroupsCount` on Awake). Carrying capacity auto-derives from initial boid count — nothing to set manually.
 - **`AddSpecies` / `RemoveSpecies`** — public API for UI buttons and netcode RPCs
-- **`CountGroups`** — returns `BoidsCount / boidsPerGroup` for UI display
-- `BoidSpawnerGPUMultiTargets` reads all spawn properties from `SpeciesDataGPU`; `FishSchoolProperties` in Inspector can be left empty when `SpeciesData` is assigned
+- **`CountGroups`** — returns current school count for UI display
+- `BoidSpawnerGPUMultiTargets` reads all spawn properties from `SpeciesDataGPU`
 
-### GPU Netcode ← NEW Week 7
+### GPU Netcode
 - **Host/Client architecture** using Unity Netcode for GameObjects (NGO) over WiFi
-- `NetworkBootstrap` — sets role (Host/Client), starts NGO, spawns `EcosystemNetworkManagerGPU`
-- `EcosystemNetworkManagerGPU` — auto-finds `EcosystemSimulationGPU` on server; syncs school counts every 1s via `NetworkList<int>`; exposes `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc` (Server RPCs)
-- `TabletEcosystemUIGPU` + `TabletSpeciesCardUIGPU` — client tablet UI; cards auto-built from `EcosystemDefinitionGPU`; buttons send RPCs; population label polls synced NetworkList
-- Host verified working. Client scene in progress — NetworkConfig mismatch being resolved (ensure both scenes have identical Network Prefabs List)
-
-### Boid.cs (CPU Ecosystem)
-- **States:** `Schooling`, `Fleeing`, `Hunting`, `Idle`, `Dead`, `Entering`, `Exiting`
-- Same-species flocking: separation, alignment, cohesion
-- Predator hunts when hunger above `HuntThreshold`, kills prey within `AttackRange`
-- Prey flees when predator within `FleeRange`, panic timer keeps fleeing after losing sight
-- `IsSolitary = true` disables flocking (used for sharks)
+- `NetworkBootstrap` — sets role (Host/Client), starts NGO
+- `EcosystemNetworkManagerGPU` — auto-finds `EcosystemSimulationGPU` on server; syncs school counts every 1s via `NetworkList<int>`; exposes `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc`
+- `TabletEcosystemUIGPU` + `TabletSpeciesCardUIGPU` — client tablet UI
+- `ConnectionScreenUI` — tablet IP entry screen
 
 ### TransformAnimator
 - Animates target transforms along Line / Circle / Rectangle paths
-- `GlobalScale` on `BoidSimulationTargetAnimatorsSpawner` uniformly scales all spawned path dimensions — adjust before hitting Create Targets
+- `GlobalScale` on `BoidSimulationTargetAnimatorsSpawner` uniformly scales all spawned path dimensions
 
 ---
 
-## What Has Been Tried and Removed
+## What Was Done — Week 7
 
-### Population Tick System — CPU (removed)
-A coroutine running every `PopulationTickInterval` seconds applying logistic growth, natural death, and starvation. Removed from the CPU system because manual add/remove via UI buttons is the right interaction model — autonomous dynamics conflicted with user agency.
-
-The equivalent system **has been implemented on the GPU side** (`EcosystemSimulationGPU`) where it runs alongside user-driven add/remove rather than replacing it.
-
-### Initial Null Reference Bug (fixed)
-`EcosystemSimulation.Start()` originally called `SpawnAllSpecies()` before `BuildSpatialPartition()`. Fixed by swapping order.
+- **Codebase cleanup** — removed ~40 dead scripts:
+  - All CPU Ecosystem scripts (Boid, BoidSimulation, EcosystemSimulation, SpatialPartition3D, all ScriptableObjects)
+  - Simple Flocking prototype folder
+  - CPU networking scripts (EcosystemNetworkManager, TabletEcosystemUI, TabletSpeciesCardUI)
+  - Old GPU variants (01 Brute Force Normal, 02 Brute Force Instanced)
+  - Editor-only shader GUI scripts
+  - Fish_Swimming_CPU, unused CPU boid variants
+  - Duplicate ComputeShaderExtensions (GameDevBuddies namespace)
+- **Shader paths fixed** — reorganised `Simulation/Shaders/` → `Shaders/`, updated all `#include` paths across compute and hlsl files
+- **Species list finalised** — 12 species confirmed (see table above)
 
 ---
 
 ## What Needs Building Next (Priority Order)
 
-### 1. Finish client netcode setup
-Resolve NetworkConfig mismatch — both host and client NetworkManagers must have the **exact same Network Prefabs List**. Register `EcosystemNetworkManagerGPU` prefab on the client's NetworkManager. Test add/remove RPC round-trip between tablet and display.
+### 1. Create SpeciesDataGPU assets for all 12 species
+`SpeciesDataGPU` needs new fields before assets can be created:
+- `string ScientificName`
+- `string Description`
+- `Sprite Icon`
+- `TrophicTier` enum (Keystone / Tertiary / Secondary / Primary)
+- `Vector2 FoodWebPosition` — node position in the food web graph UI
+- `bool StartUnlocked` — false = silhouette until prerequisites met
+- `List<SpeciesUnlockRequirement> UnlockRequirements` — prerequisites with min count
 
-### 2. Create remaining SpeciesDataGPU assets
-Only `SpeciesData_Clownfish` exists. Need assets for:
-- Golden Trevally (Mesopredator)
-- Yellowtail Snapper (Prey)
-- Giant Trevally (Apex)
+Then create one asset per species and wire all `PreySpecies` / `PredatorSpecies` lists using the food chain table above.
 
-Wire `PreySpecies` / `PredatorSpecies` lists on each. Add all four to `EcosystemDefinitionGPU`.
+### 2. Build Tablet UI (Food Web Graph)
+See prototype at `prototype/oceanx-prototype.html` for reference design. Missing from Unity:
+- **Food web graph panel** — SVG-style nodes (species bubbles) + edges (predator arrows)
+- **Species lock/unlock system** — silhouette until prerequisites met
+- **Eco-health bar** — GPU side not yet wired
+- **Over/underpopulation indicators** — red/orange rings on nodes
+- **Species info modal** — tap node → name, sci name, description, tier, count, Add button
+- **Current Organisms view** — toggle to grid of active species bubbles
+- **Intro screen** + Reset button
 
 ### 3. Ecosystem Health Score + State Machine
-Create `EcosystemHealth.cs` alongside `EcosystemSimulation`:
-
 **Health score (0–100) factors:**
 - Biodiversity: fraction of species with living members
-- Balance: each species within a healthy population range
-- Apex predator presence: sharks weighted heavily
+- Balance: prey:predator ratio per species
+- Apex predator presence (shark weighted heavily)
 - Stability: rate of population change
 
 **States:** Healthy → Unstable → Critical → Collapsing → Recovering
 
-### 4. Event System (UI Integration Bridge)
-```csharp
-public static event Action<SpeciesDefinition, int> OnPopulationChanged;
-public static event Action<float>                  OnHealthChanged;
-public static event Action<EcosystemState>         OnStateChanged;
-```
-Fire from simulation on change. Lets UI team subscribe instead of polling every frame.
+### 4. Finish Netcode Client Setup
+Resolve NetworkConfig mismatch — both host and client NetworkManagers must have the **exact same Network Prefabs List**. Register `EcosystemNetworkManagerGPU` prefab on the client's NetworkManager.
 
-### 5. FishAnimator — procedural animation for CPU boids
-The GPU simulation already has working procedural animation via shader params. The CPU Ecosystem boids move as rigid bodies with no animation.
-- `FishSwimmingMaterialUpdate.cs` is the working reference implementation
-- `SpeciesDefinition.AnimationProperties` field exists and is waiting — assign a new `FishAnimationProperties` ScriptableObject
-
-### 6. Food Chain Overlay + Species Info Panel
-- `SpeciesDefinition` needs: `Sprite Icon`, `string Description`, `string DietDescription`
-- Food chain overlay auto-generates from `PreySpecies` / `PredatorSpecies` lists
-
-### 7. Preset Scenarios
+### 5. Preset Scenarios
 - **Balanced Ocean**, **Shark Removed**, **Overpopulation**, **Collapse**, **Recovery**
-- Each is a method calling `RemoveSpecies` / `AddSpecies` to reach a starting state
+
+---
+
+## Recommended Population Dynamics Values
+
+| Species | Tier | ReproRate | NaturalDeath | StarveRate | StarveThreshold |
+|---------|------|-----------|--------------|------------|-----------------|
+| Blacktip reef shark | Keystone | 0.02 | 0.01 | 0.30 | 0.20 |
+| Brown-marbled grouper | Tertiary | 0.08 | 0.02 | 0.25 | 0.15 |
+| Great barracuda | Tertiary | 0.08 | 0.02 | 0.25 | 0.15 |
+| Humphead wrasse | Secondary | 0.10 | 0.03 | 0.20 | 0.15 |
+| Bluefin trevally | Secondary | 0.12 | 0.03 | 0.20 | 0.15 |
+| Crescent grunter | Secondary | 0.12 | 0.03 | 0.20 | 0.15 |
+| Yellowstripe scad | Secondary | 0.15 | 0.04 | 0.15 | 0.10 |
+| Fringelip mullet | Primary | 0.20 | 0.05 | 0.00 | 0.00 |
+| Bullethead parrotfish | Primary | 0.20 | 0.05 | 0.00 | 0.00 |
+| Lined surgeonfish | Primary | 0.20 | 0.05 | 0.00 | 0.00 |
+| Eyestripe surgeonfish | Primary | 0.20 | 0.05 | 0.00 | 0.00 |
+| Reticulated damselfish | Primary | 0.22 | 0.05 | 0.00 | 0.00 |
+
+Carrying capacity is auto-derived from the spawner's initial `BoidsCount` at runtime.
 
 ---
 
 ## Scene Setup Reference
 
-### Boids_Demo (host/display scene)
+### Boids_Demo (host/trifold display scene)
 - `Boids_Simulation_GPU` GameObject: `BoidSimulationGPU` + `EcosystemSimulationGPU`
-- 4 `BoidSpawnerGPUMultiTargets`: Clownfish, Yellowtail Snapper, Golden Trevally, Giant Trevally
-- Giant Trevally: 1200 boids, 60 groups, 60 animated targets from `BoidSimulationTargetAnimatorsSpawner`
+- One `BoidSpawnerGPUMultiTargets` per species (12 total needed)
 - `NetworkManager` GameObject: `NetworkManager` + `UnityTransport` + `NetworkBootstrap` (Role: Host)
 - `EcosystemNetworkManagerGPU` prefab registered in NetworkManager's Network Prefabs List
 
-### Tablet scene (client)
+### Netcode Simulation Test (client/tablet scene)
 - `NetworkManager` GameObject: same components, Role: **Client**
 - Same `EcosystemNetworkManagerGPU` prefab registered (must match host exactly)
 - `ConnectionScreenUI` canvas for IP entry
@@ -229,27 +267,13 @@ The GPU simulation already has working procedural animation via shader params. T
 
 ---
 
-## Recommended Species Values
-
-| Species | ReproRate | NaturalDeath | StarveRate | StarveThreshold |
-|---------|-----------|--------------|------------|-----------------|
-| Giant Trevally (Apex) | 0.02 | 0.01 | 0.30 | 0.20 |
-| Golden Trevally (Mesopredator) | 0.12 | 0.03 | 0.25 | 0.15 |
-| Yellowtail Snapper (Prey) | 0.20 | 0.05 | 0.00 | 0.00 |
-| Clownfish (Prey) | 0.20 | 0.05 | 0.00 | 0.00 |
-
-Carrying capacity is auto-derived from the spawner's initial `BoidsCount` at runtime — do not set it manually.
-
----
-
 ## Known Issues / Watchpoints
 
-- **NetworkConfig mismatch** — client and host must have identical Network Prefabs Lists in their NetworkManager components
-- **Only Clownfish SpeciesDataGPU exists** — other three species need assets created and added to `EcosystemDefinitionGPU`
-- **Duplicate AudioListener** — multiple cameras in the scene. Keep exactly one AudioListener active
-- **Population dynamics fields on CPU `SpeciesDefinition` are dormant** — `ReproductionRate`, `CarryingCapacity` etc. exist but nothing reads them. Ready for health system
-- **`FishAnimationProperties` type referenced in `SpeciesDefinition` but class does not exist** — will throw compile error if a script tries to use it before creation
-- **`_grid.GetNearby()` allocates a new List each call** — acceptable now, optimise in Week 11/12
+- **NetworkConfig mismatch** — client and host must have identical Network Prefabs Lists
+- **No SpeciesDataGPU assets exist yet** — need to create all 12 species assets
+- **`SpeciesDataGPU` missing UI fields** — ScientificName, Description, Sprite, TrophicTier, FoodWebPosition, unlock requirements not yet added
+- **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active
+- **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene
 
 ---
 

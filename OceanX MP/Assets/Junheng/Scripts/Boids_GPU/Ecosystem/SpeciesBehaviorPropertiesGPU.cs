@@ -8,7 +8,7 @@ namespace OceanX.BoidsGPU.Ecosystem
     /// but lives in the Simulation namespace and is designed for use with the GPU boid system.
     /// Assign to an Apex or Mesopredator SpeciesDataGPU. Leave null for Prey and Neutral.
     /// </summary>
-    [CreateAssetMenu(fileName = "SpeciesBehaviorGPU", menuName = "OceanX GPU/Species Behavior Properties GPU")]
+    [CreateAssetMenu(fileName = "SpeciesBehavior", menuName = "OceanX/Species Behavior Properties")]
     public class SpeciesBehaviorPropertiesGPU : ScriptableObject
     {
         [Header("Prey Behavior — Fleeing")]

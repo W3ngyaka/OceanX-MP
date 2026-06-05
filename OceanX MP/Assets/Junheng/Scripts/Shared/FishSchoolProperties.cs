@@ -41,17 +41,9 @@ namespace OceanX
         /// </summary>
         [Range(0f, 10f)] public float TargetWeight = 1.75f;
 
-        [Header("Fish Species Movement Properties: ")]
-        /// <summary>
-        /// Reference to the scriptable object defining the movement properties of this fish species.
-        /// </summary>
-        public FishMovementProperties MovementProperties = null;
-
-        [Header("Fish Species Render Properties: ")]
-        /// <summary>
-        /// Reference to scriptable object defining material properties that will correctly visualize
-        /// the swimming cycle of this fish species.
-        /// </summary>
-        public FishMotionRenderProperties MotionRenderProperties = null;
+        // Hidden from Inspector — injected at runtime by BoidSpawnerGPUMultiTargets from SpeciesDataGPU.
+        // Set these directly on SpeciesDataGPU; do NOT assign them here in the Inspector.
+        [HideInInspector] public FishMovementProperties    MovementProperties    = null;
+        [HideInInspector] public FishMotionRenderProperties MotionRenderProperties = null;
     }
 }

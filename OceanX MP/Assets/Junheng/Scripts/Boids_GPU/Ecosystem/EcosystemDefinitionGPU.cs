@@ -10,7 +10,7 @@ namespace OceanX.BoidsGPU.Ecosystem
     /// Create via Assets > Create > OceanX GPU > Ecosystem Definition GPU.
     /// Assign one to an EcosystemSimulationGPU component to run the GPU simulation.
     /// </summary>
-    [CreateAssetMenu(fileName = "EcosystemDefinitionGPU", menuName = "OceanX GPU/Ecosystem Definition GPU")]
+    [CreateAssetMenu(fileName = "EcosystemDefinition", menuName = "OceanX/Ecosystem Definition")]
     public class EcosystemDefinitionGPU : ScriptableObject
     {
         [Header("Identity")]

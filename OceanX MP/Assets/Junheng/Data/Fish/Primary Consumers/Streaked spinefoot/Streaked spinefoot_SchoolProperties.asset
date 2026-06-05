@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12896b1716abdbf4b84f5a1d7de3c13b, type: 3}
-  m_Name: Humphead wrasse_SchoolProperties
+  m_Name: Streaked spinefoot_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 10
   ObstacleAvoidanceRange: 5

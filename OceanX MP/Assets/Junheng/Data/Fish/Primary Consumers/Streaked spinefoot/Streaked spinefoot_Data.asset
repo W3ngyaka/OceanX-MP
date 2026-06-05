@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
-  m_Name: Lined surgeonfish_Data
+  m_Name: Streaked spinefoot_Data
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
-  SpeciesName: Lined surgeonfish
-  ScientificName: Acanthurus lineatus
+  SpeciesName: Streaked spinefoot
+  ScientificName: Siganus javus
   Role: 2
   SchoolProperties: {fileID: 11400000, guid: c9c45c868cfbed8458ee38a94a4ce706, type: 2}
   MovementProperties: {fileID: 11400000, guid: 34f5df41b0005e3468ebfe889d26330c, type: 2}

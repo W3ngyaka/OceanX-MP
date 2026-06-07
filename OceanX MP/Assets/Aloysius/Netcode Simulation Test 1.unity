@@ -1657,11 +1657,30 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1851010788 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1687683521233419027, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
+  m_PrefabInstance: {fileID: 1225928165566583862}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1851010789 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 221827790249897155, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
   m_PrefabInstance: {fileID: 1225928165566583862}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1851010791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851010788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5884b38e020eb374e80be8a6e6908628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bob
+  speed: 1.2
+  height: 6
 --- !u!1 &1865068487
 GameObject:
   m_ObjectHideFlags: 0
@@ -2110,7 +2129,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1687683521233419027, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1851010791}
   m_SourcePrefab: {fileID: 100100000, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
 --- !u!1001 &1417861760706755327
 PrefabInstance:

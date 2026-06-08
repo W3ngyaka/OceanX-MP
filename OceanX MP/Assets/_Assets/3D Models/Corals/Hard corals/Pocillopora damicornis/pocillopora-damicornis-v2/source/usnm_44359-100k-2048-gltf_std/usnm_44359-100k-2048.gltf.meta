@@ -1,0 +1,40 @@
+fileFormatVersion: 2
+guid: 4b6d0b910d9c6a049a50eb6b9a529133
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 715df9372183c47e389bb6e19fbc3b52, type: 3}
+  editorImportSettings:
+    generateSecondaryUVSet: 0
+  importSettings:
+    nodeNameMethod: 1
+    animationMethod: 2
+    generateMipMaps: 1
+    texturesReadable: 0
+    defaultMinFilterMode: 9729
+    defaultMagFilterMode: 9729
+    anisotropicFilterLevel: 1
+  instantiationSettings:
+    mask: -1
+    layer: 0
+    skinUpdateWhenOffscreen: 1
+    lightIntensityFactor: 1
+    sceneObjectCreation: 2
+  assetDependencies:
+  - type: 0
+    originalUri: Assets\_Assets\3D Models\Corals\Hard corals\Pocillopora damicornis\pocillopora-damicornis-v2\source\usnm_44359-100k-2048-gltf_std\usnm_44359-100k-2048.bin
+    assetPath: Assets\_Assets\3D Models\Corals\Hard corals\Pocillopora damicornis\pocillopora-damicornis-v2\source\usnm_44359-100k-2048-gltf_std\usnm_44359-100k-2048.bin
+  - type: 1
+    originalUri: Assets\_Assets\3D Models\Corals\Hard corals\Pocillopora damicornis\pocillopora-damicornis-v2\source\usnm_44359-100k-2048-gltf_std\usnm_44359-100k-2048-diffuse.jpg
+    assetPath: Assets\_Assets\3D Models\Corals\Hard corals\Pocillopora damicornis\pocillopora-damicornis-v2\source\usnm_44359-100k-2048-gltf_std\usnm_44359-100k-2048-diffuse.jpg
+  - type: 1
+    originalUri: Assets\_Assets\3D Models\Corals\Hard corals\Pocillopora damicornis\pocillopora-damicornis-v2\source\usnm_44359-100k-2048-gltf_std\usnm_44359-100k-2048-occlusion.jpg
+    assetPath: Assets\_Assets\3D Models\Corals\Hard corals\Pocillopora damicornis\pocillopora-damicornis-v2\source\usnm_44359-100k-2048-gltf_std\usnm_44359-100k-2048-occlusion.jpg
+  - type: 1
+    originalUri: Assets\_Assets\3D Models\Corals\Hard corals\Pocillopora damicornis\pocillopora-damicornis-v2\source\usnm_44359-100k-2048-gltf_std\usnm_44359-100k-2048-normals.jpg
+    assetPath: Assets\_Assets\3D Models\Corals\Hard corals\Pocillopora damicornis\pocillopora-damicornis-v2\source\usnm_44359-100k-2048-gltf_std\usnm_44359-100k-2048-normals.jpg
+  reportItems: []

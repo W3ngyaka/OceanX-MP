@@ -150,10 +150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcc34cf1dd6c9f45b92ca82f80a2131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkBootstrap
-  _role: 1
+  _role: 2
   _hostAddress: 192.168.1.42
   _port: 7777
   _ecosystemNetworkManagerPrefab: {fileID: 3612357492437936448, guid: a8d34986f6afdfe479c52c5cad94235e, type: 3}
+  _discovery: {fileID: 0}
 --- !u!114 &103350533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1498,9 +1499,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e29e55449c483448518832b3d07b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConnectionScreenUI
+  _statusLabel: {fileID: 199793475}
+  _manualEntryGroup: {fileID: 0}
   _ipInputField: {fileID: 1880499988}
   _connectButton: {fileID: 1162400772}
-  _statusLabel: {fileID: 199793475}
+  _manualFallbackSeconds: 10
   _tabletUIRoot: {fileID: 1241384771}
 --- !u!114 &1325380849
 MonoBehaviour:

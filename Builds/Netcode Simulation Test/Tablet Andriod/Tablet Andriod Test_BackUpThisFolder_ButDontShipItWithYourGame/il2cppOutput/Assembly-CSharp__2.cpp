@@ -1,0 +1,9781 @@
+﻿#include "pch-cpp.hpp"
+
+
+
+
+
+struct VirtualActionInvoker0
+{
+	typedef void (*Action)(void*, const RuntimeMethod*);
+
+	static inline void Invoke (Il2CppMethodSlot slot, RuntimeObject* obj)
+	{
+		const VirtualInvokeData& invokeData = il2cpp_codegen_get_virtual_invoke_data(slot, obj);
+		((Action)invokeData.methodPtr)(obj, invokeData.method);
+	}
+};
+template <typename T1>
+struct VirtualActionInvoker1
+{
+	typedef void (*Action)(void*, T1, const RuntimeMethod*);
+
+	static inline void Invoke (Il2CppMethodSlot slot, RuntimeObject* obj, T1 p1)
+	{
+		const VirtualInvokeData& invokeData = il2cpp_codegen_get_virtual_invoke_data(slot, obj);
+		((Action)invokeData.methodPtr)(obj, p1, invokeData.method);
+	}
+};
+template <typename R>
+struct VirtualFuncInvoker0
+{
+	typedef R (*Func)(void*, const RuntimeMethod*);
+
+	static inline R Invoke (Il2CppMethodSlot slot, RuntimeObject* obj)
+	{
+		const VirtualInvokeData& invokeData = il2cpp_codegen_get_virtual_invoke_data(slot, obj);
+		return ((Func)invokeData.methodPtr)(obj, invokeData.method);
+	}
+};
+template <typename R, typename T1>
+struct VirtualFuncInvoker1
+{
+	typedef R (*Func)(void*, T1, const RuntimeMethod*);
+
+	static inline R Invoke (Il2CppMethodSlot slot, RuntimeObject* obj, T1 p1)
+	{
+		const VirtualInvokeData& invokeData = il2cpp_codegen_get_virtual_invoke_data(slot, obj);
+		return ((Func)invokeData.methodPtr)(obj, p1, invokeData.method);
+	}
+};
+
+struct Dictionary_2_t5C96F4B6841710A9013966F76224BAE01FB4B4D1;
+struct Dictionary_2_t14FE4A752A83D53771C584E4C8D14E01F2AFD7BA;
+struct Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050;
+struct Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2;
+struct IEqualityComparer_1_t6090118472B13C3764AF933FCE5FFA3AD59E37F1;
+struct KeyCollection_tE32DEDB30A08E6230A71579B3E704425D36CAD93;
+struct KeyCollection_tCB33412D17F36AB8749A30BBE1180B12C5DF0F6C;
+struct List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16;
+struct List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D;
+struct List_1_tD9811238E86E769706BBBF3245B3EE281105E35A;
+struct List_1_t4B29BAC310577BAD897CFBAD9D41C489007496B8;
+struct List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E;
+struct List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1;
+struct ValueCollection_t47A6E243735B066AB10BB24BDA3E5BF8CF62090C;
+struct ValueCollection_t57E1F687711B9E7FC29E1F134479B026DBA79DD8;
+struct EntryU5BU5D_tD3EBEFDE714F4F4AD068CB7EFDFFCEAED7F84241;
+struct EntryU5BU5D_tE99E92F79912D32F1F817DAF45C2177706AA5C79;
+struct AffecterGPUU5BU5D_t1916C7B927B4CB6354C016BB6F25862386BBCD6E;
+struct BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC;
+struct BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE;
+struct BoidSchoolInfoGPUU5BU5D_t46D67098DD8147CDFF4CE1B333C644D158C84D45;
+struct BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C;
+struct BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75;
+struct CharU5BU5D_t799905CF001DD5F13F7DBB310181FC4D8B7D0AAB;
+struct FishSchoolPropertiesU5BU5D_tB07E3A7CB00D9D4F159BFCFBDF5BBABCF0F681DE;
+struct GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7;
+struct Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C;
+struct IntPtrU5BU5D_tFD177F8C806A6921AD7150264CCC62FA00CAD832;
+struct ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918;
+struct QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7;
+struct SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C;
+struct SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F;
+struct SpeciesDataGPUU5BU5D_tFAAEA67E3CC858DD604A253B4F8619E5E06F180B;
+struct StackTraceU5BU5D_t32FBCB20930EAF5BAE3F450FF75228E5450DA0DF;
+struct UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA;
+struct Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C;
+struct WanderingAffecterGPUU5BU5D_t9D271917436667AF1A1F6CB822629702AB2EDB5F;
+struct IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF;
+struct AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429;
+struct AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59;
+struct Behaviour_t01970CFBBA658497AE30F311C447DB0440BAB7FA;
+struct BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF;
+struct BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586;
+struct BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247;
+struct BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF;
+struct BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30;
+struct BoidSwirlSpawnerGPU_t980F89EF35654E32DC06695504CDF7590BFA7707;
+struct Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184;
+struct CancellationTokenSource_tAAE1E0033BCFC233801F8CB4CED5C852B350CB7B;
+struct Component_t39FBE53E5EFCF4409111FB22C15FF73717632EC3;
+struct ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233;
+struct ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8;
+struct Coroutine_t85EA685566A254C23F3FD77AB5BDFFFF8799596B;
+struct EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30;
+struct EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84;
+struct EcosystemUIAdapterGPU_t4244986468096B92FB68AE3930566309598BC188;
+struct FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5;
+struct FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D;
+struct FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD;
+struct FishSwimmingMaterialUpdate_t2230944845305A61A155BA20CC02CD05F99BDABF;
+struct GameObject_t76FEDD663AB33C991A9C9A23129337651094216F;
+struct GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1;
+struct IDictionary_t6D03155AF1FA9083817AA5B6AD7DEEACC26AB220;
+struct IEnumerator_t7B609C2FFA6EB5167D9C62A0C32A21DE2F666DAA;
+struct LightProbeProxyVolume_t431001CA94D2BB5DB419E2A89E7D8116E4E1B658;
+struct Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3;
+struct MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D;
+struct Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4;
+struct MeshRenderer_t4B7747212F0B88244BB7790C61AE124BFC15BAAE;
+struct MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71;
+struct NotSupportedException_t1429765983D409BD2986508963C98D214E4EBF4A;
+struct Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C;
+struct SafeSerializationManager_tCBB85B95DFD1634237140CD892E82D06ECB3F5E6;
+struct ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A;
+struct SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F;
+struct SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118;
+struct SpeciesBehaviorPropertiesGPU_tFD5D7CD7B448C514A4472E3E61BC145E95223B42;
+struct SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB;
+struct String_t;
+struct Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1;
+struct Void_t4861ACF8F4594C3437BB48B6E56783494B843915;
+struct WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3;
+struct WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0;
+struct U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4;
+
+IL2CPP_EXTERN_C RuntimeClass* BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* GameObject_t76FEDD663AB33C991A9C9A23129337651094216F_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* Graphics_t99CD970FFEA58171C70F54DF0C06D315BD452F2C_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* NotSupportedException_t1429765983D409BD2986508963C98D214E4EBF4A_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeClass* WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var;
+IL2CPP_EXTERN_C RuntimeField* BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9____BoidMesh_FieldInfo_var;
+IL2CPP_EXTERN_C String_t* _stringLiteral04748FBAACC2F89561A8248C8052220CD144C40D;
+IL2CPP_EXTERN_C String_t* _stringLiteral0D3820792443B8215D876BDE9E7DD9552E90BD9C;
+IL2CPP_EXTERN_C String_t* _stringLiteral1AB23E56844BE2CE7787EE8A1497A7D098A5575E;
+IL2CPP_EXTERN_C String_t* _stringLiteral1BEF1BB1952FF476F965F262EFAC24A6B2EAA865;
+IL2CPP_EXTERN_C String_t* _stringLiteral1F8DC44CAFB138503BF6ABAF9ED47A6414DCAF4D;
+IL2CPP_EXTERN_C String_t* _stringLiteral2015C07B8C03345F973A6FE294C26ACEEF2C77A9;
+IL2CPP_EXTERN_C String_t* _stringLiteral28B8BE8AD74A7D5D45F458F5CDD571BB0290ED27;
+IL2CPP_EXTERN_C String_t* _stringLiteral3C4F9CCD5B19C1450034BBF3DCFD552988871ECF;
+IL2CPP_EXTERN_C String_t* _stringLiteral3FECF4B4D5152FC7CE9F6C7DF7FCC90E51C6C320;
+IL2CPP_EXTERN_C String_t* _stringLiteral5265F0F8C977C04A74A4D717912B179553A52150;
+IL2CPP_EXTERN_C String_t* _stringLiteral555ECDEAFA859238328E06C4AFA553B36FD8812D;
+IL2CPP_EXTERN_C String_t* _stringLiteral55B5807D84FD6702B5FEB06AA43AB30B4CE7767E;
+IL2CPP_EXTERN_C String_t* _stringLiteral637A100522A9C2094765326693CB653E8700AEA9;
+IL2CPP_EXTERN_C String_t* _stringLiteral679E14F776D8AC56BD3776A2DBC1D4BFE0D5031E;
+IL2CPP_EXTERN_C String_t* _stringLiteral6F2A29A03426FDF5489D0E612D1C21F2B5F2D139;
+IL2CPP_EXTERN_C String_t* _stringLiteral76C2C39C07BDC41C313F5C0EC9EE291181BAA424;
+IL2CPP_EXTERN_C String_t* _stringLiteral846224F71D0BEF40F3349CFF8B7AA58C79DE029A;
+IL2CPP_EXTERN_C String_t* _stringLiteral8B62084B9761ACE20616CDA34130C8F0A117B1A4;
+IL2CPP_EXTERN_C String_t* _stringLiteral9AD54BEBC6C53F3252ECE6989D283640A7AD6E41;
+IL2CPP_EXTERN_C String_t* _stringLiteralA3A158495A1971E8B1EFAFCAECE9A69E345E1F90;
+IL2CPP_EXTERN_C String_t* _stringLiteralA45831BEE9B927062E086D1676A345642DA686D3;
+IL2CPP_EXTERN_C String_t* _stringLiteralA4FD2DEE80963526161136BF110B67FA4BFB9C27;
+IL2CPP_EXTERN_C String_t* _stringLiteralA5C2BAAC8C139101DDC72D0429E24646454B1874;
+IL2CPP_EXTERN_C String_t* _stringLiteralAA0CD5171B8708F239F2F970360036AAF1A5FAFE;
+IL2CPP_EXTERN_C String_t* _stringLiteralB5026323E0BA60B48870D8B4CCD2AF7E8BBBC9FE;
+IL2CPP_EXTERN_C String_t* _stringLiteralB5B0D3BEAF76D96CBF232F246130645B4CB5AB2F;
+IL2CPP_EXTERN_C String_t* _stringLiteralC2D741B642E9B3DF3BFD8F55832ECA00D6354906;
+IL2CPP_EXTERN_C String_t* _stringLiteralC5FB0CB55C1A640B382EB4ECEB0D7EE05D65E3E6;
+IL2CPP_EXTERN_C String_t* _stringLiteralC7A7939E82BEFEF8DDB755713442AA62963F09F8;
+IL2CPP_EXTERN_C String_t* _stringLiteralCBE27B6328F6DF432E5A2F7323F7EFC654FE44C3;
+IL2CPP_EXTERN_C String_t* _stringLiteralCE788A37EA645F16329BE3F0AD0A9FDC9D1AD590;
+IL2CPP_EXTERN_C String_t* _stringLiteralCE7B375A6B65A87CF694789089EC605D29215B65;
+IL2CPP_EXTERN_C String_t* _stringLiteralD14A6DA55BB0DE893F94F2F65D4D527ACF6A7CFE;
+IL2CPP_EXTERN_C String_t* _stringLiteralD3AA93D6C12EBFAF8D265D77F0951E250AD2BE76;
+IL2CPP_EXTERN_C String_t* _stringLiteralD67C7908C050F2E4CF3602473A20E5166C7AE9D5;
+IL2CPP_EXTERN_C String_t* _stringLiteralD8610048AB56AF8A9351ACBA509C6DBB2807620F;
+IL2CPP_EXTERN_C String_t* _stringLiteralDD8AB7736F5599A9DC9D6D138FF4E9AFAF5CC7D5;
+IL2CPP_EXTERN_C String_t* _stringLiteralDE076F5703B7C23D4DEDB536B187E3D212DD16A4;
+IL2CPP_EXTERN_C String_t* _stringLiteralE2B161CA76675D84F8086EFC4C0BA71F7E79A403;
+IL2CPP_EXTERN_C String_t* _stringLiteralE703B8F6D4B9A22310818C684B8625964A9572D7;
+IL2CPP_EXTERN_C String_t* _stringLiteralE7DD2DB47B295278E944ED07E27C0C7988AECB46;
+IL2CPP_EXTERN_C String_t* _stringLiteralE891707E82D6062C88A00E305DA0161DDF7DA25F;
+IL2CPP_EXTERN_C String_t* _stringLiteralF09CC17E31A65E7C18A6770B686C67B148EF9C74;
+IL2CPP_EXTERN_C String_t* _stringLiteralF28C82E3FA276068001A49BF3211A39BD897F6EF;
+IL2CPP_EXTERN_C String_t* _stringLiteralFAA164D5A69AB435EFE1DC412582B5E438DA6241;
+IL2CPP_EXTERN_C String_t* _stringLiteralFCD8484551472F7D2F6A8D8286356168262285B0;
+IL2CPP_EXTERN_C String_t* _stringLiteralFE26C675260A3C7A330FF1AC71048A26D62DA604;
+IL2CPP_EXTERN_C const RuntimeMethod* Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* Dictionary_2__ctor_mC4441B5D95FE2DE45DE1456F2430D64CB8BDCFAD_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* Dictionary_2__ctor_mEA9370B5DFD0117D346F9B657348D890BDE5DCB6_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* Dictionary_2_set_Item_mBE2A3D4CE00B67852B882F98506D34F02C1BEA09_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* Dictionary_2_set_Item_mFDB9337FADB1A3719768F01EF16F96865A002ADC_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* Enumerator_Dispose_mA415F735E85F8FE3A69C92C1AC8449F86E3145F2_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* Enumerator_MoveNext_m87F82E2F2D878FBF9D6F0A76CB32257EC29B8904_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* Enumerator_get_Current_m56CCD0A5F4B4100CE4A57E1412FFF763C75AF418_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* GameObject_AddComponent_TisWanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0_m90B2CC15ED4EBB4E1F64F8270AD06F71C69E1591_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* List_1_Add_m347489C49B768CFB853ED95DA705AEAEAB2D863F_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* List_1_GetEnumerator_mA791C387BEAF2DC043513021B0C6ACB38A64BA2B_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* List_1_Insert_m2D27AD2759306E269C69ACB656AAF34261307CCD_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* List_1__ctor_m07BB59C5A76470D8C3141683CF8FE3EAB6C0BE88_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* List_1__ctor_mF5D7B1593E775B052EFD2EE685EA6F08E0C87A58_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* List_1_get_Count_m035F79E7D9F870918EBC209977CC567502EAC0B9_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* List_1_get_Count_m867174535A6BFD5C836DEFA9B8872AA6C7B93D01_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* List_1_get_Item_m68663C1937987C20BCF6B323A927350A5C127B0E_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* List_1_get_Item_m9C7C161C4D1E41766CBE8F344F4AE9C5BC055405_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* Object_Instantiate_TisFishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD_m2C9B5E2F5F1A8717D8BB496BC7D29091085D3C20_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeMethod* U3CPopulationTickRoutineU3Ed__13_System_Collections_IEnumerator_Reset_m31FD51915B4145CCC86727426DBFEF755F022610_RuntimeMethod_var;
+IL2CPP_EXTERN_C const RuntimeType* BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_0_0_0_var;
+struct Exception_t_marshaled_com;
+struct Exception_t_marshaled_pinvoke;
+struct Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2;
+
+struct BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC;
+struct BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE;
+struct BoidSchoolInfoGPUU5BU5D_t46D67098DD8147CDFF4CE1B333C644D158C84D45;
+struct BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C;
+struct BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75;
+struct GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7;
+struct ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918;
+struct QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7;
+struct SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C;
+struct SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F;
+struct UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA;
+struct Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C;
+struct IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF;
+
+IL2CPP_EXTERN_C_BEGIN
+IL2CPP_EXTERN_C_END
+
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+struct Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050  : public RuntimeObject
+{
+	Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* ____buckets;
+	EntryU5BU5D_tD3EBEFDE714F4F4AD068CB7EFDFFCEAED7F84241* ____entries;
+	int32_t ____count;
+	int32_t ____freeList;
+	int32_t ____freeCount;
+	int32_t ____version;
+	RuntimeObject* ____comparer;
+	KeyCollection_tE32DEDB30A08E6230A71579B3E704425D36CAD93* ____keys;
+	ValueCollection_t47A6E243735B066AB10BB24BDA3E5BF8CF62090C* ____values;
+	RuntimeObject* ____syncRoot;
+};
+struct Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2  : public RuntimeObject
+{
+	Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* ____buckets;
+	EntryU5BU5D_tE99E92F79912D32F1F817DAF45C2177706AA5C79* ____entries;
+	int32_t ____count;
+	int32_t ____freeList;
+	int32_t ____freeCount;
+	int32_t ____version;
+	RuntimeObject* ____comparer;
+	KeyCollection_tCB33412D17F36AB8749A30BBE1180B12C5DF0F6C* ____keys;
+	ValueCollection_t57E1F687711B9E7FC29E1F134479B026DBA79DD8* ____values;
+	RuntimeObject* ____syncRoot;
+};
+struct List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16  : public RuntimeObject
+{
+	FishSchoolPropertiesU5BU5D_tB07E3A7CB00D9D4F159BFCFBDF5BBABCF0F681DE* ____items;
+	int32_t ____size;
+	int32_t ____version;
+	RuntimeObject* ____syncRoot;
+};
+struct List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D  : public RuntimeObject
+{
+	ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* ____items;
+	int32_t ____size;
+	int32_t ____version;
+	RuntimeObject* ____syncRoot;
+};
+struct List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E  : public RuntimeObject
+{
+	SpeciesDataGPUU5BU5D_tFAAEA67E3CC858DD604A253B4F8619E5E06F180B* ____items;
+	int32_t ____size;
+	int32_t ____version;
+	RuntimeObject* ____syncRoot;
+};
+struct List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1  : public RuntimeObject
+{
+	WanderingAffecterGPUU5BU5D_t9D271917436667AF1A1F6CB822629702AB2EDB5F* ____items;
+	int32_t ____size;
+	int32_t ____version;
+	RuntimeObject* ____syncRoot;
+};
+struct U3CPrivateImplementationDetailsU3E_t0F5473E849A5A5185A9F4C5246F0C32816C49FCA  : public RuntimeObject
+{
+};
+struct NetworkVariableSerializationHelper_tAF87607F1754FD0D398946DA553DE1DA5CB0F883  : public RuntimeObject
+{
+};
+struct String_t  : public RuntimeObject
+{
+	int32_t ____stringLength;
+	Il2CppChar ____firstChar;
+};
+struct ValueType_t6D9B272BD21782F0A9A14F2E41F85A50E97A986F  : public RuntimeObject
+{
+};
+struct ValueType_t6D9B272BD21782F0A9A14F2E41F85A50E97A986F_marshaled_pinvoke
+{
+};
+struct ValueType_t6D9B272BD21782F0A9A14F2E41F85A50E97A986F_marshaled_com
+{
+};
+struct YieldInstruction_tFCE35FD0907950EFEE9BC2890AC664E41C53728D  : public RuntimeObject
+{
+};
+struct YieldInstruction_tFCE35FD0907950EFEE9BC2890AC664E41C53728D_marshaled_pinvoke
+{
+};
+struct YieldInstruction_tFCE35FD0907950EFEE9BC2890AC664E41C53728D_marshaled_com
+{
+};
+struct U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4  : public RuntimeObject
+{
+	int32_t ___U3CU3E1__state;
+	RuntimeObject* ___U3CU3E2__current;
+	EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* ___U3CU3E4__this;
+};
+struct Enumerator_t9473BAB568A27E2339D48C1F91319E0F6D244D7A 
+{
+	List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* ____list;
+	int32_t ____index;
+	int32_t ____version;
+	RuntimeObject* ____current;
+};
+struct Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44 
+{
+	List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* ____list;
+	int32_t ____index;
+	int32_t ____version;
+	SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ____current;
+};
+struct BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15 
+{
+	float ___MinSideToSideAmplitude;
+	float ___MaxSideToSideAmplitude;
+	float ___MinYawRotationAmplitude;
+	float ___MaxYawRotationAmplitude;
+	float ___MinRollRotationAmplitude;
+	float ___MaxRollRotationAmplitude;
+	float ___MinPanningYawAmplitude;
+	float ___MaxPanningYawAmplitude;
+};
+struct BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6 
+{
+	float ___VisionRangeSquared;
+	float ___ObstacleAvoidanceRangeSquared;
+	float ___SeparationRangeSquared;
+	float ___SeparationWeight;
+	float ___CohesionWeight;
+	float ___AlignmentWeight;
+	float ___TargetFollowWeight;
+	float ___CruisingSpeed;
+	float ___MaxSpeed;
+	float ___WaterFriction;
+	float ___Deceleration;
+	float ___MaxAcceleration;
+	float ___MovementJerk;
+	float ___MaxAngularVelocity;
+	float ___AngularVelocityReduction;
+	float ___MaxAngularAcceleration;
+	float ___AngularDeceleration;
+	float ___AngularJerk;
+	float ___RotationEffectOnSpeed;
+	float ___EmptyFiller;
+};
+struct BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 
+{
+	int32_t ___BoidsCount;
+	float ___MinSpawnDistanceBetweenBoids;
+	Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* ___BoidMesh;
+	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___BoidMaterial;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* ___FishSchoolProperties;
+	SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* ___Targets;
+	SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* ___Obstacles;
+};
+struct BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshaled_pinvoke
+{
+	int32_t ___BoidsCount;
+	float ___MinSpawnDistanceBetweenBoids;
+	Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* ___BoidMesh;
+	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___BoidMaterial;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* ___FishSchoolProperties;
+	SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* ___Targets;
+	SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* ___Obstacles;
+};
+struct BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshaled_com
+{
+	int32_t ___BoidsCount;
+	float ___MinSpawnDistanceBetweenBoids;
+	Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* ___BoidMesh;
+	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___BoidMaterial;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* ___FishSchoolProperties;
+	SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* ___Targets;
+	SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* ___Obstacles;
+};
+struct Boolean_t09A6377A54BE2F9E6985A8149F19234FD7DDFE22 
+{
+	bool ___m_value;
+};
+struct Color_tD001788D726C3A7F1379BEED0260B9591F440C1F 
+{
+	float ___r;
+	float ___g;
+	float ___b;
+	float ___a;
+};
+struct Double_tE150EF3D1D43DEE85D533810AB4C742307EEDE5F 
+{
+	double ___m_value;
+};
+struct EntityId_t982FBD037EAC5CA077B1602A7EA40E3523AA0FC8 
+{
+	union
+	{
+		struct
+		{
+			int32_t ___m_Data;
+		};
+		uint8_t EntityId_t982FBD037EAC5CA077B1602A7EA40E3523AA0FC8__padding[4];
+	};
+};
+struct Enum_t2A1A94B24E3B776EEF4E5E485E290BB9D4D072E2  : public ValueType_t6D9B272BD21782F0A9A14F2E41F85A50E97A986F
+{
+};
+struct Enum_t2A1A94B24E3B776EEF4E5E485E290BB9D4D072E2_marshaled_pinvoke
+{
+};
+struct Enum_t2A1A94B24E3B776EEF4E5E485E290BB9D4D072E2_marshaled_com
+{
+};
+struct Int32_t680FF22E76F6EFAD4375103CBBFFA0421349384C 
+{
+	int32_t ___m_value;
+};
+struct IntPtr_t 
+{
+	void* ___m_value;
+};
+struct Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 
+{
+	float ___x;
+	float ___y;
+	float ___z;
+	float ___w;
+};
+struct Single_t4530F2FF86FCB0DC29F35385CA1BD21BE294761C 
+{
+	float ___m_value;
+};
+struct UInt32_t1833D51FFA667B18A5AA4B8D34DE284F8495D29B 
+{
+	uint32_t ___m_value;
+};
+struct Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 
+{
+	float ___x;
+	float ___y;
+	float ___z;
+};
+struct Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 
+{
+	float ___x;
+	float ___y;
+	float ___z;
+	float ___w;
+};
+struct Void_t4861ACF8F4594C3437BB48B6E56783494B843915 
+{
+	union
+	{
+		struct
+		{
+		};
+		uint8_t Void_t4861ACF8F4594C3437BB48B6E56783494B843915__padding[1];
+	};
+};
+struct WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3  : public YieldInstruction_tFCE35FD0907950EFEE9BC2890AC664E41C53728D
+{
+	float ___m_Seconds;
+};
+struct WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_marshaled_pinvoke : public YieldInstruction_tFCE35FD0907950EFEE9BC2890AC664E41C53728D_marshaled_pinvoke
+{
+	float ___m_Seconds;
+};
+struct WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_marshaled_com : public YieldInstruction_tFCE35FD0907950EFEE9BC2890AC664E41C53728D_marshaled_com
+{
+	float ___m_Seconds;
+};
+#pragma pack(push, tp, 1)
+struct __StaticArrayInitTypeSizeU3D3348_t84D89298233F4A9FEE2EED3A89C8886991654586 
+{
+	union
+	{
+		struct
+		{
+			union
+			{
+			};
+		};
+		uint8_t __StaticArrayInitTypeSizeU3D3348_t84D89298233F4A9FEE2EED3A89C8886991654586__padding[3348];
+	};
+};
+#pragma pack(pop, tp)
+#pragma pack(push, tp, 1)
+struct __StaticArrayInitTypeSizeU3D5805_t1420C1E97F4C4B91D4A60F42E17F1598C3865491 
+{
+	union
+	{
+		struct
+		{
+			union
+			{
+			};
+		};
+		uint8_t __StaticArrayInitTypeSizeU3D5805_t1420C1E97F4C4B91D4A60F42E17F1598C3865491__padding[5805];
+	};
+};
+#pragma pack(pop, tp)
+struct IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB 
+{
+	uint32_t ___U3CindexCountPerInstanceU3Ek__BackingField;
+	uint32_t ___U3CinstanceCountU3Ek__BackingField;
+	uint32_t ___U3CstartIndexU3Ek__BackingField;
+	uint32_t ___U3CbaseVertexIndexU3Ek__BackingField;
+	uint32_t ___U3CstartInstanceU3Ek__BackingField;
+};
+struct BoidCellInfo_t949D17CE00F5BD1FD9C25FA73520C527426A6338 
+{
+	uint32_t ___CellID;
+	uint32_t ___OrderInsideCell;
+};
+struct BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___Position;
+	float ___Acceleration;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___Direction;
+	float ___Speed;
+	float ___AngularVelocity;
+	float ___AngularAcceleration;
+	float ___BoidID;
+	float ___SwimMotionIntensity;
+	float ___CurrentSwimTime;
+	float ___MinPlaybackSpeed;
+	float ___MaxPlaybackSpeed;
+	float ___OriginalIndex;
+};
+struct BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___Position;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___MovementDirection;
+	float ___Acceleration;
+	float ___Speed;
+	float ___AngularAcceleration;
+	float ___AngularVelocity;
+};
+struct Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___m_Center;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___m_Extents;
+};
+struct ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233  : public RuntimeObject
+{
+	intptr_t ___m_Ptr;
+};
+struct Coroutine_t85EA685566A254C23F3FD77AB5BDFFFF8799596B  : public YieldInstruction_tFCE35FD0907950EFEE9BC2890AC664E41C53728D
+{
+	intptr_t ___m_Ptr;
+};
+struct Coroutine_t85EA685566A254C23F3FD77AB5BDFFFF8799596B_marshaled_pinvoke : public YieldInstruction_tFCE35FD0907950EFEE9BC2890AC664E41C53728D_marshaled_pinvoke
+{
+	intptr_t ___m_Ptr;
+};
+struct Coroutine_t85EA685566A254C23F3FD77AB5BDFFFF8799596B_marshaled_com : public YieldInstruction_tFCE35FD0907950EFEE9BC2890AC664E41C53728D_marshaled_com
+{
+	intptr_t ___m_Ptr;
+};
+struct Exception_t  : public RuntimeObject
+{
+	String_t* ____className;
+	String_t* ____message;
+	RuntimeObject* ____data;
+	Exception_t* ____innerException;
+	String_t* ____helpURL;
+	RuntimeObject* ____stackTrace;
+	String_t* ____stackTraceString;
+	String_t* ____remoteStackTraceString;
+	int32_t ____remoteStackIndex;
+	RuntimeObject* ____dynamicMethods;
+	int32_t ____HResult;
+	String_t* ____source;
+	SafeSerializationManager_tCBB85B95DFD1634237140CD892E82D06ECB3F5E6* ____safeSerializationManager;
+	StackTraceU5BU5D_t32FBCB20930EAF5BAE3F450FF75228E5450DA0DF* ___captured_traces;
+	IntPtrU5BU5D_tFD177F8C806A6921AD7150264CCC62FA00CAD832* ___native_trace_ips;
+	int32_t ___caught_in_unmanaged;
+};
+struct Exception_t_marshaled_pinvoke
+{
+	char* ____className;
+	char* ____message;
+	RuntimeObject* ____data;
+	Exception_t_marshaled_pinvoke* ____innerException;
+	char* ____helpURL;
+	Il2CppIUnknown* ____stackTrace;
+	char* ____stackTraceString;
+	char* ____remoteStackTraceString;
+	int32_t ____remoteStackIndex;
+	Il2CppIUnknown* ____dynamicMethods;
+	int32_t ____HResult;
+	char* ____source;
+	SafeSerializationManager_tCBB85B95DFD1634237140CD892E82D06ECB3F5E6* ____safeSerializationManager;
+	StackTraceU5BU5D_t32FBCB20930EAF5BAE3F450FF75228E5450DA0DF* ___captured_traces;
+	Il2CppSafeArray* ___native_trace_ips;
+	int32_t ___caught_in_unmanaged;
+};
+struct Exception_t_marshaled_com
+{
+	Il2CppChar* ____className;
+	Il2CppChar* ____message;
+	RuntimeObject* ____data;
+	Exception_t_marshaled_com* ____innerException;
+	Il2CppChar* ____helpURL;
+	Il2CppIUnknown* ____stackTrace;
+	Il2CppChar* ____stackTraceString;
+	Il2CppChar* ____remoteStackTraceString;
+	int32_t ____remoteStackIndex;
+	Il2CppIUnknown* ____dynamicMethods;
+	int32_t ____HResult;
+	Il2CppChar* ____source;
+	SafeSerializationManager_tCBB85B95DFD1634237140CD892E82D06ECB3F5E6* ____safeSerializationManager;
+	StackTraceU5BU5D_t32FBCB20930EAF5BAE3F450FF75228E5450DA0DF* ___captured_traces;
+	Il2CppSafeArray* ___native_trace_ips;
+	int32_t ___caught_in_unmanaged;
+};
+struct GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1  : public RuntimeObject
+{
+	intptr_t ___m_Ptr;
+};
+struct GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F 
+{
+	Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 ___RotationOfTheGroup;
+	Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* ___SpawnPositions;
+};
+struct GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F_marshaled_pinvoke
+{
+	Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 ___RotationOfTheGroup;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___SpawnPositions;
+};
+struct GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F_marshaled_com
+{
+	Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 ___RotationOfTheGroup;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___SpawnPositions;
+};
+struct LightProbeUsage_tC6292C7B7CBA0E5AA2A56F40D71F58A7E06C2948 
+{
+	int32_t ___value__;
+};
+struct MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D  : public RuntimeObject
+{
+	intptr_t ___m_Ptr;
+};
+struct MotionVectorGenerationMode_tE87C61556749260EF5429A0F8FE55DAD30EEAFCB 
+{
+	int32_t ___value__;
+};
+struct Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C  : public RuntimeObject
+{
+	intptr_t ___m_CachedPtr;
+};
+struct Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_marshaled_pinvoke
+{
+	intptr_t ___m_CachedPtr;
+};
+struct Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_marshaled_com
+{
+	intptr_t ___m_CachedPtr;
+};
+struct ReflectionProbeUsage_t033508C14CD4AD926A3A215D19913DC21EA22705 
+{
+	int32_t ___value__;
+};
+struct ShadowCastingMode_tF30806698B37CF120A1A506BD7549EAF308E7C6D 
+{
+	int32_t ___value__;
+};
+struct SimulationAffecterType_t6955178DB59B40AA9DCFDA6BED6D2D24C94483A3 
+{
+	uint8_t ___value__;
+};
+struct SpeciesRoleGPU_t5475A28284187850AE70094E17399BE7F5AF2D3F 
+{
+	int32_t ___value__;
+};
+struct Target_tFB6DEAAA9B8FF7F6383305B097B756A260E88E4A 
+{
+	int32_t ___value__;
+};
+struct Component_t39FBE53E5EFCF4409111FB22C15FF73717632EC3  : public Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C
+{
+};
+struct ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8  : public Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C
+{
+};
+struct GameObject_t76FEDD663AB33C991A9C9A23129337651094216F  : public Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C
+{
+};
+struct Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3  : public Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C
+{
+};
+struct Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4  : public Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C
+{
+};
+struct RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB 
+{
+	int32_t ___U3ClayerU3Ek__BackingField;
+	uint32_t ___U3CrenderingLayerMaskU3Ek__BackingField;
+	int32_t ___U3CrendererPriorityU3Ek__BackingField;
+	EntityId_t982FBD037EAC5CA077B1602A7EA40E3523AA0FC8 ___U3CentityIdU3Ek__BackingField;
+	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___U3CworldBoundsU3Ek__BackingField;
+	Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___U3CcameraU3Ek__BackingField;
+	int32_t ___U3CmotionVectorModeU3Ek__BackingField;
+	int32_t ___U3CreflectionProbeUsageU3Ek__BackingField;
+	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___U3CmaterialU3Ek__BackingField;
+	MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* ___U3CmatPropsU3Ek__BackingField;
+	int32_t ___U3CshadowCastingModeU3Ek__BackingField;
+	bool ___U3CreceiveShadowsU3Ek__BackingField;
+	int32_t ___U3ClightProbeUsageU3Ek__BackingField;
+	LightProbeProxyVolume_t431001CA94D2BB5DB419E2A89E7D8116E4E1B658* ___U3ClightProbeProxyVolumeU3Ek__BackingField;
+	bool ___U3CoverrideSceneCullingMaskU3Ek__BackingField;
+	uint64_t ___U3CsceneCullingMaskU3Ek__BackingField;
+	int32_t ___U3CforceMeshLodU3Ek__BackingField;
+	float ___U3CmeshLodSelectionBiasU3Ek__BackingField;
+};
+struct RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB_marshaled_pinvoke
+{
+	int32_t ___U3ClayerU3Ek__BackingField;
+	uint32_t ___U3CrenderingLayerMaskU3Ek__BackingField;
+	int32_t ___U3CrendererPriorityU3Ek__BackingField;
+	EntityId_t982FBD037EAC5CA077B1602A7EA40E3523AA0FC8 ___U3CentityIdU3Ek__BackingField;
+	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___U3CworldBoundsU3Ek__BackingField;
+	Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___U3CcameraU3Ek__BackingField;
+	int32_t ___U3CmotionVectorModeU3Ek__BackingField;
+	int32_t ___U3CreflectionProbeUsageU3Ek__BackingField;
+	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___U3CmaterialU3Ek__BackingField;
+	MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* ___U3CmatPropsU3Ek__BackingField;
+	int32_t ___U3CshadowCastingModeU3Ek__BackingField;
+	int32_t ___U3CreceiveShadowsU3Ek__BackingField;
+	int32_t ___U3ClightProbeUsageU3Ek__BackingField;
+	LightProbeProxyVolume_t431001CA94D2BB5DB419E2A89E7D8116E4E1B658* ___U3ClightProbeProxyVolumeU3Ek__BackingField;
+	int32_t ___U3CoverrideSceneCullingMaskU3Ek__BackingField;
+	uint64_t ___U3CsceneCullingMaskU3Ek__BackingField;
+	int32_t ___U3CforceMeshLodU3Ek__BackingField;
+	float ___U3CmeshLodSelectionBiasU3Ek__BackingField;
+};
+struct RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB_marshaled_com
+{
+	int32_t ___U3ClayerU3Ek__BackingField;
+	uint32_t ___U3CrenderingLayerMaskU3Ek__BackingField;
+	int32_t ___U3CrendererPriorityU3Ek__BackingField;
+	EntityId_t982FBD037EAC5CA077B1602A7EA40E3523AA0FC8 ___U3CentityIdU3Ek__BackingField;
+	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___U3CworldBoundsU3Ek__BackingField;
+	Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___U3CcameraU3Ek__BackingField;
+	int32_t ___U3CmotionVectorModeU3Ek__BackingField;
+	int32_t ___U3CreflectionProbeUsageU3Ek__BackingField;
+	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___U3CmaterialU3Ek__BackingField;
+	MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* ___U3CmatPropsU3Ek__BackingField;
+	int32_t ___U3CshadowCastingModeU3Ek__BackingField;
+	int32_t ___U3CreceiveShadowsU3Ek__BackingField;
+	int32_t ___U3ClightProbeUsageU3Ek__BackingField;
+	LightProbeProxyVolume_t431001CA94D2BB5DB419E2A89E7D8116E4E1B658* ___U3ClightProbeProxyVolumeU3Ek__BackingField;
+	int32_t ___U3CoverrideSceneCullingMaskU3Ek__BackingField;
+	uint64_t ___U3CsceneCullingMaskU3Ek__BackingField;
+	int32_t ___U3CforceMeshLodU3Ek__BackingField;
+	float ___U3CmeshLodSelectionBiasU3Ek__BackingField;
+};
+struct ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A  : public Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C
+{
+};
+struct ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A_marshaled_pinvoke : public Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_marshaled_pinvoke
+{
+};
+struct ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A_marshaled_com : public Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_marshaled_com
+{
+};
+struct SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___Position;
+	float ___Radius;
+	uint8_t ___Type;
+	int32_t ___BoidGroupId;
+	int32_t ___BoidSubGroupId;
+};
+struct SystemException_tCC48D868298F4C0705279823E34B00F4FBDB7295  : public Exception_t
+{
+};
+struct Behaviour_t01970CFBBA658497AE30F311C447DB0440BAB7FA  : public Component_t39FBE53E5EFCF4409111FB22C15FF73717632EC3
+{
+};
+struct EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30  : public ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A
+{
+	String_t* ___EcosystemName;
+	List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* ___Species;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___SimulationCenter;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___SimulationSize;
+};
+struct FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5  : public ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A
+{
+	float ___MinSwimPlaybackSpeed;
+	float ___MaxSwimPlaybackSpeed;
+	float ___MinSideToSideAmplitude;
+	float ___MaxSideToSideAmplitude;
+	float ___MinYawRotationAmplitude;
+	float ___MaxYawRotationAmplitude;
+	float ___MinRollRotationAmplitude;
+	float ___MaxRollRotationAmplitude;
+	float ___MinPanningYawAmplitude;
+	float ___MaxPanningYawAmplitude;
+};
+struct FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D  : public ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A
+{
+	float ___CruisingSpeed;
+	float ___MaxSpeed;
+	float ___WaterFriction;
+	float ___Deceleration;
+	float ___MaxAcceleration;
+	float ___MovementJerk;
+	float ___MaxAngularVelocity;
+	float ___AngularVelocityReduction;
+	float ___MaxAngularAcceleration;
+	float ___AngularDeceleration;
+	float ___AngularJerk;
+	float ___RotationEffectOnSpeed;
+};
+struct FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD  : public ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A
+{
+	float ___VisionRange;
+	float ___ObstacleAvoidanceRange;
+	float ___SeparationRange;
+	float ___CohesionWeight;
+	float ___AlignmentWeight;
+	float ___SeparationWeight;
+	float ___TargetWeight;
+	FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* ___MovementProperties;
+	FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* ___MotionRenderProperties;
+};
+struct NotSupportedException_t1429765983D409BD2986508963C98D214E4EBF4A  : public SystemException_tCC48D868298F4C0705279823E34B00F4FBDB7295
+{
+};
+struct SpeciesBehaviorPropertiesGPU_tFD5D7CD7B448C514A4472E3E61BC145E95223B42  : public ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A
+{
+	float ___FleeRange;
+	float ___FleeWeight;
+	float ___PanicDuration;
+	float ___DetectionRange;
+	float ___AttackRange;
+	float ___HuntWeight;
+	float ___HungerRate;
+	float ___HuntThreshold;
+	float ___HungerAfterKill;
+};
+struct SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB  : public ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A
+{
+	String_t* ___SpeciesName;
+	String_t* ___ScientificName;
+	int32_t ___Role;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* ___SchoolProperties;
+	FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* ___MovementProperties;
+	FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* ___MotionRenderProperties;
+	SpeciesBehaviorPropertiesGPU_tFD5D7CD7B448C514A4472E3E61BC145E95223B42* ___BehaviorProperties;
+	float ___ReproductionRate;
+	float ___NaturalDeathRate;
+	float ___StarvationDeathRate;
+	float ___StarvationThreshold;
+	List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* ___PreySpecies;
+	List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* ___PredatorSpecies;
+	int32_t ___RuntimeId;
+};
+struct Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1  : public Component_t39FBE53E5EFCF4409111FB22C15FF73717632EC3
+{
+};
+struct MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71  : public Behaviour_t01970CFBBA658497AE30F311C447DB0440BAB7FA
+{
+	CancellationTokenSource_tAAE1E0033BCFC233801F8CB4CED5C852B350CB7B* ___m_CancellationTokenSource;
+};
+struct AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
+{
+	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ____simulationAreaBounds;
+	SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* ____target;
+	float ____minDistanceBetweenTargets;
+	float ____maxDistanceBetweenTargets;
+	SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* ____obstacles;
+};
+struct AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
+{
+	AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* ____simulation;
+	bool ____switchTargetUponReachingIt;
+	float ____reachingDistanceFromTarget;
+	FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* ____fishMovementProperties;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* ____fishSchoolProperties;
+	FishSwimmingMaterialUpdate_t2230944845305A61A155BA20CC02CD05F99BDABF* ____fishMaterialUpdate;
+	BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3 ____boidInfo;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ____currentTargetPosition;
+};
+struct BoidSimulationBase_t8EF6E418236FBAFCCADBE2B0A62A0E4F1E944169  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
+{
+	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ____simulationAreaBounds;
+	float ____simulationSpeedMultiplier;
+	List_1_t4B29BAC310577BAD897CFBAD9D41C489007496B8* ____globalAffecters;
+};
+struct BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
+{
+	BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 ____boidSpawnData;
+	int32_t ____initialGroupsCount;
+	int32_t ____boidGroupId;
+};
+struct EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
+{
+	EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* ____ecosystem;
+	BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* ____simulation;
+	float ____tickInterval;
+	Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050* ____managedWanderers;
+	Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* ____carryingCapacity;
+	Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* ____boidsPerGroup;
+};
+struct EcosystemUIAdapterGPU_t4244986468096B92FB68AE3930566309598BC188  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
+{
+	EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* ____ecosystemGPU;
+};
+struct FishSwimmingMaterialUpdate_t2230944845305A61A155BA20CC02CD05F99BDABF  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
+{
+	FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* ____fishRenderProperties;
+	float ___swimIntensityPercentage;
+	MeshRenderer_t4B7747212F0B88244BB7790C61AE124BFC15BAAE* ____meshRenderer;
+	float ____currentSwimTime;
+};
+struct SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
+{
+	bool ____updatePositionAtRuntime;
+	Color_tD001788D726C3A7F1379BEED0260B9591F440C1F ____visualizationColor;
+	SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 ____simulationAffecter;
+};
+struct SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
+{
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* ____spatialPartitionComputeShader;
+	int32_t ____safetyBufferCellCount;
+	float ____cellSize;
+	bool ____visualizeOccupancy;
+	Color_tD001788D726C3A7F1379BEED0260B9591F440C1F ____occupancyVisualizationColor;
+	int32_t ____cellCountX;
+	int32_t ____cellCountY;
+	int32_t ____cellCountZ;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ____gridCenter;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ____gridMinPoint;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ____gridSize;
+	int32_t ____totalBoidsCount;
+	int32_t ____totalCellsCount;
+	int32_t ____totalThreadGroupsCount;
+	int32_t ____clearGridKernelID;
+	int32_t ____updateOccupancyKernelID;
+	int32_t ____calculateOffsetsKernelID;
+	int32_t ____sumOffsetsKernelID;
+	int32_t ____finalizeOffsetsKernelID;
+	int32_t ____rearrangeBoidsKernelID;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ____boidsCellInfoBuffer;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ____cellOccupancyBuffer;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ____cellsGlobalOffsetBuffer;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ____threadGroupsGlobalOffsetBuffer;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ____threadGroupsGlobalOffsetHelperBuffer;
+	UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA* ____cellsOccupancyVisualization;
+};
+struct BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF  : public BoidSimulationBase_t8EF6E418236FBAFCCADBE2B0A62A0E4F1E944169
+{
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* ____boidsComputeShader;
+	List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16* ____boidsSchools;
+	List_1_tD9811238E86E769706BBBF3245B3EE281105E35A* ____affecters;
+	int32_t ____boidsKernelId;
+	int32_t ____boidsCount;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ____boidsComputeBuffer;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ____boidsSchoolsComputeBuffer;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ____affectersComputeBuffer;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* ____boidsInfos;
+	BoidSchoolInfoGPUU5BU5D_t46D67098DD8147CDFF4CE1B333C644D158C84D45* ____boidSchoolsInfos;
+	AffecterGPUU5BU5D_t1916C7B927B4CB6354C016BB6F25862386BBCD6E* ____affectersInfos;
+};
+struct BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF  : public BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247
+{
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* ____boids;
+	int32_t ____renderingOffset;
+	GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* ____drawArgumentsBuffer;
+	IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF* ____drawArguments;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* ____preservedBoids;
+};
+struct WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0  : public SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F
+{
+	float ____wanderSpeed;
+	float ____turnRate;
+	float ____boundaryMargin;
+	float ____centerReturnStrength;
+	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ____bounds;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ____wanderDirection;
+	bool ____initialized;
+};
+struct BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586  : public BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF
+{
+	SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* ____spatialPartitionGPU;
+	BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* ____gpuBoidSpawners;
+	bool ____updateSchoolSettingsEveryFrame;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ____sortedBoidsComputeBuffer;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ____boidSchoolsRenderInfoBuffer;
+	bool ____sortedBoidsBufferIsOutput;
+	BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE* ____boidSchoolsRenderInfos;
+};
+struct BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30  : public BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF
+{
+	float ____initialOffsetFromTarget;
+	SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ____speciesData;
+};
+struct BoidSwirlSpawnerGPU_t980F89EF35654E32DC06695504CDF7590BFA7707  : public BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF
+{
+	float ____initialSwirlSphereRadius;
+};
+struct List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16_StaticFields
+{
+	FishSchoolPropertiesU5BU5D_tB07E3A7CB00D9D4F159BFCFBDF5BBABCF0F681DE* ___s_emptyArray;
+};
+struct List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D_StaticFields
+{
+	ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* ___s_emptyArray;
+};
+struct List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E_StaticFields
+{
+	SpeciesDataGPUU5BU5D_tFAAEA67E3CC858DD604A253B4F8619E5E06F180B* ___s_emptyArray;
+};
+struct List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1_StaticFields
+{
+	WanderingAffecterGPUU5BU5D_t9D271917436667AF1A1F6CB822629702AB2EDB5F* ___s_emptyArray;
+};
+struct U3CPrivateImplementationDetailsU3E_t0F5473E849A5A5185A9F4C5246F0C32816C49FCA_StaticFields
+{
+	__StaticArrayInitTypeSizeU3D3348_t84D89298233F4A9FEE2EED3A89C8886991654586 ___C253C1BF7FD915E81BE19A9482090F78CEBC33ABA958AD2AD38B4ACA9AA628DB;
+	__StaticArrayInitTypeSizeU3D5805_t1420C1E97F4C4B91D4A60F42E17F1598C3865491 ___EE9E8F70E20689EA5D99706E6BF0D001F4DD25A42EA66450D983E78B5C0CD634;
+};
+struct String_t_StaticFields
+{
+	String_t* ___Empty;
+};
+struct Boolean_t09A6377A54BE2F9E6985A8149F19234FD7DDFE22_StaticFields
+{
+	String_t* ___TrueString;
+	String_t* ___FalseString;
+};
+struct Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974_StaticFields
+{
+	Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 ___identityQuaternion;
+};
+struct Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_StaticFields
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___zeroVector;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___oneVector;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___upVector;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___downVector;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___leftVector;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___rightVector;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___forwardVector;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___backVector;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___positiveInfinityVector;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___negativeInfinityVector;
+};
+struct Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3_StaticFields
+{
+	Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 ___zeroVector;
+	Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 ___oneVector;
+	Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 ___positiveInfinityVector;
+	Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 ___negativeInfinityVector;
+};
+struct Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_StaticFields
+{
+	int32_t ___OffsetOfInstanceIDInCPlusPlusObject;
+};
+struct Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3_StaticFields
+{
+	int32_t ___k_ColorId;
+	int32_t ___k_MainTexId;
+};
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+struct BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC  : public RuntimeArray
+{
+	ALIGN_FIELD (8) BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 m_Items[1];
+
+	inline BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+	}
+	inline BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 value)
+	{
+		m_Items[index] = value;
+	}
+};
+struct IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF  : public RuntimeArray
+{
+	ALIGN_FIELD (8) IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB m_Items[1];
+
+	inline IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+	}
+	inline IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB value)
+	{
+		m_Items[index] = value;
+	}
+};
+struct GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7  : public RuntimeArray
+{
+	ALIGN_FIELD (8) GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F m_Items[1];
+
+	inline GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F* GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+		Il2CppCodeGenWriteBarrier((void**)&((m_Items + index)->___SpawnPositions), (void*)NULL);
+	}
+	inline GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F* GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F value)
+	{
+		m_Items[index] = value;
+		Il2CppCodeGenWriteBarrier((void**)&((m_Items + index)->___SpawnPositions), (void*)NULL);
+	}
+};
+struct Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C  : public RuntimeArray
+{
+	ALIGN_FIELD (8) Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 m_Items[1];
+
+	inline Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+	}
+	inline Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 value)
+	{
+		m_Items[index] = value;
+	}
+};
+struct SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F  : public RuntimeArray
+{
+	ALIGN_FIELD (8) SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* m_Items[1];
+
+	inline SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F** GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+		Il2CppCodeGenWriteBarrier((void**)m_Items + index, (void*)value);
+	}
+	inline SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F** GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* value)
+	{
+		m_Items[index] = value;
+		Il2CppCodeGenWriteBarrier((void**)m_Items + index, (void*)value);
+	}
+};
+struct QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7  : public RuntimeArray
+{
+	ALIGN_FIELD (8) Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 m_Items[1];
+
+	inline Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974* GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+	}
+	inline Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974* GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 value)
+	{
+		m_Items[index] = value;
+	}
+};
+struct UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA  : public RuntimeArray
+{
+	ALIGN_FIELD (8) uint32_t m_Items[1];
+
+	inline uint32_t GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline uint32_t* GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, uint32_t value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+	}
+	inline uint32_t GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline uint32_t* GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, uint32_t value)
+	{
+		m_Items[index] = value;
+	}
+};
+struct BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75  : public RuntimeArray
+{
+	ALIGN_FIELD (8) BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* m_Items[1];
+
+	inline BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF** GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+		Il2CppCodeGenWriteBarrier((void**)m_Items + index, (void*)value);
+	}
+	inline BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF** GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* value)
+	{
+		m_Items[index] = value;
+		Il2CppCodeGenWriteBarrier((void**)m_Items + index, (void*)value);
+	}
+};
+struct BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE  : public RuntimeArray
+{
+	ALIGN_FIELD (8) BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15 m_Items[1];
+
+	inline BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15 GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15* GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15 value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+	}
+	inline BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15 GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15* GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15 value)
+	{
+		m_Items[index] = value;
+	}
+};
+struct BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C  : public RuntimeArray
+{
+	ALIGN_FIELD (8) BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* m_Items[1];
+
+	inline BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247** GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+		Il2CppCodeGenWriteBarrier((void**)m_Items + index, (void*)value);
+	}
+	inline BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247** GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* value)
+	{
+		m_Items[index] = value;
+		Il2CppCodeGenWriteBarrier((void**)m_Items + index, (void*)value);
+	}
+};
+struct BoidSchoolInfoGPUU5BU5D_t46D67098DD8147CDFF4CE1B333C644D158C84D45  : public RuntimeArray
+{
+	ALIGN_FIELD (8) BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6 m_Items[1];
+
+	inline BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6 GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6* GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6 value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+	}
+	inline BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6 GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6* GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6 value)
+	{
+		m_Items[index] = value;
+	}
+};
+struct SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C  : public RuntimeArray
+{
+	ALIGN_FIELD (8) SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 m_Items[1];
+
+	inline SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54* GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+	}
+	inline SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54* GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 value)
+	{
+		m_Items[index] = value;
+	}
+};
+struct ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918  : public RuntimeArray
+{
+	ALIGN_FIELD (8) RuntimeObject* m_Items[1];
+
+	inline RuntimeObject* GetAt(il2cpp_array_size_t index) const
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items[index];
+	}
+	inline RuntimeObject** GetAddressAt(il2cpp_array_size_t index)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		return m_Items + index;
+	}
+	inline void SetAt(il2cpp_array_size_t index, RuntimeObject* value)
+	{
+		IL2CPP_ARRAY_BOUNDS_CHECK(index, (uint32_t)(this)->max_length);
+		m_Items[index] = value;
+		Il2CppCodeGenWriteBarrier((void**)m_Items + index, (void*)value);
+	}
+	inline RuntimeObject* GetAtUnchecked(il2cpp_array_size_t index) const
+	{
+		return m_Items[index];
+	}
+	inline RuntimeObject** GetAddressAtUnchecked(il2cpp_array_size_t index)
+	{
+		return m_Items + index;
+	}
+	inline void SetAtUnchecked(il2cpp_array_size_t index, RuntimeObject* value)
+	{
+		m_Items[index] = value;
+		Il2CppCodeGenWriteBarrier((void**)m_Items + index, (void*)value);
+	}
+};
+
+
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* Object_Instantiate_TisRuntimeObject_m90A1E6C4C2B445D2E848DB75C772D1B95AAC046A_gshared (RuntimeObject* ___0_original, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t List_1_get_Count_m4407E4C389F22B8CEC282C15D56516658746C383_gshared_inline (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void List_1_Insert_m9C9559248941FED50561DB029D55DF08DEF3B094_gshared (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, int32_t ___0_index, RuntimeObject* ___1_item, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* List_1_get_Item_m33561245D64798C2AB07584C0EC4F240E4839A38_gshared (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, int32_t ___0_index, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void List_1__ctor_m7F078BB342729BDF11327FD89D7872265328F690_gshared (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Dictionary_2_TryGetValue_m4B8EE45640C70BBFD6F3EFF1040983404C098342_gshared (Dictionary_2_t5C96F4B6841710A9013966F76224BAE01FB4B4D1* __this, RuntimeObject* ___0_key, int32_t* ___1_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Enumerator_t9473BAB568A27E2339D48C1F91319E0F6D244D7A List_1_GetEnumerator_mD8294A7FA2BEB1929487127D476F8EC1CDC23BFC_gshared (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Enumerator_Dispose_mD9DC3E3C3697830A4823047AB29A77DBBB5ED419_gshared (Enumerator_t9473BAB568A27E2339D48C1F91319E0F6D244D7A* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR RuntimeObject* Enumerator_get_Current_m6330F15D18EE4F547C05DF9BF83C5EB710376027_gshared_inline (Enumerator_t9473BAB568A27E2339D48C1F91319E0F6D244D7A* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Enumerator_MoveNext_mE921CC8F29FBBDE7CC3209A0ED0D921D58D00BCB_gshared (Enumerator_t9473BAB568A27E2339D48C1F91319E0F6D244D7A* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Dictionary_2_set_Item_m72CC2F1213D1C1B8ABEDE31082D07B67EC873B13_gshared (Dictionary_2_t5C96F4B6841710A9013966F76224BAE01FB4B4D1* __this, RuntimeObject* ___0_key, int32_t ___1_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void List_1__ctor_m76CBBC3E2F0583F5AD30CE592CEA1225C06A0428_gshared (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, int32_t ___0_capacity, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void List_1_Add_mEBCF994CC3814631017F46A387B1A192ED6C85C7_gshared_inline (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, RuntimeObject* ___0_item, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Dictionary_2_set_Item_m1A840355E8EDAECEA9D0C6F5E51B248FAA449CBD_gshared (Dictionary_2_t14FE4A752A83D53771C584E4C8D14E01F2AFD7BA* __this, RuntimeObject* ___0_key, RuntimeObject* ___1_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* GameObject_AddComponent_TisRuntimeObject_m69B93700FACCF372F5753371C6E8FB780800B824_gshared (GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Dictionary_2__ctor_m5B32FBC624618211EB461D59CFBB10E987FD1329_gshared (Dictionary_2_t14FE4A752A83D53771C584E4C8D14E01F2AFD7BA* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Dictionary_2__ctor_m517E7F9D104FEAE6646EABDDC9C852510E86077C_gshared (Dictionary_2_t5C96F4B6841710A9013966F76224BAE01FB4B4D1* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_NO_INLINE IL2CPP_METHOD_ATTR void List_1_AddWithResize_m79A9BF770BEF9C06BE40D5401E55E375F2726CC4_gshared (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, RuntimeObject* ___0_item, const RuntimeMethod* method) ;
+
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GraphicsBuffer_Dispose_m2D1F14A03BE2CAA0A68536470298B468F77AB596 (GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GraphicsBuffer_Release_m383E932BE0F3C20D90D715D751C9888472121F75 (GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t Mathf_Min_m888083F74FF5655778F0403BB5E9608BEFDEA8CB_inline (int32_t ___0_a, int32_t ___1_b, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GraphicsBuffer__ctor_mBDE2A119B58AD582F79CFE8071F47001965D14F4 (GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* __this, int32_t ___0_target, int32_t ___1_count, int32_t ___2_stride, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void IndirectDrawIndexedArgs_set_baseVertexIndex_mA8BC029CBE91D04FA9BF999FE52AD17AF91AD593_inline (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* __this, uint32_t ___0_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void IndirectDrawIndexedArgs_set_startIndex_mC3B089A30B3BC982D8AE997098759EE475F56FC0_inline (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* __this, uint32_t ___0_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void IndirectDrawIndexedArgs_set_startInstance_m4FB24CC31E5690683ABD3CF753ECDD5A12EB3D43_inline (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* __this, uint32_t ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR uint32_t Mesh_GetIndexCount_m8F6E3C336023DFD649715A2F9DAAFD83E25ED366 (Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* __this, int32_t ___0_submesh, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void IndirectDrawIndexedArgs_set_indexCountPerInstance_m3683A18DA13AC860B011243EECE17D2BB2788381_inline (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* __this, uint32_t ___0_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void IndirectDrawIndexedArgs_set_instanceCount_m7EF3E8C63A0BE8A6EE1962115B74C561220C7F1B_inline (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* __this, uint32_t ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GraphicsBuffer_SetData_m6C30CB8A616D560E576063A27C2DE3B3BACD1CAF (GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* __this, RuntimeArray* ___0_data, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void RenderParams__ctor_m2FFA3712EB95300426D6E3549E084C0C5B13997E (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___0_mat, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MaterialPropertyBlock__ctor_m14C3432585F7BB65028BCD64A0FD6607A1B490FB (MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RenderParams_set_matProps_m6E6A341325FA7936C8CA0EBCBBD74EDAE16DADB0_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* ___0_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* RenderParams_get_matProps_m950EF867EADDF762C77ACC18701142298B823FE5_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MaterialPropertyBlock_SetBuffer_mD00B50F0BFACA7F2F4F501112D208D0376B32E87 (MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* __this, String_t* ___0_name, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ___1_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MaterialPropertyBlock_SetInt_m5C415E420E7C21154F1B034C6141C7D094CF40F9 (MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* __this, String_t* ___0_name, int32_t ___1_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Bounds_get_center_m5B05F81CB835EB6DD8628FDA24B638F477984DC3_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 Vector4_op_Implicit_m2ECA73F345A7AD84144133E9E51657204002B12D_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_v, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MaterialPropertyBlock_SetVector_mB3D0FFCCDFF9D78447719F25DB8C1AFCB12B8BD5 (MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* __this, String_t* ___0_name, Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 ___1_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RenderParams_set_shadowCastingMode_m11A19F71F4A7B9DF041B5A535539851B42CA550A_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, int32_t ___0_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RenderParams_set_receiveShadows_m378D274D281BCDB51A915AD720C1583D600A16F3_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, bool ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* Component_get_gameObject_m57AEFBB14DB39EC476F740BA000E170355DE691B (Component_t39FBE53E5EFCF4409111FB22C15FF73717632EC3* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t GameObject_get_layer_m108902B9C89E9F837CE06B9942AA42307450FEAF (GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RenderParams_set_layer_m0C79C4B8B8DFB1822BD7413E201238C9B5C814B1_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, int32_t ___0_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Bounds_get_extents_mFE6DC407FCE2341BE2C750CB554055D211281D25_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, float ___1_d, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Bounds_set_extents_m09496358547B86A93EFE7BE6371E7A6FE937C46F_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RenderParams_set_worldBounds_mC00068A6DB8D898D243B16698A2B4C881447BCDB_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Graphics_RenderMeshIndirect_mA08EA196E7480222BB5F6A700E9FDE5154DB32D2 (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* ___0_rparams, Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* ___1_mesh, GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* ___2_argsBuffer, int32_t ___3_commandCount, int32_t ___4_startCommand, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t BitConverter_SingleToInt32Bits_mC760C7CFC89725E3CF68DC45BE3A9A42A7E7DA73_inline (float ___0_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float BitConverter_Int32BitsToSingle_mAD799CFA19FABC0DCA7A09F3380A1F0B0EB39130_inline (int32_t ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* BoidSpawnUtility_CalculateBoidsSpawnData_mFAC4563ACB8207BB5BB5289316860E0E849EB304 (int32_t ___0_totalBoidsCount, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___1_simulationAreaBounds, float ___2_minSpawnDistanceBetweenBoids, int32_t ___3_totalGroupsCount, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_get_forward_mAA55A7034304DF8B2152EAD49AE779FC4CA2EB4A_inline (const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Quaternion_op_Multiply_mE1EBA73F9173432B50F8F17CE8190C5A7986FB8C (Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 ___0_rotation, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_point, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerBase__ctor_mAF88EBE4CEAB78B801606899818850FBD04BB9FF (BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Object_op_Inequality_mD0BE578448EAA61948F25C32F8DD55AB1F778602 (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C* ___0_x, Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C* ___1_y, const RuntimeMethod* method) ;
+inline FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* Object_Instantiate_TisFishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD_m2C9B5E2F5F1A8717D8BB496BC7D29091085D3C20 (FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* ___0_original, const RuntimeMethod* method)
+{
+	return ((  FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* (*) (FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD*, const RuntimeMethod*))Object_Instantiate_TisRuntimeObject_m90A1E6C4C2B445D2E848DB75C772D1B95AAC046A_gshared)(___0_original, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_InitializeBoidsSpawnData_m5AABB8FDBEBB80BB4153DBA7522C0E44CBC31C6D (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_simulationAreaBounds, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 SimulationAffecterComponent_get_AffecterPosition_mA8D10675AA9AF3FBC9170831540025CF51F4EEC8 (SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 BoidSpawnerGPUMultiTargets_GetCenterPosition_m19886C0F9CE4BB9E4F9DAB78F8149EDD1B50180B (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* __this, Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* ___0_positions, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_b, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_b, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline (const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_op_Division_mCC6BB24E372AB96B8380D1678446EF6A8BAE13BB_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, float ___1_d, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU__ctor_m2ED79E380A017C117C58DEA8386F69F2A83C8E4A (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnUtility_CalculateBoidsSwirlSpawnData_m72B512452CC38C48E14314E2B47DA53C24AD4FD0 (int32_t ___0_totalBoidsCount, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_swirlSphereCenter, float ___2_swirlSphereRadius, Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C** ___3_boidsPositions, QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7** ___4_boidsRotations, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Color_tD001788D726C3A7F1379BEED0260B9591F440C1F Color_get_red_mA2E53E7173FDC97E68E335049AB0FAAEE43A844D_inline (const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Gizmos_set_color_m53927A2741937484180B20B55F7F20F8F60C5797 (Color_tD001788D726C3A7F1379BEED0260B9591F440C1F ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Gizmos_DrawWireCube_m343533B3955A2D04A8638280D0EF537274A1FD8B (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_center, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_size, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t Mathf_FloorToInt_m2A39AE881CAEE6B6A4B3BFEF9CA1ED40625F5AB7_inline (float ___0_f, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* __this, float ___0_x, float ___1_y, float ___2_z, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_Clamp01_mA7E048DBDA832D399A581BE4D6DED9FA44CE0F14_inline (float ___0_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_Lerp_m47EF2FFB7647BD0A1FDC26DC03E28B19812139B5_inline (float ___0_a, float ___1_b, float ___2_t, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_get_one_mC9B289F1E15C42C597180C9FE6FB492495B51D02_inline (const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Gizmos_DrawCube_m4417EAEA479EF4AD52445810D840BA8FCBC6EF3F (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_center, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_size, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** ___0_computeBuffer, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Debug_LogError_mB00B2B4468EF3CAF041B038D840820FB84C924B2 (RuntimeObject* ___0_message, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Bounds_get_size_m0699A53A55A78B3201D7270D6F338DFA91B6FAD4_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t Mathf_CeilToInt_mF2BF9F4261B3431DC20E10A46CFEEED103C48963_inline (float ___0_f, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ComputeBuffer__ctor_mE40DE5EF5ADAC29B6B4DECBD1EE33E8526202617 (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* __this, int32_t ___0_count, int32_t ___1_stride, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t ComputeShader_FindKernel_m3BA5C50794FA6AF4C432E55FBBD7CB266532F659 (ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* __this, String_t* ___0_name, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C (ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* __this, String_t* ___0_name, int32_t ___1_val, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ComputeShader_SetFloat_m725E64D98D75E3E1AB20CF7B6CF790798DCD6F66 (ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* __this, String_t* ___0_name, float ___1_val, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ComputeShader_SetVector_m1558A111CF6BB2A6816C6595329002EDEE40F6FC (ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* __this, String_t* ___0_name, Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 ___1_val, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0 (ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* __this, int32_t ___0_kernelIndex, String_t* ___1_name, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ___2_buffer, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ComputeShaderExtensions_DispatchThreads_mD4BB957B1281F7B52FC2F2068BC2E9B94EB11747 (ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* ___0_computeShader, int32_t ___1_kernelID, int32_t ___2_numberOfComputations, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ComputeBuffer_GetData_m7EFC5EF9035C3C48BD922221AC809DC30D6F7F27 (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* __this, RuntimeArray* ___0_data, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ComputeBuffer_Release_mF1F157C929A0A5B2FDCD703A286EE09723450B72 (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ComputeBuffer_Dispose_mBCA0F8A5BE75A41C77E1FCFBCB4EAE84A45D6BF2 (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MonoBehaviour__ctor_m592DB0105CA0BC97AA1C5F4AD27B12D68A3B7C1E (MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationBaseGPU_OnDestroy_m37DFF5414529D8CE1A0DC57AB872C3390FB669D3 (BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* BoidSpawnerGPU_get_Boids_m3C6B8A43417D41418E276FF34C24F6229C8665C4_inline (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t BoidSpawnerGPU_get_RenderingOffset_m5605DE855FC2F16A17FB250884775ACE345B9252_inline (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Array_Copy_mB4904E17BD92E320613A3251C0205E0786B3BF41 (RuntimeArray* ___0_sourceArray, int32_t ___1_sourceIndex, RuntimeArray* ___2_destinationArray, int32_t ___3_destinationIndex, int32_t ___4_length, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_StorePreservedBoids_mC00D90EFAEDEE9DB55BA31833895DF206080D9A6 (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* ___0_preserved, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationBaseGPU_CleanupBaseGPUBuffers_m75EE3B11C58C754A74A7408DDC0540CE9828A510 (BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_CleanupGrid_m53231076A6A1AA705F2789F63CB1626B39B87A74 (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_CleanupSpawnData_m3A6BA2E271399F9A023CA7E7D7A5B804D4BACCC8 (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationBaseGPU_InitializeBoidsSimulation_m9F9B38E150B35BF5E713C8705E3BC8E7B008D541 (BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_InitializeGrid_m30CFC5260955AE87C202D571BF47D4E1938E720F (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_simulationAreaBounds, int32_t ___1_totalBoidsCount, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t BoidSpawnerBase_get_BoidGroupId_m1AFEA1B8E2F29AC968F3B37DCF4A95341EFC3A68_inline (BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* __this, const RuntimeMethod* method) ;
+inline int32_t List_1_get_Count_m035F79E7D9F870918EBC209977CC567502EAC0B9_inline (List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16* __this, const RuntimeMethod* method)
+{
+	return ((  int32_t (*) (List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16*, const RuntimeMethod*))List_1_get_Count_m4407E4C389F22B8CEC282C15D56516658746C383_gshared_inline)(__this, method);
+}
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline (BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* __this, const RuntimeMethod* method) ;
+inline void List_1_Insert_m2D27AD2759306E269C69ACB656AAF34261307CCD (List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16* __this, int32_t ___0_index, FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* ___1_item, const RuntimeMethod* method)
+{
+	((  void (*) (List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16*, int32_t, FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD*, const RuntimeMethod*))List_1_Insert_m9C9559248941FED50561DB029D55DF08DEF3B094_gshared)(__this, ___0_index, ___1_item, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ComputeBuffer_SetData_m9F845E6B347CE028FA9A987D740FC642D828013A (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* __this, RuntimeArray* ___0_data, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationBaseGPU_InitializeComputeShaderData_m17CEDA00D1778A2C1B4AF180CA9537DF2D23451D (BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF* __this, const RuntimeMethod* method) ;
+inline FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* List_1_get_Item_m68663C1937987C20BCF6B323A927350A5C127B0E (List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16* __this, int32_t ___0_index, const RuntimeMethod* method)
+{
+	return ((  FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* (*) (List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16*, int32_t, const RuntimeMethod*))List_1_get_Item_m33561245D64798C2AB07584C0EC4F240E4839A38_gshared)(__this, ___0_index, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_UpdateGridOccupancy_m88124DF9170E51F2C48E011E3FB4C17C8B5EB346 (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ___0_boidsInputBuffer, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ___1_boidsOutputBuffer, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_SetSpatialPartitionProperties_m4F0D2FA1465E7B41F1B538836C55CFE7FE3A2FEE (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* ___0_computeShader, int32_t ___1_kernelID, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_RenderBoids_mA5672D1AB9EE17E2DA289AF4F13382098C830E88 (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ___0_boidsComputeBuffer, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ___1_boidSchoolsRenderInfosBuffer, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___2_simulationAreaBounds, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationBaseGPU__ctor_mF4DDCD4419E48D9B7DFC65BB7EB9AC3B4BD49C53 (BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Bounds__ctor_mAF7B238B9FBF90C495E5D7951760085A93119C5A_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_center, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_size, const RuntimeMethod* method) ;
+inline void List_1__ctor_m07BB59C5A76470D8C3141683CF8FE3EAB6C0BE88 (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* __this, const RuntimeMethod* method)
+{
+	((  void (*) (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E*, const RuntimeMethod*))List_1__ctor_m7F078BB342729BDF11327FD89D7872265328F690_gshared)(__this, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ScriptableObject__ctor_mD037FDB0B487295EA47F79A4DB1BF1846C9087FF (ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605 (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C* ___0_x, Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C* ___1_y, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Debug_LogError_m94F967AB31244EACE68C3BE1DD85B69ED3334C0E (RuntimeObject* ___0_message, Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C* ___1_context, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Behaviour_set_enabled_mF1DCFE60EB09E0529FE9476CA804A3AA2D72B16A (Behaviour_t01970CFBBA658497AE30F311C447DB0440BAB7FA* __this, bool ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_SetupAllSpecies_m389D18E305A06EBC9DD477259373341AE01D2B2C (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* EcosystemSimulationGPU_PopulationTickRoutine_m7D050EF959734498720F520472633048629791E0 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Coroutine_t85EA685566A254C23F3FD77AB5BDFFFF8799596B* MonoBehaviour_StartCoroutine_m4CAFF732AA28CD3BDC5363B44A863575530EC812 (MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71* __this, RuntimeObject* ___0_routine, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool EcosystemSimulationGPU_ValidateSpecies_m468FBB5EC6E83C25655027A716B4E20240730E3E (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30** ___1_spawner, const RuntimeMethod* method) ;
+inline bool Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C (Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_key, int32_t* ___1_value, const RuntimeMethod* method)
+{
+	return ((  bool (*) (Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2*, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB*, int32_t*, const RuntimeMethod*))Dictionary_2_TryGetValue_m4B8EE45640C70BBFD6F3EFF1040983404C098342_gshared)(__this, ___0_key, ___1_value, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_AddGroup_mD2528854CD0C857686F54828EF683D50576B05BD (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* ___1_spawner, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationGPU_ReinitializeBuffers_m258A512FC118B168A45B4E3F37C06B88900708BD (BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* String_Concat_m8855A6DE10F84DA7F4EC113CADDB59873A25573B (String_t* ___0_str0, String_t* ___1_str1, String_t* ___2_str2, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Debug_LogWarning_m33EF1B897E0C7C6FF538989610BFAFFEF4628CA9 (RuntimeObject* ___0_message, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_RemoveGroup_mA8D730EBCA96188EFBD8C01D9ED30842ABF2033F (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* ___1_spawner, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* EcosystemSimulationGPU_FindSpawner_mF45DA44AB32A3A624987B26703367D60A571F6DD (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void U3CPopulationTickRoutineU3Ed__13__ctor_m5BE3C7DDE882EEC4745A1086954960A811011321 (U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4* __this, int32_t ___0_U3CU3E1__state, const RuntimeMethod* method) ;
+inline Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44 List_1_GetEnumerator_mA791C387BEAF2DC043513021B0C6ACB38A64BA2B (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* __this, const RuntimeMethod* method)
+{
+	return ((  Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44 (*) (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E*, const RuntimeMethod*))List_1_GetEnumerator_mD8294A7FA2BEB1929487127D476F8EC1CDC23BFC_gshared)(__this, method);
+}
+inline void Enumerator_Dispose_mA415F735E85F8FE3A69C92C1AC8449F86E3145F2 (Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44* __this, const RuntimeMethod* method)
+{
+	((  void (*) (Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44*, const RuntimeMethod*))Enumerator_Dispose_mD9DC3E3C3697830A4823047AB29A77DBBB5ED419_gshared)(__this, method);
+}
+inline SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* Enumerator_get_Current_m56CCD0A5F4B4100CE4A57E1412FFF763C75AF418_inline (Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44* __this, const RuntimeMethod* method)
+{
+	return ((  SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* (*) (Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44*, const RuntimeMethod*))Enumerator_get_Current_m6330F15D18EE4F547C05DF9BF83C5EB710376027_gshared_inline)(__this, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Random_get_value_m2CEA87FADF5222EF9E13D32695F15E2BA282E24B (const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t Mathf_Max_m7FA442918DE37E3A00106D1F2E789D65829792B8_inline (int32_t ___0_a, int32_t ___1_b, const RuntimeMethod* method) ;
+inline bool Enumerator_MoveNext_m87F82E2F2D878FBF9D6F0A76CB32257EC29B8904 (Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44* __this, const RuntimeMethod* method)
+{
+	return ((  bool (*) (Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44*, const RuntimeMethod*))Enumerator_MoveNext_mE921CC8F29FBBDE7CC3209A0ED0D921D58D00BCB_gshared)(__this, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerBase_SetBoidsCount_mC5967DDDE1B0353726590A8EEDDAFACF1F693A4D (BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* __this, int32_t ___0_count, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 EcosystemDefinitionGPU_get_SimulationBounds_m400B93791D779C1FE6F0D17B12C7316FDEB611FF (EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* __this, const RuntimeMethod* method) ;
+inline SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* List_1_get_Item_m9C7C161C4D1E41766CBE8F344F4AE9C5BC055405 (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* __this, int32_t ___0_index, const RuntimeMethod* method)
+{
+	return ((  SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* (*) (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E*, int32_t, const RuntimeMethod*))List_1_get_Item_m33561245D64798C2AB07584C0EC4F240E4839A38_gshared)(__this, ___0_index, method);
+}
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t BoidSpawnerBase_get_InitialGroupsCount_m804189D5FE7825D968ACF9C9ABCC37B67338DDD5_inline (BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* __this, const RuntimeMethod* method) ;
+inline void Dictionary_2_set_Item_mBE2A3D4CE00B67852B882F98506D34F02C1BEA09 (Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_key, int32_t ___1_value, const RuntimeMethod* method)
+{
+	((  void (*) (Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2*, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB*, int32_t, const RuntimeMethod*))Dictionary_2_set_Item_m72CC2F1213D1C1B8ABEDE31082D07B67EC873B13_gshared)(__this, ___0_key, ___1_value, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_SetupApexTargets_m4CB36CBCA66BC609682C115563AACCF9CC02957D (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* ___1_spawner, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___2_bounds, const RuntimeMethod* method) ;
+inline int32_t List_1_get_Count_m867174535A6BFD5C836DEFA9B8872AA6C7B93D01_inline (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* __this, const RuntimeMethod* method)
+{
+	return ((  int32_t (*) (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E*, const RuntimeMethod*))List_1_get_Count_m4407E4C389F22B8CEC282C15D56516658746C383_gshared_inline)(__this, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* String_Format_mFB7DA489BD99F4670881FF50EC017BFB0A5C0987 (String_t* ___0_format, RuntimeObject* ___1_arg0, RuntimeObject* ___2_arg1, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Debug_Log_m87A9A3C761FF5C43ED8A53B16190A53D08F818BB (RuntimeObject* ___0_message, const RuntimeMethod* method) ;
+inline void List_1__ctor_mF5D7B1593E775B052EFD2EE685EA6F08E0C87A58 (List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1* __this, int32_t ___0_capacity, const RuntimeMethod* method)
+{
+	((  void (*) (List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1*, int32_t, const RuntimeMethod*))List_1__ctor_m76CBBC3E2F0583F5AD30CE592CEA1225C06A0428_gshared)(__this, ___0_capacity, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* EcosystemSimulationGPU_CreateAndInitWanderer_mD26ECF6CD2353832CF96C50E9CCE5F52C95D50B0 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, int32_t ___0_subGroupIndex, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WanderingAffecterGPU_Initialize_mA0A0C7CB7256F5BC317FAA22D2B357D8E0FDA844 (WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_bounds, const RuntimeMethod* method) ;
+inline void List_1_Add_m347489C49B768CFB853ED95DA705AEAEAB2D863F_inline (List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1* __this, WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* ___0_item, const RuntimeMethod* method)
+{
+	((  void (*) (List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1*, WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0*, const RuntimeMethod*))List_1_Add_mEBCF994CC3814631017F46A387B1A192ED6C85C7_gshared_inline)(__this, ___0_item, method);
+}
+inline void Dictionary_2_set_Item_mFDB9337FADB1A3719768F01EF16F96865A002ADC (Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_key, List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1* ___1_value, const RuntimeMethod* method)
+{
+	((  void (*) (Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050*, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB*, List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1*, const RuntimeMethod*))Dictionary_2_set_Item_m1A840355E8EDAECEA9D0C6F5E51B248FAA449CBD_gshared)(__this, ___0_key, ___1_value, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* String_Format_mA8DBB4C2516B9723C5A41E6CB1E2FAF4BBE96DD8 (String_t* ___0_format, RuntimeObject* ___1_arg0, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GameObject__ctor_m37D512B05D292F954792225E6C6EEE95293A9B88 (GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* __this, String_t* ___0_name, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* GameObject_get_transform_m0BC10ADFA1632166AE5544BDF9038A2650C2AE56 (GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371 (Component_t39FBE53E5EFCF4409111FB22C15FF73717632EC3* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Transform_SetParent_m6677538B60246D958DD91F931C50F969CCBB5250 (Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* __this, Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___0_p, const RuntimeMethod* method) ;
+inline WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* GameObject_AddComponent_TisWanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0_m90B2CC15ED4EBB4E1F64F8270AD06F71C69E1591 (GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* __this, const RuntimeMethod* method)
+{
+	return ((  WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* (*) (GameObject_t76FEDD663AB33C991A9C9A23129337651094216F*, const RuntimeMethod*))GameObject_AddComponent_TisRuntimeObject_m69B93700FACCF372F5753371C6E8FB780800B824_gshared)(__this, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SimulationAffecterComponent_SetSubGroupID_mCB72F7D6C2C896EAE5F834F9599B7B5784ACD677 (SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* __this, int32_t ___0_boidSubGroupID, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SimulationAffecterComponent_SetAffecterType_m2E64AD90B992E5E7D6DE16522A2F6B281B496A25 (SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* __this, uint8_t ___0_affecterType, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* BoidSpawnerGPUMultiTargets_get_SpeciesData_m2FE5CA68181D30C592C5EFBBB246A788870E337A_inline (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Color__ctor_m3786F0D6E510D9CFA544523A955870BD2A514C8C_inline (Color_tD001788D726C3A7F1379BEED0260B9591F440C1F* __this, float ___0_r, float ___1_g, float ___2_b, float ___3_a, const RuntimeMethod* method) ;
+inline void Dictionary_2__ctor_mEA9370B5DFD0117D346F9B657348D890BDE5DCB6 (Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050* __this, const RuntimeMethod* method)
+{
+	((  void (*) (Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050*, const RuntimeMethod*))Dictionary_2__ctor_m5B32FBC624618211EB461D59CFBB10E987FD1329_gshared)(__this, method);
+}
+inline void Dictionary_2__ctor_mC4441B5D95FE2DE45DE1456F2430D64CB8BDCFAD (Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* __this, const RuntimeMethod* method)
+{
+	((  void (*) (Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2*, const RuntimeMethod*))Dictionary_2__ctor_m517E7F9D104FEAE6646EABDDC9C852510E86077C_gshared)(__this, method);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Object__ctor_mE837C6B9FA8C6D5D109F4B2EC885D79919AC0EA2 (RuntimeObject* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* __this, float ___0_seconds, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_RunPopulationTick_mCCD11640D4076C09862E53DCEA135A759EC64858 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void NotSupportedException__ctor_m1398D0CDE19B36AA3DE9392879738C1EA2439CDF (NotSupportedException_t1429765983D409BD2986508963C98D214E4EBF4A* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_AddSpecies_m6056B1225E2FE32D761F150678911C5BA36932B6 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_RemoveSpecies_mC904F199C4B41207DD9C99D5C48B81B9CC0D17F9 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t EcosystemSimulationGPU_CountGroups_m9D693780BE77197ED1BD4BA24E1846195085729E (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_Max_m9B6D8FEE7F4CE32C0AAB682606FFBA59E1F37C74_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_lhs, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_rhs, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Random_Range_m5236C99A7D8AE6AC9190592DC66016652A2D2494 (float ___0_minInclusive, float ___1_maxInclusive, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Transform_set_position_mA1A817124BB41B685043DED2A9BA48CDF37C4156 (Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Random_get_onUnitSphere_mA7FD531C3043945E5EA290F670E79A78EFAC0D92 (const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1 (Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SimulationAffecterComponent_set_AffecterPosition_mFF6FAB181425DD7BACA70B086D3F72C9B80C4262 (SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SimulationAffecterComponent_SetUpdatePositionEveryFrame_m155EDCC5853E70D0AA20B5DEC3C1D6878253357E (SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* __this, bool ___0_shouldUpdatePositionEveryFrame, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Time_get_deltaTime_mC3195000401F0FD167DD2F948FD2BC58330D0865 (const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Random_get_insideUnitSphere_mA488D6859560B73565B8D890ED6B39DB4091C54F (const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_Slerp_m6CA14E5B6F6217802BAA0ADD2C9D086C741BA09C_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_b, float ___2_t, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Bounds_get_max_m6446F2AB97C1E57CA89467B9DE52D4EB61F1CB09_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Bounds_get_min_m465AC9BBE1DE5D8E8AD95AC19B9899068FEEBB13_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_Min_m747CA71A9483CDB394B13BD0AD048EE17E48FFE4_inline (float ___0_a, float ___1_b, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_Clamp_mEB9AEA827D27D20FCC787F7375156AF46BB12BBF_inline (float ___0_value, float ___1_min, float ___2_max, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SimulationAffecterComponent__ctor_m8E3CE8E94DDF3D28FA0F26355F556BFC8A1E458C (SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 SimulationAffecterComponent_get_Affecter_mDFA9921837734CB0FA9FC844E28DEBD1AE014C08_inline (SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Bounds_set_center_m891869DD5B1BEEE2D17907BBFB7EB79AAE44884B_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 AutomaticFishSwimSimulation_GetRandomPositionInsideSimulationArea_mDBB2943486E9046BE2F0491FE7A26DD7FC85BE63 (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 AutomaticFishSwimSimulation_GetCurrentTargetPosition_m467F85B2E59B54F6733E8F3DB1D9D1A0BD92147A (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3 FishSwimmingUtility_InitializeBoid_m227330AB9353317EAA41E03AFDF785BB1C901D5A (Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___0_boidTransform, FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* ___1_fishMovementProperties, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AutomaticFishSwimming_UpdateTarget_m220879DC769D9E1DC42FDF3A2C7A17A905F82BD8 (AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 AutomaticFishSwimming_GetClosestObstacle_mBC79BF29946738C0236FB12C018EDE5D0CBC4C84 (AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Vector3_get_magnitude_mF0D6017E90B345F1F52D1CC564C640F1A847AF2D_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool AutomaticFishSwimming_SimulationHasObstacles_m4F8625580155A27B8C37820514E1F41517E3C1CB (AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 AutomaticFishSwimSimulation_get_SimulationAreaBounds_mFC41C753C235C03B841CDCC6BD3DDABACC4BCEC1_inline (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool FishSwimmingUtility_WillLeaveSimulationArea_mAEFC21228AB6175B2E0C0B585DDB37995CB7D983 (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_currentPosition, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_currentMovementDirection, float ___2_currentMovementSpeed, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___3_simulationAreaBounds, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void FishSwimmingUtility_UpdateMovementDirection_m395E0824E1379F6B3E9E11E9AA90371CAFE149EA (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_targetDirection, float ___1_timeDelta, FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* ___2_fishMovementProperties, BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* ___3_BoidInformation, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void FishSwimmingUtility_UpdateMovementSpeed_m97A3E4CB5795FEB6ABC19BD76EAB13FDDE20CAE3 (bool ___0_shouldAccelerate, float ___1_timeDelta, FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* ___2_fishMovementProperties, BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* ___3_BoidInformation, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void FishSwimmingUtility_UpdatePositionAndRotation_m3F31E2A54635D405D42CCF83FB207EAE79F7838D (float ___0_timeDelta, Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___1_transform, BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* ___2_BoidInformation, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_InverseLerp_mBD7EC6A7173CE082226077E1557D5BC2D2AE0D9D_inline (float ___0_a, float ___1_b, float ___2_value, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_Max_mF5379E63D2BBAC76D090748695D833934F8AD051_inline (float ___0_a, float ___1_b, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void FishSwimmingMaterialUpdate_UpdateSwimIntensityPercentage_m5846B7DADA2EF639FE8731CDA21943F63B28D81D (FishSwimmingMaterialUpdate_t2230944845305A61A155BA20CC02CD05F99BDABF* __this, float ___0_percentage, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 AutomaticFishSwimSimulation_GetNewTargetPosition_m1025EDA4D342A282F4ED21C630140A2709FC86D9 (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* AutomaticFishSwimSimulation_get_Obstacles_mB16FD586799A1499D2FBAD60ABF64E81EEA41EC0 (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Vector3_get_sqrMagnitude_m43C27DEC47C4811FB30AB474FF2131A963B66FC8_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* __this, const RuntimeMethod* method) ;
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_Normalize_m1DE89849FE2019B6AA0031306896F3B800849399_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___0_value, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_Internal_Slerp_m35A70ECE16468E7E543C14B7396B8183709C8464 (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___0_a, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___1_b, float ___2_t, const RuntimeMethod* method) ;
+inline void List_1_AddWithResize_m79A9BF770BEF9C06BE40D5401E55E375F2726CC4 (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, RuntimeObject* ___0_item, const RuntimeMethod* method)
+{
+	((  void (*) (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D*, RuntimeObject*, const RuntimeMethod*))List_1_AddWithResize_m79A9BF770BEF9C06BE40D5401E55E375F2726CC4_gshared)(__this, ___0_item, method);
+}
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71294
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t BoidSpawnerGPU_get_RenderingOffset_m5605DE855FC2F16A17FB250884775ACE345B9252 (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:28>
+		int32_t L_0 = __this->____renderingOffset;
+		return L_0;
+	}
+}
+// Method Definition Index: 71295
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* BoidSpawnerGPU_get_Boids_m3C6B8A43417D41418E276FF34C24F6229C8665C4 (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:34>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_0 = __this->____boids;
+		return L_0;
+	}
+}
+// Method Definition Index: 71296
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_OnDestroy_m576EE187075160BB557D489AAA210E2B9E3498F7 (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) 
+{
+	GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* G_B2_0 = NULL;
+	GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* G_B1_0 = NULL;
+	GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* G_B5_0 = NULL;
+	GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* G_B4_0 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:38>
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_0 = __this->____drawArgumentsBuffer;
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_1 = L_0;
+		if (L_1)
+		{
+			G_B2_0 = L_1;
+			goto IL_000d;
+		}
+		G_B1_0 = L_1;
+	}
+	{
+		goto IL_0013;
+	}
+
+IL_000d:
+	{
+		NullCheck(G_B2_0);
+		GraphicsBuffer_Dispose_m2D1F14A03BE2CAA0A68536470298B468F77AB596(G_B2_0, NULL);
+	}
+
+IL_0013:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:39>
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_2 = __this->____drawArgumentsBuffer;
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_3 = L_2;
+		if (L_3)
+		{
+			G_B5_0 = L_3;
+			goto IL_001f;
+		}
+		G_B4_0 = L_3;
+	}
+	{
+		goto IL_0025;
+	}
+
+IL_001f:
+	{
+		NullCheck(G_B5_0);
+		GraphicsBuffer_Release_m383E932BE0F3C20D90D715D751C9888472121F75(G_B5_0, NULL);
+	}
+
+IL_0025:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:40>
+		__this->____drawArgumentsBuffer = (GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____drawArgumentsBuffer), (void*)(GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:41>
+		__this->____drawArguments = (IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____drawArguments), (void*)(IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:42>
+		return;
+	}
+}
+// Method Definition Index: 71297
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_SpawnBoids_mF8240E16E886E5EC48D443226BBC7CBAB5EC0738 (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_simulationAreaBounds, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	bool V_0 = false;
+	int32_t V_1 = 0;
+	int32_t V_2 = 0;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 V_3;
+	memset((&V_3), 0, sizeof(V_3));
+	bool V_4 = false;
+	IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB V_5;
+	memset((&V_5), 0, sizeof(V_5));
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:51>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_0 = ___0_simulationAreaBounds;
+		VirtualActionInvoker1< Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 >::Invoke(12, __this, L_0);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:55>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_1 = __this->____preservedBoids;
+		V_0 = (bool)((!(((RuntimeObject*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)L_1) <= ((RuntimeObject*)(RuntimeObject*)NULL)))? 1 : 0);
+		bool L_2 = V_0;
+		if (!L_2)
+		{
+			goto IL_0093;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:57>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_3 = __this->____preservedBoids;
+		NullCheck(L_3);
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_4 = __this->____boids;
+		NullCheck(L_4);
+		int32_t L_5;
+		L_5 = Mathf_Min_m888083F74FF5655778F0403BB5E9608BEFDEA8CB_inline(((int32_t)(((RuntimeArray*)L_3)->max_length)), ((int32_t)(((RuntimeArray*)L_4)->max_length)), NULL);
+		V_1 = L_5;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:58>
+		V_2 = 0;
+		goto IL_0081;
+	}
+
+IL_0031:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:60>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_6 = __this->____boids;
+		int32_t L_7 = V_2;
+		NullCheck(L_6);
+		int32_t L_8 = L_7;
+		BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 L_9 = (L_6)->GetAt(static_cast<il2cpp_array_size_t>(L_8));
+		V_3 = L_9;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:61>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_10 = __this->____preservedBoids;
+		int32_t L_11 = V_2;
+		NullCheck(L_10);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = ((L_10)->GetAddressAt(static_cast<il2cpp_array_size_t>(L_11)))->___Position;
+		(&V_3)->___Position = L_12;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:62>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_13 = __this->____preservedBoids;
+		int32_t L_14 = V_2;
+		NullCheck(L_13);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_15 = ((L_13)->GetAddressAt(static_cast<il2cpp_array_size_t>(L_14)))->___Direction;
+		(&V_3)->___Direction = L_15;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:63>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_16 = __this->____boids;
+		int32_t L_17 = V_2;
+		BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 L_18 = V_3;
+		NullCheck(L_16);
+		(L_16)->SetAt(static_cast<il2cpp_array_size_t>(L_17), (BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41)L_18);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:58>
+		int32_t L_19 = V_2;
+		V_2 = ((int32_t)il2cpp_codegen_add(L_19, 1));
+	}
+
+IL_0081:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:58>
+		int32_t L_20 = V_2;
+		int32_t L_21 = V_1;
+		V_4 = (bool)((((int32_t)L_20) < ((int32_t)L_21))? 1 : 0);
+		bool L_22 = V_4;
+		if (L_22)
+		{
+			goto IL_0031;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:65>
+		__this->____preservedBoids = (BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____preservedBoids), (void*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)NULL);
+	}
+
+IL_0093:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:69>
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_23 = (GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1*)il2cpp_codegen_object_new(GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1_il2cpp_TypeInfo_var);
+		GraphicsBuffer__ctor_mBDE2A119B58AD582F79CFE8071F47001965D14F4(L_23, ((int32_t)256), 1, ((int32_t)20), NULL);
+		__this->____drawArgumentsBuffer = L_23;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____drawArgumentsBuffer), (void*)L_23);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:70>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:71>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:72>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:73>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:74>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:75>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:76>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:77>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:78>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:79>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:80>
+		IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF* L_24 = (IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF*)(IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF*)SZArrayNew(IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF_il2cpp_TypeInfo_var, (uint32_t)1);
+		IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF* L_25 = L_24;
+		il2cpp_codegen_initobj((&V_5), sizeof(IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB));
+		IndirectDrawIndexedArgs_set_baseVertexIndex_mA8BC029CBE91D04FA9BF999FE52AD17AF91AD593_inline((&V_5), 0, NULL);
+		IndirectDrawIndexedArgs_set_startIndex_mC3B089A30B3BC982D8AE997098759EE475F56FC0_inline((&V_5), 0, NULL);
+		IndirectDrawIndexedArgs_set_startInstance_m4FB24CC31E5690683ABD3CF753ECDD5A12EB3D43_inline((&V_5), 0, NULL);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_26 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_27 = L_26->___BoidMesh;
+		NullCheck(L_27);
+		uint32_t L_28;
+		L_28 = Mesh_GetIndexCount_m8F6E3C336023DFD649715A2F9DAAFD83E25ED366(L_27, 0, NULL);
+		IndirectDrawIndexedArgs_set_indexCountPerInstance_m3683A18DA13AC860B011243EECE17D2BB2788381_inline((&V_5), L_28, NULL);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_29 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		int32_t L_30 = L_29->___BoidsCount;
+		IndirectDrawIndexedArgs_set_instanceCount_m7EF3E8C63A0BE8A6EE1962115B74C561220C7F1B_inline((&V_5), L_30, NULL);
+		IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB L_31 = V_5;
+		NullCheck(L_25);
+		(L_25)->SetAt(static_cast<il2cpp_array_size_t>(0), (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB)L_31);
+		__this->____drawArguments = L_25;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____drawArguments), (void*)L_25);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:81>
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_32 = __this->____drawArgumentsBuffer;
+		IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF* L_33 = __this->____drawArguments;
+		NullCheck(L_32);
+		GraphicsBuffer_SetData_m6C30CB8A616D560E576063A27C2DE3B3BACD1CAF(L_32, (RuntimeArray*)L_33, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:82>
+		return;
+	}
+}
+// Method Definition Index: 71298
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_SetRenderingOffset_m829B5591F7C74661088C23CD6DE6EF3774CDC06E (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, int32_t ___0_renderingOffset, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:92>
+		int32_t L_0 = ___0_renderingOffset;
+		__this->____renderingOffset = L_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:93>
+		return;
+	}
+}
+// Method Definition Index: 71299
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_RenderBoids_mA5672D1AB9EE17E2DA289AF4F13382098C830E88 (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ___0_boidsComputeBuffer, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ___1_boidSchoolsRenderInfosBuffer, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___2_simulationAreaBounds, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Graphics_t99CD970FFEA58171C70F54DF0C06D315BD452F2C_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral04748FBAACC2F89561A8248C8052220CD144C40D);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral637A100522A9C2094765326693CB653E8700AEA9);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralDD8AB7736F5599A9DC9D6D138FF4E9AFAF5CC7D5);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralE7DD2DB47B295278E944ED07E27C0C7988AECB46);
+		s_Il2CppMethodInitialized = true;
+	}
+	RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:105>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_0 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_1 = L_0->___BoidMaterial;
+		RenderParams__ctor_m2FFA3712EB95300426D6E3549E084C0C5B13997E((&V_0), L_1, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:106>
+		MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* L_2 = (MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D*)il2cpp_codegen_object_new(MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D_il2cpp_TypeInfo_var);
+		MaterialPropertyBlock__ctor_m14C3432585F7BB65028BCD64A0FD6607A1B490FB(L_2, NULL);
+		RenderParams_set_matProps_m6E6A341325FA7936C8CA0EBCBBD74EDAE16DADB0_inline((&V_0), L_2, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:107>
+		MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* L_3;
+		L_3 = RenderParams_get_matProps_m950EF867EADDF762C77ACC18701142298B823FE5_inline((&V_0), NULL);
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_4 = ___0_boidsComputeBuffer;
+		NullCheck(L_3);
+		MaterialPropertyBlock_SetBuffer_mD00B50F0BFACA7F2F4F501112D208D0376B32E87(L_3, _stringLiteralE7DD2DB47B295278E944ED07E27C0C7988AECB46, L_4, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:108>
+		MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* L_5;
+		L_5 = RenderParams_get_matProps_m950EF867EADDF762C77ACC18701142298B823FE5_inline((&V_0), NULL);
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_6 = ___1_boidSchoolsRenderInfosBuffer;
+		NullCheck(L_5);
+		MaterialPropertyBlock_SetBuffer_mD00B50F0BFACA7F2F4F501112D208D0376B32E87(L_5, _stringLiteralDD8AB7736F5599A9DC9D6D138FF4E9AFAF5CC7D5, L_6, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:109>
+		MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* L_7;
+		L_7 = RenderParams_get_matProps_m950EF867EADDF762C77ACC18701142298B823FE5_inline((&V_0), NULL);
+		int32_t L_8 = __this->____renderingOffset;
+		NullCheck(L_7);
+		MaterialPropertyBlock_SetInt_m5C415E420E7C21154F1B034C6141C7D094CF40F9(L_7, _stringLiteral04748FBAACC2F89561A8248C8052220CD144C40D, L_8, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:110>
+		MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* L_9;
+		L_9 = RenderParams_get_matProps_m950EF867EADDF762C77ACC18701142298B823FE5_inline((&V_0), NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10;
+		L_10 = Bounds_get_center_m5B05F81CB835EB6DD8628FDA24B638F477984DC3_inline((&___2_simulationAreaBounds), NULL);
+		Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 L_11;
+		L_11 = Vector4_op_Implicit_m2ECA73F345A7AD84144133E9E51657204002B12D_inline(L_10, NULL);
+		NullCheck(L_9);
+		MaterialPropertyBlock_SetVector_mB3D0FFCCDFF9D78447719F25DB8C1AFCB12B8BD5(L_9, _stringLiteral637A100522A9C2094765326693CB653E8700AEA9, L_11, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:111>
+		RenderParams_set_shadowCastingMode_m11A19F71F4A7B9DF041B5A535539851B42CA550A_inline((&V_0), 0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:112>
+		RenderParams_set_receiveShadows_m378D274D281BCDB51A915AD720C1583D600A16F3_inline((&V_0), (bool)0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:113>
+		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_12;
+		L_12 = Component_get_gameObject_m57AEFBB14DB39EC476F740BA000E170355DE691B(__this, NULL);
+		NullCheck(L_12);
+		int32_t L_13;
+		L_13 = GameObject_get_layer_m108902B9C89E9F837CE06B9942AA42307450FEAF(L_12, NULL);
+		RenderParams_set_layer_m0C79C4B8B8DFB1822BD7413E201238C9B5C814B1_inline((&V_0), L_13, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:116>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_14 = (&___2_simulationAreaBounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_15;
+		L_15 = Bounds_get_extents_mFE6DC407FCE2341BE2C750CB554055D211281D25_inline(L_14, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16;
+		L_16 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_15, (1.25f), NULL);
+		Bounds_set_extents_m09496358547B86A93EFE7BE6371E7A6FE937C46F_inline(L_14, L_16, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:117>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_17 = ___2_simulationAreaBounds;
+		RenderParams_set_worldBounds_mC00068A6DB8D898D243B16698A2B4C881447BCDB_inline((&V_0), L_17, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:119>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_18 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_19 = L_18->___BoidMesh;
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_20 = __this->____drawArgumentsBuffer;
+		il2cpp_codegen_runtime_class_init_inline(Graphics_t99CD970FFEA58171C70F54DF0C06D315BD452F2C_il2cpp_TypeInfo_var);
+		Graphics_RenderMeshIndirect_mA08EA196E7480222BB5F6A700E9FDE5154DB32D2((&V_0), L_19, L_20, 1, 0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:120>
+		return;
+	}
+}
+// Method Definition Index: 71300
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_StorePreservedBoids_mC00D90EFAEDEE9DB55BA31833895DF206080D9A6 (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* ___0_preserved, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:130>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_0 = ___0_preserved;
+		__this->____preservedBoids = L_0;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____preservedBoids), (void*)L_0);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:131>
+		return;
+	}
+}
+// Method Definition Index: 71301
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_CleanupSpawnData_m3A6BA2E271399F9A023CA7E7D7A5B804D4BACCC8 (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) 
+{
+	GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* G_B2_0 = NULL;
+	GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* G_B1_0 = NULL;
+	GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* G_B5_0 = NULL;
+	GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* G_B4_0 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:140>
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_0 = __this->____drawArgumentsBuffer;
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_1 = L_0;
+		if (L_1)
+		{
+			G_B2_0 = L_1;
+			goto IL_000d;
+		}
+		G_B1_0 = L_1;
+	}
+	{
+		goto IL_0013;
+	}
+
+IL_000d:
+	{
+		NullCheck(G_B2_0);
+		GraphicsBuffer_Dispose_m2D1F14A03BE2CAA0A68536470298B468F77AB596(G_B2_0, NULL);
+	}
+
+IL_0013:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:141>
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_2 = __this->____drawArgumentsBuffer;
+		GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1* L_3 = L_2;
+		if (L_3)
+		{
+			G_B5_0 = L_3;
+			goto IL_001f;
+		}
+		G_B4_0 = L_3;
+	}
+	{
+		goto IL_0025;
+	}
+
+IL_001f:
+	{
+		NullCheck(G_B5_0);
+		GraphicsBuffer_Release_m383E932BE0F3C20D90D715D751C9888472121F75(G_B5_0, NULL);
+	}
+
+IL_0025:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:142>
+		__this->____drawArgumentsBuffer = (GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____drawArgumentsBuffer), (void*)(GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:143>
+		__this->____boids = (BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boids), (void*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:144>
+		return;
+	}
+}
+// Method Definition Index: 71302
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_UpdateBoidGroupId_m4DD9308E14A38852C4DEDB4A7D6ED67A6D8DB46B (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, int32_t ___0_boidGroupId, const RuntimeMethod* method) 
+{
+	int32_t V_0 = 0;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 V_1;
+	memset((&V_1), 0, sizeof(V_1));
+	int32_t V_2 = 0;
+	int32_t V_3 = 0;
+	bool V_4 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:149>
+		V_0 = 0;
+		goto IL_004e;
+	}
+
+IL_0005:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:151>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_0 = __this->____boids;
+		int32_t L_1 = V_0;
+		NullCheck(L_0);
+		int32_t L_2 = L_1;
+		BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 L_3 = (L_0)->GetAt(static_cast<il2cpp_array_size_t>(L_2));
+		V_1 = L_3;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:152>
+		BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 L_4 = V_1;
+		float L_5 = L_4.___BoidID;
+		int32_t L_6;
+		L_6 = BitConverter_SingleToInt32Bits_mC760C7CFC89725E3CF68DC45BE3A9A42A7E7DA73_inline(L_5, NULL);
+		V_2 = L_6;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:154>
+		int32_t L_7 = V_2;
+		int32_t L_8 = ___0_boidGroupId;
+		V_3 = ((int32_t)(((int32_t)(L_7&((int32_t)65280)))|((int32_t)(L_8&((int32_t)255)))));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:155>
+		int32_t L_9 = V_3;
+		float L_10;
+		L_10 = BitConverter_Int32BitsToSingle_mAD799CFA19FABC0DCA7A09F3380A1F0B0EB39130_inline(L_9, NULL);
+		(&V_1)->___BoidID = L_10;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:156>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_11 = __this->____boids;
+		int32_t L_12 = V_0;
+		BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 L_13 = V_1;
+		NullCheck(L_11);
+		(L_11)->SetAt(static_cast<il2cpp_array_size_t>(L_12), (BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41)L_13);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:149>
+		int32_t L_14 = V_0;
+		V_0 = ((int32_t)il2cpp_codegen_add(L_14, 1));
+	}
+
+IL_004e:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:149>
+		int32_t L_15 = V_0;
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_16 = __this->____boids;
+		NullCheck(L_16);
+		V_4 = (bool)((((int32_t)L_15) < ((int32_t)((int32_t)(((RuntimeArray*)L_16)->max_length))))? 1 : 0);
+		bool L_17 = V_4;
+		if (L_17)
+		{
+			goto IL_0005;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:158>
+		return;
+	}
+}
+// Method Definition Index: 71303
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU_InitializeBoidsSpawnData_m5AABB8FDBEBB80BB4153DBA7522C0E44CBC31C6D (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_simulationAreaBounds, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* V_0 = NULL;
+	int32_t V_1 = 0;
+	GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* V_2 = NULL;
+	int32_t V_3 = 0;
+	int32_t V_4 = 0;
+	GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* V_5 = NULL;
+	int32_t V_6 = 0;
+	GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F V_7;
+	memset((&V_7), 0, sizeof(V_7));
+	Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 V_8;
+	memset((&V_8), 0, sizeof(V_8));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_9;
+	memset((&V_9), 0, sizeof(V_9));
+	int32_t V_10 = 0;
+	int32_t V_11 = 0;
+	int32_t V_12 = 0;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 V_13;
+	memset((&V_13), 0, sizeof(V_13));
+	bool V_14 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:167>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_0 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_1 = L_0->___FishSchoolProperties;
+		V_0 = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:168>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_2 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		int32_t L_3 = L_2->___BoidsCount;
+		V_1 = L_3;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:169>
+		int32_t L_4 = V_1;
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_5 = (BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)SZArrayNew(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC_il2cpp_TypeInfo_var, (uint32_t)L_4);
+		__this->____boids = L_5;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boids), (void*)L_5);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:171>
+		int32_t L_6 = V_1;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_7 = ___0_simulationAreaBounds;
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_8 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		float L_9 = L_8->___MinSpawnDistanceBetweenBoids;
+		int32_t L_10 = ((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____initialGroupsCount;
+		GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* L_11;
+		L_11 = BoidSpawnUtility_CalculateBoidsSpawnData_mFAC4563ACB8207BB5BB5289316860E0E849EB304(L_6, L_7, L_9, L_10, NULL);
+		V_2 = L_11;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:172>
+		V_3 = 0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:173>
+		V_4 = 0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:174>
+		GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* L_12 = V_2;
+		V_5 = L_12;
+		V_6 = 0;
+		goto IL_0177;
+	}
+
+IL_004f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:174>
+		GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* L_13 = V_5;
+		int32_t L_14 = V_6;
+		NullCheck(L_13);
+		int32_t L_15 = L_14;
+		GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F L_16 = (L_13)->GetAt(static_cast<il2cpp_array_size_t>(L_15));
+		V_7 = L_16;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:176>
+		GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F L_17 = V_7;
+		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_18 = L_17.___RotationOfTheGroup;
+		V_8 = L_18;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:177>
+		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_19 = V_8;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_20;
+		L_20 = Vector3_get_forward_mAA55A7034304DF8B2152EAD49AE779FC4CA2EB4A_inline(NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_21;
+		L_21 = Quaternion_op_Multiply_mE1EBA73F9173432B50F8F17CE8190C5A7986FB8C(L_19, L_20, NULL);
+		V_9 = L_21;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:178>
+		GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F L_22 = V_7;
+		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_23 = L_22.___SpawnPositions;
+		NullCheck(L_23);
+		V_10 = ((int32_t)(((RuntimeArray*)L_23)->max_length));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:179>
+		V_11 = 0;
+		goto IL_015b;
+	}
+
+IL_0085:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:181>
+		int32_t L_24 = V_3;
+		V_12 = L_24;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:182>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:183>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:184>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:185>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:186>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:187>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:188>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:189>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:190>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:191>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:192>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:193>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:194>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:195>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:196>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:197>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:198>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_25 = __this->____boids;
+		int32_t L_26 = V_12;
+		il2cpp_codegen_initobj((&V_13), sizeof(BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41));
+		GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F L_27 = V_7;
+		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_28 = L_27.___SpawnPositions;
+		int32_t L_29 = V_11;
+		NullCheck(L_28);
+		int32_t L_30 = L_29;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_31 = (L_28)->GetAt(static_cast<il2cpp_array_size_t>(L_30));
+		(&V_13)->___Position = L_31;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_32 = V_9;
+		(&V_13)->___Direction = L_32;
+		(&V_13)->___Acceleration = (0.0f);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_33 = V_0;
+		NullCheck(L_33);
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_34 = L_33->___MovementProperties;
+		NullCheck(L_34);
+		float L_35 = L_34->___CruisingSpeed;
+		(&V_13)->___Speed = L_35;
+		(&V_13)->___AngularAcceleration = (0.0f);
+		(&V_13)->___AngularVelocity = (0.0f);
+		int32_t L_36 = V_4;
+		float L_37;
+		L_37 = BitConverter_Int32BitsToSingle_mAD799CFA19FABC0DCA7A09F3380A1F0B0EB39130_inline(((int32_t)(((int32_t)(L_36&((int32_t)255)))<<8)), NULL);
+		(&V_13)->___BoidID = L_37;
+		(&V_13)->___CurrentSwimTime = (0.0f);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_38 = V_0;
+		NullCheck(L_38);
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_39 = L_38->___MotionRenderProperties;
+		NullCheck(L_39);
+		float L_40 = L_39->___MaxSwimPlaybackSpeed;
+		(&V_13)->___MaxPlaybackSpeed = L_40;
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_41 = V_0;
+		NullCheck(L_41);
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_42 = L_41->___MotionRenderProperties;
+		NullCheck(L_42);
+		float L_43 = L_42->___MinSwimPlaybackSpeed;
+		(&V_13)->___MinPlaybackSpeed = L_43;
+		(&V_13)->___SwimMotionIntensity = (0.0f);
+		int32_t L_44 = V_12;
+		(&V_13)->___OriginalIndex = ((float)L_44);
+		BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 L_45 = V_13;
+		NullCheck(L_25);
+		(L_25)->SetAt(static_cast<il2cpp_array_size_t>(L_26), (BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41)L_45);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:199>
+		int32_t L_46 = V_3;
+		V_3 = ((int32_t)il2cpp_codegen_add(L_46, 1));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:179>
+		int32_t L_47 = V_11;
+		V_11 = ((int32_t)il2cpp_codegen_add(L_47, 1));
+	}
+
+IL_015b:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:179>
+		int32_t L_48 = V_11;
+		int32_t L_49 = V_10;
+		V_14 = (bool)((((int32_t)L_48) < ((int32_t)L_49))? 1 : 0);
+		bool L_50 = V_14;
+		if (L_50)
+		{
+			goto IL_0085;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:201>
+		int32_t L_51 = V_4;
+		V_4 = ((int32_t)il2cpp_codegen_add(L_51, 1));
+		int32_t L_52 = V_6;
+		V_6 = ((int32_t)il2cpp_codegen_add(L_52, 1));
+	}
+
+IL_0177:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:174>
+		int32_t L_53 = V_6;
+		GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* L_54 = V_5;
+		NullCheck(L_54);
+		if ((((int32_t)L_53) < ((int32_t)((int32_t)(((RuntimeArray*)L_54)->max_length)))))
+		{
+			goto IL_004f;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:203>
+		return;
+	}
+}
+// Method Definition Index: 71304
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPU__ctor_m2ED79E380A017C117C58DEA8386F69F2A83C8E4A (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:17>
+		__this->____boids = (BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boids), (void*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:19>
+		__this->____renderingOffset = 0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:20>
+		__this->____drawArgumentsBuffer = (GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____drawArgumentsBuffer), (void*)(GraphicsBuffer_t91FACD3CD78588C25C361C453D1A2FE055EC4AF1*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:21>
+		__this->____drawArguments = (IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____drawArguments), (void*)(IndirectDrawIndexedArgsU5BU5D_t84825DD018144B0D90D14B350FEA8277448662FF*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:25>
+		__this->____preservedBoids = (BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____preservedBoids), (void*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)NULL);
+		BoidSpawnerBase__ctor_mAF88EBE4CEAB78B801606899818850FBD04BB9FF(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71305
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* BoidSpawnerGPUMultiTargets_get_SpeciesData_m2FE5CA68181D30C592C5EFBBB246A788870E337A (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:26>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_0 = __this->____speciesData;
+		return L_0;
+	}
+}
+// Method Definition Index: 71306
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPUMultiTargets_InitializeBoidsSpawnData_m2E8DA0AF9F171016B6670728AA845C7C48BEB44A (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_simulationAreaBounds, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_Instantiate_TisFishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD_m2C9B5E2F5F1A8717D8BB496BC7D29091085D3C20_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* V_0 = NULL;
+	FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* V_1 = NULL;
+	SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* V_2 = NULL;
+	int32_t V_3 = 0;
+	GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* V_4 = NULL;
+	int32_t V_5 = 0;
+	int32_t V_6 = 0;
+	bool V_7 = false;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* V_8 = NULL;
+	bool V_9 = false;
+	int32_t V_10 = 0;
+	GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F V_11;
+	memset((&V_11), 0, sizeof(V_11));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_12;
+	memset((&V_12), 0, sizeof(V_12));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_13;
+	memset((&V_13), 0, sizeof(V_13));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_14;
+	memset((&V_14), 0, sizeof(V_14));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_15;
+	memset((&V_15), 0, sizeof(V_15));
+	int32_t V_16 = 0;
+	int32_t V_17 = 0;
+	int32_t V_18 = 0;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 V_19;
+	memset((&V_19), 0, sizeof(V_19));
+	bool V_20 = false;
+	bool V_21 = false;
+	int32_t G_B3_0 = 0;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* G_B7_0 = NULL;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* G_B6_0 = NULL;
+	FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* G_B8_0 = NULL;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* G_B10_0 = NULL;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* G_B9_0 = NULL;
+	FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* G_B11_0 = NULL;
+	int32_t G_B14_0 = 0;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* G_B20_0 = NULL;
+	int32_t G_B20_1 = 0;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* G_B20_2 = NULL;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* G_B19_0 = NULL;
+	int32_t G_B19_1 = 0;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* G_B19_2 = NULL;
+	float G_B21_0 = 0.0f;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* G_B21_1 = NULL;
+	int32_t G_B21_2 = 0;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* G_B21_3 = NULL;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* G_B23_0 = NULL;
+	int32_t G_B23_1 = 0;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* G_B23_2 = NULL;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* G_B22_0 = NULL;
+	int32_t G_B22_1 = 0;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* G_B22_2 = NULL;
+	float G_B24_0 = 0.0f;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* G_B24_1 = NULL;
+	int32_t G_B24_2 = 0;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* G_B24_3 = NULL;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* G_B26_0 = NULL;
+	int32_t G_B26_1 = 0;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* G_B26_2 = NULL;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* G_B25_0 = NULL;
+	int32_t G_B25_1 = 0;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* G_B25_2 = NULL;
+	float G_B27_0 = 0.0f;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41* G_B27_1 = NULL;
+	int32_t G_B27_2 = 0;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* G_B27_3 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:36>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_0 = __this->____speciesData;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_1;
+		L_1 = Object_op_Inequality_mD0BE578448EAA61948F25C32F8DD55AB1F778602(L_0, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		if (!L_1)
+		{
+			goto IL_0022;
+		}
+	}
+	{
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_2 = __this->____speciesData;
+		NullCheck(L_2);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_3 = L_2->___SchoolProperties;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_4;
+		L_4 = Object_op_Inequality_mD0BE578448EAA61948F25C32F8DD55AB1F778602(L_3, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		G_B3_0 = ((int32_t)(L_4));
+		goto IL_0023;
+	}
+
+IL_0022:
+	{
+		G_B3_0 = 0;
+	}
+
+IL_0023:
+	{
+		V_7 = (bool)G_B3_0;
+		bool L_5 = V_7;
+		if (!L_5)
+		{
+			goto IL_006e;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:38>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_6 = __this->____speciesData;
+		NullCheck(L_6);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_7 = L_6->___SchoolProperties;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_8;
+		L_8 = Object_Instantiate_TisFishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD_m2C9B5E2F5F1A8717D8BB496BC7D29091085D3C20(L_7, Object_Instantiate_TisFishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD_m2C9B5E2F5F1A8717D8BB496BC7D29091085D3C20_RuntimeMethod_var);
+		V_8 = L_8;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:39>
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_9 = V_8;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_10 = __this->____speciesData;
+		NullCheck(L_10);
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_11 = L_10->___MovementProperties;
+		NullCheck(L_9);
+		L_9->___MovementProperties = L_11;
+		Il2CppCodeGenWriteBarrier((void**)(&L_9->___MovementProperties), (void*)L_11);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:40>
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_12 = V_8;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_13 = __this->____speciesData;
+		NullCheck(L_13);
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_14 = L_13->___MotionRenderProperties;
+		NullCheck(L_12);
+		L_12->___MotionRenderProperties = L_14;
+		Il2CppCodeGenWriteBarrier((void**)(&L_12->___MotionRenderProperties), (void*)L_14);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:41>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_15 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_16 = V_8;
+		L_15->___FishSchoolProperties = L_16;
+		Il2CppCodeGenWriteBarrier((void**)(&L_15->___FishSchoolProperties), (void*)L_16);
+	}
+
+IL_006e:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:44>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_17 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_18 = L_17->___FishSchoolProperties;
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_19 = L_18;
+		if (L_19)
+		{
+			G_B7_0 = L_19;
+			goto IL_0080;
+		}
+		G_B6_0 = L_19;
+	}
+	{
+		G_B8_0 = ((FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D*)(NULL));
+		goto IL_0085;
+	}
+
+IL_0080:
+	{
+		NullCheck(G_B7_0);
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_20 = G_B7_0->___MovementProperties;
+		G_B8_0 = L_20;
+	}
+
+IL_0085:
+	{
+		V_0 = G_B8_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:45>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_21 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_22 = L_21->___FishSchoolProperties;
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_23 = L_22;
+		if (L_23)
+		{
+			G_B10_0 = L_23;
+			goto IL_0098;
+		}
+		G_B9_0 = L_23;
+	}
+	{
+		G_B11_0 = ((FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5*)(NULL));
+		goto IL_009d;
+	}
+
+IL_0098:
+	{
+		NullCheck(G_B10_0);
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_24 = G_B10_0->___MotionRenderProperties;
+		G_B11_0 = L_24;
+	}
+
+IL_009d:
+	{
+		V_1 = G_B11_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:48>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_25 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_26 = L_25->___Targets;
+		V_2 = L_26;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:49>
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_27 = V_2;
+		if (!L_27)
+		{
+			goto IL_00ba;
+		}
+	}
+	{
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_28 = V_2;
+		NullCheck(L_28);
+		int32_t L_29 = ((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____initialGroupsCount;
+		G_B14_0 = ((((int32_t)((int32_t)(((RuntimeArray*)L_28)->max_length))) < ((int32_t)L_29))? 1 : 0);
+		goto IL_00bb;
+	}
+
+IL_00ba:
+	{
+		G_B14_0 = 1;
+	}
+
+IL_00bb:
+	{
+		V_9 = (bool)G_B14_0;
+		bool L_30 = V_9;
+		if (!L_30)
+		{
+			goto IL_00cf;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:51>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_31 = ___0_simulationAreaBounds;
+		BoidSpawnerGPU_InitializeBoidsSpawnData_m5AABB8FDBEBB80BB4153DBA7522C0E44CBC31C6D(__this, L_31, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:52>
+		goto IL_02a0;
+	}
+
+IL_00cf:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:55>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_32 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		int32_t L_33 = L_32->___BoidsCount;
+		V_3 = L_33;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:56>
+		int32_t L_34 = V_3;
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_35 = (BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)SZArrayNew(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC_il2cpp_TypeInfo_var, (uint32_t)L_34);
+		((BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF*)__this)->____boids = L_35;
+		Il2CppCodeGenWriteBarrier((void**)(&((BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF*)__this)->____boids), (void*)L_35);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:59>
+		int32_t L_36 = V_3;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_37 = ___0_simulationAreaBounds;
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_38 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		float L_39 = L_38->___MinSpawnDistanceBetweenBoids;
+		int32_t L_40 = ((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____initialGroupsCount;
+		GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* L_41;
+		L_41 = BoidSpawnUtility_CalculateBoidsSpawnData_mFAC4563ACB8207BB5BB5289316860E0E849EB304(L_36, L_37, L_39, L_40, NULL);
+		V_4 = L_41;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:60>
+		V_5 = 0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:61>
+		V_6 = 0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:66>
+		V_10 = 0;
+		goto IL_028f;
+	}
+
+IL_010f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:68>
+		GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* L_42 = V_4;
+		int32_t L_43 = V_10;
+		NullCheck(L_42);
+		int32_t L_44 = L_43;
+		GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F L_45 = (L_42)->GetAt(static_cast<il2cpp_array_size_t>(L_44));
+		V_11 = L_45;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:72>
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_46 = V_2;
+		int32_t L_47 = V_10;
+		NullCheck(L_46);
+		int32_t L_48 = L_47;
+		SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* L_49 = (L_46)->GetAt(static_cast<il2cpp_array_size_t>(L_48));
+		NullCheck(L_49);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_50;
+		L_50 = SimulationAffecterComponent_get_AffecterPosition_mA8D10675AA9AF3FBC9170831540025CF51F4EEC8(L_49, NULL);
+		V_12 = L_50;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:73>
+		GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F L_51 = V_11;
+		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_52 = L_51.___SpawnPositions;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_53;
+		L_53 = BoidSpawnerGPUMultiTargets_GetCenterPosition_m19886C0F9CE4BB9E4F9DAB78F8149EDD1B50180B(__this, L_52, NULL);
+		V_13 = L_53;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:74>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_54 = V_12;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_55 = V_13;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_56;
+		L_56 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_54, L_55, NULL);
+		V_14 = L_56;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:78>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_57;
+		L_57 = Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline((&V_14), NULL);
+		V_15 = L_57;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:79>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_58 = V_14;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_59 = V_15;
+		float L_60 = __this->____initialOffsetFromTarget;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_61;
+		L_61 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_59, L_60, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_62;
+		L_62 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_58, L_61, NULL);
+		V_14 = L_62;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:81>
+		GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F L_63 = V_11;
+		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_64 = L_63.___SpawnPositions;
+		NullCheck(L_64);
+		V_16 = ((int32_t)(((RuntimeArray*)L_64)->max_length));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:82>
+		V_17 = 0;
+		goto IL_0273;
+	}
+
+IL_0172:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:84>
+		int32_t L_65 = V_5;
+		V_18 = L_65;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:85>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:86>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:87>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:88>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:89>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:90>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:91>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:92>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:93>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:94>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:95>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:96>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:97>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:98>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:99>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_66 = ((BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF*)__this)->____boids;
+		int32_t L_67 = V_18;
+		il2cpp_codegen_initobj((&V_19), sizeof(BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41));
+		GroupOfBoidsSpawnData_tB89BC49927FE329DE5CFF69F265CDB923B0A676F L_68 = V_11;
+		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_69 = L_68.___SpawnPositions;
+		int32_t L_70 = V_17;
+		NullCheck(L_69);
+		int32_t L_71 = L_70;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_72 = (L_69)->GetAt(static_cast<il2cpp_array_size_t>(L_71));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_73 = V_14;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_74;
+		L_74 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_72, L_73, NULL);
+		(&V_19)->___Position = L_74;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_75 = V_15;
+		(&V_19)->___Direction = L_75;
+		(&V_19)->___Acceleration = (0.0f);
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_76 = V_0;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_77;
+		L_77 = Object_op_Inequality_mD0BE578448EAA61948F25C32F8DD55AB1F778602(L_76, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		if (L_77)
+		{
+			G_B20_0 = (&V_19);
+			G_B20_1 = L_67;
+			G_B20_2 = L_66;
+			goto IL_01ca;
+		}
+		G_B19_0 = (&V_19);
+		G_B19_1 = L_67;
+		G_B19_2 = L_66;
+	}
+	{
+		G_B21_0 = (0.0f);
+		G_B21_1 = G_B19_0;
+		G_B21_2 = G_B19_1;
+		G_B21_3 = G_B19_2;
+		goto IL_01d0;
+	}
+
+IL_01ca:
+	{
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_78 = V_0;
+		NullCheck(L_78);
+		float L_79 = L_78->___CruisingSpeed;
+		G_B21_0 = L_79;
+		G_B21_1 = G_B20_0;
+		G_B21_2 = G_B20_1;
+		G_B21_3 = G_B20_2;
+	}
+
+IL_01d0:
+	{
+		G_B21_1->___Speed = G_B21_0;
+		(&V_19)->___AngularAcceleration = (0.0f);
+		(&V_19)->___AngularVelocity = (0.0f);
+		int32_t L_80 = V_6;
+		float L_81;
+		L_81 = BitConverter_Int32BitsToSingle_mAD799CFA19FABC0DCA7A09F3380A1F0B0EB39130_inline(((int32_t)(((int32_t)(L_80&((int32_t)255)))<<8)), NULL);
+		(&V_19)->___BoidID = L_81;
+		(&V_19)->___CurrentSwimTime = (0.0f);
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_82 = V_1;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_83;
+		L_83 = Object_op_Inequality_mD0BE578448EAA61948F25C32F8DD55AB1F778602(L_82, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		if (L_83)
+		{
+			G_B23_0 = (&V_19);
+			G_B23_1 = G_B21_2;
+			G_B23_2 = G_B21_3;
+			goto IL_0221;
+		}
+		G_B22_0 = (&V_19);
+		G_B22_1 = G_B21_2;
+		G_B22_2 = G_B21_3;
+	}
+	{
+		G_B24_0 = (0.0f);
+		G_B24_1 = G_B22_0;
+		G_B24_2 = G_B22_1;
+		G_B24_3 = G_B22_2;
+		goto IL_0227;
+	}
+
+IL_0221:
+	{
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_84 = V_1;
+		NullCheck(L_84);
+		float L_85 = L_84->___MaxSwimPlaybackSpeed;
+		G_B24_0 = L_85;
+		G_B24_1 = G_B23_0;
+		G_B24_2 = G_B23_1;
+		G_B24_3 = G_B23_2;
+	}
+
+IL_0227:
+	{
+		G_B24_1->___MaxPlaybackSpeed = G_B24_0;
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_86 = V_1;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_87;
+		L_87 = Object_op_Inequality_mD0BE578448EAA61948F25C32F8DD55AB1F778602(L_86, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		if (L_87)
+		{
+			G_B26_0 = (&V_19);
+			G_B26_1 = G_B24_2;
+			G_B26_2 = G_B24_3;
+			goto IL_023e;
+		}
+		G_B25_0 = (&V_19);
+		G_B25_1 = G_B24_2;
+		G_B25_2 = G_B24_3;
+	}
+	{
+		G_B27_0 = (0.0f);
+		G_B27_1 = G_B25_0;
+		G_B27_2 = G_B25_1;
+		G_B27_3 = G_B25_2;
+		goto IL_0244;
+	}
+
+IL_023e:
+	{
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_88 = V_1;
+		NullCheck(L_88);
+		float L_89 = L_88->___MinSwimPlaybackSpeed;
+		G_B27_0 = L_89;
+		G_B27_1 = G_B26_0;
+		G_B27_2 = G_B26_1;
+		G_B27_3 = G_B26_2;
+	}
+
+IL_0244:
+	{
+		G_B27_1->___MinPlaybackSpeed = G_B27_0;
+		(&V_19)->___SwimMotionIntensity = (0.0f);
+		int32_t L_90 = V_18;
+		(&V_19)->___OriginalIndex = ((float)L_90);
+		BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 L_91 = V_19;
+		NullCheck(G_B27_3);
+		(G_B27_3)->SetAt(static_cast<il2cpp_array_size_t>(G_B27_2), (BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41)L_91);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:100>
+		int32_t L_92 = V_5;
+		V_5 = ((int32_t)il2cpp_codegen_add(L_92, 1));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:82>
+		int32_t L_93 = V_17;
+		V_17 = ((int32_t)il2cpp_codegen_add(L_93, 1));
+	}
+
+IL_0273:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:82>
+		int32_t L_94 = V_17;
+		int32_t L_95 = V_16;
+		V_20 = (bool)((((int32_t)L_94) < ((int32_t)L_95))? 1 : 0);
+		bool L_96 = V_20;
+		if (L_96)
+		{
+			goto IL_0172;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:102>
+		int32_t L_97 = V_6;
+		V_6 = ((int32_t)il2cpp_codegen_add(L_97, 1));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:66>
+		int32_t L_98 = V_10;
+		V_10 = ((int32_t)il2cpp_codegen_add(L_98, 1));
+	}
+
+IL_028f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:66>
+		int32_t L_99 = V_10;
+		GroupOfBoidsSpawnDataU5BU5D_tA31CFBE3788AF798F28B5E80D6057A66D8F7BBB7* L_100 = V_4;
+		NullCheck(L_100);
+		V_21 = (bool)((((int32_t)L_99) < ((int32_t)((int32_t)(((RuntimeArray*)L_100)->max_length))))? 1 : 0);
+		bool L_101 = V_21;
+		if (L_101)
+		{
+			goto IL_010f;
+		}
+	}
+
+IL_02a0:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:104>
+		return;
+	}
+}
+// Method Definition Index: 71307
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 BoidSpawnerGPUMultiTargets_GetCenterPosition_m19886C0F9CE4BB9E4F9DAB78F8149EDD1B50180B (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* __this, Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* ___0_positions, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	int32_t V_1 = 0;
+	int32_t V_2 = 0;
+	bool V_3 = false;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_4;
+	memset((&V_4), 0, sizeof(V_4));
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:108>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0;
+		L_0 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
+		V_0 = L_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:109>
+		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_1 = ___0_positions;
+		NullCheck(L_1);
+		V_1 = ((int32_t)(((RuntimeArray*)L_1)->max_length));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:111>
+		V_2 = 0;
+		goto IL_0023;
+	}
+
+IL_000f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:113>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2 = V_0;
+		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_3 = ___0_positions;
+		int32_t L_4 = V_2;
+		NullCheck(L_3);
+		int32_t L_5 = L_4;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6 = (L_3)->GetAt(static_cast<il2cpp_array_size_t>(L_5));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7;
+		L_7 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_2, L_6, NULL);
+		V_0 = L_7;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:111>
+		int32_t L_8 = V_2;
+		V_2 = ((int32_t)il2cpp_codegen_add(L_8, 1));
+	}
+
+IL_0023:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:111>
+		int32_t L_9 = V_2;
+		int32_t L_10 = V_1;
+		V_3 = (bool)((((int32_t)L_9) < ((int32_t)L_10))? 1 : 0);
+		bool L_11 = V_3;
+		if (L_11)
+		{
+			goto IL_000f;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:116>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = V_0;
+		int32_t L_13 = V_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_14;
+		L_14 = Vector3_op_Division_mCC6BB24E372AB96B8380D1678446EF6A8BAE13BB_inline(L_12, ((float)L_13), NULL);
+		V_4 = L_14;
+		goto IL_0037;
+	}
+
+IL_0037:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:117>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_15 = V_4;
+		return L_15;
+	}
+}
+// Method Definition Index: 71308
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSpawnerGPUMultiTargets__ctor_m5654C893060B4965C5804FBFF1EA6ABB6AB30E37 (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:16>
+		__this->____initialOffsetFromTarget = (1.5f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:22>
+		__this->____speciesData = (SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____speciesData), (void*)(SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB*)NULL);
+		BoidSpawnerGPU__ctor_m2ED79E380A017C117C58DEA8386F69F2A83C8E4A(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71309
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSwirlSpawnerGPU_InitializeBoidsSpawnData_m0DDDF5008E1E8CFB69D9A541869DF8A5A91C7D67 (BoidSwirlSpawnerGPU_t980F89EF35654E32DC06695504CDF7590BFA7707* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_simulationAreaBounds, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	int32_t V_0 = 0;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_1;
+	memset((&V_1), 0, sizeof(V_1));
+	Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* V_2 = NULL;
+	QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7* V_3 = NULL;
+	int32_t V_4 = 0;
+	FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* V_5 = NULL;
+	int32_t V_6 = 0;
+	int32_t V_7 = 0;
+	BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 V_8;
+	memset((&V_8), 0, sizeof(V_8));
+	bool V_9 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:19>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_0 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		int32_t L_1 = L_0->___BoidsCount;
+		V_0 = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:20>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
+		L_2 = Bounds_get_center_m5B05F81CB835EB6DD8628FDA24B638F477984DC3_inline((&___0_simulationAreaBounds), NULL);
+		V_1 = L_2;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:21>
+		int32_t L_3 = V_0;
+		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_4 = (Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C*)(Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C*)SZArrayNew(Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C_il2cpp_TypeInfo_var, (uint32_t)L_3);
+		V_2 = L_4;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:22>
+		int32_t L_5 = V_0;
+		QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7* L_6 = (QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7*)(QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7*)SZArrayNew(QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7_il2cpp_TypeInfo_var, (uint32_t)L_5);
+		V_3 = L_6;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:24>
+		int32_t L_7 = V_0;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8 = V_1;
+		float L_9 = __this->____initialSwirlSphereRadius;
+		BoidSpawnUtility_CalculateBoidsSwirlSpawnData_m72B512452CC38C48E14314E2B47DA53C24AD4FD0(L_7, L_8, L_9, (&V_2), (&V_3), NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:26>
+		V_4 = 0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:27>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9* L_10 = (BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9*)(&((BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247*)__this)->____boidSpawnData);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_11 = L_10->___FishSchoolProperties;
+		V_5 = L_11;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:28>
+		int32_t L_12 = V_0;
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_13 = (BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)SZArrayNew(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC_il2cpp_TypeInfo_var, (uint32_t)L_12);
+		((BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF*)__this)->____boids = L_13;
+		Il2CppCodeGenWriteBarrier((void**)(&((BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF*)__this)->____boids), (void*)L_13);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:29>
+		V_6 = 0;
+		goto IL_0135;
+	}
+
+IL_0059:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:31>
+		int32_t L_14 = V_4;
+		V_7 = L_14;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:32>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:33>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:34>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:35>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:36>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:37>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:38>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:39>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:40>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:41>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:42>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:43>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:44>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:45>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:46>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_15 = ((BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF*)__this)->____boids;
+		int32_t L_16 = V_7;
+		il2cpp_codegen_initobj((&V_8), sizeof(BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41));
+		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_17 = V_2;
+		int32_t L_18 = V_7;
+		NullCheck(L_17);
+		int32_t L_19 = L_18;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_20 = (L_17)->GetAt(static_cast<il2cpp_array_size_t>(L_19));
+		(&V_8)->___Position = L_20;
+		QuaternionU5BU5D_t3C088AFB0F3D2763228C9CAB227021C5DC462AF7* L_21 = V_3;
+		int32_t L_22 = V_7;
+		NullCheck(L_21);
+		int32_t L_23 = L_22;
+		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_24 = (L_21)->GetAt(static_cast<il2cpp_array_size_t>(L_23));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_25;
+		L_25 = Vector3_get_forward_mAA55A7034304DF8B2152EAD49AE779FC4CA2EB4A_inline(NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_26;
+		L_26 = Quaternion_op_Multiply_mE1EBA73F9173432B50F8F17CE8190C5A7986FB8C(L_24, L_25, NULL);
+		(&V_8)->___Direction = L_26;
+		(&V_8)->___Acceleration = (0.0f);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_27 = V_5;
+		NullCheck(L_27);
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_28 = L_27->___MovementProperties;
+		NullCheck(L_28);
+		float L_29 = L_28->___CruisingSpeed;
+		(&V_8)->___Speed = L_29;
+		(&V_8)->___AngularAcceleration = (0.0f);
+		(&V_8)->___AngularVelocity = (0.0f);
+		(&V_8)->___BoidID = (0.0f);
+		(&V_8)->___CurrentSwimTime = (0.0f);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_30 = V_5;
+		NullCheck(L_30);
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_31 = L_30->___MotionRenderProperties;
+		NullCheck(L_31);
+		float L_32 = L_31->___MaxSwimPlaybackSpeed;
+		(&V_8)->___MaxPlaybackSpeed = L_32;
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_33 = V_5;
+		NullCheck(L_33);
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_34 = L_33->___MotionRenderProperties;
+		NullCheck(L_34);
+		float L_35 = L_34->___MinSwimPlaybackSpeed;
+		(&V_8)->___MinPlaybackSpeed = L_35;
+		(&V_8)->___SwimMotionIntensity = (0.0f);
+		int32_t L_36 = V_7;
+		(&V_8)->___OriginalIndex = ((float)L_36);
+		BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41 L_37 = V_8;
+		NullCheck(L_15);
+		(L_15)->SetAt(static_cast<il2cpp_array_size_t>(L_16), (BoidInfoGPU_tE3060107CFB463BDEA2C469B5BFC544A7AE5EF41)L_37);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:47>
+		int32_t L_38 = V_4;
+		V_4 = ((int32_t)il2cpp_codegen_add(L_38, 1));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:29>
+		int32_t L_39 = V_6;
+		V_6 = ((int32_t)il2cpp_codegen_add(L_39, 1));
+	}
+
+IL_0135:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:29>
+		int32_t L_40 = V_6;
+		int32_t L_41 = V_0;
+		V_9 = (bool)((((int32_t)L_40) < ((int32_t)L_41))? 1 : 0);
+		bool L_42 = V_9;
+		if (L_42)
+		{
+			goto IL_0059;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:49>
+		return;
+	}
+}
+// Method Definition Index: 71310
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSwirlSpawnerGPU__ctor_mC2536283F039658B3D5455CDE0963953A9E1AB6E (BoidSwirlSpawnerGPU_t980F89EF35654E32DC06695504CDF7590BFA7707* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSwirlSpawnerGPU.cs:14>
+		__this->____initialSwirlSphereRadius = (12.0f);
+		BoidSpawnerGPU__ctor_m2ED79E380A017C117C58DEA8386F69F2A83C8E4A(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71311
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_OnDrawGizmosSelected_m9C114160F57D66107C1352D7D3C31969CBA85A09 (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, const RuntimeMethod* method) 
+{
+	Color_tD001788D726C3A7F1379BEED0260B9591F440C1F V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	uint32_t V_1 = 0;
+	bool V_2 = false;
+	bool V_3 = false;
+	int32_t V_4 = 0;
+	uint32_t V_5 = 0;
+	bool V_6 = false;
+	bool V_7 = false;
+	int32_t V_8 = 0;
+	uint32_t V_9 = 0;
+	int32_t V_10 = 0;
+	int32_t V_11 = 0;
+	int32_t V_12 = 0;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_13;
+	memset((&V_13), 0, sizeof(V_13));
+	bool V_14 = false;
+	bool V_15 = false;
+	int32_t G_B5_0 = 0;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:115>
+		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_0;
+		L_0 = Color_get_red_mA2E53E7173FDC97E68E335049AB0FAAEE43A844D_inline(NULL);
+		Gizmos_set_color_m53927A2741937484180B20B55F7F20F8F60C5797(L_0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:116>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1 = __this->____gridCenter;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2 = __this->____gridSize;
+		Gizmos_DrawWireCube_m343533B3955A2D04A8638280D0EF537274A1FD8B(L_1, L_2, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:118>
+		bool L_3 = __this->____visualizeOccupancy;
+		V_2 = (bool)((((int32_t)L_3) == ((int32_t)0))? 1 : 0);
+		bool L_4 = V_2;
+		if (!L_4)
+		{
+			goto IL_0031;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:120>
+		goto IL_019c;
+	}
+
+IL_0031:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:123>
+		UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA* L_5 = __this->____cellsOccupancyVisualization;
+		if (!L_5)
+		{
+			goto IL_0045;
+		}
+	}
+	{
+		UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA* L_6 = __this->____cellsOccupancyVisualization;
+		NullCheck(L_6);
+		G_B5_0 = ((((int32_t)(((RuntimeArray*)L_6)->max_length)) == ((int32_t)0))? 1 : 0);
+		goto IL_0046;
+	}
+
+IL_0045:
+	{
+		G_B5_0 = 1;
+	}
+
+IL_0046:
+	{
+		V_3 = (bool)G_B5_0;
+		bool L_7 = V_3;
+		if (!L_7)
+		{
+			goto IL_0050;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:125>
+		goto IL_019c;
+	}
+
+IL_0050:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:129>
+		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_8 = __this->____occupancyVisualizationColor;
+		V_0 = L_8;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:130>
+		V_1 = 1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:131>
+		V_4 = 0;
+		goto IL_0081;
+	}
+
+IL_005e:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:133>
+		UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA* L_9 = __this->____cellsOccupancyVisualization;
+		int32_t L_10 = V_4;
+		NullCheck(L_9);
+		int32_t L_11 = L_10;
+		uint32_t L_12 = (L_9)->GetAt(static_cast<il2cpp_array_size_t>(L_11));
+		V_5 = L_12;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:134>
+		uint32_t L_13 = V_5;
+		uint32_t L_14 = V_1;
+		V_6 = (bool)((!(((uint32_t)L_13) <= ((uint32_t)L_14)))? 1 : 0);
+		bool L_15 = V_6;
+		if (!L_15)
+		{
+			goto IL_007a;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:136>
+		uint32_t L_16 = V_5;
+		V_1 = L_16;
+	}
+
+IL_007a:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:131>
+		int32_t L_17 = V_4;
+		V_4 = ((int32_t)il2cpp_codegen_add(L_17, 1));
+	}
+
+IL_0081:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:131>
+		int32_t L_18 = V_4;
+		int32_t L_19 = __this->____totalCellsCount;
+		V_7 = (bool)((((int32_t)L_18) < ((int32_t)L_19))? 1 : 0);
+		bool L_20 = V_7;
+		if (L_20)
+		{
+			goto IL_005e;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:141>
+		V_8 = 0;
+		goto IL_0189;
+	}
+
+IL_0099:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:143>
+		UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA* L_21 = __this->____cellsOccupancyVisualization;
+		int32_t L_22 = V_8;
+		NullCheck(L_21);
+		int32_t L_23 = L_22;
+		uint32_t L_24 = (L_21)->GetAt(static_cast<il2cpp_array_size_t>(L_23));
+		V_9 = L_24;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:144>
+		uint32_t L_25 = V_9;
+		V_14 = (bool)((((int32_t)((!(((uint32_t)L_25) <= ((uint32_t)0)))? 1 : 0)) == ((int32_t)0))? 1 : 0);
+		bool L_26 = V_14;
+		if (!L_26)
+		{
+			goto IL_00b9;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:146>
+		goto IL_0183;
+	}
+
+IL_00b9:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:149>
+		int32_t L_27 = V_8;
+		int32_t L_28 = __this->____cellCountX;
+		V_10 = ((int32_t)(L_27%L_28));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:150>
+		int32_t L_29 = V_8;
+		int32_t L_30 = __this->____cellCountX;
+		int32_t L_31;
+		L_31 = Mathf_FloorToInt_m2A39AE881CAEE6B6A4B3BFEF9CA1ED40625F5AB7_inline(((float)(((float)L_29)/((float)L_30))), NULL);
+		int32_t L_32 = __this->____cellCountY;
+		V_11 = ((int32_t)(L_31%L_32));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:151>
+		int32_t L_33 = V_8;
+		int32_t L_34 = __this->____cellCountX;
+		int32_t L_35 = __this->____cellCountY;
+		int32_t L_36;
+		L_36 = Mathf_FloorToInt_m2A39AE881CAEE6B6A4B3BFEF9CA1ED40625F5AB7_inline(((float)(((float)L_33)/((float)il2cpp_codegen_multiply(((float)L_34), ((float)L_35))))), NULL);
+		int32_t L_37 = __this->____cellCountZ;
+		V_12 = ((int32_t)(L_36%L_37));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:152>
+		int32_t L_38 = V_10;
+		float L_39 = __this->____cellSize;
+		int32_t L_40 = V_11;
+		float L_41 = __this->____cellSize;
+		int32_t L_42 = V_12;
+		float L_43 = __this->____cellSize;
+		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&V_13), ((float)il2cpp_codegen_multiply(((float)il2cpp_codegen_add(((float)L_38), (0.5f))), L_39)), ((float)il2cpp_codegen_multiply(((float)il2cpp_codegen_add(((float)L_40), (0.5f))), L_41)), ((float)il2cpp_codegen_multiply(((float)il2cpp_codegen_add(((float)L_42), (0.5f))), L_43)), NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:154>
+		uint32_t L_44 = V_9;
+		uint32_t L_45 = V_1;
+		float L_46;
+		L_46 = Mathf_Clamp01_mA7E048DBDA832D399A581BE4D6DED9FA44CE0F14_inline(((float)(((float)((double)(uint32_t)L_44))/((float)((double)(uint32_t)L_45)))), NULL);
+		float L_47;
+		L_47 = Mathf_Lerp_m47EF2FFB7647BD0A1FDC26DC03E28B19812139B5_inline((0.5f), (1.0f), L_46, NULL);
+		(&V_0)->___a = L_47;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:155>
+		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_48 = V_0;
+		Gizmos_set_color_m53927A2741937484180B20B55F7F20F8F60C5797(L_48, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:157>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_49 = V_13;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_50 = __this->____gridMinPoint;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_51;
+		L_51 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_49, L_50, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_52;
+		L_52 = Vector3_get_one_mC9B289F1E15C42C597180C9FE6FB492495B51D02_inline(NULL);
+		float L_53 = __this->____cellSize;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_54;
+		L_54 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_52, L_53, NULL);
+		Gizmos_DrawCube_m4417EAEA479EF4AD52445810D840BA8FCBC6EF3F(L_51, L_54, NULL);
+	}
+
+IL_0183:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:141>
+		int32_t L_55 = V_8;
+		V_8 = ((int32_t)il2cpp_codegen_add(L_55, 1));
+	}
+
+IL_0189:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:141>
+		int32_t L_56 = V_8;
+		int32_t L_57 = __this->____totalCellsCount;
+		V_15 = (bool)((((int32_t)L_56) < ((int32_t)L_57))? 1 : 0);
+		bool L_58 = V_15;
+		if (L_58)
+		{
+			goto IL_0099;
+		}
+	}
+
+IL_019c:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:159>
+		return;
+	}
+}
+// Method Definition Index: 71312
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_OnDestroy_m7D7CC9D3B9D30670C123763676B64F73F12F0D1E (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:163>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_0 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____boidsCellInfoBuffer);
+		SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E(__this, L_0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:164>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_1 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____cellOccupancyBuffer);
+		SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E(__this, L_1, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:165>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_2 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____cellsGlobalOffsetBuffer);
+		SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E(__this, L_2, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:166>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_3 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____threadGroupsGlobalOffsetBuffer);
+		SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E(__this, L_3, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:167>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_4 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____threadGroupsGlobalOffsetHelperBuffer);
+		SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E(__this, L_4, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:168>
+		return;
+	}
+}
+// Method Definition Index: 71313
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_InitializeGrid_m30CFC5260955AE87C202D571BF47D4E1938E720F (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_simulationAreaBounds, int32_t ___1_totalBoidsCount, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral0D3820792443B8215D876BDE9E7DD9552E90BD9C);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral1AB23E56844BE2CE7787EE8A1497A7D098A5575E);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral1BEF1BB1952FF476F965F262EFAC24A6B2EAA865);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral2015C07B8C03345F973A6FE294C26ACEEF2C77A9);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral28B8BE8AD74A7D5D45F458F5CDD571BB0290ED27);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral3FECF4B4D5152FC7CE9F6C7DF7FCC90E51C6C320);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral555ECDEAFA859238328E06C4AFA553B36FD8812D);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral679E14F776D8AC56BD3776A2DBC1D4BFE0D5031E);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral76C2C39C07BDC41C313F5C0EC9EE291181BAA424);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral8B62084B9761ACE20616CDA34130C8F0A117B1A4);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralA4FD2DEE80963526161136BF110B67FA4BFB9C27);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralB5026323E0BA60B48870D8B4CCD2AF7E8BBBC9FE);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralC5FB0CB55C1A640B382EB4ECEB0D7EE05D65E3E6);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralCBE27B6328F6DF432E5A2F7323F7EFC654FE44C3);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralD14A6DA55BB0DE893F94F2F65D4D527ACF6A7CFE);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralD8610048AB56AF8A9351ACBA509C6DBB2807620F);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralDE076F5703B7C23D4DEDB536B187E3D212DD16A4);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralE891707E82D6062C88A00E305DA0161DDF7DA25F);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralF28C82E3FA276068001A49BF3211A39BD897F6EF);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralFAA164D5A69AB435EFE1DC412582B5E438DA6241);
+		s_Il2CppMethodInitialized = true;
+	}
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	bool V_1 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:179>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_0 = __this->____boidsCellInfoBuffer;
+		V_1 = (bool)((!(((RuntimeObject*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)L_0) <= ((RuntimeObject*)(RuntimeObject*)NULL)))? 1 : 0);
+		bool L_1 = V_1;
+		if (!L_1)
+		{
+			goto IL_001f;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:182>
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_LogError_mB00B2B4468EF3CAF041B038D840820FB84C924B2(_stringLiteralB5026323E0BA60B48870D8B4CCD2AF7E8BBBC9FE, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:183>
+		goto IL_03b4;
+	}
+
+IL_001f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:186>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
+		L_2 = Bounds_get_center_m5B05F81CB835EB6DD8628FDA24B638F477984DC3_inline((&___0_simulationAreaBounds), NULL);
+		__this->____gridCenter = L_2;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:187>
+		int32_t L_3 = ___1_totalBoidsCount;
+		__this->____totalBoidsCount = L_3;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:192>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_4;
+		L_4 = Bounds_get_size_m0699A53A55A78B3201D7270D6F338DFA91B6FAD4_inline((&___0_simulationAreaBounds), NULL);
+		V_0 = L_4;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:193>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_5 = V_0;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6;
+		L_6 = Vector3_get_one_mC9B289F1E15C42C597180C9FE6FB492495B51D02_inline(NULL);
+		int32_t L_7 = __this->____safetyBufferCellCount;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8;
+		L_8 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_6, ((float)L_7), NULL);
+		float L_9 = __this->____cellSize;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10;
+		L_10 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_8, L_9, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_11;
+		L_11 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_5, L_10, NULL);
+		V_0 = L_11;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:194>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = V_0;
+		__this->____gridSize = L_12;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:195>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13 = V_0;
+		float L_14 = L_13.___x;
+		float L_15 = __this->____cellSize;
+		int32_t L_16;
+		L_16 = Mathf_CeilToInt_mF2BF9F4261B3431DC20E10A46CFEEED103C48963_inline(((float)(L_14/L_15)), NULL);
+		__this->____cellCountX = L_16;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:196>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_17 = V_0;
+		float L_18 = L_17.___y;
+		float L_19 = __this->____cellSize;
+		int32_t L_20;
+		L_20 = Mathf_CeilToInt_mF2BF9F4261B3431DC20E10A46CFEEED103C48963_inline(((float)(L_18/L_19)), NULL);
+		__this->____cellCountY = L_20;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:197>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_21 = V_0;
+		float L_22 = L_21.___z;
+		float L_23 = __this->____cellSize;
+		int32_t L_24;
+		L_24 = Mathf_CeilToInt_mF2BF9F4261B3431DC20E10A46CFEEED103C48963_inline(((float)(L_22/L_23)), NULL);
+		__this->____cellCountZ = L_24;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:201>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_25;
+		L_25 = Bounds_get_center_m5B05F81CB835EB6DD8628FDA24B638F477984DC3_inline((&___0_simulationAreaBounds), NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_26 = V_0;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_27;
+		L_27 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_26, (0.5f), NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_28;
+		L_28 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_25, L_27, NULL);
+		__this->____gridMinPoint = L_28;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:203>
+		int32_t L_29 = __this->____cellCountX;
+		int32_t L_30 = __this->____cellCountY;
+		int32_t L_31 = __this->____cellCountZ;
+		__this->____totalCellsCount = ((int32_t)il2cpp_codegen_multiply(((int32_t)il2cpp_codegen_multiply(L_29, L_30)), L_31));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:204>
+		int32_t L_32 = __this->____totalCellsCount;
+		int32_t L_33;
+		L_33 = Mathf_CeilToInt_mF2BF9F4261B3431DC20E10A46CFEEED103C48963_inline(((float)(((float)L_32)/(1024.0f))), NULL);
+		__this->____totalThreadGroupsCount = L_33;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:207>
+		int32_t L_34 = ___1_totalBoidsCount;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_35 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)il2cpp_codegen_object_new(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var);
+		ComputeBuffer__ctor_mE40DE5EF5ADAC29B6B4DECBD1EE33E8526202617(L_35, L_34, 8, NULL);
+		__this->____boidsCellInfoBuffer = L_35;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boidsCellInfoBuffer), (void*)L_35);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:208>
+		int32_t L_36 = __this->____totalCellsCount;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_37 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)il2cpp_codegen_object_new(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var);
+		ComputeBuffer__ctor_mE40DE5EF5ADAC29B6B4DECBD1EE33E8526202617(L_37, L_36, 4, NULL);
+		__this->____cellOccupancyBuffer = L_37;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____cellOccupancyBuffer), (void*)L_37);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:209>
+		int32_t L_38 = __this->____totalCellsCount;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_39 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)il2cpp_codegen_object_new(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var);
+		ComputeBuffer__ctor_mE40DE5EF5ADAC29B6B4DECBD1EE33E8526202617(L_39, L_38, 4, NULL);
+		__this->____cellsGlobalOffsetBuffer = L_39;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____cellsGlobalOffsetBuffer), (void*)L_39);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:210>
+		int32_t L_40 = __this->____totalThreadGroupsCount;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_41 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)il2cpp_codegen_object_new(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var);
+		ComputeBuffer__ctor_mE40DE5EF5ADAC29B6B4DECBD1EE33E8526202617(L_41, L_40, 4, NULL);
+		__this->____threadGroupsGlobalOffsetBuffer = L_41;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____threadGroupsGlobalOffsetBuffer), (void*)L_41);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:211>
+		int32_t L_42 = __this->____totalThreadGroupsCount;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_43 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)il2cpp_codegen_object_new(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var);
+		ComputeBuffer__ctor_mE40DE5EF5ADAC29B6B4DECBD1EE33E8526202617(L_43, L_42, 4, NULL);
+		__this->____threadGroupsGlobalOffsetHelperBuffer = L_43;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____threadGroupsGlobalOffsetHelperBuffer), (void*)L_43);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:214>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_44 = __this->____spatialPartitionComputeShader;
+		NullCheck(L_44);
+		int32_t L_45;
+		L_45 = ComputeShader_FindKernel_m3BA5C50794FA6AF4C432E55FBBD7CB266532F659(L_44, _stringLiteral2015C07B8C03345F973A6FE294C26ACEEF2C77A9, NULL);
+		__this->____clearGridKernelID = L_45;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:215>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_46 = __this->____spatialPartitionComputeShader;
+		NullCheck(L_46);
+		int32_t L_47;
+		L_47 = ComputeShader_FindKernel_m3BA5C50794FA6AF4C432E55FBBD7CB266532F659(L_46, _stringLiteral0D3820792443B8215D876BDE9E7DD9552E90BD9C, NULL);
+		__this->____updateOccupancyKernelID = L_47;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:216>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_48 = __this->____spatialPartitionComputeShader;
+		NullCheck(L_48);
+		int32_t L_49;
+		L_49 = ComputeShader_FindKernel_m3BA5C50794FA6AF4C432E55FBBD7CB266532F659(L_48, _stringLiteral3FECF4B4D5152FC7CE9F6C7DF7FCC90E51C6C320, NULL);
+		__this->____calculateOffsetsKernelID = L_49;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:217>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_50 = __this->____spatialPartitionComputeShader;
+		NullCheck(L_50);
+		int32_t L_51;
+		L_51 = ComputeShader_FindKernel_m3BA5C50794FA6AF4C432E55FBBD7CB266532F659(L_50, _stringLiteralE891707E82D6062C88A00E305DA0161DDF7DA25F, NULL);
+		__this->____sumOffsetsKernelID = L_51;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:218>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_52 = __this->____spatialPartitionComputeShader;
+		NullCheck(L_52);
+		int32_t L_53;
+		L_53 = ComputeShader_FindKernel_m3BA5C50794FA6AF4C432E55FBBD7CB266532F659(L_52, _stringLiteralDE076F5703B7C23D4DEDB536B187E3D212DD16A4, NULL);
+		__this->____finalizeOffsetsKernelID = L_53;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:219>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_54 = __this->____spatialPartitionComputeShader;
+		NullCheck(L_54);
+		int32_t L_55;
+		L_55 = ComputeShader_FindKernel_m3BA5C50794FA6AF4C432E55FBBD7CB266532F659(L_54, _stringLiteral555ECDEAFA859238328E06C4AFA553B36FD8812D, NULL);
+		__this->____rearrangeBoidsKernelID = L_55;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:222>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_56 = __this->____spatialPartitionComputeShader;
+		int32_t L_57 = __this->____totalBoidsCount;
+		NullCheck(L_56);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_56, _stringLiteralA4FD2DEE80963526161136BF110B67FA4BFB9C27, L_57, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:223>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_58 = __this->____spatialPartitionComputeShader;
+		int32_t L_59 = __this->____totalCellsCount;
+		NullCheck(L_58);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_58, _stringLiteral1AB23E56844BE2CE7787EE8A1497A7D098A5575E, L_59, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:224>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_60 = __this->____spatialPartitionComputeShader;
+		int32_t L_61 = __this->____cellCountX;
+		NullCheck(L_60);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_60, _stringLiteral28B8BE8AD74A7D5D45F458F5CDD571BB0290ED27, L_61, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:225>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_62 = __this->____spatialPartitionComputeShader;
+		int32_t L_63 = __this->____cellCountY;
+		NullCheck(L_62);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_62, _stringLiteral679E14F776D8AC56BD3776A2DBC1D4BFE0D5031E, L_63, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:226>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_64 = __this->____spatialPartitionComputeShader;
+		int32_t L_65 = __this->____cellCountZ;
+		NullCheck(L_64);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_64, _stringLiteralC5FB0CB55C1A640B382EB4ECEB0D7EE05D65E3E6, L_65, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:227>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_66 = __this->____spatialPartitionComputeShader;
+		int32_t L_67 = __this->____totalThreadGroupsCount;
+		NullCheck(L_66);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_66, _stringLiteralFAA164D5A69AB435EFE1DC412582B5E438DA6241, L_67, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:228>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_68 = __this->____spatialPartitionComputeShader;
+		float L_69 = __this->____cellSize;
+		NullCheck(L_68);
+		ComputeShader_SetFloat_m725E64D98D75E3E1AB20CF7B6CF790798DCD6F66(L_68, _stringLiteralD14A6DA55BB0DE893F94F2F65D4D527ACF6A7CFE, L_69, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:229>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_70 = __this->____spatialPartitionComputeShader;
+		float L_71 = __this->____cellSize;
+		NullCheck(L_70);
+		ComputeShader_SetFloat_m725E64D98D75E3E1AB20CF7B6CF790798DCD6F66(L_70, _stringLiteralD8610048AB56AF8A9351ACBA509C6DBB2807620F, ((float)((1.0f)/L_71)), NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:230>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_72 = __this->____spatialPartitionComputeShader;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_73 = __this->____gridMinPoint;
+		Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 L_74;
+		L_74 = Vector4_op_Implicit_m2ECA73F345A7AD84144133E9E51657204002B12D_inline(L_73, NULL);
+		NullCheck(L_72);
+		ComputeShader_SetVector_m1558A111CF6BB2A6816C6595329002EDEE40F6FC(L_72, _stringLiteral1BEF1BB1952FF476F965F262EFAC24A6B2EAA865, L_74, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:233>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_75 = __this->____spatialPartitionComputeShader;
+		int32_t L_76 = __this->____clearGridKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_77 = __this->____cellOccupancyBuffer;
+		NullCheck(L_75);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_75, L_76, _stringLiteral76C2C39C07BDC41C313F5C0EC9EE291181BAA424, L_77, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:236>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_78 = __this->____spatialPartitionComputeShader;
+		int32_t L_79 = __this->____updateOccupancyKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_80 = __this->____boidsCellInfoBuffer;
+		NullCheck(L_78);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_78, L_79, _stringLiteral8B62084B9761ACE20616CDA34130C8F0A117B1A4, L_80, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:237>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_81 = __this->____spatialPartitionComputeShader;
+		int32_t L_82 = __this->____updateOccupancyKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_83 = __this->____cellOccupancyBuffer;
+		NullCheck(L_81);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_81, L_82, _stringLiteral76C2C39C07BDC41C313F5C0EC9EE291181BAA424, L_83, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:240>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_84 = __this->____spatialPartitionComputeShader;
+		int32_t L_85 = __this->____calculateOffsetsKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_86 = __this->____cellOccupancyBuffer;
+		NullCheck(L_84);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_84, L_85, _stringLiteral76C2C39C07BDC41C313F5C0EC9EE291181BAA424, L_86, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:241>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_87 = __this->____spatialPartitionComputeShader;
+		int32_t L_88 = __this->____calculateOffsetsKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_89 = __this->____cellsGlobalOffsetBuffer;
+		NullCheck(L_87);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_87, L_88, _stringLiteralCBE27B6328F6DF432E5A2F7323F7EFC654FE44C3, L_89, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:242>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_90 = __this->____spatialPartitionComputeShader;
+		int32_t L_91 = __this->____calculateOffsetsKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_92 = __this->____threadGroupsGlobalOffsetBuffer;
+		NullCheck(L_90);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_90, L_91, _stringLiteralF28C82E3FA276068001A49BF3211A39BD897F6EF, L_92, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:246>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_93 = __this->____spatialPartitionComputeShader;
+		int32_t L_94 = __this->____finalizeOffsetsKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_95 = __this->____cellsGlobalOffsetBuffer;
+		NullCheck(L_93);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_93, L_94, _stringLiteralCBE27B6328F6DF432E5A2F7323F7EFC654FE44C3, L_95, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:249>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_96 = __this->____spatialPartitionComputeShader;
+		int32_t L_97 = __this->____rearrangeBoidsKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_98 = __this->____boidsCellInfoBuffer;
+		NullCheck(L_96);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_96, L_97, _stringLiteral8B62084B9761ACE20616CDA34130C8F0A117B1A4, L_98, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:250>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_99 = __this->____spatialPartitionComputeShader;
+		int32_t L_100 = __this->____rearrangeBoidsKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_101 = __this->____cellsGlobalOffsetBuffer;
+		NullCheck(L_99);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_99, L_100, _stringLiteralCBE27B6328F6DF432E5A2F7323F7EFC654FE44C3, L_101, NULL);
+	}
+
+IL_03b4:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:251>
+		return;
+	}
+}
+// Method Definition Index: 71314
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_UpdateGridOccupancy_m88124DF9170E51F2C48E011E3FB4C17C8B5EB346 (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ___0_boidsInputBuffer, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* ___1_boidsOutputBuffer, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral1F8DC44CAFB138503BF6ABAF9ED47A6414DCAF4D);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral3C4F9CCD5B19C1450034BBF3DCFD552988871ECF);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral9AD54BEBC6C53F3252ECE6989D283640A7AD6E41);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralC2D741B642E9B3DF3BFD8F55832ECA00D6354906);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralE7DD2DB47B295278E944ED07E27C0C7988AECB46);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralF28C82E3FA276068001A49BF3211A39BD897F6EF);
+		s_Il2CppMethodInitialized = true;
+	}
+	bool V_0 = false;
+	bool V_1 = false;
+	bool V_2 = false;
+	bool V_3 = false;
+	int32_t V_4 = 0;
+	bool V_5 = false;
+	String_t* G_B9_0 = NULL;
+	int32_t G_B9_1 = 0;
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* G_B9_2 = NULL;
+	String_t* G_B8_0 = NULL;
+	int32_t G_B8_1 = 0;
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* G_B8_2 = NULL;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* G_B10_0 = NULL;
+	String_t* G_B10_1 = NULL;
+	int32_t G_B10_2 = 0;
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* G_B10_3 = NULL;
+	String_t* G_B12_0 = NULL;
+	int32_t G_B12_1 = 0;
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* G_B12_2 = NULL;
+	String_t* G_B11_0 = NULL;
+	int32_t G_B11_1 = 0;
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* G_B11_2 = NULL;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* G_B13_0 = NULL;
+	String_t* G_B13_1 = NULL;
+	int32_t G_B13_2 = 0;
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* G_B13_3 = NULL;
+	String_t* G_B17_0 = NULL;
+	int32_t G_B17_1 = 0;
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* G_B17_2 = NULL;
+	String_t* G_B16_0 = NULL;
+	int32_t G_B16_1 = 0;
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* G_B16_2 = NULL;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* G_B18_0 = NULL;
+	String_t* G_B18_1 = NULL;
+	int32_t G_B18_2 = 0;
+	ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* G_B18_3 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:266>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_0 = __this->____boidsCellInfoBuffer;
+		V_1 = (bool)((((RuntimeObject*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)L_0) == ((RuntimeObject*)(RuntimeObject*)NULL))? 1 : 0);
+		bool L_1 = V_1;
+		if (!L_1)
+		{
+			goto IL_001f;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:268>
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_LogError_mB00B2B4468EF3CAF041B038D840820FB84C924B2(_stringLiteral1F8DC44CAFB138503BF6ABAF9ED47A6414DCAF4D, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:269>
+		goto IL_01f6;
+	}
+
+IL_001f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:273>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_2 = __this->____spatialPartitionComputeShader;
+		int32_t L_3 = __this->____clearGridKernelID;
+		int32_t L_4 = __this->____totalCellsCount;
+		ComputeShaderExtensions_DispatchThreads_mD4BB957B1281F7B52FC2F2068BC2E9B94EB11747(L_2, L_3, L_4, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:277>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_5 = __this->____spatialPartitionComputeShader;
+		int32_t L_6 = __this->____updateOccupancyKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_7 = ___0_boidsInputBuffer;
+		NullCheck(L_5);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_5, L_6, _stringLiteralE7DD2DB47B295278E944ED07E27C0C7988AECB46, L_7, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:278>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_8 = __this->____spatialPartitionComputeShader;
+		int32_t L_9 = __this->____updateOccupancyKernelID;
+		int32_t L_10 = __this->____totalBoidsCount;
+		ComputeShaderExtensions_DispatchThreads_mD4BB957B1281F7B52FC2F2068BC2E9B94EB11747(L_8, L_9, L_10, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:281>
+		bool L_11 = __this->____visualizeOccupancy;
+		V_2 = L_11;
+		bool L_12 = V_2;
+		if (!L_12)
+		{
+			goto IL_00a5;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:283>
+		UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA* L_13 = __this->____cellsOccupancyVisualization;
+		V_3 = (bool)((((RuntimeObject*)(UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA*)L_13) == ((RuntimeObject*)(RuntimeObject*)NULL))? 1 : 0);
+		bool L_14 = V_3;
+		if (!L_14)
+		{
+			goto IL_0092;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:285>
+		int32_t L_15 = __this->____totalCellsCount;
+		UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA* L_16 = (UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA*)(UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA*)SZArrayNew(UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA_il2cpp_TypeInfo_var, (uint32_t)L_15);
+		__this->____cellsOccupancyVisualization = L_16;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____cellsOccupancyVisualization), (void*)L_16);
+	}
+
+IL_0092:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:287>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_17 = __this->____cellOccupancyBuffer;
+		UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA* L_18 = __this->____cellsOccupancyVisualization;
+		NullCheck(L_17);
+		ComputeBuffer_GetData_m7EFC5EF9035C3C48BD922221AC809DC30D6F7F27(L_17, (RuntimeArray*)L_18, NULL);
+	}
+
+IL_00a5:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:295>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_19 = __this->____spatialPartitionComputeShader;
+		int32_t L_20 = __this->____calculateOffsetsKernelID;
+		int32_t L_21 = __this->____totalCellsCount;
+		ComputeShaderExtensions_DispatchThreads_mD4BB957B1281F7B52FC2F2068BC2E9B94EB11747(L_19, L_20, L_21, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:299>
+		V_0 = (bool)0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:300>
+		V_4 = 1;
+		goto IL_015b;
+	}
+
+IL_00c7:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:303>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_22 = __this->____spatialPartitionComputeShader;
+		int32_t L_23 = __this->____sumOffsetsKernelID;
+		bool L_24 = V_0;
+		if (L_24)
+		{
+			G_B9_0 = _stringLiteral3C4F9CCD5B19C1450034BBF3DCFD552988871ECF;
+			G_B9_1 = L_23;
+			G_B9_2 = L_22;
+			goto IL_00e4;
+		}
+		G_B8_0 = _stringLiteral3C4F9CCD5B19C1450034BBF3DCFD552988871ECF;
+		G_B8_1 = L_23;
+		G_B8_2 = L_22;
+	}
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_25 = __this->____threadGroupsGlobalOffsetBuffer;
+		G_B10_0 = L_25;
+		G_B10_1 = G_B8_0;
+		G_B10_2 = G_B8_1;
+		G_B10_3 = G_B8_2;
+		goto IL_00ea;
+	}
+
+IL_00e4:
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_26 = __this->____threadGroupsGlobalOffsetHelperBuffer;
+		G_B10_0 = L_26;
+		G_B10_1 = G_B9_0;
+		G_B10_2 = G_B9_1;
+		G_B10_3 = G_B9_2;
+	}
+
+IL_00ea:
+	{
+		NullCheck(G_B10_3);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(G_B10_3, G_B10_2, G_B10_1, G_B10_0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:304>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_27 = __this->____spatialPartitionComputeShader;
+		int32_t L_28 = __this->____sumOffsetsKernelID;
+		bool L_29 = V_0;
+		if (L_29)
+		{
+			G_B12_0 = _stringLiteralF28C82E3FA276068001A49BF3211A39BD897F6EF;
+			G_B12_1 = L_28;
+			G_B12_2 = L_27;
+			goto IL_010c;
+		}
+		G_B11_0 = _stringLiteralF28C82E3FA276068001A49BF3211A39BD897F6EF;
+		G_B11_1 = L_28;
+		G_B11_2 = L_27;
+	}
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_30 = __this->____threadGroupsGlobalOffsetHelperBuffer;
+		G_B13_0 = L_30;
+		G_B13_1 = G_B11_0;
+		G_B13_2 = G_B11_1;
+		G_B13_3 = G_B11_2;
+		goto IL_0112;
+	}
+
+IL_010c:
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_31 = __this->____threadGroupsGlobalOffsetBuffer;
+		G_B13_0 = L_31;
+		G_B13_1 = G_B12_0;
+		G_B13_2 = G_B12_1;
+		G_B13_3 = G_B12_2;
+	}
+
+IL_0112:
+	{
+		NullCheck(G_B13_3);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(G_B13_3, G_B13_2, G_B13_1, G_B13_0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:305>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_32 = __this->____spatialPartitionComputeShader;
+		int32_t L_33 = V_4;
+		NullCheck(L_32);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_32, _stringLiteralC2D741B642E9B3DF3BFD8F55832ECA00D6354906, L_33, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:308>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_34 = __this->____spatialPartitionComputeShader;
+		int32_t L_35 = __this->____sumOffsetsKernelID;
+		int32_t L_36 = __this->____totalThreadGroupsCount;
+		int32_t L_37;
+		L_37 = Mathf_CeilToInt_mF2BF9F4261B3431DC20E10A46CFEEED103C48963_inline(((float)(((float)L_36)/(1024.0f))), NULL);
+		ComputeShaderExtensions_DispatchThreads_mD4BB957B1281F7B52FC2F2068BC2E9B94EB11747(L_34, L_35, L_37, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:311>
+		bool L_38 = V_0;
+		V_0 = (bool)((((int32_t)L_38) == ((int32_t)0))? 1 : 0);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:300>
+		int32_t L_39 = V_4;
+		V_4 = ((int32_t)il2cpp_codegen_multiply(L_39, 2));
+	}
+
+IL_015b:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:300>
+		int32_t L_40 = V_4;
+		int32_t L_41 = __this->____totalThreadGroupsCount;
+		V_5 = (bool)((((int32_t)L_40) < ((int32_t)L_41))? 1 : 0);
+		bool L_42 = V_5;
+		if (L_42)
+		{
+			goto IL_00c7;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:317>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_43 = __this->____spatialPartitionComputeShader;
+		int32_t L_44 = __this->____finalizeOffsetsKernelID;
+		bool L_45 = V_0;
+		if (L_45)
+		{
+			G_B17_0 = _stringLiteral3C4F9CCD5B19C1450034BBF3DCFD552988871ECF;
+			G_B17_1 = L_44;
+			G_B17_2 = L_43;
+			goto IL_018a;
+		}
+		G_B16_0 = _stringLiteral3C4F9CCD5B19C1450034BBF3DCFD552988871ECF;
+		G_B16_1 = L_44;
+		G_B16_2 = L_43;
+	}
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_46 = __this->____threadGroupsGlobalOffsetBuffer;
+		G_B18_0 = L_46;
+		G_B18_1 = G_B16_0;
+		G_B18_2 = G_B16_1;
+		G_B18_3 = G_B16_2;
+		goto IL_0190;
+	}
+
+IL_018a:
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_47 = __this->____threadGroupsGlobalOffsetHelperBuffer;
+		G_B18_0 = L_47;
+		G_B18_1 = G_B17_0;
+		G_B18_2 = G_B17_1;
+		G_B18_3 = G_B17_2;
+	}
+
+IL_0190:
+	{
+		NullCheck(G_B18_3);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(G_B18_3, G_B18_2, G_B18_1, G_B18_0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:318>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_48 = __this->____spatialPartitionComputeShader;
+		int32_t L_49 = __this->____finalizeOffsetsKernelID;
+		int32_t L_50 = __this->____totalCellsCount;
+		ComputeShaderExtensions_DispatchThreads_mD4BB957B1281F7B52FC2F2068BC2E9B94EB11747(L_48, L_49, L_50, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:321>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_51 = __this->____spatialPartitionComputeShader;
+		int32_t L_52 = __this->____rearrangeBoidsKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_53 = ___0_boidsInputBuffer;
+		NullCheck(L_51);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_51, L_52, _stringLiteralE7DD2DB47B295278E944ED07E27C0C7988AECB46, L_53, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:322>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_54 = __this->____spatialPartitionComputeShader;
+		int32_t L_55 = __this->____rearrangeBoidsKernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_56 = ___1_boidsOutputBuffer;
+		NullCheck(L_54);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_54, L_55, _stringLiteral9AD54BEBC6C53F3252ECE6989D283640A7AD6E41, L_56, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:323>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_57 = __this->____spatialPartitionComputeShader;
+		int32_t L_58 = __this->____rearrangeBoidsKernelID;
+		int32_t L_59 = __this->____totalBoidsCount;
+		ComputeShaderExtensions_DispatchThreads_mD4BB957B1281F7B52FC2F2068BC2E9B94EB11747(L_57, L_58, L_59, NULL);
+	}
+
+IL_01f6:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:324>
+		return;
+	}
+}
+// Method Definition Index: 71315
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_CleanupGrid_m53231076A6A1AA705F2789F63CB1626B39B87A74 (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:333>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_0 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____boidsCellInfoBuffer);
+		SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E(__this, L_0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:334>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_1 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____cellOccupancyBuffer);
+		SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E(__this, L_1, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:335>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_2 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____cellsGlobalOffsetBuffer);
+		SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E(__this, L_2, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:336>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_3 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____threadGroupsGlobalOffsetBuffer);
+		SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E(__this, L_3, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:337>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_4 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____threadGroupsGlobalOffsetHelperBuffer);
+		SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E(__this, L_4, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:338>
+		__this->____cellsOccupancyVisualization = (UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____cellsOccupancyVisualization), (void*)(UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:339>
+		return;
+	}
+}
+// Method Definition Index: 71316
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_SetSpatialPartitionProperties_m4F0D2FA1465E7B41F1B538836C55CFE7FE3A2FEE (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* ___0_computeShader, int32_t ___1_kernelID, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral1AB23E56844BE2CE7787EE8A1497A7D098A5575E);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral1BEF1BB1952FF476F965F262EFAC24A6B2EAA865);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral28B8BE8AD74A7D5D45F458F5CDD571BB0290ED27);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral679E14F776D8AC56BD3776A2DBC1D4BFE0D5031E);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralC5FB0CB55C1A640B382EB4ECEB0D7EE05D65E3E6);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralCBE27B6328F6DF432E5A2F7323F7EFC654FE44C3);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralD14A6DA55BB0DE893F94F2F65D4D527ACF6A7CFE);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralD8610048AB56AF8A9351ACBA509C6DBB2807620F);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:343>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_0 = ___0_computeShader;
+		int32_t L_1 = ___1_kernelID;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_2 = __this->____cellsGlobalOffsetBuffer;
+		NullCheck(L_0);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_0, L_1, _stringLiteralCBE27B6328F6DF432E5A2F7323F7EFC654FE44C3, L_2, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:344>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_3 = ___0_computeShader;
+		int32_t L_4 = __this->____totalCellsCount;
+		NullCheck(L_3);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_3, _stringLiteral1AB23E56844BE2CE7787EE8A1497A7D098A5575E, L_4, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:345>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_5 = ___0_computeShader;
+		int32_t L_6 = __this->____cellCountX;
+		NullCheck(L_5);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_5, _stringLiteral28B8BE8AD74A7D5D45F458F5CDD571BB0290ED27, L_6, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:346>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_7 = ___0_computeShader;
+		int32_t L_8 = __this->____cellCountY;
+		NullCheck(L_7);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_7, _stringLiteral679E14F776D8AC56BD3776A2DBC1D4BFE0D5031E, L_8, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:347>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_9 = ___0_computeShader;
+		int32_t L_10 = __this->____cellCountZ;
+		NullCheck(L_9);
+		ComputeShader_SetInt_mBA565A55A8C3AA621F4F141C2CF15A934E8C345C(L_9, _stringLiteralC5FB0CB55C1A640B382EB4ECEB0D7EE05D65E3E6, L_10, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:348>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_11 = ___0_computeShader;
+		float L_12 = __this->____cellSize;
+		NullCheck(L_11);
+		ComputeShader_SetFloat_m725E64D98D75E3E1AB20CF7B6CF790798DCD6F66(L_11, _stringLiteralD14A6DA55BB0DE893F94F2F65D4D527ACF6A7CFE, L_12, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:349>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_13 = ___0_computeShader;
+		float L_14 = __this->____cellSize;
+		NullCheck(L_13);
+		ComputeShader_SetFloat_m725E64D98D75E3E1AB20CF7B6CF790798DCD6F66(L_13, _stringLiteralD8610048AB56AF8A9351ACBA509C6DBB2807620F, ((float)((1.0f)/L_14)), NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:350>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_15 = ___0_computeShader;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16 = __this->____gridMinPoint;
+		Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 L_17;
+		L_17 = Vector4_op_Implicit_m2ECA73F345A7AD84144133E9E51657204002B12D_inline(L_16, NULL);
+		NullCheck(L_15);
+		ComputeShader_SetVector_m1558A111CF6BB2A6816C6595329002EDEE40F6FC(L_15, _stringLiteral1BEF1BB1952FF476F965F262EFAC24A6B2EAA865, L_17, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:351>
+		return;
+	}
+}
+// Method Definition Index: 71317
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU_CleanUpComputeBuffer_m57525DF1ED7F39E43CC302604981274A645CD48E (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** ___0_computeBuffer, const RuntimeMethod* method) 
+{
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* G_B2_0 = NULL;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* G_B1_0 = NULL;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* G_B5_0 = NULL;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* G_B4_0 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:355>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_0 = ___0_computeBuffer;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_1 = *((ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)L_0);
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_2 = L_1;
+		if (L_2)
+		{
+			G_B2_0 = L_2;
+			goto IL_0009;
+		}
+		G_B1_0 = L_2;
+	}
+	{
+		goto IL_000f;
+	}
+
+IL_0009:
+	{
+		NullCheck(G_B2_0);
+		ComputeBuffer_Release_mF1F157C929A0A5B2FDCD703A286EE09723450B72(G_B2_0, NULL);
+	}
+
+IL_000f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:356>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_3 = ___0_computeBuffer;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_4 = *((ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)L_3);
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_5 = L_4;
+		if (L_5)
+		{
+			G_B5_0 = L_5;
+			goto IL_0017;
+		}
+		G_B4_0 = L_5;
+	}
+	{
+		goto IL_001d;
+	}
+
+IL_0017:
+	{
+		NullCheck(G_B5_0);
+		ComputeBuffer_Dispose_mBCA0F8A5BE75A41C77E1FCFBCB4EAE84A45D6BF2(G_B5_0, NULL);
+	}
+
+IL_001d:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:357>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_6 = ___0_computeBuffer;
+		*((ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)L_6) = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)L_6, (void*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:358>
+		return;
+	}
+}
+// Method Definition Index: 71318
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpatialPartitionGPU__ctor_mD96F5C97E735A76ADC6BF1E738E213C4F77ECC16 (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:30>
+		__this->____spatialPartitionComputeShader = (ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____spatialPartitionComputeShader), (void*)(ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:35>
+		__this->____safetyBufferCellCount = 4;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:37>
+		__this->____cellSize = (2.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:40>
+		__this->____visualizeOccupancy = (bool)1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:41>
+		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_0;
+		L_0 = Color_get_red_mA2E53E7173FDC97E68E335049AB0FAAEE43A844D_inline(NULL);
+		__this->____occupancyVisualizationColor = L_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:46>
+		__this->____cellCountX = 0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:48>
+		__this->____cellCountY = 0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:50>
+		__this->____cellCountZ = 0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:53>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
+		L_1 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
+		__this->____gridCenter = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:57>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
+		L_2 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
+		__this->____gridMinPoint = L_2;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:59>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3;
+		L_3 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
+		__this->____gridSize = L_3;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:81>
+		__this->____boidsCellInfoBuffer = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boidsCellInfoBuffer), (void*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:85>
+		__this->____cellOccupancyBuffer = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____cellOccupancyBuffer), (void*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:97>
+		__this->____cellsGlobalOffsetBuffer = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____cellsGlobalOffsetBuffer), (void*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:102>
+		__this->____threadGroupsGlobalOffsetBuffer = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____threadGroupsGlobalOffsetBuffer), (void*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:107>
+		__this->____threadGroupsGlobalOffsetHelperBuffer = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____threadGroupsGlobalOffsetHelperBuffer), (void*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/GPU_Spatial_Partition/SpatialPartitionGPU.cs:110>
+		__this->____cellsOccupancyVisualization = (UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____cellsOccupancyVisualization), (void*)(UInt32U5BU5D_t02FBD658AD156A17574ECE6106CF1FBFCC9807FA*)NULL);
+		MonoBehaviour__ctor_m592DB0105CA0BC97AA1C5F4AD27B12D68A3B7C1E(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71319
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationGPU_OnDestroy_m4843835F2AA54019AABBE1666CC37ED445855CEA (BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:42>
+		BoidSimulationBaseGPU_OnDestroy_m37DFF5414529D8CE1A0DC57AB872C3390FB669D3(__this, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:43>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_0 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____sortedBoidsComputeBuffer);
+		VirtualActionInvoker1< ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** >::Invoke(15, __this, L_0);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:44>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_1 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____boidSchoolsRenderInfoBuffer);
+		VirtualActionInvoker1< ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** >::Invoke(15, __this, L_1);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:45>
+		return;
+	}
+}
+// Method Definition Index: 71320
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationGPU_ReinitializeBuffers_m258A512FC118B168A45B4E3F37C06B88900708BD (BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	bool V_0 = false;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* V_1 = NULL;
+	bool V_2 = false;
+	BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* V_3 = NULL;
+	int32_t V_4 = 0;
+	BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* V_5 = NULL;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* V_6 = NULL;
+	int32_t V_7 = 0;
+	int32_t V_8 = 0;
+	BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* V_9 = NULL;
+	bool V_10 = false;
+	bool V_11 = false;
+	BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* V_12 = NULL;
+	int32_t V_13 = 0;
+	BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* V_14 = NULL;
+	int32_t G_B3_0 = 0;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* G_B7_0 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:68>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_0 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeBuffer;
+		if (!L_0)
+		{
+			goto IL_0014;
+		}
+	}
+	{
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_1 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsInfos;
+		G_B3_0 = ((!(((RuntimeObject*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)L_1) <= ((RuntimeObject*)(RuntimeObject*)NULL)))? 1 : 0);
+		goto IL_0015;
+	}
+
+IL_0014:
+	{
+		G_B3_0 = 0;
+	}
+
+IL_0015:
+	{
+		V_0 = (bool)G_B3_0;
+		bool L_2 = V_0;
+		if (!L_2)
+		{
+			goto IL_00d3;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:70>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:71>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:72>
+		bool L_3 = __this->____sortedBoidsBufferIsOutput;
+		if (L_3)
+		{
+			goto IL_002d;
+		}
+	}
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_4 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeBuffer;
+		G_B7_0 = L_4;
+		goto IL_0033;
+	}
+
+IL_002d:
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_5 = __this->____sortedBoidsComputeBuffer;
+		G_B7_0 = L_5;
+	}
+
+IL_0033:
+	{
+		V_1 = G_B7_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:74>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_6 = V_1;
+		V_2 = (bool)((!(((RuntimeObject*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)L_6) <= ((RuntimeObject*)(RuntimeObject*)NULL)))? 1 : 0);
+		bool L_7 = V_2;
+		if (!L_7)
+		{
+			goto IL_00d2;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:76>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_8 = V_1;
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_9 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsInfos;
+		NullCheck(L_8);
+		ComputeBuffer_GetData_m7EFC5EF9035C3C48BD922221AC809DC30D6F7F27(L_8, (RuntimeArray*)L_9, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:77>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_10 = __this->____gpuBoidSpawners;
+		V_3 = L_10;
+		V_4 = 0;
+		goto IL_00ca;
+	}
+
+IL_005a:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:77>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_11 = V_3;
+		int32_t L_12 = V_4;
+		NullCheck(L_11);
+		int32_t L_13 = L_12;
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_14 = (L_11)->GetAt(static_cast<il2cpp_array_size_t>(L_13));
+		V_5 = L_14;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:79>
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_15 = V_5;
+		NullCheck(L_15);
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_16;
+		L_16 = BoidSpawnerGPU_get_Boids_m3C6B8A43417D41418E276FF34C24F6229C8665C4_inline(L_15, NULL);
+		V_6 = L_16;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:80>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_17 = V_6;
+		V_10 = (bool)((((RuntimeObject*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)L_17) == ((RuntimeObject*)(RuntimeObject*)NULL))? 1 : 0);
+		bool L_18 = V_10;
+		if (!L_18)
+		{
+			goto IL_0077;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:80>
+		goto IL_00c4;
+	}
+
+IL_0077:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:81>
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_19 = V_5;
+		NullCheck(L_19);
+		int32_t L_20;
+		L_20 = BoidSpawnerGPU_get_RenderingOffset_m5605DE855FC2F16A17FB250884775ACE345B9252_inline(L_19, NULL);
+		V_7 = L_20;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:82>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_21 = V_6;
+		NullCheck(L_21);
+		V_8 = ((int32_t)(((RuntimeArray*)L_21)->max_length));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:83>
+		int32_t L_22 = V_7;
+		int32_t L_23 = V_8;
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_24 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsInfos;
+		NullCheck(L_24);
+		V_11 = (bool)((((int32_t)((int32_t)il2cpp_codegen_add(L_22, L_23))) > ((int32_t)((int32_t)(((RuntimeArray*)L_24)->max_length))))? 1 : 0);
+		bool L_25 = V_11;
+		if (!L_25)
+		{
+			goto IL_009d;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:83>
+		goto IL_00c4;
+	}
+
+IL_009d:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:84>
+		int32_t L_26 = V_8;
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_27 = (BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC*)SZArrayNew(BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC_il2cpp_TypeInfo_var, (uint32_t)L_26);
+		V_9 = L_27;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:85>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_28 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsInfos;
+		int32_t L_29 = V_7;
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_30 = V_9;
+		int32_t L_31 = V_8;
+		Array_Copy_mB4904E17BD92E320613A3251C0205E0786B3BF41((RuntimeArray*)L_28, L_29, (RuntimeArray*)L_30, 0, L_31, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:86>
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_32 = V_5;
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_33 = V_9;
+		NullCheck(L_32);
+		BoidSpawnerGPU_StorePreservedBoids_mC00D90EFAEDEE9DB55BA31833895DF206080D9A6(L_32, L_33, NULL);
+	}
+
+IL_00c4:
+	{
+		int32_t L_34 = V_4;
+		V_4 = ((int32_t)il2cpp_codegen_add(L_34, 1));
+	}
+
+IL_00ca:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:77>
+		int32_t L_35 = V_4;
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_36 = V_3;
+		NullCheck(L_36);
+		if ((((int32_t)L_35) < ((int32_t)((int32_t)(((RuntimeArray*)L_36)->max_length)))))
+		{
+			goto IL_005a;
+		}
+	}
+	{
+	}
+
+IL_00d2:
+	{
+	}
+
+IL_00d3:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:92>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_37 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____sortedBoidsComputeBuffer);
+		VirtualActionInvoker1< ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** >::Invoke(15, __this, L_37);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:93>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** L_38 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233**)(&__this->____boidSchoolsRenderInfoBuffer);
+		VirtualActionInvoker1< ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233** >::Invoke(15, __this, L_38);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:94>
+		__this->____boidSchoolsRenderInfos = (BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boidSchoolsRenderInfos), (void*)(BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:95>
+		__this->____sortedBoidsBufferIsOutput = (bool)0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:98>
+		BoidSimulationBaseGPU_CleanupBaseGPUBuffers_m75EE3B11C58C754A74A7408DDC0540CE9828A510(__this, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:101>
+		SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* L_39 = __this->____spatialPartitionGPU;
+		NullCheck(L_39);
+		SpatialPartitionGPU_CleanupGrid_m53231076A6A1AA705F2789F63CB1626B39B87A74(L_39, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:104>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_40 = __this->____gpuBoidSpawners;
+		V_12 = L_40;
+		V_13 = 0;
+		goto IL_0131;
+	}
+
+IL_011c:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:104>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_41 = V_12;
+		int32_t L_42 = V_13;
+		NullCheck(L_41);
+		int32_t L_43 = L_42;
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_44 = (L_41)->GetAt(static_cast<il2cpp_array_size_t>(L_43));
+		V_14 = L_44;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:105>
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_45 = V_14;
+		NullCheck(L_45);
+		BoidSpawnerGPU_CleanupSpawnData_m3A6BA2E271399F9A023CA7E7D7A5B804D4BACCC8(L_45, NULL);
+		int32_t L_46 = V_13;
+		V_13 = ((int32_t)il2cpp_codegen_add(L_46, 1));
+	}
+
+IL_0131:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:104>
+		int32_t L_47 = V_13;
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_48 = V_12;
+		NullCheck(L_48);
+		if ((((int32_t)L_47) < ((int32_t)((int32_t)(((RuntimeArray*)L_48)->max_length)))))
+		{
+			goto IL_011c;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:109>
+		VirtualActionInvoker0::Invoke(11, __this);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:110>
+		return;
+	}
+}
+// Method Definition Index: 71321
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* BoidSimulationGPU_GetBoidSpawners_mE1E05B571BBB07AF98AD21AAD8775343F8CCF403 (BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* __this, const RuntimeMethod* method) 
+{
+	BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* V_0 = NULL;
+	BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* V_1 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:115>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_0 = __this->____gpuBoidSpawners;
+		V_0 = (BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C*)L_0;
+		BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* L_1 = V_0;
+		V_1 = L_1;
+		goto IL_000c;
+	}
+
+IL_000c:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:116>
+		BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* L_2 = V_1;
+		return L_2;
+	}
+}
+// Method Definition Index: 71322
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationGPU_SpawnBoids_m2147AB638A5F22C7BA5986C5DAE8D0D02EC676AD (BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* __this, const RuntimeMethod* method) 
+{
+	BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* V_0 = NULL;
+	int32_t V_1 = 0;
+	BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* V_2 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:122>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_0 = __this->____gpuBoidSpawners;
+		V_0 = L_0;
+		V_1 = 0;
+		goto IL_0024;
+	}
+
+IL_000d:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:122>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_1 = V_0;
+		int32_t L_2 = V_1;
+		NullCheck(L_1);
+		int32_t L_3 = L_2;
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_4 = (L_1)->GetAt(static_cast<il2cpp_array_size_t>(L_3));
+		V_2 = L_4;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:124>
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_5 = V_2;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_6 = ((BoidSimulationBase_t8EF6E418236FBAFCCADBE2B0A62A0E4F1E944169*)__this)->____simulationAreaBounds;
+		NullCheck(L_5);
+		VirtualActionInvoker1< Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 >::Invoke(4, L_5, L_6);
+		int32_t L_7 = V_1;
+		V_1 = ((int32_t)il2cpp_codegen_add(L_7, 1));
+	}
+
+IL_0024:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:122>
+		int32_t L_8 = V_1;
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_9 = V_0;
+		NullCheck(L_9);
+		if ((((int32_t)L_8) < ((int32_t)((int32_t)(((RuntimeArray*)L_9)->max_length)))))
+		{
+			goto IL_000d;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:126>
+		return;
+	}
+}
+// Method Definition Index: 71323
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationGPU_InitializeBoidsSimulation_m81E96E0EBCD5288344A00B2C0D15CD9E43E5396E (BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:131>
+		BoidSimulationBaseGPU_InitializeBoidsSimulation_m9F9B38E150B35BF5E713C8705E3BC8E7B008D541(__this, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:134>
+		SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* L_0 = __this->____spatialPartitionGPU;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_1 = ((BoidSimulationBase_t8EF6E418236FBAFCCADBE2B0A62A0E4F1E944169*)__this)->____simulationAreaBounds;
+		int32_t L_2 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsCount;
+		NullCheck(L_0);
+		SpatialPartitionGPU_InitializeGrid_m30CFC5260955AE87C202D571BF47D4E1938E720F(L_0, L_1, L_2, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:135>
+		return;
+	}
+}
+// Method Definition Index: 71324
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationGPU_InitializeRenderProperties_m255AB0F6EE27530A05BAF1FA85CB41DB29E96C68 (BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_Insert_m2D27AD2759306E269C69ACB656AAF34261307CCD_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_get_Count_m035F79E7D9F870918EBC209977CC567502EAC0B9_RuntimeMethod_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* V_0 = NULL;
+	int32_t V_1 = 0;
+	BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* V_2 = NULL;
+	int32_t V_3 = 0;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:141>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_0 = __this->____gpuBoidSpawners;
+		NullCheck(L_0);
+		BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE* L_1 = (BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE*)(BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE*)SZArrayNew(BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE_il2cpp_TypeInfo_var, (uint32_t)((int32_t)(((RuntimeArray*)L_0)->max_length)));
+		__this->____boidSchoolsRenderInfos = L_1;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boidSchoolsRenderInfos), (void*)L_1);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:142>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_2 = __this->____gpuBoidSpawners;
+		V_0 = L_2;
+		V_1 = 0;
+		goto IL_0080;
+	}
+
+IL_0020:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:142>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_3 = V_0;
+		int32_t L_4 = V_1;
+		NullCheck(L_3);
+		int32_t L_5 = L_4;
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_6 = (L_3)->GetAt(static_cast<il2cpp_array_size_t>(L_5));
+		V_2 = L_6;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:144>
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_7 = V_2;
+		NullCheck(L_7);
+		int32_t L_8;
+		L_8 = BoidSpawnerBase_get_BoidGroupId_m1AFEA1B8E2F29AC968F3B37DCF4A95341EFC3A68_inline(L_7, NULL);
+		List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16* L_9 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsSchools;
+		NullCheck(L_9);
+		int32_t L_10;
+		L_10 = List_1_get_Count_m035F79E7D9F870918EBC209977CC567502EAC0B9_inline(L_9, List_1_get_Count_m035F79E7D9F870918EBC209977CC567502EAC0B9_RuntimeMethod_var);
+		int32_t L_11;
+		L_11 = Mathf_Min_m888083F74FF5655778F0403BB5E9608BEFDEA8CB_inline(L_8, L_10, NULL);
+		V_3 = L_11;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:145>
+		List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16* L_12 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsSchools;
+		int32_t L_13 = V_3;
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_14 = V_2;
+		NullCheck(L_14);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_15;
+		L_15 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_14, NULL);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_16 = L_15.___FishSchoolProperties;
+		NullCheck(L_12);
+		List_1_Insert_m2D27AD2759306E269C69ACB656AAF34261307CCD(L_12, L_13, L_16, List_1_Insert_m2D27AD2759306E269C69ACB656AAF34261307CCD_RuntimeMethod_var);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:146>
+		BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE* L_17 = __this->____boidSchoolsRenderInfos;
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_18 = V_2;
+		NullCheck(L_18);
+		int32_t L_19;
+		L_19 = BoidSpawnerBase_get_BoidGroupId_m1AFEA1B8E2F29AC968F3B37DCF4A95341EFC3A68_inline(L_18, NULL);
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_20 = V_2;
+		NullCheck(L_20);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_21;
+		L_21 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_20, NULL);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_22 = L_21.___FishSchoolProperties;
+		NullCheck(L_22);
+		FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* L_23 = L_22->___MotionRenderProperties;
+		BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15 L_24;
+		L_24 = VirtualFuncInvoker1< BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15, FishMotionRenderProperties_t1B9A6C4E914994E8E50EEE92E29DACD1E85FA0A5* >::Invoke(20, __this, L_23);
+		NullCheck(L_17);
+		(L_17)->SetAt(static_cast<il2cpp_array_size_t>(L_19), (BoidRenderInfoGPU_tCCC010F5CDC83E7E23E7F080A0C1BEF15BA51B15)L_24);
+		int32_t L_25 = V_1;
+		V_1 = ((int32_t)il2cpp_codegen_add(L_25, 1));
+	}
+
+IL_0080:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:142>
+		int32_t L_26 = V_1;
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_27 = V_0;
+		NullCheck(L_27);
+		if ((((int32_t)L_26) < ((int32_t)((int32_t)(((RuntimeArray*)L_27)->max_length)))))
+		{
+			goto IL_0020;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:151>
+		BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE* L_28 = __this->____boidSchoolsRenderInfos;
+		NullCheck(L_28);
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_29 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)il2cpp_codegen_object_new(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var);
+		ComputeBuffer__ctor_mE40DE5EF5ADAC29B6B4DECBD1EE33E8526202617(L_29, ((int32_t)(((RuntimeArray*)L_28)->max_length)), ((int32_t)32), NULL);
+		__this->____boidSchoolsRenderInfoBuffer = L_29;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boidSchoolsRenderInfoBuffer), (void*)L_29);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:152>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_30 = __this->____boidSchoolsRenderInfoBuffer;
+		BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE* L_31 = __this->____boidSchoolsRenderInfos;
+		NullCheck(L_30);
+		ComputeBuffer_SetData_m9F845E6B347CE028FA9A987D740FC642D828013A(L_30, (RuntimeArray*)L_31, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:153>
+		return;
+	}
+}
+// Method Definition Index: 71325
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationGPU_InitializeComputeShaderData_mE3232B29D8BBF7D883069B9868304BBCCC988FA7 (BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:158>
+		BoidSimulationBaseGPU_InitializeComputeShaderData_m17CEDA00D1778A2C1B4AF180CA9537DF2D23451D(__this, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:160>
+		int32_t L_0 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsCount;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_1 = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)il2cpp_codegen_object_new(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233_il2cpp_TypeInfo_var);
+		ComputeBuffer__ctor_mE40DE5EF5ADAC29B6B4DECBD1EE33E8526202617(L_1, L_0, ((int32_t)64), NULL);
+		__this->____sortedBoidsComputeBuffer = L_1;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____sortedBoidsComputeBuffer), (void*)L_1);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:161>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_2 = __this->____sortedBoidsComputeBuffer;
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_3 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsInfos;
+		NullCheck(L_2);
+		ComputeBuffer_SetData_m9F845E6B347CE028FA9A987D740FC642D828013A(L_2, (RuntimeArray*)L_3, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:162>
+		return;
+	}
+}
+// Method Definition Index: 71326
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationGPU_UpdateSimulation_m2F0DF879BCFFA3856A5EFBF53BD0420A573410CC (BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* __this, float ___0_timeDelta, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_get_Count_m035F79E7D9F870918EBC209977CC567502EAC0B9_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_get_Item_m68663C1937987C20BCF6B323A927350A5C127B0E_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral846224F71D0BEF40F3349CFF8B7AA58C79DE029A);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralA5C2BAAC8C139101DDC72D0429E24646454B1874);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralB5B0D3BEAF76D96CBF232F246130645B4CB5AB2F);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralE7DD2DB47B295278E944ED07E27C0C7988AECB46);
+		s_Il2CppMethodInitialized = true;
+	}
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* V_0 = NULL;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* V_1 = NULL;
+	bool V_2 = false;
+	int32_t V_3 = 0;
+	int32_t V_4 = 0;
+	bool V_5 = false;
+	BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* V_6 = NULL;
+	BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* V_7 = NULL;
+	int32_t V_8 = 0;
+	BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* V_9 = NULL;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* G_B8_0 = NULL;
+	ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* G_B11_0 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:167>
+		bool L_0 = __this->____updateSchoolSettingsEveryFrame;
+		V_2 = L_0;
+		bool L_1 = V_2;
+		if (!L_1)
+		{
+			goto IL_0063;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:171>
+		List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16* L_2 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsSchools;
+		NullCheck(L_2);
+		int32_t L_3;
+		L_3 = List_1_get_Count_m035F79E7D9F870918EBC209977CC567502EAC0B9_inline(L_2, List_1_get_Count_m035F79E7D9F870918EBC209977CC567502EAC0B9_RuntimeMethod_var);
+		V_3 = L_3;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:172>
+		V_4 = 0;
+		goto IL_0045;
+	}
+
+IL_001d:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:174>
+		BoidSchoolInfoGPUU5BU5D_t46D67098DD8147CDFF4CE1B333C644D158C84D45* L_4 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidSchoolsInfos;
+		int32_t L_5 = V_4;
+		List_1_t2F80C3A19F149E8B7EDE0197F46FE895B0DA9B16* L_6 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsSchools;
+		int32_t L_7 = V_4;
+		NullCheck(L_6);
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_8;
+		L_8 = List_1_get_Item_m68663C1937987C20BCF6B323A927350A5C127B0E(L_6, L_7, List_1_get_Item_m68663C1937987C20BCF6B323A927350A5C127B0E_RuntimeMethod_var);
+		BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6 L_9;
+		L_9 = VirtualFuncInvoker1< BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6, FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* >::Invoke(18, __this, L_8);
+		NullCheck(L_4);
+		(L_4)->SetAt(static_cast<il2cpp_array_size_t>(L_5), (BoidSchoolInfoGPU_t01870D1C923C11D0759A385CDCB1DF3F873641C6)L_9);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:172>
+		int32_t L_10 = V_4;
+		V_4 = ((int32_t)il2cpp_codegen_add(L_10, 1));
+	}
+
+IL_0045:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:172>
+		int32_t L_11 = V_4;
+		int32_t L_12 = V_3;
+		V_5 = (bool)((((int32_t)L_11) < ((int32_t)L_12))? 1 : 0);
+		bool L_13 = V_5;
+		if (L_13)
+		{
+			goto IL_001d;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:176>
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_14 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsSchoolsComputeBuffer;
+		BoidSchoolInfoGPUU5BU5D_t46D67098DD8147CDFF4CE1B333C644D158C84D45* L_15 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidSchoolsInfos;
+		NullCheck(L_14);
+		ComputeBuffer_SetData_m9F845E6B347CE028FA9A987D740FC642D828013A(L_14, (RuntimeArray*)L_15, NULL);
+	}
+
+IL_0063:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:180>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_16 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeShader;
+		float L_17 = ___0_timeDelta;
+		NullCheck(L_16);
+		ComputeShader_SetFloat_m725E64D98D75E3E1AB20CF7B6CF790798DCD6F66(L_16, _stringLiteralB5B0D3BEAF76D96CBF232F246130645B4CB5AB2F, L_17, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:181>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_18 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeShader;
+		int32_t L_19 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsKernelId;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_20 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____affectersComputeBuffer;
+		NullCheck(L_18);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_18, L_19, _stringLiteral846224F71D0BEF40F3349CFF8B7AA58C79DE029A, L_20, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:184>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_21 = __this->____gpuBoidSpawners;
+		V_6 = (BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C*)L_21;
+		BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* L_22 = V_6;
+		VirtualActionInvoker1< BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* >::Invoke(17, __this, L_22);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:187>
+		SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* L_23 = __this->____spatialPartitionGPU;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_24 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeBuffer;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_25 = __this->____sortedBoidsComputeBuffer;
+		NullCheck(L_23);
+		SpatialPartitionGPU_UpdateGridOccupancy_m88124DF9170E51F2C48E011E3FB4C17C8B5EB346(L_23, L_24, L_25, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:190>
+		SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118* L_26 = __this->____spatialPartitionGPU;
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_27 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeShader;
+		int32_t L_28 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsKernelId;
+		NullCheck(L_26);
+		SpatialPartitionGPU_SetSpatialPartitionProperties_m4F0D2FA1465E7B41F1B538836C55CFE7FE3A2FEE(L_26, L_27, L_28, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:191>
+		bool L_29 = __this->____sortedBoidsBufferIsOutput;
+		if (L_29)
+		{
+			goto IL_00e3;
+		}
+	}
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_30 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeBuffer;
+		G_B8_0 = L_30;
+		goto IL_00e9;
+	}
+
+IL_00e3:
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_31 = __this->____sortedBoidsComputeBuffer;
+		G_B8_0 = L_31;
+	}
+
+IL_00e9:
+	{
+		V_0 = G_B8_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:192>
+		bool L_32 = __this->____sortedBoidsBufferIsOutput;
+		if (L_32)
+		{
+			goto IL_00fa;
+		}
+	}
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_33 = __this->____sortedBoidsComputeBuffer;
+		G_B11_0 = L_33;
+		goto IL_0100;
+	}
+
+IL_00fa:
+	{
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_34 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeBuffer;
+		G_B11_0 = L_34;
+	}
+
+IL_0100:
+	{
+		V_1 = G_B11_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:193>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_35 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeShader;
+		int32_t L_36 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsKernelId;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_37 = V_0;
+		NullCheck(L_35);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_35, L_36, _stringLiteralE7DD2DB47B295278E944ED07E27C0C7988AECB46, L_37, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:194>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_38 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeShader;
+		int32_t L_39 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsKernelId;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_40 = V_1;
+		NullCheck(L_38);
+		ComputeShader_SetBuffer_m3C3C7A2AA529EDBF2700C8953CA7EE373EA411B0(L_38, L_39, _stringLiteralA5C2BAAC8C139101DDC72D0429E24646454B1874, L_40, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:195>
+		ComputeShader_tA7BDD0F6EE879D149480F5890BA2E665C50CFBF8* L_41 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsComputeShader;
+		int32_t L_42 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsKernelId;
+		int32_t L_43 = ((BoidSimulationBaseGPU_t36FD796EAFFAC3CAE07098CB916BCE12747E7EAF*)__this)->____boidsCount;
+		ComputeShaderExtensions_DispatchThreads_mD4BB957B1281F7B52FC2F2068BC2E9B94EB11747(L_41, L_42, L_43, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:200>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_44 = __this->____gpuBoidSpawners;
+		V_7 = L_44;
+		V_8 = 0;
+		goto IL_017b;
+	}
+
+IL_0157:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:200>
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_45 = V_7;
+		int32_t L_46 = V_8;
+		NullCheck(L_45);
+		int32_t L_47 = L_46;
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_48 = (L_45)->GetAt(static_cast<il2cpp_array_size_t>(L_47));
+		V_9 = L_48;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:202>
+		BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* L_49 = V_9;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_50 = V_1;
+		ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233* L_51 = __this->____boidSchoolsRenderInfoBuffer;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_52 = ((BoidSimulationBase_t8EF6E418236FBAFCCADBE2B0A62A0E4F1E944169*)__this)->____simulationAreaBounds;
+		NullCheck(L_49);
+		BoidSpawnerGPU_RenderBoids_mA5672D1AB9EE17E2DA289AF4F13382098C830E88(L_49, L_50, L_51, L_52, NULL);
+		int32_t L_53 = V_8;
+		V_8 = ((int32_t)il2cpp_codegen_add(L_53, 1));
+	}
+
+IL_017b:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:200>
+		int32_t L_54 = V_8;
+		BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75* L_55 = V_7;
+		NullCheck(L_55);
+		if ((((int32_t)L_54) < ((int32_t)((int32_t)(((RuntimeArray*)L_55)->max_length)))))
+		{
+			goto IL_0157;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:205>
+		bool L_56 = __this->____sortedBoidsBufferIsOutput;
+		__this->____sortedBoidsBufferIsOutput = (bool)((((int32_t)L_56) == ((int32_t)0))? 1 : 0);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:206>
+		return;
+	}
+}
+// Method Definition Index: 71327
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BoidSimulationGPU__ctor_mD21CE725FBF2822CF06A1F1FE6E0B583304BD6D2 (BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:25>
+		__this->____spatialPartitionGPU = (SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____spatialPartitionGPU), (void*)(SpatialPartitionGPU_t108EB160B90F7C79DD6FB0CCB833E25943392118*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:26>
+		__this->____gpuBoidSpawners = (BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____gpuBoidSpawners), (void*)(BoidSpawnerGPUU5BU5D_t480F180492B63D9E4E7593B0508729C532E68C75*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:31>
+		__this->____updateSchoolSettingsEveryFrame = (bool)0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:33>
+		__this->____sortedBoidsComputeBuffer = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____sortedBoidsComputeBuffer), (void*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:34>
+		__this->____boidSchoolsRenderInfoBuffer = (ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boidSchoolsRenderInfoBuffer), (void*)(ComputeBuffer_t51EADA9015EBCC1B982C5584E9AB2734415A8233*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:36>
+		__this->____sortedBoidsBufferIsOutput = (bool)0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Spatial_Partition_Instanced_Rendering/BoidSimulationGPU.cs:37>
+		__this->____boidSchoolsRenderInfos = (BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boidSchoolsRenderInfos), (void*)(BoidRenderInfoGPUU5BU5D_tA007A7DEB4CE74F5BA0762C0DD1723553BD0E6DE*)NULL);
+		BoidSimulationBaseGPU__ctor_mF4DDCD4419E48D9B7DFC65BB7EB9AC3B4BD49C53(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71328
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 EcosystemDefinitionGPU_get_SimulationBounds_m400B93791D779C1FE6F0D17B12C7316FDEB611FF (EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemDefinitionGPU.cs:29>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = __this->___SimulationCenter;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1 = __this->___SimulationSize;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_2;
+		memset((&L_2), 0, sizeof(L_2));
+		Bounds__ctor_mAF7B238B9FBF90C495E5D7951760085A93119C5A_inline((&L_2), L_0, L_1, NULL);
+		return L_2;
+	}
+}
+// Method Definition Index: 71329
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemDefinitionGPU__ctor_m7E3E0B6E48ADA18712529F3D1411BBA880D0EEEE (EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1__ctor_m07BB59C5A76470D8C3141683CF8FE3EAB6C0BE88_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralE2B161CA76675D84F8086EFC4C0BA71F7E79A403);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemDefinitionGPU.cs:17>
+		__this->___EcosystemName = _stringLiteralE2B161CA76675D84F8086EFC4C0BA71F7E79A403;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___EcosystemName), (void*)_stringLiteralE2B161CA76675D84F8086EFC4C0BA71F7E79A403);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemDefinitionGPU.cs:21>
+		List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* L_0 = (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E*)il2cpp_codegen_object_new(List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E_il2cpp_TypeInfo_var);
+		List_1__ctor_m07BB59C5A76470D8C3141683CF8FE3EAB6C0BE88(L_0, List_1__ctor_m07BB59C5A76470D8C3141683CF8FE3EAB6C0BE88_RuntimeMethod_var);
+		__this->___Species = L_0;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___Species), (void*)L_0);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemDefinitionGPU.cs:25>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
+		L_1 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
+		__this->___SimulationCenter = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemDefinitionGPU.cs:26>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
+		memset((&L_2), 0, sizeof(L_2));
+		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&L_2), (100.0f), (40.0f), (100.0f), NULL);
+		__this->___SimulationSize = L_2;
+		ScriptableObject__ctor_mD037FDB0B487295EA47F79A4DB1BF1846C9087FF(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71330
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* EcosystemSimulationGPU_get_Ecosystem_m993D028BC3BA76FE9D9654FE10949AB997DAE025 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:16>
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_0 = __this->____ecosystem;
+		return L_0;
+	}
+}
+// Method Definition Index: 71331
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_Awake_mA7376BFEFF48E913C712F516AEA5C97E72624D03 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralA3A158495A1971E8B1EFAFCAECE9A69E345E1F90);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralA45831BEE9B927062E086D1676A345642DA686D3);
+		s_Il2CppMethodInitialized = true;
+	}
+	bool V_0 = false;
+	bool V_1 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:39>
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_0 = __this->____ecosystem;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_1;
+		L_1 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_0, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		V_0 = L_1;
+		bool L_2 = V_0;
+		if (!L_2)
+		{
+			goto IL_0028;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:41>
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_LogError_m94F967AB31244EACE68C3BE1DD85B69ED3334C0E(_stringLiteralA45831BEE9B927062E086D1676A345642DA686D3, __this, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:42>
+		Behaviour_set_enabled_mF1DCFE60EB09E0529FE9476CA804A3AA2D72B16A(__this, (bool)0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:43>
+		goto IL_0056;
+	}
+
+IL_0028:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:46>
+		BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* L_3 = __this->____simulation;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_4;
+		L_4 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_3, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		V_1 = L_4;
+		bool L_5 = V_1;
+		if (!L_5)
+		{
+			goto IL_004f;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:48>
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_LogError_m94F967AB31244EACE68C3BE1DD85B69ED3334C0E(_stringLiteralA3A158495A1971E8B1EFAFCAECE9A69E345E1F90, __this, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:49>
+		Behaviour_set_enabled_mF1DCFE60EB09E0529FE9476CA804A3AA2D72B16A(__this, (bool)0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:50>
+		goto IL_0056;
+	}
+
+IL_004f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:53>
+		EcosystemSimulationGPU_SetupAllSpecies_m389D18E305A06EBC9DD477259373341AE01D2B2C(__this, NULL);
+	}
+
+IL_0056:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:54>
+		return;
+	}
+}
+// Method Definition Index: 71332
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_Start_m36AC8DCAAAEABAC40E8DE14648BF0A6E8D5BFC49 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:58>
+		RuntimeObject* L_0;
+		L_0 = EcosystemSimulationGPU_PopulationTickRoutine_m7D050EF959734498720F520472633048629791E0(__this, NULL);
+		Coroutine_t85EA685566A254C23F3FD77AB5BDFFFF8799596B* L_1;
+		L_1 = MonoBehaviour_StartCoroutine_m4CAFF732AA28CD3BDC5363B44A863575530EC812(__this, L_0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:59>
+		return;
+	}
+}
+// Method Definition Index: 71333
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_AddSpecies_m6056B1225E2FE32D761F150678911C5BA36932B6 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* V_0 = NULL;
+	int32_t V_1 = 0;
+	bool V_2 = false;
+	bool V_3 = false;
+	int32_t G_B5_0 = 0;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:68>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_0 = ___0_species;
+		bool L_1;
+		L_1 = EcosystemSimulationGPU_ValidateSpecies_m468FBB5EC6E83C25655027A716B4E20240730E3E(__this, L_0, (&V_0), NULL);
+		V_2 = (bool)((((int32_t)L_1) == ((int32_t)0))? 1 : 0);
+		bool L_2 = V_2;
+		if (!L_2)
+		{
+			goto IL_0013;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:68>
+		goto IL_0052;
+	}
+
+IL_0013:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:69>
+		Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_3 = __this->____carryingCapacity;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_4 = ___0_species;
+		NullCheck(L_3);
+		bool L_5;
+		L_5 = Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C(L_3, L_4, (&V_1), Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		if (!L_5)
+		{
+			goto IL_0036;
+		}
+	}
+	{
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_6 = V_0;
+		NullCheck(L_6);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_7;
+		L_7 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_6, NULL);
+		int32_t L_8 = L_7.___BoidsCount;
+		int32_t L_9 = V_1;
+		G_B5_0 = ((((int32_t)((((int32_t)L_8) < ((int32_t)L_9))? 1 : 0)) == ((int32_t)0))? 1 : 0);
+		goto IL_0037;
+	}
+
+IL_0036:
+	{
+		G_B5_0 = 0;
+	}
+
+IL_0037:
+	{
+		V_3 = (bool)G_B5_0;
+		bool L_10 = V_3;
+		if (!L_10)
+		{
+			goto IL_003d;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:69>
+		goto IL_0052;
+	}
+
+IL_003d:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:70>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_11 = ___0_species;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_12 = V_0;
+		EcosystemSimulationGPU_AddGroup_mD2528854CD0C857686F54828EF683D50576B05BD(__this, L_11, L_12, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:71>
+		BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* L_13 = __this->____simulation;
+		NullCheck(L_13);
+		BoidSimulationGPU_ReinitializeBuffers_m258A512FC118B168A45B4E3F37C06B88900708BD(L_13, NULL);
+	}
+
+IL_0052:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:72>
+		return;
+	}
+}
+// Method Definition Index: 71334
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_RemoveSpecies_mC904F199C4B41207DD9C99D5C48B81B9CC0D17F9 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral5265F0F8C977C04A74A4D717912B179553A52150);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralC7A7939E82BEFEF8DDB755713442AA62963F09F8);
+		s_Il2CppMethodInitialized = true;
+	}
+	BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* V_0 = NULL;
+	int32_t V_1 = 0;
+	bool V_2 = false;
+	bool V_3 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:77>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_0 = ___0_species;
+		bool L_1;
+		L_1 = EcosystemSimulationGPU_ValidateSpecies_m468FBB5EC6E83C25655027A716B4E20240730E3E(__this, L_0, (&V_0), NULL);
+		V_2 = (bool)((((int32_t)L_1) == ((int32_t)0))? 1 : 0);
+		bool L_2 = V_2;
+		if (!L_2)
+		{
+			goto IL_0013;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:77>
+		goto IL_006a;
+	}
+
+IL_0013:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:78>
+		Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_3 = __this->____boidsPerGroup;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_4 = ___0_species;
+		NullCheck(L_3);
+		bool L_5;
+		L_5 = Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C(L_3, L_4, (&V_1), Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:79>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_6 = V_0;
+		NullCheck(L_6);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_7;
+		L_7 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_6, NULL);
+		int32_t L_8 = L_7.___BoidsCount;
+		int32_t L_9 = V_1;
+		V_3 = (bool)((((int32_t)((((int32_t)L_8) > ((int32_t)L_9))? 1 : 0)) == ((int32_t)0))? 1 : 0);
+		bool L_10 = V_3;
+		if (!L_10)
+		{
+			goto IL_0055;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:81>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_11 = ___0_species;
+		NullCheck(L_11);
+		String_t* L_12 = L_11->___SpeciesName;
+		String_t* L_13;
+		L_13 = String_Concat_m8855A6DE10F84DA7F4EC113CADDB59873A25573B(_stringLiteral5265F0F8C977C04A74A4D717912B179553A52150, L_12, _stringLiteralC7A7939E82BEFEF8DDB755713442AA62963F09F8, NULL);
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_LogWarning_m33EF1B897E0C7C6FF538989610BFAFFEF4628CA9(L_13, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:82>
+		goto IL_006a;
+	}
+
+IL_0055:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:84>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_14 = ___0_species;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_15 = V_0;
+		EcosystemSimulationGPU_RemoveGroup_mA8D730EBCA96188EFBD8C01D9ED30842ABF2033F(__this, L_14, L_15, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:85>
+		BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* L_16 = __this->____simulation;
+		NullCheck(L_16);
+		BoidSimulationGPU_ReinitializeBuffers_m258A512FC118B168A45B4E3F37C06B88900708BD(L_16, NULL);
+	}
+
+IL_006a:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:86>
+		return;
+	}
+}
+// Method Definition Index: 71335
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t EcosystemSimulationGPU_CountGroups_m9D693780BE77197ED1BD4BA24E1846195085729E (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* V_0 = NULL;
+	int32_t V_1 = 0;
+	bool V_2 = false;
+	int32_t V_3 = 0;
+	int32_t G_B5_0 = 0;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:94>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_0 = ___0_species;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_1;
+		L_1 = EcosystemSimulationGPU_FindSpawner_mF45DA44AB32A3A624987B26703367D60A571F6DD(__this, L_0, NULL);
+		V_0 = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:95>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_2 = V_0;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_3;
+		L_3 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_2, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		V_2 = L_3;
+		bool L_4 = V_2;
+		if (!L_4)
+		{
+			goto IL_0018;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:95>
+		V_3 = 0;
+		goto IL_003e;
+	}
+
+IL_0018:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:96>
+		Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_5 = __this->____boidsPerGroup;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_6 = ___0_species;
+		NullCheck(L_5);
+		bool L_7;
+		L_7 = Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C(L_5, L_6, (&V_1), Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:97>
+		int32_t L_8 = V_1;
+		if ((((int32_t)L_8) > ((int32_t)0)))
+		{
+			goto IL_002e;
+		}
+	}
+	{
+		G_B5_0 = 0;
+		goto IL_003b;
+	}
+
+IL_002e:
+	{
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_9 = V_0;
+		NullCheck(L_9);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_10;
+		L_10 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_9, NULL);
+		int32_t L_11 = L_10.___BoidsCount;
+		int32_t L_12 = V_1;
+		G_B5_0 = ((int32_t)(L_11/L_12));
+	}
+
+IL_003b:
+	{
+		V_3 = G_B5_0;
+		goto IL_003e;
+	}
+
+IL_003e:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:98>
+		int32_t L_13 = V_3;
+		return L_13;
+	}
+}
+// Method Definition Index: 71336
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* EcosystemSimulationGPU_PopulationTickRoutine_m7D050EF959734498720F520472633048629791E0 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4* L_0 = (U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4*)il2cpp_codegen_object_new(U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4_il2cpp_TypeInfo_var);
+		U3CPopulationTickRoutineU3Ed__13__ctor_m5BE3C7DDE882EEC4745A1086954960A811011321(L_0, 0, NULL);
+		U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4* L_1 = L_0;
+		NullCheck(L_1);
+		L_1->___U3CU3E4__this = __this;
+		Il2CppCodeGenWriteBarrier((void**)(&L_1->___U3CU3E4__this), (void*)__this);
+		return L_1;
+	}
+}
+// Method Definition Index: 71337
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_RunPopulationTick_mCCD11640D4076C09862E53DCEA135A759EC64858 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Enumerator_Dispose_mA415F735E85F8FE3A69C92C1AC8449F86E3145F2_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Enumerator_MoveNext_m87F82E2F2D878FBF9D6F0A76CB32257EC29B8904_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Enumerator_get_Current_m56CCD0A5F4B4100CE4A57E1412FFF763C75AF418_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_GetEnumerator_mA791C387BEAF2DC043513021B0C6ACB38A64BA2B_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	bool V_0 = false;
+	Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44 V_1;
+	memset((&V_1), 0, sizeof(V_1));
+	SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* V_2 = NULL;
+	BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* V_3 = NULL;
+	int32_t V_4 = 0;
+	int32_t V_5 = 0;
+	int32_t V_6 = 0;
+	int32_t V_7 = 0;
+	bool V_8 = false;
+	bool V_9 = false;
+	bool V_10 = false;
+	float V_11 = 0.0f;
+	bool V_12 = false;
+	bool V_13 = false;
+	Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44 V_14;
+	memset((&V_14), 0, sizeof(V_14));
+	SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* V_15 = NULL;
+	BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* V_16 = NULL;
+	int32_t V_17 = 0;
+	float V_18 = 0.0f;
+	bool V_19 = false;
+	bool V_20 = false;
+	bool V_21 = false;
+	bool V_22 = false;
+	bool V_23 = false;
+	bool V_24 = false;
+	bool V_25 = false;
+	int32_t G_B9_0 = 0;
+	int32_t G_B16_0 = 0;
+	int32_t G_B28_0 = 0;
+	int32_t G_B38_0 = 0;
+	int32_t G_B43_0 = 0;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:115>
+		V_0 = (bool)0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:117>
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_0 = __this->____ecosystem;
+		NullCheck(L_0);
+		List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* L_1 = L_0->___Species;
+		NullCheck(L_1);
+		Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44 L_2;
+		L_2 = List_1_GetEnumerator_mA791C387BEAF2DC043513021B0C6ACB38A64BA2B(L_1, List_1_GetEnumerator_mA791C387BEAF2DC043513021B0C6ACB38A64BA2B_RuntimeMethod_var);
+		V_1 = L_2;
+	}
+	{
+		auto __finallyBlock = il2cpp::utils::Finally([&]
+		{
+
+FINALLY_01f6:
+			{
+				Enumerator_Dispose_mA415F735E85F8FE3A69C92C1AC8449F86E3145F2((&V_1), Enumerator_Dispose_mA415F735E85F8FE3A69C92C1AC8449F86E3145F2_RuntimeMethod_var);
+				return;
+			}
+		});
+		try
+		{
+			{
+				goto IL_01e8_1;
+			}
+
+IL_001a_1:
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:117>
+				SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_3;
+				L_3 = Enumerator_get_Current_m56CCD0A5F4B4100CE4A57E1412FFF763C75AF418_inline((&V_1), Enumerator_get_Current_m56CCD0A5F4B4100CE4A57E1412FFF763C75AF418_RuntimeMethod_var);
+				V_2 = L_3;
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:119>
+				SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_4 = V_2;
+				il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+				bool L_5;
+				L_5 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_4, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+				V_8 = L_5;
+				bool L_6 = V_8;
+				if (!L_6)
+				{
+					goto IL_0035_1;
+				}
+			}
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:119>
+				goto IL_01e8_1;
+			}
+
+IL_0035_1:
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:120>
+				SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_7 = V_2;
+				BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_8;
+				L_8 = EcosystemSimulationGPU_FindSpawner_mF45DA44AB32A3A624987B26703367D60A571F6DD(__this, L_7, NULL);
+				V_3 = L_8;
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:121>
+				BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_9 = V_3;
+				il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+				bool L_10;
+				L_10 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_9, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+				V_9 = L_10;
+				bool L_11 = V_9;
+				if (!L_11)
+				{
+					goto IL_004f_1;
+				}
+			}
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:121>
+				goto IL_01e8_1;
+			}
+
+IL_004f_1:
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:123>
+				BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_12 = V_3;
+				NullCheck(L_12);
+				BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_13;
+				L_13 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_12, NULL);
+				int32_t L_14 = L_13.___BoidsCount;
+				V_4 = L_14;
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:124>
+				Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_15 = __this->____carryingCapacity;
+				SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_16 = V_2;
+				NullCheck(L_15);
+				bool L_17;
+				L_17 = Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C(L_15, L_16, (&V_5), Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:125>
+				Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_18 = __this->____boidsPerGroup;
+				SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_19 = V_2;
+				NullCheck(L_18);
+				bool L_20;
+				L_20 = Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C(L_18, L_19, (&V_6), Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:126>
+				V_7 = 0;
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:129>
+				int32_t L_21 = V_5;
+				if ((((int32_t)L_21) <= ((int32_t)0)))
+				{
+					goto IL_008a_1;
+				}
+			}
+			{
+				int32_t L_22 = V_4;
+				int32_t L_23 = V_5;
+				G_B9_0 = ((((int32_t)L_22) < ((int32_t)L_23))? 1 : 0);
+				goto IL_008b_1;
+			}
+
+IL_008a_1:
+			{
+				G_B9_0 = 0;
+			}
+
+IL_008b_1:
+			{
+				V_10 = (bool)G_B9_0;
+				bool L_24 = V_10;
+				if (!L_24)
+				{
+					goto IL_00be_1;
+				}
+			}
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:131>
+				SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_25 = V_2;
+				NullCheck(L_25);
+				float L_26 = L_25->___ReproductionRate;
+				int32_t L_27 = V_4;
+				int32_t L_28 = V_5;
+				V_11 = ((float)il2cpp_codegen_multiply(L_26, ((float)il2cpp_codegen_subtract((1.0f), ((float)(((float)L_27)/((float)L_28)))))));
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:132>
+				float L_29;
+				L_29 = Random_get_value_m2CEA87FADF5222EF9E13D32695F15E2BA282E24B(NULL);
+				float L_30 = V_11;
+				V_12 = (bool)((((float)L_29) < ((float)L_30))? 1 : 0);
+				bool L_31 = V_12;
+				if (!L_31)
+				{
+					goto IL_00bd_1;
+				}
+			}
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:132>
+				int32_t L_32 = V_7;
+				V_7 = ((int32_t)il2cpp_codegen_add(L_32, 1));
+			}
+
+IL_00bd_1:
+			{
+			}
+
+IL_00be_1:
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:136>
+				int32_t L_33 = V_4;
+				int32_t L_34 = V_6;
+				if ((((int32_t)L_33) <= ((int32_t)L_34)))
+				{
+					goto IL_00d3_1;
+				}
+			}
+			{
+				float L_35;
+				L_35 = Random_get_value_m2CEA87FADF5222EF9E13D32695F15E2BA282E24B(NULL);
+				SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_36 = V_2;
+				NullCheck(L_36);
+				float L_37 = L_36->___NaturalDeathRate;
+				G_B16_0 = ((((float)L_35) < ((float)L_37))? 1 : 0);
+				goto IL_00d4_1;
+			}
+
+IL_00d3_1:
+			{
+				G_B16_0 = 0;
+			}
+
+IL_00d4_1:
+			{
+				V_13 = (bool)G_B16_0;
+				bool L_38 = V_13;
+				if (!L_38)
+				{
+					goto IL_00e0_1;
+				}
+			}
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:136>
+				int32_t L_39 = V_7;
+				V_7 = ((int32_t)il2cpp_codegen_subtract(L_39, 1));
+			}
+
+IL_00e0_1:
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:139>
+				SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_40 = V_2;
+				NullCheck(L_40);
+				List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* L_41 = L_40->___PreySpecies;
+				NullCheck(L_41);
+				Enumerator_tAEFADBE788F64869B9F56D6312DEC56D9087FC44 L_42;
+				L_42 = List_1_GetEnumerator_mA791C387BEAF2DC043513021B0C6ACB38A64BA2B(L_41, List_1_GetEnumerator_mA791C387BEAF2DC043513021B0C6ACB38A64BA2B_RuntimeMethod_var);
+				V_14 = L_42;
+			}
+			{
+				auto __finallyBlock = il2cpp::utils::Finally([&]
+				{
+
+FINALLY_0194_1:
+					{
+						Enumerator_Dispose_mA415F735E85F8FE3A69C92C1AC8449F86E3145F2((&V_14), Enumerator_Dispose_mA415F735E85F8FE3A69C92C1AC8449F86E3145F2_RuntimeMethod_var);
+						return;
+					}
+				});
+				try
+				{
+					{
+						goto IL_0186_2;
+					}
+
+IL_00f3_2:
+					{
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:139>
+						SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_43;
+						L_43 = Enumerator_get_Current_m56CCD0A5F4B4100CE4A57E1412FFF763C75AF418_inline((&V_14), Enumerator_get_Current_m56CCD0A5F4B4100CE4A57E1412FFF763C75AF418_RuntimeMethod_var);
+						V_15 = L_43;
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:141>
+						SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_44 = V_15;
+						il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+						bool L_45;
+						L_45 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_44, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+						V_19 = L_45;
+						bool L_46 = V_19;
+						if (!L_46)
+						{
+							goto IL_010d_2;
+						}
+					}
+					{
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:141>
+						goto IL_0186_2;
+					}
+
+IL_010d_2:
+					{
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:142>
+						SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_47 = V_15;
+						BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_48;
+						L_48 = EcosystemSimulationGPU_FindSpawner_mF45DA44AB32A3A624987B26703367D60A571F6DD(__this, L_47, NULL);
+						V_16 = L_48;
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:143>
+						BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_49 = V_16;
+						il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+						bool L_50;
+						L_50 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_49, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+						V_20 = L_50;
+						bool L_51 = V_20;
+						if (!L_51)
+						{
+							goto IL_0127_2;
+						}
+					}
+					{
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:143>
+						goto IL_0186_2;
+					}
+
+IL_0127_2:
+					{
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:144>
+						Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_52 = __this->____carryingCapacity;
+						SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_53 = V_15;
+						NullCheck(L_52);
+						bool L_54;
+						L_54 = Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C(L_52, L_53, (&V_17), Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:145>
+						BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_55 = V_16;
+						NullCheck(L_55);
+						BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_56;
+						L_56 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_55, NULL);
+						int32_t L_57 = L_56.___BoidsCount;
+						int32_t L_58 = V_17;
+						int32_t L_59;
+						L_59 = Mathf_Max_m7FA442918DE37E3A00106D1F2E789D65829792B8_inline(1, L_58, NULL);
+						V_18 = ((float)(((float)L_57)/((float)L_59)));
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:146>
+						float L_60 = V_18;
+						SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_61 = V_2;
+						NullCheck(L_61);
+						float L_62 = L_61->___StarvationThreshold;
+						V_21 = (bool)((((float)L_60) < ((float)L_62))? 1 : 0);
+						bool L_63 = V_21;
+						if (!L_63)
+						{
+							goto IL_0185_2;
+						}
+					}
+					{
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:148>
+						int32_t L_64 = V_4;
+						int32_t L_65 = V_6;
+						if ((((int32_t)L_64) <= ((int32_t)L_65)))
+						{
+							goto IL_0176_2;
+						}
+					}
+					{
+						float L_66;
+						L_66 = Random_get_value_m2CEA87FADF5222EF9E13D32695F15E2BA282E24B(NULL);
+						SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_67 = V_2;
+						NullCheck(L_67);
+						float L_68 = L_67->___StarvationDeathRate;
+						G_B28_0 = ((((float)L_66) < ((float)L_68))? 1 : 0);
+						goto IL_0177_2;
+					}
+
+IL_0176_2:
+					{
+						G_B28_0 = 0;
+					}
+
+IL_0177_2:
+					{
+						V_22 = (bool)G_B28_0;
+						bool L_69 = V_22;
+						if (!L_69)
+						{
+							goto IL_0183_2;
+						}
+					}
+					{
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:148>
+						int32_t L_70 = V_7;
+						V_7 = ((int32_t)il2cpp_codegen_subtract(L_70, 1));
+					}
+
+IL_0183_2:
+					{
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:149>
+						goto IL_0192_2;
+					}
+
+IL_0185_2:
+					{
+					}
+
+IL_0186_2:
+					{
+						//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:139>
+						bool L_71;
+						L_71 = Enumerator_MoveNext_m87F82E2F2D878FBF9D6F0A76CB32257EC29B8904((&V_14), Enumerator_MoveNext_m87F82E2F2D878FBF9D6F0A76CB32257EC29B8904_RuntimeMethod_var);
+						if (L_71)
+						{
+							goto IL_00f3_2;
+						}
+					}
+
+IL_0192_2:
+					{
+						goto IL_01a3_1;
+					}
+				}
+				catch(Il2CppExceptionWrapper& e)
+				{
+					__finallyBlock.StoreException(e.ex);
+				}
+			}
+
+IL_01a3_1:
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:153>
+				int32_t L_72 = V_7;
+				if ((((int32_t)L_72) <= ((int32_t)0)))
+				{
+					goto IL_01b0_1;
+				}
+			}
+			{
+				int32_t L_73 = V_4;
+				int32_t L_74 = V_5;
+				G_B38_0 = ((((int32_t)L_73) < ((int32_t)L_74))? 1 : 0);
+				goto IL_01b1_1;
+			}
+
+IL_01b0_1:
+			{
+				G_B38_0 = 0;
+			}
+
+IL_01b1_1:
+			{
+				V_23 = (bool)G_B38_0;
+				bool L_75 = V_23;
+				if (!L_75)
+				{
+					goto IL_01c6_1;
+				}
+			}
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:153>
+				SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_76 = V_2;
+				BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_77 = V_3;
+				EcosystemSimulationGPU_AddGroup_mD2528854CD0C857686F54828EF683D50576B05BD(__this, L_76, L_77, NULL);
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:153>
+				V_0 = (bool)1;
+				goto IL_01e7_1;
+			}
+
+IL_01c6_1:
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:154>
+				int32_t L_78 = V_7;
+				if ((((int32_t)L_78) >= ((int32_t)0)))
+				{
+					goto IL_01d3_1;
+				}
+			}
+			{
+				int32_t L_79 = V_4;
+				int32_t L_80 = V_6;
+				G_B43_0 = ((((int32_t)L_79) > ((int32_t)L_80))? 1 : 0);
+				goto IL_01d4_1;
+			}
+
+IL_01d3_1:
+			{
+				G_B43_0 = 0;
+			}
+
+IL_01d4_1:
+			{
+				V_24 = (bool)G_B43_0;
+				bool L_81 = V_24;
+				if (!L_81)
+				{
+					goto IL_01e7_1;
+				}
+			}
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:154>
+				SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_82 = V_2;
+				BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_83 = V_3;
+				EcosystemSimulationGPU_RemoveGroup_mA8D730EBCA96188EFBD8C01D9ED30842ABF2033F(__this, L_82, L_83, NULL);
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:154>
+				V_0 = (bool)1;
+			}
+
+IL_01e7_1:
+			{
+			}
+
+IL_01e8_1:
+			{
+				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:117>
+				bool L_84;
+				L_84 = Enumerator_MoveNext_m87F82E2F2D878FBF9D6F0A76CB32257EC29B8904((&V_1), Enumerator_MoveNext_m87F82E2F2D878FBF9D6F0A76CB32257EC29B8904_RuntimeMethod_var);
+				if (L_84)
+				{
+					goto IL_001a_1;
+				}
+			}
+			{
+				goto IL_0205;
+			}
+		}
+		catch(Il2CppExceptionWrapper& e)
+		{
+			__finallyBlock.StoreException(e.ex);
+		}
+	}
+
+IL_0205:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:157>
+		bool L_85 = V_0;
+		V_25 = L_85;
+		bool L_86 = V_25;
+		if (!L_86)
+		{
+			goto IL_0218;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:157>
+		BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* L_87 = __this->____simulation;
+		NullCheck(L_87);
+		BoidSimulationGPU_ReinitializeBuffers_m258A512FC118B168A45B4E3F37C06B88900708BD(L_87, NULL);
+	}
+
+IL_0218:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:158>
+		return;
+	}
+}
+// Method Definition Index: 71338
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_AddGroup_mD2528854CD0C857686F54828EF683D50576B05BD (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* ___1_spawner, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	int32_t V_0 = 0;
+	bool V_1 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:166>
+		Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_0 = __this->____boidsPerGroup;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_1 = ___0_species;
+		NullCheck(L_0);
+		bool L_2;
+		L_2 = Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C(L_0, L_1, (&V_0), Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		V_1 = L_2;
+		bool L_3 = V_1;
+		if (!L_3)
+		{
+			goto IL_0027;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:167>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_4 = ___1_spawner;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_5 = ___1_spawner;
+		NullCheck(L_5);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_6;
+		L_6 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_5, NULL);
+		int32_t L_7 = L_6.___BoidsCount;
+		int32_t L_8 = V_0;
+		NullCheck(L_4);
+		BoidSpawnerBase_SetBoidsCount_mC5967DDDE1B0353726590A8EEDDAFACF1F693A4D(L_4, ((int32_t)il2cpp_codegen_add(L_7, L_8)), NULL);
+	}
+
+IL_0027:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:168>
+		return;
+	}
+}
+// Method Definition Index: 71339
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_RemoveGroup_mA8D730EBCA96188EFBD8C01D9ED30842ABF2033F (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* ___1_spawner, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	int32_t V_0 = 0;
+	bool V_1 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:172>
+		Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_0 = __this->____boidsPerGroup;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_1 = ___0_species;
+		NullCheck(L_0);
+		bool L_2;
+		L_2 = Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C(L_0, L_1, (&V_0), Dictionary_2_TryGetValue_m0F47A0486D8D66ADC08E3598454A91E8CAF7A23C_RuntimeMethod_var);
+		V_1 = L_2;
+		bool L_3 = V_1;
+		if (!L_3)
+		{
+			goto IL_002d;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:173>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_4 = ___1_spawner;
+		int32_t L_5 = V_0;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_6 = ___1_spawner;
+		NullCheck(L_6);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_7;
+		L_7 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_6, NULL);
+		int32_t L_8 = L_7.___BoidsCount;
+		int32_t L_9 = V_0;
+		int32_t L_10;
+		L_10 = Mathf_Max_m7FA442918DE37E3A00106D1F2E789D65829792B8_inline(L_5, ((int32_t)il2cpp_codegen_subtract(L_8, L_9)), NULL);
+		NullCheck(L_4);
+		BoidSpawnerBase_SetBoidsCount_mC5967DDDE1B0353726590A8EEDDAFACF1F693A4D(L_4, L_10, NULL);
+	}
+
+IL_002d:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:174>
+		return;
+	}
+}
+// Method Definition Index: 71340
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_SetupAllSpecies_m389D18E305A06EBC9DD477259373341AE01D2B2C (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_set_Item_mBE2A3D4CE00B67852B882F98506D34F02C1BEA09_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_get_Count_m867174535A6BFD5C836DEFA9B8872AA6C7B93D01_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_get_Item_m9C7C161C4D1E41766CBE8F344F4AE9C5BC055405_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralAA0CD5171B8708F239F2F970360036AAF1A5FAFE);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralF09CC17E31A65E7C18A6770B686C67B148EF9C74);
+		s_Il2CppMethodInitialized = true;
+	}
+	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	int32_t V_1 = 0;
+	SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* V_2 = NULL;
+	BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* V_3 = NULL;
+	int32_t V_4 = 0;
+	bool V_5 = false;
+	bool V_6 = false;
+	bool V_7 = false;
+	bool V_8 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:182>
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_0 = __this->____ecosystem;
+		NullCheck(L_0);
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_1;
+		L_1 = EcosystemDefinitionGPU_get_SimulationBounds_m400B93791D779C1FE6F0D17B12C7316FDEB611FF(L_0, NULL);
+		V_0 = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:184>
+		V_1 = 0;
+		goto IL_00d2;
+	}
+
+IL_0014:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:186>
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_2 = __this->____ecosystem;
+		NullCheck(L_2);
+		List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* L_3 = L_2->___Species;
+		int32_t L_4 = V_1;
+		NullCheck(L_3);
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_5;
+		L_5 = List_1_get_Item_m9C7C161C4D1E41766CBE8F344F4AE9C5BC055405(L_3, L_4, List_1_get_Item_m9C7C161C4D1E41766CBE8F344F4AE9C5BC055405_RuntimeMethod_var);
+		V_2 = L_5;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:187>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_6 = V_2;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_7;
+		L_7 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_6, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		V_5 = L_7;
+		bool L_8 = V_5;
+		if (!L_8)
+		{
+			goto IL_0039;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:187>
+		goto IL_00ce;
+	}
+
+IL_0039:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:189>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_9 = V_2;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_10;
+		L_10 = EcosystemSimulationGPU_FindSpawner_mF45DA44AB32A3A624987B26703367D60A571F6DD(__this, L_9, NULL);
+		V_3 = L_10;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:190>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_11 = V_3;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_12;
+		L_12 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_11, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		V_6 = L_12;
+		bool L_13 = V_6;
+		if (!L_13)
+		{
+			goto IL_006c;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:192>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_14 = V_2;
+		NullCheck(L_14);
+		String_t* L_15 = L_14->___SpeciesName;
+		String_t* L_16;
+		L_16 = String_Concat_m8855A6DE10F84DA7F4EC113CADDB59873A25573B(_stringLiteralF09CC17E31A65E7C18A6770B686C67B148EF9C74, L_15, _stringLiteralAA0CD5171B8708F239F2F970360036AAF1A5FAFE, NULL);
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_LogWarning_m33EF1B897E0C7C6FF538989610BFAFFEF4628CA9(L_16, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:193>
+		goto IL_00ce;
+	}
+
+IL_006c:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:196>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_17 = V_2;
+		int32_t L_18 = V_1;
+		NullCheck(L_17);
+		L_17->___RuntimeId = L_18;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:198>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_19 = V_3;
+		NullCheck(L_19);
+		int32_t L_20;
+		L_20 = BoidSpawnerBase_get_InitialGroupsCount_m804189D5FE7825D968ACF9C9ABCC37B67338DDD5_inline(L_19, NULL);
+		V_4 = L_20;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:199>
+		Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_21 = __this->____boidsPerGroup;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_22 = V_2;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_23 = V_3;
+		NullCheck(L_23);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_24;
+		L_24 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_23, NULL);
+		int32_t L_25 = L_24.___BoidsCount;
+		int32_t L_26 = V_4;
+		int32_t L_27;
+		L_27 = Mathf_Max_m7FA442918DE37E3A00106D1F2E789D65829792B8_inline(1, ((int32_t)(L_25/L_26)), NULL);
+		NullCheck(L_21);
+		Dictionary_2_set_Item_mBE2A3D4CE00B67852B882F98506D34F02C1BEA09(L_21, L_22, L_27, Dictionary_2_set_Item_mBE2A3D4CE00B67852B882F98506D34F02C1BEA09_RuntimeMethod_var);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:200>
+		Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_28 = __this->____carryingCapacity;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_29 = V_2;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_30 = V_3;
+		NullCheck(L_30);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_31;
+		L_31 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_30, NULL);
+		int32_t L_32 = L_31.___BoidsCount;
+		NullCheck(L_28);
+		Dictionary_2_set_Item_mBE2A3D4CE00B67852B882F98506D34F02C1BEA09(L_28, L_29, L_32, Dictionary_2_set_Item_mBE2A3D4CE00B67852B882F98506D34F02C1BEA09_RuntimeMethod_var);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:202>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_33 = V_2;
+		NullCheck(L_33);
+		int32_t L_34 = L_33->___Role;
+		V_7 = (bool)((((int32_t)L_34) == ((int32_t)0))? 1 : 0);
+		bool L_35 = V_7;
+		if (!L_35)
+		{
+			goto IL_00cd;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:203>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_36 = V_2;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_37 = V_3;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_38 = V_0;
+		EcosystemSimulationGPU_SetupApexTargets_m4CB36CBCA66BC609682C115563AACCF9CC02957D(__this, L_36, L_37, L_38, NULL);
+	}
+
+IL_00cd:
+	{
+	}
+
+IL_00ce:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:184>
+		int32_t L_39 = V_1;
+		V_1 = ((int32_t)il2cpp_codegen_add(L_39, 1));
+	}
+
+IL_00d2:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:184>
+		int32_t L_40 = V_1;
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_41 = __this->____ecosystem;
+		NullCheck(L_41);
+		List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* L_42 = L_41->___Species;
+		NullCheck(L_42);
+		int32_t L_43;
+		L_43 = List_1_get_Count_m867174535A6BFD5C836DEFA9B8872AA6C7B93D01_inline(L_42, List_1_get_Count_m867174535A6BFD5C836DEFA9B8872AA6C7B93D01_RuntimeMethod_var);
+		V_8 = (bool)((((int32_t)L_40) < ((int32_t)L_43))? 1 : 0);
+		bool L_44 = V_8;
+		if (L_44)
+		{
+			goto IL_0014;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:206>
+		return;
+	}
+}
+// Method Definition Index: 71341
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_SetupApexTargets_m4CB36CBCA66BC609682C115563AACCF9CC02957D (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* ___1_spawner, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___2_bounds, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_set_Item_mFDB9337FADB1A3719768F01EF16F96865A002ADC_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_Add_m347489C49B768CFB853ED95DA705AEAEAB2D863F_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1__ctor_mF5D7B1593E775B052EFD2EE685EA6F08E0C87A58_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral55B5807D84FD6702B5FEB06AA43AB30B4CE7767E);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralCE7B375A6B65A87CF694789089EC605D29215B65);
+		s_Il2CppMethodInitialized = true;
+	}
+	SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* V_0 = NULL;
+	int32_t V_1 = 0;
+	List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1* V_2 = NULL;
+	bool V_3 = false;
+	int32_t V_4 = 0;
+	WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* V_5 = NULL;
+	bool V_6 = false;
+	int32_t G_B3_0 = 0;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:214>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_0 = ___1_spawner;
+		NullCheck(L_0);
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_1;
+		L_1 = BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline(L_0, NULL);
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_2 = L_1.___Targets;
+		V_0 = L_2;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:215>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_3 = ___1_spawner;
+		NullCheck(L_3);
+		int32_t L_4;
+		L_4 = BoidSpawnerBase_get_InitialGroupsCount_m804189D5FE7825D968ACF9C9ABCC37B67338DDD5_inline(L_3, NULL);
+		V_1 = L_4;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:217>
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_5 = V_0;
+		if (!L_5)
+		{
+			goto IL_0022;
+		}
+	}
+	{
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_6 = V_0;
+		NullCheck(L_6);
+		int32_t L_7 = V_1;
+		G_B3_0 = ((((int32_t)((((int32_t)((int32_t)(((RuntimeArray*)L_6)->max_length))) < ((int32_t)L_7))? 1 : 0)) == ((int32_t)0))? 1 : 0);
+		goto IL_0023;
+	}
+
+IL_0022:
+	{
+		G_B3_0 = 0;
+	}
+
+IL_0023:
+	{
+		V_3 = (bool)G_B3_0;
+		bool L_8 = V_3;
+		if (!L_8)
+		{
+			goto IL_0048;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:221>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_9 = ___0_species;
+		NullCheck(L_9);
+		String_t* L_10 = L_9->___SpeciesName;
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_11 = V_0;
+		NullCheck(L_11);
+		int32_t L_12 = ((int32_t)(((RuntimeArray*)L_11)->max_length));
+		RuntimeObject* L_13 = Box(il2cpp_defaults.int32_class, &L_12);
+		String_t* L_14;
+		L_14 = String_Format_mFB7DA489BD99F4670881FF50EC017BFB0A5C0987(_stringLiteralCE7B375A6B65A87CF694789089EC605D29215B65, L_10, L_13, NULL);
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_Log_m87A9A3C761FF5C43ED8A53B16190A53D08F818BB(L_14, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:222>
+		goto IL_00bd;
+	}
+
+IL_0048:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:226>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_15 = ___1_spawner;
+		NullCheck(L_15);
+		VirtualActionInvoker0::Invoke(8, L_15);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:227>
+		int32_t L_16 = V_1;
+		List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1* L_17 = (List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1*)il2cpp_codegen_object_new(List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1_il2cpp_TypeInfo_var);
+		List_1__ctor_mF5D7B1593E775B052EFD2EE685EA6F08E0C87A58(L_17, L_16, List_1__ctor_mF5D7B1593E775B052EFD2EE685EA6F08E0C87A58_RuntimeMethod_var);
+		V_2 = L_17;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:228>
+		V_4 = 0;
+		goto IL_0088;
+	}
+
+IL_005b:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:230>
+		int32_t L_18 = V_4;
+		WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* L_19;
+		L_19 = EcosystemSimulationGPU_CreateAndInitWanderer_mD26ECF6CD2353832CF96C50E9CCE5F52C95D50B0(__this, L_18, NULL);
+		V_5 = L_19;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:231>
+		WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* L_20 = V_5;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_21 = ___2_bounds;
+		NullCheck(L_20);
+		WanderingAffecterGPU_Initialize_mA0A0C7CB7256F5BC317FAA22D2B357D8E0FDA844(L_20, L_21, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:232>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_22 = ___1_spawner;
+		WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* L_23 = V_5;
+		NullCheck(L_22);
+		VirtualActionInvoker1< SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* >::Invoke(7, L_22, L_23);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:233>
+		List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1* L_24 = V_2;
+		WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* L_25 = V_5;
+		NullCheck(L_24);
+		List_1_Add_m347489C49B768CFB853ED95DA705AEAEAB2D863F_inline(L_24, L_25, List_1_Add_m347489C49B768CFB853ED95DA705AEAEAB2D863F_RuntimeMethod_var);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:228>
+		int32_t L_26 = V_4;
+		V_4 = ((int32_t)il2cpp_codegen_add(L_26, 1));
+	}
+
+IL_0088:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:228>
+		int32_t L_27 = V_4;
+		int32_t L_28 = V_1;
+		V_6 = (bool)((((int32_t)L_27) < ((int32_t)L_28))? 1 : 0);
+		bool L_29 = V_6;
+		if (L_29)
+		{
+			goto IL_005b;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:235>
+		Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050* L_30 = __this->____managedWanderers;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_31 = ___0_species;
+		List_1_tE46858216C602B28BA0BFD38FD7608ADB7F2A2F1* L_32 = V_2;
+		NullCheck(L_30);
+		Dictionary_2_set_Item_mFDB9337FADB1A3719768F01EF16F96865A002ADC(L_30, L_31, L_32, Dictionary_2_set_Item_mFDB9337FADB1A3719768F01EF16F96865A002ADC_RuntimeMethod_var);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:237>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_33 = ___0_species;
+		NullCheck(L_33);
+		String_t* L_34 = L_33->___SpeciesName;
+		int32_t L_35 = V_1;
+		int32_t L_36 = L_35;
+		RuntimeObject* L_37 = Box(il2cpp_defaults.int32_class, &L_36);
+		String_t* L_38;
+		L_38 = String_Format_mFB7DA489BD99F4670881FF50EC017BFB0A5C0987(_stringLiteral55B5807D84FD6702B5FEB06AA43AB30B4CE7767E, L_34, L_37, NULL);
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_Log_m87A9A3C761FF5C43ED8A53B16190A53D08F818BB(L_38, NULL);
+	}
+
+IL_00bd:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:238>
+		return;
+	}
+}
+// Method Definition Index: 71342
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* EcosystemSimulationGPU_CreateAndInitWanderer_mD26ECF6CD2353832CF96C50E9CCE5F52C95D50B0 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, int32_t ___0_subGroupIndex, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&GameObject_AddComponent_TisWanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0_m90B2CC15ED4EBB4E1F64F8270AD06F71C69E1591_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&GameObject_t76FEDD663AB33C991A9C9A23129337651094216F_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral6F2A29A03426FDF5489D0E612D1C21F2B5F2D139);
+		s_Il2CppMethodInitialized = true;
+	}
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* V_0 = NULL;
+	WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* V_1 = NULL;
+	WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* V_2 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:243>
+		int32_t L_0 = ___0_subGroupIndex;
+		int32_t L_1 = L_0;
+		RuntimeObject* L_2 = Box(il2cpp_defaults.int32_class, &L_1);
+		String_t* L_3;
+		L_3 = String_Format_mA8DBB4C2516B9723C5A41E6CB1E2FAF4BBE96DD8(_stringLiteral6F2A29A03426FDF5489D0E612D1C21F2B5F2D139, L_2, NULL);
+		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_4 = (GameObject_t76FEDD663AB33C991A9C9A23129337651094216F*)il2cpp_codegen_object_new(GameObject_t76FEDD663AB33C991A9C9A23129337651094216F_il2cpp_TypeInfo_var);
+		GameObject__ctor_m37D512B05D292F954792225E6C6EEE95293A9B88(L_4, L_3, NULL);
+		V_0 = L_4;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:244>
+		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_5 = V_0;
+		NullCheck(L_5);
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_6;
+		L_6 = GameObject_get_transform_m0BC10ADFA1632166AE5544BDF9038A2650C2AE56(L_5, NULL);
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_7;
+		L_7 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		NullCheck(L_6);
+		Transform_SetParent_m6677538B60246D958DD91F931C50F969CCBB5250(L_6, L_7, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:246>
+		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_8 = V_0;
+		NullCheck(L_8);
+		WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* L_9;
+		L_9 = GameObject_AddComponent_TisWanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0_m90B2CC15ED4EBB4E1F64F8270AD06F71C69E1591(L_8, GameObject_AddComponent_TisWanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0_m90B2CC15ED4EBB4E1F64F8270AD06F71C69E1591_RuntimeMethod_var);
+		V_1 = L_9;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:247>
+		WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* L_10 = V_1;
+		int32_t L_11 = ___0_subGroupIndex;
+		NullCheck(L_10);
+		SimulationAffecterComponent_SetSubGroupID_mCB72F7D6C2C896EAE5F834F9599B7B5784ACD677(L_10, L_11, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:248>
+		WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* L_12 = V_1;
+		NullCheck(L_12);
+		SimulationAffecterComponent_SetAffecterType_m2E64AD90B992E5E7D6DE16522A2F6B281B496A25(L_12, 0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:249>
+		WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* L_13 = V_1;
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_14 = __this->____ecosystem;
+		NullCheck(L_14);
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_15;
+		L_15 = EcosystemDefinitionGPU_get_SimulationBounds_m400B93791D779C1FE6F0D17B12C7316FDEB611FF(L_14, NULL);
+		NullCheck(L_13);
+		WanderingAffecterGPU_Initialize_mA0A0C7CB7256F5BC317FAA22D2B357D8E0FDA844(L_13, L_15, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:250>
+		WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* L_16 = V_1;
+		V_2 = L_16;
+		goto IL_0056;
+	}
+
+IL_0056:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:251>
+		WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* L_17 = V_2;
+		return L_17;
+	}
+}
+// Method Definition Index: 71343
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* EcosystemSimulationGPU_FindSpawner_mF45DA44AB32A3A624987B26703367D60A571F6DD (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* V_0 = NULL;
+	bool V_1 = false;
+	BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* V_2 = NULL;
+	bool V_3 = false;
+	BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* V_4 = NULL;
+	int32_t V_5 = 0;
+	BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* V_6 = NULL;
+	BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* V_7 = NULL;
+	bool V_8 = false;
+	int32_t G_B8_0 = 0;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:255>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_0 = ___0_species;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_1;
+		L_1 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_0, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		V_1 = L_1;
+		bool L_2 = V_1;
+		if (!L_2)
+		{
+			goto IL_0010;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:255>
+		V_2 = (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30*)NULL;
+		goto IL_0074;
+	}
+
+IL_0010:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:256>
+		BoidSimulationGPU_t978031CB82F7C7A94FDECE8F7366A608BDF40586* L_3 = __this->____simulation;
+		NullCheck(L_3);
+		BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* L_4;
+		L_4 = VirtualFuncInvoker0< BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* >::Invoke(4, L_3);
+		V_0 = L_4;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:257>
+		BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* L_5 = V_0;
+		V_3 = (bool)((((RuntimeObject*)(BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C*)L_5) == ((RuntimeObject*)(RuntimeObject*)NULL))? 1 : 0);
+		bool L_6 = V_3;
+		if (!L_6)
+		{
+			goto IL_0028;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:257>
+		V_2 = (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30*)NULL;
+		goto IL_0074;
+	}
+
+IL_0028:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:258>
+		BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* L_7 = V_0;
+		V_4 = L_7;
+		V_5 = 0;
+		goto IL_0068;
+	}
+
+IL_0031:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:258>
+		BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* L_8 = V_4;
+		int32_t L_9 = V_5;
+		NullCheck(L_8);
+		int32_t L_10 = L_9;
+		BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* L_11 = (L_8)->GetAt(static_cast<il2cpp_array_size_t>(L_10));
+		V_6 = L_11;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:260>
+		BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* L_12 = V_6;
+		V_7 = ((BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30*)IsInstClass((RuntimeObject*)L_12, BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30_il2cpp_TypeInfo_var));
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_13 = V_7;
+		if (!L_13)
+		{
+			goto IL_0055;
+		}
+	}
+	{
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_14 = V_7;
+		NullCheck(L_14);
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_15;
+		L_15 = BoidSpawnerGPUMultiTargets_get_SpeciesData_m2FE5CA68181D30C592C5EFBBB246A788870E337A_inline(L_14, NULL);
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_16 = ___0_species;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_17;
+		L_17 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_15, L_16, NULL);
+		G_B8_0 = ((int32_t)(L_17));
+		goto IL_0056;
+	}
+
+IL_0055:
+	{
+		G_B8_0 = 0;
+	}
+
+IL_0056:
+	{
+		V_8 = (bool)G_B8_0;
+		bool L_18 = V_8;
+		if (!L_18)
+		{
+			goto IL_0061;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:261>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_19 = V_7;
+		V_2 = L_19;
+		goto IL_0074;
+	}
+
+IL_0061:
+	{
+		int32_t L_20 = V_5;
+		V_5 = ((int32_t)il2cpp_codegen_add(L_20, 1));
+	}
+
+IL_0068:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:258>
+		int32_t L_21 = V_5;
+		BoidSpawnerBaseU5BU5D_tDE5A908832A26B3776206CF4CF80310783EB317C* L_22 = V_4;
+		NullCheck(L_22);
+		if ((((int32_t)L_21) < ((int32_t)((int32_t)(((RuntimeArray*)L_22)->max_length)))))
+		{
+			goto IL_0031;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:263>
+		V_2 = (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30*)NULL;
+		goto IL_0074;
+	}
+
+IL_0074:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:264>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_23 = V_2;
+		return L_23;
+	}
+}
+// Method Definition Index: 71344
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool EcosystemSimulationGPU_ValidateSpecies_m468FBB5EC6E83C25655027A716B4E20240730E3E (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30** ___1_spawner, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralD3AA93D6C12EBFAF8D265D77F0951E250AD2BE76);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralFCD8484551472F7D2F6A8D8286356168262285B0);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralFE26C675260A3C7A330FF1AC71048A26D62DA604);
+		s_Il2CppMethodInitialized = true;
+	}
+	bool V_0 = false;
+	bool V_1 = false;
+	bool V_2 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:268>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30** L_0 = ___1_spawner;
+		*((BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30**)L_0) = (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30**)L_0, (void*)(BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:269>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_1 = ___0_species;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_2;
+		L_2 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_1, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		V_0 = L_2;
+		bool L_3 = V_0;
+		if (!L_3)
+		{
+			goto IL_001f;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:271>
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_LogWarning_m33EF1B897E0C7C6FF538989610BFAFFEF4628CA9(_stringLiteralFCD8484551472F7D2F6A8D8286356168262285B0, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:272>
+		V_1 = (bool)0;
+		goto IL_0058;
+	}
+
+IL_001f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:274>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30** L_4 = ___1_spawner;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_5 = ___0_species;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_6;
+		L_6 = EcosystemSimulationGPU_FindSpawner_mF45DA44AB32A3A624987B26703367D60A571F6DD(__this, L_5, NULL);
+		*((BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30**)L_4) = (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30*)L_6;
+		Il2CppCodeGenWriteBarrier((void**)(BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30**)L_4, (void*)(BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30*)L_6);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:275>
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30** L_7 = ___1_spawner;
+		BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* L_8 = *((BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30**)L_7);
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_9;
+		L_9 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_8, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		V_2 = L_9;
+		bool L_10 = V_2;
+		if (!L_10)
+		{
+			goto IL_0054;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:277>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_11 = ___0_species;
+		NullCheck(L_11);
+		String_t* L_12 = L_11->___SpeciesName;
+		String_t* L_13;
+		L_13 = String_Concat_m8855A6DE10F84DA7F4EC113CADDB59873A25573B(_stringLiteralFE26C675260A3C7A330FF1AC71048A26D62DA604, L_12, _stringLiteralD3AA93D6C12EBFAF8D265D77F0951E250AD2BE76, NULL);
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_LogWarning_m33EF1B897E0C7C6FF538989610BFAFFEF4628CA9(L_13, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:278>
+		V_1 = (bool)0;
+		goto IL_0058;
+	}
+
+IL_0054:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:280>
+		V_1 = (bool)1;
+		goto IL_0058;
+	}
+
+IL_0058:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:281>
+		bool L_14 = V_1;
+		return L_14;
+	}
+}
+// Method Definition Index: 71345
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU_OnDrawGizmosSelected_m2B3F75DAE455934DF98CA099AB9C4F1E170D7AC7 (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	bool V_0 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:289>
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_0 = __this->____ecosystem;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_1;
+		L_1 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_0, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		V_0 = L_1;
+		bool L_2 = V_0;
+		if (!L_2)
+		{
+			goto IL_0013;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:289>
+		goto IL_0089;
+	}
+
+IL_0013:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:290>
+		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_3;
+		memset((&L_3), 0, sizeof(L_3));
+		Color__ctor_m3786F0D6E510D9CFA544523A955870BD2A514C8C_inline((&L_3), (0.0f), (0.800000012f), (1.0f), (0.119999997f), NULL);
+		Gizmos_set_color_m53927A2741937484180B20B55F7F20F8F60C5797(L_3, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:291>
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_4 = __this->____ecosystem;
+		NullCheck(L_4);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_5 = L_4->___SimulationCenter;
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_6 = __this->____ecosystem;
+		NullCheck(L_6);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = L_6->___SimulationSize;
+		Gizmos_DrawCube_m4417EAEA479EF4AD52445810D840BA8FCBC6EF3F(L_5, L_7, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:292>
+		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_8;
+		memset((&L_8), 0, sizeof(L_8));
+		Color__ctor_m3786F0D6E510D9CFA544523A955870BD2A514C8C_inline((&L_8), (0.0f), (0.800000012f), (1.0f), (0.5f), NULL);
+		Gizmos_set_color_m53927A2741937484180B20B55F7F20F8F60C5797(L_8, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:293>
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_9 = __this->____ecosystem;
+		NullCheck(L_9);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10 = L_9->___SimulationCenter;
+		EcosystemDefinitionGPU_t1991DCB5EF8B42D9198700DB8845349D23A03C30* L_11 = __this->____ecosystem;
+		NullCheck(L_11);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = L_11->___SimulationSize;
+		Gizmos_DrawWireCube_m343533B3955A2D04A8638280D0EF537274A1FD8B(L_10, L_12, NULL);
+	}
+
+IL_0089:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:294>
+		return;
+	}
+}
+// Method Definition Index: 71346
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemSimulationGPU__ctor_mF0586973CC9FA1E3BE4BB1BA127C9220CA0AB37E (EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2__ctor_mC4441B5D95FE2DE45DE1456F2430D64CB8BDCFAD_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2__ctor_mEA9370B5DFD0117D346F9B657348D890BDE5DCB6_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:20>
+		__this->____tickInterval = (5.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:24>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:25>
+		Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050* L_0 = (Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050*)il2cpp_codegen_object_new(Dictionary_2_t003A061D1587E94F91073B15C944FA0455059050_il2cpp_TypeInfo_var);
+		Dictionary_2__ctor_mEA9370B5DFD0117D346F9B657348D890BDE5DCB6(L_0, Dictionary_2__ctor_mEA9370B5DFD0117D346F9B657348D890BDE5DCB6_RuntimeMethod_var);
+		__this->____managedWanderers = L_0;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____managedWanderers), (void*)L_0);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:28>
+		Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_1 = (Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2*)il2cpp_codegen_object_new(Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2_il2cpp_TypeInfo_var);
+		Dictionary_2__ctor_mC4441B5D95FE2DE45DE1456F2430D64CB8BDCFAD(L_1, Dictionary_2__ctor_mC4441B5D95FE2DE45DE1456F2430D64CB8BDCFAD_RuntimeMethod_var);
+		__this->____carryingCapacity = L_1;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____carryingCapacity), (void*)L_1);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:30>
+		Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2* L_2 = (Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2*)il2cpp_codegen_object_new(Dictionary_2_tB3D2000EA9907DDD20067612CF75541A6E76ACB2_il2cpp_TypeInfo_var);
+		Dictionary_2__ctor_mC4441B5D95FE2DE45DE1456F2430D64CB8BDCFAD(L_2, Dictionary_2__ctor_mC4441B5D95FE2DE45DE1456F2430D64CB8BDCFAD_RuntimeMethod_var);
+		__this->____boidsPerGroup = L_2;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____boidsPerGroup), (void*)L_2);
+		MonoBehaviour__ctor_m592DB0105CA0BC97AA1C5F4AD27B12D68A3B7C1E(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71347
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void U3CPopulationTickRoutineU3Ed__13__ctor_m5BE3C7DDE882EEC4745A1086954960A811011321 (U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4* __this, int32_t ___0_U3CU3E1__state, const RuntimeMethod* method) 
+{
+	{
+		Object__ctor_mE837C6B9FA8C6D5D109F4B2EC885D79919AC0EA2(__this, NULL);
+		int32_t L_0 = ___0_U3CU3E1__state;
+		__this->___U3CU3E1__state = L_0;
+		return;
+	}
+}
+// Method Definition Index: 71348
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void U3CPopulationTickRoutineU3Ed__13_System_IDisposable_Dispose_mEF5D1C2D144028ED711554A2F00046553307811F (U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4* __this, const RuntimeMethod* method) 
+{
+	{
+		return;
+	}
+}
+// Method Definition Index: 71349
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool U3CPopulationTickRoutineU3Ed__13_MoveNext_m1AE91257CFBCAE4D1A78606558D91B8BEB79D321 (U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	int32_t V_0 = 0;
+	bool V_1 = false;
+	{
+		int32_t L_0 = __this->___U3CU3E1__state;
+		V_0 = L_0;
+		int32_t L_1 = V_0;
+		if (!L_1)
+		{
+			goto IL_0012;
+		}
+	}
+	{
+		goto IL_000c;
+	}
+
+IL_000c:
+	{
+		int32_t L_2 = V_0;
+		if ((((int32_t)L_2) == ((int32_t)1)))
+		{
+			goto IL_0014;
+		}
+	}
+	{
+		goto IL_0016;
+	}
+
+IL_0012:
+	{
+		goto IL_0018;
+	}
+
+IL_0014:
+	{
+		goto IL_0042;
+	}
+
+IL_0016:
+	{
+		return (bool)0;
+	}
+
+IL_0018:
+	{
+		__this->___U3CU3E1__state = (-1);
+		goto IL_0056;
+	}
+
+IL_0022:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:108>
+		EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* L_3 = __this->___U3CU3E4__this;
+		NullCheck(L_3);
+		float L_4 = L_3->____tickInterval;
+		WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* L_5 = (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3*)il2cpp_codegen_object_new(WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
+		WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC(L_5, L_4, NULL);
+		__this->___U3CU3E2__current = L_5;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___U3CU3E2__current), (void*)L_5);
+		__this->___U3CU3E1__state = 1;
+		return (bool)1;
+	}
+
+IL_0042:
+	{
+		__this->___U3CU3E1__state = (-1);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:109>
+		EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* L_6 = __this->___U3CU3E4__this;
+		NullCheck(L_6);
+		EcosystemSimulationGPU_RunPopulationTick_mCCD11640D4076C09862E53DCEA135A759EC64858(L_6, NULL);
+	}
+
+IL_0056:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs:106>
+		V_1 = (bool)1;
+		goto IL_0022;
+	}
+}
+// Method Definition Index: 71350
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* U3CPopulationTickRoutineU3Ed__13_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_m8CF92D75AA9AB31BF51B252C66D570790C02AB7B (U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4* __this, const RuntimeMethod* method) 
+{
+	{
+		RuntimeObject* L_0 = __this->___U3CU3E2__current;
+		return L_0;
+	}
+}
+// Method Definition Index: 71351
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void U3CPopulationTickRoutineU3Ed__13_System_Collections_IEnumerator_Reset_m31FD51915B4145CCC86727426DBFEF755F022610 (U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4* __this, const RuntimeMethod* method) 
+{
+	{
+		NotSupportedException_t1429765983D409BD2986508963C98D214E4EBF4A* L_0 = (NotSupportedException_t1429765983D409BD2986508963C98D214E4EBF4A*)il2cpp_codegen_object_new(((RuntimeClass*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&NotSupportedException_t1429765983D409BD2986508963C98D214E4EBF4A_il2cpp_TypeInfo_var)));
+		NotSupportedException__ctor_m1398D0CDE19B36AA3DE9392879738C1EA2439CDF(L_0, NULL);
+		IL2CPP_RAISE_MANAGED_EXCEPTION(L_0, ((RuntimeMethod*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&U3CPopulationTickRoutineU3Ed__13_System_Collections_IEnumerator_Reset_m31FD51915B4145CCC86727426DBFEF755F022610_RuntimeMethod_var)));
+	}
+}
+// Method Definition Index: 71352
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* U3CPopulationTickRoutineU3Ed__13_System_Collections_IEnumerator_get_Current_m214825646B5C1FC82324FCF4DC8A2B47A8239BC0 (U3CPopulationTickRoutineU3Ed__13_t97964B7548B087A47BE263209608A5586CD2E6F4* __this, const RuntimeMethod* method) 
+{
+	{
+		RuntimeObject* L_0 = __this->___U3CU3E2__current;
+		return L_0;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71353
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemUIAdapterGPU_Start_m027CF27D41FEC961968910A42B58931602130493 (EcosystemUIAdapterGPU_t4244986468096B92FB68AE3930566309598BC188* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralCE788A37EA645F16329BE3F0AD0A9FDC9D1AD590);
+		s_Il2CppMethodInitialized = true;
+	}
+	bool V_0 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemUIAdapterGPU.cs:24>
+		EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* L_0 = __this->____ecosystemGPU;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_1;
+		L_1 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_0, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		V_0 = L_1;
+		bool L_2 = V_0;
+		if (!L_2)
+		{
+			goto IL_0027;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemUIAdapterGPU.cs:26>
+		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		Debug_LogError_m94F967AB31244EACE68C3BE1DD85B69ED3334C0E(_stringLiteralCE788A37EA645F16329BE3F0AD0A9FDC9D1AD590, __this, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemUIAdapterGPU.cs:27>
+		Behaviour_set_enabled_mF1DCFE60EB09E0529FE9476CA804A3AA2D72B16A(__this, (bool)0, NULL);
+	}
+
+IL_0027:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemUIAdapterGPU.cs:29>
+		return;
+	}
+}
+// Method Definition Index: 71354
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemUIAdapterGPU_AddSpecies_m8063791D68DF15BF37021B362954CC0990418280 (EcosystemUIAdapterGPU_t4244986468096B92FB68AE3930566309598BC188* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemUIAdapterGPU.cs:32>
+		EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* L_0 = __this->____ecosystemGPU;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_1 = ___0_species;
+		NullCheck(L_0);
+		EcosystemSimulationGPU_AddSpecies_m6056B1225E2FE32D761F150678911C5BA36932B6(L_0, L_1, NULL);
+		return;
+	}
+}
+// Method Definition Index: 71355
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemUIAdapterGPU_RemoveSpecies_m050784DC7B9C5E9553B5A6523C27294DC6E5ACD3 (EcosystemUIAdapterGPU_t4244986468096B92FB68AE3930566309598BC188* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemUIAdapterGPU.cs:35>
+		EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* L_0 = __this->____ecosystemGPU;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_1 = ___0_species;
+		NullCheck(L_0);
+		EcosystemSimulationGPU_RemoveSpecies_mC904F199C4B41207DD9C99D5C48B81B9CC0D17F9(L_0, L_1, NULL);
+		return;
+	}
+}
+// Method Definition Index: 71356
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t EcosystemUIAdapterGPU_CountGroups_mC898CF72001FDA9C130EE1BA066689B544C2C556 (EcosystemUIAdapterGPU_t4244986468096B92FB68AE3930566309598BC188* __this, SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* ___0_species, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemUIAdapterGPU.cs:38>
+		EcosystemSimulationGPU_t52CD0E349918A64B55E9D4D8A96A806A9A4A2D84* L_0 = __this->____ecosystemGPU;
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_1 = ___0_species;
+		NullCheck(L_0);
+		int32_t L_2;
+		L_2 = EcosystemSimulationGPU_CountGroups_m9D693780BE77197ED1BD4BA24E1846195085729E(L_0, L_1, NULL);
+		return L_2;
+	}
+}
+// Method Definition Index: 71357
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void EcosystemUIAdapterGPU__ctor_mBEDB647DA3810E7BECA27223E6F15142C09BB641 (EcosystemUIAdapterGPU_t4244986468096B92FB68AE3930566309598BC188* __this, const RuntimeMethod* method) 
+{
+	{
+		MonoBehaviour__ctor_m592DB0105CA0BC97AA1C5F4AD27B12D68A3B7C1E(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71358
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpeciesBehaviorPropertiesGPU__ctor_m141CCAA77BB9D97DBB35321ABDB948D0A3CA3C54 (SpeciesBehaviorPropertiesGPU_tFD5D7CD7B448C514A4472E3E61BC145E95223B42* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesBehaviorPropertiesGPU.cs:16>
+		__this->___FleeRange = (12.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesBehaviorPropertiesGPU.cs:19>
+		__this->___FleeWeight = (4.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesBehaviorPropertiesGPU.cs:22>
+		__this->___PanicDuration = (3.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesBehaviorPropertiesGPU.cs:26>
+		__this->___DetectionRange = (20.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesBehaviorPropertiesGPU.cs:29>
+		__this->___AttackRange = (1.5f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesBehaviorPropertiesGPU.cs:32>
+		__this->___HuntWeight = (3.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesBehaviorPropertiesGPU.cs:36>
+		__this->___HungerRate = (0.0199999996f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesBehaviorPropertiesGPU.cs:39>
+		__this->___HuntThreshold = (0.300000012f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesBehaviorPropertiesGPU.cs:42>
+		__this->___HungerAfterKill = (0.0f);
+		ScriptableObject__ctor_mD037FDB0B487295EA47F79A4DB1BF1846C9087FF(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71359
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void SpeciesDataGPU__ctor_m434A43E812DD2B7ACB9B5387F5F8301AED752CC0 (SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1__ctor_m07BB59C5A76470D8C3141683CF8FE3EAB6C0BE88_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralD67C7908C050F2E4CF3602473A20E5166C7AE9D5);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralE703B8F6D4B9A22310818C684B8625964A9572D7);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesDataGPU.cs:24>
+		__this->___SpeciesName = _stringLiteralE703B8F6D4B9A22310818C684B8625964A9572D7;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___SpeciesName), (void*)_stringLiteralE703B8F6D4B9A22310818C684B8625964A9572D7);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesDataGPU.cs:25>
+		__this->___ScientificName = _stringLiteralD67C7908C050F2E4CF3602473A20E5166C7AE9D5;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___ScientificName), (void*)_stringLiteralD67C7908C050F2E4CF3602473A20E5166C7AE9D5);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesDataGPU.cs:26>
+		__this->___Role = 2;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesDataGPU.cs:43>
+		__this->___ReproductionRate = (0.100000001f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesDataGPU.cs:45>
+		__this->___NaturalDeathRate = (0.0299999993f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesDataGPU.cs:47>
+		__this->___StarvationDeathRate = (0.25f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesDataGPU.cs:49>
+		__this->___StarvationThreshold = (0.200000003f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesDataGPU.cs:52>
+		List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* L_0 = (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E*)il2cpp_codegen_object_new(List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E_il2cpp_TypeInfo_var);
+		List_1__ctor_m07BB59C5A76470D8C3141683CF8FE3EAB6C0BE88(L_0, List_1__ctor_m07BB59C5A76470D8C3141683CF8FE3EAB6C0BE88_RuntimeMethod_var);
+		__this->___PreySpecies = L_0;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___PreySpecies), (void*)L_0);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesDataGPU.cs:53>
+		List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E* L_1 = (List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E*)il2cpp_codegen_object_new(List_1_t0C015E47709B76A819E0C7DD3CA7C58F0F67C42E_il2cpp_TypeInfo_var);
+		List_1__ctor_m07BB59C5A76470D8C3141683CF8FE3EAB6C0BE88(L_1, List_1__ctor_m07BB59C5A76470D8C3141683CF8FE3EAB6C0BE88_RuntimeMethod_var);
+		__this->___PredatorSpecies = L_1;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___PredatorSpecies), (void*)L_1);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/SpeciesDataGPU.cs:56>
+		__this->___RuntimeId = (-1);
+		ScriptableObject__ctor_mD037FDB0B487295EA47F79A4DB1BF1846C9087FF(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71360
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WanderingAffecterGPU_Initialize_mA0A0C7CB7256F5BC317FAA22D2B357D8E0FDA844 (WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_bounds, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:48>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_0 = ___0_bounds;
+		__this->____bounds = L_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:51>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
+		L_1 = Bounds_get_extents_mFE6DC407FCE2341BE2C750CB554055D211281D25_inline((&___0_bounds), NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
+		L_2 = Vector3_get_one_mC9B289F1E15C42C597180C9FE6FB492495B51D02_inline(NULL);
+		float L_3 = __this->____boundaryMargin;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_4;
+		L_4 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_2, ((float)il2cpp_codegen_add(L_3, (1.0f))), NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_5;
+		L_5 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_1, L_4, NULL);
+		V_0 = L_5;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:52>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6 = V_0;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7;
+		L_7 = Vector3_get_one_mC9B289F1E15C42C597180C9FE6FB492495B51D02_inline(NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8;
+		L_8 = Vector3_Max_m9B6D8FEE7F4CE32C0AAB682606FFBA59E1F37C74_inline(L_6, L_7, NULL);
+		V_0 = L_8;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:53>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:54>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:55>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:56>
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_9;
+		L_9 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10;
+		L_10 = Bounds_get_center_m5B05F81CB835EB6DD8628FDA24B638F477984DC3_inline((&___0_bounds), NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_11 = V_0;
+		float L_12 = L_11.___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13 = V_0;
+		float L_14 = L_13.___x;
+		float L_15;
+		L_15 = Random_Range_m5236C99A7D8AE6AC9190592DC66016652A2D2494(((-L_12)), L_14, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16 = V_0;
+		float L_17 = L_16.___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_18 = V_0;
+		float L_19 = L_18.___y;
+		float L_20;
+		L_20 = Random_Range_m5236C99A7D8AE6AC9190592DC66016652A2D2494(((-L_17)), L_19, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_21 = V_0;
+		float L_22 = L_21.___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_23 = V_0;
+		float L_24 = L_23.___z;
+		float L_25;
+		L_25 = Random_Range_m5236C99A7D8AE6AC9190592DC66016652A2D2494(((-L_22)), L_24, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_26;
+		memset((&L_26), 0, sizeof(L_26));
+		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&L_26), L_15, L_20, L_25, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_27;
+		L_27 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_10, L_26, NULL);
+		NullCheck(L_9);
+		Transform_set_position_mA1A817124BB41B685043DED2A9BA48CDF37C4156(L_9, L_27, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:58>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_28;
+		L_28 = Random_get_onUnitSphere_mA7FD531C3043945E5EA290F670E79A78EFAC0D92(NULL);
+		__this->____wanderDirection = L_28;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:59>
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_29;
+		L_29 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		NullCheck(L_29);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_30;
+		L_30 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_29, NULL);
+		SimulationAffecterComponent_set_AffecterPosition_mFF6FAB181425DD7BACA70B086D3F72C9B80C4262(__this, L_30, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:60>
+		SimulationAffecterComponent_SetUpdatePositionEveryFrame_m155EDCC5853E70D0AA20B5DEC3C1D6878253357E(__this, (bool)1, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:61>
+		__this->____initialized = (bool)1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:62>
+		return;
+	}
+}
+// Method Definition Index: 71361
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WanderingAffecterGPU_Update_m9F953C0A5FDD9218DD7A1629AC7AD37E9382A8E0 (WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* __this, const RuntimeMethod* method) 
+{
+	float V_0 = 0.0f;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_1;
+	memset((&V_1), 0, sizeof(V_1));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_2;
+	memset((&V_2), 0, sizeof(V_2));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_3;
+	memset((&V_3), 0, sizeof(V_3));
+	float V_4 = 0.0f;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_5;
+	memset((&V_5), 0, sizeof(V_5));
+	float V_6 = 0.0f;
+	bool V_7 = false;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_8;
+	memset((&V_8), 0, sizeof(V_8));
+	bool V_9 = false;
+	float V_10 = 0.0f;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:74>
+		bool L_0 = __this->____initialized;
+		V_7 = (bool)((((int32_t)L_0) == ((int32_t)0))? 1 : 0);
+		bool L_1 = V_7;
+		if (!L_1)
+		{
+			goto IL_0015;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:74>
+		goto IL_028d;
+	}
+
+IL_0015:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:76>
+		float L_2;
+		L_2 = Time_get_deltaTime_mC3195000401F0FD167DD2F948FD2BC58330D0865(NULL);
+		V_0 = L_2;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:80>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3;
+		L_3 = Random_get_insideUnitSphere_mA488D6859560B73565B8D890ED6B39DB4091C54F(NULL);
+		float L_4 = __this->____turnRate;
+		float L_5 = V_0;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6;
+		L_6 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_3, ((float)il2cpp_codegen_multiply(((float)il2cpp_codegen_multiply(L_4, (0.0174532924f))), L_5)), NULL);
+		V_1 = L_6;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:81>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = __this->____wanderDirection;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8 = __this->____wanderDirection;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_9 = V_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10;
+		L_10 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_8, L_9, NULL);
+		V_8 = L_10;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_11;
+		L_11 = Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline((&V_8), NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12;
+		L_12 = Vector3_Slerp_m6CA14E5B6F6217802BAA0ADD2C9D086C741BA09C_inline(L_7, L_11, (0.150000006f), NULL);
+		V_8 = L_12;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13;
+		L_13 = Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline((&V_8), NULL);
+		__this->____wanderDirection = L_13;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:84>
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_14;
+		L_14 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		NullCheck(L_14);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_15;
+		L_15 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_14, NULL);
+		V_2 = L_15;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:85>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_16 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_17;
+		L_17 = Bounds_get_center_m5B05F81CB835EB6DD8628FDA24B638F477984DC3_inline(L_16, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_18 = V_2;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_19;
+		L_19 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_17, L_18, NULL);
+		V_3 = L_19;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:86>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:87>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:88>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:89>
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:90>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_20 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_21;
+		L_21 = Bounds_get_max_m6446F2AB97C1E57CA89467B9DE52D4EB61F1CB09_inline(L_20, NULL);
+		float L_22 = L_21.___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_23 = V_2;
+		float L_24 = L_23.___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_25 = V_2;
+		float L_26 = L_25.___x;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_27 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_28;
+		L_28 = Bounds_get_min_m465AC9BBE1DE5D8E8AD95AC19B9899068FEEBB13_inline(L_27, NULL);
+		float L_29 = L_28.___x;
+		float L_30;
+		L_30 = Mathf_Min_m747CA71A9483CDB394B13BD0AD048EE17E48FFE4_inline(((float)il2cpp_codegen_subtract(L_22, L_24)), ((float)il2cpp_codegen_subtract(L_26, L_29)), NULL);
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_31 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_32;
+		L_32 = Bounds_get_max_m6446F2AB97C1E57CA89467B9DE52D4EB61F1CB09_inline(L_31, NULL);
+		float L_33 = L_32.___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_34 = V_2;
+		float L_35 = L_34.___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_36 = V_2;
+		float L_37 = L_36.___y;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_38 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_39;
+		L_39 = Bounds_get_min_m465AC9BBE1DE5D8E8AD95AC19B9899068FEEBB13_inline(L_38, NULL);
+		float L_40 = L_39.___y;
+		float L_41;
+		L_41 = Mathf_Min_m747CA71A9483CDB394B13BD0AD048EE17E48FFE4_inline(((float)il2cpp_codegen_subtract(L_33, L_35)), ((float)il2cpp_codegen_subtract(L_37, L_40)), NULL);
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_42 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_43;
+		L_43 = Bounds_get_max_m6446F2AB97C1E57CA89467B9DE52D4EB61F1CB09_inline(L_42, NULL);
+		float L_44 = L_43.___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_45 = V_2;
+		float L_46 = L_45.___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_47 = V_2;
+		float L_48 = L_47.___z;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_49 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_50;
+		L_50 = Bounds_get_min_m465AC9BBE1DE5D8E8AD95AC19B9899068FEEBB13_inline(L_49, NULL);
+		float L_51 = L_50.___z;
+		float L_52;
+		L_52 = Mathf_Min_m747CA71A9483CDB394B13BD0AD048EE17E48FFE4_inline(((float)il2cpp_codegen_subtract(L_44, L_46)), ((float)il2cpp_codegen_subtract(L_48, L_51)), NULL);
+		float L_53;
+		L_53 = Mathf_Min_m747CA71A9483CDB394B13BD0AD048EE17E48FFE4_inline(L_41, L_52, NULL);
+		float L_54;
+		L_54 = Mathf_Min_m747CA71A9483CDB394B13BD0AD048EE17E48FFE4_inline(L_30, L_53, NULL);
+		V_4 = L_54;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:92>
+		float L_55 = V_4;
+		float L_56 = __this->____boundaryMargin;
+		V_9 = (bool)((((float)L_55) < ((float)L_56))? 1 : 0);
+		bool L_57 = V_9;
+		if (!L_57)
+		{
+			goto IL_017d;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:94>
+		float L_58 = V_4;
+		float L_59 = __this->____boundaryMargin;
+		float L_60;
+		L_60 = Mathf_Clamp01_mA7E048DBDA832D399A581BE4D6DED9FA44CE0F14_inline(((float)(L_58/L_59)), NULL);
+		V_10 = ((float)il2cpp_codegen_subtract((1.0f), L_60));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:95>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_61 = __this->____wanderDirection;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_62;
+		L_62 = Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline((&V_3), NULL);
+		float L_63 = V_10;
+		float L_64 = __this->____centerReturnStrength;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_65;
+		L_65 = Vector3_Slerp_m6CA14E5B6F6217802BAA0ADD2C9D086C741BA09C_inline(L_61, L_62, ((float)il2cpp_codegen_multiply(L_63, L_64)), NULL);
+		V_8 = L_65;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_66;
+		L_66 = Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline((&V_8), NULL);
+		__this->____wanderDirection = L_66;
+	}
+
+IL_017d:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:99>
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_67;
+		L_67 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_68 = L_67;
+		NullCheck(L_68);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_69;
+		L_69 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_68, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_70 = __this->____wanderDirection;
+		float L_71 = __this->____wanderSpeed;
+		float L_72 = V_0;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_73;
+		L_73 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_70, ((float)il2cpp_codegen_multiply(L_71, L_72)), NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_74;
+		L_74 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_69, L_73, NULL);
+		NullCheck(L_68);
+		Transform_set_position_mA1A817124BB41B685043DED2A9BA48CDF37C4156(L_68, L_74, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:102>
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_75;
+		L_75 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		NullCheck(L_75);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_76;
+		L_76 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_75, NULL);
+		V_5 = L_76;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:103>
+		float L_77 = __this->____boundaryMargin;
+		V_6 = ((float)il2cpp_codegen_multiply(L_77, (0.5f)));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:104>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_78 = V_5;
+		float L_79 = L_78.___x;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_80 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_81;
+		L_81 = Bounds_get_min_m465AC9BBE1DE5D8E8AD95AC19B9899068FEEBB13_inline(L_80, NULL);
+		float L_82 = L_81.___x;
+		float L_83 = V_6;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_84 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_85;
+		L_85 = Bounds_get_max_m6446F2AB97C1E57CA89467B9DE52D4EB61F1CB09_inline(L_84, NULL);
+		float L_86 = L_85.___x;
+		float L_87 = V_6;
+		float L_88;
+		L_88 = Mathf_Clamp_mEB9AEA827D27D20FCC787F7375156AF46BB12BBF_inline(L_79, ((float)il2cpp_codegen_add(L_82, L_83)), ((float)il2cpp_codegen_subtract(L_86, L_87)), NULL);
+		(&V_5)->___x = L_88;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:105>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_89 = V_5;
+		float L_90 = L_89.___y;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_91 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_92;
+		L_92 = Bounds_get_min_m465AC9BBE1DE5D8E8AD95AC19B9899068FEEBB13_inline(L_91, NULL);
+		float L_93 = L_92.___y;
+		float L_94 = V_6;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_95 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_96;
+		L_96 = Bounds_get_max_m6446F2AB97C1E57CA89467B9DE52D4EB61F1CB09_inline(L_95, NULL);
+		float L_97 = L_96.___y;
+		float L_98 = V_6;
+		float L_99;
+		L_99 = Mathf_Clamp_mEB9AEA827D27D20FCC787F7375156AF46BB12BBF_inline(L_90, ((float)il2cpp_codegen_add(L_93, L_94)), ((float)il2cpp_codegen_subtract(L_97, L_98)), NULL);
+		(&V_5)->___y = L_99;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:106>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_100 = V_5;
+		float L_101 = L_100.___z;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_102 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_103;
+		L_103 = Bounds_get_min_m465AC9BBE1DE5D8E8AD95AC19B9899068FEEBB13_inline(L_102, NULL);
+		float L_104 = L_103.___z;
+		float L_105 = V_6;
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_106 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____bounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_107;
+		L_107 = Bounds_get_max_m6446F2AB97C1E57CA89467B9DE52D4EB61F1CB09_inline(L_106, NULL);
+		float L_108 = L_107.___z;
+		float L_109 = V_6;
+		float L_110;
+		L_110 = Mathf_Clamp_mEB9AEA827D27D20FCC787F7375156AF46BB12BBF_inline(L_101, ((float)il2cpp_codegen_add(L_104, L_105)), ((float)il2cpp_codegen_subtract(L_108, L_109)), NULL);
+		(&V_5)->___z = L_110;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:107>
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_111;
+		L_111 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_112 = V_5;
+		NullCheck(L_111);
+		Transform_set_position_mA1A817124BB41B685043DED2A9BA48CDF37C4156(L_111, L_112, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:110>
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_113;
+		L_113 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		NullCheck(L_113);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_114;
+		L_114 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_113, NULL);
+		SimulationAffecterComponent_set_AffecterPosition_mFF6FAB181425DD7BACA70B086D3F72C9B80C4262(__this, L_114, NULL);
+	}
+
+IL_028d:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:111>
+		return;
+	}
+}
+// Method Definition Index: 71362
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WanderingAffecterGPU__ctor_mA8E2264015B081CD596746B85323335C5CD88F7C (WanderingAffecterGPU_t532CF016A2AEAC110986B4C4C5266BD2266998C0* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:21>
+		__this->____wanderSpeed = (5.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:24>
+		__this->____turnRate = (45.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:27>
+		__this->____boundaryMargin = (6.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/Ecosystem/WanderingAffecterGPU.cs:31>
+		__this->____centerReturnStrength = (0.349999994f);
+		SimulationAffecterComponent__ctor_m8E3CE8E94DDF3D28FA0F26355F556BFC8A1E458C(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+IL2CPP_EXTERN_C void BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshal_pinvoke(const BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9& unmarshaled, BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshaled_pinvoke& marshaled)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_0_0_0_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9____BoidMesh_FieldInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	Exception_t* ___BoidMeshException = il2cpp_codegen_get_marshal_directive_exception("Cannot marshal field '%s' of type '%s': Reference type field marshaling is not supported.", BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9____BoidMesh_FieldInfo_var, BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_0_0_0_var);
+	IL2CPP_RAISE_MANAGED_EXCEPTION(___BoidMeshException, NULL);
+}
+IL2CPP_EXTERN_C void BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshal_pinvoke_back(const BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshaled_pinvoke& marshaled, BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9& unmarshaled)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_0_0_0_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9____BoidMesh_FieldInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	Exception_t* ___BoidMeshException = il2cpp_codegen_get_marshal_directive_exception("Cannot marshal field '%s' of type '%s': Reference type field marshaling is not supported.", BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9____BoidMesh_FieldInfo_var, BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_0_0_0_var);
+	IL2CPP_RAISE_MANAGED_EXCEPTION(___BoidMeshException, NULL);
+}
+IL2CPP_EXTERN_C void BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshal_pinvoke_cleanup(BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshaled_pinvoke& marshaled)
+{
+}
+IL2CPP_EXTERN_C void BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshal_com(const BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9& unmarshaled, BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshaled_com& marshaled)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_0_0_0_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9____BoidMesh_FieldInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	Exception_t* ___BoidMeshException = il2cpp_codegen_get_marshal_directive_exception("Cannot marshal field '%s' of type '%s': Reference type field marshaling is not supported.", BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9____BoidMesh_FieldInfo_var, BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_0_0_0_var);
+	IL2CPP_RAISE_MANAGED_EXCEPTION(___BoidMeshException, NULL);
+}
+IL2CPP_EXTERN_C void BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshal_com_back(const BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshaled_com& marshaled, BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9& unmarshaled)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_0_0_0_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9____BoidMesh_FieldInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	Exception_t* ___BoidMeshException = il2cpp_codegen_get_marshal_directive_exception("Cannot marshal field '%s' of type '%s': Reference type field marshaling is not supported.", BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9____BoidMesh_FieldInfo_var, BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_0_0_0_var);
+	IL2CPP_RAISE_MANAGED_EXCEPTION(___BoidMeshException, NULL);
+}
+IL2CPP_EXTERN_C void BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshal_com_cleanup(BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9_marshaled_com& marshaled)
+{
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71363
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 AutomaticFishSwimSimulation_get_SimulationAreaBounds_mFC41C753C235C03B841CDCC6BD3DDABACC4BCEC1 (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:25>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_0 = __this->____simulationAreaBounds;
+		return L_0;
+	}
+}
+// Method Definition Index: 71364
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* AutomaticFishSwimSimulation_get_Obstacles_mB16FD586799A1499D2FBAD60ABF64E81EEA41EC0 (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* V_0 = NULL;
+	int32_t V_1 = 0;
+	bool V_2 = false;
+	SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* V_3 = NULL;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:31>
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_0 = __this->____obstacles;
+		NullCheck(L_0);
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_1 = (SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C*)(SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C*)SZArrayNew(SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C_il2cpp_TypeInfo_var, (uint32_t)((int32_t)(((RuntimeArray*)L_0)->max_length)));
+		V_0 = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:32>
+		V_1 = 0;
+		goto IL_002d;
+	}
+
+IL_0013:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:34>
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_2 = V_0;
+		int32_t L_3 = V_1;
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_4 = __this->____obstacles;
+		int32_t L_5 = V_1;
+		NullCheck(L_4);
+		int32_t L_6 = L_5;
+		SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* L_7 = (L_4)->GetAt(static_cast<il2cpp_array_size_t>(L_6));
+		NullCheck(L_7);
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_8;
+		L_8 = SimulationAffecterComponent_get_Affecter_mDFA9921837734CB0FA9FC844E28DEBD1AE014C08_inline(L_7, NULL);
+		NullCheck(L_2);
+		(L_2)->SetAt(static_cast<il2cpp_array_size_t>(L_3), (SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54)L_8);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:32>
+		int32_t L_9 = V_1;
+		V_1 = ((int32_t)il2cpp_codegen_add(L_9, 1));
+	}
+
+IL_002d:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:32>
+		int32_t L_10 = V_1;
+		SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F* L_11 = __this->____obstacles;
+		NullCheck(L_11);
+		V_2 = (bool)((((int32_t)L_10) < ((int32_t)((int32_t)(((RuntimeArray*)L_11)->max_length))))? 1 : 0);
+		bool L_12 = V_2;
+		if (L_12)
+		{
+			goto IL_0013;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:36>
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_13 = V_0;
+		V_3 = L_13;
+		goto IL_0040;
+	}
+
+IL_0040:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:37>
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_14 = V_3;
+		return L_14;
+	}
+}
+// Method Definition Index: 71365
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AutomaticFishSwimSimulation_OnDrawGizmos_mBC98C539C08EE335BDE43159A56B527D928CB166 (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:44>
+		return;
+	}
+}
+// Method Definition Index: 71366
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AutomaticFishSwimSimulation_Update_m0B035CAA02BA89F4654D4C2428445B0120D31226 (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:48>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_0 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____simulationAreaBounds);
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_1;
+		L_1 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		NullCheck(L_1);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
+		L_2 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_1, NULL);
+		Bounds_set_center_m891869DD5B1BEEE2D17907BBFB7EB79AAE44884B_inline(L_0, L_2, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:49>
+		return;
+	}
+}
+// Method Definition Index: 71367
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 AutomaticFishSwimSimulation_GetCurrentTargetPosition_m467F85B2E59B54F6733E8F3DB1D9D1A0BD92147A (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:57>
+		SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* L_0 = __this->____target;
+		NullCheck(L_0);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
+		L_1 = SimulationAffecterComponent_get_AffecterPosition_mA8D10675AA9AF3FBC9170831540025CF51F4EEC8(L_0, NULL);
+		V_0 = L_1;
+		goto IL_000f;
+	}
+
+IL_000f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:58>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2 = V_0;
+		return L_2;
+	}
+}
+// Method Definition Index: 71368
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 AutomaticFishSwimSimulation_GetNewTargetPosition_m1025EDA4D342A282F4ED21C630140A2709FC86D9 (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_1;
+	memset((&V_1), 0, sizeof(V_1));
+	float V_2 = 0.0f;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_3;
+	memset((&V_3), 0, sizeof(V_3));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_4;
+	memset((&V_4), 0, sizeof(V_4));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_5;
+	memset((&V_5), 0, sizeof(V_5));
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:68>
+		SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* L_0 = __this->____target;
+		NullCheck(L_0);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
+		L_1 = SimulationAffecterComponent_get_AffecterPosition_mA8D10675AA9AF3FBC9170831540025CF51F4EEC8(L_0, NULL);
+		V_0 = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:71>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
+		L_2 = AutomaticFishSwimSimulation_GetRandomPositionInsideSimulationArea_mDBB2943486E9046BE2F0491FE7A26DD7FC85BE63(__this, NULL);
+		V_1 = L_2;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:72>
+		float L_3 = __this->____minDistanceBetweenTargets;
+		float L_4 = __this->____maxDistanceBetweenTargets;
+		float L_5;
+		L_5 = Random_Range_m5236C99A7D8AE6AC9190592DC66016652A2D2494(L_3, L_4, NULL);
+		V_2 = L_5;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:73>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6 = V_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = V_0;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8;
+		L_8 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_6, L_7, NULL);
+		V_4 = L_8;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_9;
+		L_9 = Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline((&V_4), NULL);
+		V_3 = L_9;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:74>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10 = V_0;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_11 = V_3;
+		float L_12 = V_2;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13;
+		L_13 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_11, L_12, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_14;
+		L_14 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_10, L_13, NULL);
+		V_1 = L_14;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:77>
+		SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* L_15 = __this->____target;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16 = V_1;
+		NullCheck(L_15);
+		SimulationAffecterComponent_set_AffecterPosition_mFF6FAB181425DD7BACA70B086D3F72C9B80C4262(L_15, L_16, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:79>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_17 = V_1;
+		V_5 = L_17;
+		goto IL_0057;
+	}
+
+IL_0057:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:80>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_18 = V_5;
+		return L_18;
+	}
+}
+// Method Definition Index: 71369
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 AutomaticFishSwimSimulation_GetRandomPositionInsideSimulationArea_mDBB2943486E9046BE2F0491FE7A26DD7FC85BE63 (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_1;
+	memset((&V_1), 0, sizeof(V_1));
+	float V_2 = 0.0f;
+	float V_3 = 0.0f;
+	float V_4 = 0.0f;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_5;
+	memset((&V_5), 0, sizeof(V_5));
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:84>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_0 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____simulationAreaBounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
+		L_1 = Bounds_get_center_m5B05F81CB835EB6DD8628FDA24B638F477984DC3_inline(L_0, NULL);
+		V_0 = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:85>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_2 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____simulationAreaBounds);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3;
+		L_3 = Bounds_get_extents_mFE6DC407FCE2341BE2C750CB554055D211281D25_inline(L_2, NULL);
+		V_1 = L_3;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:87>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_4 = V_0;
+		float L_5 = L_4.___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6 = V_1;
+		float L_7 = L_6.___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8 = V_0;
+		float L_9 = L_8.___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10 = V_1;
+		float L_11 = L_10.___x;
+		float L_12;
+		L_12 = Random_Range_m5236C99A7D8AE6AC9190592DC66016652A2D2494(((float)il2cpp_codegen_subtract(L_5, L_7)), ((float)il2cpp_codegen_add(L_9, L_11)), NULL);
+		V_2 = L_12;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:88>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13 = V_0;
+		float L_14 = L_13.___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_15 = V_1;
+		float L_16 = L_15.___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_17 = V_0;
+		float L_18 = L_17.___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_19 = V_1;
+		float L_20 = L_19.___y;
+		float L_21;
+		L_21 = Random_Range_m5236C99A7D8AE6AC9190592DC66016652A2D2494(((float)il2cpp_codegen_subtract(L_14, L_16)), ((float)il2cpp_codegen_add(L_18, L_20)), NULL);
+		V_3 = L_21;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:89>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_22 = V_0;
+		float L_23 = L_22.___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_24 = V_1;
+		float L_25 = L_24.___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_26 = V_0;
+		float L_27 = L_26.___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_28 = V_1;
+		float L_29 = L_28.___z;
+		float L_30;
+		L_30 = Random_Range_m5236C99A7D8AE6AC9190592DC66016652A2D2494(((float)il2cpp_codegen_subtract(L_23, L_25)), ((float)il2cpp_codegen_add(L_27, L_29)), NULL);
+		V_4 = L_30;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:91>
+		float L_31 = V_2;
+		float L_32 = V_3;
+		float L_33 = V_4;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_34;
+		memset((&L_34), 0, sizeof(L_34));
+		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&L_34), L_31, L_32, L_33, NULL);
+		V_5 = L_34;
+		goto IL_0087;
+	}
+
+IL_0087:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:92>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_35 = V_5;
+		return L_35;
+	}
+}
+// Method Definition Index: 71370
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AutomaticFishSwimSimulation__ctor_mA38DEEB2FFAF4BA18A6987083F394DCD556DE20D (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:15>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* L_0 = (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3*)(&__this->____simulationAreaBounds);
+		il2cpp_codegen_initobj(L_0, sizeof(Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:18>
+		__this->____target = (SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____target), (void*)(SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:19>
+		__this->____minDistanceBetweenTargets = (5.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:20>
+		__this->____maxDistanceBetweenTargets = (10.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:23>
+		__this->____obstacles = (SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____obstacles), (void*)(SimulationAffecterComponentU5BU5D_t97CF77B477092A45A462BDB5BB15ACAD8BD9C26F*)NULL);
+		MonoBehaviour__ctor_m592DB0105CA0BC97AA1C5F4AD27B12D68A3B7C1E(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71371
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AutomaticFishSwimming_Start_m106D6DF3D4EEE2AE61F5E62A5F9A9ACF39F49A61 (AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:32>
+		AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* L_0 = __this->____simulation;
+		NullCheck(L_0);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
+		L_1 = AutomaticFishSwimSimulation_GetCurrentTargetPosition_m467F85B2E59B54F6733E8F3DB1D9D1A0BD92147A(L_0, NULL);
+		__this->____currentTargetPosition = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:35>
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_2;
+		L_2 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_3 = __this->____fishMovementProperties;
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3 L_4;
+		L_4 = FishSwimmingUtility_InitializeBoid_m227330AB9353317EAA41E03AFDF785BB1C901D5A(L_2, L_3, NULL);
+		__this->____boidInfo = L_4;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:36>
+		return;
+	}
+}
+// Method Definition Index: 71372
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AutomaticFishSwimming_Update_m750B064E562B48FD67BDE4C03F928C4CE898656A (AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59* __this, const RuntimeMethod* method) 
+{
+	float V_0 = 0.0f;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_1;
+	memset((&V_1), 0, sizeof(V_1));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_2;
+	memset((&V_2), 0, sizeof(V_2));
+	SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 V_3;
+	memset((&V_3), 0, sizeof(V_3));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_4;
+	memset((&V_4), 0, sizeof(V_4));
+	float V_5 = 0.0f;
+	float V_6 = 0.0f;
+	float V_7 = 0.0f;
+	float V_8 = 0.0f;
+	bool V_9 = false;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_10;
+	memset((&V_10), 0, sizeof(V_10));
+	float V_11 = 0.0f;
+	float V_12 = 0.0f;
+	float V_13 = 0.0f;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_14;
+	memset((&V_14), 0, sizeof(V_14));
+	bool V_15 = false;
+	bool V_16 = false;
+	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 V_17;
+	memset((&V_17), 0, sizeof(V_17));
+	int32_t G_B3_0 = 0;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 G_B8_0;
+	memset((&G_B8_0), 0, sizeof(G_B8_0));
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:42>
+		AutomaticFishSwimming_UpdateTarget_m220879DC769D9E1DC42FDF3A2C7A17A905F82BD8(__this, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:45>
+		float L_0;
+		L_0 = Time_get_deltaTime_mC3195000401F0FD167DD2F948FD2BC58330D0865(NULL);
+		V_0 = L_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:48>
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* L_1 = (BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3*)(&__this->____boidInfo);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2 = L_1->___Position;
+		V_1 = L_2;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:49>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3 = __this->____currentTargetPosition;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_4 = V_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_5;
+		L_5 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_3, L_4, NULL);
+		V_14 = L_5;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6;
+		L_6 = Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline((&V_14), NULL);
+		V_2 = L_6;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:52>
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_7;
+		L_7 = AutomaticFishSwimming_GetClosestObstacle_mBC79BF29946738C0236FB12C018EDE5D0CBC4C84(__this, NULL);
+		V_3 = L_7;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:53>
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_8 = V_3;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_9 = L_8.___Position;
+		V_4 = L_9;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:54>
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_10 = V_3;
+		float L_11 = L_10.___Radius;
+		V_5 = L_11;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:55>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = V_4;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13 = V_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_14;
+		L_14 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_12, L_13, NULL);
+		V_14 = L_14;
+		float L_15;
+		L_15 = Vector3_get_magnitude_mF0D6017E90B345F1F52D1CC564C640F1A847AF2D_inline((&V_14), NULL);
+		float L_16 = V_5;
+		V_6 = ((float)il2cpp_codegen_subtract(L_15, L_16));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:58>
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_17 = __this->____fishSchoolProperties;
+		NullCheck(L_17);
+		float L_18 = L_17->___VisionRange;
+		V_7 = L_18;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:59>
+		FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD* L_19 = __this->____fishSchoolProperties;
+		NullCheck(L_19);
+		float L_20 = L_19->___ObstacleAvoidanceRange;
+		V_8 = L_20;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:60>
+		float L_21 = V_6;
+		float L_22 = V_7;
+		if ((!(((float)L_21) <= ((float)L_22))))
+		{
+			goto IL_0088;
+		}
+	}
+	{
+		float L_23 = V_6;
+		float L_24 = V_8;
+		G_B3_0 = ((((int32_t)((!(((float)L_23) <= ((float)L_24)))? 1 : 0)) == ((int32_t)0))? 1 : 0);
+		goto IL_0089;
+	}
+
+IL_0088:
+	{
+		G_B3_0 = 0;
+	}
+
+IL_0089:
+	{
+		V_9 = (bool)G_B3_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:61>
+		bool L_25;
+		L_25 = AutomaticFishSwimming_SimulationHasObstacles_m4F8625580155A27B8C37820514E1F41517E3C1CB(__this, NULL);
+		V_15 = (bool)((((int32_t)L_25) == ((int32_t)0))? 1 : 0);
+		bool L_26 = V_15;
+		if (!L_26)
+		{
+			goto IL_009f;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:63>
+		V_9 = (bool)0;
+	}
+
+IL_009f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:65>
+		bool L_27 = V_9;
+		if (L_27)
+		{
+			goto IL_00a6;
+		}
+	}
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_28 = V_2;
+		G_B8_0 = L_28;
+		goto IL_00b7;
+	}
+
+IL_00a6:
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_29 = V_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_30 = V_4;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_31;
+		L_31 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_29, L_30, NULL);
+		V_14 = L_31;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_32;
+		L_32 = Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline((&V_14), NULL);
+		G_B8_0 = L_32;
+	}
+
+IL_00b7:
+	{
+		V_10 = G_B8_0;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:68>
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* L_33 = (BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3*)(&__this->____boidInfo);
+		float L_34 = L_33->___Speed;
+		V_11 = L_34;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:69>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_35 = V_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_36 = V_10;
+		float L_37 = V_11;
+		AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* L_38 = __this->____simulation;
+		NullCheck(L_38);
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_39;
+		L_39 = AutomaticFishSwimSimulation_get_SimulationAreaBounds_mFC41C753C235C03B841CDCC6BD3DDABACC4BCEC1_inline(L_38, NULL);
+		bool L_40;
+		L_40 = FishSwimmingUtility_WillLeaveSimulationArea_mAEFC21228AB6175B2E0C0B585DDB37995CB7D983(L_35, L_36, L_37, L_39, NULL);
+		V_16 = L_40;
+		bool L_41 = V_16;
+		if (!L_41)
+		{
+			goto IL_010b;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:71>
+		AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* L_42 = __this->____simulation;
+		NullCheck(L_42);
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_43;
+		L_43 = AutomaticFishSwimSimulation_get_SimulationAreaBounds_mFC41C753C235C03B841CDCC6BD3DDABACC4BCEC1_inline(L_42, NULL);
+		V_17 = L_43;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_44;
+		L_44 = Bounds_get_center_m5B05F81CB835EB6DD8628FDA24B638F477984DC3_inline((&V_17), NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_45 = V_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_46;
+		L_46 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_44, L_45, NULL);
+		V_14 = L_46;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_47;
+		L_47 = Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline((&V_14), NULL);
+		V_10 = L_47;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:72>
+		V_9 = (bool)0;
+	}
+
+IL_010b:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:74>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_48 = V_10;
+		float L_49 = V_0;
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_50 = __this->____fishMovementProperties;
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* L_51 = (BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3*)(&__this->____boidInfo);
+		FishSwimmingUtility_UpdateMovementDirection_m395E0824E1379F6B3E9E11E9AA90371CAFE149EA(L_48, L_49, L_50, L_51, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:77>
+		bool L_52 = V_9;
+		float L_53 = V_0;
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_54 = __this->____fishMovementProperties;
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* L_55 = (BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3*)(&__this->____boidInfo);
+		FishSwimmingUtility_UpdateMovementSpeed_m97A3E4CB5795FEB6ABC19BD76EAB13FDDE20CAE3(L_52, L_53, L_54, L_55, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:80>
+		float L_56 = V_0;
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_57;
+		L_57 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* L_58 = (BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3*)(&__this->____boidInfo);
+		FishSwimmingUtility_UpdatePositionAndRotation_m3F31E2A54635D405D42CCF83FB207EAE79F7838D(L_56, L_57, L_58, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:83>
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_59 = __this->____fishMovementProperties;
+		NullCheck(L_59);
+		float L_60 = L_59->___MaxAcceleration;
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* L_61 = (BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3*)(&__this->____boidInfo);
+		float L_62 = L_61->___Acceleration;
+		float L_63;
+		L_63 = Mathf_InverseLerp_mBD7EC6A7173CE082226077E1557D5BC2D2AE0D9D_inline((0.0f), L_60, L_62, NULL);
+		V_12 = L_63;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:84>
+		FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D* L_64 = __this->____fishMovementProperties;
+		NullCheck(L_64);
+		float L_65 = L_64->___MaxAngularAcceleration;
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* L_66 = (BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3*)(&__this->____boidInfo);
+		float L_67 = L_66->___AngularAcceleration;
+		float L_68;
+		L_68 = Mathf_InverseLerp_mBD7EC6A7173CE082226077E1557D5BC2D2AE0D9D_inline((0.0f), L_65, L_67, NULL);
+		V_13 = L_68;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:85>
+		FishSwimmingMaterialUpdate_t2230944845305A61A155BA20CC02CD05F99BDABF* L_69 = __this->____fishMaterialUpdate;
+		float L_70 = V_12;
+		float L_71 = V_13;
+		float L_72;
+		L_72 = Mathf_Max_mF5379E63D2BBAC76D090748695D833934F8AD051_inline(L_70, L_71, NULL);
+		NullCheck(L_69);
+		FishSwimmingMaterialUpdate_UpdateSwimIntensityPercentage_m5846B7DADA2EF639FE8731CDA21943F63B28D81D(L_69, L_72, NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:86>
+		return;
+	}
+}
+// Method Definition Index: 71373
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AutomaticFishSwimming_UpdateTarget_m220879DC769D9E1DC42FDF3A2C7A17A905F82BD8 (AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59* __this, const RuntimeMethod* method) 
+{
+	float V_0 = 0.0f;
+	bool V_1 = false;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_2;
+	memset((&V_2), 0, sizeof(V_2));
+	bool V_3 = false;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:90>
+		bool L_0 = __this->____switchTargetUponReachingIt;
+		V_1 = (bool)((((int32_t)L_0) == ((int32_t)0))? 1 : 0);
+		bool L_1 = V_1;
+		if (!L_1)
+		{
+			goto IL_0022;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:92>
+		AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* L_2 = __this->____simulation;
+		NullCheck(L_2);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3;
+		L_3 = AutomaticFishSwimSimulation_GetCurrentTargetPosition_m467F85B2E59B54F6733E8F3DB1D9D1A0BD92147A(L_2, NULL);
+		__this->____currentTargetPosition = L_3;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:93>
+		goto IL_0064;
+	}
+
+IL_0022:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:97>
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* L_4 = (BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3*)(&__this->____boidInfo);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_5 = L_4->___Position;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6 = __this->____currentTargetPosition;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7;
+		L_7 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_5, L_6, NULL);
+		V_2 = L_7;
+		float L_8;
+		L_8 = Vector3_get_magnitude_mF0D6017E90B345F1F52D1CC564C640F1A847AF2D_inline((&V_2), NULL);
+		V_0 = L_8;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:98>
+		float L_9 = V_0;
+		float L_10 = __this->____reachingDistanceFromTarget;
+		V_3 = (bool)((((int32_t)((!(((float)L_9) <= ((float)L_10)))? 1 : 0)) == ((int32_t)0))? 1 : 0);
+		bool L_11 = V_3;
+		if (!L_11)
+		{
+			goto IL_0064;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:100>
+		AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* L_12 = __this->____simulation;
+		NullCheck(L_12);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13;
+		L_13 = AutomaticFishSwimSimulation_GetNewTargetPosition_m1025EDA4D342A282F4ED21C630140A2709FC86D9(L_12, NULL);
+		__this->____currentTargetPosition = L_13;
+	}
+
+IL_0064:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:102>
+		return;
+	}
+}
+// Method Definition Index: 71374
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool AutomaticFishSwimming_SimulationHasObstacles_m4F8625580155A27B8C37820514E1F41517E3C1CB (AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59* __this, const RuntimeMethod* method) 
+{
+	SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* V_0 = NULL;
+	bool V_1 = false;
+	bool V_2 = false;
+	int32_t G_B3_0 = 0;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:106>
+		AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* L_0 = __this->____simulation;
+		NullCheck(L_0);
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_1;
+		L_1 = AutomaticFishSwimSimulation_get_Obstacles_mB16FD586799A1499D2FBAD60ABF64E81EEA41EC0(L_0, NULL);
+		V_0 = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:107>
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_2 = V_0;
+		if (!L_2)
+		{
+			goto IL_0017;
+		}
+	}
+	{
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_3 = V_0;
+		NullCheck(L_3);
+		G_B3_0 = ((((int32_t)(((RuntimeArray*)L_3)->max_length)) == ((int32_t)0))? 1 : 0);
+		goto IL_0018;
+	}
+
+IL_0017:
+	{
+		G_B3_0 = 1;
+	}
+
+IL_0018:
+	{
+		V_1 = (bool)G_B3_0;
+		bool L_4 = V_1;
+		if (!L_4)
+		{
+			goto IL_0021;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:109>
+		V_2 = (bool)0;
+		goto IL_0025;
+	}
+
+IL_0021:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:112>
+		V_2 = (bool)1;
+		goto IL_0025;
+	}
+
+IL_0025:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:113>
+		bool L_5 = V_2;
+		return L_5;
+	}
+}
+// Method Definition Index: 71375
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 AutomaticFishSwimming_GetClosestObstacle_mBC79BF29946738C0236FB12C018EDE5D0CBC4C84 (AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59* __this, const RuntimeMethod* method) 
+{
+	SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* V_0 = NULL;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_1;
+	memset((&V_1), 0, sizeof(V_1));
+	SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 V_2;
+	memset((&V_2), 0, sizeof(V_2));
+	float V_3 = 0.0f;
+	bool V_4 = false;
+	SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 V_5;
+	memset((&V_5), 0, sizeof(V_5));
+	SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 V_6;
+	memset((&V_6), 0, sizeof(V_6));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_7;
+	memset((&V_7), 0, sizeof(V_7));
+	int32_t V_8 = 0;
+	SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 V_9;
+	memset((&V_9), 0, sizeof(V_9));
+	float V_10 = 0.0f;
+	bool V_11 = false;
+	bool V_12 = false;
+	int32_t G_B3_0 = 0;
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:117>
+		AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* L_0 = __this->____simulation;
+		NullCheck(L_0);
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_1;
+		L_1 = AutomaticFishSwimSimulation_get_Obstacles_mB16FD586799A1499D2FBAD60ABF64E81EEA41EC0(L_0, NULL);
+		V_0 = L_1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:118>
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_2 = V_0;
+		if (!L_2)
+		{
+			goto IL_0017;
+		}
+	}
+	{
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_3 = V_0;
+		NullCheck(L_3);
+		G_B3_0 = ((((int32_t)(((RuntimeArray*)L_3)->max_length)) == ((int32_t)0))? 1 : 0);
+		goto IL_0018;
+	}
+
+IL_0017:
+	{
+		G_B3_0 = 1;
+	}
+
+IL_0018:
+	{
+		V_4 = (bool)G_B3_0;
+		bool L_4 = V_4;
+		if (!L_4)
+		{
+			goto IL_0030;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:120>
+		il2cpp_codegen_initobj((&V_5), sizeof(SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54));
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_5 = V_5;
+		V_6 = L_5;
+		goto IL_00d2;
+	}
+
+IL_0030:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:123>
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* L_6 = (BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3*)(&__this->____boidInfo);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = L_6->___Position;
+		V_1 = L_7;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:124>
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_8 = V_0;
+		NullCheck(L_8);
+		int32_t L_9 = 0;
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_10 = (L_8)->GetAt(static_cast<il2cpp_array_size_t>(L_9));
+		V_2 = L_10;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:125>
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_11 = V_2;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = L_11.___Position;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13 = V_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_14;
+		L_14 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_12, L_13, NULL);
+		V_7 = L_14;
+		float L_15;
+		L_15 = Vector3_get_sqrMagnitude_m43C27DEC47C4811FB30AB474FF2131A963B66FC8_inline((&V_7), NULL);
+		V_3 = L_15;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:126>
+		float L_16 = V_3;
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_17 = V_2;
+		float L_18 = L_17.___Radius;
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_19 = V_2;
+		float L_20 = L_19.___Radius;
+		V_3 = ((float)il2cpp_codegen_subtract(L_16, ((float)il2cpp_codegen_multiply(L_18, L_20))));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:128>
+		V_8 = 1;
+		goto IL_00c0;
+	}
+
+IL_006f:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:130>
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_21 = V_0;
+		int32_t L_22 = V_8;
+		NullCheck(L_21);
+		int32_t L_23 = L_22;
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_24 = (L_21)->GetAt(static_cast<il2cpp_array_size_t>(L_23));
+		V_9 = L_24;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:131>
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_25 = V_9;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_26 = L_25.___Position;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_27 = V_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_28;
+		L_28 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_26, L_27, NULL);
+		V_7 = L_28;
+		float L_29;
+		L_29 = Vector3_get_sqrMagnitude_m43C27DEC47C4811FB30AB474FF2131A963B66FC8_inline((&V_7), NULL);
+		V_10 = L_29;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:132>
+		float L_30 = V_10;
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_31 = V_9;
+		float L_32 = L_31.___Radius;
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_33 = V_9;
+		float L_34 = L_33.___Radius;
+		V_10 = ((float)il2cpp_codegen_subtract(L_30, ((float)il2cpp_codegen_multiply(L_32, L_34))));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:134>
+		float L_35 = V_10;
+		float L_36 = V_3;
+		V_11 = (bool)((((float)L_35) < ((float)L_36))? 1 : 0);
+		bool L_37 = V_11;
+		if (!L_37)
+		{
+			goto IL_00b9;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:136>
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_38 = V_9;
+		V_2 = L_38;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:137>
+		float L_39 = V_10;
+		V_3 = L_39;
+	}
+
+IL_00b9:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:128>
+		int32_t L_40 = V_8;
+		V_8 = ((int32_t)il2cpp_codegen_add(L_40, 1));
+	}
+
+IL_00c0:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:128>
+		int32_t L_41 = V_8;
+		SimulationAffecterU5BU5D_t88190E6D00EECCD95F4D831F886C1FCBBACC516C* L_42 = V_0;
+		NullCheck(L_42);
+		V_12 = (bool)((((int32_t)L_41) < ((int32_t)((int32_t)(((RuntimeArray*)L_42)->max_length))))? 1 : 0);
+		bool L_43 = V_12;
+		if (L_43)
+		{
+			goto IL_006f;
+		}
+	}
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:141>
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_44 = V_2;
+		V_6 = L_44;
+		goto IL_00d2;
+	}
+
+IL_00d2:
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:142>
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_45 = V_6;
+		return L_45;
+	}
+}
+// Method Definition Index: 71376
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AutomaticFishSwimming__ctor_m3D6183B9E91F2D868C85C6125906ADB4548927A5 (AutomaticFishSwimming_tD090336106490293E5B2A57651DAFD93562A6B59* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:15>
+		__this->____simulation = (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____simulation), (void*)(AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:16>
+		__this->____switchTargetUponReachingIt = (bool)1;
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:17>
+		__this->____reachingDistanceFromTarget = (1.0f);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:20>
+		__this->____fishMovementProperties = (FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____fishMovementProperties), (void*)(FishMovementProperties_tA08569B3DBC09385435D8EE777A44A00AF1DAB2D*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:21>
+		__this->____fishSchoolProperties = (FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____fishSchoolProperties), (void*)(FishSchoolProperties_tAE8394650C0CBCE250207CE053EA23E05CAA68AD*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:22>
+		__this->____fishMaterialUpdate = (FishSwimmingMaterialUpdate_t2230944845305A61A155BA20CC02CD05F99BDABF*)NULL;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->____fishMaterialUpdate), (void*)(FishSwimmingMaterialUpdate_t2230944845305A61A155BA20CC02CD05F99BDABF*)NULL);
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:25>
+		BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3* L_0 = (BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3*)(&__this->____boidInfo);
+		il2cpp_codegen_initobj(L_0, sizeof(BoidInformation_t36048B76B261F87B07C4607BAFC9F69B288B9FD3));
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimming.cs:27>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
+		L_1 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
+		__this->____currentTargetPosition = L_1;
+		MonoBehaviour__ctor_m592DB0105CA0BC97AA1C5F4AD27B12D68A3B7C1E(__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// Method Definition Index: 71377
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void NetworkVariableSerializationHelper_InitializeSerialization_mA4F17C9D8F4934C552263003358AF8CC0E55E6E3 (const RuntimeMethod* method) 
+{
+	{
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+// Method Definition Index: 45514
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t Mathf_Min_m888083F74FF5655778F0403BB5E9608BEFDEA8CB_inline (int32_t ___0_a, int32_t ___1_b, const RuntimeMethod* method) 
+{
+	int32_t V_0 = 0;
+	int32_t G_B3_0 = 0;
+	{
+		int32_t L_0 = ___0_a;
+		int32_t L_1 = ___1_b;
+		if ((((int32_t)L_0) < ((int32_t)L_1)))
+		{
+			goto IL_0008;
+		}
+	}
+	{
+		int32_t L_2 = ___1_b;
+		G_B3_0 = L_2;
+		goto IL_0009;
+	}
+
+IL_0008:
+	{
+		int32_t L_3 = ___0_a;
+		G_B3_0 = L_3;
+	}
+
+IL_0009:
+	{
+		V_0 = G_B3_0;
+		goto IL_000c;
+	}
+
+IL_000c:
+	{
+		int32_t L_4 = V_0;
+		return L_4;
+	}
+}
+// Method Definition Index: 44550
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void IndirectDrawIndexedArgs_set_baseVertexIndex_mA8BC029CBE91D04FA9BF999FE52AD17AF91AD593_inline (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* __this, uint32_t ___0_value, const RuntimeMethod* method) 
+{
+	{
+		uint32_t L_0 = ___0_value;
+		__this->___U3CbaseVertexIndexU3Ek__BackingField = L_0;
+		return;
+	}
+}
+// Method Definition Index: 44549
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void IndirectDrawIndexedArgs_set_startIndex_mC3B089A30B3BC982D8AE997098759EE475F56FC0_inline (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* __this, uint32_t ___0_value, const RuntimeMethod* method) 
+{
+	{
+		uint32_t L_0 = ___0_value;
+		__this->___U3CstartIndexU3Ek__BackingField = L_0;
+		return;
+	}
+}
+// Method Definition Index: 44551
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void IndirectDrawIndexedArgs_set_startInstance_m4FB24CC31E5690683ABD3CF753ECDD5A12EB3D43_inline (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* __this, uint32_t ___0_value, const RuntimeMethod* method) 
+{
+	{
+		uint32_t L_0 = ___0_value;
+		__this->___U3CstartInstanceU3Ek__BackingField = L_0;
+		return;
+	}
+}
+// Method Definition Index: 44547
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void IndirectDrawIndexedArgs_set_indexCountPerInstance_m3683A18DA13AC860B011243EECE17D2BB2788381_inline (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* __this, uint32_t ___0_value, const RuntimeMethod* method) 
+{
+	{
+		uint32_t L_0 = ___0_value;
+		__this->___U3CindexCountPerInstanceU3Ek__BackingField = L_0;
+		return;
+	}
+}
+// Method Definition Index: 44548
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void IndirectDrawIndexedArgs_set_instanceCount_m7EF3E8C63A0BE8A6EE1962115B74C561220C7F1B_inline (IndirectDrawIndexedArgs_t43439E77ECB29BDF03BBDCC245276D40730E26DB* __this, uint32_t ___0_value, const RuntimeMethod* method) 
+{
+	{
+		uint32_t L_0 = ___0_value;
+		__this->___U3CinstanceCountU3Ek__BackingField = L_0;
+		return;
+	}
+}
+// Method Definition Index: 44180
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RenderParams_set_matProps_m6E6A341325FA7936C8CA0EBCBBD74EDAE16DADB0_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* ___0_value, const RuntimeMethod* method) 
+{
+	{
+		MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* L_0 = ___0_value;
+		__this->___U3CmatPropsU3Ek__BackingField = L_0;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___U3CmatPropsU3Ek__BackingField), (void*)L_0);
+		return;
+	}
+}
+// Method Definition Index: 44179
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* RenderParams_get_matProps_m950EF867EADDF762C77ACC18701142298B823FE5_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, const RuntimeMethod* method) 
+{
+	{
+		MaterialPropertyBlock_t2308669579033A857EFE6E4831909F638B27411D* L_0 = __this->___U3CmatPropsU3Ek__BackingField;
+		return L_0;
+	}
+}
+// Method Definition Index: 43828
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Bounds_get_center_m5B05F81CB835EB6DD8628FDA24B638F477984DC3_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, const RuntimeMethod* method) 
+{
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = __this->___m_Center;
+		return L_0;
+	}
+}
+// Method Definition Index: 45668
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 Vector4_op_Implicit_m2ECA73F345A7AD84144133E9E51657204002B12D_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_v, const RuntimeMethod* method) 
+{
+	Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		il2cpp_codegen_initobj((&V_0), sizeof(Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ___0_v;
+		float L_1 = L_0.___x;
+		(&V_0)->___x = L_1;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2 = ___0_v;
+		float L_3 = L_2.___y;
+		(&V_0)->___y = L_3;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_4 = ___0_v;
+		float L_5 = L_4.___z;
+		(&V_0)->___z = L_5;
+		(&V_0)->___w = (0.0f);
+		Vector4_t58B63D32F48C0DBF50DE2C60794C4676C80EDBE3 L_6 = V_0;
+		return L_6;
+	}
+}
+// Method Definition Index: 44181
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RenderParams_set_shadowCastingMode_m11A19F71F4A7B9DF041B5A535539851B42CA550A_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, int32_t ___0_value, const RuntimeMethod* method) 
+{
+	{
+		int32_t L_0 = ___0_value;
+		__this->___U3CshadowCastingModeU3Ek__BackingField = L_0;
+		return;
+	}
+}
+// Method Definition Index: 44182
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RenderParams_set_receiveShadows_m378D274D281BCDB51A915AD720C1583D600A16F3_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, bool ___0_value, const RuntimeMethod* method) 
+{
+	{
+		bool L_0 = ___0_value;
+		__this->___U3CreceiveShadowsU3Ek__BackingField = L_0;
+		return;
+	}
+}
+// Method Definition Index: 44170
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RenderParams_set_layer_m0C79C4B8B8DFB1822BD7413E201238C9B5C814B1_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, int32_t ___0_value, const RuntimeMethod* method) 
+{
+	{
+		int32_t L_0 = ___0_value;
+		__this->___U3ClayerU3Ek__BackingField = L_0;
+		return;
+	}
+}
+// Method Definition Index: 43832
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Bounds_get_extents_mFE6DC407FCE2341BE2C750CB554055D211281D25_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, const RuntimeMethod* method) 
+{
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = __this->___m_Extents;
+		return L_0;
+	}
+}
+// Method Definition Index: 45428
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, float ___1_d, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		il2cpp_codegen_initobj((&V_0), sizeof(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ___0_a;
+		float L_1 = L_0.___x;
+		float L_2 = ___1_d;
+		(&V_0)->___x = ((float)il2cpp_codegen_multiply(L_1, L_2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3 = ___0_a;
+		float L_4 = L_3.___y;
+		float L_5 = ___1_d;
+		(&V_0)->___y = ((float)il2cpp_codegen_multiply(L_4, L_5));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6 = ___0_a;
+		float L_7 = L_6.___z;
+		float L_8 = ___1_d;
+		(&V_0)->___z = ((float)il2cpp_codegen_multiply(L_7, L_8));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_9 = V_0;
+		return L_9;
+	}
+}
+// Method Definition Index: 43833
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Bounds_set_extents_m09496358547B86A93EFE7BE6371E7A6FE937C46F_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_value, const RuntimeMethod* method) 
+{
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ___0_value;
+		__this->___m_Extents = L_0;
+		return;
+	}
+}
+// Method Definition Index: 44174
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void RenderParams_set_worldBounds_mC00068A6DB8D898D243B16698A2B4C881447BCDB_inline (RenderParams_t2571537494874787A0A0B3013052A03AA0E51CFB* __this, Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 ___0_value, const RuntimeMethod* method) 
+{
+	{
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_0 = ___0_value;
+		__this->___U3CworldBoundsU3Ek__BackingField = L_0;
+		return;
+	}
+}
+// Method Definition Index: 12819
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t BitConverter_SingleToInt32Bits_mC760C7CFC89725E3CF68DC45BE3A9A42A7E7DA73_inline (float ___0_value, const RuntimeMethod* method) 
+{
+	{
+		int32_t L_0 = *((int32_t*)((uintptr_t)(&___0_value)));
+		return L_0;
+	}
+}
+// Method Definition Index: 12820
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float BitConverter_Int32BitsToSingle_mAD799CFA19FABC0DCA7A09F3380A1F0B0EB39130_inline (int32_t ___0_value, const RuntimeMethod* method) 
+{
+	{
+		float L_0 = *((float*)((uintptr_t)(&___0_value)));
+		return L_0;
+	}
+}
+// Method Definition Index: 45419
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_get_forward_mAA55A7034304DF8B2152EAD49AE779FC4CA2EB4A_inline (const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ((Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_StaticFields*)il2cpp_codegen_static_fields_for(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var))->___forwardVector;
+		return L_0;
+	}
+}
+// Method Definition Index: 45426
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_b, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		il2cpp_codegen_initobj((&V_0), sizeof(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ___0_a;
+		float L_1 = L_0.___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2 = ___1_b;
+		float L_3 = L_2.___x;
+		(&V_0)->___x = ((float)il2cpp_codegen_subtract(L_1, L_3));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_4 = ___0_a;
+		float L_5 = L_4.___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6 = ___1_b;
+		float L_7 = L_6.___y;
+		(&V_0)->___y = ((float)il2cpp_codegen_subtract(L_5, L_7));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8 = ___0_a;
+		float L_9 = L_8.___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10 = ___1_b;
+		float L_11 = L_10.___z;
+		(&V_0)->___z = ((float)il2cpp_codegen_subtract(L_9, L_11));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = V_0;
+		return L_12;
+	}
+}
+// Method Definition Index: 45403
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* __this, const RuntimeMethod* method) 
+{
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0;
+		L_0 = Vector3_Normalize_m1DE89849FE2019B6AA0031306896F3B800849399_inline(__this, NULL);
+		return L_0;
+	}
+}
+// Method Definition Index: 45425
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_b, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		il2cpp_codegen_initobj((&V_0), sizeof(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ___0_a;
+		float L_1 = L_0.___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2 = ___1_b;
+		float L_3 = L_2.___x;
+		(&V_0)->___x = ((float)il2cpp_codegen_add(L_1, L_3));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_4 = ___0_a;
+		float L_5 = L_4.___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6 = ___1_b;
+		float L_7 = L_6.___y;
+		(&V_0)->___y = ((float)il2cpp_codegen_add(L_5, L_7));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8 = ___0_a;
+		float L_9 = L_8.___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10 = ___1_b;
+		float L_11 = L_10.___z;
+		(&V_0)->___z = ((float)il2cpp_codegen_add(L_9, L_11));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = V_0;
+		return L_12;
+	}
+}
+// Method Definition Index: 45417
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline (const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ((Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_StaticFields*)il2cpp_codegen_static_fields_for(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var))->___zeroVector;
+		return L_0;
+	}
+}
+// Method Definition Index: 45430
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_op_Division_mCC6BB24E372AB96B8380D1678446EF6A8BAE13BB_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, float ___1_d, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		il2cpp_codegen_initobj((&V_0), sizeof(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ___0_a;
+		float L_1 = L_0.___x;
+		float L_2 = ___1_d;
+		(&V_0)->___x = ((float)(L_1/L_2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3 = ___0_a;
+		float L_4 = L_3.___y;
+		float L_5 = ___1_d;
+		(&V_0)->___y = ((float)(L_4/L_5));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6 = ___0_a;
+		float L_7 = L_6.___z;
+		float L_8 = ___1_d;
+		(&V_0)->___z = ((float)(L_7/L_8));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_9 = V_0;
+		return L_9;
+	}
+}
+// Method Definition Index: 45269
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Color_tD001788D726C3A7F1379BEED0260B9591F440C1F Color_get_red_mA2E53E7173FDC97E68E335049AB0FAAEE43A844D_inline (const RuntimeMethod* method) 
+{
+	{
+		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_0;
+		memset((&L_0), 0, sizeof(L_0));
+		Color__ctor_m3786F0D6E510D9CFA544523A955870BD2A514C8C_inline((&L_0), (1.0f), (0.0f), (0.0f), (1.0f), NULL);
+		return L_0;
+	}
+}
+// Method Definition Index: 45527
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t Mathf_FloorToInt_m2A39AE881CAEE6B6A4B3BFEF9CA1ED40625F5AB7_inline (float ___0_f, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	int32_t V_0 = 0;
+	{
+		float L_0 = ___0_f;
+		il2cpp_codegen_runtime_class_init_inline(Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		double L_1;
+		L_1 = floor(((double)L_0));
+		V_0 = il2cpp_codegen_cast_double_to_int<int32_t>(L_1);
+		goto IL_000c;
+	}
+
+IL_000c:
+	{
+		int32_t L_2 = V_0;
+		return L_2;
+	}
+}
+// Method Definition Index: 45391
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* __this, float ___0_x, float ___1_y, float ___2_z, const RuntimeMethod* method) 
+{
+	{
+		float L_0 = ___0_x;
+		__this->___x = L_0;
+		float L_1 = ___1_y;
+		__this->___y = L_1;
+		float L_2 = ___2_z;
+		__this->___z = L_2;
+		return;
+	}
+}
+// Method Definition Index: 45532
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_Clamp01_mA7E048DBDA832D399A581BE4D6DED9FA44CE0F14_inline (float ___0_value, const RuntimeMethod* method) 
+{
+	bool V_0 = false;
+	float V_1 = 0.0f;
+	bool V_2 = false;
+	{
+		float L_0 = ___0_value;
+		V_0 = (bool)((((float)L_0) < ((float)(0.0f)))? 1 : 0);
+		bool L_1 = V_0;
+		if (!L_1)
+		{
+			goto IL_0015;
+		}
+	}
+	{
+		V_1 = (0.0f);
+		goto IL_002d;
+	}
+
+IL_0015:
+	{
+		float L_2 = ___0_value;
+		V_2 = (bool)((((float)L_2) > ((float)(1.0f)))? 1 : 0);
+		bool L_3 = V_2;
+		if (!L_3)
+		{
+			goto IL_0029;
+		}
+	}
+	{
+		V_1 = (1.0f);
+		goto IL_002d;
+	}
+
+IL_0029:
+	{
+		float L_4 = ___0_value;
+		V_1 = L_4;
+		goto IL_002d;
+	}
+
+IL_002d:
+	{
+		float L_5 = V_1;
+		return L_5;
+	}
+}
+// Method Definition Index: 45533
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_Lerp_m47EF2FFB7647BD0A1FDC26DC03E28B19812139B5_inline (float ___0_a, float ___1_b, float ___2_t, const RuntimeMethod* method) 
+{
+	float V_0 = 0.0f;
+	{
+		float L_0 = ___0_a;
+		float L_1 = ___1_b;
+		float L_2 = ___0_a;
+		float L_3 = ___2_t;
+		float L_4;
+		L_4 = Mathf_Clamp01_mA7E048DBDA832D399A581BE4D6DED9FA44CE0F14_inline(L_3, NULL);
+		V_0 = ((float)il2cpp_codegen_add(L_0, ((float)il2cpp_codegen_multiply(((float)il2cpp_codegen_subtract(L_1, L_2)), L_4))));
+		goto IL_0010;
+	}
+
+IL_0010:
+	{
+		float L_5 = V_0;
+		return L_5;
+	}
+}
+// Method Definition Index: 45418
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_get_one_mC9B289F1E15C42C597180C9FE6FB492495B51D02_inline (const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ((Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_StaticFields*)il2cpp_codegen_static_fields_for(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var))->___oneVector;
+		return L_0;
+	}
+}
+// Method Definition Index: 43830
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Bounds_get_size_m0699A53A55A78B3201D7270D6F338DFA91B6FAD4_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		il2cpp_codegen_initobj((&V_0), sizeof(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_0 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		float L_1 = L_0->___x;
+		(&V_0)->___x = ((float)il2cpp_codegen_multiply(L_1, (2.0f)));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_2 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		float L_3 = L_2->___y;
+		(&V_0)->___y = ((float)il2cpp_codegen_multiply(L_3, (2.0f)));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_4 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		float L_5 = L_4->___z;
+		(&V_0)->___z = ((float)il2cpp_codegen_multiply(L_5, (2.0f)));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6 = V_0;
+		return L_6;
+	}
+}
+// Method Definition Index: 45526
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t Mathf_CeilToInt_mF2BF9F4261B3431DC20E10A46CFEEED103C48963_inline (float ___0_f, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	int32_t V_0 = 0;
+	{
+		float L_0 = ___0_f;
+		il2cpp_codegen_runtime_class_init_inline(Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		double L_1;
+		L_1 = ceil(((double)L_0));
+		V_0 = il2cpp_codegen_cast_double_to_int<int32_t>(L_1);
+		goto IL_000c;
+	}
+
+IL_000c:
+	{
+		int32_t L_2 = V_0;
+		return L_2;
+	}
+}
+// Method Definition Index: 71295
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* BoidSpawnerGPU_get_Boids_m3C6B8A43417D41418E276FF34C24F6229C8665C4_inline (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:34>
+		BoidInfoGPUU5BU5D_tF2E46ED8149AB757B739DBB29E1311B3CCAB6AAC* L_0 = __this->____boids;
+		return L_0;
+	}
+}
+// Method Definition Index: 71294
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t BoidSpawnerGPU_get_RenderingOffset_m5605DE855FC2F16A17FB250884775ACE345B9252_inline (BoidSpawnerGPU_tD4A7DBBBA35A7E22365E82061D02F82E6746EBDF* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPU.cs:28>
+		int32_t L_0 = __this->____renderingOffset;
+		return L_0;
+	}
+}
+// Method Definition Index: 71221
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t BoidSpawnerBase_get_BoidGroupId_m1AFEA1B8E2F29AC968F3B37DCF4A95341EFC3A68_inline (BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Shared/BoidSpawnerBase.cs:45>
+		int32_t L_0 = __this->____boidGroupId;
+		return L_0;
+	}
+}
+// Method Definition Index: 71220
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 BoidSpawnerBase_get_SpawnData_mF2501B899C0B84CBADEB8721DD103D6BE12C823D_inline (BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Shared/BoidSpawnerBase.cs:41>
+		BoidSpawnData_t7DADD638DE5332B749F645F08D1F81D79C1EECE9 L_0 = __this->____boidSpawnData;
+		return L_0;
+	}
+}
+// Method Definition Index: 43823
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Bounds__ctor_mAF7B238B9FBF90C495E5D7951760085A93119C5A_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_center, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_size, const RuntimeMethod* method) 
+{
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_0 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Center);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1 = ___0_center;
+		float L_2 = L_1.___x;
+		L_0->___x = L_2;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_3 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Center);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_4 = ___0_center;
+		float L_5 = L_4.___y;
+		L_3->___y = L_5;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_6 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Center);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = ___0_center;
+		float L_8 = L_7.___z;
+		L_6->___z = L_8;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_9 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10 = ___1_size;
+		float L_11 = L_10.___x;
+		L_9->___x = ((float)il2cpp_codegen_multiply(L_11, (0.5f)));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_12 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13 = ___1_size;
+		float L_14 = L_13.___y;
+		L_12->___y = ((float)il2cpp_codegen_multiply(L_14, (0.5f)));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_15 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16 = ___1_size;
+		float L_17 = L_16.___z;
+		L_15->___z = ((float)il2cpp_codegen_multiply(L_17, (0.5f)));
+		return;
+	}
+}
+// Method Definition Index: 45517
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t Mathf_Max_m7FA442918DE37E3A00106D1F2E789D65829792B8_inline (int32_t ___0_a, int32_t ___1_b, const RuntimeMethod* method) 
+{
+	int32_t V_0 = 0;
+	int32_t G_B3_0 = 0;
+	{
+		int32_t L_0 = ___0_a;
+		int32_t L_1 = ___1_b;
+		if ((((int32_t)L_0) > ((int32_t)L_1)))
+		{
+			goto IL_0008;
+		}
+	}
+	{
+		int32_t L_2 = ___1_b;
+		G_B3_0 = L_2;
+		goto IL_0009;
+	}
+
+IL_0008:
+	{
+		int32_t L_3 = ___0_a;
+		G_B3_0 = L_3;
+	}
+
+IL_0009:
+	{
+		V_0 = G_B3_0;
+		goto IL_000c;
+	}
+
+IL_000c:
+	{
+		int32_t L_4 = V_0;
+		return L_4;
+	}
+}
+// Method Definition Index: 71222
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t BoidSpawnerBase_get_InitialGroupsCount_m804189D5FE7825D968ACF9C9ABCC37B67338DDD5_inline (BoidSpawnerBase_t861D47FD49848D63D9022D0F706C64A622065247* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Shared/BoidSpawnerBase.cs:49>
+		int32_t L_0 = __this->____initialGroupsCount;
+		return L_0;
+	}
+}
+// Method Definition Index: 71305
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* BoidSpawnerGPUMultiTargets_get_SpeciesData_m2FE5CA68181D30C592C5EFBBB246A788870E337A_inline (BoidSpawnerGPUMultiTargets_tD76C1C57A306F9D8BCBA2FA69F2FA066EA109F30* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Boids_GPU/BoidSpawnerGPUMultiTargets.cs:26>
+		SpeciesDataGPU_t7BA4E7EFBFD92361DE0E0C4496AD1FA82E010CEB* L_0 = __this->____speciesData;
+		return L_0;
+	}
+}
+// Method Definition Index: 45241
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Color__ctor_m3786F0D6E510D9CFA544523A955870BD2A514C8C_inline (Color_tD001788D726C3A7F1379BEED0260B9591F440C1F* __this, float ___0_r, float ___1_g, float ___2_b, float ___3_a, const RuntimeMethod* method) 
+{
+	{
+		float L_0 = ___0_r;
+		__this->___r = L_0;
+		float L_1 = ___1_g;
+		__this->___g = L_1;
+		float L_2 = ___2_b;
+		__this->___b = L_2;
+		float L_3 = ___3_a;
+		__this->___a = L_3;
+		return;
+	}
+}
+// Method Definition Index: 45415
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_Max_m9B6D8FEE7F4CE32C0AAB682606FFBA59E1F37C74_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_lhs, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_rhs, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		il2cpp_codegen_initobj((&V_0), sizeof(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ___0_lhs;
+		float L_1 = L_0.___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2 = ___1_rhs;
+		float L_3 = L_2.___x;
+		float L_4;
+		L_4 = Mathf_Max_mF5379E63D2BBAC76D090748695D833934F8AD051_inline(L_1, L_3, NULL);
+		(&V_0)->___x = L_4;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_5 = ___0_lhs;
+		float L_6 = L_5.___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = ___1_rhs;
+		float L_8 = L_7.___y;
+		float L_9;
+		L_9 = Mathf_Max_mF5379E63D2BBAC76D090748695D833934F8AD051_inline(L_6, L_8, NULL);
+		(&V_0)->___y = L_9;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10 = ___0_lhs;
+		float L_11 = L_10.___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = ___1_rhs;
+		float L_13 = L_12.___z;
+		float L_14;
+		L_14 = Mathf_Max_mF5379E63D2BBAC76D090748695D833934F8AD051_inline(L_11, L_13, NULL);
+		(&V_0)->___z = L_14;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_15 = V_0;
+		return L_15;
+	}
+}
+// Method Definition Index: 45381
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_Slerp_m6CA14E5B6F6217802BAA0ADD2C9D086C741BA09C_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___1_b, float ___2_t, const RuntimeMethod* method) 
+{
+	{
+		float L_0 = ___2_t;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
+		L_1 = Vector3_Internal_Slerp_m35A70ECE16468E7E543C14B7396B8183709C8464((&___0_a), (&___1_b), L_0, NULL);
+		return L_1;
+	}
+}
+// Method Definition Index: 43836
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Bounds_get_max_m6446F2AB97C1E57CA89467B9DE52D4EB61F1CB09_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		il2cpp_codegen_initobj((&V_0), sizeof(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_0 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Center);
+		float L_1 = L_0->___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_2 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		float L_3 = L_2->___x;
+		(&V_0)->___x = ((float)il2cpp_codegen_add(L_1, L_3));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_4 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Center);
+		float L_5 = L_4->___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_6 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		float L_7 = L_6->___y;
+		(&V_0)->___y = ((float)il2cpp_codegen_add(L_5, L_7));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_8 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Center);
+		float L_9 = L_8->___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_10 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		float L_11 = L_10->___z;
+		(&V_0)->___z = ((float)il2cpp_codegen_add(L_9, L_11));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = V_0;
+		return L_12;
+	}
+}
+// Method Definition Index: 43834
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Bounds_get_min_m465AC9BBE1DE5D8E8AD95AC19B9899068FEEBB13_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, const RuntimeMethod* method) 
+{
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		il2cpp_codegen_initobj((&V_0), sizeof(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_0 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Center);
+		float L_1 = L_0->___x;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_2 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		float L_3 = L_2->___x;
+		(&V_0)->___x = ((float)il2cpp_codegen_subtract(L_1, L_3));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_4 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Center);
+		float L_5 = L_4->___y;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_6 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		float L_7 = L_6->___y;
+		(&V_0)->___y = ((float)il2cpp_codegen_subtract(L_5, L_7));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_8 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Center);
+		float L_9 = L_8->___z;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_10 = (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(&__this->___m_Extents);
+		float L_11 = L_10->___z;
+		(&V_0)->___z = ((float)il2cpp_codegen_subtract(L_9, L_11));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = V_0;
+		return L_12;
+	}
+}
+// Method Definition Index: 45512
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_Min_m747CA71A9483CDB394B13BD0AD048EE17E48FFE4_inline (float ___0_a, float ___1_b, const RuntimeMethod* method) 
+{
+	float V_0 = 0.0f;
+	float G_B3_0 = 0.0f;
+	{
+		float L_0 = ___0_a;
+		float L_1 = ___1_b;
+		if ((((float)L_0) < ((float)L_1)))
+		{
+			goto IL_0008;
+		}
+	}
+	{
+		float L_2 = ___1_b;
+		G_B3_0 = L_2;
+		goto IL_0009;
+	}
+
+IL_0008:
+	{
+		float L_3 = ___0_a;
+		G_B3_0 = L_3;
+	}
+
+IL_0009:
+	{
+		V_0 = G_B3_0;
+		goto IL_000c;
+	}
+
+IL_000c:
+	{
+		float L_4 = V_0;
+		return L_4;
+	}
+}
+// Method Definition Index: 45530
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_Clamp_mEB9AEA827D27D20FCC787F7375156AF46BB12BBF_inline (float ___0_value, float ___1_min, float ___2_max, const RuntimeMethod* method) 
+{
+	bool V_0 = false;
+	bool V_1 = false;
+	float V_2 = 0.0f;
+	{
+		float L_0 = ___0_value;
+		float L_1 = ___1_min;
+		V_0 = (bool)((((float)L_0) < ((float)L_1))? 1 : 0);
+		bool L_2 = V_0;
+		if (!L_2)
+		{
+			goto IL_000e;
+		}
+	}
+	{
+		float L_3 = ___1_min;
+		___0_value = L_3;
+		goto IL_0019;
+	}
+
+IL_000e:
+	{
+		float L_4 = ___0_value;
+		float L_5 = ___2_max;
+		V_1 = (bool)((((float)L_4) > ((float)L_5))? 1 : 0);
+		bool L_6 = V_1;
+		if (!L_6)
+		{
+			goto IL_0019;
+		}
+	}
+	{
+		float L_7 = ___2_max;
+		___0_value = L_7;
+	}
+
+IL_0019:
+	{
+		float L_8 = ___0_value;
+		V_2 = L_8;
+		goto IL_001d;
+	}
+
+IL_001d:
+	{
+		float L_9 = V_2;
+		return L_9;
+	}
+}
+// Method Definition Index: 71263
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 SimulationAffecterComponent_get_Affecter_mDFA9921837734CB0FA9FC844E28DEBD1AE014C08_inline (SimulationAffecterComponent_t95B8F6B5D2A63314DD57FBE9CB38C2F95459377F* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Shared/SimulationAffecterComponent.cs:20>
+		SimulationAffecter_t265970167E9D8E92B79016D82EBA07DF711FFB54 L_0 = __this->____simulationAffecter;
+		return L_0;
+	}
+}
+// Method Definition Index: 43829
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Bounds_set_center_m891869DD5B1BEEE2D17907BBFB7EB79AAE44884B_inline (Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_value, const RuntimeMethod* method) 
+{
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ___0_value;
+		__this->___m_Center = L_0;
+		return;
+	}
+}
+// Method Definition Index: 45410
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Vector3_get_magnitude_mF0D6017E90B345F1F52D1CC564C640F1A847AF2D_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* __this, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		float L_0 = __this->___x;
+		float L_1 = __this->___x;
+		float L_2 = __this->___y;
+		float L_3 = __this->___y;
+		float L_4 = __this->___z;
+		float L_5 = __this->___z;
+		il2cpp_codegen_runtime_class_init_inline(Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		double L_6;
+		L_6 = sqrt(((double)((float)il2cpp_codegen_add(((float)il2cpp_codegen_add(((float)il2cpp_codegen_multiply(L_0, L_1)), ((float)il2cpp_codegen_multiply(L_2, L_3)))), ((float)il2cpp_codegen_multiply(L_4, L_5))))));
+		return ((float)L_6);
+	}
+}
+// Method Definition Index: 71363
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 AutomaticFishSwimSimulation_get_SimulationAreaBounds_mFC41C753C235C03B841CDCC6BD3DDABACC4BCEC1_inline (AutomaticFishSwimSimulation_t84A365E090BBF73FF7FB2E3852AAFF1F601C4429* __this, const RuntimeMethod* method) 
+{
+	{
+		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Junheng/Scripts/Automatic_Fish_Swimming_CPU/AutomaticFishSwimSimulation.cs:25>
+		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_0 = __this->____simulationAreaBounds;
+		return L_0;
+	}
+}
+// Method Definition Index: 45541
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_InverseLerp_mBD7EC6A7173CE082226077E1557D5BC2D2AE0D9D_inline (float ___0_a, float ___1_b, float ___2_value, const RuntimeMethod* method) 
+{
+	bool V_0 = false;
+	float V_1 = 0.0f;
+	{
+		float L_0 = ___0_a;
+		float L_1 = ___1_b;
+		V_0 = (bool)((((int32_t)((((float)L_0) == ((float)L_1))? 1 : 0)) == ((int32_t)0))? 1 : 0);
+		bool L_2 = V_0;
+		if (!L_2)
+		{
+			goto IL_001b;
+		}
+	}
+	{
+		float L_3 = ___2_value;
+		float L_4 = ___0_a;
+		float L_5 = ___1_b;
+		float L_6 = ___0_a;
+		float L_7;
+		L_7 = Mathf_Clamp01_mA7E048DBDA832D399A581BE4D6DED9FA44CE0F14_inline(((float)(((float)il2cpp_codegen_subtract(L_3, L_4))/((float)il2cpp_codegen_subtract(L_5, L_6)))), NULL);
+		V_1 = L_7;
+		goto IL_0023;
+	}
+
+IL_001b:
+	{
+		V_1 = (0.0f);
+		goto IL_0023;
+	}
+
+IL_0023:
+	{
+		float L_8 = V_1;
+		return L_8;
+	}
+}
+// Method Definition Index: 45515
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Mathf_Max_mF5379E63D2BBAC76D090748695D833934F8AD051_inline (float ___0_a, float ___1_b, const RuntimeMethod* method) 
+{
+	float V_0 = 0.0f;
+	float G_B3_0 = 0.0f;
+	{
+		float L_0 = ___0_a;
+		float L_1 = ___1_b;
+		if ((((float)L_0) > ((float)L_1)))
+		{
+			goto IL_0008;
+		}
+	}
+	{
+		float L_2 = ___1_b;
+		G_B3_0 = L_2;
+		goto IL_0009;
+	}
+
+IL_0008:
+	{
+		float L_3 = ___0_a;
+		G_B3_0 = L_3;
+	}
+
+IL_0009:
+	{
+		V_0 = G_B3_0;
+		goto IL_000c;
+	}
+
+IL_000c:
+	{
+		float L_4 = V_0;
+		return L_4;
+	}
+}
+// Method Definition Index: 45412
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Vector3_get_sqrMagnitude_m43C27DEC47C4811FB30AB474FF2131A963B66FC8_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* __this, const RuntimeMethod* method) 
+{
+	{
+		float L_0 = __this->___x;
+		float L_1 = __this->___x;
+		float L_2 = __this->___y;
+		float L_3 = __this->___y;
+		float L_4 = __this->___z;
+		float L_5 = __this->___z;
+		return ((float)il2cpp_codegen_add(((float)il2cpp_codegen_add(((float)il2cpp_codegen_multiply(L_0, L_1)), ((float)il2cpp_codegen_multiply(L_2, L_3)))), ((float)il2cpp_codegen_multiply(L_4, L_5))));
+	}
+}
+// Method Definition Index: 21387
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t List_1_get_Count_m4407E4C389F22B8CEC282C15D56516658746C383_gshared_inline (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, const RuntimeMethod* method) 
+{
+	{
+		int32_t L_0 = __this->____size;
+		return L_0;
+	}
+}
+// Method Definition Index: 21446
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR RuntimeObject* Enumerator_get_Current_m6330F15D18EE4F547C05DF9BF83C5EB710376027_gshared_inline (Enumerator_t9473BAB568A27E2339D48C1F91319E0F6D244D7A* __this, const RuntimeMethod* method) 
+{
+	{
+		RuntimeObject* L_0 = __this->____current;
+		return L_0;
+	}
+}
+// Method Definition Index: 21397
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void List_1_Add_mEBCF994CC3814631017F46A387B1A192ED6C85C7_gshared_inline (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, RuntimeObject* ___0_item, const RuntimeMethod* method) 
+{
+	ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* V_0 = NULL;
+	int32_t V_1 = 0;
+	{
+		int32_t L_0 = __this->____version;
+		__this->____version = ((int32_t)il2cpp_codegen_add(L_0, 1));
+		ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* L_1 = __this->____items;
+		V_0 = L_1;
+		int32_t L_2 = __this->____size;
+		V_1 = L_2;
+		int32_t L_3 = V_1;
+		ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* L_4 = V_0;
+		NullCheck(L_4);
+		if ((!(((uint32_t)L_3) < ((uint32_t)((int32_t)(((RuntimeArray*)L_4)->max_length))))))
+		{
+			goto IL_0034;
+		}
+	}
+	{
+		int32_t L_5 = V_1;
+		__this->____size = ((int32_t)il2cpp_codegen_add(L_5, 1));
+		ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* L_6 = V_0;
+		int32_t L_7 = V_1;
+		RuntimeObject* L_8 = ___0_item;
+		NullCheck(L_6);
+		(L_6)->SetAt(static_cast<il2cpp_array_size_t>(L_7), (RuntimeObject*)L_8);
+		return;
+	}
+
+IL_0034:
+	{
+		RuntimeObject* L_9 = ___0_item;
+		List_1_AddWithResize_m79A9BF770BEF9C06BE40D5401E55E375F2726CC4(__this, L_9, il2cpp_rgctx_method(method->klass->rgctx_data, 14));
+		return;
+	}
+}
+// Method Definition Index: 45401
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_Normalize_m1DE89849FE2019B6AA0031306896F3B800849399_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___0_value, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	float V_0 = 0.0f;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_1;
+	memset((&V_1), 0, sizeof(V_1));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_2;
+	memset((&V_2), 0, sizeof(V_2));
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 G_B3_0;
+	memset((&G_B3_0), 0, sizeof(G_B3_0));
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_0 = ___0_value;
+		float L_1;
+		L_1 = Vector3_get_magnitude_mF0D6017E90B345F1F52D1CC564C640F1A847AF2D_inline(L_0, NULL);
+		V_0 = L_1;
+		float L_2 = V_0;
+		if ((((float)L_2) > ((float)(9.99999975E-06f))))
+		{
+			goto IL_0017;
+		}
+	}
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3 = ((Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_StaticFields*)il2cpp_codegen_static_fields_for(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var))->___zeroVector;
+		G_B3_0 = L_3;
+		goto IL_004d;
+	}
+
+IL_0017:
+	{
+		il2cpp_codegen_initobj((&V_1), sizeof(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_4 = ___0_value;
+		float L_5 = L_4->___x;
+		float L_6 = V_0;
+		(&V_1)->___x = ((float)(L_5/L_6));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_7 = ___0_value;
+		float L_8 = L_7->___y;
+		float L_9 = V_0;
+		(&V_1)->___y = ((float)(L_8/L_9));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_10 = ___0_value;
+		float L_11 = L_10->___z;
+		float L_12 = V_0;
+		(&V_1)->___z = ((float)(L_11/L_12));
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13 = V_1;
+		G_B3_0 = L_13;
+	}
+
+IL_004d:
+	{
+		V_2 = G_B3_0;
+		goto IL_0050;
+	}
+
+IL_0050:
+	{
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_14 = V_2;
+		return L_14;
+	}
+}

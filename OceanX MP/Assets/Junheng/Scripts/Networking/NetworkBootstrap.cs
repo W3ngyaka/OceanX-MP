@@ -7,14 +7,26 @@ using UnityEngine;
 // Set HostAddress on the Client to the trifold's local IP (e.g. 192.168.1.x).
 public class NetworkBootstrap : MonoBehaviour
 {
-    public enum DeviceRole { Host, Client }
+    // Auto = decide from the platform (Windows/desktop -> Host, Android/mobile -> Client).
+    // Host / Client = force that role regardless of platform (useful for testing in the Editor).
+    public enum DeviceRole { Auto, Host, Client }
 
-    [SerializeField] private DeviceRole _role       = DeviceRole.Host;
+    [SerializeField] private DeviceRole _role       = DeviceRole.Auto;
     [SerializeField] private string     _hostAddress = "127.0.0.1";
     [SerializeField] private ushort     _port        = 7777;
 
     [Tooltip("Only needed on the Host — the EcosystemNetworkManager prefab to spawn.")]
     [SerializeField] private GameObject _ecosystemNetworkManagerPrefab;
+
+    // Resolves the actual role to use at runtime.
+    // Android tablet -> Client; Windows trifold machine (or Editor) -> Host.
+    private DeviceRole ResolveRole()
+    {
+        if (_role != DeviceRole.Auto)
+            return _role;
+
+        return Application.isMobilePlatform ? DeviceRole.Client : DeviceRole.Host;
+    }
 
     private void Start()
     {
@@ -25,14 +37,25 @@ public class NetworkBootstrap : MonoBehaviour
             return;
         }
 
-        if (_role == DeviceRole.Host)
+        DeviceRole role = ResolveRole();
+        Debug.Log($"[NetworkBootstrap] Platform: {Application.platform}. Resolved role: {role}.");
+
+        if (role == DeviceRole.Host)
         {
             // Host binds to all interfaces so any device on the network can connect
             transport.SetConnectionData("0.0.0.0", _port);
             Debug.Log($"[NetworkBootstrap] Starting as Host on port {_port}.");
             NetworkManager.Singleton.OnClientConnectedCallback += id => Debug.Log($"[NetworkBootstrap] Client connected! ID: {id}");
-            NetworkManager.Singleton.StartHost();
-            SpawnEcosystemNetworkManager();
+
+            if (NetworkManager.Singleton.StartHost())
+            {
+                SpawnEcosystemNetworkManager();
+            }
+            else
+            {
+                Debug.LogError($"[NetworkBootstrap] Failed to start Host (port {_port} likely already in use). " +
+                               "Close any other running instance or free the port, then try again.");
+            }
         }
         // Client waits for ConnectionScreenUI to call ConnectAsClient()
     }

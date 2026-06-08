@@ -14,7 +14,9 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git log *)",
-      "Bash(xargs grep -l \"Assets/Junheng/Simulation/Shaders\")"
+      "Bash(xargs grep -l \"Assets/Junheng/Simulation/Shaders\")",
+      "Bash(grep -oE \"m_Script: \\\\{fileID: [0-9]+, guid: [a-f0-9]+\" \"Netcode Simulation Test 1.unity\")",
+      "Bash(awk '/&1865068491$/{f=1} f{print NR\": \"$0} f&&/m_Father:/{exit}' \"Netcode Simulation Test 1.unity\")"
     ]
   }
 }

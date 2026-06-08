@@ -44,7 +44,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties: _FoamSpeed
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -156,11 +156,11 @@ Material:
     - _BumpScale: 1
     - _CROSSPAN_INTERSECTIONOn: 1
     - _CausticsBrightness: 2
-    - _CausticsChromance: 0.356
-    - _CausticsDistortion: 0.246
+    - _CausticsChromance: 0.254
+    - _CausticsDistortion: 0.257
     - _CausticsOn: 1
-    - _CausticsSpeed: 0.030000014
-    - _CausticsTiling: 0.020000014
+    - _CausticsSpeed: 0.020000014
+    - _CausticsTiling: 0.010000015
     - _ColorAbsorption: 0
     - _CrossPan_IntersectionOn: 0
     - _Cull: 0

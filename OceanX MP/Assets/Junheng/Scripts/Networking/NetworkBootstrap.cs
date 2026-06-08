@@ -18,6 +18,20 @@ public class NetworkBootstrap : MonoBehaviour
     [Tooltip("Only needed on the Host — the EcosystemNetworkManager prefab to spawn.")]
     [SerializeField] private GameObject _ecosystemNetworkManagerPrefab;
 
+    [Tooltip("Optional — LAN auto-discovery so the tablet finds the host without typing an IP. " +
+             "Leave empty to auto-add one at runtime.")]
+    [SerializeField] private LanDiscovery _discovery;
+
+    // Gets the LanDiscovery component, adding one to this GameObject if none is assigned/present.
+    public LanDiscovery GetDiscovery()
+    {
+        if (_discovery == null) _discovery = GetComponent<LanDiscovery>();
+        if (_discovery == null) _discovery = gameObject.AddComponent<LanDiscovery>();
+        return _discovery;
+    }
+
+    public ushort Port => _port;
+
     // Resolves the actual role to use at runtime.
     // Android tablet -> Client; Windows trifold machine (or Editor) -> Host.
     private DeviceRole ResolveRole()
@@ -50,6 +64,8 @@ public class NetworkBootstrap : MonoBehaviour
             if (NetworkManager.Singleton.StartHost())
             {
                 SpawnEcosystemNetworkManager();
+                // Start broadcasting our presence so tablets can auto-discover us.
+                GetDiscovery().StartAdvertising(_port);
             }
             else
             {

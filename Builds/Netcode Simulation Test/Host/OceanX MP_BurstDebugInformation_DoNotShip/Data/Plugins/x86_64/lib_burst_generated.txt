@@ -11,7 +11,6 @@ Library: C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64
 --linker-options=PdbAltPath="OceanX MP_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
 --decode-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Library\Burst
 --output=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
@@ -66,7 +65,6 @@ Library: C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64
 --linker-options=PdbAltPath="OceanX MP_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
 --decode-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Library\Burst
 --output=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
@@ -121,7 +119,6 @@ Library: C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64
 --linker-options=PdbAltPath="OceanX MP_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
 --decode-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Library\Burst
 --output=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
@@ -239,7 +236,6 @@ Library: C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64
 --linker-options=PdbAltPath="OceanX MP_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
 --decode-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Library\Burst
 --output=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
@@ -359,7 +355,6 @@ Library: C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64
 --linker-options=PdbAltPath="OceanX MP_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
 --decode-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Library\Burst
 --output=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
@@ -381,7 +376,6 @@ Library: C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64
 --linker-options=PdbAltPath="OceanX MP_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
 --decode-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Library\Burst
 --output=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
@@ -401,7 +395,6 @@ Library: C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64
 --linker-options=PdbAltPath="OceanX MP_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
 --decode-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Library\Burst
 --output=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
@@ -519,7 +512,6 @@ Library: C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64
 --linker-options=PdbAltPath="OceanX MP_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\Burst
---debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
 --decode-folder=C:\Unity FIles\OceanX-MP\OceanX MP\Library\Burst
 --output=C:\Unity FIles\OceanX-MP\OceanX MP\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated

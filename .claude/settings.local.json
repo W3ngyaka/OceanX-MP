@@ -4,7 +4,8 @@
       "Bash(grep -E \"\\\\.\\(cs\\)$\")",
       "Bash(npx skills *)",
       "mcp__mcp-registry__search_mcp_registry",
-      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\Admin\\\\Downloads\\\\claude-skills-main\" | ForEach-Object { $_.FullName })"
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\Admin\\\\Downloads\\\\claude-skills-main\" | ForEach-Object { $_.FullName })",
+      "Bash(awk '/^--- !u!2[3-7] |^--- !u!137 / {section=$0; in_renderer=1} in_renderer {print} /^---/ && !/!u!2[3-7] / && !/!u!137 / {if \\(in_renderer\\) print \"---END---\"; in_renderer=0}' \"C:/TP Projects/OceanX-MP/OceanX MP/Assets/Junheng/Prefabs/Fish/Grey_Reef_Shark.prefab\")"
     ]
   }
 }

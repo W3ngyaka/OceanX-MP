@@ -522,5 +522,5 @@ Shader "OceanX/Fish_Lit_Instanced"
     }
 
     FallBack "Hidden/Universal Render Pipeline/FallbackError"
-    CustomEditor "GameDevBuddies.FishLitShaderGUI"
+    CustomEditor "OceanX.FishLitShaderGUI"
 }

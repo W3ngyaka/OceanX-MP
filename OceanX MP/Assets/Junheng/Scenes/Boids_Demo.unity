@@ -3564,7 +3564,7 @@ Transform:
   m_GameObject: {fileID: 1638838934}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -256, y: -30, z: -256}
+  m_LocalPosition: {x: -102, y: -30, z: -97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3876,6 +3876,7 @@ MonoBehaviour:
   _hostAddress: 127.0.0.1
   _port: 7777
   _ecosystemNetworkManagerPrefab: {fileID: 3612357492437936448, guid: a8d34986f6afdfe479c52c5cad94235e, type: 3}
+  _discovery: {fileID: 0}
 --- !u!1001 &1739252811
 PrefabInstance:
   m_ObjectHideFlags: 0

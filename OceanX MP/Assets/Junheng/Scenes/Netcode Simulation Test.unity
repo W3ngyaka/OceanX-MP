@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModalController
   AddButton: {fileID: 1745762467}
-  RemoveButton: {fileID: 0}
+  RemoveButton: {fileID: 1416391355}
   PopulationLabel: {fileID: 1838270558}
 --- !u!114 &121582304
 MonoBehaviour:

@@ -55,6 +55,15 @@ public class ModalController : MonoBehaviour
         if (AddButton    != null) AddButton.interactable    = hasTarget;
         if (RemoveButton != null) RemoveButton.interactable = hasTarget;
 
+        // Population is per-species: show it only for a real target, and set it
+        // right away so we never show the previously-opened card's number.
+        if (PopulationLabel != null)
+        {
+            PopulationLabel.gameObject.SetActive(hasTarget);
+            if (hasTarget && EcosystemNetworkManagerGPU.Instance != null)
+                PopulationLabel.text = EcosystemNetworkManagerGPU.Instance.GetPopulation(speciesIndex).ToString();
+        }
+
         gameObject.SetActive(true);
     }
 

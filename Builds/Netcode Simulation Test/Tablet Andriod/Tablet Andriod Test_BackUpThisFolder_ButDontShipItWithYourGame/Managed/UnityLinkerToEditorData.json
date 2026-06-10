@@ -255,19 +255,25 @@
           },
           {
             "name": "Mesh",
-            "scenes": [],
+            "scenes": [
+              "Assets/Junheng/Scenes/Netcode Simulation Test.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
           {
             "name": "MeshFilter",
-            "scenes": [],
+            "scenes": [
+              "Assets/Junheng/Scenes/Netcode Simulation Test.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
           {
             "name": "MeshRenderer",
-            "scenes": [],
+            "scenes": [
+              "Assets/Junheng/Scenes/Netcode Simulation Test.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
@@ -921,13 +927,17 @@
         "dependencies": [
           {
             "name": "ParticleSystem",
-            "scenes": [],
+            "scenes": [
+              "Assets/Junheng/Scenes/Netcode Simulation Test.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
           {
             "name": "ParticleSystemRenderer",
-            "scenes": [],
+            "scenes": [
+              "Assets/Junheng/Scenes/Netcode Simulation Test.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           }
@@ -938,14 +948,16 @@
         "dependencies": [
           {
             "name": "BoxCollider",
-            "scenes": [],
+            "scenes": [
+              "Assets/Junheng/Scenes/Netcode Simulation Test.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
           {
             "name": "Collider",
             "scenes": [],
-            "dependencyType": 0,
+            "dependencyType": 1,
             "icon": null
           },
           {
@@ -958,6 +970,14 @@
             "name": "Joint",
             "scenes": [],
             "dependencyType": 1,
+            "icon": null
+          },
+          {
+            "name": "MeshCollider",
+            "scenes": [
+              "Assets/Junheng/Scenes/Netcode Simulation Test.unity"
+            ],
+            "dependencyType": 0,
             "icon": null
           },
           {

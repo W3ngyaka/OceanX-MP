@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: Week 7 of 12_
+_Last updated: Week 8 of 12 (2026-06-10)_
 
 ---
 
@@ -35,7 +35,7 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 | 6 | Population growth/decline + ecosystem health system | 🔶 Partial — health score not yet built |
 | 7 | Cascading effects + ecosystem state machine + codebase cleanup | 🔶 Partial — GPU cascade done, state machine not started, dead code removed |
 | 8 | Movement systems — flocking + predator behaviour | ✅ Done (completed Week 5) |
-| 9 | Event system + integration hooks for UI | 🔶 Partial — netcode sync working, C# events not yet wired |
+| 9 | Event system + integration hooks for UI | 🔶 Partial — netcode sync + tablet UI add/remove working, C# events not yet wired |
 | 10 | Preset scenarios + complete core system | ❌ Not started |
 | 11 | Debugging, testing, system balancing | ❌ Not started |
 | 12 | Final optimisation, bug fixing, project completion | ❌ Not started |
@@ -164,9 +164,10 @@ Assets/Junheng/
 ### GPU Netcode
 - **Host/Client architecture** using Unity Netcode for GameObjects (NGO) over WiFi
 - `NetworkBootstrap` — sets role (Host/Client), starts NGO
-- `EcosystemNetworkManagerGPU` — auto-finds `EcosystemSimulationGPU` on server; syncs school counts every 1s via `NetworkList<int>`; exposes `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc`
-- `TabletEcosystemUIGPU` + `TabletSpeciesCardUIGPU` — client tablet UI
-- `ConnectionScreenUI` — tablet IP entry screen
+- `EcosystemNetworkManagerGPU` — auto-finds `EcosystemSimulationGPU` on server; syncs school counts via `NetworkList<int>` (periodic tick **+ immediate resync on add/remove**); exposes `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc`
+- `TabletEcosystemUIGPU` — now a species→index lookup service; legacy `TabletSpeciesCardUIGPU` cards optional
+- New tablet UI: `SpeciesBubble` (tap → modal) + `ModalController` (in-card Add/Remove + per-species population)
+- `ConnectionScreenUI` — tablet IP entry screen + LAN auto-discovery
 
 ### TransformAnimator
 - Animates target transforms along Line / Circle / Rectangle paths
@@ -186,6 +187,31 @@ Assets/Junheng/
   - Duplicate ComputeShaderExtensions (GameDevBuddies namespace)
 - **Shader paths fixed** — reorganised `Simulation/Shaders/` → `Shaders/`, updated all `#include` paths across compute and hlsl files
 - **Species list finalised** — 12 species confirmed (see table above)
+
+---
+
+## What Was Done — Week 8 (JunHeng)
+
+Focus: real species data, Android tablet build pipeline, shaders in-scene, and wiring the new tablet UI to the netcode layer.
+
+### ✅ What Worked
+- **Species data assets created** — built the per-species `SpeciesDataGPU` assets (Blacktip reef shark, Bluefin trevally, Bullethead parrotfish, Eyestripe surgeonfish, Fringelip mullet, Reticulated damselfish, Streaked spinefoot, Bluespotted ribbontail ray, Russell's snapper, Yellowstripe scad, Brown-marbled grouper, Great barracuda) + iterated on their data values. These no longer "don't exist."
+- **Android APK builds** — got the tablet client building and deploying to Android; multiple successful test builds.
+- **Mobile renderer** — switched the build to a mobile-appropriate URP renderer for the tablet.
+- **Shaders in-scene** — implemented the `Fish_Lit` shader and a `Shader_GUI/Editor` property drawer into the simulation/UI scenes.
+- **New tablet scene** — built out the `Netcode Simulation Test` tablet scene with the new bubble/modal UI.
+- **Netcode UI integration (this session)** — wired the new UI to the existing netcode layer:
+  - `SpeciesBubble` now carries a `SpeciesDataGPU` reference and resolves its species **index** via `TabletEcosystemUIGPU.GetSpeciesIndex()` (robust to reordering — no hand-numbered indices).
+  - `TabletEcosystemUIGPU` became a lookup service (singleton + `GetSpeciesIndex`); legacy auto-card spawning is now optional.
+  - Add/Remove moved **into the modal card** (`ModalController`) — buttons fire `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc` and show the synced population for the open species only.
+  - **Instant population feedback** — `EcosystemNetworkManagerGPU` now resyncs the `NetworkList<int>` immediately after an add/remove RPC instead of only on the 1s tick, so the tablet count updates without lag.
+  - Fixed stale-population bug — modal population is now per-species (cleared/hidden for cosmetic-only bubbles instead of showing the last card's number).
+
+### ❌ What Didn't Work / Still Open
+- **Hard crash with shark + water shader (URP).** See dedicated note in Known Issues below. This was the main blocker and is not fully resolved — only worked around.
+- **Ecosystem definition not fully populated** — the `SpeciesDataGPU` assets exist, but `EcosystemDefinitionGPU.asset` still needs all species added in a fixed order (host + tablet must share the same list). Until then, bubbles for unlisted species resolve to index -1 (card goes dead).
+- **C# event system** — population/health/state events for the UI team still not wired.
+- **Ecosystem health bar** — GPU side still not connected.
 
 ---
 
@@ -269,8 +295,14 @@ Carrying capacity is auto-derived from the spawner's initial `BoidsCount` at run
 
 ## Known Issues / Watchpoints
 
+- **🛑 CRASH — shark + water shader (suspected URP / Stylized Water opaque-texture interaction).**
+  - **Repro:** when the **shark** enters the scene **together with the water shader**, the app crashes.
+  - **Workarounds that run fine:** removing the **shader** alone, or the **shark** alone, runs without crashing.
+  - **Oddity:** with the **shark + water + (some) other GameObject** all present, everything runs smoothly — so it appears to be a fragile state, not a clean reproduction.
+  - **Suspected cause:** URP / Stylized Water shader not resolving correctly, likely tied to the **Opaque Texture** setting (camera/URP asset `_CameraOpaqueTexture`). The shark material rendering with the water shader's opaque-texture sampling may be the trigger.
+  - **Status:** worked around (commit `b85296d` "fixing Crashing error" in `Boids_Demo.unity`), **not root-caused.** Next step: verify URP asset has Opaque Texture enabled and matches between desktop + mobile renderers, and test the shark material in isolation against the water shader.
 - **NetworkConfig mismatch** — client and host must have identical Network Prefabs Lists
-- **No SpeciesDataGPU assets exist yet** — need to create all 12 species assets
+- **`SpeciesDataGPU` assets exist but ecosystem list incomplete** — the per-species assets are created; `EcosystemDefinitionGPU.asset` still needs every species added (same order on host + tablet) so the index-based RPCs line up
 - **`SpeciesDataGPU` missing UI fields** — ScientificName, Description, Sprite, TrophicTier, FoodWebPosition, unlock requirements not yet added
 - **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active
 - **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene

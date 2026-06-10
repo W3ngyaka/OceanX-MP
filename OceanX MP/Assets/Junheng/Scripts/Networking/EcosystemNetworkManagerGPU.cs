@@ -52,12 +52,21 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         if (_syncTimer < _populationSyncInterval) return;
         _syncTimer = 0f;
 
+        SyncPopulations();
+    }
+
+    // Recount every species and write into the synced list. Called on the periodic
+    // tick AND immediately after an add/remove so the tablet reflects user actions
+    // without waiting for the next tick.
+    private void SyncPopulations()
+    {
         for (int i = 0; i < _simulation.Ecosystem.Species.Count; i++)
         {
             SpeciesDataGPU s = _simulation.Ecosystem.Species[i];
             if (s != null && i < _populationCounts.Count)
                 _populationCounts[i] = _simulation.CountGroups(s);
         }
+        _syncTimer = 0f;   // reset so the periodic tick doesn't immediately re-fire
     }
 
     // Called from the tablet client — executes on the host/server.
@@ -67,6 +76,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         if (_simulation == null) return;
         if ((uint)speciesIndex >= (uint)_simulation.Ecosystem.Species.Count) return;
         _simulation.AddSpecies(_simulation.Ecosystem.Species[speciesIndex]);
+        SyncPopulations();   // reflect the change on the tablet right away
     }
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
@@ -75,6 +85,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         if (_simulation == null) return;
         if ((uint)speciesIndex >= (uint)_simulation.Ecosystem.Species.Count) return;
         _simulation.RemoveSpecies(_simulation.Ecosystem.Species[speciesIndex]);
+        SyncPopulations();   // reflect the change on the tablet right away
     }
 
     // Read by TabletSpeciesCardUIGPU every frame.

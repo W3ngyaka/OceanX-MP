@@ -2,11 +2,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using OceanX.BoidsGPU.Ecosystem;
 
 public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public Sprite cardImage;
     public string speciesKey;
+
+    [Tooltip("The species this bubble represents. Drag in the SpeciesDataGPU asset " +
+             "(e.g. Bluefin Trevally_Data). Used to resolve the netcode index.")]
+    public SpeciesDataGPU speciesData;
+
     public List<SpeciesBubble> prey = new List<SpeciesBubble>();
     public List<SpeciesBubble> predators = new List<SpeciesBubble>();
 
@@ -15,10 +21,30 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private bool isHolding = false;
     private bool longPressTriggered = false;
 
+    // Index into the ecosystem species list; -1 = no netcode target (cosmetic only).
+    private int _speciesIndex = -1;
+
     void Start()
     {
         Button btn = GetComponent<Button>();
         if (btn != null) btn.onClick.AddListener(OnTap);
+
+        ResolveSpeciesIndex();
+    }
+
+    private void ResolveSpeciesIndex()
+    {
+        if (speciesData == null) return;   // cosmetic-only bubble
+
+        if (TabletEcosystemUIGPU.Instance == null)
+        {
+            Debug.LogWarning($"[SpeciesBubble] No TabletEcosystemUIGPU in scene — '{name}' can't resolve a netcode index.", this);
+            return;
+        }
+
+        _speciesIndex = TabletEcosystemUIGPU.Instance.GetSpeciesIndex(speciesData);
+        if (_speciesIndex < 0)
+            Debug.LogWarning($"[SpeciesBubble] '{speciesData.SpeciesName}' is not in the ecosystem species list.", this);
     }
 
     void Update()
@@ -60,6 +86,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     void OnTap()
     {
         if (ModalController.Instance != null && cardImage != null)
-            ModalController.Instance.Open(cardImage);
+            ModalController.Instance.Open(cardImage, _speciesIndex);
     }
 }

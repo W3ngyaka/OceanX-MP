@@ -5,11 +5,10 @@ using System.Collections.Generic;
 public class FoodWebLines : MonoBehaviour
 {
     public static FoodWebLines Instance;
-
     public GameObject linePrefab;
 
-    private List<GameObject> activeLines = new List<GameObject>();
-    private List<Image> glowRings = new List<Image>();
+    public List<GameObject> activeLines = new List<GameObject>();
+    public List<Image> glowRings = new List<Image>();
 
     void Awake()
     {
@@ -18,75 +17,55 @@ public class FoodWebLines : MonoBehaviour
 
     public void ShowConnections(SpeciesBubble source)
     {
-        HideConnections();
+        Debug.Log($"ShowConnections: {source.name}, prey={source.prey.Count}, predators={source.predators.Count}");
 
         foreach (var predator in source.predators)
-        {
             DrawLine(source.transform, predator.transform, new Color(0f, 0.85f, 1f, 1f));
-            HighlightBubble(predator, true);
-        }
 
-        foreach (var prey in source.prey)
-        {
-            DrawLine(source.transform, prey.transform, new Color(0f, 0.85f, 1f, 0.4f));
-            HighlightBubble(prey, false);
-        }
+        foreach (var p in source.prey)
+            DrawLine(source.transform, p.transform, new Color(0f, 0.85f, 1f, 0.4f));
+
+        Debug.Log($"activeLines count after draw: {activeLines.Count}");
     }
 
     public void HideConnections()
     {
-        foreach (var line in activeLines)
+        Debug.Log($"HideConnections: destroying {activeLines.Count} lines");
+        for (int i = activeLines.Count - 1; i >= 0; i--)
         {
-            if (line != null)
-                Destroy(line);
+            if (activeLines[i] != null)
+                DestroyImmediate(activeLines[i]);
         }
         activeLines.Clear();
 
         foreach (var ring in glowRings)
-        {
-            if (ring != null)
-                ring.enabled = false;
-        }
+            if (ring != null) ring.enabled = false;
         glowRings.Clear();
     }
 
     void DrawLine(Transform from, Transform to, Color color)
     {
+        if (linePrefab == null) { Debug.LogError("linePrefab is null!"); return; }
+
         GameObject line = Instantiate(linePrefab, transform);
+        line.SetActive(true);
+        activeLines.Add(line);
+
         RectTransform rt = line.GetComponent<RectTransform>();
         Image img = line.GetComponent<Image>();
-
         img.color = color;
 
         Vector2 fromPos = from.position;
         Vector2 toPos = to.position;
-
         Vector2 dir = toPos - fromPos;
         float dist = dir.magnitude;
 
         rt.position = (fromPos + toPos) / 2f;
-        rt.sizeDelta = new Vector2(dist, 2f);
+        rt.sizeDelta = new Vector2(dist, 6f);
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         rt.rotation = Quaternion.Euler(0, 0, angle);
 
-        activeLines.Add(line);
-    }
-
-    void HighlightBubble(SpeciesBubble bubble, bool bright)
-    {
-        Transform ring = bubble.transform.Find("GlowRing");
-        if (ring == null) return;
-
-        Image ringImg = ring.GetComponent<Image>();
-        if (ringImg == null) return;
-
-        ringImg.enabled = true;
-
-        ringImg.color = bright
-            ? new Color(0f, 0.85f, 1f, 1f)
-            : new Color(0f, 0.85f, 1f, 0.4f);
-
-        glowRings.Add(ringImg);
+        Debug.Log($"Drew line from {from.name} to {to.name}, activeLines now: {activeLines.Count}");
     }
 }

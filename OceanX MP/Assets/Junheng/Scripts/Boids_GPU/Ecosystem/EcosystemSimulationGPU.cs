@@ -121,21 +121,14 @@ namespace OceanX.BoidsGPU.Ecosystem
                 if (spawner == null) continue;
 
                 int current = spawner.SpawnData.BoidsCount;
-                _carryingCapacity.TryGetValue(species, out int cap);
                 _boidsPerGroup.TryGetValue(species, out int bpg);
-                int delta = 0;
 
-                // Births — logistic growth slows as population nears carrying capacity.
-                if (cap > 0 && current < cap)
-                {
-                    float birthChance = species.ReproductionRate * (1f - (float)current / cap);
-                    if (Random.value < birthChance) delta++;
-                }
+                // Natural births (respawn) and natural deaths removed.
+                // Population now only changes via the starvation cascade below
+                // and the UI add/remove API.
 
-                // Natural deaths.
-                if (current > bpg && Random.value < species.NaturalDeathRate) delta--;
-
-                // Starvation — fires if any prey species is below its starvation threshold.
+                // Starvation — fires if any prey species is below its starvation threshold (ratio-based).
+                bool starved = false;
                 foreach (SpeciesDataGPU prey in species.PreySpecies)
                 {
                     if (prey == null) continue;
@@ -145,13 +138,12 @@ namespace OceanX.BoidsGPU.Ecosystem
                     float preyRatio = (float)preySpawner.SpawnData.BoidsCount / Mathf.Max(1, preyCap);
                     if (preyRatio < species.StarvationThreshold)
                     {
-                        if (current > bpg && Random.value < species.StarvationDeathRate) delta--;
+                        if (current > bpg && Random.value < species.StarvationDeathRate) starved = true;
                         break;
                     }
                 }
 
-                if (delta > 0 && current < cap)          { AddGroup(species, spawner);    anyChanged = true; }
-                else if (delta < 0 && current > bpg)     { RemoveGroup(species, spawner); anyChanged = true; }
+                if (starved && current > bpg) { RemoveGroup(species, spawner); anyChanged = true; }
             }
 
             if (anyChanged) _simulation.ReinitializeBuffers();

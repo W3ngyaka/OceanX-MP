@@ -88,7 +88,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         SyncPopulations();   // reflect the change on the tablet right away
     }
 
-    // Read by TabletSpeciesCardUIGPU every frame.
+    // Read by the tablet UI (ModalController) every frame.
     public int GetPopulation(int speciesIndex)
     {
         if (speciesIndex < 0 || speciesIndex >= _populationCounts.Count) return 0;

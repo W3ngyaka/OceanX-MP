@@ -39,10 +39,6 @@ namespace OceanX.BoidsGPU.Ecosystem
         public SpeciesBehaviorPropertiesGPU BehaviorProperties;
 
         [Header("Population Dynamics")]
-        [Tooltip("Chance per tick to gain one school (logistic — slows near carrying capacity).")]
-        [Range(0f, 1f)] public float ReproductionRate = 0.10f;
-        [Tooltip("Chance per tick to lose one school from natural causes.")]
-        [Range(0f, 1f)] public float NaturalDeathRate = 0.03f;
         [Tooltip("Additional chance per tick to lose one school when prey is scarce.")]
         [Range(0f, 1f)] public float StarvationDeathRate = 0.25f;
         [Tooltip("Fraction of prey's carrying capacity below which this species starts starving.")]

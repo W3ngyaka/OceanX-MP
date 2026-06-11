@@ -15,6 +15,15 @@ namespace OceanX.BoidsGPU.Ecosystem
 
         public EcosystemDefinitionGPU Ecosystem => _ecosystem;
 
+        /// <summary>
+        /// The simulation volume, taken straight from the BoidSimulationGPU so the ecosystem (where the
+        /// roaming targets live) is always the SAME box as the actual boid simulation area — no need to
+        /// keep EcosystemDefinitionGPU's center/size in sync by hand. Falls back to the asset's bounds
+        /// only if the BoidSimulationGPU reference is missing (e.g. drawing gizmos before it is wired).
+        /// </summary>
+        private Bounds SimulationBounds =>
+            _simulation != null ? _simulation.SimulationAreaBounds : _ecosystem.SimulationBounds;
+
         [Header("Population Tick")]
         [Tooltip("Seconds between each population tick.")]
         [SerializeField] private float _tickInterval = 5f;
@@ -249,7 +258,7 @@ namespace OceanX.BoidsGPU.Ecosystem
             WanderingAffecterGPU wanderer = go.AddComponent<WanderingAffecterGPU>();
             wanderer.SetSubGroupID(subGroupIndex);
             wanderer.SetAffecterType(SimulationAffecterType.Target);
-            wanderer.Initialize(_ecosystem.SimulationBounds);
+            wanderer.Initialize(SimulationBounds);
             return wanderer;
         }
 
@@ -319,11 +328,14 @@ namespace OceanX.BoidsGPU.Ecosystem
 
         private void OnDrawGizmosSelected()
         {
-            if (_ecosystem == null) return;
+            // Draw the volume actually used (from BoidSimulationGPU when available), so this box always
+            // overlaps the BoidSimulationGPU's own bounds gizmo instead of drifting from it.
+            if (_simulation == null && _ecosystem == null) return;
+            Bounds bounds = SimulationBounds;
             Gizmos.color = new Color(0f, 0.8f, 1f, 0.12f);
-            Gizmos.DrawCube(_ecosystem.SimulationCenter, _ecosystem.SimulationSize);
+            Gizmos.DrawCube(bounds.center, bounds.size);
             Gizmos.color = new Color(0f, 0.8f, 1f, 0.5f);
-            Gizmos.DrawWireCube(_ecosystem.SimulationCenter, _ecosystem.SimulationSize);
+            Gizmos.DrawWireCube(bounds.center, bounds.size);
         }
     }
 }

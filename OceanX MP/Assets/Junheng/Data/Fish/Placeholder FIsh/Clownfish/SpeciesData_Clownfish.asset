@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: SpeciesData_Clownfish
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
   SpeciesName: Clownfish
+  ScientificName: Scientific Name
   Role: 2
   SchoolProperties: {fileID: 11400000, guid: 383b717f072cac545bf97d8c7521b8f0, type: 2}
   MovementProperties: {fileID: 11400000, guid: 23ed38104da47d44782c651762d48a78, type: 2}
   MotionRenderProperties: {fileID: 11400000, guid: a37d6d388b1a919408e9a2f107d0f158, type: 2}
   BehaviorProperties: {fileID: 11400000, guid: 3059a1d7465fe664f999f8644ad4ac9a, type: 2}
-  ReproductionRate: 0.1
-  NaturalDeathRate: 0.03
+  FishPerSchool: 120
+  MaxSchools: 5
   StarvationDeathRate: 0.25
   StarvationThreshold: 0.2
   PreySpecies: []

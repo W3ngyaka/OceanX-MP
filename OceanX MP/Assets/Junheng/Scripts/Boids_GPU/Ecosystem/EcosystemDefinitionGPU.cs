@@ -20,8 +20,10 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Tooltip("All GPU species in this ecosystem. Order determines RuntimeId.")]
         public List<SpeciesDataGPU> Species = new List<SpeciesDataGPU>();
 
-        [Header("Simulation Area")]
-        [Tooltip("Must match the SimulationAreaBounds set on the BoidSimulationGPU component.")]
+        [Header("Simulation Area (fallback only)")]
+        [Tooltip("Fallback bounds. At runtime EcosystemSimulationGPU reads the simulation volume straight " +
+                 "from the BoidSimulationGPU's Simulation Area Bounds, so these values are only used when " +
+                 "no BoidSimulationGPU is assigned. You normally don't need to match them by hand anymore.")]
         public Vector3 SimulationCenter = Vector3.zero;
         public Vector3 SimulationSize   = new Vector3(100f, 40f, 100f);
 

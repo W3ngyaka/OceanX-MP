@@ -290,7 +290,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.142395
+      value: 18.142738
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -298,7 +298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.2455823
+      value: 8.14891
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2358,15 +2358,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.142395
+      value: 18.142738
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -16.800072
+      value: -18.740782
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.2455823
+      value: 8.14891
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4761,24 +4761,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boidSpawnData:
-    BoidsCount: 250
+    BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: 4023981112819473776, guid: 09b07def93206674c838a112bb9c6e43, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 5cb625ec19658aa4db5014d6bad643d3, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: 383b717f072cac545bf97d8c7521b8f0, type: 2}
     Targets:
     - {fileID: 1178520261}
-    - {fileID: 1405337181}
-    - {fileID: 803812293}
-    - {fileID: 1103958677}
-    - {fileID: 1213970024}
-    - {fileID: 1088915005}
-    - {fileID: 2144482060}
-    - {fileID: 1661813342}
-    - {fileID: 454194399}
-    - {fileID: 1083159062}
     Obstacles: []
-  _initialGroupsCount: 5
+  _initialGroupsCount: 1
   _initialOffsetFromTarget: 1.5
   _speciesData: {fileID: 11400000, guid: 7ee79425b71dd174387c754f3f4c7625, type: 2}
 --- !u!1001 &1883927728
@@ -5277,15 +5268,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.142395
+      value: 18.142738
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -16.800072
+      value: -18.740782
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.2455823
+      value: 8.14891
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalRotation.w

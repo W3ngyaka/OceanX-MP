@@ -187,6 +187,7 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         {
             // Empty ocean (all species extinct / none added yet): nothing to dispatch or draw.
             // The GPU buffers exist (sized to 1) but must never be dispatched or rendered when there
+            // are no real boids — dispatching 0 threads / drawing 0 instances is what we avoid here.
             if (_boidsCount == 0) return;
 
             if (_updateSchoolSettingsEveryFrame)

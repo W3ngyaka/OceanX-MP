@@ -38,6 +38,15 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Tooltip("Hunting and fleeing AI settings. Leave null for Prey and Neutral.")]
         public SpeciesBehaviorPropertiesGPU BehaviorProperties;
 
+        [Header("School Scaling")]
+        [Tooltip("Number of fish in a single school. Each Add spawns one more school of this many fish; " +
+                 "schools always stay this size — adding makes MORE schools, not denser ones.")]
+        [Range(1, 200)] public int FishPerSchool = 10;
+
+        [Tooltip("Maximum number of schools the player can add for this species. " +
+                 "Add greys out once the school count reaches this cap.")]
+        [Range(1, 50)] public int MaxSchools = 5;
+
         [Header("Population Dynamics")]
         [Tooltip("Additional chance per tick to lose one school when prey is scarce.")]
         [Range(0f, 1f)] public float StarvationDeathRate = 0.25f;

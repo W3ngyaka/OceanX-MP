@@ -24,7 +24,10 @@
       "Bash(python /c/Users/w3ngy/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/3d0144a4-c041-4ac9-a72c-4f856e3dea57/2dab3d61-d5cc-4146-8c5e-2424c312d928/skills/docx/scripts/office/unpack.py 'C:/Users/w3ngy/OneDrive/Documents/TP/year 3 sem 1/MP/Weekly Update/Weng Junheng_2400792D_Week04ProjectProgressReport.docx' /tmp/wk4_unpacked/)",
       "PowerShell($py = Get-Command python,python3,py -ErrorAction SilentlyContinue | Select-Object -First 1; if\\($py\\){ \"Found: $\\($py.Source\\)\" } else { \"no python\" }; \"---node---\"; \\(Get-Command node -ErrorAction SilentlyContinue\\).Source)",
       "Bash(git rm *)",
-      "Bash(cd \"C:\\\\Unity FIles\\\\OceanX-MP\" && find . -iname \"*prototype*\" -not -path \"*/Library/*\" -not -path \"*/node_modules/*\" 2>/dev/null; echo \"---\"; find . -iname \"oceanx*.html\" 2>/dev/null | head)"
+      "Bash(cd \"C:\\\\Unity FIles\\\\OceanX-MP\" && find . -iname \"*prototype*\" -not -path \"*/Library/*\" -not -path \"*/node_modules/*\" 2>/dev/null; echo \"---\"; find . -iname \"oceanx*.html\" 2>/dev/null | head)",
+      "Skill(code-review)",
+      "Skill(code-review:*)",
+      "Bash(git -C \"C:\\\\Unity FIles\\\\OceanX-MP\" diff HEAD -- \"*.cs\")"
     ]
   }
 }

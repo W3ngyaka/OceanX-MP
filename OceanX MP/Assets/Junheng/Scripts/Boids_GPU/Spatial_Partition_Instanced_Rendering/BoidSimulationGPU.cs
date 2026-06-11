@@ -65,7 +65,10 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             //   2. Use spawner.Boids.Length (the live local array) for the slice size — NOT
             //      SpawnData.BoidsCount, which may already reflect the new target count because
             //      EcosystemSimulationGPU calls SetBoidsCount BEFORE ReinitializeBuffers.
-            if (_boidsComputeBuffer != null && _boidsInfos != null)
+            //   3. Only read back when there are real boids. Coming out of the empty-ocean state
+            //      _boidsInfos is a zero-length array and ComputeBuffer.GetData rejects empty arrays
+            //      (the buffers themselves are size-1 placeholders). Nothing to preserve anyway.
+            if (_boidsCount > 0 && _boidsComputeBuffer != null && _boidsInfos != null)
             {
                 ComputeBuffer readBuffer = _sortedBoidsBufferIsOutput
                     ? _sortedBoidsComputeBuffer
@@ -76,6 +79,10 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
                     readBuffer.GetData(_boidsInfos);
                     foreach (BoidSpawnerGPU spawner in _gpuBoidSpawners)
                     {
+                        // Skip spawners going inactive this rebuild (extinct): they won't SpawnBoids,
+                        // so preserving their positions would only leave stale data to be wrongly
+                        // restored if the species is re-added later.
+                        if (!spawner.IsActive) continue;
                         BoidInfoGPU[] oldBoids = spawner.Boids;
                         if (oldBoids == null) continue;
                         int offset = spawner.RenderingOffset;
@@ -118,9 +125,11 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         /// <inheritdoc/>
         protected override void SpawnBoids()
         {
-            // Spawn all boids inside the simulation area.            
+            // Spawn boids only for active species. An inactive (zero-school) spawner is skipped so it
+            // produces no boid array and no draw-arguments buffer — it is fully excluded this rebuild.
             foreach (BoidSpawnerGPU gpuBoidSpawner in _gpuBoidSpawners)
             {
+                if (!gpuBoidSpawner.IsActive) continue;
                 gpuBoidSpawner.SpawnBoids(_simulationAreaBounds);
             }
         }
@@ -137,19 +146,27 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         /// <inheritdoc/>
         protected override void InitializeRenderProperties()
         {
-            // Fetch all fish school properties and cache them. Also, fetch all boid school render properties.
-            _boidSchoolsRenderInfos = new BoidRenderInfoGPU[_gpuBoidSpawners.Length];
-            foreach (BoidSpawnerGPU gpuBoidSpawner in _gpuBoidSpawners)
+            // Build the per-group school + render info only for the active spawners, in BoidGroupId
+            // order. _activeSortedSpawners is already ordered by BoidGroupId (0..N-1, dense), so the
+            // arrays line up with the group ID packed into each boid and sampled by the shaders.
+            int activeCount = _activeSortedSpawners.Count;
+            _boidsSchools.Clear();
+            _boidSchoolsRenderInfos = new BoidRenderInfoGPU[Mathf.Max(1, activeCount)];
+            for (int i = 0; i < activeCount; i++)
             {
-                int index = Mathf.Min(gpuBoidSpawner.BoidGroupId, _boidsSchools.Count);
-                _boidsSchools.Insert(index, gpuBoidSpawner.SpawnData.FishSchoolProperties);
-                _boidSchoolsRenderInfos[gpuBoidSpawner.BoidGroupId] = ExtractBoidSchoolRenderInfo(gpuBoidSpawner.SpawnData.FishSchoolProperties.MotionRenderProperties);
+                BoidSpawnerGPU gpuBoidSpawner = _activeSortedSpawners[i];
+                _boidsSchools.Add(gpuBoidSpawner.SpawnData.FishSchoolProperties);
+                _boidSchoolsRenderInfos[i] = ExtractBoidSchoolRenderInfo(gpuBoidSpawner.SpawnData.FishSchoolProperties.MotionRenderProperties);
             }
 
             // Initialize the compute buffer that will hold the render information for each boid school in a
-            // GPU-readable format, so that instanced materials can use it.
-            _boidSchoolsRenderInfoBuffer = new ComputeBuffer(_boidSchoolsRenderInfos.Length, BoidRenderInfoGPU.Size);
-            _boidSchoolsRenderInfoBuffer.SetData(_boidSchoolsRenderInfos);
+            // GPU-readable format, so that instanced materials can use it. Sized Mathf.Max(1, ...) so it is
+            // never zero-sized when the ocean is empty (the placeholder element is never sampled).
+            _boidSchoolsRenderInfoBuffer = new ComputeBuffer(Mathf.Max(1, activeCount), BoidRenderInfoGPU.Size);
+            if (activeCount > 0)
+            {
+                _boidSchoolsRenderInfoBuffer.SetData(_boidSchoolsRenderInfos);
+            }
         }
 
         /// <inheritdoc/>
@@ -157,13 +174,21 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         {
             base.InitializeComputeShaderData();
 
-            _sortedBoidsComputeBuffer = new ComputeBuffer(_boidsCount, BoidInfoGPU.Size);
-            _sortedBoidsComputeBuffer.SetData(_boidsInfos);
+            // Mathf.Max(1, ...) so the ping-pong buffer is never zero-sized at empty-ocean start.
+            _sortedBoidsComputeBuffer = new ComputeBuffer(Mathf.Max(1, _boidsCount), BoidInfoGPU.Size);
+            if (_boidsCount > 0)
+            {
+                _sortedBoidsComputeBuffer.SetData(_boidsInfos);
+            }
         }
 
         /// <inheritdoc/>
         protected override void UpdateSimulation(float timeDelta)
         {
+            // Empty ocean (all species extinct / none added yet): nothing to dispatch or draw.
+            // The GPU buffers exist (sized to 1) but must never be dispatched or rendered when there
+            if (_boidsCount == 0) return;
+
             if (_updateSchoolSettingsEveryFrame)
             {
                 // Update the fish school properties (cohesion, separation, alignment and target weight) every frame
@@ -181,7 +206,7 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_Affecters", _affectersComputeBuffer);
 
             // Update the affecters data on the GPU to reflect their newly updated position.
-            UpdateSimulationAffecters(_gpuBoidSpawners);
+            UpdateSimulationAffecters();
 
             // Sort the boids based on their position inside the simulation area.
             _spatialPartitionGPU.UpdateGridOccupancy(_boidsComputeBuffer, _sortedBoidsComputeBuffer);
@@ -199,6 +224,7 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             // correctly, the final array containing the boids data must be sorted by ID.
             foreach (BoidSpawnerGPU gpuBoidSpawner in _gpuBoidSpawners)
             {
+                if (!gpuBoidSpawner.IsActive) continue; // inactive species have no draw-args buffer
                 gpuBoidSpawner.RenderBoids(boidsOutputDataBuffer, _boidSchoolsRenderInfoBuffer, _simulationAreaBounds);
             }
 

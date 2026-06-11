@@ -204,7 +204,10 @@ namespace OceanX.BoidsGPU
             _totalThreadGroupsCount = Mathf.CeilToInt(_totalCellsCount / (float)THREAD_GROUP_SIZE);
 
             // Initialization of the required compute buffers.
-            _boidsCellInfoBuffer = new ComputeBuffer(totalBoidsCount, BoidCellInfo.Size);
+            // Mathf.Max(1, ...) so the per-boid buffer is never zero-sized when the ocean is empty.
+            // _totalBoidsCount stays honest (may be 0); UpdateGridOccupancy early-returns in that case
+            // so the placeholder element is never dispatched.
+            _boidsCellInfoBuffer = new ComputeBuffer(Mathf.Max(1, totalBoidsCount), BoidCellInfo.Size);
             _cellOccupancyBuffer = new ComputeBuffer(_totalCellsCount, sizeof(uint));
             _cellsGlobalOffsetBuffer = new ComputeBuffer(_totalCellsCount, sizeof(uint));
             _threadGroupsGlobalOffsetBuffer = new ComputeBuffer(_totalThreadGroupsCount, sizeof(uint));
@@ -266,6 +269,13 @@ namespace OceanX.BoidsGPU
             if (_boidsCellInfoBuffer == null)
             {
                 Debug.LogError("The grid hasn't been initialized, can't execute update!");
+                return;
+            }
+
+            // Empty ocean: no boids to sort. Skip all dispatches (the per-boid buffer is a size-1
+            // placeholder and must not be dispatched). Callers also early-return upstream, but guard here too.
+            if (_totalBoidsCount <= 0)
+            {
                 return;
             }
 

@@ -35,9 +35,13 @@ public class ModalController : MonoBehaviour
         if (_speciesIndex < 0 || EcosystemNetworkManagerGPU.Instance == null) return;
 
         int pop = EcosystemNetworkManagerGPU.Instance.GetPopulation(_speciesIndex);
+        int max = EcosystemNetworkManagerGPU.Instance.GetMaxSchools(_speciesIndex);
 
         if (PopulationLabel != null) PopulationLabel.text = pop.ToString();
+        // Remove greys out at 0 (extinction); Add greys out once the cap is reached.
+        // max <= 0 means the cap hasn't synced yet — leave Add enabled (the host enforces the cap).
         if (RemoveButton    != null) RemoveButton.interactable = pop > 0;
+        if (AddButton       != null) AddButton.interactable    = !(max > 0 && pop >= max);
     }
 
     // Cosmetic-only card (no netcode target).
@@ -51,17 +55,24 @@ public class ModalController : MonoBehaviour
 
         // Buttons stay visible; they're just disabled when this bubble has no
         // netcode target (cosmetic-only, or species not found in the ecosystem list).
+        // Compute the same cap/floor interactable state Update() uses, so a species already
+        // at its cap (or at 0) doesn't show an enabled button for one frame before Update corrects it.
         bool hasTarget = speciesIndex >= 0;
-        if (AddButton    != null) AddButton.interactable    = hasTarget;
-        if (RemoveButton != null) RemoveButton.interactable = hasTarget;
+        int pop = 0, max = 0;
+        if (hasTarget && EcosystemNetworkManagerGPU.Instance != null)
+        {
+            pop = EcosystemNetworkManagerGPU.Instance.GetPopulation(speciesIndex);
+            max = EcosystemNetworkManagerGPU.Instance.GetMaxSchools(speciesIndex);
+        }
+        if (AddButton    != null) AddButton.interactable    = hasTarget && !(max > 0 && pop >= max);
+        if (RemoveButton != null) RemoveButton.interactable = hasTarget && pop > 0;
 
         // Population is per-species: show it only for a real target, and set it
         // right away so we never show the previously-opened card's number.
         if (PopulationLabel != null)
         {
             PopulationLabel.gameObject.SetActive(hasTarget);
-            if (hasTarget && EcosystemNetworkManagerGPU.Instance != null)
-                PopulationLabel.text = EcosystemNetworkManagerGPU.Instance.GetPopulation(speciesIndex).ToString();
+            if (hasTarget) PopulationLabel.text = pop.ToString();
         }
 
         gameObject.SetActive(true);

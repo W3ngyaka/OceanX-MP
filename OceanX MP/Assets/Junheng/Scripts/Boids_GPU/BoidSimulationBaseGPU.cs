@@ -15,6 +15,10 @@ namespace OceanX.BoidsGPU
 
         protected List<FishSchoolProperties> _boidsSchools = new List<FishSchoolProperties>();
         protected List<SimulationAffecter> _affecters = new List<SimulationAffecter>();
+        // Active GPU spawners ordered by their (dense) BoidGroupId. Inactive (zero-school)
+        // spawners are excluded. Rebuilt on every InitializeBoidsSimulation and used by the
+        // derived class for render setup and the per-frame render loop.
+        protected List<BoidSpawnerGPU> _activeSortedSpawners = new List<BoidSpawnerGPU>();
         protected int _boidsKernelId = 0;
         protected int _boidsCount = 0;
 
@@ -38,19 +42,29 @@ namespace OceanX.BoidsGPU
         {
             base.InitializeBoidsSimulation();
 
-            // Collect all simulation affecters into one collection. They differentiate on their boid group ID.
             BoidSpawnerBase[] boidSpawners = GetBoidSpawners();
 
-            // Sort the GPU spawners based on their fish size.
-            List<BoidSpawnerGPU> sortedGpuBoidSpawners = new List<BoidSpawnerGPU>();
-            for (int currentDesiredIndex = 0; currentDesiredIndex < boidSpawners.Length; currentDesiredIndex++)
+            // Gather only the active GPU spawners — inactive (zero-school) species are excluded
+            // entirely so they contribute no boids, affecters or render data.
+            List<BoidSpawnerGPU> activeGpuSpawners = new List<BoidSpawnerGPU>(boidSpawners.Length);
+            foreach (BoidSpawnerBase spawner in boidSpawners)
             {
-                for (int i = 0; i < boidSpawners.Length; i++)
+                if (spawner is BoidSpawnerGPU gpuSpawner && gpuSpawner.IsActive)
                 {
-                    BoidSpawnerGPU boidSpawner = (BoidSpawnerGPU)boidSpawners[i];
-                    if (boidSpawner.BoidGroupId == currentDesiredIndex)
+                    activeGpuSpawners.Add(gpuSpawner);
+                }
+            }
+
+            // Sort the active GPU spawners by their (dense) boid group ID, which was assigned by fish size.
+            int activeCount = activeGpuSpawners.Count;
+            _activeSortedSpawners.Clear();
+            for (int currentDesiredIndex = 0; currentDesiredIndex < activeCount; currentDesiredIndex++)
+            {
+                for (int i = 0; i < activeCount; i++)
+                {
+                    if (activeGpuSpawners[i].BoidGroupId == currentDesiredIndex)
                     {
-                        sortedGpuBoidSpawners.Add(boidSpawner);
+                        _activeSortedSpawners.Add(activeGpuSpawners[i]);
                         break;
                     }
                 }
@@ -59,16 +73,16 @@ namespace OceanX.BoidsGPU
             // Use the sorted GPU spawners to calculate the offsets of each fish species in the final fish array.
             int currentOffset = 0;
             List<BoidInfoGPU> spawnedBoids = new List<BoidInfoGPU>();
-            for (int i = 0; i < sortedGpuBoidSpawners.Count; i++)
+            for (int i = 0; i < _activeSortedSpawners.Count; i++)
             {
-                BoidSpawnerGPU boidSpawner = sortedGpuBoidSpawners[i];
+                BoidSpawnerGPU boidSpawner = _activeSortedSpawners[i];
                 boidSpawner.SetRenderingOffset(currentOffset);
 
                 // Add all spawned boids to the final collection of boids, but also update their
                 // original index for correct rendering since their original index was in their local array
                 // of boids and not in the global one.
                 BoidInfoGPU[] spawnedBoidsByThisSpawner = boidSpawner.Boids;
-                int boidsSpawnedByThisSpawner = spawnedBoidsByThisSpawner.Length;
+                int boidsSpawnedByThisSpawner = spawnedBoidsByThisSpawner != null ? spawnedBoidsByThisSpawner.Length : 0;
                 for (int boidIndex = 0; boidIndex < boidsSpawnedByThisSpawner; boidIndex++)
                 {
                     BoidInfoGPU spawnedBoid = spawnedBoidsByThisSpawner[boidIndex];
@@ -78,15 +92,12 @@ namespace OceanX.BoidsGPU
                 currentOffset += boidsSpawnedByThisSpawner;
             }
 
-            // Cache all boids and total boids count.
+            // Cache all boids and total boids count. May legitimately be 0 (empty ocean).
             _boidsCount = currentOffset;
             _boidsInfos = spawnedBoids.ToArray();
 
-            // Re-order the GPU boid spawners to have them correctly ordered throughout the rest of the simulation.
-            boidSpawners = sortedGpuBoidSpawners.ToArray();
-
             // Collect all simulation affecters into one collection. They differentiate on their boid group ID.
-            foreach (BoidSpawnerGPU gpuBoidSpawner in boidSpawners)
+            foreach (BoidSpawnerGPU gpuBoidSpawner in _activeSortedSpawners)
             {
                 SimulationAffecter[] targets = gpuBoidSpawner.Targets;
                 if(targets != null && targets.Length > 0)
@@ -135,6 +146,7 @@ namespace OceanX.BoidsGPU
             _affectersInfos  = null;
             _boidsSchools.Clear();
             _affecters.Clear();
+            _activeSortedSpawners.Clear();
         }
 
         /// <inheritdoc/>
@@ -165,28 +177,41 @@ namespace OceanX.BoidsGPU
             _boidsKernelId = _boidsComputeShader.FindKernel("BoidSimulationKernel");
 
             // Boids compute buffer initialization.
-            _boidsComputeBuffer = new ComputeBuffer(_boidsCount, BoidInfoGPU.Size);
-            _boidsComputeBuffer.SetData(_boidsInfos);
+            // Every buffer is sized Mathf.Max(1, count): a zero-size ComputeBuffer throws in Unity,
+            // and at empty-ocean start (or after the last extinction) all of these counts can be 0.
+            // The placeholder element is never dispatched or drawn — UpdateSimulation early-returns
+            // when _boidsCount == 0 — so it has no visible or behavioural effect.
+            _boidsComputeBuffer = new ComputeBuffer(Mathf.Max(1, _boidsCount), BoidInfoGPU.Size);
+            if (_boidsCount > 0)
+            {
+                _boidsComputeBuffer.SetData(_boidsInfos);
+            }
 
             // Boids schools compute buffer initialization.
             int boidSchoolsCount = _boidsSchools.Count;
-            _boidsSchoolsComputeBuffer = new ComputeBuffer(boidSchoolsCount, BoidSchoolInfoGPU.Size);
+            _boidsSchoolsComputeBuffer = new ComputeBuffer(Mathf.Max(1, boidSchoolsCount), BoidSchoolInfoGPU.Size);
             _boidSchoolsInfos = new BoidSchoolInfoGPU[boidSchoolsCount];
             for (int i = 0; i < boidSchoolsCount; i++)
             {
                 _boidSchoolsInfos[i] = ExtractBoidSchoolInfo(_boidsSchools[i]);
             }
-            _boidsSchoolsComputeBuffer.SetData(_boidSchoolsInfos);
+            if (boidSchoolsCount > 0)
+            {
+                _boidsSchoolsComputeBuffer.SetData(_boidSchoolsInfos);
+            }
 
             // Affecters compute buffer initialization.
             int affectersCount = _affecters.Count;
-            _affectersComputeBuffer = new ComputeBuffer(affectersCount, AffecterGPU.Size);
+            _affectersComputeBuffer = new ComputeBuffer(Mathf.Max(1, affectersCount), AffecterGPU.Size);
             _affectersInfos = new AffecterGPU[affectersCount];
             for (int i = 0; i < affectersCount; i++)
             {
                 _affectersInfos[i] = ExtractAffecterInfo(_affecters[i]);
             }
-            _affectersComputeBuffer.SetData(_affectersInfos);
+            if (affectersCount > 0)
+            {
+                _affectersComputeBuffer.SetData(_affectersInfos);
+            }
 
             // Bind all compute buffers to the compute shader.
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_Boids", _boidsComputeBuffer);
@@ -203,13 +228,15 @@ namespace OceanX.BoidsGPU
 
         /// <summary>
         /// Function updates the position and size of each simulation affecter in the simulation.
+        /// Iterates the SAME active spawner set used to size the affecter buffer in
+        /// InitializeComputeShaderData — iterating all spawners here (including inactive ones that may
+        /// still carry inspector-assigned obstacles) would make the per-frame affecter count exceed the
+        /// buffer size and throw on SetData.
         /// </summary>
-        /// <param name="boidSpawners">Reference to the array of <see cref="BoidSpawnerBase"/> 
-        /// that are included in the current simulation.</param>
-        protected virtual void UpdateSimulationAffecters(BoidSpawnerBase[] boidSpawners)
+        protected virtual void UpdateSimulationAffecters()
         {
             _affecters.Clear();
-            foreach (BoidSpawnerBase gpuBoidSpawner in boidSpawners)
+            foreach (BoidSpawnerGPU gpuBoidSpawner in _activeSortedSpawners)
             {
                 SimulationAffecter[] targets = gpuBoidSpawner.Targets;
                 if (targets != null && targets.Length > 0)
@@ -231,6 +258,18 @@ namespace OceanX.BoidsGPU
             }
 
             int affectersCount = _affecters.Count;
+            if (affectersCount == 0)
+            {
+                // No targets/obstacles this frame — nothing to upload (and SetData rejects empty arrays).
+                return;
+            }
+
+            // The active affecter count is fixed for a buffer's lifetime (a rebuild re-runs init),
+            // but guard the array size defensively so we never write out of range.
+            if (_affectersInfos == null || _affectersInfos.Length != affectersCount)
+            {
+                _affectersInfos = new AffecterGPU[affectersCount];
+            }
             for (int i = 0; i < affectersCount; i++)
             {
                 _affectersInfos[i] = ExtractAffecterInfo(_affecters[i]);

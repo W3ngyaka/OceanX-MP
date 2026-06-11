@@ -173,6 +173,14 @@ namespace OceanX
         {
             Vector3[] points = new Vector3[numberOfPoints];
 
+            // A single point would divide by (numberOfPoints - 1) == 0 below and produce a NaN
+            // position, which corrupts the GPU boids/spatial-partition buffers. Place it at the centre.
+            if (numberOfPoints == 1)
+            {
+                points[0] = Vector3.zero;
+                return points;
+            }
+
             // Calculate the golden angle increment.
             float phi = Mathf.PI * (3f - Mathf.Sqrt(5f));
 

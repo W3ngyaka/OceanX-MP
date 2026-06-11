@@ -152,12 +152,11 @@ Assets/Junheng/
 ## What Is Currently Working
 
 ### GPU Ecosystem (EcosystemSimulationGPU.cs) — Active System
-- **`SpeciesDataGPU`** — one asset per species holds all simulation SOs (FishSchoolProperties, FishMovementProperties, FishMotionRenderProperties, SpeciesBehaviorPropertiesGPU) plus population dynamics fields
-- **Autonomous population cascade** — coroutine ticks every 5s (configurable):
-  - Births: logistic growth `reproRate × (1 - current/cap)`, slows near carrying capacity
-  - Natural deaths: random chance per tick
-  - Starvation: extra death chance when any prey species drops below `StarvationThreshold` fraction of its capacity
-- **`AddSpecies` / `RemoveSpecies`** — public API for UI buttons and netcode RPCs
+- **`SpeciesDataGPU`** — one asset per species holds all simulation SOs (FishSchoolProperties, FishMovementProperties, FishMotionRenderProperties, SpeciesBehaviorPropertiesGPU) plus population dynamics fields (`StarvationDeathRate`, `StarvationThreshold`, prey/predator lists)
+- **Population tick** — coroutine ticks every 5s (configurable). **Natural births and natural deaths were removed** (see Week 8). Population now changes only from:
+  - **Starvation cascade (ratio-based)** — a species loses a school when any prey species drops below `StarvationThreshold` fraction of its capacity, rolled at `StarvationDeathRate`
+  - **Manual add/remove** via the UI / netcode RPCs
+- **`AddSpecies` / `RemoveSpecies`** — public API for UI buttons and netcode RPCs (currently keeps ≥1 school per species — start-at-zero/extinction is the next planned change)
 - **`CountGroups`** — returns current school count for UI display
 - `BoidSpawnerGPUMultiTargets` reads all spawn properties from `SpeciesDataGPU`
 
@@ -165,7 +164,7 @@ Assets/Junheng/
 - **Host/Client architecture** using Unity Netcode for GameObjects (NGO) over WiFi
 - `NetworkBootstrap` — sets role (Host/Client), starts NGO
 - `EcosystemNetworkManagerGPU` — auto-finds `EcosystemSimulationGPU` on server; syncs school counts via `NetworkList<int>` (periodic tick **+ immediate resync on add/remove**); exposes `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc`
-- `TabletEcosystemUIGPU` — now a species→index lookup service; legacy `TabletSpeciesCardUIGPU` cards optional
+- `TabletEcosystemUIGPU` — now a pure species→index lookup service (card UI stripped out entirely)
 - New tablet UI: `SpeciesBubble` (tap → modal) + `ModalController` (in-card Add/Remove + per-species population)
 - `ConnectionScreenUI` — tablet IP entry screen + LAN auto-discovery
 
@@ -206,10 +205,15 @@ Focus: real species data, Android tablet build pipeline, shaders in-scene, and w
   - Add/Remove moved **into the modal card** (`ModalController`) — buttons fire `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc` and show the synced population for the open species only.
   - **Instant population feedback** — `EcosystemNetworkManagerGPU` now resyncs the `NetworkList<int>` immediately after an add/remove RPC instead of only on the 1s tick, so the tablet count updates without lag.
   - Fixed stale-population bug — modal population is now per-species (cleared/hidden for cosmetic-only bubbles instead of showing the last card's number).
+- **Population model simplified (this session)** — removed natural births and natural deaths from `EcosystemSimulationGPU.RunPopulationTick`. Population now changes only via the **starvation/prey-ratio cascade** + manual add/remove. The starvation cascade (the core "remove the food → predators starve" demo) is intact.
+- **Removed dead rate fields (this session)** — deleted `ReproductionRate` and `NaturalDeathRate` from `SpeciesDataGPU` (gone from the Inspector; they were unused after the births/deaths removal). `StarvationDeathRate` / `StarvationThreshold` kept.
+- **Card UI fully removed (this session)** — deleted `TabletSpeciesCardUIGPU.cs` (+ meta); stripped `TabletEcosystemUIGPU` down to a pure species→index lookup (no more `CardPrefab` / `CardContainer` / `BuildCards`). Updated the stale comment in `EcosystemNetworkManagerGPU`. The new bubble/modal UI is the only tablet UI now.
+- **Planned next, spec'd this session** — start-at-zero / school-scaling / extinction model (player builds the ecosystem up from an empty ocean; species removable to 0; per-species `MaxSchools` cap). Full implementation prompt written (see "What Needs Building Next").
 
 ### ❌ What Didn't Work / Still Open
 - **Hard crash with shark + water shader (URP).** See dedicated note in Known Issues below. This was the main blocker and is not fully resolved — only worked around.
 - **Ecosystem definition not fully populated** — the `SpeciesDataGPU` assets exist, but `EcosystemDefinitionGPU.asset` still needs all species added in a fixed order (host + tablet must share the same list). Until then, bubbles for unlisted species resolve to index -1 (card goes dead).
+- **Start-at-zero / extinction not yet built** — Add/Remove currently keeps ≥1 school per species (can't reach 0). The GPU pipeline assumes ≥1 boid per spawner, and an all-zero start would hit a zero-size `ComputeBuffer` crash. Spec'd and ready to implement.
 - **C# event system** — population/health/state events for the UI team still not wired.
 - **Ecosystem health bar** — GPU side still not connected.
 
@@ -217,7 +221,13 @@ Focus: real species data, Android tablet build pipeline, shaders in-scene, and w
 
 ## What Needs Building Next (Priority Order)
 
-### 1. Create SpeciesDataGPU assets for all 12 species
+### 1. Start-at-Zero / School-Scaling / Extinction model (spec'd, ready to build)
+Player builds the ecosystem up from an empty ocean. Each species starts at **N = 0 schools** (excluded from the GPU sim); Add/Remove scales **groups + targets + animators + boids together** (constant density, X fish per school); removable to **0 (extinction)**; per-species **static `MaxSchools` cap**.
+- Key risk: all-zero start → zero-size `ComputeBuffer` crash. Chosen fix: min-1 placeholder buffers + skip dispatch/render when total boids = 0.
+- Add fields `FishPerSchool` + `MaxSchools` to `SpeciesDataGPU`; spawner gets an active/school-count concept; `EcosystemSimulationGPU` owns `N`.
+- A full implementation prompt for this was written this session (hand to `/game-developer`, then `/code-review`).
+
+### 2. Create SpeciesDataGPU assets for all 12 species
 `SpeciesDataGPU` needs new fields before assets can be created:
 - `string ScientificName`
 - `string Description`
@@ -229,7 +239,7 @@ Focus: real species data, Android tablet build pipeline, shaders in-scene, and w
 
 Then create one asset per species and wire all `PreySpecies` / `PredatorSpecies` lists using the food chain table above.
 
-### 2. Build Tablet UI (Food Web Graph)
+### 3. Build Tablet UI (Food Web Graph)
 See prototype at `prototype/oceanx-prototype.html` for reference design. Missing from Unity:
 - **Food web graph panel** — SVG-style nodes (species bubbles) + edges (predator arrows)
 - **Species lock/unlock system** — silhouette until prerequisites met
@@ -239,7 +249,7 @@ See prototype at `prototype/oceanx-prototype.html` for reference design. Missing
 - **Current Organisms view** — toggle to grid of active species bubbles
 - **Intro screen** + Reset button
 
-### 3. Ecosystem Health Score + State Machine
+### 4. Ecosystem Health Score + State Machine
 **Health score (0–100) factors:**
 - Biodiversity: fraction of species with living members
 - Balance: prey:predator ratio per species
@@ -248,10 +258,10 @@ See prototype at `prototype/oceanx-prototype.html` for reference design. Missing
 
 **States:** Healthy → Unstable → Critical → Collapsing → Recovering
 
-### 4. Finish Netcode Client Setup
+### 5. Finish Netcode Client Setup
 Resolve NetworkConfig mismatch — both host and client NetworkManagers must have the **exact same Network Prefabs List**. Register `EcosystemNetworkManagerGPU` prefab on the client's NetworkManager.
 
-### 5. Preset Scenarios
+### 6. Preset Scenarios
 - **Balanced Ocean**, **Shark Removed**, **Overpopulation**, **Collapse**, **Recovery**
 
 ---

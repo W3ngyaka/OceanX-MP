@@ -115,22 +115,33 @@ namespace OceanX
         {
             SpawnBoids();
 
-            BoidSpawnerBase[] boidSpawners = GetBoidSpawners();
-            int boidSpawnersCount = boidSpawners.Length;
+            // Only active spawners participate in the simulation. An inactive (ecosystem-controlled,
+            // zero-school) spawner is skipped so the group IDs assigned below stay dense — 0..N-1 across
+            // the active set — which is what the render/compute shaders index by.
+            BoidSpawnerBase[] allSpawners = GetBoidSpawners();
+            List<BoidSpawnerBase> activeSpawners = new List<BoidSpawnerBase>(allSpawners.Length);
+            foreach (BoidSpawnerBase spawner in allSpawners)
+            {
+                if (spawner != null && spawner.IsActive)
+                {
+                    activeSpawners.Add(spawner);
+                }
+            }
+            int activeCount = activeSpawners.Count;
 
-            // Assign an ID to each boid group that will differentiate it from other groups
+            // Assign an ID to each active boid group that will differentiate it from other groups
             // and also let it compare its fish species' size compared to other boid groups.
             // Higher ID means that the fish species is larger than the other one.
-            ComparableBounds[] boidFishSizesBounds = new ComparableBounds[boidSpawnersCount];
-            for (int i = 0; i < boidSpawnersCount; i++)
+            ComparableBounds[] boidFishSizesBounds = new ComparableBounds[activeCount];
+            for (int i = 0; i < activeCount; i++)
             {
                 int boundsID = i;
-                boidFishSizesBounds[i] = new ComparableBounds { OriginalBoundsID = boundsID, Bounds = boidSpawners[i].FishSizeBounds };
+                boidFishSizesBounds[i] = new ComparableBounds { OriginalBoundsID = boundsID, Bounds = activeSpawners[i].FishSizeBounds };
             }
-            for (int i = 0; i < boidSpawnersCount; i++)
+            for (int i = 0; i < activeCount; i++)
             {
                 int boidGroupIndex = i;
-                boidSpawners[boidGroupIndex].SetId(CalculateBoidGroupId(boidGroupIndex, boidFishSizesBounds));
+                activeSpawners[boidGroupIndex].SetId(CalculateBoidGroupId(boidGroupIndex, boidFishSizesBounds));
             }
         }
 

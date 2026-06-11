@@ -19,6 +19,17 @@ namespace OceanX
 
         protected int _boidGroupId = 0;
 
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        // Number of schools this spawner currently represents. 0 = excluded from the
+        // simulation entirely (no boids, no targets, no draw call). Only meaningful once
+        // EcosystemSimulationGPU takes control via SetSchoolConfiguration.
+        protected int _schoolCount = 0;
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        // True once EcosystemSimulationGPU drives this spawner's school count. Spawners that
+        // are never ecosystem-controlled (e.g. standalone boid demos) keep their legacy
+        // "always active" behaviour so existing scenes are unaffected.
+        protected bool _ecosystemControlled = false;
+
         /// <summary>
         /// Collection of simulation affecters that the boids of this boid group
         /// will try to reach.
@@ -47,6 +58,19 @@ namespace OceanX
         /// Total number of sub-groups that this boid species will be initially divided into.
         /// </summary>
         public int InitialGroupsCount { get => _initialGroupsCount; }
+
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>Current number of schools (sub-groups) this spawner represents.</summary>
+        public int SchoolCount { get => _schoolCount; }
+
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Whether this spawner participates in the simulation. An ecosystem-controlled
+        /// spawner with zero schools is inactive: it is excluded from the buffer concat,
+        /// spatial grid, target collection and rendering. Spawners that were never placed
+        /// under ecosystem control are always active (legacy behaviour).
+        /// </summary>
+        public virtual bool IsActive { get => !_ecosystemControlled || _schoolCount > 0; }
 
         /// <summary>
         /// Function spawns boid instances inside the provided <paramref name="simulationAreaBounds"/>.
@@ -116,6 +140,22 @@ namespace OceanX
         // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
         /// <summary>Sets the total boid count on this spawner. Minimum 1.</summary>
         public void SetBoidsCount(int count) => _boidSpawnData.BoidsCount = Mathf.Max(1, count);
+
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Places this spawner under ecosystem control and configures it for <paramref name="schools"/>
+        /// schools of <paramref name="fishPerSchool"/> fish each. Passing 0 schools deactivates the
+        /// spawner (see <see cref="IsActive"/>). The underlying BoidsCount and InitialGroupsCount keep
+        /// their minimum-1 clamps so no GPU buffer is ever sized from a zero here — IsActive is the real
+        /// gate that excludes an empty species from the simulation.
+        /// </summary>
+        public void SetSchoolConfiguration(int schools, int fishPerSchool)
+        {
+            _ecosystemControlled = true;
+            _schoolCount = Mathf.Max(0, schools);
+            SetInitialGroupsCount(_schoolCount);                       // clamps to >= 1
+            SetBoidsCount(_schoolCount * Mathf.Max(1, fishPerSchool)); // clamps to >= 1
+        }
 
         // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
         /// <summary>Removes a specific target affecter from this spawner's target list.</summary>

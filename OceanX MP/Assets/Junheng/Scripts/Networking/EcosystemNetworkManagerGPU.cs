@@ -15,6 +15,8 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
 
     private EcosystemSimulationGPU _simulation;
     private NetworkList<int> _populationCounts;
+    // Static per-species school cap, synced once on spawn so clients can grey the Add button at the cap.
+    private NetworkList<int> _maxSchools;
     private float _syncTimer;
 
     private void Awake()
@@ -22,6 +24,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         _populationCounts = new NetworkList<int>();
+        _maxSchools = new NetworkList<int>();
     }
 
     public override void OnNetworkSpawn()
@@ -41,7 +44,11 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
 
         int speciesCount = _simulation.Ecosystem.Species.Count;
         for (int i = 0; i < speciesCount; i++)
+        {
             _populationCounts.Add(0);
+            SpeciesDataGPU s = _simulation.Ecosystem.Species[i];
+            _maxSchools.Add(s != null ? _simulation.GetMaxSchools(s) : 0);
+        }
     }
 
     private void Update()
@@ -93,5 +100,14 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     {
         if (speciesIndex < 0 || speciesIndex >= _populationCounts.Count) return 0;
         return _populationCounts[speciesIndex];
+    }
+
+    // Read by the tablet UI (ModalController) to grey the Add button at the cap.
+    // Returns 0 when the cap hasn't synced yet — the UI treats 0 as "unknown" and the host
+    // enforces the real cap regardless.
+    public int GetMaxSchools(int speciesIndex)
+    {
+        if (speciesIndex < 0 || speciesIndex >= _maxSchools.Count) return 0;
+        return _maxSchools[speciesIndex];
     }
 }

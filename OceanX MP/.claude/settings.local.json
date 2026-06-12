@@ -27,7 +27,11 @@
       "Bash(cd \"C:\\\\Unity FIles\\\\OceanX-MP\" && find . -iname \"*prototype*\" -not -path \"*/Library/*\" -not -path \"*/node_modules/*\" 2>/dev/null; echo \"---\"; find . -iname \"oceanx*.html\" 2>/dev/null | head)",
       "Skill(code-review)",
       "Skill(code-review:*)",
-      "Bash(git -C \"C:\\\\Unity FIles\\\\OceanX-MP\" diff HEAD -- \"*.cs\")"
+      "Bash(git -C \"C:\\\\Unity FIles\\\\OceanX-MP\" diff HEAD -- \"*.cs\")",
+      "Bash(grep -v \"^commit\\\\|^Author\\\\|^Date\\\\|^$\\\\|^\\\\s\")",
+      "Bash(grep -rl \"7ee79425b71dd174387c754f3f4c7625\" Assets/Junheng/Data --include=\"*.meta\")",
+      "Bash(grep -c \"BoidSpawnerGPUMultiTargets\\\\|m_Script.*MultiTargets\" \"Assets/Junheng/Scenes/Boids_Demo.unity\")",
+      "Bash(grep -c \"SpeciesData\\\\|_Data.asset\" \"Assets/Junheng/Scenes/Boids_Demo.unity\")"
     ]
   }
 }

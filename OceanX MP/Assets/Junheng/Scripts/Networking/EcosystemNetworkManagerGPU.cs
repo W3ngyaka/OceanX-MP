@@ -17,6 +17,8 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     private NetworkList<int> _populationCounts;
     // Static per-species school cap, synced once on spawn so clients can grey the Add button at the cap.
     private NetworkList<int> _maxSchools;
+    // Live ecosystem health in 0..1, written by the server each sync, read by the tablet health bar.
+    private readonly NetworkVariable<float> _ecoHealth = new NetworkVariable<float>(0f);
     private float _syncTimer;
 
     private void Awake()
@@ -73,6 +75,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
             if (s != null && i < _populationCounts.Count)
                 _populationCounts[i] = _simulation.CountGroups(s);
         }
+        _ecoHealth.Value = _simulation.EcoHealth01;   // push the live health score to clients
         _syncTimer = 0f;   // reset so the periodic tick doesn't immediately re-fire
     }
 
@@ -110,4 +113,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         if (speciesIndex < 0 || speciesIndex >= _maxSchools.Count) return 0;
         return _maxSchools[speciesIndex];
     }
+
+    // Read by the tablet eco-health bar (Health.cs). 0..1, replicated from the host.
+    public float GetEcoHealth() => _ecoHealth.Value;
 }

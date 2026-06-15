@@ -28,6 +28,29 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Tooltip("Seconds between each population tick.")]
         [SerializeField] private float _tickInterval = 5f;
 
+        [Header("Predator-Prey Balance (global)")]
+        [Tooltip("Lower edge of the balanced prey:predator ratio (measured in SCHOOL counts). " +
+                 "Below this, there are too many predators for the prey — prey shrinks, predators starve.")]
+        [SerializeField] private float _ratioBandLow = 1f;
+        [Tooltip("Upper edge of the balanced prey:predator ratio (in SCHOOL counts). " +
+                 "Above this, there are too few predators — prey overpopulates, well-fed predators grow.")]
+        [SerializeField] private float _ratioBandHigh = 3f;
+        [Tooltip("Per-tick chance (0-1) that an under-predated / well-fed species gains one school.")]
+        [Range(0f, 1f)] [SerializeField] private float _growRate = 0.3f;
+        [Tooltip("Per-tick chance (0-1) that an over-predated / starving species loses one school.")]
+        [Range(0f, 1f)] [SerializeField] private float _shrinkRate = 0.3f;
+
+        [Header("Eco-Health weights (sum ~1)")]
+        [Tooltip("How much species diversity (fraction of species alive) contributes to eco-health.")]
+        [Range(0f, 1f)] [SerializeField] private float _healthDiversityWeight = 0.4f;
+        [Tooltip("How much food-web balance (fraction of species within the ratio band) contributes.")]
+        [Range(0f, 1f)] [SerializeField] private float _healthBalanceWeight = 0.4f;
+        [Tooltip("How much apex-predator presence contributes (the shark is the keystone).")]
+        [Range(0f, 1f)] [SerializeField] private float _healthApexWeight = 0.2f;
+
+        /// <summary>Current ecosystem health in 0..1, derived live from school counts. Read by the netcode layer.</summary>
+        public float EcoHealth01 => ComputeEcoHealth01();
+
         // -------------------------------------------------------------------------
         // Runtime state — every species starts at zero schools (empty ocean). The
         // player builds the ecosystem up from nothing; schools are added/removed one
@@ -121,9 +144,15 @@ namespace OceanX.BoidsGPU.Ecosystem
         }
 
         // -------------------------------------------------------------------------
-        // Population tick — manual add/remove plus the emergent starvation cascade.
-        // Natural births and natural deaths are intentionally NOT modelled; population
-        // only changes via the UI and the prey-ratio starvation below.
+        // Population tick — symmetric, ratio-driven predator-prey dynamics.
+        //
+        // Each species feels two forces, both measured as a prey:predator ratio in
+        // SCHOOL counts against a shared [low, high] dead-band:
+        //   • Predation (top-down): few predators (ratio high) → grow; many (ratio low) → shrink.
+        //   • Food       (bottom-up): prey abundant (ratio high) → grow; prey scarce (ratio low) → starve.
+        // Inside the band nothing changes. Counts are read from a snapshot taken at the
+        // start of the tick so every species is updated from the SAME state (order-independent).
+        // Manual add/remove and these dynamics are the only things that change population.
         // -------------------------------------------------------------------------
 
         private IEnumerator PopulationTickRoutine()
@@ -137,39 +166,145 @@ namespace OceanX.BoidsGPU.Ecosystem
 
         private void RunPopulationTick()
         {
-            bool anyChanged = false;
+            // Snapshot counts so all decisions use the same pre-tick state.
+            Dictionary<SpeciesDataGPU, int> snapshot = new Dictionary<SpeciesDataGPU, int>(_schoolCount);
 
+            bool anyChanged = false;
             foreach (SpeciesDataGPU species in _ecosystem.Species)
             {
                 if (species == null) continue;
-                if (!_schoolCount.TryGetValue(species, out int n) || n <= 0) continue; // already extinct / not present
+                if (!snapshot.TryGetValue(species, out int n) || n <= 0) continue; // extinct / not present
 
                 BoidSpawnerGPUMultiTargets spawner = FindSpawner(species);
                 if (spawner == null) continue;
 
-                // Starvation — fires if any prey species is below its starvation threshold (ratio-based).
-                // Ratio = prey's live fish (N * FishPerSchool) over its carrying capacity (MaxSchools * FishPerSchool).
-                bool starved = false;
-                foreach (SpeciesDataGPU prey in species.PreySpecies)
+                int pressure = PopulationPressure(species, snapshot);
+                if (pressure > 0)
                 {
-                    if (prey == null) continue;
-                    if (!_schoolCount.TryGetValue(prey, out int preyN)) continue;
-                    int preyFish = preyN * FishPerSchool(prey);
-                    int preyCap  = MaxSchoolsOf(prey) * FishPerSchool(prey); // carrying capacity in fish
-                    float preyRatio = (float)preyFish / Mathf.Max(1, preyCap);
-                    if (preyRatio < species.StarvationThreshold)
-                    {
-                        if (Random.value < species.StarvationDeathRate) starved = true;
-                        break;
-                    }
+                    if (Random.value < _growRate && AddSchool(species, spawner)) anyChanged = true;
                 }
-
-                // Starvation can remove the LAST school (extinction) — the only guard is N > 0,
-                // which we already checked above.
-                if (starved && RemoveSchool(species, spawner)) anyChanged = true;
+                else if (pressure < 0)
+                {
+                    if (Random.value < _shrinkRate && RemoveSchool(species, spawner)) anyChanged = true;
+                }
             }
 
             if (anyChanged) _simulation.ReinitializeBuffers();
+        }
+
+        /// <summary>
+        /// Net population tendency for a species given a snapshot of school counts:
+        /// +1 = should grow, -1 = should shrink, 0 = balanced (inside the dead-band).
+        /// Combines predation pressure (from its predators) and food availability (from its prey).
+        /// </summary>
+        private int PopulationPressure(SpeciesDataGPU species, Dictionary<SpeciesDataGPU, int> counts)
+        {
+            int n = CountIn(counts, species);
+            if (n <= 0) return 0;
+
+            bool hasPrey      = HasAny(species.PreySpecies);
+            bool hasPredators = HasAny(species.PredatorSpecies);
+
+            // Starvation is a HARD override — a species can't grow without food, no matter how
+            // few predators it has. This keeps the keystone-collapse cascade intact: when prey
+            // runs out, the predator shrinks even if its own predators are gone.
+            // (Primary consumers have no modelled prey — they graze algae — so they never starve.)
+            if (hasPrey)
+            {
+                int preySchools = SumCounts(counts, species.PreySpecies);
+                if (preySchools <= 0) return -1;                                  // food gone
+                if ((float)preySchools / n < _ratioBandLow) return -1;           // food scarce
+            }
+
+            // Otherwise, weigh growth vs decline from predation pressure + food abundance.
+            int growVotes = 0;
+            int shrinkVotes = 0;
+
+            if (hasPredators)
+            {
+                int predatorSchools = SumCounts(counts, species.PredatorSpecies);
+                if (predatorSchools <= 0)
+                {
+                    growVotes++; // no predators present → prey overpopulates toward its cap
+                }
+                else
+                {
+                    float ratio = (float)n / predatorSchools;
+                    if (ratio > _ratioBandHigh) growVotes++;       // too few predators
+                    else if (ratio < _ratioBandLow) shrinkVotes++; // too many predators
+                }
+            }
+
+            if (hasPrey)
+            {
+                // Scarcity already handled by the override above; here only abundance drives growth.
+                if ((float)SumCounts(counts, species.PreySpecies) / n > _ratioBandHigh) growVotes++;
+            }
+
+            return growVotes.CompareTo(shrinkVotes); // sign of (grow - shrink): +1 / 0 / -1
+        }
+
+        // -------------------------------------------------------------------------
+        // Eco-health — a read-only scoreboard derived from the SAME ratios the
+        // dynamics use, so the bar, the warnings and the population all agree.
+        // -------------------------------------------------------------------------
+
+        private float ComputeEcoHealth01()
+        {
+            int totalSpecies = 0;
+            int aliveSpecies = 0;
+            int considered = 0;   // alive species that participate in the food web
+            int balanced = 0;     // ...of those, how many sit inside the ratio band
+            bool apexAlive = false;
+
+            foreach (SpeciesDataGPU species in _ecosystem.Species)
+            {
+                if (species == null) continue;
+                totalSpecies++;
+
+                int n = CountGroups(species);
+                if (n <= 0) continue;
+                aliveSpecies++;
+
+                if (species.Role == SpeciesRoleGPU.Apex) apexAlive = true;
+
+                if (HasAny(species.PredatorSpecies) || HasAny(species.PreySpecies))
+                {
+                    considered++;
+                    if (PopulationPressure(species, _schoolCount) == 0) balanced++;
+                }
+            }
+
+            if (totalSpecies == 0) return 0f;
+
+            float diversity = (float)aliveSpecies / totalSpecies;
+            float balance   = considered > 0 ? (float)balanced / considered : 0f;
+            float apex      = apexAlive ? 1f : 0f;
+
+            float weightSum = Mathf.Max(0.0001f, _healthDiversityWeight + _healthBalanceWeight + _healthApexWeight);
+            float health = (_healthDiversityWeight * diversity
+                          + _healthBalanceWeight   * balance
+                          + _healthApexWeight      * apex) / weightSum;
+            return Mathf.Clamp01(health);
+        }
+
+        // Count/sum helpers over a snapshot or the live dictionary.
+        private static int CountIn(Dictionary<SpeciesDataGPU, int> counts, SpeciesDataGPU species)
+            => species != null && counts.TryGetValue(species, out int n) ? n : 0;
+
+        private static int SumCounts(Dictionary<SpeciesDataGPU, int> counts, List<SpeciesDataGPU> species)
+        {
+            if (species == null) return 0;
+            int sum = 0;
+            for (int i = 0; i < species.Count; i++) sum += CountIn(counts, species[i]);
+            return sum;
+        }
+
+        private static bool HasAny(List<SpeciesDataGPU> species)
+        {
+            if (species == null) return false;
+            for (int i = 0; i < species.Count; i++) if (species[i] != null) return true;
+            return false;
         }
 
         // -------------------------------------------------------------------------

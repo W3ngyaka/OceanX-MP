@@ -32,7 +32,7 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 | 3 | Core simulation manager + species data system | ✅ Done |
 | 4 | Spawning, removal, population tracking | ✅ Done |
 | 5 | Food chain relationships + predator-prey logic | ✅ Done |
-| 6 | Population growth/decline + ecosystem health system | 🔶 Partial — health score not yet built |
+| 6 | Population growth/decline + ecosystem health system | ✅ Done — ratio-driven predator-prey dynamics + eco-health score (GPU side) |
 | 7 | Cascading effects + ecosystem state machine + codebase cleanup | 🔶 Partial — GPU cascade done, state machine not started, dead code removed |
 | 8 | Movement systems — flocking + predator behaviour | ✅ Done (completed Week 5) |
 | 9 | Event system + integration hooks for UI | 🔶 Partial — start-at-zero/extinction done; bounds derived from sim area; C# events not yet wired |
@@ -172,12 +172,17 @@ Assets/Aloysius/                     UI team (see "Weeks 7–8 — UI Team" sect
 
 ### GPU Ecosystem (EcosystemSimulationGPU.cs) — Active System
 - **`SpeciesDataGPU`** — one asset per species holds all simulation SOs (FishSchoolProperties, FishMovementProperties, FishMotionRenderProperties, SpeciesBehaviorPropertiesGPU) plus population dynamics fields (`StarvationDeathRate`, `StarvationThreshold`, prey/predator lists)
-- **Population tick** — coroutine ticks every 5s (configurable). **Natural births and natural deaths were removed** (see Week 8). Population now changes only from:
-  - **Starvation cascade (ratio-based)** — a species loses a school when any prey species drops below `StarvationThreshold` fraction of its capacity, rolled at `StarvationDeathRate`
+- **Population tick** — coroutine ticks every 5s (configurable). **Natural births and natural deaths were removed** (Week 8). Population now changes from:
+  - **Symmetric ratio-driven predator-prey dynamics** (Week 9) — each species feels a prey:predator balance ratio (in **school counts**) against a shared dead-band `[RatioBandLow, RatioBandHigh]` (default **1–3**):
+    - few predators (ratio high) → prey grows; many predators (ratio low) → prey shrinks
+    - prey abundant → predator grows (well-fed); prey scarce/gone → predator **starves** (hard override — can't grow without food)
+    - inside the band → stable. Rolled at `GrowRate` / `ShrinkRate` (default 0.3/tick). Counts snapshotted each tick so updates are order-independent.
   - **Manual add/remove** via the UI / netcode RPCs
-- **`AddSpecies` / `RemoveSpecies`** — public API for UI buttons and netcode RPCs. Species start at 0 schools; Add increments up to `MaxSchools`; Remove decrements to extinction (0). Starvation tick can also remove the last school.
+- **Eco-health score** (Week 9) — `EcoHealth01` (0–1) derived live from the **same ratios**: `diversity` (fraction of species alive) + `balance` (fraction within the band) + `apex present`, weighted (0.4/0.4/0.2). Synced to the tablet and drives `Health.cs`.
+- **`AddSpecies` / `RemoveSpecies`** — public API for UI buttons and netcode RPCs. Species start at 0 schools; Add increments up to `MaxSchools`; Remove decrements to extinction (0). The ratio tick can also drive a species to extinction.
 - **`CountGroups`** — returns current school count for UI display
 - **`FishPerSchool` / `MaxSchools`** — per-species fields on `SpeciesDataGPU`; Add/Remove scales boid count by `FishPerSchool`; cap synced to clients
+- **Prey/predator lists are now load-bearing** — `PreySpecies` / `PredatorSpecies` on `SpeciesDataGPU` drive BOTH the dynamics and eco-health. A species with empty lists won't participate (no growth/decline, ignored by balance).
 - **Empty-ocean crash safety** — all GPU buffers sized `Mathf.Max(1, count)`; dispatch and render skipped when `_boidsCount == 0`
 - **Simulation bounds derived** — `EcosystemSimulationGPU.SimulationBounds` reads from `BoidSimulationGPU.SimulationAreaBounds`; no more manual sync of two separate bounds assets
 - `BoidSpawnerGPUMultiTargets` reads all spawn properties from `SpeciesDataGPU`
@@ -371,6 +376,28 @@ Added an early-return null-guard in `BoidSimulationGPU.UpdateSimulation` so the 
 
 ---
 
+### ✅ Ratio-driven predator-prey dynamics + eco-health
+
+Replaced the old per-species starvation cascade with a **symmetric, global ratio model**, and wired up the eco-health bar.
+
+**`EcosystemSimulationGPU`:**
+- `PopulationPressure(species, counts)` → `+1 / 0 / -1` from the prey:predator balance ratio (school counts) vs a global dead-band. Combines predation pressure (top-down) and food availability (bottom-up). **Starvation is a hard override** — no/low food always shrinks, so the keystone-collapse cascade can't be cancelled by "no predators."
+- `RunPopulationTick` snapshots counts, then grows/shrinks each species via `AddSchool`/`RemoveSchool` rolled at `GrowRate`/`ShrinkRate`, one `ReinitializeBuffers` per tick.
+- `ComputeEcoHealth01` / `EcoHealth01` (0–1) = diversity + balance + apex presence, weighted; reads the same ratios.
+- New global tunables (Inspector): `RatioBandLow` (1), `RatioBandHigh` (3), `GrowRate` (0.3), `ShrinkRate` (0.3), health weights (0.4 / 0.4 / 0.2).
+
+**`SpeciesDataGPU`:** removed the now-unused `StarvationDeathRate` / `StarvationThreshold`. Balance is global; per-species behaviour comes from `FishPerSchool` / `MaxSchools` / `PreySpecies` / `PredatorSpecies`.
+
+**`EcosystemNetworkManagerGPU`:** added `NetworkVariable<float> _ecoHealth`, pushed each sync; `GetEcoHealth()` for clients.
+
+**`Health.cs`:** now pulls live health from `EcosystemNetworkManagerGPU.Instance.GetEcoHealth()` (toggle `readFromSimulation`); null-guarded.
+
+**Behaviour to expect:** prey with no predators climbs to its `MaxSchools` cap; a predator added before its prey starves out (gate this with the unlock UI); removing the shark makes mid fish overpopulate → over-predate their prey → then starve → oscillate, with eco-health dropping in step.
+
+> ⚠ **Not yet play-tested in the Unity Editor.** Needs an in-editor run; tune the band/rates if it swings too hard or flatlines.
+
+---
+
 ## Prototype Specification (`prototype/oceanx-prototype.html`)
 
 _Full interactive reference — open it in a browser. Everything below is derived from reading its source code._
@@ -540,14 +567,10 @@ Full spec in **Prototype Specification** section above. Key pieces missing in Un
 | Reset | SpongeBob bubble-flood animation, state wipe, intro re-appears |
 | Reef habitat visual | Layered flora growth, murk fade, ocean colour keyframes (GPU-side equivalent) |
 
-### 3. Ecosystem Health Score + State Machine
-**Health score (0–100) factors:**
-- Biodiversity: fraction of species with living members
-- Balance: prey:predator ratio per species
-- Apex predator presence (shark weighted heavily)
-- Stability: rate of population change
+### 3. Ecosystem State Machine (health score ✅ done)
+**Health score ✅** — `EcosystemSimulationGPU.EcoHealth01` (diversity + balance + apex, weighted) is built and synced; the bar moves. Remaining:
 
-**States:** Healthy → Unstable → Critical → Collapsing → Recovering
+**State machine (not built):** Healthy → Unstable → Critical → Collapsing → Recovering — derive from the `EcoHealth01` value (and/or its rate of change) and expose it for the UI / Alucia warnings.
 
 ### 4. Finish Netcode Client Setup
 Resolve NetworkConfig mismatch — both host and client NetworkManagers must have the **exact same Network Prefabs List**. Register `EcosystemNetworkManagerGPU` prefab on the client's NetworkManager.
@@ -557,26 +580,26 @@ Resolve NetworkConfig mismatch — both host and client NetworkManagers must hav
 
 ---
 
-## Recommended Population Dynamics Values
+## Population Dynamics Values
 
-> ⚠ **`ReproRate` and `NaturalDeath` were deleted from `SpeciesDataGPU` in Week 8** — those two columns are historical reference only and no longer map to any field. Only **StarveRate** (`StarvationDeathRate`) and **StarveThreshold** (`StarvationThreshold`) still exist. Species below match the canonical list.
+> ⚠ **The per-species rate fields are gone.** `ReproRate` / `NaturalDeath` were deleted in Week 8; `StarvationDeathRate` / `StarvationThreshold` were deleted in Week 9 when the model became a **global, ratio-driven** system. Population behaviour is now tuned by **global constants** on `EcosystemSimulationGPU` plus **per-species** `FishPerSchool` / `MaxSchools` / prey-predator lists.
 
-| Species | Tier | ~~ReproRate~~ | ~~NaturalDeath~~ | StarveRate | StarveThreshold |
-|---------|------|-----------|--------------|------------|-----------------|
-| Blacktip reef shark | Keystone | 0.02 | 0.01 | 0.30 | 0.20 |
-| Brown-marbled grouper | Tertiary | 0.08 | 0.02 | 0.25 | 0.15 |
-| Giant moray | Tertiary | 0.08 | 0.02 | 0.25 | 0.15 |
-| Bluefin trevally | Secondary | 0.12 | 0.03 | 0.20 | 0.15 |
-| Russell's snapper | Secondary | 0.12 | 0.03 | 0.20 | 0.15 |
-| Yellowstripe scad | Secondary | 0.15 | 0.04 | 0.15 | 0.10 |
-| Bluespotted ribbontail ray | Secondary | 0.10 | 0.03 | 0.20 | 0.15 |
-| Fringelip mullet | Primary | 0.20 | 0.05 | 0.00 | 0.00 |
-| Bullethead parrotfish | Primary | 0.20 | 0.05 | 0.00 | 0.00 |
-| Streaked spinefoot | Primary | 0.20 | 0.05 | 0.00 | 0.00 |
-| Eyestripe surgeonfish | Primary | 0.20 | 0.05 | 0.00 | 0.00 |
-| Reticulated damselfish | Primary | 0.22 | 0.05 | 0.00 | 0.00 |
+### Global tuning (on the `EcosystemSimulationGPU` component)
+| Constant | Default | Meaning |
+|----------|---------|---------|
+| `RatioBandLow` | 1 | below this prey:predator ratio (schools) → prey shrinks / predators starve |
+| `RatioBandHigh` | 3 | above this → prey overpopulates / well-fed predators grow |
+| `GrowRate` | 0.3 | per-tick chance an out-of-band species gains a school |
+| `ShrinkRate` | 0.3 | per-tick chance an out-of-band species loses a school |
+| `_tickInterval` | 5 s | seconds between population ticks |
+| Eco-health weights | 0.4 / 0.4 / 0.2 | diversity / balance / apex |
 
-Carrying capacity is now derived from `MaxSchools × FishPerSchool` (per-species fields on `SpeciesDataGPU`), not the old runtime `BoidsCount`.
+### Per-species (on each `SpeciesDataGPU` asset)
+- `FishPerSchool` — fish per school (constant density)
+- `MaxSchools` — hard cap; carrying capacity = `MaxSchools × FishPerSchool`
+- `PreySpecies` / `PredatorSpecies` — **required**: they drive both the dynamics and eco-health (empty lists = species doesn't participate)
+
+Tune the global band/rates live in Play mode by watching whether the reef settles or collapses.
 
 ---
 
@@ -611,7 +634,7 @@ This is the canonical tablet client. `Netcode Simulation Test 1` (Aloysius) is o
   - **Status:** worked around (commit `b85296d` "fixing Crashing error" in `Boids_Demo.unity`), **not root-caused.** Next step: verify URP asset has Opaque Texture enabled and matches between desktop + mobile renderers, and test the shark material in isolation against the water shader.
 - **Start-at-zero not yet play-tested** — `e13e26b` was committed without an in-editor run. First full add/remove cycle in the editor may surface buffer or affecter regressions.
 - **Food web lines broken** — `FoodWebLines.cs` `LineRenderer` edges are present but hidden (`LINE FOOD WEB HIDE`). Marked "wonky, TO BE CHANGED." Predator arrows need a rework before they can be shown.
-- **Eco-health bar not wired to GPU** — `Health.cs` exists in Aloysius's scene but is not reading live population data from the GPU simulation. Needs a bridge to `EcosystemSimulationGPU` or the netcode layer.
+- **Eco-health bar — now wired** (Week 9). `Health.cs` reads `EcosystemNetworkManagerGPU.Instance.GetEcoHealth()` when `readFromSimulation` is on. To work it needs: the network manager spawned (host), `Health.fillImage` assigned, and prey/predator lists filled so the score is meaningful. The **state machine** (Healthy/Unstable/Critical/…) is still not built — only the 0–1 score.
 - **NetworkConfig mismatch** — client and host must have identical Network Prefabs Lists
 - **`EcosystemDefinitionGPU.asset` species order** — all 12 species must be added in a fixed, shared order so index-based RPCs match between host and tablet
 - **`SpeciesDataGPU` missing UI fields** — ScientificName, Description, Sprite, TrophicTier, FoodWebPosition, unlock requirements not yet added

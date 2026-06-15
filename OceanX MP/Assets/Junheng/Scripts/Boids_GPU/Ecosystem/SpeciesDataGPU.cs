@@ -47,12 +47,6 @@ namespace OceanX.BoidsGPU.Ecosystem
                  "Add greys out once the school count reaches this cap.")]
         [Range(1, 50)] public int MaxSchools = 5;
 
-        [Header("Population Dynamics")]
-        [Tooltip("Additional chance per tick to lose one school when prey is scarce.")]
-        [Range(0f, 1f)] public float StarvationDeathRate = 0.25f;
-        [Tooltip("Fraction of prey's carrying capacity below which this species starts starving.")]
-        [Range(0f, 1f)] public float StarvationThreshold = 0.20f;
-
         [Header("Predator-Prey Relationships")]
         public List<SpeciesDataGPU> PreySpecies     = new List<SpeciesDataGPU>();
         public List<SpeciesDataGPU> PredatorSpecies = new List<SpeciesDataGPU>();

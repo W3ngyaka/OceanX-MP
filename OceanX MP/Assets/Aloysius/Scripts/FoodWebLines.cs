@@ -23,7 +23,7 @@ public class FoodWebLines : MonoBehaviour
             DrawLine(source.transform, predator.transform, new Color(0f, 0.85f, 1f, 1f));
 
         foreach (var p in source.prey)
-            DrawLine(source.transform, p.transform, new Color(0f, 0.85f, 1f, 0.4f));
+            DrawLine(source.transform, p.transform, new Color(0f, 0.85f, 1f, 1f));
 
         Debug.Log($"activeLines count after draw: {activeLines.Count}");
     }

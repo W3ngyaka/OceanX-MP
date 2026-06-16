@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: eafcbe55255834b439bb4593bb20185d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 314391
+  packageName: Light-colored Graph And Chart UI Pack
+  packageVersion: 1.0
+  assetPath: Assets/LightColored Graph And Chart UI Pack/UIResources/Scripts/TMSliderValuePass.cs
+  uploadId: 742955

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 6f0a19ea01d101d4c94a8bcd01c1d34b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 314391
+  packageName: Light-colored Graph And Chart UI Pack
+  packageVersion: 1.0
+  assetPath: Assets/LightColored Graph And Chart UI Pack/UIResources/Scripts/UILineRenderer.cs
+  uploadId: 742955

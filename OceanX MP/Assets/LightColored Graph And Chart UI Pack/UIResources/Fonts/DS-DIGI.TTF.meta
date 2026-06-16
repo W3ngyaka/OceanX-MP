@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 2445b816598cbac47bc64fa909a0de45
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - DS-Digital
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 50b079845bf3e324aaa524fa9be52e14, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 314391
+  packageName: Light-colored Graph And Chart UI Pack
+  packageVersion: 1.0
+  assetPath: Assets/LightColored Graph And Chart UI Pack/UIResources/Fonts/DS-DIGI.TTF
+  uploadId: 742955

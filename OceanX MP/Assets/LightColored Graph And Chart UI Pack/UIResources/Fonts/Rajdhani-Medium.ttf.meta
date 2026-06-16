@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: ad1163c2593785f4f8d91ab54bf16654
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Rajdhani
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 21abb9784eed54740bde4ba200a124c4, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 314391
+  packageName: Light-colored Graph And Chart UI Pack
+  packageVersion: 1.0
+  assetPath: Assets/LightColored Graph And Chart UI Pack/UIResources/Fonts/Rajdhani-Medium.ttf
+  uploadId: 742955

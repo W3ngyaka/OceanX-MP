@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: fa85ee3ad4d374c4a860a3204ac7604c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 314391
+  packageName: Light-colored Graph And Chart UI Pack
+  packageVersion: 1.0
+  assetPath: Assets/LightColored Graph And Chart UI Pack/UIResources/Scripts/TMLineSlider.cs
+  uploadId: 742955

@@ -33,7 +33,11 @@
       "Bash(grep -c \"BoidSpawnerGPUMultiTargets\\\\|m_Script.*MultiTargets\" \"Assets/Junheng/Scenes/Boids_Demo.unity\")",
       "Bash(grep -c \"SpeciesData\\\\|_Data.asset\" \"Assets/Junheng/Scenes/Boids_Demo.unity\")",
       "Skill(anthropic-skills:code-reviewer)",
-      "Skill(anthropic-skills:code-reviewer:*)"
+      "Skill(anthropic-skills:code-reviewer:*)",
+      "Bash(find Assets -iname \"*.asset\" -path \"*Fish*\")",
+      "Bash(find Assets -iname \"EcosystemDefinition*.asset\")",
+      "Bash(find Assets -iname \"*_Data.asset\")",
+      "Bash(find Assets -iname \"SpeciesData*.asset\")"
     ]
   }
 }

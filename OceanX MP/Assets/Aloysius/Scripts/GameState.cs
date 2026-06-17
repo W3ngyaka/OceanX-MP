@@ -39,7 +39,7 @@ public class GameState : MonoBehaviour
         RefreshAllBubbles();
     }
 
-    public void CheckUnlocks()
+public void CheckUnlocks()
     {
         foreach (var s in allSpecies)
         {
@@ -56,6 +56,7 @@ public class GameState : MonoBehaviour
                 NotificationManager.Instance?.ShowUnlocked(s);
             }
         }
+        RefreshAllBubbles();
     }
 
     void RefreshAllBubbles()

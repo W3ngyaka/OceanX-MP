@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296caf2a51c87d647b5bda939d80a037, type: 3}
+  m_Name: Blacktip_Reef_Shark
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
+  speciesName: Blacktip Reef Shark
+  sciName: Carcharhinus melanopterus
+  tier: Keystone Species
+  description: 
+  photo: {fileID: 0}
+  startUnlocked: 0
+  minHealth: 0
+  requires:
+  - species: {fileID: 11400000, guid: 6dcf9665d96952c47a27495e56cdbe28, type: 2}
+    count: 1
+  - species: {fileID: 11400000, guid: 0b6ffecf8c4d9c645ac91b3295e44834, type: 2}
+    count: 1
+  - species: {fileID: 11400000, guid: efb62a89b9b8fbb4ba41c83625e8b84d, type: 2}
+    count: 2
+  - species: {fileID: 11400000, guid: 4fed5ebcf5d8c474bba2986df708624d, type: 2}
+    count: 3
+  hint1: The reef shark needs a fully functioning food web to return.
+  hint2: You need Grouper x1, Moray x1, Trevally x2 and Scad x3.
+  hint3: "Almost there \u2014 the shark is close to returning to the reef!"
+  addedMessage: The blacktip reef shark has returned as the top predator!

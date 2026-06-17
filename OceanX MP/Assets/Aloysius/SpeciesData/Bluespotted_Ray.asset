@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296caf2a51c87d647b5bda939d80a037, type: 3}
+  m_Name: Bluespotted_Ray
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
+  speciesName: Bluespotted Ray
+  sciName: Taeniura lymma
+  tier: Secondary Consumer
+  description: 
+  photo: {fileID: 0}
+  startUnlocked: 0
+  minHealth: 0
+  requires:
+  - species: {fileID: 11400000, guid: cafaf2c4b30e8fb44837dc6c5675d763, type: 2}
+    count: 2
+  - species: {fileID: 11400000, guid: 8da02fb278092b44e9ea8359885bbb19, type: 2}
+    count: 2
+  hint1: Rays feed on the reef floor and need herbivores nearby.
+  hint2: You need Parrotfish x2 and Spinefoot x2 to attract rays.
+  hint3: "Almost there \u2014 add more parrotfish and spinefoot."
+  addedMessage: Bluespotted ribbontail rays are gliding across the reef floor.

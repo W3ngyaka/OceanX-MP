@@ -1221,7 +1221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af50de67cac181b468c1e7177239a4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
-  cardImage: {fileID: 21300000, guid: eb39ade5e069855449de5542432deb81, type: 3}
+  cardImage: {fileID: 21300000, guid: cc2b37a9e42fd5243b3a2ca9712547d2, type: 3}
   speciesKey: Blacktip Reef Shark
   speciesData: {fileID: 0}
   prey:
@@ -3135,7 +3135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1307543389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3393,7 +3393,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1408799185
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3403,7 +3403,7 @@ RectTransform:
   m_GameObject: {fileID: 1408799184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4242, y: 1.4242, z: 1.4242}
+  m_LocalScale: {x: 1.5691472, y: 2.318028, z: 2.318028}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1732000129}
@@ -3413,7 +3413,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -29, y: 38}
+  m_AnchoredPosition: {x: -54, y: 73}
   m_SizeDelta: {x: 910, y: 403}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1408799186
@@ -3451,7 +3451,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: cc2b37a9e42fd5243b3a2ca9712547d2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

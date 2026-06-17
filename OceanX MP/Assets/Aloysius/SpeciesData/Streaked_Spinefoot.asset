@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296caf2a51c87d647b5bda939d80a037, type: 3}
+  m_Name: Streaked_Spinefoot
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
+  speciesName: Streaked Spinefoot
+  sciName: Siganus javus
+  tier: Primary Consumer
+  description: 
+  photo: {fileID: 0}
+  startUnlocked: 1
+  minHealth: 0
+  requires: []
+  hint1: Spinefoot are algae grazers that support reef health.
+  hint2: Stable herbivores attract secondary consumers like rays.
+  hint3: Add more spinefoot to complete the primary consumer tier.
+  addedMessage: Streaked spinefoot are grazing seagrass and improving reef balance.

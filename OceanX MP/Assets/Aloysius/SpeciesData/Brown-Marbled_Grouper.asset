@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296caf2a51c87d647b5bda939d80a037, type: 3}
+  m_Name: Brown-Marbled_Grouper
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
+  speciesName: Brown-Marbled Grouper
+  sciName: Epinephelus fuscoguttatus
+  tier: Tertiary Consumer
+  description: 
+  photo: {fileID: 0}
+  startUnlocked: 0
+  minHealth: 0
+  requires:
+  - species: {fileID: 11400000, guid: 4fed5ebcf5d8c474bba2986df708624d, type: 2}
+    count: 2
+  - species: {fileID: 11400000, guid: efb62a89b9b8fbb4ba41c83625e8b84d, type: 2}
+    count: 1
+  - species: {fileID: 11400000, guid: d35c87e6d560cb645bfd49d6025d499b, type: 2}
+    count: 1
+  hint1: Grouper are ambush predators that need schooling prey.
+  hint2: You need Scad x2, Trevally x1 and Snapper x1 to attract grouper.
+  hint3: "Almost there \u2014 stabilise your secondary consumer population."
+  addedMessage: Brown-marbled grouper have taken up ambush positions in the reef.

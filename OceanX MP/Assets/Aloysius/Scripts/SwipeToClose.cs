@@ -8,18 +8,27 @@ public class SwipeToClose : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public float slideDuration = 0.25f;
 
     private RectTransform rt;
-    private Vector2 startPos;
+    private Vector2 originalPos; // never changes
+    private Vector2 dragStartPos;
 
     void Start()
     {
         rt = GetComponent<RectTransform>();
-        startPos = rt.anchoredPosition;
+        originalPos = rt.anchoredPosition;
+    }
+
+    // reset position every time modal opens
+    void OnEnable()
+    {
+        if (rt != null)
+            rt.anchoredPosition = originalPos;
     }
 
     public void OnPointerDown(PointerEventData e)
     {
         StopAllCoroutines();
-        startPos = rt.anchoredPosition;
+        rt.anchoredPosition = originalPos; // snap to original before drag
+        dragStartPos = originalPos;
     }
 
     public void OnDrag(PointerEventData e)
@@ -29,13 +38,12 @@ public class SwipeToClose : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public void OnPointerUp(PointerEventData e)
     {
-        Vector2 swipeDelta = rt.anchoredPosition - startPos;
+        Vector2 swipeDelta = rt.anchoredPosition - dragStartPos;
 
         if (swipeDelta.magnitude > swipeThreshold)
         {
-            // slide out in the direction of the swipe
             Vector2 direction = swipeDelta.normalized;
-            Vector2 offscreen = startPos + direction * Screen.height * 1.5f;
+            Vector2 offscreen = dragStartPos + direction * Screen.height * 1.5f;
             StartCoroutine(SlideOut(offscreen));
         }
         else
@@ -56,7 +64,7 @@ public class SwipeToClose : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             yield return null;
         }
         ModalController.Instance.Close();
-        rt.anchoredPosition = startPos;
+        rt.anchoredPosition = originalPos;
     }
 
     IEnumerator SnapBack()
@@ -66,9 +74,9 @@ public class SwipeToClose : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         while (t < 1f)
         {
             t += Time.deltaTime / 0.15f;
-            rt.anchoredPosition = Vector2.Lerp(from, startPos, Mathf.Clamp01(t));
+            rt.anchoredPosition = Vector2.Lerp(from, originalPos, Mathf.Clamp01(t));
             yield return null;
         }
-        rt.anchoredPosition = startPos;
+        rt.anchoredPosition = originalPos;
     }
 }

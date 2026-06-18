@@ -100,13 +100,15 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
 
-    void OnTap()
+void OnTap()
     {
         if (locked)
         {
             ShowLockedHint();
             return;
         }
+
+        StartCoroutine(TapPunch());   // tap-punch animation (Aloysius)
 
         if (ModalController.Instance == null || cardImage == null) return;
 
@@ -117,6 +119,31 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             speciesIndex = TabletEcosystemUIGPU.Instance.GetSpeciesIndex(data.gpuSpecies);
 
         ModalController.Instance.Open(cardImage, speciesIndex);
+    }
+
+    System.Collections.IEnumerator TapPunch()
+    {
+        Vector3 big = original * 1.2f;
+        float t = 0f;
+
+        // scale up
+        while (t < 1f)
+        {
+            t += Time.unscaledDeltaTime / 0.1f;
+            transform.localScale = Vector3.Lerp(original, big, Mathf.Clamp01(t));
+            yield return null;
+        }
+
+        // scale back down
+        t = 0f;
+        while (t < 1f)
+        {
+            t += Time.unscaledDeltaTime / 0.15f;
+            transform.localScale = Vector3.Lerp(big, original, Mathf.Clamp01(t));
+            yield return null;
+        }
+
+        transform.localScale = original;
     }
 
     void ShowLockedHint()

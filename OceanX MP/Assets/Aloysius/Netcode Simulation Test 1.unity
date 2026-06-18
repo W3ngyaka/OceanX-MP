@@ -2856,7 +2856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 6dfb9df93974eb6469c12d2cd7f8ce73, type: 2}
-  cardImage: {fileID: 21300000, guid: eb39ade5e069855449de5542432deb81, type: 3}
+  cardImage: {fileID: 21300000, guid: f148f7c1299986649a3dbb0f9c0154c0, type: 3}
   lockOverlay: {fileID: 756228222}
   glowRing: {fileID: 0}
   prey:
@@ -6142,8 +6142,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4292324657
-  m_fontColor: {r: 0.19215688, g: 0.6784314, b: 0.8431373, a: 1}
+    rgba: 4294936882
+  m_fontColor: {r: 0.19607843, g: 0.5372549, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6247,14 +6247,14 @@ RectTransform:
   m_GameObject: {fileID: 1307543388}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.36674815, y: 0.36674815, z: 0.36674815}
+  m_LocalScale: {x: 0.48295376, y: 0.48295376, z: 0.48295376}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1408799185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5, y: -121}
+  m_AnchoredPosition: {x: -6, y: -180}
   m_SizeDelta: {x: 259, y: 256}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1307543390
@@ -6728,7 +6728,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -29, y: 38}
-  m_SizeDelta: {x: 910, y: 403}
+  m_SizeDelta: {x: 914, y: 567}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1408799186
 MonoBehaviour:

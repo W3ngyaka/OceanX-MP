@@ -15,10 +15,9 @@ MonoBehaviour:
   speciesName: Eyestripe Surgeonfish
   sciName: Acanthurus dussumieri
   tier: Primary Consumer
-  description: 
-  photo: {fileID: 0}
   startUnlocked: 1
   minHealth: 0
+  gpuSpecies: {fileID: 11400000, guid: f86b5c0ecfe17ff46a21606c1b388029, type: 2}
   requires: []
   hint1: Surgeonfish keep algae under control on the reef.
   hint2: A stable surgeonfish population supports the next trophic level.

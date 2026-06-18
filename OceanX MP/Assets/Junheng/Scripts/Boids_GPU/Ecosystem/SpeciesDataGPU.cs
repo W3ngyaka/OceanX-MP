@@ -17,7 +17,7 @@ namespace OceanX.BoidsGPU.Ecosystem
     /// can be configured from one asset. BoidSpawnerGPUMultiTargets reads from here
     /// instead of having FishSchoolProperties set directly on BoidSpawnData.
     /// </summary>
-    [CreateAssetMenu(fileName = "SpeciesData", menuName = "OceanX/Species Data")]
+    [CreateAssetMenu(fileName = "SpeciesDataGPU", menuName = "OceanX/Species Data")]
     public class SpeciesDataGPU : ScriptableObject
     {
         [Header("Identity")]

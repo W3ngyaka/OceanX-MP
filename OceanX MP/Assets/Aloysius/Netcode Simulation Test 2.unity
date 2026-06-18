@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcc34cf1dd6c9f45b92ca82f80a2131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkBootstrap
-  _role: 1
+  _role: 2
   _hostAddress: 192.168.1.42
   _port: 7777
   _ecosystemNetworkManagerPrefab: {fileID: 3612357492437936448, guid: a8d34986f6afdfe479c52c5cad94235e, type: 3}
@@ -1221,9 +1221,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af50de67cac181b468c1e7177239a4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
+  data: {fileID: 0}
   cardImage: {fileID: 21300000, guid: cc2b37a9e42fd5243b3a2ca9712547d2, type: 3}
-  speciesKey: Blacktip Reef Shark
-  speciesData: {fileID: 0}
+  lockOverlay: {fileID: 0}
+  glowRing: {fileID: 0}
   prey:
   - {fileID: 1466899775}
   predators:
@@ -2170,9 +2171,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af50de67cac181b468c1e7177239a4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
+  data: {fileID: 0}
   cardImage: {fileID: 21300000, guid: d2f8265f4812bd84085dfe885ab06527, type: 3}
-  speciesKey: 
-  speciesData: {fileID: 0}
+  lockOverlay: {fileID: 0}
+  glowRing: {fileID: 0}
   prey: []
   predators: []
 --- !u!114 &1047119563
@@ -3516,9 +3518,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af50de67cac181b468c1e7177239a4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
+  data: {fileID: 0}
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
-  speciesKey: 
-  speciesData: {fileID: 0}
+  lockOverlay: {fileID: 0}
+  glowRing: {fileID: 0}
   prey: []
   predators: []
 --- !u!114 &1466899776

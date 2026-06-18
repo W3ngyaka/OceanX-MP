@@ -14,6 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.EcosystemDefinitionGPU
   EcosystemName: Coral Reef (GPU)
   Species:
+  - {fileID: 11400000, guid: 28ab075c094107a46a43ca11a323eeee, type: 2}
+  - {fileID: 11400000, guid: 892ea29c7c18d0044bbe2dcb3933ad9d, type: 2}
+  - {fileID: 11400000, guid: dc512e93d9ee1e549a1615044232bd55, type: 2}
+  - {fileID: 11400000, guid: 06e91a47e0ce37648b59657851cf6383, type: 2}
+  - {fileID: 11400000, guid: 1cf137833ce32454a999ba54ac57956a, type: 2}
+  - {fileID: 11400000, guid: f86b5c0ecfe17ff46a21606c1b388029, type: 2}
+  - {fileID: 11400000, guid: 030fe1af58270a04c843fdda6fe90410, type: 2}
+  - {fileID: 11400000, guid: 14da079c95523e54cbaaac13fca15745, type: 2}
+  - {fileID: 11400000, guid: 726d849f72d5e0e49811ea03c3b196c3, type: 2}
+  - {fileID: 11400000, guid: a84af6e7a4568ad45b12ab35abec7305, type: 2}
   - {fileID: 11400000, guid: 7ee79425b71dd174387c754f3f4c7625, type: 2}
+  - {fileID: 11400000, guid: 4b46331ffc6eb6e41aec9bd29a6762b0, type: 2}
+  - {fileID: 11400000, guid: 689b9216c078756428f919978d9e2a3e, type: 2}
   SimulationCenter: {x: 0, y: 0, z: 0}
   SimulationSize: {x: 100, y: 40, z: 100}

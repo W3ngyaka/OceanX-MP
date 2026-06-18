@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using OceanX.BoidsGPU.Ecosystem;
 
 [CreateAssetMenu(menuName = "OceanX/SpeciesData")]
 public class SpeciesData : ScriptableObject
@@ -7,10 +8,12 @@ public class SpeciesData : ScriptableObject
     public string speciesName;
     public string sciName;
     public string tier;
-    [TextArea(2, 4)] public string description;
-    public Sprite photo;
     public bool startUnlocked;
     public int minHealth;
+
+    [Tooltip("Link to the simulation species this card represents. Drives add/remove of the " +
+             "real fish and supplies the live population used by the unlock requirements.")]
+    public SpeciesDataGPU gpuSpecies;
 
     [System.Serializable]
     public class Requirement

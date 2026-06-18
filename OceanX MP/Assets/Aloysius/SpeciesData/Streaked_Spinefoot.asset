@@ -15,10 +15,9 @@ MonoBehaviour:
   speciesName: Streaked Spinefoot
   sciName: Siganus javus
   tier: Primary Consumer
-  description: 
-  photo: {fileID: 0}
   startUnlocked: 1
   minHealth: 0
+  gpuSpecies: {fileID: 11400000, guid: 4b46331ffc6eb6e41aec9bd29a6762b0, type: 2}
   requires: []
   hint1: Spinefoot are algae grazers that support reef health.
   hint2: Stable herbivores attract secondary consumers like rays.

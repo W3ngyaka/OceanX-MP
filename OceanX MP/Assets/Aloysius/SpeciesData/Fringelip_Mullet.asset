@@ -15,10 +15,9 @@ MonoBehaviour:
   speciesName: Fringelip Mullet
   sciName: Crenemugil crenilabis
   tier: Primary Consumer
-  description: 
-  photo: {fileID: 0}
   startUnlocked: 1
   minHealth: 0
+  gpuSpecies: {fileID: 11400000, guid: 030fe1af58270a04c843fdda6fe90410, type: 2}
   requires: []
   hint1: Mullet are a key food source for larger reef predators.
   hint2: Build up mullet numbers to attract secondary consumers.

@@ -457,6 +457,22 @@ Replaced the old per-species starvation cascade with a **symmetric, global ratio
 > formula sits low early (diversity term), so a threshold like 70 can be
 > effectively unreachable. Set them against what the bar actually reaches in play.
 
+**Flocking / school tuning**
+- Unified all 12 species' `FishSchoolProperties` (`Assets/Junheng/Data/Fish/**/*_SchoolProperties.asset`)
+  to the Clownfish values: `VisionRange 15`, `ObstacleAvoidanceRange 3`,
+  **`SeparationRange 0.35`**, `CohesionWeight 0.4`, `AlignmentWeight 0.35`,
+  `SeparationWeight 1`, `TargetWeight 0.85`. Fixes fish spawning **too spread out** — the
+  old `SeparationRange: 5` made them hold ~5 m gaps. `MovementProperties` /
+  `MotionRenderProperties` left null on these assets (runtime-injected per species from
+  `SpeciesDataGPU`). Apex/solitary species (shark, moray) now school tightly too — re-tune
+  individually later if that looks unnatural.
+- **Flocking model confirmed** (compute `BoidsGPU_Spatial_Partition.compute`): a boid's
+  `BoidID` packs group ID (species, bits 0–7) + sub-group ID (school, bits 8–15).
+  **Cohesion + alignment apply only within the same species AND the same school** — different
+  species (and even different schools of one species) never merge. **Separation** applies to
+  same-species + **larger** species (smaller species are ignored; species are size-ranked by
+  group ID). So copying one species' school settings to all is safe — it doesn't blend species.
+
 ### Aloysius (UI / UX)
 
 - **Shark info box** — new species info card / infobox for the shark (`0fe8695`).

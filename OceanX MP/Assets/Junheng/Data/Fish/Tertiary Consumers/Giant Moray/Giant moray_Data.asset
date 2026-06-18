@@ -10,19 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
-  m_Name: Great barracuda_Data
+  m_Name: Giant moray_Data
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
-  SpeciesName: Great barracuda
+  SpeciesName: Giant moray
   ScientificName: Sphyraena barracuda
   Role: 1
   SchoolProperties: {fileID: 11400000, guid: c9d02622afc8d50409cc9651e7903922, type: 2}
   MovementProperties: {fileID: 11400000, guid: e5aac5c4c624423499caca634034164c, type: 2}
   MotionRenderProperties: {fileID: 11400000, guid: 42d1117a386cc094ca243c5a0f165a63, type: 2}
   BehaviorProperties: {fileID: 11400000, guid: afc715b3cdc829646b0dac205040a69f, type: 2}
-  ReproductionRate: 0.1
-  NaturalDeathRate: 0.03
-  StarvationDeathRate: 0.25
-  StarvationThreshold: 0.2
+  FishPerSchool: 10
+  MaxSchools: 5
   PreySpecies: []
   PredatorSpecies: []
   RuntimeId: -1

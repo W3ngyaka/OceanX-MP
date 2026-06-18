@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12896b1716abdbf4b84f5a1d7de3c13b, type: 3}
   m_Name: Bluespotted ribbontail ray_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
-  VisionRange: 10
-  ObstacleAvoidanceRange: 5
-  SeparationRange: 5
-  CohesionWeight: 0.5
-  AlignmentWeight: 0.7
-  SeparationWeight: 0.9
-  TargetWeight: 1.75
+  VisionRange: 15
+  ObstacleAvoidanceRange: 3
+  SeparationRange: 0.35
+  CohesionWeight: 0.4
+  AlignmentWeight: 0.35
+  SeparationWeight: 1
+  TargetWeight: 0.85
   MovementProperties: {fileID: 0}
   MotionRenderProperties: {fileID: 0}

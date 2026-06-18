@@ -37,7 +37,8 @@
       "Bash(find Assets -iname \"*.asset\" -path \"*Fish*\")",
       "Bash(find Assets -iname \"EcosystemDefinition*.asset\")",
       "Bash(find Assets -iname \"*_Data.asset\")",
-      "Bash(find Assets -iname \"SpeciesData*.asset\")"
+      "Bash(find Assets -iname \"SpeciesData*.asset\")",
+      "Bash(f=\"C:/Users/w3ngy/Downloads/undefined - -.json\"; echo \"size: $\\(wc -c < \"$f\"\\) bytes, lines: $\\(wc -l < \"$f\"\\)\"; echo \"--- top-level keys ---\"; head -c 2000 \"$f\")"
     ]
   }
 }

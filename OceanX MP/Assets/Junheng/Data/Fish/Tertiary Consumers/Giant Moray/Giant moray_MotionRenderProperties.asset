@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aeffc396a2a2c474abc9ea526ba9eb47, type: 3}
-  m_Name: Great barracuda_MotionRenderProperties
+  m_Name: Giant moray_MotionRenderProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMotionRenderProperties
   MinSwimPlaybackSpeed: 0.75
   MaxSwimPlaybackSpeed: 4.25

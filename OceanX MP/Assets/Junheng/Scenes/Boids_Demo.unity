@@ -188,7 +188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &66317446
 Transform:
   m_ObjectHideFlags: 0
@@ -290,7 +290,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3567333
+      value: -11.176991
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -298,7 +298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.072389
+      value: -6.544807
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -351,61 +351,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
   m_PrefabInstance: {fileID: 257266691}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &263595911
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 263595912}
-  - component: {fileID: 263595913}
-  m_Layer: 0
-  m_Name: Target Animator (8)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &263595912
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263595911}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.8, y: 2.7491856, z: -123.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1157932896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &263595913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263595911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc05bc5b36b9894cb25d0e9a781abde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.TransformAnimator
-  TargetTransform: {fileID: 454194398}
-  AnimationShape: 0
-  MovementSpeed: 0.8
-  AnimationSpeedMultiplier: 1
-  EdgeReachingDistance: 0.5
-  MovingClockwise: 1
-  RectangleWidth: 38.81833
-  RectangleLength: 38.81833
-  CircleRadius: 25
-  CircleResolution: 24
-  LineLength: 50
 --- !u!1 &272880482
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,61 +1128,6 @@ MonoBehaviour:
     Speed: 0
     AngularAcceleration: 0
     AngularVelocity: 0
---- !u!1 &439565404
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 439565405}
-  - component: {fileID: 439565406}
-  m_Layer: 0
-  m_Name: Target Animator (6)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &439565405
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439565404}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.08574022, z: 0, w: 0.9963175}
-  m_LocalPosition: {x: -44.8, y: 2.248106, z: -123.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1157932896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &439565406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439565404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc05bc5b36b9894cb25d0e9a781abde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.TransformAnimator
-  TargetTransform: {fileID: 2144482059}
-  AnimationShape: 2
-  MovementSpeed: 0.8
-  AnimationSpeedMultiplier: 1
-  EdgeReachingDistance: 0.5
-  MovingClockwise: 0
-  RectangleWidth: 20
-  RectangleLength: 10
-  CircleRadius: 25
-  CircleResolution: 24
-  LineLength: 27.73679
 --- !u!1 &451393600
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,110 +1234,6 @@ Transform:
   - {fileID: 899326766}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &454194397
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 454194398}
-  - component: {fileID: 454194399}
-  m_Layer: 0
-  m_Name: Target (8)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &454194398
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454194397}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -25.390835, y: 2.7491856, z: -143.00916}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1977010676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &454194399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454194397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
-  _updatePositionAtRuntime: 1
-  _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
-  _simulationAffecter:
-    Position: {x: 16.609165, y: -1.2508144, z: -18.909157}
-    Radius: 3
-    Type: 0
-    BoidGroupId: 0
-    BoidSubGroupId: 8
---- !u!1 &523589655
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 523589656}
-  - component: {fileID: 523589657}
-  m_Layer: 0
-  m_Name: Targets_Spawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &523589656
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523589655}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1865063512}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &523589657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523589655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3fb726a83f2459489acf6fa02ac0304, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _boidSimulation: {fileID: 663968713}
-  _boidSpawner: {fileID: 1865063513}
-  _targetsHolder: {fileID: 1977010676}
-  _targetsAnimatorsHolder: {fileID: 1157932896}
-  _targetRadius: 3
-  _targetMovementSpeed: 0.8
-  _boundsSafeZoneSize: 2
-  _globalScale: 0.3
 --- !u!1 &527725645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,61 +1500,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 51.233, y: 16.747, z: -177.56}
---- !u!1 &663829921
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 663829922}
-  - component: {fileID: 663829923}
-  m_Layer: 0
-  m_Name: Target Animator (7)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &663829922
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 663829921}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.61923337, z: 0, w: 0.78520703}
-  m_LocalPosition: {x: -44.8, y: -4.2179947, z: -123.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1157932896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &663829923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 663829921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc05bc5b36b9894cb25d0e9a781abde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.TransformAnimator
-  TargetTransform: {fileID: 1661813341}
-  AnimationShape: 1
-  MovementSpeed: 0.8
-  AnimationSpeedMultiplier: 1
-  EdgeReachingDistance: 0.5
-  MovingClockwise: 0
-  RectangleWidth: 20
-  RectangleLength: 10
-  CircleRadius: 26.037066
-  CircleResolution: 24
-  LineLength: 50
 --- !u!1 &663968711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1849,61 +1580,13 @@ MonoBehaviour:
   _ecosystem: {fileID: 11400000, guid: 9e57b3bec364fee44893a89487aed21e, type: 2}
   _simulation: {fileID: 663968713}
   _tickInterval: 5
---- !u!1 &670525081
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 670525082}
-  - component: {fileID: 670525083}
-  m_Layer: 0
-  m_Name: Target Animator (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &670525082
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670525081}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.011117387, z: 0, w: 0.9999382}
-  m_LocalPosition: {x: -44.8, y: -17.053303, z: -123.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1157932896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &670525083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670525081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc05bc5b36b9894cb25d0e9a781abde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.TransformAnimator
-  TargetTransform: {fileID: 1405337180}
-  AnimationShape: 1
-  MovementSpeed: 0.8
-  AnimationSpeedMultiplier: 1
-  EdgeReachingDistance: 0.5
-  MovingClockwise: 0
-  RectangleWidth: 20
-  RectangleLength: 10
-  CircleRadius: 15.725925
-  CircleResolution: 24
-  LineLength: 50
+  _ratioBandLow: 1
+  _ratioBandHigh: 3
+  _growRate: 0.3
+  _shrinkRate: 0.3
+  _healthDiversityWeight: 0.4
+  _healthBalanceWeight: 0.4
+  _healthApexWeight: 0.2
 --- !u!1 &681969164
 GameObject:
   m_ObjectHideFlags: 0
@@ -2202,58 +1885,6 @@ MonoBehaviour:
     Speed: 0
     AngularAcceleration: 0
     AngularVelocity: 0
---- !u!1 &803812291
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 803812292}
-  - component: {fileID: 803812293}
-  m_Layer: 0
-  m_Name: Target (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &803812292
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803812291}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -67.8215, y: 4.0950956, z: -100.57849}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1977010676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &803812293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803812291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
-  _updatePositionAtRuntime: 1
-  _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
-  _simulationAffecter:
-    Position: {x: -25.821503, y: 0.095095634, z: 23.521507}
-    Radius: 3
-    Type: 0
-    BoidGroupId: 0
-    BoidSubGroupId: 2
 --- !u!1 &825078509
 GameObject:
   m_ObjectHideFlags: 0
@@ -2358,15 +1989,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3567333
+      value: -11.176991
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.278374
+      value: -19.321413
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.072389
+      value: -6.544807
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2801,162 +2432,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 37.311, y: -126.895, z: 4.358}
---- !u!1 &1083159061
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1083159063}
-  - component: {fileID: 1083159062}
-  m_Layer: 0
-  m_Name: Target (9)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1083159062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1083159061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
-  _updatePositionAtRuntime: 1
-  _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
-  _simulationAffecter:
-    Position: {x: -14.202916, y: -13.213755, z: 12.363342}
-    Radius: 3
-    Type: 0
-    BoidGroupId: 0
-    BoidSubGroupId: 9
---- !u!4 &1083159063
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1083159061}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -56.202915, y: -9.213755, z: -111.73666}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1977010676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1088915003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1088915004}
-  - component: {fileID: 1088915005}
-  m_Layer: 0
-  m_Name: Target (5)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1088915004
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1088915003}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.858234, y: -6.6900997, z: -138.54176}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1977010676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1088915005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1088915003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
-  _updatePositionAtRuntime: 1
-  _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
-  _simulationAffecter:
-    Position: {x: 12.141765, y: -10.6901, z: -14.441765}
-    Radius: 3
-    Type: 0
-    BoidGroupId: 0
-    BoidSubGroupId: 5
---- !u!1 &1103958675
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1103958676}
-  - component: {fileID: 1103958677}
-  m_Layer: 0
-  m_Name: Target (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1103958676
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1103958675}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -52.692642, y: 2.6207018, z: -110.91728}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1977010676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1103958677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1103958675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
-  _updatePositionAtRuntime: 1
-  _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
-  _simulationAffecter:
-    Position: {x: -10.692643, y: -1.3792982, z: 13.182716}
-    Radius: 3
-    Type: 0
-    BoidGroupId: 0
-    BoidSubGroupId: 3
 --- !u!1 &1142450595
 GameObject:
   m_ObjectHideFlags: 0
@@ -3094,154 +2569,6 @@ MonoBehaviour:
   CircleRadius: 20
   CircleResolution: 10
   LineLength: 100
---- !u!1 &1157932895
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1157932896}
-  m_Layer: 0
-  m_Name: Targets_Animators
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1157932896
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157932895}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1892284524}
-  - {fileID: 670525082}
-  - {fileID: 1781680802}
-  - {fileID: 1776310814}
-  - {fileID: 1194466160}
-  - {fileID: 2038858184}
-  - {fileID: 439565405}
-  - {fileID: 663829922}
-  - {fileID: 263595912}
-  - {fileID: 1574424614}
-  m_Father: {fileID: 1865063512}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1178520259
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1178520260}
-  - component: {fileID: 1178520261}
-  m_Layer: 0
-  m_Name: Target (0)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1178520260
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178520259}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -27.361391, y: 1.9621873, z: -113.236824}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1977010676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1178520261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178520259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
-  _updatePositionAtRuntime: 1
-  _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
-  _simulationAffecter:
-    Position: {x: 14.638608, y: -2.0378127, z: 10.863174}
-    Radius: 3
-    Type: 0
-    BoidGroupId: 0
-    BoidSubGroupId: 0
---- !u!1 &1194466159
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1194466160}
-  - component: {fileID: 1194466161}
-  m_Layer: 0
-  m_Name: Target Animator (4)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1194466160
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194466159}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.07912768, z: 0, w: 0.9968645}
-  m_LocalPosition: {x: -44.8, y: 2.650137, z: -123.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1157932896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1194466161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194466159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc05bc5b36b9894cb25d0e9a781abde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.TransformAnimator
-  TargetTransform: {fileID: 1213970023}
-  AnimationShape: 1
-  MovementSpeed: 0.8
-  AnimationSpeedMultiplier: 1
-  EdgeReachingDistance: 0.5
-  MovingClockwise: 0
-  RectangleWidth: 20
-  RectangleLength: 10
-  CircleRadius: 20.348694
-  CircleResolution: 24
-  LineLength: 50
 --- !u!1 &1201507487
 GameObject:
   m_ObjectHideFlags: 0
@@ -3258,7 +2585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1201507488
 Transform:
   m_ObjectHideFlags: 0
@@ -3319,58 +2646,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!1 &1213970022
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1213970023}
-  - component: {fileID: 1213970024}
-  m_Layer: 0
-  m_Name: Target (4)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1213970023
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1213970022}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.70612, y: 2.650137, z: -126.81019}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1977010676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1213970024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1213970022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
-  _updatePositionAtRuntime: 1
-  _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
-  _simulationAffecter:
-    Position: {x: 17.29388, y: -1.349863, z: -2.7101898}
-    Radius: 3
-    Type: 0
-    BoidGroupId: 0
-    BoidSubGroupId: 4
 --- !u!1 &1237704540
 GameObject:
   m_ObjectHideFlags: 0
@@ -3644,58 +2919,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3899d5cc4380d3a43ae50fbd8a1c5d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1405337179
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1405337180}
-  - component: {fileID: 1405337181}
-  m_Layer: 0
-  m_Name: Target (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1405337180
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405337179}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.077961, y: -17.053303, z: -123.94964}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1977010676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1405337181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405337179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
-  _updatePositionAtRuntime: 1
-  _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
-  _simulationAffecter:
-    Position: {x: 12.922038, y: -21.053303, z: 0.1503601}
-    Radius: 3
-    Type: 0
-    BoidGroupId: 0
-    BoidSubGroupId: 1
 --- !u!1 &1455759513
 GameObject:
   m_ObjectHideFlags: 0
@@ -3880,61 +3103,6 @@ MonoBehaviour:
     Type: 1
     BoidGroupId: 255
     BoidSubGroupId: 255
---- !u!1 &1574424613
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1574424614}
-  - component: {fileID: 1574424615}
-  m_Layer: 0
-  m_Name: Target Animator (9)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1574424614
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574424613}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.3918049, z: 0, w: 0.92004836}
-  m_LocalPosition: {x: -44.8, y: -9.213755, z: -123.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1157932896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1574424615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574424613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc05bc5b36b9894cb25d0e9a781abde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.TransformAnimator
-  TargetTransform: {fileID: 1083159063}
-  AnimationShape: 2
-  MovementSpeed: 0.8
-  AnimationSpeedMultiplier: 1
-  EdgeReachingDistance: 0.5
-  MovingClockwise: 0
-  RectangleWidth: 20
-  RectangleLength: 10
-  CircleRadius: 25
-  CircleResolution: 24
-  LineLength: 32.909897
 --- !u!1 &1614268682
 GameObject:
   m_ObjectHideFlags: 0
@@ -4151,7 +3319,7 @@ MonoBehaviour:
   CircleRadius: 20
   CircleResolution: 10
   LineLength: 30
---- !u!1 &1661813340
+--- !u!1 &1652561700
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4159,50 +3327,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1661813341}
-  - component: {fileID: 1661813342}
+  - component: {fileID: 1652561702}
+  - component: {fileID: 1652561701}
   m_Layer: 0
-  m_Name: Target (7)
+  m_Name: DebugHarness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1661813341
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1661813340}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -38.73076, y: -4.2179947, z: -148.91982}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1977010676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1661813342
+--- !u!114 &1652561701
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1661813340}
+  m_GameObject: {fileID: 1652561700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c3412202d9528345a6ef417e0fdacb4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
-  _updatePositionAtRuntime: 1
-  _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
-  _simulationAffecter:
-    Position: {x: 3.2692406, y: -8.217995, z: -24.819817}
-    Radius: 3
-    Type: 0
-    BoidGroupId: 0
-    BoidSubGroupId: 7
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.EcosystemDebugHarnessGPU
+  _simulation: {fileID: 0}
+  _toggleKey: 282
+  _visibleOnStart: 1
+--- !u!4 &1652561702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652561700}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -27.45155, y: -26.60019, z: 29.18499}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1690217877
 GameObject:
   m_ObjectHideFlags: 0
@@ -4412,116 +3575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3899d5cc4380d3a43ae50fbd8a1c5d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1776310813
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1776310814}
-  - component: {fileID: 1776310815}
-  m_Layer: 0
-  m_Name: Target Animator (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1776310814
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776310813}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.48561367, z: 0, w: 0.8741736}
-  m_LocalPosition: {x: -44.8, y: 2.6207018, z: -123.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1157932896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1776310815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776310813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc05bc5b36b9894cb25d0e9a781abde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.TransformAnimator
-  TargetTransform: {fileID: 1103958676}
-  AnimationShape: 2
-  MovementSpeed: 0.8
-  AnimationSpeedMultiplier: 1
-  EdgeReachingDistance: 0.5
-  MovingClockwise: 0
-  RectangleWidth: 20
-  RectangleLength: 10
-  CircleRadius: 25
-  CircleResolution: 24
-  LineLength: 29.87608
---- !u!1 &1781680801
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1781680802}
-  - component: {fileID: 1781680803}
-  m_Layer: 0
-  m_Name: Target Animator (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1781680802
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781680801}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -44.8, y: 4.0950956, z: -123.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1157932896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1781680803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781680801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc05bc5b36b9894cb25d0e9a781abde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.TransformAnimator
-  TargetTransform: {fileID: 803812292}
-  AnimationShape: 0
-  MovementSpeed: 0.8
-  AnimationSpeedMultiplier: 1
-  EdgeReachingDistance: 0.5
-  MovingClockwise: 0
-  RectangleWidth: 46.043015
-  RectangleLength: 46.043015
-  CircleRadius: 25
-  CircleResolution: 24
-  LineLength: 50
 --- !u!1 &1828629866
 GameObject:
   m_ObjectHideFlags: 0
@@ -4742,10 +3795,7 @@ Transform:
   m_LocalPosition: {x: 44.8, y: 6, z: 123.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1977010676}
-  - {fileID: 1157932896}
-  - {fileID: 523589656}
+  m_Children: []
   m_Father: {fileID: 1391047456}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1865063513
@@ -4767,7 +3817,7 @@ MonoBehaviour:
     BoidMaterial: {fileID: 2100000, guid: 5cb625ec19658aa4db5014d6bad643d3, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: 383b717f072cac545bf97d8c7521b8f0, type: 2}
     Targets:
-    - {fileID: 1178520261}
+    - {fileID: 0}
     Obstacles: []
   _initialGroupsCount: 1
   _initialOffsetFromTarget: 1.5
@@ -4857,61 +3907,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3899d5cc4380d3a43ae50fbd8a1c5d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1892284523
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1892284524}
-  - component: {fileID: 1892284525}
-  m_Layer: 0
-  m_Name: Target Animator (0)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1892284524
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1892284523}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.9642769, z: 0, w: 0.26489633}
-  m_LocalPosition: {x: -44.8, y: 1.9621873, z: -123.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1157932896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1892284525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1892284523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc05bc5b36b9894cb25d0e9a781abde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.TransformAnimator
-  TargetTransform: {fileID: 1178520260}
-  AnimationShape: 2
-  MovementSpeed: 0.8
-  AnimationSpeedMultiplier: 1
-  EdgeReachingDistance: 0.5
-  MovingClockwise: 0
-  RectangleWidth: 20
-  RectangleLength: 10
-  CircleRadius: 25
-  CircleResolution: 24
-  LineLength: 40.570946
 --- !u!1 &1911200240
 GameObject:
   m_ObjectHideFlags: 0
@@ -5049,102 +4044,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
---- !u!1 &1977010675
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1977010676}
-  m_Layer: 0
-  m_Name: Targets
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1977010676
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1977010675}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1178520260}
-  - {fileID: 1405337180}
-  - {fileID: 803812292}
-  - {fileID: 1103958676}
-  - {fileID: 1213970023}
-  - {fileID: 1088915004}
-  - {fileID: 2144482059}
-  - {fileID: 1661813341}
-  - {fileID: 454194398}
-  - {fileID: 1083159063}
-  m_Father: {fileID: 1865063512}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2038858183
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2038858184}
-  - component: {fileID: 2038858185}
-  m_Layer: 0
-  m_Name: Target Animator (5)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2038858184
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038858183}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.8, y: -6.6900997, z: -123.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1157932896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2038858185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038858183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc05bc5b36b9894cb25d0e9a781abde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.TransformAnimator
-  TargetTransform: {fileID: 1088915004}
-  AnimationShape: 0
-  MovementSpeed: 0.8
-  AnimationSpeedMultiplier: 1
-  EdgeReachingDistance: 0.5
-  MovingClockwise: 1
-  RectangleWidth: 29.883528
-  RectangleLength: 29.883528
-  CircleRadius: 25
-  CircleResolution: 24
-  LineLength: 50
 --- !u!1 &2055535603
 GameObject:
   m_ObjectHideFlags: 0
@@ -5268,15 +4167,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3567333
+      value: -11.176991
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.278374
+      value: -19.321413
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.072389
+      value: -6.544807
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5333,58 +4232,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
   m_PrefabInstance: {fileID: 2084735668}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2144482058
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2144482059}
-  - component: {fileID: 2144482060}
-  m_Layer: 0
-  m_Name: Target (6)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2144482059
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2144482058}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -58.46449, y: 2.248106, z: -121.2306}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1977010676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2144482060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2144482058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
-  _updatePositionAtRuntime: 1
-  _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
-  _simulationAffecter:
-    Position: {x: -16.464489, y: -1.751894, z: 2.8694}
-    Radius: 3
-    Type: 0
-    BoidGroupId: 0
-    BoidSubGroupId: 6
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -5401,3 +4248,4 @@ SceneRoots:
   - {fileID: 1690217880}
   - {fileID: 318495041}
   - {fileID: 825078512}
+  - {fileID: 1652561702}

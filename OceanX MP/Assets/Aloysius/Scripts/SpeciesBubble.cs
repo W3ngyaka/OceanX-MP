@@ -123,6 +123,7 @@ void OnTap()
 
     System.Collections.IEnumerator TapPunch()
     {
+        Vector3 original = transform.localScale;
         Vector3 big = original * 1.2f;
         float t = 0f;
 

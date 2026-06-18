@@ -49,6 +49,8 @@ public class EcosystemUnlockManagerGPU : MonoBehaviour
     public event Action OnUnlockStateChanged;
 
     private readonly Dictionary<SpeciesData, bool> _unlocked = new Dictionary<SpeciesData, bool>();
+    // Hint progression per locked species (replaces GameState.tapCounts).
+    private readonly Dictionary<SpeciesData, int> _tapCounts = new Dictionary<SpeciesData, int>();
     private float _timer;
     private bool _initialised;
 
@@ -91,6 +93,7 @@ public class EcosystemUnlockManagerGPU : MonoBehaviour
         }
         _initialised = true;
         OnUnlockStateChanged?.Invoke();
+        RefreshAllBubbles();
     }
 
     private void Update()
@@ -126,10 +129,15 @@ public class EcosystemUnlockManagerGPU : MonoBehaviour
             changed = true;
             if (_logUnlocks)
                 Debug.Log($"[Unlock] '{sd.speciesName}' unlocked  (health {health}% ≥ {sd.minHealth}%, requirements met).", this);
+            NotificationManager.Instance?.ShowUnlocked(sd);   // "You've unlocked the …!" toast
             OnSpeciesUnlocked?.Invoke(sd);
         }
 
-        if (changed) OnUnlockStateChanged?.Invoke();
+        if (changed)
+        {
+            OnUnlockStateChanged?.Invoke();
+            RefreshAllBubbles();
+        }
     }
 
     private bool RequirementsMet(SpeciesData sd)
@@ -166,6 +174,26 @@ public class EcosystemUnlockManagerGPU : MonoBehaviour
     public bool IsUnlocked(SpeciesData species)
     {
         return species != null && _unlocked.TryGetValue(species, out bool u) && u;
+    }
+
+    /// <summary>
+    /// Records a tap on a locked species and returns the PRE-increment tap index (0,1,2,…),
+    /// so the UI can show progressively clearer hints. Mirrors GameState.tapCounts.
+    /// </summary>
+    public int RegisterLockedTap(SpeciesData species)
+    {
+        if (species == null) return 0;
+        int taps = _tapCounts.TryGetValue(species, out int v) ? v : 0;
+        _tapCounts[species] = taps + 1;
+        return taps;
+    }
+
+    /// <summary>Tell every SpeciesBubble in the scene to re-read its lock state. Mirrors GameState.RefreshAllBubbles.</summary>
+    private void RefreshAllBubbles()
+    {
+        var bubbles = FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None);
+        foreach (var b in bubbles)
+            b.Refresh();
     }
 
     /// <summary>One requirement row, resolved against the live sim — for the locked modal checklist.</summary>

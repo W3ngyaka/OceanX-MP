@@ -32,10 +32,15 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (data == null) return;
 
-        bool isUnlocked = GameState.Instance != null &&
-                          GameState.Instance.unlocked.ContainsKey(data.speciesName)
-            ? GameState.Instance.unlocked[data.speciesName]
-            : data.startUnlocked;
+        // Prefer the live unlock manager (JunHeng's sim-driven system); fall back to GameState
+        // (Aloysius' placeholder) when the manager isn't in the scene; else the asset's default.
+        bool isUnlocked;
+        if (EcosystemUnlockManagerGPU.Instance != null)
+            isUnlocked = EcosystemUnlockManagerGPU.Instance.IsUnlocked(data);
+        else if (GameState.Instance != null && GameState.Instance.unlocked.ContainsKey(data.speciesName))
+            isUnlocked = GameState.Instance.unlocked[data.speciesName];
+        else
+            isUnlocked = data.startUnlocked;
 
         locked = !isUnlocked;
 
@@ -45,7 +50,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Button btn = GetComponent<Button>();
         if (btn != null)
             btn.interactable = true; // keep receiving clicks
-        Debug.Log($"{data.speciesName} Locked: {locked}");
     }
 
     void Update()
@@ -104,19 +108,38 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             return;
         }
 
-        if (ModalController.Instance != null && cardImage != null)
-            ModalController.Instance.Open(cardImage);
+        if (ModalController.Instance == null || cardImage == null) return;
+
+        // Resolve this species' netcode index from its sim link so the modal's Add/Remove
+        // buttons drive the real simulation (and the population number shows). -1 = cosmetic only.
+        int speciesIndex = -1;
+        if (data != null && data.gpuSpecies != null && TabletEcosystemUIGPU.Instance != null)
+            speciesIndex = TabletEcosystemUIGPU.Instance.GetSpeciesIndex(data.gpuSpecies);
+
+        ModalController.Instance.Open(cardImage, speciesIndex);
     }
 
     void ShowLockedHint()
     {
-        if (data == null || GameState.Instance == null) return;
+        if (data == null) return;
 
-        int taps = GameState.Instance.tapCounts.ContainsKey(data.speciesName)
-            ? GameState.Instance.tapCounts[data.speciesName]
-            : 0;
-
-        GameState.Instance.tapCounts[data.speciesName] = taps + 1;
+        // Same either/or source as Refresh: manager first, then GameState, else no progression.
+        int taps;
+        if (EcosystemUnlockManagerGPU.Instance != null)
+        {
+            taps = EcosystemUnlockManagerGPU.Instance.RegisterLockedTap(data);
+        }
+        else if (GameState.Instance != null)
+        {
+            taps = GameState.Instance.tapCounts.ContainsKey(data.speciesName)
+                ? GameState.Instance.tapCounts[data.speciesName]
+                : 0;
+            GameState.Instance.tapCounts[data.speciesName] = taps + 1;
+        }
+        else
+        {
+            taps = 0;
+        }
 
         string[] hints = { data.hint1, data.hint2, data.hint3 };
         int level = Mathf.Min(taps, hints.Length - 1);

@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: Week 9 of 12 (2026-06-12)_
+_Last updated: 2026-06-18_
 
 ---
 
@@ -35,7 +35,7 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 | 6 | Population growth/decline + ecosystem health system | ✅ Done — ratio-driven predator-prey dynamics + eco-health score (GPU side) |
 | 7 | Cascading effects + ecosystem state machine + codebase cleanup | 🔶 Partial — GPU cascade done, state machine not started, dead code removed |
 | 8 | Movement systems — flocking + predator behaviour | ✅ Done (completed Week 5) |
-| 9 | Event system + integration hooks for UI | 🔶 Partial — start-at-zero/extinction done; bounds derived from sim area; C# events not yet wired |
+| 9 | Event system + integration hooks for UI | 🔶 Partial — start-at-zero/extinction done; bounds derived from sim area; unlock C# events wired (`OnSpeciesUnlocked` / `OnUnlockStateChanged`); population/health/state events still partial |
 | 10 | Preset scenarios + complete core system | ❌ Not started |
 | 11 | Debugging, testing, system balancing | ❌ Not started |
 | 12 | Final optimisation, bug fixing, project completion | ❌ Not started |
@@ -46,14 +46,14 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 
 > ✅ **CANONICAL species list (confirmed by JunHeng, 2026-06-12).** This table is now the single source of truth. The data assets and prototype must be aligned to it.
 >
-> **Asset delta to apply:**
-> - ➕ **Giant moray** (*Gymnothorax javanicus*) — **no `_Data.asset` yet, needs creating** (+ Behavior / MotionRender / Movement / School props, like the other species)
-> - ➖ **Great barracuda** — has a `_Data.asset` but is **no longer in the list** → remove/deprecate it
-> - The other 10 species already have data assets ✓
+> **Asset delta — ✅ applied (2026-06-18):**
+> - ➕ **Giant moray** (*Gymnothorax javanicus*) — data assets created and wired ✓
+> - ➖ **Great barracuda** — dropped from the roster (excluded from the wired set) ✓
+> - All 12 species now have data assets ✓
 >
-> **Superseded names** (do not use): Humphead wrasse, Crescent grunter, Lined surgeonfish (never had assets); Great barracuda (being removed). The **prototype** (`oceanx-prototype.html`) still uses placeholder names (Striped Mullet, Convict Surgeonfish, Reef Manta Ray, Malabar Grouper…) — align it to this list when wiring the unlock system.
+> **Superseded names** (do not use): Humphead wrasse, Crescent grunter, Lined surgeonfish (never had assets); Great barracuda (removed). The **prototype** (`oceanx-prototype.html`) still uses placeholder names (Striped Mullet, Convict Surgeonfish, Reef Manta Ray, Malabar Grouper…) — these were **remapped to this canonical list when the unlock system was wired (2026-06-18)**.
 >
-> **Live sim still runs only the Clownfish placeholder** — `EcosystemDefinitionGPU.asset` has none of these 12 wired in yet (confirmed by Player.log "Found simulation with 1 species").
+> **✅ Live sim now runs all 12 species** — `EcosystemDefinitionGPU.asset` has the full roster wired in fixed order, each with a matching `BoidSpawnerGPUMultiTargets` in `BoidSimulationGPU._gpuBoidSpawners`. (The old "1 species / Clownfish only" state is resolved.)
 >
 > _Prey/predator columns below follow the game's tier-based cascade design (apex eats all below; each tier eats the tiers beneath it). Confirm the exact per-species prey/predator lists when filling in each `SpeciesDataGPU` asset._
 
@@ -198,7 +198,7 @@ Assets/Aloysius/                     UI team (see "Weeks 7–8 — UI Team" sect
 ### Tablet UI (built by Aloysius, integrated into JunHeng's main `Netcode Simulation Test` scene)
 - **Food web graph** — 12 species bubbles (`SpeciesBubble.cs`) laid out in trophic tiers; `FoodWebLines.cs` edges exist but are hidden pending visual fix
 - **`ModalController.cs`** — species info modal with Add/Remove buttons wired to `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc`; now also greys buttons at cap/0 (connected in `e13e26b`)
-- **Eco-health bar** — `Health.cs` bar present in scene; **not yet reading from GPU simulation**
+- **Eco-health bar** — ✅ `Health.cs` reads live eco-health from `EcosystemNetworkManagerGPU.GetEcoHealth()` when `readFromSimulation` is on (needs the host running + `fillImage` assigned)
 - **`SwipeToClose.cs`** — swipe to dismiss modal
 - **`Bob.cs`** — bobbing animation on species bubbles
 - **Fish image assets** — PNG sprites for most species in `Assets/Aloysius/Fishes/` and `Assets/Aloysius/iamge/`
@@ -297,7 +297,7 @@ All work lives in `Assets/Aloysius/` and the `Netcode Simulation Test 1` scene �
 ### Eco-Health Bar
 - **`Health.cs`** — health bar UI script (reads eco-health, drives fill bar)
 - Bar/frame image assets: `bar.png`, `ecoheal.png`, `healthframe.png`
-- Wired to the `Netcode Simulation Test 1` scene; **not yet connected to GPU simulation data**
+- ✅ `Health.cs` now reads live eco-health from `EcosystemNetworkManagerGPU.GetEcoHealth()` (Week 9 code); in the standalone `Netcode Simulation Test 1` prototype scene it falls back to the manual value when no host is running
 
 ### Mockup / Coral Assets (shared team)
 - Imported temporary 3D coral assets (`Assets/_Assets/3D Models/Corals/`) — *Acropora hyacinthus* hard coral model + *Rainbow Haven Reef* coral preset
@@ -395,6 +395,82 @@ Replaced the old per-species starvation cascade with a **symmetric, global ratio
 **Behaviour to expect:** prey with no predators climbs to its `MaxSchools` cap; a predator added before its prey starves out (gate this with the unlock UI); removing the shark makes mid fish overpopulate → over-predate their prey → then starve → oscillate, with eco-health dropping in step.
 
 > ⚠ **Not yet play-tested in the Unity Editor.** Needs an in-editor run; tune the band/rates if it swings too hard or flatlines.
+
+---
+
+## What Was Done — 2026-06-18
+
+> Work split by contributor. See `git log` for commit-level detail.
+
+### JunHeng (simulation / backend + integration)
+
+**Eco-health-gated species unlock system — new `EcosystemUnlockManagerGPU`**
+(`Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemUnlockManagerGPU.cs`)
+- Ports the prototype's gate model: a locked species unlocks when **all** its
+  `requires` (prey/support **school counts**) are met **AND** live eco-health %
+  ≥ its `minHealth`. Latching / one-way, like the prototype.
+- **Dual data source:** reads population + eco-health straight from
+  `EcosystemSimulationGPU` when present (host / standalone — testable with
+  `EcosystemDebugHarnessGPU`, no netcode needed), and falls back to the synced
+  netcode layer (`EcosystemNetworkManagerGPU.GetPopulation` / `GetEcoHealth`) on
+  the tablet client (where `_simulation` is left empty).
+- **Drop-in replacement for Aloysius's placeholder `GameState`:** exposes
+  `IsUnlocked`, `RegisterLockedTap` (progressive hints), `RefreshAllBubbles`, and
+  fires `NotificationManager.ShowUnlocked` on each unlock; plus `OnSpeciesUnlocked`
+  / `OnUnlockStateChanged` events and `GetLockInfo()` for the locked-modal
+  requirement checklist. Optional `[Unlock]` console logging for headless testing.
+
+**Species data model unified**
+- `SpeciesData` (the UI/unlock asset) is now the single config per fish and links
+  to its simulation species via a new **`gpuSpecies`** field (→ `SpeciesDataGPU`).
+  Removed the unused `description` / `photo` fields. `SpeciesDataGPU` stays pure
+  simulation data. Net: **one UI asset + one sim asset + one link** per fish — no
+  more parallel species systems.
+
+**Tablet UI wired to the real simulation**
+- `SpeciesBubble.OnTap` resolves the species' netcode index via `gpuSpecies`
+  (`TabletEcosystemUIGPU.GetSpeciesIndex`), so the modal's Add/Remove now drive the
+  real sim and the population number shows — previously cosmetic-only (index -1),
+  which is why Add was greyed and the count blank.
+- `SpeciesBubble` reads lock state + hint progression from the unlock manager when
+  present, falling back to `GameState` when it isn't — so **both** JunHeng's and
+  Aloysius's setups run. **`GameState.cs` left untouched** (still Aloysius's
+  placeholder).
+
+**12 canonical species wired into the sim**
+- All 12 `SpeciesDataGPU` added to `EcosystemDefinitionGPU` in fixed order, each
+  with a per-species `BoidSpawnerGPUMultiTargets` registered in the
+  `BoidSimulationGPU` **`_gpuBoidSpawners`** array — the list the sim actually
+  reads. ⚠ Child spawner objects are **not** auto-scanned; a species in the
+  definition list but missing from this array throws
+  *"no spawner has SpeciesData 'X' assigned"* and won't spawn.
+- Configured the 12 `SpeciesData` assets (gpuSpecies links, startUnlocked,
+  minHealth, requires) using the **canonical** names — the prototype's placeholder
+  names (Striped Mullet, Convict Surgeonfish, Reef Manta Ray, …) were remapped.
+
+**Netcode + build**
+- Verified host↔client over a `Boids_Demo` host + `Netcode Simulation Test` tablet
+  client: add/remove RPCs, synced population, and the eco-health bar all working.
+- Built Host + Tablet players under `Builds/Netcode Simulation Test/`.
+
+> ⚠ **`minHealth` thresholds need tuning** against the real eco-health curve — the
+> formula sits low early (diversity term), so a threshold like 70 can be
+> effectively unreachable. Set them against what the bar actually reaches in play.
+
+### Aloysius (UI / UX)
+
+- **Shark info box** — new species info card / infobox for the shark (`0fe8695`).
+- **Tap animation** — `TapPunch()` scale-punch on species-bubble tap in
+  `SpeciesBubble` (`bff35e0`). Merged with JunHeng's netcode-index change in
+  `OnTap` — both kept (animation fires, then the modal opens with a real target).
+- **Lock/unlock placeholder** — `GameState` + `UnlockTester` remain his
+  keyboard-driven placeholders for testing the unlock UI in isolation; kept as-is
+  at his request. JunHeng's `EcosystemUnlockManagerGPU` is the production
+  replacement, and `SpeciesBubble` works with either.
+- Greyed-out food-web line styling for locked nodes.
+
+### Akil
+- _To be filled in._
 
 ---
 
@@ -522,7 +598,7 @@ Ocean background colour interpolates across 8 keyframes from dark murky teal (he
 
 ### ⚠ Key design difference vs current build
 
-The prototype uses a **locked progression** model: only 2 species are available at start; the rest unlock gate-by-gate as the player adds prey first. The current Unity build has **no lock system** — any species can be added at any time. **The unlock system and progressive hint logic need to be built.** The `SpeciesDataGPU` fields `StartUnlocked` and `UnlockRequirements` are already spec'd for this.
+The prototype uses a **locked progression** model: only 2 species are available at start; the rest unlock gate-by-gate as the player adds prey first. **✅ Implemented in Unity (2026-06-18)** via `EcosystemUnlockManagerGPU`: unlock config lives on the `SpeciesData` assets (`startUnlocked`, `minHealth`, `requires`) and the manager gates on live eco-health % + school counts (latching). Progressive 3-level hints run through `SpeciesBubble.ShowLockedHint`. **Remaining:** the locked-modal requirement checklist UI (the data is already exposed via `EcosystemUnlockManagerGPU.GetLockInfo`).
 
 ---
 
@@ -532,21 +608,17 @@ The prototype uses a **locked progression** model: only 2 species are available 
 
 Implemented in commit `e13e26b`. Player builds from empty ocean; Add/Remove scale schools; extinction at 0; `MaxSchools` cap; crash-safe empty-ocean state. **Needs an in-editor play-test with full add/remove cycles to confirm no regressions.**
 
-### 1. Finalise the 12 canonical species + wire them into the sim
-The species list is now locked (see **Species List & Food Chain**). Concrete steps:
-- ➕ **Create the Giant moray** (*Gymnothorax javanicus*) data assets — `_Data`, `_Behavior`, `_MotionRenderProperties`, `_MovementProperties`, `_SchoolProperties` (mirror an existing Tertiary species like Brown-marbled grouper)
-- ➖ **Remove/deprecate Great barracuda** — it has assets but is no longer in the list
-- Wire all 12 `SpeciesDataGPU` assets into `EcosystemDefinitionGPU.asset` **in a fixed order** (currently only the Clownfish placeholder is wired) so host + tablet index-based RPCs line up
-- Then add the UI/unlock fields below and fill `PreySpecies` / `PredatorSpecies` from the food-chain table
+### ~~1. Finalise the 12 canonical species + wire them into the sim~~ ✅ Done (2026-06-18)
+The 12 canonical species are created and wired into `EcosystemDefinitionGPU.asset` in fixed order,
+each with a matching `BoidSpawnerGPUMultiTargets` in `BoidSimulationGPU._gpuBoidSpawners`. Giant
+moray added; Great barracuda dropped. `PreySpecies` / `PredatorSpecies` populated from the
+food-chain table. **Still worth a balance pass** on the prey/predator lists + `MaxSchools` values.
 
-`SpeciesDataGPU` needs new fields before the food-web UI can be built:
-- `string ScientificName`
-- `string Description`
-- `Sprite Icon`
-- `TrophicTier` enum (Keystone / Tertiary / Secondary / Primary)
-- `Vector2 FoodWebPosition` — node position in the food web graph UI
-- `bool StartUnlocked` — false = silhouette until prerequisites met
-- `List<SpeciesUnlockRequirement> UnlockRequirements` — prerequisites with min count
+> **Where the UI/unlock fields ended up:** these did **not** go on `SpeciesDataGPU` as originally
+> planned. Unlock config lives on the UI asset **`SpeciesData`** (`startUnlocked`, `minHealth`,
+> `requires`, hints), linked to its sim species via a `gpuSpecies` field. `SpeciesDataGPU` stays
+> pure simulation data. Remaining UI-only fields (Icon, TrophicTier, FoodWebPosition) can be added
+> to `SpeciesData` as the food-web graph UI is built.
 
 ### 2. Build Tablet UI (Food Web Graph)
 Full spec in **Prototype Specification** section above. Key pieces missing in Unity:
@@ -555,8 +627,8 @@ Full spec in **Prototype Specification** section above. Key pieces missing in Un
 |---------|-------|
 | Food web SVG canvas | Bubble nodes, trophic-tier colour rings, count badge, over/under glow |
 | Predator arrow edges | Hidden by default; revealed on long-press (dim all, show connected edges + highlight predators) |
-| Species lock/unlock system | Silhouette + "???" until prereqs met; progressive 3-level hint on repeated taps |
-| Eco-health bar (GPU-wired) | Formula in Prototype Specification; currently not connected to GPU population |
+| Species lock/unlock system | ✅ Logic done (`EcosystemUnlockManagerGPU` + `SpeciesBubble`): lock state, eco-health/requirements gating, progressive 3-level hints. Remaining: silhouette/"???" visuals + locked-modal checklist |
+| Eco-health bar (GPU-wired) | ✅ `Health.cs` reads `GetEcoHealth()` from the sim/netcode. Remaining: the prototype's low/mid/high colour states |
 | Over/underpopulation indicators | Ring colour + glow; Alucia warns when player taps an imbalanced node |
 | Species info modal | Left: emoji + ADD button; Right: tier, sci name, role, "What's next" hint, count + balance status |
 | Locked modal | Silhouette, progressive hint, requirements checklist (eco-health % + prey counts) |
@@ -611,7 +683,7 @@ Tune the global band/rates live in Play mode by watching whether the reef settle
 - GameObject with `BoidSimulationGPU` + `EcosystemSimulationGPU` (verified present)
 - `BoidSpawnerGPUMultiTargets` per species + `BoidSimulationTargetAnimatorsSpawner` (verified present)
 - `NetworkBootstrap` (Role: Host) present in scene
-- ⚠ Currently only the **Clownfish placeholder** is wired into `EcosystemDefinitionGPU` — the 12 real species still need adding (same fixed order on host + tablet)
+- ✅ All 12 species wired into `EcosystemDefinitionGPU` in fixed order, each with a matching `BoidSpawnerGPUMultiTargets` registered in `BoidSimulationGPU._gpuBoidSpawners` (the tablet's `TabletEcosystemUIGPU.Ecosystem` must point at the same definition asset/order)
 - `EcosystemNetworkManagerGPU` prefab registered in NetworkManager's Network Prefabs List
 
 ### Netcode Simulation Test (client/tablet scene — MAIN, JunHeng)
@@ -620,7 +692,7 @@ This is the canonical tablet client. `Netcode Simulation Test 1` (Aloysius) is o
 - `ConnectionScreenUI` for IP entry / LAN auto-discovery (`LanDiscovery`)
 - `TabletEcosystemUIGPU` — species→index lookup service
 - Food-web UI (integrated from Aloysius): `SpeciesBubble`, `ModalController`, `FoodWebLines`, `Bob`, `SwipeToClose`
-- ⚠ `Health.cs` eco-health bar exists in Aloysius's prototype scene; not yet confirmed wired into this main scene
+- ✅ `Health.cs` eco-health bar reads `EcosystemNetworkManagerGPU.GetEcoHealth()` (assign its `fillImage`); `EcosystemUnlockManagerGPU` also lives here (client) with `_simulation` left empty so it reads via netcode
 
 ---
 
@@ -637,7 +709,7 @@ This is the canonical tablet client. `Netcode Simulation Test 1` (Aloysius) is o
 - **Eco-health bar — now wired** (Week 9). `Health.cs` reads `EcosystemNetworkManagerGPU.Instance.GetEcoHealth()` when `readFromSimulation` is on. To work it needs: the network manager spawned (host), `Health.fillImage` assigned, and prey/predator lists filled so the score is meaningful. The **state machine** (Healthy/Unstable/Critical/…) is still not built — only the 0–1 score.
 - **NetworkConfig mismatch** — client and host must have identical Network Prefabs Lists
 - **`EcosystemDefinitionGPU.asset` species order** — all 12 species must be added in a fixed, shared order so index-based RPCs match between host and tablet
-- **`SpeciesDataGPU` missing UI fields** — ScientificName, Description, Sprite, TrophicTier, FoodWebPosition, unlock requirements not yet added
+- **Species UI fields split across two assets** — unlock config (`startUnlocked`, `minHealth`, `requires`, hints) lives on **`SpeciesData`** (linked to the sim via `gpuSpecies`); `SpeciesDataGPU` stays pure sim data. Remaining UI-only fields (Icon, TrophicTier, FoodWebPosition) still to add to `SpeciesData` for the food-web graph
 - **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active
 - **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene
 

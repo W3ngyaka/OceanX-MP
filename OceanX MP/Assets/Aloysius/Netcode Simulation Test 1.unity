@@ -2856,7 +2856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 6dfb9df93974eb6469c12d2cd7f8ce73, type: 2}
-  cardImage: {fileID: 21300000, guid: f148f7c1299986649a3dbb0f9c0154c0, type: 3}
+  cardImage: {fileID: 21300000, guid: 2f8cc444eec3add4a900b7f686486867, type: 3}
   lockOverlay: {fileID: 756228222}
   glowRing: {fileID: 0}
   prey:
@@ -6765,7 +6765,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: e760805ebcaccb548983e739e235d51a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9239,7 +9239,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e641fc50a6991f94488a292b9be307c9, type: 2}
+  - {fileID: 2100000, guid: 4a7cf4d6776c74a41b32dd8c06636024, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -11,9 +11,12 @@ public class ModalController : MonoBehaviour
     public Button   RemoveButton;
     public TMP_Text PopulationLabel;
 
-    private Image img;
+    [Header("Dim Overlay")]
+    public CanvasGroup DimOverlay;
+    public float dimFadeDuration = 0.25f;
 
-    // Species this modal currently controls; -1 = cosmetic only (no Add/Remove).
+    private Image img;
+    private DimFader dimFader;
     private int _speciesIndex = -1;
 
     void Awake()
@@ -23,11 +26,24 @@ public class ModalController : MonoBehaviour
 
         if (AddButton    != null) AddButton.onClick.AddListener(OnAdd);
         if (RemoveButton != null) RemoveButton.onClick.AddListener(OnRemove);
+
+        if (DimOverlay != null)
+        {
+            dimFader = DimOverlay.GetComponent<DimFader>();
+            if (dimFader == null) dimFader = DimOverlay.gameObject.AddComponent<DimFader>();
+        }
     }
 
     void Start()
     {
         gameObject.SetActive(false);
+
+        if (DimOverlay != null)
+        {
+            DimOverlay.alpha = 0f;
+            DimOverlay.blocksRaycasts = false;
+            DimOverlay.gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -38,25 +54,17 @@ public class ModalController : MonoBehaviour
         int max = EcosystemNetworkManagerGPU.Instance.GetMaxSchools(_speciesIndex);
 
         if (PopulationLabel != null) PopulationLabel.text = pop.ToString();
-        // Remove greys out at 0 (extinction); Add greys out once the cap is reached.
-        // max <= 0 means the cap hasn't synced yet — leave Add enabled (the host enforces the cap).
         if (RemoveButton    != null) RemoveButton.interactable = pop > 0;
         if (AddButton       != null) AddButton.interactable    = !(max > 0 && pop >= max);
     }
 
-    // Cosmetic-only card (no netcode target).
     public void Open(Sprite card) => Open(card, -1);
 
-    // Netcode-aware: the Add/Remove buttons drive this species via the host.
     public void Open(Sprite card, int speciesIndex)
     {
         if (img != null) img.sprite = card;
         _speciesIndex = speciesIndex;
 
-        // Buttons stay visible; they're just disabled when this bubble has no
-        // netcode target (cosmetic-only, or species not found in the ecosystem list).
-        // Compute the same cap/floor interactable state Update() uses, so a species already
-        // at its cap (or at 0) doesn't show an enabled button for one frame before Update corrects it.
         bool hasTarget = speciesIndex >= 0;
         int pop = 0, max = 0;
         if (hasTarget && EcosystemNetworkManagerGPU.Instance != null)
@@ -67,8 +75,6 @@ public class ModalController : MonoBehaviour
         if (AddButton    != null) AddButton.interactable    = hasTarget && !(max > 0 && pop >= max);
         if (RemoveButton != null) RemoveButton.interactable = hasTarget && pop > 0;
 
-        // Population is per-species: show it only for a real target, and set it
-        // right away so we never show the previously-opened card's number.
         if (PopulationLabel != null)
         {
             PopulationLabel.gameObject.SetActive(hasTarget);
@@ -76,10 +82,26 @@ public class ModalController : MonoBehaviour
         }
 
         gameObject.SetActive(true);
+
+        if (DimOverlay != null && dimFader != null)
+        {
+            DimOverlay.gameObject.SetActive(true);
+            DimOverlay.blocksRaycasts = true;
+            dimFader.FadeTo(1f, dimFadeDuration);
+        }
     }
 
     public void Close()
     {
+        if (DimOverlay != null && dimFader != null)
+        {
+            DimOverlay.blocksRaycasts = false;
+            dimFader.FadeTo(0f, dimFadeDuration, () =>
+            {
+                DimOverlay.gameObject.SetActive(false);
+            });
+        }
+
         gameObject.SetActive(false);
     }
 

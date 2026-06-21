@@ -17,9 +17,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Junheng/Scenes/Boids_Demo.unity
     guid: 40d94709598b9b34eab017cce9110736
-  - enabled: 1
+  - enabled: 0
     path: Assets/Junheng/Scenes/Netcode Simulation Test.unity
     guid: a11f7b88de9c06f4ca398630bec499f2
+  - enabled: 1
+    path: Assets/Aloysius/Netcode Simulation Test.unity
+    guid: 500d132d54a8d9c44a250f1acdd49448
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

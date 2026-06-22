@@ -879,7 +879,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1670450441}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FoodWebDragReveal, Assembly-CSharp
         m_MethodName: CloseView
         m_Mode: 0
@@ -891,7 +891,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1670450442}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FoodWebDragReveal, Assembly-CSharp
         m_MethodName: CloseView
         m_Mode: 0
@@ -4189,7 +4189,7 @@ RectTransform:
   m_GameObject: {fileID: 909014091}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.78657, z: 1}
+  m_LocalScale: {x: 1, y: 0.7264367, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 924900499}
@@ -4359,9 +4359,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 909014092}
   - {fileID: 1453633632}
   - {fileID: 702530873}
-  - {fileID: 909014092}
   m_Father: {fileID: 1429282709}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4841,7 +4841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: e92ec5b9c4d74d34c944ce3e9436e9df, type: 2}
-  cardImage: {fileID: 21300000, guid: ea3adf5663aa0104993359fe7ecd469d, type: 3}
+  cardImage: {fileID: 21300000, guid: 544d59d81af58324e8c69ac4a7c6d476, type: 3}
   lockOverlay: {fileID: 1409539485}
   glowRing: {fileID: 0}
   prey: []
@@ -5338,7 +5338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1090360378
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7080,7 +7080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1415037589
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7090,7 +7090,7 @@ RectTransform:
   m_GameObject: {fileID: 1415037588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3867362, y: 1.0441961, z: 1.4715732}
+  m_LocalScale: {x: 1.7437501, y: 1.3130236, z: 1.8504285}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1090360378}
@@ -7100,8 +7100,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -28.237162, y: 40.354286}
-  m_SizeDelta: {x: 918, y: 554}
+  m_AnchoredPosition: {x: -10, y: 40.354286}
+  m_SizeDelta: {x: 938, y: 511}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1415037590
 MonoBehaviour:
@@ -7847,7 +7847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1485244578
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8141,7 +8141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1576842651
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8415,8 +8415,6 @@ GameObject:
   - component: {fileID: 1670450440}
   - component: {fileID: 1670450439}
   - component: {fileID: 1670450438}
-  - component: {fileID: 1670450441}
-  - component: {fileID: 1670450442}
   m_Layer: 0
   m_Name: DragHandle
   m_TagString: Untagged
@@ -8500,44 +8498,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670450436}
   m_CullTransparentMesh: 1
---- !u!114 &1670450441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670450436}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d4d715b08fdeb42ad05802689b37d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FoodWebDragReveal
-  dimOverlay: {fileID: 0}
-  organismsGrid: {fileID: 0}
-  currentOrganismsView: {fileID: 2062397094}
-  closeButton: {fileID: 286437874}
-  swipeThreshold: 50
-  animDuration: 0.3
-  slideDistance: 60
---- !u!114 &1670450442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670450436}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d4d715b08fdeb42ad05802689b37d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FoodWebDragReveal
-  dimOverlay: {fileID: 0}
-  organismsGrid: {fileID: 0}
-  currentOrganismsView: {fileID: 2062397094}
-  closeButton: {fileID: 286437874}
-  swipeThreshold: 50
-  animDuration: 0.3
-  slideDistance: 60
 --- !u!1 &1672225262
 GameObject:
   m_ObjectHideFlags: 0
@@ -10677,7 +10637,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -14, y: 166}
+  m_AnchoredPosition: {x: -107, y: 166}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2062397096
@@ -11014,13 +10974,14 @@ GameObject:
   - component: {fileID: 2091968097}
   - component: {fileID: 2091968100}
   - component: {fileID: 2091968099}
+  - component: {fileID: 2091968101}
   m_Layer: 5
   m_Name: arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2091968097
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11037,7 +10998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -44.000008, y: 335.9}
+  m_AnchoredPosition: {x: -56, y: 335.9}
   m_SizeDelta: {x: 42, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2091968099
@@ -11078,6 +11039,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2091968096}
   m_CullTransparentMesh: 1
+--- !u!114 &2091968101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091968096}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d4d715b08fdeb42ad05802689b37d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodWebDragReveal
+  dimOverlay: {fileID: 1327557229}
+  organismsGrid: {fileID: 2062397097}
+  currentOrganismsView: {fileID: 2062397094}
+  closeButton: {fileID: 286437874}
+  swipeThreshold: 50
+  animDuration: 0.3
+  slideDistance: 60
 --- !u!1 &2111967374 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1771101361051355309, guid: d9d8cc7978951f74b84d30ad2b6f4a84, type: 3}

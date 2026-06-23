@@ -21,10 +21,13 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private float holdTimer = 0f;
     private bool isHolding = false;
     private bool longPressTriggered = false;
+    private Vector3 baseScale = Vector3.one;
+    private Coroutine punchRoutine;
     private bool locked = false;
 
     void Start()
     {
+        baseScale = transform.localScale;
         Refresh();
     }
 
@@ -108,7 +111,9 @@ void OnTap()
             return;
         }
 
-        StartCoroutine(TapPunch());   // tap-punch animation (Aloysius)
+        if (punchRoutine != null) StopCoroutine(punchRoutine);
+        transform.localScale = baseScale;
+        punchRoutine = StartCoroutine(TapPunch());   // tap-punch animation (Aloysius)
 
         if (ModalController.Instance == null || cardImage == null) return;
 
@@ -123,7 +128,7 @@ void OnTap()
 
     System.Collections.IEnumerator TapPunch()
     {
-        Vector3 original = transform.localScale;
+        Vector3 original = baseScale;
         Vector3 big = original * 1.2f;
         float t = 0f;
 
@@ -145,6 +150,7 @@ void OnTap()
         }
 
         transform.localScale = original;
+        punchRoutine = null;
     }
 
     void ShowLockedHint()

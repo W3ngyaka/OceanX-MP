@@ -1,6 +1,6 @@
 \# OceanX MP — UI/UX Handoff (Aloysius)
 
-\_Last updated: 2026-06-24\_
+\_Last updated: 2026-06-24 (rev 2)\_
 
 
 
@@ -8,7 +8,45 @@
 
 > Scope: food-web tablet layout, species info card, atmospheric effects, a
 
-> bubble-scaling bug fix, and the new \*\*Alucia\*\* host-screen guide character.
+> bubble-scaling bug fix, the \*\*Alucia\*\* host-screen guide character, the
+
+> \*\*species unlock reveal + hint\*\* feature, and a \*\*disabled-unlock-manager bug\*\*
+
+> found and fixed on the host.
+
+
+
+\---
+
+
+
+\## READ FIRST — Two things JunHeng needs to know
+
+
+
+1\. \*\*The host's `EcosystemUnlockManagerGPU` component was DISABLED.\*\* On the host
+
+&#x20;  `DebugHarness` object, the unlock manager component had `enabled = false`, so it
+
+&#x20;  never ran `Update()` -> never initialised -> `CheckUnlocks()` always early-returned.
+
+&#x20;  Result: \*\*nothing ever unlocked on the host\*\*, even when every requirement was met
+
+&#x20;  (e.g. Yellowstripe Scad sitting at 2/2 + 2/2 stayed locked). Fixed in the host
+
+&#x20;  \*\*copy\*\* by enabling the component. \*\*Check whether it's also disabled in the
+
+&#x20;  canonical `Boids\_Demo` — if so, host-side unlocking is broken there too.\*\*
+
+
+
+2\. \*\*`Blacktip Reef Shark` has `startUnlocked = True` in its `SpeciesData`.\*\* This
+
+&#x20;  looks wrong — the shark is the apex keystone with the heaviest requirements
+
+&#x20;  (grouper x1, moray x1, trevally x2, scad x3) yet is set to start unlocked. Likely a
+
+&#x20;  data error. Recommend setting it to `False`.
 
 
 
@@ -24,25 +62,23 @@
 
 |-------|--------------|-------|
 
-| Food web layout + atmospheric FX | \*\*Copy\*\* of `Netcode Simulation Test` | Working in a copy, not JunHeng's canonical scene |
+| Food web layout + atmospheric FX | \*\*Copy\*\* of `Netcode Simulation Test` (`Assets/Aloysius/`) | Working in a copy, not the canonical scene |
 
-| Alucia guide character | \*\*Copy\*\* of `Boids\_Demo` → `Assets/Aloysius/Boids\_Demo.unity` | Host/large-screen scene copy |
+| Alucia + unlock reveal | \*\*Copy\*\* of `Boids\_Demo` -> `Assets/Aloysius/Boids\_Demo.unity` | Host/large-screen scene copy |
 
-| New scripts | `Assets/Aloysius/Scripts/` | `SonarPulse.cs`, `MarineSnow.cs`, `GodRays.cs`, `AluciaController.cs` |
+| New scripts | `Assets/Aloysius/Scripts/` | `SonarPulse.cs`, `MarineSnow.cs`, `GodRays.cs`, `AluciaController.cs`, `SpeciesUnlockReveal.cs` |
 
-| Edited shared script | `Assets/Aloysius/Scripts/SpeciesBubble.cs` | TapPunch bug fix — \*\*affects JunHeng's scene too\*\* (shared file) |
+| Edited shared script | `Assets/Aloysius/Scripts/SpeciesBubble.cs` | TapPunch bug fix — \*\*affects canonical scene too\*\* |
 
 
 
-> ⚠ \*\*Scene copies, not the canonical scenes.\*\* The food-web and Alucia work was
+> \*\*Scene copies, not the canonical scenes.\*\* Scene-level work is in copies to
 
-> done in \*\*copies\*\* to avoid clobbering JunHeng's `.unity` files (which merge
+> avoid clobbering JunHeng's `.unity` files. The \*\*scripts\*\* are shared and live in
 
-> badly in Git). The scripts are shared and live in `Assets/Aloysius/Scripts/`.
+> `Assets/Aloysius/Scripts/`. Integration into the canonical scenes is a separate
 
-> When this is ready, hand the scripts + the placement/FX recipe to JunHeng to
-
-> integrate into the canonical scenes.
+> handoff step.
 
 
 
@@ -56,211 +92,137 @@
 
 \### 1. Food Web layout — radial redesign
 
+\- Reorganized the 12 species bubbles into a \*\*radial layout\*\* centered on the shark,
 
+&#x20; with even angles / consistent radii (exact `anchoredPosition` per bubble), to fix
 
-\*\*Problem:\*\* the original bubble layout was flagged as "all over the place" — the
+&#x20; the "all over the place" feedback. Normalized bubble scales. Faint ring guides.
 
-12 species bubbles had no organizing rule, so the food web read as a scatter and
+\- This is a \*\*departure from the prototype's tier-based design\*\*; a groupmate
 
-the long-press connection lines (revealed on hold) would cross chaotically.
+&#x20; pushed back on rings. \*\*Team to confirm direction.\*\*
 
-
-
-\*\*What changed:\*\*
-
-\- Reorganized the 12 bubbles into a \*\*radial layout\*\* centered on the Blacktip
-
-&#x20; Reef Shark (the keystone species).
-
-\- Bubbles placed at \*\*even angles and consistent radii\*\* via exact coordinates
-
-&#x20; (set on each bubble's `RectTransform.anchoredPosition`), measured from the
-
-&#x20; shark's center — so spacing is mathematically even, not eyeballed.
-
-\- Inner ring = mid-tier; outer ring = the rest. Shark enlarged as the focal point.
-
-\- Normalized bubble \*\*scales\*\* (they previously varied 0.83–1.27 for no reason).
-
-\- Soft concentric \*\*ring guides\*\* kept faint (the hard "dartboard" version read
-
-&#x20; as cold/technical; faint rings imply structure without fighting the bubbles).
-
-
-
-\*\*Open / for discussion with the team:\*\*
-
-\- The radial layout is a \*\*departure from the prototype's tier-based design\*\*
-
-&#x20; (prototype + JunHeng's handoff describe top=keystone, bottom=primary tiers).
-
-&#x20; A groupmate pushed back on ring layouts. \*\*Team should confirm the direction.\*\*
-
-\- Bubble \*\*halo colours\*\* are currently decorative (harmonious but not encoding
-
-&#x20; anything). To push quality: tie halo colour to trophic tier, or remove them.
+\- Halo colours are currently decorative (not tier-encoded).
 
 
 
 \### 2. Species info card — visual hierarchy fix
 
+\- Section labels made small/muted; answers more prominent; body text regular weight
 
+&#x20; and softer. IUCN badge kept as the one meaningful colour accent.
 
-\*\*Problem:\*\* the card was flagged as "poor" — everything (title, section labels,
-
-answers, body text) was the same bold bright blue, so there was no hierarchy and
-
-nowhere for the eye to land.
-
-
-
-\*\*What changed (type treatment, not layout):\*\*
-
-\- Section labels (Scientific Name / Diet / IUCN Status) made \*\*small, muted,
-
-&#x20; lighter weight\*\* so they read as labels.
-
-\- Answer values made more prominent than their labels (the reverse of before).
-
-\- Body description set to \*\*regular weight, smaller, softer colour\*\* so it stops
-
-&#x20; competing with the headers.
-
-\- IUCN status badge kept as the one meaningful colour accent (amber VU / green LC).
-
-
-
-\*\*Remaining polish:\*\* italicize scientific names; shrink/relabel the "+" add
-
-button (currently a large ambiguous glowing centre element).
+\- Remaining polish: italic sci-names, shrink/relabel the "+" add button.
 
 
 
 \### 3. Atmospheric depth (immersion pass)
 
+Three self-contained background scripts in the food-web scene copy. Each is on its
 
-
-Three self-contained background effects added to the food-web scene copy to make
-
-it feel underwater rather than like a flat diagram. Each is a standalone script
-
-on its own object, behind the bubbles, \*\*raycast-disabled\*\* (never blocks taps),
-
-and \*\*generates its own sprite at runtime\*\* (no art assets needed).
+own object, behind the bubbles, raycast-disabled, generates its own sprite at runtime.
 
 
 
-| Script | Effect | Object |
+| Script | Effect |
 
-|--------|--------|--------|
+|--------|--------|
 
-| `SonarPulse.cs` | Faint cyan rings expanding outward from centre on a loop (sonar pulse) | `SonarPulse` under FoodWebLayer |
+| `SonarPulse.cs` | Expanding cyan rings from centre, looping |
 
-| `MarineSnow.cs` | \*\*Rising reef bubbles\*\* (started as falling "marine snow", flipped to rising bubbles since snow read wrong for a reef) | `MarineSnow` under FoodWebLayer |
+| `MarineSnow.cs` | \*\*Rising reef bubbles\*\* (started as falling snow, flipped to rising — snow read wrong for a reef) |
 
-| `GodRays.cs` | Soft light shafts from the top, gentle sway + shimmer | `GodRays` under FoodWebLayer |
-
-
-
-Render order (back→front): `GodRays → SonarPulse → MarineSnow → Linesmanager → Organisms`.
+| `GodRays.cs` | Soft light shafts from the top, sway + shimmer |
 
 
 
-All effects expose Inspector tunables (count, speed, opacity, colour, etc.).
+Render order back->front: `GodRays -> SonarPulse -> MarineSnow -> Linesmanager -> Organisms`.
 
-\*\*Tune to subtle\*\* — they should sit below conscious notice.
+All expose Inspector tunables; tune to subtle.
 
 
 
 \### 4. Bug fix — runaway bubble scaling (`SpeciesBubble.cs`)
 
+Spam-tapping a bubble grew it without bound. `TapPunch()` captured the live
 
+(already-enlarged) scale as "original", so overlapping coroutines compounded.
 
-\*\*Bug:\*\* spam-tapping a species bubble made it grow without bound.
+Fixed: capture true `baseScale` once in `Start()`; punch from/to `baseScale`;
 
+`OnTap` stops any running punch + resets before starting a new one.
 
-
-\*\*Cause:\*\* `TapPunch()` captured `transform.localScale` as its "original" at the
-
-moment it started. Rapid taps launched overlapping coroutines, each reading an
-
-already-enlarged scale as baseline → compounding growth that never reset.
-
-
-
-\*\*Fix:\*\*
-
-\- Capture the true resting scale once in `Start()` (`baseScale`).
-
-\- `TapPunch` animates from/to `baseScale` (absolute), not the live scale.
-
-\- `OnTap` stops any running punch and resets to `baseScale` before starting a
-
-&#x20; new one, so coroutines can't stack.
+Shared script — \*\*affects canonical scene; commit + tell JunHeng.\*\*
 
 
 
-> ⚠ This edits the \*\*shared\*\* `SpeciesBubble.cs`, so it affects JunHeng's canonical
+\### 5. Alucia — host-screen guide character
 
-> scene too. It's a clean bug fix (no behaviour change beyond stopping the runaway
+2D character overlay on the \*\*large/host screen\*\* (`Boids\_Demo`), separate from the
 
-> growth), and the `OnTap` edit preserves JunHeng's netcode-index resolution +
-
-> `ModalController.Open` call. \*\*Commit + mention to JunHeng.\*\*
+tablet. Octopus-girl guide per the storyboard; replaces the prototype's mermaid.
 
 
 
-\### 5. Alucia — host-screen guide character (NEW)
+\*\*Script:\*\* `AluciaController.cs`
 
+\*\*Scene objects (host copy):\*\* `AluciaCanvas` (Screen Space Overlay, sortingOrder 100)
 
+\-> `AluciaCharacter` (Image + CanvasGroup, \*\*placeholder block — swap real art later\*\*),
 
-A 2D character overlay on the \*\*large/host screen\*\* (`Boids\_Demo`), separate from
-
-the tablet. Replaces the prototype's mermaid speech-bubble; designed as an
-
-octopus-girl guide per the storyboard. Reacts to live ecosystem state.
-
-
-
-\*\*Script:\*\* `Assets/Aloysius/Scripts/AluciaController.cs`
-
-
-
-\*\*Scene objects (in the `Boids\_Demo` copy):\*\*
-
-\- `AluciaCanvas` (Screen Space Overlay, sortingOrder 100) — holds the controller
-
-&#x20; - `AluciaCharacter` (Image + CanvasGroup) — \*\*placeholder colour block; swap in real art PNG later\*\*
-
-&#x20; - `AluciaBubble` (Image + CanvasGroup) → `BubbleText` (legacy `Text`)
+`AluciaBubble` (Image + CanvasGroup) -> `BubbleText`.
 
 
 
 \*\*Behaviour:\*\*
 
-\- \*\*Appears only when speaking\*\* — character + bubble fade in together, fade out
+\- \*\*Appears only when speaking\*\* — character + bubble fade in/out together; hidden
 
-&#x20; together after \~5.2s. Hidden otherwise (keeps the reef view clean).
+&#x20; otherwise (keeps the reef clean).
 
-\- \*\*Intro sequence\*\* on Start: 3 storyboard lines ("Hey, my name's Alucia!" →
+\- \*\*Intro sequence\*\* on Start: 3 storyboard lines.
 
-&#x20; "...isn't doing too well..." → "Please help me save it!").
+\- \*\*Health reactions:\*\* reads `EcosystemSimulationGPU.EcoHealth01`; speaks on band
 
-\- \*\*Health reactions:\*\* reads `EcosystemSimulationGPU.EcoHealth01` live and speaks
+&#x20; crossing (Critical <35 / Unstable / Healthy >70 / Thriving), debounced + hysteresis,
 
-&#x20; when health crosses a band boundary (Critical <35 / Unstable / Healthy >70 /
+&#x20; different lines for improving vs worsening.
 
-&#x20; Thriving), with \*\*debounce + hysteresis\*\* so it doesn't spam or flip-flop.
-
-&#x20; Different lines for improving vs. worsening.
-
-\- \*\*Three moods\*\* (Calm / Warn / Win) currently tint the bubble; swap for
-
-&#x20; sprite/animation states when art exists.
+\- Three moods (Calm/Warn/Win) tint the bubble; swap for sprite states with real art.
 
 
 
-\*\*Wiring:\*\* auto-finds `EcosystemSimulationGPU` in the scene (`Boids\_Simulation\_GPU`).
+\### 6. Species unlock reveal + next-fish hint (NEW)
+
+On the host screen, when a species unlocks for the first time:
+
+1\. A big \*\*"NEW SPECIES DISCOVERED" reveal card\*\* fades in (name, sci-name, tier,
+
+&#x20;  `addedMessage`), holds \~5.5s, fades out. Image slot present but empty (text-first;
+
+&#x20;  add fish PNG later).
+
+2\. \*\*Alucia then delivers a hint\*\* for the \*\*closest-to-unlockable\*\* locked species
+
+&#x20;  (fewest unmet requirements via `GetLockInfo`), using its `hint1` or an auto-built
+
+&#x20;  requirement summary.
+
+
+
+\*\*Script:\*\* `SpeciesUnlockReveal.cs` (on `AluciaCanvas`).
+
+\*\*Wiring:\*\* subscribes to `EcosystemUnlockManagerGPU.Instance.OnSpeciesUnlocked`;
+
+loads all 12 `SpeciesData`; linked to the reveal card UI + `AluciaController`.
+
+
+
+\*\*Status: confirmed working\*\* via a forced-event test (reveal card + hint displayed
+
+correctly). It fires on real unlock events once the unlock manager is running (see
+
+the disabled-manager fix above).
 
 
 
@@ -268,45 +230,111 @@ octopus-girl guide per the storyboard. Reacts to live ecosystem state.
 
 
 
-\## What Alucia Still Needs
+\## How Unlocking Actually Works (reference)
 
 
 
-\- \*\*Real art.\*\* Currently a placeholder block. Needs an illustrated Alucia PNG
+\- \*\*Logic:\*\* `EcosystemUnlockManagerGPU.CheckUnlocks()` (runs every `\_checkInterval`).
 
-&#x20; (ideally a few poses for the moods). Drop into the `AluciaCharacter` Image —
+&#x20; A locked species unlocks when \*\*both\*\*: eco-health% >= its `minHealth`, AND every
 
-&#x20; no code change needed.
+&#x20; `requires` entry met (each prey species has >= that many schools live). Latching.
 
-\- \*\*Win threshold is unreachable as written.\*\* The thriving/win line fires at
+\- \*\*Per-species config:\*\* on each `SpeciesData` asset (`Assets/Aloysius/SpeciesData/`):
 
-&#x20; `EcoHealth01 == 100%`, but per JunHeng's handoff the health formula likely
+&#x20; `startUnlocked`, `minHealth`, `requires` (prey + count), `hint1/2/3`, `addedMessage`.
 
-&#x20; \*\*tops out below 100%\*\* (diversity term sits low; needs tuning). \*\*Lower the
+\- \*\*Current values (read this session):\*\* all `minHealth = 0`, so unlocking currently
 
-&#x20; thriving trigger to \~90%\*\* (and optionally add an "almost there" line \~85%) so
+&#x20; depends \*\*only on prey counts\*\*, not health. Start-unlocked: the 5 grazers
 
-&#x20; the win moment can actually play. \_(Identified but not yet applied.)\_
+&#x20; (Parrotfish, Surgeonfish, Mullet, Damselfish, Spinefoot) + (erroneously) the Shark.
 
-\- \*\*Unlock / extinction reactions not yet wired.\*\* `EcosystemUnlockManagerGPU`
+\- The tablet bubbles only \*\*read\*\* unlock state (`IsUnlocked`) and show hints on a
 
-&#x20; exists on the `DebugHarness` object and exposes `OnSpeciesUnlocked` /
+&#x20; locked tap; they do \*\*not\*\* unlock — the manager does it automatically.
 
-&#x20; `OnUnlockStateChanged`. Hook Alucia to these for unlock announcements and
 
-&#x20; species-extinction alarm lines.
 
-\- \*\*Position/size\*\* of the character is a rough placeholder (bottom-left,
+\### Current unlock requirements (read from the assets)
 
-&#x20; 300×520) — tune to the real art and trifold layout.
+| Species | minHealth | Requires |
 
-\- \*\*TMP option:\*\* bubble uses legacy `Text`. If the project standardizes on
+|---------|-----------|----------|
 
-&#x20; TextMeshPro, swap for crisper text.
+| Bullethead Parrotfish | 0 | start unlocked |
 
-\- \*\*Bubble-flood reset animation\*\* (storyboard) not built — same
+| Eyestripe Surgeonfish | 0 | start unlocked |
 
-&#x20; particle/overlay approach as the FX scripts when wanted.
+| Fringelip Mullet | 0 | start unlocked |
+
+| Reticulated Damselfish | 0 | start unlocked |
+
+| Streaked Spinefoot | 0 | start unlocked |
+
+| Yellowstripe Scad | 0 | Damselfish x2, Mullet x2 |
+
+| Russell's Snapper | 0 | Damselfish x2, Surgeonfish x2 |
+
+| Bluefin Trevally | 0 | Mullet x3, Parrotfish x2 |
+
+| Bluespotted Ray | 0 | Parrotfish x2, Spinefoot x2 |
+
+| Brown-Marbled Grouper | 0 | Scad x2, Trevally x1, Snapper x1 |
+
+| Giant Moray | 0 | Snapper x2, Ray x1 |
+
+| Blacktip Reef Shark | 0 | Grouper x1, Moray x1, Trevally x2, Scad x3 — \*\*but startUnlocked=True (bug)\*\* |
+
+
+
+\---
+
+
+
+\## What's Still Open
+
+
+
+\*\*Alucia / reveal:\*\*
+
+\- \*\*Real art\*\* — Alucia is a placeholder block; reveal card image slot is empty.
+
+&#x20; Drop PNGs in later, no code change. (Fish PNGs exist in `Assets/Aloysius/Fishes/`
+
+&#x20; and `iamge/` but are \*\*inconsistently named\*\* — consider an explicit `revealImage`
+
+&#x20; Sprite field on `SpeciesData` rather than name-matching.)
+
+\- \*\*Win threshold unreachable\*\* — Alucia's "Thriving" line fires at `EcoHealth01 == 100%`.
+
+&#x20; Health likely tops out below 100. \*\*Lower the thriving trigger to \~90%\*\* (+ optional
+
+&#x20; "almost there" \~85%). Identified, not yet applied.
+
+\- \*\*Unlock/extinction Alucia reactions\*\* — not yet wired (only the reveal+hint use the
+
+&#x20; unlock event so far; Alucia could also react to extinctions).
+
+\- \*\*Position/size + TMP\*\* — placeholder layout; bubble uses legacy `Text` (swap to TMP
+
+&#x20; if standardized).
+
+\- \*\*Diagnostic Debug.Logs\*\* still in `SpeciesUnlockReveal` (`\[Reveal] Subscribed...`,
+
+&#x20; `\[Reveal] HandleUnlock...`) — harmless, remove before final if desired.
+
+\- \*\*Bubble-flood reset animation\*\* (storyboard) not built.
+
+
+
+\*\*For JunHeng (simulation/integration):\*\*
+
+\- \*\*Re-check the unlock manager is ENABLED\*\* in canonical `Boids\_Demo` (was disabled).
+
+\- \*\*Fix `Blacktip Reef Shark` `startUnlocked` -> False\*\* (likely data error).
+
+\- \*\*Balance pass\*\* on `requires` counts and (if re-enabled) `minHealth` thresholds.
 
 
 
@@ -318,33 +346,29 @@ octopus-girl guide per the storyboard. Reacts to live ecosystem state.
 
 
 
-\- \*\*`Boids\_Demo` crash warning still applies.\*\* Per JunHeng's handoff, shark +
-
-&#x20; water shader (URP opaque-texture) crashes the host scene. The Alucia work is
-
-&#x20; pure UI overlay (unrelated), but the scene itself is fragile — confirm the copy
-
-&#x20; runs before relying on it.
-
 \- \*\*Save the scene after runtime-created objects.\*\* Objects created via the MCP
 
-&#x20; `execute\_code` path do NOT persist unless the scene is saved (Ctrl+S). The
+&#x20; `execute\_code` path do NOT persist unless the scene is saved (Ctrl+S). The Alucia
 
-&#x20; Alucia objects were lost once when the editor reloaded before a save — always
+&#x20; objects were lost once before a save. Always save immediately.
 
-&#x20; save immediately after creating scene objects this way.
+\- \*\*MCP bridge dropped connection a few times\*\* mid-edit (recovered each time). If
 
-\- \*\*MCP bridge dropped connection once\*\* mid-edit (recovered). If anything looks
+&#x20; anything looks half-applied, re-read the script/scene to confirm state.
 
-&#x20; half-applied, re-read the script/scene to confirm state.
+\- \*\*`Boids\_Demo` crash warning\*\* (shark + water shader, URP) still applies per
 
-\- \*\*Scene copies vs canonical.\*\* All scene-level work is in copies. Only the
+&#x20; JunHeng's handoff — the Alucia work is pure UI overlay (unrelated) but the scene is
 
-&#x20; \*\*scripts\*\* (shared, in `Assets/Aloysius/Scripts/`) affect the canonical scenes.
+&#x20; fragile; confirm the copy runs.
 
-&#x20; Integration into JunHeng's `Netcode Simulation Test` / `Boids\_Demo` is a
+\- \*\*Singletons (`...Instance`) are null in edit mode\*\* — only valid during Play.
 
-&#x20; separate handoff step.
+&#x20; Diagnostics that read `Instance` must run while in Play.
+
+\- \*\*Isolated host = empty sim.\*\* Testing the host alone shows 0 population; population
+
+&#x20; only arrives when the tablet client is connected and adding. Test connected.
 
 
 
@@ -358,13 +382,11 @@ octopus-girl guide per the storyboard. Reacts to live ecosystem state.
 
 \*\*New scripts (`Assets/Aloysius/Scripts/`):\*\*
 
-\- `SonarPulse.cs` — expanding sonar-ring background effect
+\- `SonarPulse.cs`, `MarineSnow.cs`, `GodRays.cs` — atmospheric background effects
 
-\- `MarineSnow.cs` — rising reef bubbles background effect
+\- `AluciaController.cs` — host guide character (intro + health reactions)
 
-\- `GodRays.cs` — light-shaft background effect
-
-\- `AluciaController.cs` — host-screen guide character (intro + health reactions)
+\- `SpeciesUnlockReveal.cs` — unlock reveal card + next-fish hint via Alucia
 
 
 
@@ -374,13 +396,15 @@ octopus-girl guide per the storyboard. Reacts to live ecosystem state.
 
 
 
-\*\*Scene objects (in copies only):\*\*
+\*\*Scene changes (in copies only):\*\*
 
-\- Food-web copy: repositioned 12 bubbles (radial), `SonarPulse` / `MarineSnow` /
+\- Food-web copy: 12 bubbles repositioned (radial); `SonarPulse`/`MarineSnow`/`GodRays`
 
-&#x20; `GodRays` objects under FoodWebLayer
+\- `Boids\_Demo` copy: `AluciaCanvas` (+ `AluciaCharacter`, `AluciaBubble`, `BubbleText`,
 
-\- `Boids\_Demo` copy: `AluciaCanvas` (+ `AluciaCharacter`, `AluciaBubble`,
+&#x20; `SpeciesRevealCard`) with `AluciaController` + `SpeciesUnlockReveal`; \*\*enabled the
 
-&#x20; `BubbleText`) with `AluciaController`
+&#x20; `EcosystemUnlockManagerGPU` component on `DebugHarness`\*\* (was disabled)
+
+
 

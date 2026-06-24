@@ -14,6 +14,9 @@ public class EcoHealthDashboard : MonoBehaviour
     public Image fillImage;
     [Tooltip("The percentage text (e.g. shows 75%).")]
     public TMP_Text percentText;
+    public TMP_Text statusText;
+    public bool colorStatus = true;
+
 
     [Header("Behaviour")]
     public bool smooth = true;
@@ -26,15 +29,36 @@ public class EcoHealthDashboard : MonoBehaviour
 
     void Update()
     {
+        if (statusText == null) AutoWire();
         float target = GetHealth01();
-        if (_displayed01 < 0f) _displayed01 = target; // first frame: snap
+        if (_displayed01 < 0f) _displayed01 = target;
         else if (smooth && Application.isPlaying)
             _displayed01 = Mathf.MoveTowards(_displayed01, target, smoothSpeed * Time.deltaTime);
         else
             _displayed01 = target;
-
         if (fillImage != null) fillImage.fillAmount = _displayed01;
         if (percentText != null) percentText.text = Mathf.RoundToInt(_displayed01 * 100f) + "%";
+        if (statusText != null)
+        {
+            statusText.text = StatusWord(_displayed01);
+            if (colorStatus) statusText.color = StatusColor(_displayed01);
+        }
+    }
+
+    string StatusWord(float h)
+    {
+        if (h >= 0.85f) return "THRIVING";
+        if (h >= 0.60f) return "HEALTHY";
+        if (h >= 0.35f) return "UNSTABLE";
+        if (h > 0.001f) return "CRITICAL";
+        return "COLLAPSED";
+    }
+
+    Color StatusColor(float h)
+    {
+        if (h >= 0.60f) return new Color(0.35f, 0.9f, 0.5f);   // green
+        if (h >= 0.35f) return new Color(1f, 0.75f, 0.2f);     // amber
+        return new Color(0.95f, 0.3f, 0.3f);                   // red
     }
 
     float GetHealth01()
@@ -47,5 +71,18 @@ public class EcoHealthDashboard : MonoBehaviour
             return Mathf.Clamp01(h);
         }
         return Mathf.Clamp01(manualHealth01);
+    }
+
+
+    void OnEnable() { AutoWire(); }
+
+    void AutoWire()
+    {
+        // Self-heal references so a cleared Inspector slot can't break the widget.
+        if (statusText == null)
+        {
+            var t = transform.Find("StatusText");
+            if (t != null) statusText = t.GetComponent<TMP_Text>();
+        }
     }
 }

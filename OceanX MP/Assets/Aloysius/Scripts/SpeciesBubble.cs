@@ -115,15 +115,17 @@ void OnTap()
         transform.localScale = baseScale;
         punchRoutine = StartCoroutine(TapPunch());   // tap-punch animation (Aloysius)
 
-        if (ModalController.Instance == null || cardImage == null) return;
-
         // Resolve this species' netcode index from its sim link so the modal's Add/Remove
         // buttons drive the real simulation (and the population number shows). -1 = cosmetic only.
         int speciesIndex = -1;
         if (data != null && data.gpuSpecies != null && TabletEcosystemUIGPU.Instance != null)
             speciesIndex = TabletEcosystemUIGPU.Instance.GetSpeciesIndex(data.gpuSpecies);
 
-        ModalController.Instance.Open(cardImage, speciesIndex);
+        // Fill the right-side info panel (summary). Its 'View Details' button opens the full modal.
+        if (SpeciesInfoPanel.Instance != null)
+            SpeciesInfoPanel.Instance.Show(data, cardImage, speciesIndex);
+        else if (ModalController.Instance != null && cardImage != null)
+            ModalController.Instance.Open(cardImage, speciesIndex); // fallback: open modal directly
     }
 
     System.Collections.IEnumerator TapPunch()

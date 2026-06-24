@@ -16,6 +16,11 @@ public class EcoHealthDashboard : MonoBehaviour
     public TMP_Text percentText;
     public TMP_Text statusText;
     public bool colorStatus = true;
+    [Tooltip("Optional 'X / 12 species present' text.")]
+    public TMP_Text speciesCountText;
+    [Tooltip("Total species in the ecosystem (denominator).")]
+    public int totalSpecies = 12;
+
 
 
     [Header("Behaviour")]
@@ -43,6 +48,18 @@ public class EcoHealthDashboard : MonoBehaviour
             statusText.text = StatusWord(_displayed01);
             if (colorStatus) statusText.color = StatusColor(_displayed01);
         }
+        if (speciesCountText != null)
+            speciesCountText.text = CountPresent() + " / " + totalSpecies + " species present";
+    }
+
+    int CountPresent()
+    {
+        var mgr = EcosystemNetworkManagerGPU.Instance;
+        if (mgr == null) return 0;
+        int present = 0;
+        for (int i = 0; i < totalSpecies; i++)
+            if (mgr.GetPopulation(i) > 0) present++;
+        return present;
     }
 
     string StatusWord(float h)
@@ -83,6 +100,16 @@ public class EcoHealthDashboard : MonoBehaviour
         {
             var t = transform.Find("StatusText");
             if (t != null) statusText = t.GetComponent<TMP_Text>();
+        }
+        if (speciesCountText == null)
+        {
+            // count text lives on the Health parent, not under the dashboard
+            var p = transform.parent;
+            if (p != null)
+            {
+                var t = p.Find("SpeciesCountText");
+                if (t != null) speciesCountText = t.GetComponent<TMP_Text>();
+            }
         }
     }
 }

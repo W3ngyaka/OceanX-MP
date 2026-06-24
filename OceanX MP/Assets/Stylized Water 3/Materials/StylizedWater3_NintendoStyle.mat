@@ -170,7 +170,7 @@ Material:
     - _DepthHorizontal: 0.01
     - _DepthMode: 0
     - _DepthTexture: 1
-    - _DepthVertical: 4
+    - _DepthVertical: 3.72
     - _DisableDepthTexture: 0
     - _DistanceFoamTiling: 0.2
     - _DistanceNormalsOn: 1
@@ -325,7 +325,7 @@ Material:
     - _ZClip: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.019223925, g: 0.08339495, b: 0.1509434, a: 1}
+    - _BaseColor: {r: 0.017933426, g: 0.068700984, b: 0.122641504, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _DepthMapBounds: {r: -402.3, g: -459.43, b: 0.0012693577, a: 0}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
@@ -335,11 +335,11 @@ Material:
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _FoamCrestMinMaxHeight: {r: 0.56760806, g: 0.8265599, b: 0, a: 0}
     - _FoamTiling: {r: 0.02, g: 0.02, b: 0, a: 0}
-    - _HorizonColor: {r: 0.27558264, g: 0.825463, b: 1.4980389, a: 0}
+    - _HorizonColor: {r: 0.10377357, g: 0.96013373, b: 1.9999995, a: 0}
     - _IntersectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _NormalTiling: {r: 0.06999999, g: 0.06999999, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShallowColor: {r: 0, g: 0.7375002, b: 1, a: 1}
+    - _ShallowColor: {r: 0.063545756, g: 0.41156512, b: 0.7924528, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _WaterColor: {r: 0.21176466, g: 0.6745098, b: 1, a: 1}
     - _WaterShallowColor: {r: 0, g: 0.9394503, b: 1, a: 1}

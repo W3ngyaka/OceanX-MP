@@ -670,14 +670,14 @@ RectTransform:
   m_GameObject: {fileID: 249234325}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0259185, y: 1.2070197, z: 1.2070197}
+  m_LocalScale: {x: 0.63628453, y: 1.0896491, z: 1.0896491}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 947692288}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 3.1}
+  m_AnchoredPosition: {x: 4.6, y: 1.3}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &249234327
@@ -6174,7 +6174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: e92ec5b9c4d74d34c944ce3e9436e9df, type: 2}
-  cardImage: {fileID: 21300000, guid: a3fb564164362c144ac22d6c149806bd, type: 3}
+  cardImage: {fileID: 21300000, guid: 799ccf49efd2b4e43a25502b0314a9bc, type: 3}
   lockOverlay: {fileID: 1409539485}
   glowRing: {fileID: 0}
   prey: []
@@ -6288,14 +6288,14 @@ RectTransform:
   m_GameObject: {fileID: 1055919525}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.83764, y: 1, z: 1}
+  m_LocalScale: {x: 0.50159305, y: 0.9595705, z: 0.9595705}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 401540851}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1.300003, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1055919527
@@ -6894,7 +6894,7 @@ RectTransform:
   m_GameObject: {fileID: 1098807345}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5198716, y: 1.0747977, z: 1.0747977}
+  m_LocalScale: {x: 1.4998895, y: 0.8820018, z: 0.8820018}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 401540851}
@@ -6904,7 +6904,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -39.075, y: 173}
+  m_AnchoredPosition: {x: -38.974, y: 180.95}
   m_SizeDelta: {x: 720, y: 80}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1098807347
@@ -8796,7 +8796,7 @@ RectTransform:
   m_GameObject: {fileID: 1415037588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8599203, y: 0.7542678, z: 1.8504285}
+  m_LocalScale: {x: 1.1182404, y: 0.98084986, z: 2.4062972}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1090360378}
@@ -8806,8 +8806,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -41, y: 87}
-  m_SizeDelta: {x: 938, y: 511}
+  m_AnchoredPosition: {x: -41, y: 59}
+  m_SizeDelta: {x: 925, y: 478}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1415037590
 MonoBehaviour:
@@ -9582,7 +9582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1485244578
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9876,7 +9876,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1576842651
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11298,14 +11298,14 @@ RectTransform:
   m_GameObject: {fileID: 1784515303}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0359287, y: 1.0658292, z: 1.1841756}
+  m_LocalScale: {x: 0.63854665, y: 0.9056883, z: 1.0062532}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 279388724}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.699997, y: 1}
+  m_AnchoredPosition: {x: -11.5, y: 0.20000076}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1784515305

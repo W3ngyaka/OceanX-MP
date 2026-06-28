@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 // Tab switcher with a horizontal swipe transition: the outgoing panel slides
 // off one side while the incoming panel slides in from the other.
+// Also updates a shared header title per tab.
 public class TabController : MonoBehaviour
 {
     [System.Serializable]
@@ -12,10 +13,16 @@ public class TabController : MonoBehaviour
     {
         public Button button;
         public GameObject panel;
+        [Tooltip("Header title shown when this tab is active, e.g. FOOD WEB.")]
+        public string title;
     }
 
     [Header("Tabs (button + panel, same order)")]
     public List<Tab> tabs = new List<Tab>();
+
+    [Header("Header title")]
+    [Tooltip("The shared title text at the top that changes per tab.")]
+    public TMPro.TMP_Text titleText;
 
     [Header("Button tint")]
     public Color activeColor = new Color(0.20f, 0.55f, 0.95f, 1f);
@@ -58,6 +65,14 @@ public class TabController : MonoBehaviour
             TintButton(i, on);
         }
         _current = defaultTab;
+        SetTitle(defaultTab);
+
+        // Refresh the default panel's content if it needs it.
+        if (tabs.Count > 0 && tabs[defaultTab].panel != null)
+        {
+            var g = tabs[defaultTab].panel.GetComponent<CurrentOrganismsGrid>();
+            if (g != null) g.Refresh();
+        }
     }
 
     public void Select(int index)
@@ -75,11 +90,16 @@ public class TabController : MonoBehaviour
         var inPanel = tabs[to].panel;
 
         for (int i = 0; i < tabs.Count; i++) TintButton(i, i == to);
+        SetTitle(to);
 
         Vector2 inHome = _homePos.ContainsKey(inPanel) ? _homePos[inPanel] : Vector2.zero;
         var inRT = inPanel.GetComponent<RectTransform>();
         inPanel.SetActive(true);
         inRT.anchoredPosition = inHome + new Vector2(dir * slideDistance, 0f);
+
+        // Refresh content that needs to rebuild when shown (e.g. the organisms grid).
+        var grid = inPanel.GetComponent<CurrentOrganismsGrid>();
+        if (grid != null) grid.Refresh();
 
         Vector2 outHome = Vector2.zero;
         RectTransform outRT = null;
@@ -110,6 +130,13 @@ public class TabController : MonoBehaviour
 
         _current = to;
         _animating = false;
+    }
+
+    void SetTitle(int index)
+    {
+        if (titleText == null || index < 0 || index >= tabs.Count) return;
+        if (!string.IsNullOrEmpty(tabs[index].title))
+            titleText.text = tabs[index].title;
     }
 
     void TintButton(int i, bool active)

@@ -12,6 +12,10 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public Sprite cardImage;
     public GameObject lockOverlay;
     public GameObject glowRing;
+    [Tooltip("Name label under the bubble. Auto-found if left empty. Shows '???' when locked.")]
+    public TMPro.TMP_Text nameLabel;
+    [Tooltip("Text shown in place of the species name while locked.")]
+    public string lockedNameText = "???";
 
     [Header("Food Web")]
     public List<SpeciesBubble> prey = new List<SpeciesBubble>();
@@ -49,6 +53,14 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         if (lockOverlay != null)
             lockOverlay.SetActive(locked);
+
+        // Auto-find the name label (first TMP child) if not assigned in the Inspector.
+        if (nameLabel == null)
+            nameLabel = GetComponentInChildren<TMPro.TMP_Text>(true);
+
+        // Show '???' while locked, the real species name once unlocked.
+        if (nameLabel != null)
+            nameLabel.text = (locked && Application.isPlaying) ? lockedNameText : data.speciesName;
 
         Button btn = GetComponent<Button>();
         if (btn != null)
@@ -103,7 +115,7 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
 
-void OnTap()
+    void OnTap()
     {
         if (locked)
         {

@@ -78,6 +78,72 @@ public class FoodWebLines : MonoBehaviour
     {
         if (linePrefab == null) { Debug.LogError("linePrefab is null!"); return; }
 
+        Vector2 start = from.position;
+        Vector2 end = to.position;
+        Vector2 dir = end - start;
+        float dist = dir.magnitude;
+        if (dist < 0.001f) return;
+        Vector2 unit = dir / dist;
+        Vector2 mid = (start + end) / 2f;
+
+        // Perpendicular directions to bow toward.
+        Vector2 perp = new Vector2(-unit.y, unit.x);
+        float bow = Mathf.Clamp(dist * 0.42f, 60f, 400f);
+
+        // Gather other bubbles (exclude the two endpoints) to test clearance against.
+        var obstacles = new List<Vector2>();
+        var allBubbles = FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None);
+        foreach (var b in allBubbles)
+        {
+            if (b.transform == from || b.transform == to) continue;
+            obstacles.Add(b.transform.position);
+        }
+
+        // Try bowing each way; pick the side whose curve stays farthest from obstacles.
+        Vector2 controlA = mid + perp * bow;
+        Vector2 controlB = mid - perp * bow;
+        float clearA = MinClearance(start, controlA, end, obstacles);
+        float clearB = MinClearance(start, controlB, end, obstacles);
+        Vector2 control = (clearA >= clearB) ? controlA : controlB;
+
+        int segments = 16;
+        Vector2 prev = start;
+        for (int i = 1; i <= segments; i++)
+        {
+            float t = i / (float)segments;
+            Vector2 point = Bezier(start, control, end, t);
+            DrawSegment(prev, point, color);
+            prev = point;
+        }
+    }
+
+    // Smallest distance from any sampled point on the curve to the nearest obstacle.
+    float MinClearance(Vector2 a, Vector2 c, Vector2 b, List<Vector2> obstacles)
+    {
+        if (obstacles.Count == 0) return float.MaxValue;
+        float min = float.MaxValue;
+        int samples = 8;
+        for (int i = 1; i < samples; i++)
+        {
+            float t = i / (float)samples;
+            Vector2 p = Bezier(a, c, b, t);
+            foreach (var o in obstacles)
+            {
+                float d = Vector2.Distance(p, o);
+                if (d < min) min = d;
+            }
+        }
+        return min;
+    }
+
+    Vector2 Bezier(Vector2 a, Vector2 b, Vector2 c, float t)
+    {
+        float u = 1f - t;
+        return u * u * a + 2f * u * t * b + t * t * c;
+    }
+
+    void DrawSegment(Vector2 p1, Vector2 p2, Color color)
+    {
         GameObject line = Instantiate(linePrefab, transform);
         line.SetActive(true);
         activeLines.Add(line);
@@ -86,18 +152,26 @@ public class FoodWebLines : MonoBehaviour
         Image img = line.GetComponent<Image>();
         img.color = color;
 
-        Vector2 fromPos = from.position;
-        Vector2 toPos = to.position;
-        Vector2 dir = toPos - fromPos;
-        float dist = dir.magnitude;
-
-        rt.position = (fromPos + toPos) / 2f;
-        rt.sizeDelta = new Vector2(dist, 4f);
-
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Vector2 d = p2 - p1;
+        float len = d.magnitude;
+        rt.position = (p1 + p2) / 2f;
+        rt.sizeDelta = new Vector2(len + 1f, 4f);
+        float angle = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
         rt.rotation = Quaternion.Euler(0, 0, angle);
+    }
 
-        Debug.Log($"Drew line: {from.name} → {to.name}");
+    // Approximate a bubble's on-screen radius from its RectTransform.
+    float BubbleRadius(Transform bubble)
+    {
+        var brt = bubble as RectTransform;
+        if (brt == null) brt = bubble.GetComponent<RectTransform>();
+        if (brt == null) return 0f;
+        // half the smaller world-space dimension, with a little extra gap
+        Vector3[] corners = new Vector3[4];
+        brt.GetWorldCorners(corners);
+        float w = Vector3.Distance(corners[0], corners[3]);
+        float h = Vector3.Distance(corners[0], corners[1]);
+        return Mathf.Min(w, h) * 0.5f + 8f;
     }
 
     void HighlightBubble(SpeciesBubble bubble, bool bright)

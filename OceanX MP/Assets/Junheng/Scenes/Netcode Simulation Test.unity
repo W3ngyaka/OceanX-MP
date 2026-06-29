@@ -2210,6 +2210,7 @@ GameObject:
   - component: {fileID: 498641588}
   - component: {fileID: 498641587}
   - component: {fileID: 498641586}
+  - component: {fileID: 498641590}
   m_Layer: 5
   m_Name: parrot bubble
   m_TagString: Untagged
@@ -2341,6 +2342,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498641584}
   m_CullTransparentMesh: 1
+--- !u!114 &498641590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498641584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1001 &502391445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3350,6 +3363,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7118194484329517317, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2003371144}
+    - targetCorrespondingSourceObject: {fileID: 7118194484329517317, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8557370571499723840}
   m_SourcePrefab: {fileID: 100100000, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
 --- !u!1 &644115237
 GameObject:
@@ -3573,6 +3589,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &651877519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651877513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &654011400
 GameObject:
   m_ObjectHideFlags: 0
@@ -5824,6 +5852,7 @@ GameObject:
   - component: {fileID: 1027214598}
   - component: {fileID: 1027214597}
   - component: {fileID: 1027214596}
+  - component: {fileID: 1027214600}
   m_Layer: 5
   m_Name: Scad Bubble
   m_TagString: Untagged
@@ -5955,6 +5984,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027214594}
   m_CullTransparentMesh: 1
+--- !u!114 &1027214600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027214594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1032516375 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
@@ -6040,6 +6081,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &1032516381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032516375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1035722074
 GameObject:
   m_ObjectHideFlags: 0
@@ -6186,6 +6239,7 @@ GameObject:
   - component: {fileID: 1051391727}
   - component: {fileID: 1051391726}
   - component: {fileID: 1051391725}
+  - component: {fileID: 1051391729}
   m_Layer: 5
   m_Name: eyestripe bubble
   m_TagString: Untagged
@@ -6317,6 +6371,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1051391723}
   m_CullTransparentMesh: 1
+--- !u!114 &1051391729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051391723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1055919525
 GameObject:
   m_ObjectHideFlags: 0
@@ -7040,6 +7106,7 @@ GameObject:
   - component: {fileID: 1160316769}
   - component: {fileID: 1160316768}
   - component: {fileID: 1160316767}
+  - component: {fileID: 1160316771}
   m_Layer: 5
   m_Name: Damsel bubblke
   m_TagString: Untagged
@@ -7171,6 +7238,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1160316765}
   m_CullTransparentMesh: 1
+--- !u!114 &1160316771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160316765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1166526229
 GameObject:
   m_ObjectHideFlags: 0
@@ -7390,6 +7469,7 @@ GameObject:
   - component: {fileID: 1208796834}
   - component: {fileID: 1208796833}
   - component: {fileID: 1208796832}
+  - component: {fileID: 1208796836}
   m_Layer: 5
   m_Name: Streaked bubble
   m_TagString: Untagged
@@ -7521,6 +7601,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208796830}
   m_CullTransparentMesh: 1
+--- !u!114 &1208796836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208796830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1233059426 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7047485706591861722, guid: 271c779a24010e44ca07e55edc89efcf, type: 3}
@@ -7858,6 +7950,7 @@ GameObject:
   - component: {fileID: 1335586777}
   - component: {fileID: 1335586776}
   - component: {fileID: 1335586775}
+  - component: {fileID: 1335586779}
   m_Layer: 5
   m_Name: Snapper bubble
   m_TagString: Untagged
@@ -7989,6 +8082,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335586773}
   m_CullTransparentMesh: 1
+--- !u!114 &1335586779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335586773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1001 &1339720224
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8147,6 +8252,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 651877515}
+    - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 651877519}
   m_SourcePrefab: {fileID: 100100000, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
 --- !u!1 &1379598225
 GameObject:
@@ -8897,9 +9005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b211369f3a4ba442bd9de7ed16e7c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModalController
-  AddButton: {fileID: 1090360380}
-  RemoveButton: {fileID: 1485244579}
-  PopulationLabel: {fileID: 1576842652}
   DimOverlay: {fileID: 1327557229}
   dimFadeDuration: 0.25
 --- !u!114 &1415037592
@@ -9087,6 +9192,7 @@ GameObject:
   - component: {fileID: 1429282711}
   - component: {fileID: 1429282713}
   - component: {fileID: 1429282714}
+  - component: {fileID: 1429282715}
   m_Layer: 5
   m_Name: Ecosystem Panel
   m_TagString: Untagged
@@ -9205,6 +9311,21 @@ MonoBehaviour:
   slideDuration: 0.3
   slideDistance: 1920
   defaultTab: 0
+--- !u!114 &1429282715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429282708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afcae2689686b5445affaa9d54b89a92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TabletAddRemoveUIGPU
+  addButton: {fileID: 1090360380}
+  removeButton: {fileID: 0}
+  populationLabel: {fileID: 1576842652}
 --- !u!1 &1431128370
 GameObject:
   m_ObjectHideFlags: 0
@@ -9959,7 +10080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1576842651
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10847,6 +10968,7 @@ GameObject:
   - component: {fileID: 1694656289}
   - component: {fileID: 1694656288}
   - component: {fileID: 1694656287}
+  - component: {fileID: 1694656291}
   m_Layer: 5
   m_Name: Trevally Bubble
   m_TagString: Untagged
@@ -10978,6 +11100,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694656285}
   m_CullTransparentMesh: 1
+--- !u!114 &1694656291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694656285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1708969465
 GameObject:
   m_ObjectHideFlags: 0
@@ -10991,6 +11125,7 @@ GameObject:
   - component: {fileID: 1708969469}
   - component: {fileID: 1708969468}
   - component: {fileID: 1708969467}
+  - component: {fileID: 1708969471}
   m_Layer: 5
   m_Name: Ray bubble
   m_TagString: Untagged
@@ -11122,6 +11257,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708969465}
   m_CullTransparentMesh: 1
+--- !u!114 &1708969471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708969465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1757445267 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 591040946678386339, guid: 2fefb093f65b6df42a711e1decb0ce01, type: 3}
@@ -11450,6 +11597,7 @@ GameObject:
   - component: {fileID: 1811861560}
   - component: {fileID: 1811861559}
   - component: {fileID: 1811861558}
+  - component: {fileID: 1811861562}
   m_Layer: 5
   m_Name: Mullet bubble
   m_TagString: Untagged
@@ -11581,6 +11729,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811861556}
   m_CullTransparentMesh: 1
+--- !u!114 &1811861562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811861556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1820206090
 GameObject:
   m_ObjectHideFlags: 0
@@ -12233,6 +12393,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1032516377}
+    - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1032516381}
   m_SourcePrefab: {fileID: 100100000, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
 --- !u!1 &1880508276
 GameObject:
@@ -14045,6 +14208,18 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8557370570891920623, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
   m_PrefabInstance: {fileID: 620386513}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8557370571499723840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7118194483855968724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

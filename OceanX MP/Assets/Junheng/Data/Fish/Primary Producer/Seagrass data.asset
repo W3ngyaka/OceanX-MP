@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
+  m_Name: Seagrass data
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
+  SpeciesName: Seagrass
+  ScientificName: Halophila
+  Role: 3
+  SchoolProperties: {fileID: 0}
+  MovementProperties: {fileID: 0}
+  MotionRenderProperties: {fileID: 0}
+  BehaviorProperties: {fileID: 0}
+  FishPerSchool: 10
+  MaxSchools: 5
+  PreySpecies:
+  - {fileID: 11400000, guid: 030fe1af58270a04c843fdda6fe90410, type: 2}
+  - {fileID: 11400000, guid: a84af6e7a4568ad45b12ab35abec7305, type: 2}
+  - {fileID: 11400000, guid: 1cf137833ce32454a999ba54ac57956a, type: 2}
+  - {fileID: 11400000, guid: 4b46331ffc6eb6e41aec9bd29a6762b0, type: 2}
+  - {fileID: 11400000, guid: f86b5c0ecfe17ff46a21606c1b388029, type: 2}
+  - {fileID: 11400000, guid: 689b9216c078756428f919978d9e2a3e, type: 2}
+  - {fileID: 11400000, guid: 726d849f72d5e0e49811ea03c3b196c3, type: 2}
+  - {fileID: 11400000, guid: dc512e93d9ee1e549a1615044232bd55, type: 2}
+  PredatorSpecies: []
+  RuntimeId: -1

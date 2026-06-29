@@ -22,4 +22,5 @@ MonoBehaviour:
   hint1: Surgeonfish keep algae under control on the reef.
   hint2: A stable surgeonfish population supports the next trophic level.
   hint3: Add more surgeonfish to unlock secondary consumers.
-  addedMessage: Eyestripe surgeonfish are feeding on algae and improving reef balance.
+  addedMessage: Solitary herbivores that scrape algal films, wields scalpel-like
+    spines for defence.

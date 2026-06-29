@@ -24,7 +24,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 14da079c95523e54cbaaac13fca15745, type: 2}
   - {fileID: 11400000, guid: 726d849f72d5e0e49811ea03c3b196c3, type: 2}
   - {fileID: 11400000, guid: a84af6e7a4568ad45b12ab35abec7305, type: 2}
-  - {fileID: 11400000, guid: 7ee79425b71dd174387c754f3f4c7625, type: 2}
   - {fileID: 11400000, guid: 4b46331ffc6eb6e41aec9bd29a6762b0, type: 2}
   - {fileID: 11400000, guid: 689b9216c078756428f919978d9e2a3e, type: 2}
   SimulationCenter: {x: 0, y: 0, z: 0}

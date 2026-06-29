@@ -981,15 +981,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.638424
+      value: -23.965563
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.721618
+      value: -10.893515
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -41.252865
+      value: -27.244495
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1824,6 +1824,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: 7a058959fa0749048bea24630e3d0367, type: 3}
   lockOverlay: {fileID: 1085469882}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &498641587
@@ -3043,6 +3045,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
   lockOverlay: {fileID: 835110881}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &651877516
@@ -3237,15 +3241,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.638424
+      value: -23.965563
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.721618
+      value: -11.756092
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -41.252865
+      value: -27.244495
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4057,15 +4061,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.638424
+      value: -23.965563
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.721618
+      value: -11.756092
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -41.252865
+      value: -27.244495
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4499,6 +4503,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
   lockOverlay: {fileID: 180567696}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &1027214597
@@ -4609,6 +4615,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
   lockOverlay: {fileID: 1762786810}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &1032516378
@@ -4803,6 +4811,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: a3fb564164362c144ac22d6c149806bd, type: 3}
   lockOverlay: {fileID: 1409539485}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &1051391726
@@ -5471,6 +5481,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
   lockOverlay: {fileID: 786875126}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &1160316768
@@ -5764,6 +5776,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
   lockOverlay: {fileID: 1880508276}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &1208796833
@@ -6230,6 +6244,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
   lockOverlay: {fileID: 1016381542}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &1335586776
@@ -8750,6 +8766,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
   lockOverlay: {fileID: 1529946103}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &1694656288
@@ -8892,6 +8910,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
   lockOverlay: {fileID: 36561861}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &1708969468
@@ -9280,6 +9300,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
   lockOverlay: {fileID: 116770308}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey: []
   predators: []
 --- !u!114 &1811861559
@@ -10196,6 +10218,8 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: e760805ebcaccb548983e739e235d51a, type: 3}
   lockOverlay: {fileID: 1204667255}
   glowRing: {fileID: 0}
+  nameLabel: {fileID: 0}
+  lockedNameText: ???
   prey:
   - {fileID: 498641586}
   - {fileID: 1335586775}

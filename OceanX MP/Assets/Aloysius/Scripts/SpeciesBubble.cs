@@ -16,6 +16,10 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public TMPro.TMP_Text nameLabel;
     [Tooltip("Text shown in place of the species name while locked.")]
     public string lockedNameText = "???";
+    [Tooltip("The fish image. Auto-found (child whose name contains 'IMAGE') if empty. Greyed when locked.")]
+    public UnityEngine.UI.Image fishImage;
+    [Tooltip("Tint applied to the fish image while locked.")]
+    public Color lockedTint = new Color(0.45f, 0.45f, 0.45f, 1f);
 
     [Header("Food Web")]
     public List<SpeciesBubble> prey = new List<SpeciesBubble>();
@@ -39,8 +43,7 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (data == null) return;
 
-        // Prefer the live unlock manager (JunHeng's sim-driven system); fall back to GameState
-        // (Aloysius' placeholder) when the manager isn't in the scene; else the asset's default.
+        // Prefer the live unlock manager; fall back to GameState, else the asset default.
         bool isUnlocked;
         if (EcosystemUnlockManagerGPU.Instance != null)
             isUnlocked = EcosystemUnlockManagerGPU.Instance.IsUnlocked(data);
@@ -54,17 +57,33 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (lockOverlay != null)
             lockOverlay.SetActive(locked);
 
-        // Auto-find the name label (first TMP child) if not assigned in the Inspector.
+        // Auto-find the name label (first TMP child) if not assigned.
         if (nameLabel == null)
             nameLabel = GetComponentInChildren<TMPro.TMP_Text>(true);
 
-        // Show '???' while locked, the real species name once unlocked.
+        // Show '???' while locked (Play only); real name once unlocked.
         if (nameLabel != null)
             nameLabel.text = (locked && Application.isPlaying) ? lockedNameText : data.speciesName;
 
+        // Auto-find the fish image: the Image child that is NOT the 'Overpopulated' status
+        // overlay and NOT inside the lock overlay. (Bubbles name the fish image inconsistently,
+        // so we identify it by exclusion rather than by name.)
+        if (fishImage == null)
+        {
+            foreach (Transform c in transform)
+            {
+                if (c.name == "Overpopulated") continue;
+                if (lockOverlay != null && c == lockOverlay.transform) continue;
+                var im = c.GetComponent<UnityEngine.UI.Image>();
+                if (im != null) { fishImage = im; break; }
+            }
+        }
+        if (fishImage != null)
+            fishImage.color = (locked && Application.isPlaying) ? lockedTint : Color.white;
+
         Button btn = GetComponent<Button>();
         if (btn != null)
-            btn.interactable = true; // keep receiving clicks
+            btn.interactable = true;
     }
 
     void Update()
@@ -146,7 +165,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Vector3 big = original * 1.2f;
         float t = 0f;
 
-        // scale up
         while (t < 1f)
         {
             t += Time.unscaledDeltaTime / 0.1f;
@@ -154,7 +172,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             yield return null;
         }
 
-        // scale back down
         t = 0f;
         while (t < 1f)
         {
@@ -171,7 +188,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (data == null) return;
 
-        // Same either/or source as Refresh: manager first, then GameState, else no progression.
         int taps;
         if (EcosystemUnlockManagerGPU.Instance != null)
         {

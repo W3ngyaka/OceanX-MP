@@ -15,7 +15,7 @@ MonoBehaviour:
   speciesName: Blacktip Reef Shark
   sciName: Carcharhinus melanopterus
   tier: Keystone Species
-  startUnlocked: 1
+  startUnlocked: 0
   minHealth: 0
   gpuSpecies: {fileID: 11400000, guid: 28ab075c094107a46a43ca11a323eeee, type: 2}
   requires:

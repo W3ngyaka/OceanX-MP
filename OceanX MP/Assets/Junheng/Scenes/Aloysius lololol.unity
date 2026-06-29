@@ -119,81 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &345202
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 345203}
-  - component: {fileID: 345205}
-  - component: {fileID: 345204}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &345203
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 345202}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1039483, y: 0.1039483, z: 0.1039483}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 452223004}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.9, y: 0.8}
-  m_SizeDelta: {x: 438, y: 490}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &345204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 345202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c0de37990855334a83847e964a3a35e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &345205
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 345202}
-  m_CullTransparentMesh: 1
 --- !u!1 &36561861
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &36561862
 RectTransform:
   m_ObjectHideFlags: 0
@@ -585,7 +510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &180567697
 RectTransform:
   m_ObjectHideFlags: 0
@@ -796,51 +721,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249234325}
-  m_CullTransparentMesh: 1
---- !u!1 &276752664
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 276752665}
-  - component: {fileID: 276752666}
-  m_Layer: 5
-  m_Name: Locked (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &276752665
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 276752664}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 8.711747}
-  m_LocalScale: {x: 1.0243804, y: 1.1085814, z: 1.0204554}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1478951711}
-  m_Father: {fileID: 1694656286}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.9, y: -1.8}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &276752666
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 276752664}
   m_CullTransparentMesh: 1
 --- !u!1 &279388723
 GameObject:
@@ -1810,81 +1690,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401540850}
   m_CullTransparentMesh: 1
---- !u!1 &410455220
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 410455221}
-  - component: {fileID: 410455223}
-  - component: {fileID: 410455222}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &410455221
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410455220}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.103948295, y: 0.103948295, z: 0.103948295}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 931584197}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.1, y: 3.4}
-  m_SizeDelta: {x: 438, y: 490}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &410455222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410455220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c0de37990855334a83847e964a3a35e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &410455223
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410455220}
-  m_CullTransparentMesh: 1
 --- !u!1 &421644165
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,7 +1792,7 @@ GameObject:
   - component: {fileID: 425673935}
   - component: {fileID: 425673934}
   m_Layer: 5
-  m_Name: Grouper IMAGE
+  m_Name: Grouper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2308,96 +2113,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1839946920}
   m_SourcePrefab: {fileID: 100100000, guid: a35c211f5cf76c4469e118b23ee44672, type: 3}
---- !u!1 &452223003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 452223004}
-  - component: {fileID: 452223005}
-  m_Layer: 5
-  m_Name: Locked (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &452223004
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452223003}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0289991, y: 1.1470649, z: 1.0558794}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 345203}
-  m_Father: {fileID: 1708969466}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: 4}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &452223005
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452223003}
-  m_CullTransparentMesh: 1
---- !u!1 &473747244
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 473747245}
-  - component: {fileID: 473747246}
-  m_Layer: 5
-  m_Name: Locked (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &473747245
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473747244}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0289057, y: 1.146961, z: 1.055784}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 479459971}
-  m_Father: {fileID: 1027214595}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3, y: 1}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &473747246
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473747244}
-  m_CullTransparentMesh: 1
 --- !u!1 &474501563
 GameObject:
   m_ObjectHideFlags: 0
@@ -2477,81 +2192,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474501563}
   m_CullTransparentMesh: 1
---- !u!1 &479459970
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 479459971}
-  - component: {fileID: 479459973}
-  - component: {fileID: 479459972}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &479459971
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479459970}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1039483, y: 0.1039483, z: 0.1039483}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 473747245}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.4, y: 3.4}
-  m_SizeDelta: {x: 438, y: 490}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &479459972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479459970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c0de37990855334a83847e964a3a35e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &479459973
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479459970}
-  m_CullTransparentMesh: 1
 --- !u!224 &489630880 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2704471090199120231, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
@@ -2570,6 +2210,7 @@ GameObject:
   - component: {fileID: 498641588}
   - component: {fileID: 498641587}
   - component: {fileID: 498641586}
+  - component: {fileID: 498641590}
   m_Layer: 5
   m_Name: parrot bubble
   m_TagString: Untagged
@@ -2617,8 +2258,6 @@ MonoBehaviour:
   glowRing: {fileID: 0}
   nameLabel: {fileID: 743127246}
   lockedNameText: ???
-  fishImage: {fileID: 1847912408}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &498641587
@@ -2703,6 +2342,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498641584}
   m_CullTransparentMesh: 1
+--- !u!114 &498641590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498641584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1001 &502391445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2868,7 +2519,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Brown-Marbled Grouper
+  m_text: Brown-marbled Grouper
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 15f937ff135e67548aa36b6516104381, type: 2}
   m_sharedMaterial: {fileID: 1329013161203325420, guid: 15f937ff135e67548aa36b6516104381, type: 2}
@@ -3712,6 +3363,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7118194484329517317, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2003371144}
+    - targetCorrespondingSourceObject: {fileID: 7118194484329517317, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8557370571499723840}
   m_SourcePrefab: {fileID: 100100000, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
 --- !u!1 &644115237
 GameObject:
@@ -3874,12 +3528,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 0b6ffecf8c4d9c645ac91b3295e44834, type: 2}
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
-  lockOverlay: {fileID: 931584196}
+  lockOverlay: {fileID: 835110881}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 337056082}
   lockedNameText: ???
-  fishImage: {fileID: 1200253572}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &651877516
@@ -3937,6 +3589,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &651877519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651877513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &654011400
 GameObject:
   m_ObjectHideFlags: 0
@@ -4654,7 +4318,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &766877598
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4932,7 +4596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &835110882
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5866,51 +5530,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924900498}
   m_CullTransparentMesh: 1
---- !u!1 &931584196
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 931584197}
-  - component: {fileID: 931584198}
-  m_Layer: 5
-  m_Name: Locked (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &931584197
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 931584196}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9266092, y: 1.0329252, z: 0.9508184}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 410455221}
-  m_Father: {fileID: 651877514}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.7, y: 2.8}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &931584198
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 931584196}
-  m_CullTransparentMesh: 1
 --- !u!1 &947692287
 GameObject:
   m_ObjectHideFlags: 0
@@ -6031,51 +5650,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947692287}
-  m_CullTransparentMesh: 1
---- !u!1 &960665206
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 960665207}
-  - component: {fileID: 960665208}
-  m_Layer: 5
-  m_Name: Locked (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &960665207
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960665206}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.3528173}
-  m_LocalScale: {x: 1.0178329, y: 1.1346116, z: 1.0444217}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1946140372}
-  m_Father: {fileID: 1335586774}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.7, y: 1}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &960665208
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960665206}
   m_CullTransparentMesh: 1
 --- !u!1 &983577947
 GameObject:
@@ -6207,7 +5781,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1016381543
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6278,6 +5852,7 @@ GameObject:
   - component: {fileID: 1027214598}
   - component: {fileID: 1027214597}
   - component: {fileID: 1027214596}
+  - component: {fileID: 1027214600}
   m_Layer: 5
   m_Name: Scad Bubble
   m_TagString: Untagged
@@ -6300,7 +5875,6 @@ RectTransform:
   - {fileID: 180567697}
   - {fileID: 396436257}
   - {fileID: 1061951276}
-  - {fileID: 473747245}
   m_Father: {fileID: 1645260994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -6322,12 +5896,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 4fed5ebcf5d8c474bba2986df708624d, type: 2}
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
-  lockOverlay: {fileID: 473747244}
+  lockOverlay: {fileID: 180567696}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1061951277}
   lockedNameText: ???
-  fishImage: {fileID: 396436258}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &1027214597
@@ -6412,6 +5984,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027214594}
   m_CullTransparentMesh: 1
+--- !u!114 &1027214600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027214594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1032516375 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
@@ -6436,12 +6020,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 6dcf9665d96952c47a27495e56cdbe28, type: 2}
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
-  lockOverlay: {fileID: 1044990424}
+  lockOverlay: {fileID: 1762786810}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 505508136}
   lockedNameText: ???
-  fishImage: {fileID: 425673934}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &1032516378
@@ -6499,6 +6081,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &1032516381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032516375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1035722074
 GameObject:
   m_ObjectHideFlags: 0
@@ -6578,51 +6172,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1044990424
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1044990425}
-  - component: {fileID: 1044990426}
-  m_Layer: 5
-  m_Name: Locked (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1044990425
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1044990424}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.4825573}
-  m_LocalScale: {x: 0.9533093, y: 1.0626848, z: 0.978212}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1332421302}
-  m_Father: {fileID: 1032516376}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1, y: 3.5610962}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1044990426
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1044990424}
-  m_CullTransparentMesh: 1
 --- !u!1 &1045821172
 GameObject:
   m_ObjectHideFlags: 0
@@ -6690,6 +6239,7 @@ GameObject:
   - component: {fileID: 1051391727}
   - component: {fileID: 1051391726}
   - component: {fileID: 1051391725}
+  - component: {fileID: 1051391729}
   m_Layer: 5
   m_Name: eyestripe bubble
   m_TagString: Untagged
@@ -6737,8 +6287,6 @@ MonoBehaviour:
   glowRing: {fileID: 0}
   nameLabel: {fileID: 2024261757}
   lockedNameText: ???
-  fishImage: {fileID: 1496209746}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &1051391726
@@ -6823,6 +6371,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1051391723}
   m_CullTransparentMesh: 1
+--- !u!114 &1051391729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051391723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1055919525
 GameObject:
   m_ObjectHideFlags: 0
@@ -7051,7 +6611,7 @@ GameObject:
   - component: {fileID: 1067737457}
   - component: {fileID: 1067737456}
   m_Layer: 5
-  m_Name: snapper image
+  m_Name: snapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7533,81 +7093,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098807345}
   m_CullTransparentMesh: 1
---- !u!1 &1110297079
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1110297080}
-  - component: {fileID: 1110297082}
-  - component: {fileID: 1110297081}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1110297080
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110297079}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.10719121, y: 0.10719121, z: 0.10719121}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1204667256}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.3, y: 5.3}
-  m_SizeDelta: {x: 438, y: 490}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1110297081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110297079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c0de37990855334a83847e964a3a35e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1110297082
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110297079}
-  m_CullTransparentMesh: 1
 --- !u!1 &1160316765
 GameObject:
   m_ObjectHideFlags: 0
@@ -7621,6 +7106,7 @@ GameObject:
   - component: {fileID: 1160316769}
   - component: {fileID: 1160316768}
   - component: {fileID: 1160316767}
+  - component: {fileID: 1160316771}
   m_Layer: 5
   m_Name: Damsel bubblke
   m_TagString: Untagged
@@ -7668,8 +7154,6 @@ MonoBehaviour:
   glowRing: {fileID: 0}
   nameLabel: {fileID: 554904588}
   lockedNameText: ???
-  fishImage: {fileID: 1993546680}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &1160316768
@@ -7754,6 +7238,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1160316765}
   m_CullTransparentMesh: 1
+--- !u!114 &1160316771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160316765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1166526229
 GameObject:
   m_ObjectHideFlags: 0
@@ -7821,7 +7317,7 @@ GameObject:
   - component: {fileID: 1200253573}
   - component: {fileID: 1200253572}
   m_Layer: 5
-  m_Name: Moray IMAGE
+  m_Name: Moray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7894,13 +7390,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1204667256}
   - component: {fileID: 1204667258}
+  - component: {fileID: 1204667257}
   m_Layer: 5
   m_Name: Locked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1204667256
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7914,7 +7411,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 766877598}
-  - {fileID: 1110297080}
   m_Father: {fileID: 8557370571499723838}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -7922,6 +7418,36 @@ RectTransform:
   m_AnchoredPosition: {x: -3.4, y: 0.9}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1204667257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204667255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: a9177b3b6d6c3334e944dc0a85d043e7, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1204667258
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7943,6 +7469,7 @@ GameObject:
   - component: {fileID: 1208796834}
   - component: {fileID: 1208796833}
   - component: {fileID: 1208796832}
+  - component: {fileID: 1208796836}
   m_Layer: 5
   m_Name: Streaked bubble
   m_TagString: Untagged
@@ -7990,8 +7517,6 @@ MonoBehaviour:
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1397172175}
   lockedNameText: ???
-  fishImage: {fileID: 434304783}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &1208796833
@@ -8076,6 +7601,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208796830}
   m_CullTransparentMesh: 1
+--- !u!114 &1208796836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208796830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1233059426 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7047485706591861722, guid: 271c779a24010e44ca07e55edc89efcf, type: 3}
@@ -8134,7 +7671,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.8, y: -44.8}
+  m_AnchoredPosition: {x: -8.7, y: -44.8}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1261258033
@@ -8337,7 +7874,7 @@ GameObject:
   - component: {fileID: 1329607696}
   - component: {fileID: 1329607695}
   m_Layer: 5
-  m_Name: trevally image
+  m_Name: treva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8400,81 +7937,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329607693}
   m_CullTransparentMesh: 1
---- !u!1 &1332421301
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1332421302}
-  - component: {fileID: 1332421304}
-  - component: {fileID: 1332421303}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1332421302
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1332421301}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1039483, y: 0.1039483, z: 0.1039483}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1044990425}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.3, y: 1.9}
-  m_SizeDelta: {x: 438, y: 490}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1332421303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1332421301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c0de37990855334a83847e964a3a35e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1332421304
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1332421301}
-  m_CullTransparentMesh: 1
 --- !u!1 &1335586773
 GameObject:
   m_ObjectHideFlags: 0
@@ -8488,6 +7950,7 @@ GameObject:
   - component: {fileID: 1335586777}
   - component: {fileID: 1335586776}
   - component: {fileID: 1335586775}
+  - component: {fileID: 1335586779}
   m_Layer: 5
   m_Name: Snapper bubble
   m_TagString: Untagged
@@ -8510,7 +7973,6 @@ RectTransform:
   - {fileID: 1016381543}
   - {fileID: 1067737455}
   - {fileID: 1392149312}
-  - {fileID: 960665207}
   m_Father: {fileID: 1233059427}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -8532,12 +7994,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: d35c87e6d560cb645bfd49d6025d499b, type: 2}
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
-  lockOverlay: {fileID: 960665206}
+  lockOverlay: {fileID: 1016381542}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1392149313}
   lockedNameText: ???
-  fishImage: {fileID: 1067737456}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &1335586776
@@ -8622,6 +8082,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335586773}
   m_CullTransparentMesh: 1
+--- !u!114 &1335586779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335586773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1001 &1339720224
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8770,9 +8242,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 307475108956564068, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 337056081}
-    - targetCorrespondingSourceObject: {fileID: 307475108956564068, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 931584197}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5005041501736883166, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       insertIndex: -1
@@ -8783,6 +8252,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 651877515}
+    - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 651877519}
   m_SourcePrefab: {fileID: 100100000, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
 --- !u!1 &1379598225
 GameObject:
@@ -9098,7 +8570,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Russells Snapper
+  m_text: "Russell\u2019s Snapper"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 15f937ff135e67548aa36b6516104381, type: 2}
   m_sharedMaterial: {fileID: 1329013161203325420, guid: 15f937ff135e67548aa36b6516104381, type: 2}
@@ -9485,7 +8957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1415037589
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9720,6 +9192,7 @@ GameObject:
   - component: {fileID: 1429282711}
   - component: {fileID: 1429282713}
   - component: {fileID: 1429282714}
+  - component: {fileID: 1429282715}
   m_Layer: 5
   m_Name: Ecosystem Panel
   m_TagString: Untagged
@@ -9838,6 +9311,21 @@ MonoBehaviour:
   slideDuration: 0.3
   slideDistance: 1920
   defaultTab: 0
+--- !u!114 &1429282715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429282708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afcae2689686b5445affaa9d54b89a92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TabletAddRemoveUIGPU
+  addButton: {fileID: 1090360380}
+  removeButton: {fileID: 0}
+  populationLabel: {fileID: 1576842652}
 --- !u!1 &1431128370
 GameObject:
   m_ObjectHideFlags: 0
@@ -10280,81 +9768,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
   m_PrefabInstance: {fileID: 1470842439}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1478951710
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1478951711}
-  - component: {fileID: 1478951713}
-  - component: {fileID: 1478951712}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1478951711
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1478951710}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1039483, y: 0.1039483, z: 0.1039483}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 276752665}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.6, y: 3.4}
-  m_SizeDelta: {x: 438, y: 490}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1478951712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1478951710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c0de37990855334a83847e964a3a35e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1478951713
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1478951710}
-  m_CullTransparentMesh: 1
 --- !u!1 &1485244577
 GameObject:
   m_ObjectHideFlags: 0
@@ -10592,7 +10005,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1529946104
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10667,7 +10080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1576842651
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11555,6 +10968,7 @@ GameObject:
   - component: {fileID: 1694656289}
   - component: {fileID: 1694656288}
   - component: {fileID: 1694656287}
+  - component: {fileID: 1694656291}
   m_Layer: 5
   m_Name: Trevally Bubble
   m_TagString: Untagged
@@ -11577,7 +10991,6 @@ RectTransform:
   - {fileID: 1529946104}
   - {fileID: 1329607694}
   - {fileID: 1431128371}
-  - {fileID: 276752665}
   m_Father: {fileID: 1522120279}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -11599,12 +11012,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: efb62a89b9b8fbb4ba41c83625e8b84d, type: 2}
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
-  lockOverlay: {fileID: 276752664}
+  lockOverlay: {fileID: 1529946103}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1431128372}
   lockedNameText: ???
-  fishImage: {fileID: 1329607695}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &1694656288
@@ -11689,6 +11100,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694656285}
   m_CullTransparentMesh: 1
+--- !u!114 &1694656291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694656285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1708969465
 GameObject:
   m_ObjectHideFlags: 0
@@ -11702,6 +11125,7 @@ GameObject:
   - component: {fileID: 1708969469}
   - component: {fileID: 1708969468}
   - component: {fileID: 1708969467}
+  - component: {fileID: 1708969471}
   m_Layer: 5
   m_Name: Ray bubble
   m_TagString: Untagged
@@ -11724,7 +11148,6 @@ RectTransform:
   - {fileID: 36561862}
   - {fileID: 1871884585}
   - {fileID: 2083927937}
-  - {fileID: 452223004}
   m_Father: {fileID: 681278710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -11746,12 +11169,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: b39a0af90408e7b4099758d98c5d3356, type: 2}
   cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
-  lockOverlay: {fileID: 452223003}
+  lockOverlay: {fileID: 36561861}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 2083927938}
   lockedNameText: ???
-  fishImage: {fileID: 1871884586}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &1708969468
@@ -11836,6 +11257,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708969465}
   m_CullTransparentMesh: 1
+--- !u!114 &1708969471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708969465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1757445267 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 591040946678386339, guid: 2fefb093f65b6df42a711e1decb0ce01, type: 3}
@@ -11877,7 +11310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1762786811
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12164,6 +11597,7 @@ GameObject:
   - component: {fileID: 1811861560}
   - component: {fileID: 1811861559}
   - component: {fileID: 1811861558}
+  - component: {fileID: 1811861562}
   m_Layer: 5
   m_Name: Mullet bubble
   m_TagString: Untagged
@@ -12206,13 +11640,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: f283ade99c2bdb54f89c72a7f577559b, type: 2}
-  cardImage: {fileID: 21300000, guid: a4c1f05d70edb8a47b2c2bc1b6725545, type: 3}
+  cardImage: {fileID: 21300000, guid: 1d069c9fc3ee39b40a8832461aee4924, type: 3}
   lockOverlay: {fileID: 116770308}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 327334449}
   lockedNameText: ???
-  fishImage: {fileID: 191577053}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
 --- !u!114 &1811861559
@@ -12297,6 +11729,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811861556}
   m_CullTransparentMesh: 1
+--- !u!114 &1811861562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811861556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1 &1820206090
 GameObject:
   m_ObjectHideFlags: 0
@@ -12724,7 +12168,7 @@ GameObject:
   - component: {fileID: 1871884587}
   - component: {fileID: 1871884586}
   m_Layer: 5
-  m_Name: Grouper IMAGE
+  m_Name: Grouper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12939,9 +12383,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 307475108956564068, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 505508135}
-    - targetCorrespondingSourceObject: {fileID: 307475108956564068, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1044990425}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5005041501736883166, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       insertIndex: -1
@@ -12952,6 +12393,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1032516377}
+    - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1032516381}
   m_SourcePrefab: {fileID: 100100000, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
 --- !u!1 &1880508276
 GameObject:
@@ -13027,81 +12471,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880508276}
-  m_CullTransparentMesh: 1
---- !u!1 &1946140371
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1946140372}
-  - component: {fileID: 1946140374}
-  - component: {fileID: 1946140373}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1946140372
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946140371}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1039483, y: 0.1039483, z: 0.1039483}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 960665207}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.8, y: 3.4}
-  m_SizeDelta: {x: 438, y: 490}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1946140373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946140371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c0de37990855334a83847e964a3a35e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1946140374
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946140371}
   m_CullTransparentMesh: 1
 --- !u!1 &1965589783
 GameObject:
@@ -13341,13 +12710,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 6dfb9df93974eb6469c12d2cd7f8ce73, type: 2}
-  cardImage: {fileID: 21300000, guid: 01f722b2063a1b046875db7469a5ea2c, type: 3}
+  cardImage: {fileID: 21300000, guid: e760805ebcaccb548983e739e235d51a, type: 3}
   lockOverlay: {fileID: 1204667255}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1261258033}
   lockedNameText: ???
-  fishImage: {fileID: 1468270428}
-  lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey:
   - {fileID: 498641586}
   - {fileID: 1335586775}
@@ -14065,7 +13432,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bluespotted Ray
+  m_text: Bluespotted Ribbontail Ray
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 15f937ff135e67548aa36b6516104381, type: 2}
   m_sharedMaterial: {fileID: 1329013161203325420, guid: 15f937ff135e67548aa36b6516104381, type: 2}
@@ -14804,18 +14171,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2704471090946486986, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
-      propertyPath: m_text
-      value: 50%
-      objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: statusText
       value: 
       objectReference: {fileID: 748468811}
-    - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
-      propertyPath: manualHealth01
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: speciesCountText
       value: 
@@ -14849,6 +14208,18 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8557370570891920623, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
   m_PrefabInstance: {fileID: 620386513}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8557370571499723840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7118194483855968724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

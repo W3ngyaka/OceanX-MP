@@ -3592,7 +3592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &654011401
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8897,9 +8897,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b211369f3a4ba442bd9de7ed16e7c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModalController
-  AddButton: {fileID: 1090360380}
-  RemoveButton: {fileID: 1485244579}
-  PopulationLabel: {fileID: 1576842652}
   DimOverlay: {fileID: 1327557229}
   dimFadeDuration: 0.25
 --- !u!114 &1415037592

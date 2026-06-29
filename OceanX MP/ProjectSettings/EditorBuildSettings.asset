@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Junheng/Ecosystem/Scenes/Netcode Test.unity
     guid: 6a56bdae7f11e6f4e8d408a7c364802f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Junheng/Scenes/Boids_Demo.unity
     guid: a82cd417066164345af16d799514f518
-  - enabled: 0
+  - enabled: 1
     path: Assets/Junheng/Scenes/Netcode Simulation Test.unity
     guid: c8c264f74499c3344a7567f9f67988d7
   - enabled: 0

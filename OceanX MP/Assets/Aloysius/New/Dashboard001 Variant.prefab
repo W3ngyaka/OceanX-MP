@@ -216,6 +216,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EcoHealthDashboard
   fillImage: {fileID: 2704471089967960307}
   percentText: {fileID: 2704471090946486986}
+  statusText: {fileID: 0}
+  colorStatus: 1
+  speciesCountText: {fileID: 0}
+  totalSpecies: 12
   smooth: 1
   smoothSpeed: 2
   manualHealth01: 0.5

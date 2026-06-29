@@ -3805,15 +3805,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -10.586764
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.846236
+      value: -21.752909
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -505.37067
+      value: -9.411333
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5057,7 +5057,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -10.586764
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5065,7 +5065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -505.37067
+      value: -9.411333
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9579,15 +9579,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -10.586764
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.846236
+      value: -21.752909
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -505.37067
+      value: -9.411333
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11489,7 +11489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: f283ade99c2bdb54f89c72a7f577559b, type: 2}
-  cardImage: {fileID: 21300000, guid: 1d069c9fc3ee39b40a8832461aee4924, type: 3}
+  cardImage: {fileID: 21300000, guid: a4c1f05d70edb8a47b2c2bc1b6725545, type: 3}
   lockOverlay: {fileID: 116770308}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 327334449}
@@ -12544,7 +12544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 6dfb9df93974eb6469c12d2cd7f8ce73, type: 2}
-  cardImage: {fileID: 21300000, guid: e760805ebcaccb548983e739e235d51a, type: 3}
+  cardImage: {fileID: 21300000, guid: 01f722b2063a1b046875db7469a5ea2c, type: 3}
   lockOverlay: {fileID: 1204667255}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1261258033}
@@ -14005,10 +14005,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2704471090946486986, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: m_text
+      value: 50%
+      objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: statusText
       value: 
       objectReference: {fileID: 748468811}
+    - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: manualHealth01
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: speciesCountText
       value: 

@@ -19,10 +19,13 @@ MonoBehaviour:
   MovementProperties: {fileID: 11400000, guid: aa37a07c0da241e45b4e6e8d52c2a247, type: 2}
   MotionRenderProperties: {fileID: 11400000, guid: 8365bc0c1b8c3324fa33d8d2fc5059fb, type: 2}
   BehaviorProperties: {fileID: 11400000, guid: 2751b9ce0fe6c48419805eb861625c78, type: 2}
-  ReproductionRate: 0.1
-  NaturalDeathRate: 0
-  StarvationDeathRate: 0.25
-  StarvationThreshold: 0.2
-  PreySpecies: []
-  PredatorSpecies: []
+  FishPerSchool: 10
+  MaxSchools: 5
+  PreySpecies:
+  - {fileID: 11400000, guid: 726d849f72d5e0e49811ea03c3b196c3, type: 2}
+  PredatorSpecies:
+  - {fileID: 11400000, guid: 28ab075c094107a46a43ca11a323eeee, type: 2}
+  - {fileID: 11400000, guid: 06e91a47e0ce37648b59657851cf6383, type: 2}
+  - {fileID: 11400000, guid: 14da079c95523e54cbaaac13fca15745, type: 2}
+  - {fileID: 11400000, guid: 892ea29c7c18d0044bbe2dcb3933ad9d, type: 2}
   RuntimeId: -1

@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Junheng/Scenes/Boids_Demo.unity
     guid: a82cd417066164345af16d799514f518
-  - enabled: 1
+  - enabled: 0
     path: Assets/Junheng/Scenes/Netcode Simulation Test.unity
     guid: c8c264f74499c3344a7567f9f67988d7
   - enabled: 0
@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Aloysius/Boids_Demo.unity
     guid: d10c70a8490421240879a99e008efbf3
+  - enabled: 1
+    path: Assets/Junheng/Scenes/ALOYLOU VEFR @.unity
+    guid: 3efe750eec52e5e43934e9fca646995a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

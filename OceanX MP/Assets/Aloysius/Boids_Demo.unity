@@ -6248,13 +6248,62 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8654333621639123857, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
       propertyPath: m_Name
-      value: LinearProgress002Blue
+      value: healthbar
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6947182169432552877, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8654333621639123857, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8720160450810507298}
   m_SourcePrefab: {fileID: 100100000, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
+--- !u!114 &8720160450810507295 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6015778624246723952, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
+  m_PrefabInstance: {fileID: 8720160450810507294}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8720160450810507296 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7438460849443980067, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
+  m_PrefabInstance: {fileID: 8720160450810507294}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8720160450810507297 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8654333621639123857, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
+  m_PrefabInstance: {fileID: 8720160450810507294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8720160450810507298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8720160450810507297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809698e4ef97dc448961218cae02f2d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBarBinder
+  sim: {fileID: 663968714}
+  fillImage: {fileID: 8720160450810507296}
+  percentText: {fileID: 8720160450810507295}
+  smooth: 1
+  smoothSpeed: 4
+  percentFormat: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

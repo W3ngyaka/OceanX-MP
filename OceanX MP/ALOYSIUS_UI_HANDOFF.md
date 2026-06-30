@@ -444,3 +444,120 @@ working via forced-event test.
 
 &#x20; `EcosystemUnlockManagerGPU` component on DebugHarness
 
+
+# OceanX MP — UI/UX Handoff Update (Aloysius)
+_Session: 2026-06-30 — to be merged into ALOYSIUS_UI_HANDOFF.md_
+
+> Supplement to the main handoff (rev 3). Covers this session only:
+> producer unlock-registration fix, new Macroalgae data + GPU species,
+> species description edits, and the Boids_Demo host health bar binding.
+
+---
+
+## READ FIRST — new this session
+
+1. **Producers were locked-by-default because they weren't registered with the unlock manager.**
+   `EcosystemUnlockManagerGPU.IsUnlocked(species)` returns `false` for any
+   `SpeciesData` not in its serialized `_allSpecies` list (locked-by-default).
+   That list (on the **`Ecosystem Panel`** GameObject) held only the 12 fish, so
+   **Seagrass** and **Macroalgae** reported `locked = true` at runtime even though
+   their `SpeciesData.startUnlocked = true` — the manager's answer overrides
+   `startUnlocked`. A locked bubble routes taps to the locked-hint path (no punch
+   animation, no info panel), which is why Seagrass "couldn't be tapped."
+   **Fix:** added both producers to `_allSpecies`. They now read unlocked and tap correctly.
+
+2. **`simIndex = -1` for both producers.** `TabletEcosystemUIGPU` can't map the
+   producers' `gpuSpecies` to a live sim slot, so the info panel's **Add/Remove
+   buttons and population count do nothing for Seagrass / Macroalgae** (info panel
+   still opens fine). If producers should be interactive on the sim side, JunHeng
+   needs to register their GPU species in the `TabletEcosystemUIGPU` species list.
+
+3. **Macroalgae was created fresh this session** (it had no `SpeciesData` asset
+   before, and the bubble's `data` was effectively unset). See below.
+
+---
+
+## Producer species — Seagrass & Macroalgae
+
+### Seagrass
+- Existing `SpeciesData` (`Assets/Aloysius/SpeciesData/Seagrass.asset`); added to
+  the manager's `_allSpecies`. Now unlocked + tappable.
+- **Data note:** its `hint1/2/3` and `addedMessage` are still copied from
+  **Yellowstripe Scad** ("Schooling fish like scad…", "Damselfish x2 and Mullet x2…").
+  Harmless for a start-unlocked producer (hints won't show), but worth cleaning up.
+
+### Macroalgae (new)
+- New UI `SpeciesData` at **`Assets/Aloysius/SpeciesData/Macroalgae.asset`**
+  (duplicated from Seagrass, then cleaned):
+  - `speciesName = Macroalgae`, `tier = Primary Producer`, `startUnlocked = true`,
+    `minHealth = 0`, `requires` = empty, hints + `addedMessage` cleared,
+    `sciName` = **blank (TODO: fill in genus)**.
+  - `gpuSpecies` -> JunHeng's new GPU species
+    **`Assets/Junheng/Data/Fish/Primary Producer/Macroalgae.asset`**.
+- Assigned to the `macroalgae bubble` and added to the manager's `_allSpecies`.
+- Verified in Play: unlocked, tap punch + info panel work.
+
+### Manager list state
+`Ecosystem Panel` → `EcosystemUnlockManagerGPU._allSpecies` now has **14** entries
+(12 fish + Seagrass + Macroalgae).
+
+---
+
+## Species info-panel description edits
+
+The right-side panel description = `SpeciesData.addedMessage` (auto-uppercased
+tier shows as the role badge; `speciesName` is the title). Condensed two to ~10 words:
+
+- **Fringelip Mullet** → "Schooling herbivore that grazes algae and detritus off sandy reef floors."
+- **Eyestripe Surgeonfish** → "Solitary herbivore scraping algal films; wields scalpel-like spines for defence."
+  _(proposed — apply if not already done)_
+
+> Reminder: `addedMessage` is doing double duty (panel description **and** the
+> unlock toast text). If those need to diverge, add a separate `description`
+> field to `SpeciesData` rather than overloading `addedMessage`.
+
+---
+
+## Host (Boids_Demo) — health bar now bound to eco-health
+
+- **`Screen UI/healthbar`** is now driven live by ecosystem health.
+- `HealthBarBinder.cs` (already in `Assets/Aloysius/Scripts/`) reads
+  `EcosystemSimulationGPU.EcoHealth01` (0–1) each frame and updates the filled
+  Image's `fillAmount` + the "%" TMP label. Auto-wires the sim, fill image, and
+  text on `Awake`; component is attached to the `healthbar` object.
+  - **Compile fix:** the binder referenced `EcosystemSimulationGPU` without its
+    namespace; added `using OceanX.BoidsGPU.Ecosystem;` so it compiles.
+  - **Bug fix:** the fill Image carried a leftover **`TMLineSliderP`** demo-animation
+    component (from "LightColored Graph And Chart UI Pack") that looped `fillAmount`
+    0→1 forever and overwrote the binder every frame — that was the "bar just
+    counts 1→100 continuously" symptom. **Removed `TMLineSliderP`** from the fill Image.
+  - **Easing:** `Update()` uses frame-rate-independent ease-out (`1 - Exp(-speed*dt)`)
+    so the bar glides to the target instead of snapping. Tunables on the component:
+    `Smooth`, `Smooth Speed` (~4 default), `Percent Format`.
+- **Demo-scene caveat:** health reads 0% at start because no species are spawned
+  yet — that's the true value, not a binding bug. Reflects real health once
+  organisms exist / in the exhibit scene.
+
+---
+
+## Open / To-Do (this session)
+
+- Fill Macroalgae `sciName` (left blank).
+- Clean Seagrass's Scad-derived hint/addedMessage text.
+- Decide whether producers should be sim-interactive (needs JunHeng to register
+  Seagrass/Macroalgae GPU species in `TabletEcosystemUIGPU`; currently `simIndex = -1`).
+- Confirm Eyestripe Surgeonfish description got applied.
+
+---
+
+## Files touched this session
+
+**New asset:** `Assets/Aloysius/SpeciesData/Macroalgae.asset`
+**Edited assets:** `Seagrass.asset` (registered), `Fringelip_Mullet.asset` /
+`Eyestripe_Surgeonfish.asset` (`addedMessage`), `Macroalgae` (new).
+**Edited script:** `Assets/Aloysius/Scripts/HealthBarBinder.cs` (namespace using;
+ease-out Update).
+**Scene changes:**
+- Tablet copy: `Ecosystem Panel` → `EcosystemUnlockManagerGPU._allSpecies` += Seagrass, Macroalgae; macroalgae bubble `data` assigned.
+- `Boids_Demo` copy: `HealthBarBinder` on `Screen UI/healthbar`; removed `TMLineSliderP` from the fill Image.
+

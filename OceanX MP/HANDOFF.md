@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-06-18_
+_Last updated: 2026-06-30_
 
 ---
 
@@ -127,11 +127,13 @@ Assets/Junheng/
 │   │   ├── AutomaticFishSwimSimulation.cs
 │   │   └── AutomaticFishSwimming.cs
 │   ├── Networking/
+│   │   ├── BubbleSelectHook.cs              Per-bubble tap → selects species in TabletAddRemoveUIGPU (no SpeciesBubble edits)
 │   │   ├── ConnectionScreenUI.cs           Client IP input + connect button
-│   │   ├── EcosystemNetworkManagerGPU.cs   Syncs school counts via NetworkList, RPCs
+│   │   ├── EcosystemNetworkManagerGPU.cs   Syncs school counts + eco-health via NetworkList/NetworkVariable, RPCs
 │   │   ├── HostSpawner.cs                  Spawns network manager prefab on server start
 │   │   ├── LanDiscovery.cs                 UDP broadcast — tablet auto-finds host on WiFi
 │   │   ├── NetworkBootstrap.cs             Host/Client role setup, starts NGO
+│   │   ├── TabletAddRemoveUIGPU.cs          Singleton Add/Remove controller — fires RPCs for the selected species, greys at cap/0
 │   │   └── TabletEcosystemUIGPU.cs         Pure species→index lookup service
 │   ├── Shader_GUI/Editor/          Custom material inspectors for the Fish_Lit shaders
 │   │   ├── FishLitBaseShaderGUI.cs / FishLitDetailGUI.cs / FishLitShaderGUI.cs
@@ -192,7 +194,9 @@ Assets/Aloysius/                     UI team (see "Weeks 7–8 — UI Team" sect
 - `NetworkBootstrap` — sets role (Host/Client), starts NGO
 - `EcosystemNetworkManagerGPU` — auto-finds `EcosystemSimulationGPU` on server; syncs school counts via `NetworkList<int>` (periodic tick **+ immediate resync on add/remove**); exposes `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc`
 - `TabletEcosystemUIGPU` — now a pure species→index lookup service (card UI stripped out entirely)
-- New tablet UI: `SpeciesBubble` (tap → modal) + `ModalController` (in-card Add/Remove + per-species population)
+- **Decoupled tablet Add/Remove input layer (2026-06-29, `43fca49`)** — Add/Remove was extracted out of `ModalController` (which no longer touches netcode at all):
+  - `TabletAddRemoveUIGPU` (singleton) holds the +/− buttons and optional population label; `Select(species)` resolves the netcode index via `TabletEcosystemUIGPU` and the buttons fire `RequestAddSpeciesRpc`/`RequestRemoveSpeciesRpc`; greys Add at `MaxSchools`, Remove at 0
+  - `BubbleSelectHook` (one per species bubble) routes a bubble tap to `TabletAddRemoveUIGPU.Select(bubble.data.gpuSpecies)` **without editing the UI-team's `SpeciesBubble`** — add-component on each bubble, no per-bubble wiring
 - `ConnectionScreenUI` — tablet IP entry screen + LAN auto-discovery
 
 ### Tablet UI (built by Aloysius, integrated into JunHeng's main `Netcode Simulation Test` scene)
@@ -485,8 +489,63 @@ Replaced the old per-species starvation cascade with a **symmetric, global ratio
   replacement, and `SpeciesBubble` works with either.
 - Greyed-out food-web line styling for locked nodes.
 
-### Akil
-- _To be filled in._
+### Akil (akeel-h) — scene environment / art
+- Active contributor since ~2026-06-24. Owns the **3D scene environment**: coral
+  placement, rockwork, mockup-scene redo, shader/rock-colour passes.
+- Imported/added meshes & assets: fish + stingray assets, **parrotfish** mesh,
+  **damselfish**; added the **shark** to the scene and adjusted rock colour.
+
+---
+
+## What Was Done — 2026-06-29 → 06-30
+
+### JunHeng (simulation / backend + integration)
+
+**Decoupled tablet Add/Remove input layer (`43fca49`)**
+- New `BubbleSelectHook.cs` + `TabletAddRemoveUIGPU.cs` (under `Scripts/Networking/`).
+  Add/Remove is now driven by a singleton controller fed by a per-bubble tap hook,
+  instead of living inside `ModalController`. `ModalController` was slimmed by ~50
+  lines and **no longer references netcode** (verified: no RPC/AddSpecies calls).
+- Wiring contract: drop `BubbleSelectHook` on every species bubble (auto-reads
+  `SpeciesBubble.data.gpuSpecies`), put one `TabletAddRemoveUIGPU` on an always-active
+  object (e.g. the **Ecosystem Panel**, which also holds `TabletEcosystemUIGPU`), and
+  assign its `addButton` / `removeButton` / `populationLabel`.
+
+**Prey/predator relationships populated for all 12 species (`dac6700`)**
+- `PreySpecies` / `PredatorSpecies` filled in on every `SpeciesDataGPU` asset from the
+  food-chain table — the ratio dynamics + eco-health now have real edges to work with.
+  (Was flagged "still worth a balance pass" in the 06-18 handoff; the lists themselves
+  are now populated — values may still need tuning in play.)
+
+**Clownfish placeholder dropped from the live sim (`e46bbd2`)**
+- `EcosystemDefinitionGPU.asset` now wires exactly the **canonical 12** (Clownfish entry
+  removed). The Clownfish data assets/mesh still exist on disk under
+  `Data/Fish/Placeholder FIsh/Clownfish/` but are no longer referenced by the definition.
+
+**Build scene switched to the tablet client**
+- `EditorBuildSettings`: **`Assets/Junheng/Scenes/Netcode Simulation Test.unity` is now
+  the enabled build scene** (Boids_Demo + Aloysius's client scene are present but
+  disabled). ⚠ This supersedes the older "only Boids_Demo is in the build" note below.
+- Multiple Android/host rebuilds across the team (`1001c91`, `eb0e945`, `8dd91c6`,
+  `2a1d7d4`).
+
+**New WIP client scenes (local, under `Assets/Junheng/Scenes/`)**
+- `ALOYLOU VEFR @.unity` — JunHeng's current working tablet-client scene (newer/bigger
+  than `Netcode Simulation Test`; 14 species bubbles). The decoupled Add/Remove layer
+  had to be re-linked into it (11 plain bubbles hooked + controller added; the 3
+  prefab-instanced bubbles — Shark, grouper, moray — and the controller's button refs
+  are assigned in-editor).
+- `Aloysius lololol.unity` — a 1-flag fork of `Netcode Simulation Test` with the
+  `ConnectionScreen` GameObject disabled (UI-only inspection variant).
+  > ⚠ Both of these are **not committed to git** at time of writing — treat as local
+  > scratch/WIP until they land in a commit.
+
+### Aloysius (UI / UX)
+- New sprite for **locked organisms** (`114ac9e`); **seagrass** bubble (`243b9f3`);
+  scene/build iterations (`502204d`, `6486453`, `4342b30`).
+
+### Akil (akeel-h)
+- See the Team section above — scene environment, coral/rockwork, fish/stingray/parrotfish/damselfish assets, shark added to scene.
 
 ---
 
@@ -693,7 +752,7 @@ Tune the global band/rates live in Play mode by watching whether the reef settle
 
 ## Scene Setup Reference
 
-> The only scene enabled in the build is **`Assets/Junheng/Scenes/Boids_Demo.unity`** (verified in `EditorBuildSettings.asset`). Other scenes present: `Netcode Simulation Test` (Junheng), `Swirl_Demo` (Junheng), `Netcode Simulation Test 1` + `Health` (Aloysius), plus mockup/shader-test scenes under `Assets/_Assets/Scenes/`.
+> ⚠ **Updated 2026-06-30:** the enabled build scene is now **`Assets/Junheng/Scenes/Netcode Simulation Test.unity`** (the tablet client), verified in `EditorBuildSettings.asset`. `Boids_Demo` and Aloysius's `Netcode Simulation Test` are listed but **disabled**. (Previously Boids_Demo was the only enabled scene.) Other scenes present: `Swirl_Demo`, `ALOYLOU VEFR @`, `Aloysius lololol` (Junheng, local WIP), `Netcode Simulation Test 1` + `Health` (Aloysius), plus mockup/shader-test scenes.
 
 ### Boids_Demo (host/trifold display scene — the build scene)
 - GameObject with `BoidSimulationGPU` + `EcosystemSimulationGPU` (verified present)
@@ -728,6 +787,7 @@ This is the canonical tablet client. `Netcode Simulation Test 1` (Aloysius) is o
 - **Species UI fields split across two assets** — unlock config (`startUnlocked`, `minHealth`, `requires`, hints) lives on **`SpeciesData`** (linked to the sim via `gpuSpecies`); `SpeciesDataGPU` stays pure sim data. Remaining UI-only fields (Icon, TrophicTier, FoodWebPosition) still to add to `SpeciesData` for the food-web graph
 - **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active
 - **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene
+- **Add/Remove wiring is a re-link trap when duplicating client scenes** — the decoupled input layer (`BubbleSelectHook` on every bubble + a `TabletAddRemoveUIGPU` with its buttons assigned) lives in the scene, not on a prefab, so a copied/new client scene (e.g. `ALOYLOU VEFR @`) loses it and taps do nothing until it's re-added. If population shows but Add/Remove are dead, check: hooks present on bubbles, controller present + buttons assigned, and `TabletEcosystemUIGPU.Ecosystem` points at the **same** `EcosystemDefinitionGPU` (same order) as the host.
 
 ---
 
@@ -735,7 +795,8 @@ This is the canonical tablet client. `Netcode Simulation Test 1` (Aloysius) is o
 
 | Role | Person |
 |------|--------|
-| Simulation / backend | JunHeng |
-| UI and rendering | Separate teammates |
+| Simulation / backend + integration | JunHeng |
+| UI / UX (tablet food-web, modals, Alucia) | Aloysius |
+| Scene environment / 3D art (coral, rockwork, meshes) | Akil (akeel-h) |
 
 Each person has their own Claude session. Share context via this file and `CLAUDE.md` (project root), both committed to git.

@@ -108,19 +108,30 @@ struct BoidSchoolInfo {
 // Structure defining information about the simulation affecter that affects the 
 // movement of the boids throughout the simulation. Affecters can be either considered
 // as targets or as obstacles.
+// MUST match the C# AffecterGPU struct (AffecterGPU.cs) field-for-field, in order.
+// 16 floats (64 bytes): position(3) radius(1) halfExtents(3) shape(1)
+// rotation(4) affecterType(1) boidGroupId(1) boidSubGroupId(1) emptyFiller(1).
 struct Affecter {
-    // World position of the affecter.
+    // World position of the affecter (box center for Box shape).
     float3 position;
-    // Size of the affecter, determining the distance from affecter where its impact is non-existent.
+    // Sphere radius — distance from affecter where its impact is non-existent (Sphere shape).
     float radius;
 
-    // Type of the affecter (0 --> Target, 1 --> Obstacle).
+    // Box influence half-extents in local space (Box shape). Unused for Sphere.
+    float3 halfExtents;
+    // Shape flag: 0 --> Sphere, 1 --> Box.
+    float shape;
+
+    // Box orientation quaternion (x, y, z, w). Unused for Sphere.
+    float4 rotation;
+
+    // Type of the affecter (0 --> Target, 1 --> Obstacle, 2 --> Predator).
     float affecterType;
     // Which boid group does this affecter affect.
     float boidGroupId;
     // Sub-group inside fish species that this boid belongs to.
     float boidSubGroupId;
-    // Currently not used, but added to fill to the 16-byte memory slot.
+    // Currently not used, padding to a 16-float (64-byte) stride.
     float emptyFiller;
 };
 

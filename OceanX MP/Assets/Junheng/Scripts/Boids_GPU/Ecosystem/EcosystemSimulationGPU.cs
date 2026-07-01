@@ -25,8 +25,21 @@ namespace OceanX.BoidsGPU.Ecosystem
             _simulation != null ? _simulation.SimulationAreaBounds : _ecosystem.SimulationBounds;
 
         [Header("Population Tick")]
+        [Tooltip("Master switch for the automatic ratio-driven population dynamics (growth / shrink / " +
+                 "starvation). When OFF, populations are frozen and change ONLY via manual Add/Remove " +
+                 "(UI / netcode / debug harness) — nothing auto-grows or despawns. Handy while testing " +
+                 "movement or shaders. Can be toggled live in Play mode.")]
+        [SerializeField] private bool _enablePopulationDynamics = true;
+
         [Tooltip("Seconds between each population tick.")]
         [SerializeField] private float _tickInterval = 5f;
+
+        /// <summary>Whether the automatic ratio-driven population tick is running. Manual Add/Remove always works.</summary>
+        public bool PopulationDynamicsEnabled
+        {
+            get => _enablePopulationDynamics;
+            set => _enablePopulationDynamics = value;
+        }
 
         [Header("Predator-Prey Balance (global)")]
         [Tooltip("Lower edge of the balanced prey:predator ratio (measured in SCHOOL counts). " +
@@ -166,6 +179,9 @@ namespace OceanX.BoidsGPU.Ecosystem
 
         private void RunPopulationTick()
         {
+            // Master switch — when off, populations are frozen (manual Add/Remove still works).
+            if (!_enablePopulationDynamics) return;
+
             // Snapshot counts so all decisions use the same pre-tick state.
             Dictionary<SpeciesDataGPU, int> snapshot = new Dictionary<SpeciesDataGPU, int>(_schoolCount);
 

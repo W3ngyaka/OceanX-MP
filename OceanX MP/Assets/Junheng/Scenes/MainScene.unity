@@ -3172,6 +3172,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 38106463}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &38501163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 38501164}
+  - component: {fileID: 38501165}
+  m_Layer: 0
+  m_Name: Reef Obstacle (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &38501164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38501163}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -81.36, y: -32, z: 79.24}
+  m_LocalScale: {x: 7.0347033, y: 3.0703032, z: 6.304539}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &38501165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38501163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: -17.517805, y: 5.18604, z: 47.947037}
+    Radius: 7.0347033
+    HalfExtents: {x: 7.0347033, y: 3.0703032, z: 6.304539}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &39397174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7247,7 +7303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _simulationAreaBounds:
-    m_Center: {x: 4.0999975, y: -14.7, z: -0.0999982}
+    m_Center: {x: 15.899998, y: 13.8, z: 15.400002}
     m_Extent: {x: 50, y: 14, z: 50}
   _target: {fileID: 489180896}
   _minDistanceBetweenTargets: 5
@@ -11465,7 +11521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &132240657
 Transform:
   m_ObjectHideFlags: 0
@@ -16294,6 +16350,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 186853311}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &187074537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 187074538}
+  - component: {fileID: 187074539}
+  m_Layer: 0
+  m_Name: Reef Obstacle (42)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &187074538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187074537}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: -11.6, y: -41.7, z: -27.9}
+  m_LocalScale: {x: 7.1448417, y: 2.5301867, z: 7.2777905}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &187074539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187074537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 11.135416, y: 1.2018623, z: 3.9403553}
+    Radius: 7.1448417
+    HalfExtents: {x: 7.1448417, y: 2.5301867, z: 7.2777905}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &189034296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21756,6 +21868,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 253506033}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &254290940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 254290941}
+  - component: {fileID: 254290942}
+  m_Layer: 0
+  m_Name: Reef Obstacle (22)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &254290941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254290940}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.020337077, y: -0.11756239, z: 0.011013633, w: 0.9927962}
+  m_LocalPosition: {x: -19.76, y: -47.54, z: 32.46}
+  m_LocalScale: {x: 5.901969, y: 2.1788716, z: 8.2942915}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 2.463, y: -13.485, z: 0.98}
+--- !u!114 &254290942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254290940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 7.783777, y: -1.1968594, z: 28.73262}
+    Radius: 5.901969
+    HalfExtents: {x: 5.901969, y: 2.1788716, z: 8.2942915}
+    Rotation: {x: 0.020337077, y: -0.11756239, z: 0.011013633, w: 0.9927962}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &254370444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22952,6 +23120,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 263183299}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &265424996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 265424997}
+  - component: {fileID: 265424998}
+  m_Layer: 0
+  m_Name: Reef Obstacle (20)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &265424997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265424996}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.058725987, y: -0.11704836, z: 0.015553029, w: 0.9912664}
+  m_LocalPosition: {x: -42.99, y: -42.11, z: 35.74}
+  m_LocalScale: {x: 2.269466, y: 0.8378348, z: 3.1893785}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 6.896, y: -13.409, z: 0.986}
+--- !u!114 &265424998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265424996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: -1.7577133, y: 1.0334587, z: 30.07985}
+    Radius: 2.269466
+    HalfExtents: {x: 2.269466, y: 0.8378348, z: 3.1893785}
+    Rotation: {x: 0.058725987, y: -0.11704836, z: 0.015553029, w: 0.9912664}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &266141870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25885,6 +26109,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 299462660}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &300651307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 300651308}
+  - component: {fileID: 300651309}
+  m_Layer: 0
+  m_Name: Reef Obstacle (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &300651308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300651307}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.079343446, y: -0.14528632, z: 0.18238169, w: 0.96919215}
+  m_LocalPosition: {x: -48.01, y: -29.36, z: 81.13}
+  m_LocalScale: {x: 2.2389665, y: 1.8786099, z: 3.4961598}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -5.785, y: -18.189, z: 22.241}
+--- !u!114 &300651309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300651307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: -3.8196259, y: 6.2703934, z: 48.723335}
+    Radius: 2.2389665
+    HalfExtents: {x: 2.2389665, y: 1.8786099, z: 3.4961598}
+    Rotation: {x: -0.079343446, y: -0.14528632, z: 0.18238169, w: 0.96919215}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &301081560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26557,6 +26837,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 307273999}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &308114311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 308114312}
+  - component: {fileID: 308114313}
+  m_Layer: 0
+  m_Name: Reef Obstacle (31)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &308114312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308114311}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 51.2, y: 0.9, z: 40.7}
+  m_LocalScale: {x: 7.2062597, y: 3.3444266, z: 8.229054}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &308114313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308114311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 36.929886, y: 18.699385, z: 32.11712}
+    Radius: 7.2062597
+    HalfExtents: {x: 7.2062597, y: 3.3444266, z: 8.229054}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &308395190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29724,7 +30060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _simulationAreaBounds:
-    m_Center: {x: 4.0999975, y: -14.7, z: 8.320171}
+    m_Center: {x: 15.899998, y: 13.8, z: 23.820171}
     m_Extent: {x: 50, y: 14, z: 50}
   _target: {fileID: 1278385832}
   _minDistanceBetweenTargets: 5
@@ -30649,6 +30985,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 349604342}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &350159864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 350159865}
+  - component: {fileID: 350159866}
+  m_Layer: 0
+  m_Name: Reef Obstacle (39)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &350159865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350159864}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.025656983, y: -0.3382931, z: -0.0077626165, w: 0.9406589}
+  m_LocalPosition: {x: 38.5, y: 4.100001, z: -28.899998}
+  m_LocalScale: {x: 9.691996, y: 3.1745212, z: 7.9368954}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -3.068, y: -39.565, z: 0.158}
+--- !u!114 &350159866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350159864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 31.71349, y: 20.013754, z: 3.5296154}
+    Radius: 9.691996
+    HalfExtents: {x: 9.691996, y: 3.1745212, z: 7.9368954}
+    Rotation: {x: -0.025656983, y: -0.3382931, z: -0.0077626165, w: 0.9406589}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &350442873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31682,6 +32074,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4960dc20c120f09418a1708b494773e8, type: 3}
   m_PrefabInstance: {fileID: 360135005}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &360259532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 360259533}
+  - component: {fileID: 360259534}
+  m_Layer: 0
+  m_Name: Reef Obstacle (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &360259533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360259532}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.073810585, y: -0.11742581, z: 0.008752199, w: 0.9902962}
+  m_LocalPosition: {x: -25.4, y: -32.44, z: 95.65}
+  m_LocalScale: {x: 7.604846, y: 2.807535, z: 9.047167}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -8.287, y: -13.67, z: 2.008}
+--- !u!114 &360259534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360259532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 5.467204, y: 5.005315, z: 54.687283}
+    Radius: 7.604846
+    HalfExtents: {x: 7.604846, y: 2.807535, z: 9.047167}
+    Rotation: {x: -0.073810585, y: -0.11742581, z: 0.008752199, w: 0.9902962}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &360933567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33642,6 +34090,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 384033410}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &384890440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 384890441}
+  - component: {fileID: 384890442}
+  m_Layer: 0
+  m_Name: Reef Obstacle (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &384890441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384890440}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.074327685, y: -0, z: -0, w: 0.9972339}
+  m_LocalPosition: {x: -32.09, y: -21.899998, z: 95.069984}
+  m_LocalScale: {x: 8.300325, y: 1.9399772, z: 9.047167}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -8.525, y: 0, z: 0}
+--- !u!114 &384890442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384890440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 2.7193537, y: 9.334515, z: 54.449047}
+    Radius: 8.300325
+    HalfExtents: {x: 8.300325, y: 1.9399772, z: 9.047167}
+    Rotation: {x: -0.074327685, y: -0, z: -0, w: 0.9972339}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &386364247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40590,6 +41094,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 463250251}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &463305115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 463305116}
+  - component: {fileID: 463305117}
+  m_Layer: 0
+  m_Name: Reef Obstacle (29)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &463305116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463305115}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.016319003, y: 0.2735946, z: -0.021265684, w: 0.96147156}
+  m_LocalPosition: {x: 60.59999, y: 8.400001, z: 66.3}
+  m_LocalScale: {x: 7.203414, y: 8.216719, z: 6.0013523}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -1.131, y: 31.797, z: -2.856}
+--- !u!114 &463305117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463305115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 40.79084, y: 21.779936, z: 42.632065}
+    Radius: 7.203414
+    HalfExtents: {x: 7.203414, y: 8.216719, z: 6.0013523}
+    Rotation: {x: -0.016319003, y: 0.2735946, z: -0.021265684, w: 0.96147156}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &463874082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42207,7 +42767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _simulationAreaBounds:
-    m_Center: {x: 7.5091395, y: -14.7, z: 6.7593603}
+    m_Center: {x: 19.30914, y: 13.8, z: 22.259361}
     m_Extent: {x: 50, y: 14, z: 50}
   _target: {fileID: 1027471828}
   _minDistanceBetweenTargets: 5
@@ -43042,10 +43602,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updatePositionAtRuntime: 1
+  _shape: 0
   _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
   _simulationAffecter:
-    Position: {x: 12.129964, y: -12.350567, z: -0.4121606}
+    Position: {x: 23.929964, y: 11.2494335, z: 15.087839}
     Radius: 1
+    HalfExtents: {x: 1, y: 1, z: 1}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 0
     Type: 0
     BoidGroupId: 0
     BoidSubGroupId: 0
@@ -47657,6 +48221,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 536633583}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &537102639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 537102640}
+  - component: {fileID: 537102641}
+  m_Layer: 0
+  m_Name: Reef Obstacle (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &537102640
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537102639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -64.6, y: 9.3, z: 94.6}
+  m_LocalScale: {x: 8.300325, y: 3.739739, z: 9.047167}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &537102641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537102639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: -10.633802, y: 22.149601, z: 54.256004}
+    Radius: 8.300325
+    HalfExtents: {x: 8.300325, y: 3.739739, z: 9.047167}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &538829950
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53830,6 +54450,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 602275395}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &604677371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 604677372}
+  - component: {fileID: 604677373}
+  m_Layer: 0
+  m_Name: Reef Obstacle (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &604677372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604677371}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -83.81, y: -6.87, z: 90.98}
+  m_LocalScale: {x: 2.653637, y: 3.050674, z: 5.276153}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &604677373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604677371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: -18.524118, y: 15.507936, z: 52.769127}
+    Radius: 2.653637
+    HalfExtents: {x: 2.653637, y: 3.050674, z: 5.276153}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &604853839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54281,7 +54957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &609190416
 Transform:
   m_ObjectHideFlags: 0
@@ -54291,12 +54967,13 @@ Transform:
   m_GameObject: {fileID: 609190415}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.1, y: -0.17028, z: -0.1}
+  m_LocalPosition: {x: 15.9, y: 18.32972, z: 15.400001}
   m_LocalScale: {x: 0.41074, y: 0.41074, z: 0.41074}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 132240657}
-  m_Father: {fileID: 1776848804}
+  - {fileID: 1518656815}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &609190417
 MonoBehaviour:
@@ -55312,6 +55989,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 626132277}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &627236801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 627236802}
+  - component: {fileID: 627236803}
+  m_Layer: 0
+  m_Name: Reef Obstacle (38)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &627236802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627236801}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 39.8, y: -11.5, z: -21.9}
+  m_LocalScale: {x: 4.4919763, y: 3.9949174, z: 8.488504}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &627236803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627236801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 32.24745, y: 13.60621, z: 6.4047947}
+    Radius: 4.4919763
+    HalfExtents: {x: 4.4919763, y: 3.9949174, z: 8.488504}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &629862039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56323,6 +57056,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4960dc20c120f09418a1708b494773e8, type: 3}
   m_PrefabInstance: {fileID: 639523117}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &641013165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 641013166}
+  - component: {fileID: 641013167}
+  m_Layer: 0
+  m_Name: Reef Obstacle (32)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &641013166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641013165}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 46.2, y: -13.2, z: 35.9}
+  m_LocalScale: {x: 4.413762, y: 6.4390244, z: 4.9441805}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &641013167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641013165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 34.87619, y: 12.907951, z: 30.145567}
+    Radius: 4.413762
+    HalfExtents: {x: 4.413762, y: 6.4390244, z: 4.9441805}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &641937678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58218,6 +59007,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 663073745}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &664575081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 664575082}
+  - component: {fileID: 664575083}
+  m_Layer: 0
+  m_Name: Reef Obstacle (30)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &664575082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664575081}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 54.6, y: 21.1, z: 66.5}
+  m_LocalScale: {x: 9.877321, y: 3.3444266, z: 8.229054}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &664575083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664575081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 38.3264, y: 26.996334, z: 42.71421}
+    Radius: 9.877321
+    HalfExtents: {x: 9.877321, y: 3.3444266, z: 8.229054}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &665671641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58416,6 +59261,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 666620953}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &667936511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 667936512}
+  - component: {fileID: 667936513}
+  m_Layer: 0
+  m_Name: 'Reef Obstacle '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &667936512
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667936511}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -65.7, y: -39.4, z: 62.51}
+  m_LocalScale: {x: 6.723919, y: 2.588352, z: 5.894535}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &667936513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667936511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: -11.085617, y: 2.1465626, z: 41.075356}
+    Radius: 6.723919
+    HalfExtents: {x: 6.723919, y: 2.588352, z: 5.894535}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &669663588
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59492,6 +60393,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 680532735}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &681382378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 681382379}
+  - component: {fileID: 681382380}
+  m_Layer: 0
+  m_Name: Reef Obstacle (36)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &681382379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681382378}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 30.2, y: -34.5, z: -28}
+  m_LocalScale: {x: 10.181898, y: 5.920867, z: 6.008248}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &681382380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681382378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 28.304348, y: 4.15919, z: 3.8992805}
+    Radius: 10.181898
+    HalfExtents: {x: 10.181898, y: 5.920867, z: 6.008248}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &682007283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69436,8 +70393,8 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: 4023981112819473776, guid: 09b07def93206674c838a112bb9c6e43, type: 3}
-    BoidMaterial: {fileID: 2100000, guid: 5cb625ec19658aa4db5014d6bad643d3, type: 2}
+    BoidMesh: {fileID: -2432090755550338912, guid: a39e2d1e7a223044294536160d0dd6b6, type: 3}
+    BoidMaterial: {fileID: 2100000, guid: 338a223d69137f04d99b86d2f9e6b318, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: 1a9e8698e0ddb734689594b712273353, type: 2}
     Targets:
     - {fileID: 0}
@@ -71353,7 +72310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _simulationAreaBounds:
-    m_Center: {x: -7.4417963, y: -14.7, z: 6.307546}
+    m_Center: {x: 4.3582034, y: 13.8, z: 21.807547}
     m_Extent: {x: 50, y: 14, z: 50}
   _target: {fileID: 1600591179}
   _minDistanceBetweenTargets: 5
@@ -72260,6 +73217,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 1580472834}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &812311623
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 812311624}
+  - component: {fileID: 812311625}
+  m_Layer: 0
+  m_Name: Reef Obstacle (28)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &812311624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812311623}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.070949025, y: 0.29724622, z: -0.022154909, w: 0.9519034}
+  m_LocalPosition: {x: 57.6, y: -24.4, z: 66.2}
+  m_LocalScale: {x: 6.1211877, y: 6.9822555, z: 5.0997214}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -7.002, y: 34.982, z: -4.876}
+--- !u!114 &812311625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812311623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 39.558624, y: 8.307664, z: 42.59099}
+    Radius: 6.1211877
+    HalfExtents: {x: 6.1211877, y: 6.9822555, z: 5.0997214}
+    Rotation: {x: -0.070949025, y: 0.29724622, z: -0.022154909, w: 0.9519034}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &814027862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79696,6 +80709,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 885259413}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &886242378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 886242379}
+  - component: {fileID: 886242380}
+  m_Layer: 0
+  m_Name: Reef Obstacle (24)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &886242379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886242378}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.0637728, w: 0.9979645}
+  m_LocalPosition: {x: -13.93, y: -32.1, z: 26.22}
+  m_LocalScale: {x: 2.1694036, y: 2.4478588, z: 1.5653323}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.313}
+--- !u!114 &886242380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886242378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 10.178391, y: 5.144966, z: 26.169601}
+    Radius: 2.1694036
+    HalfExtents: {x: 2.1694036, y: 2.4478588, z: 1.5653323}
+    Rotation: {x: -0, y: -0, z: -0.0637728, w: 0.9979645}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &886596426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80549,6 +81618,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 895335228}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &895712258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 895712259}
+  - component: {fileID: 895712260}
+  m_Layer: 0
+  m_Name: Reef Obstacle (11)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &895712259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895712258}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.074327685, y: -0, z: -0, w: 0.9972339}
+  m_LocalPosition: {x: 2.95, y: -29.9, z: 79.4}
+  m_LocalScale: {x: 7.1407604, y: 1.9399772, z: 9.047167}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -8.525, y: 0, z: 0}
+--- !u!114 &895712260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895712258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 17.111683, y: 6.0485945, z: 48.012756}
+    Radius: 7.1407604
+    HalfExtents: {x: 7.1407604, y: 1.9399772, z: 9.047167}
+    Rotation: {x: -0.074327685, y: -0, z: -0, w: 0.9972339}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1 &895985107
 GameObject:
   m_ObjectHideFlags: 0
@@ -81521,6 +82646,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8456125644450630886, guid: b8465399a2898c14a80517e1db02e7b9, type: 3}
   m_PrefabInstance: {fileID: 905576249}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &908015853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 908015854}
+  - component: {fileID: 908015855}
+  m_Layer: 0
+  m_Name: Reef Obstacle (40)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &908015854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908015853}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 18.1, y: -16, z: -30.6}
+  m_LocalScale: {x: 2.0551376, y: 1.8508652, z: 2.5708091}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &908015855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908015853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 23.334393, y: 11.757879, z: 2.831357}
+    Radius: 2.0551376
+    HalfExtents: {x: 2.0551376, y: 1.8508652, z: 2.5708091}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &910685158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83502,6 +84683,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 932831708}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &933024775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 933024776}
+  - component: {fileID: 933024777}
+  m_Layer: 0
+  m_Name: Reef Obstacle (16)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &933024776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933024775}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.0637728, w: 0.9979645}
+  m_LocalPosition: {x: -13.599998, y: -36.6, z: 54.090004}
+  m_LocalScale: {x: 3.0248582, y: 6.046335, z: 2.4421742}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.313}
+--- !u!114 &933024777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933024775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 10.313936, y: 3.2966366, z: 37.61693}
+    Radius: 3.0248582
+    HalfExtents: {x: 3.0248582, y: 6.046335, z: 2.4421742}
+    Rotation: {x: -0, y: -0, z: -0.0637728, w: 0.9979645}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &933349359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83898,6 +85135,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 940036279}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &940166142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 940166143}
+  - component: {fileID: 940166144}
+  m_Layer: 0
+  m_Name: Reef Obstacle (37)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &940166143
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940166142}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 37.94, y: -11.69, z: -28.2}
+  m_LocalScale: {x: 6.9198885, y: 3.9949174, z: 6.008248}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &940166144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940166142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 31.483475, y: 13.52817, z: 3.817133}
+    Radius: 6.9198885
+    HalfExtents: {x: 6.9198885, y: 3.9949174, z: 6.008248}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &940184796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -92428,10 +93721,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updatePositionAtRuntime: 1
+  _shape: 0
   _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
   _simulationAffecter:
-    Position: {x: 15.539105, y: -12.350567, z: 6.4471974}
+    Position: {x: 27.339104, y: 11.2494335, z: 21.947197}
     Radius: 1
+    HalfExtents: {x: 1, y: 1, z: 1}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 0
     Type: 0
     BoidGroupId: 0
     BoidSubGroupId: 0
@@ -92657,8 +93954,8 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: 4023981112819473776, guid: 09b07def93206674c838a112bb9c6e43, type: 3}
-    BoidMaterial: {fileID: 2100000, guid: 5cb625ec19658aa4db5014d6bad643d3, type: 2}
+    BoidMesh: {fileID: -2432090755550338912, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+    BoidMaterial: {fileID: 2100000, guid: 6d06371fa9f46094c89f529eedb5c617, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: e5057589a9bfe4340bf4b696e3866375, type: 2}
     Targets:
     - {fileID: 0}
@@ -93705,7 +95002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _simulationAreaBounds:
-    m_Center: {x: -5.8399105, y: -14.7, z: -7.370096}
+    m_Center: {x: 5.960089, y: 13.8, z: 8.129904}
     m_Extent: {x: 50, y: 14, z: 50}
   _target: {fileID: 1249167711}
   _minDistanceBetweenTargets: 5
@@ -96785,6 +98082,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4960dc20c120f09418a1708b494773e8, type: 3}
   m_PrefabInstance: {fileID: 1069295327}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1069625473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1069625474}
+  - component: {fileID: 1069625475}
+  m_Layer: 0
+  m_Name: Reef Obstacle (15)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1069625474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069625473}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.0637728, w: 0.9979645}
+  m_LocalPosition: {x: -13.599998, y: -36.6, z: 35.63}
+  m_LocalScale: {x: 3.0248582, y: 6.046335, z: 2.4421742}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.313}
+--- !u!114 &1069625475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069625473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 10.313936, y: 3.2966366, z: 30.034668}
+    Radius: 3.0248582
+    HalfExtents: {x: 3.0248582, y: 6.046335, z: 2.4421742}
+    Rotation: {x: -0, y: -0, z: -0.0637728, w: 0.9979645}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1069723122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97770,10 +99123,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updatePositionAtRuntime: 1
+  _shape: 0
   _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
   _simulationAffecter:
-    Position: {x: 13.80168, y: -10.17028, z: 6.0611}
+    Position: {x: 25.601679, y: 18.32972, z: 21.5611}
     Radius: 10
+    HalfExtents: {x: 10, y: 3, z: 3}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 0
     Type: 1
     BoidGroupId: 255
     BoidSubGroupId: 255
@@ -100824,6 +102181,62 @@ MonoBehaviour:
   _initialGroupsCount: 1
   _initialOffsetFromTarget: 1.5
   _speciesData: {fileID: 11400000, guid: 06e91a47e0ce37648b59657851cf6383, type: 2}
+--- !u!1 &1117231694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1117231695}
+  - component: {fileID: 1117231696}
+  m_Layer: 0
+  m_Name: Reef Obstacle (23)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1117231695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117231694}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.01641956, y: 0.045385174, z: 0.015767986, w: 0.9987102}
+  m_LocalPosition: {x: -18.48, y: -41.88, z: 26.04}
+  m_LocalScale: {x: 4.3194575, y: 2.1788716, z: 4.695714}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -1.962, y: 5.174, z: 1.72}
+--- !u!114 &1117231696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117231694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 8.309525, y: 1.1279278, z: 26.09567}
+    Radius: 4.3194575
+    HalfExtents: {x: 4.3194575, y: 2.1788716, z: 4.695714}
+    Rotation: {x: -0.01641956, y: 0.045385174, z: 0.015767986, w: 0.9987102}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1118911569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -101423,10 +102836,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updatePositionAtRuntime: 1
+  _shape: 0
   _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
   _simulationAffecter:
-    Position: {x: 13.80168, y: -10.17028, z: 6.0611}
+    Position: {x: 25.601679, y: 18.32972, z: 21.5611}
     Radius: 10
+    HalfExtents: {x: 10, y: 3, z: 3}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 0
     Type: 1
     BoidGroupId: 255
     BoidSubGroupId: 255
@@ -101963,6 +103380,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 1129988127}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1131301969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1131301970}
+  - component: {fileID: 1131301971}
+  m_Layer: 0
+  m_Name: Reef Obstacle (25)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1131301970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131301969}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.018360108, y: 0.17702608, z: 0.013458743, w: 0.98394287}
+  m_LocalPosition: {x: 16.8, y: -40.2, z: 41.9}
+  m_LocalScale: {x: 5.484847, y: 3.6162734, z: 14.519516}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.344, y: 20.375, z: 1.146}
+--- !u!114 &1131301971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131301969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 22.80043, y: 1.8179722, z: 32.61001}
+    Radius: 5.484847
+    HalfExtents: {x: 5.484847, y: 3.6162734, z: 14.519516}
+    Rotation: {x: -0.018360108, y: 0.17702608, z: 0.013458743, w: 0.98394287}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1131679399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106358,6 +107831,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 1173137636}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1174205397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1174205398}
+  - component: {fileID: 1174205399}
+  m_Layer: 0
+  m_Name: Reef Obstacle (27)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1174205398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174205397}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0742153, y: -0.054817446, z: 0.0040857503, w: 0.9957261}
+  m_LocalPosition: {x: 36.5, y: -34.12, z: 20.56}
+  m_LocalScale: {x: 8.606118, y: 3.6556153, z: 5.808973}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -8.473, y: -6.372, z: 0.943}
+--- !u!114 &1174205399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174205397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 30.89201, y: 4.3152714, z: 23.844814}
+    Radius: 8.606118
+    HalfExtents: {x: 8.606118, y: 3.6556153, z: 5.808973}
+    Rotation: {x: -0.0742153, y: -0.054817446, z: 0.0040857503, w: 0.9957261}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1174490912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -109904,6 +111433,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 1208249570}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1208351425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1208351426}
+  - component: {fileID: 1208351427}
+  m_Layer: 0
+  m_Name: Reef Obstacle (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1208351426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208351425}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -64.6, y: -10.02, z: 88.65}
+  m_LocalScale: {x: 5.7394032, y: 1.5609114, z: 8.898898}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1208351427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208351425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: -10.633802, y: 14.214105, z: 51.812103}
+    Radius: 5.7394032
+    HalfExtents: {x: 5.7394032, y: 1.5609114, z: 8.898898}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1210487342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111988,6 +113573,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 1229710764}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1230137478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1230137479}
+  - component: {fileID: 1230137480}
+  m_Layer: 0
+  m_Name: Reef Obstacle (26)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1230137479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230137478}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.06995334, y: 0.3370603, z: -0.025122408, w: 0.9385445}
+  m_LocalPosition: {x: 33.3, y: -26.3, z: 53.5}
+  m_LocalScale: {x: 8.606118, y: 2.6354375, z: 8.390226}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -6.567, y: 39.822, z: -5.448}
+--- !u!114 &1230137480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230137478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 29.57764, y: 7.527258, z: 37.37459}
+    Radius: 8.606118
+    HalfExtents: {x: 8.606118, y: 2.6354375, z: 8.390226}
+    Rotation: {x: -0.06995334, y: 0.3370603, z: -0.025122408, w: 0.9385445}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1230966349
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112913,6 +114554,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 1237490512}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1237862915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1237862916}
+  - component: {fileID: 1237862917}
+  m_Layer: 0
+  m_Name: Reef Obstacle (13)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1237862916
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237862915}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.06995334, y: 0.3370603, z: -0.025122408, w: 0.9385445}
+  m_LocalPosition: {x: 6.5, y: -9.2, z: 78.7}
+  m_LocalScale: {x: 8.206876, y: 1.9399772, z: 6.0926776}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -6.567, y: 39.822, z: -5.448}
+--- !u!114 &1237862917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237862915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 18.569809, y: 14.550912, z: 47.72524}
+    Radius: 8.206876
+    HalfExtents: {x: 8.206876, y: 1.9399772, z: 6.0926776}
+    Rotation: {x: -0.06995334, y: 0.3370603, z: -0.025122408, w: 0.9385445}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1238100190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -114320,10 +116017,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updatePositionAtRuntime: 1
+  _shape: 0
   _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
   _simulationAffecter:
-    Position: {x: 2.1900558, y: -12.350567, z: -7.6822586}
+    Position: {x: 13.990055, y: 11.2494335, z: 7.8177414}
     Radius: 1
+    HalfExtents: {x: 1, y: 1, z: 1}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 0
     Type: 0
     BoidGroupId: 0
     BoidSubGroupId: 0
@@ -117040,10 +118741,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updatePositionAtRuntime: 1
+  _shape: 0
   _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
   _simulationAffecter:
-    Position: {x: 12.129964, y: -12.350567, z: 8.008009}
+    Position: {x: 23.929964, y: 11.2494335, z: 23.508009}
     Radius: 1
+    HalfExtents: {x: 1, y: 1, z: 1}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 0
     Type: 0
     BoidGroupId: 0
     BoidSubGroupId: 0
@@ -125427,6 +127132,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 1381460109}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1385118333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1385118334}
+  - component: {fileID: 1385118335}
+  m_Layer: 0
+  m_Name: Reef Obstacle (33)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1385118334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385118333}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 72.5, y: -20.4, z: 26.6}
+  m_LocalScale: {x: 7.2062597, y: 3.3444266, z: 8.229054}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &1385118335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385118333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 45.67865, y: 9.9506235, z: 26.325684}
+    Radius: 7.2062597
+    HalfExtents: {x: 7.2062597, y: 3.3444266, z: 8.229054}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1385322099
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -135468,6 +137229,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 1490323368}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1490469981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1490469982}
+  - component: {fileID: 1490469983}
+  m_Layer: 0
+  m_Name: Reef Obstacle (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1490469982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490469981}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -64.6, y: -2.81, z: 90.98}
+  m_LocalScale: {x: 5.7394032, y: 1.5609114, z: 7.375315}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1490469983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490469981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: -10.633802, y: 17.17554, z: 52.769127}
+    Radius: 5.7394032
+    HalfExtents: {x: 5.7394032, y: 1.5609114, z: 7.375315}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1490729021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138034,6 +139851,80 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2753770016014726719, guid: f797e2e4cc4b8cb4ba803156236dac26, type: 3}
   m_PrefabInstance: {fileID: 1518408521}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1518656814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1518656815}
+  m_Layer: 0
+  m_Name: Reef Obstacles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1518656815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518656814}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 667936512}
+  - {fileID: 1825682196}
+  - {fileID: 38501164}
+  - {fileID: 1939285215}
+  - {fileID: 1208351426}
+  - {fileID: 1490469982}
+  - {fileID: 537102640}
+  - {fileID: 384890441}
+  - {fileID: 895712259}
+  - {fileID: 1848440723}
+  - {fileID: 1069625474}
+  - {fileID: 886242379}
+  - {fileID: 1791371848}
+  - {fileID: 933024776}
+  - {fileID: 1237862916}
+  - {fileID: 1539350869}
+  - {fileID: 1230137479}
+  - {fileID: 812311624}
+  - {fileID: 463305116}
+  - {fileID: 664575082}
+  - {fileID: 308114312}
+  - {fileID: 1385118334}
+  - {fileID: 1629201614}
+  - {fileID: 1589475645}
+  - {fileID: 681382379}
+  - {fileID: 1728746935}
+  - {fileID: 187074538}
+  - {fileID: 940166143}
+  - {fileID: 908015854}
+  - {fileID: 350159865}
+  - {fileID: 627236802}
+  - {fileID: 641013166}
+  - {fileID: 1174205398}
+  - {fileID: 360259533}
+  - {fileID: 1807920401}
+  - {fileID: 1946993350}
+  - {fileID: 254290941}
+  - {fileID: 1117231695}
+  - {fileID: 1131301970}
+  - {fileID: 265424997}
+  - {fileID: 2082537468}
+  - {fileID: 300651308}
+  - {fileID: 604677372}
+  m_Father: {fileID: 609190416}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1518701372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -139738,6 +141629,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 1539258445}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1539350868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1539350869}
+  - component: {fileID: 1539350870}
+  m_Layer: 0
+  m_Name: Reef Obstacle (14)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1539350869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539350868}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.06995334, y: 0.3370603, z: -0.025122408, w: 0.9385445}
+  m_LocalPosition: {x: 6.3, y: 3.5, z: 72.7}
+  m_LocalScale: {x: 8.606118, y: 3.9987822, z: 8.390226}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -6.567, y: 39.822, z: -5.448}
+--- !u!114 &1539350870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539350868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 18.487661, y: 19.76731, z: 45.260796}
+    Radius: 8.606118
+    HalfExtents: {x: 8.606118, y: 3.9987822, z: 8.390226}
+    Rotation: {x: -0.06995334, y: 0.3370603, z: -0.025122408, w: 0.9385445}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1539417039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141875,7 +143822,7 @@ MonoBehaviour:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: 4023981112819473776, guid: 09b07def93206674c838a112bb9c6e43, type: 3}
-    BoidMaterial: {fileID: 2100000, guid: 5cb625ec19658aa4db5014d6bad643d3, type: 2}
+    BoidMaterial: {fileID: 2100000, guid: 6d06371fa9f46094c89f529eedb5c617, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: f297a2d4ba71f584ebb088dc5618eaea, type: 2}
     Targets:
     - {fileID: 0}
@@ -144723,6 +146670,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 1589350888}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1589475644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1589475645}
+  - component: {fileID: 1589475646}
+  m_Layer: 0
+  m_Name: Reef Obstacle (35)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1589475645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589475644}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 43, y: -37.9, z: -3}
+  m_LocalScale: {x: 6.3238993, y: 3.3444266, z: 5.0299273}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &1589475646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589475644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 33.56182, y: 2.7626734, z: 14.167781}
+    Radius: 6.3238993
+    HalfExtents: {x: 6.3238993, y: 3.3444266, z: 5.0299273}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1590294734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -145808,10 +147811,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updatePositionAtRuntime: 1
+  _shape: 0
   _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
   _simulationAffecter:
-    Position: {x: 2.2598825, y: -14.7, z: 14.842723}
+    Position: {x: 14.059882, y: 8.900002, z: 30.342724}
     Radius: 1
+    HalfExtents: {x: 1, y: 1, z: 1}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 0
     Type: 0
     BoidGroupId: 0
     BoidSubGroupId: 0
@@ -146595,10 +148602,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updatePositionAtRuntime: 1
+  _shape: 0
   _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
   _simulationAffecter:
-    Position: {x: 13.80168, y: -10.17028, z: 6.0611}
+    Position: {x: 25.601679, y: 18.32972, z: 21.5611}
     Radius: 10
+    HalfExtents: {x: 10, y: 3, z: 3}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 0
     Type: 1
     BoidGroupId: 255
     BoidSubGroupId: 255
@@ -147805,6 +149816,62 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
+--- !u!1 &1629201613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1629201614}
+  - component: {fileID: 1629201615}
+  m_Layer: 0
+  m_Name: Reef Obstacle (34)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1629201614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629201613}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 67.1, y: -27, z: -4.4}
+  m_LocalScale: {x: 5.773286, y: 3.3444266, z: 5.0299273}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &1629201615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629201613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 43.46065, y: 7.2397394, z: 13.592745}
+    Radius: 5.773286
+    HalfExtents: {x: 5.773286, y: 3.3444266, z: 5.0299273}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1630458339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150701,10 +152768,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updatePositionAtRuntime: 1
+  _shape: 0
   _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
   _simulationAffecter:
-    Position: {x: 13.80168, y: -10.17028, z: 6.0611}
+    Position: {x: 25.601679, y: 18.32972, z: 21.5611}
     Radius: 10
+    HalfExtents: {x: 10, y: 3, z: 3}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 0
     Type: 1
     BoidGroupId: 255
     BoidSubGroupId: 255
@@ -152039,7 +154110,7 @@ Transform:
   m_GameObject: {fileID: 1674192529}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 28.5, z: 0}
+  m_LocalPosition: {x: 10.2, y: 28.5, z: 14.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -154237,10 +156308,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updatePositionAtRuntime: 1
+  _shape: 0
   _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
   _simulationAffecter:
-    Position: {x: 13.80168, y: -10.17028, z: 6.0611}
+    Position: {x: 25.601679, y: 18.32972, z: 21.5611}
     Radius: 10
+    HalfExtents: {x: 10, y: 3, z: 3}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 0
     Type: 1
     BoidGroupId: 255
     BoidSubGroupId: 255
@@ -157729,6 +159804,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 1728447704}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1728746934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1728746935}
+  - component: {fileID: 1728746936}
+  m_Layer: 0
+  m_Name: Reef Obstacle (41)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1728746935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728746934}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+  m_LocalPosition: {x: 18, y: -42.1, z: -14.8}
+  m_LocalScale: {x: 7.1448417, y: 1.9633636, z: 6.008248}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -2.657, y: -6.447, z: -1.543}
+--- !u!114 &1728746936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728746934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 23.29332, y: 1.0375671, z: 9.321049}
+    Radius: 7.1448417
+    HalfExtents: {x: 7.1448417, y: 1.9633636, z: 6.008248}
+    Rotation: {x: -0.02238568, y: -0.056520443, z: -0.014745186, w: 0.99804157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1728963148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -161767,6 +163898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.EcosystemSimulationGPU
   _ecosystem: {fileID: 11400000, guid: 9e57b3bec364fee44893a89487aed21e, type: 2}
   _simulation: {fileID: 1776848803}
+  _enablePopulationDynamics: 0
   _tickInterval: 5
   _ratioBandLow: 1
   _ratioBandHigh: 3
@@ -161788,8 +163920,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _simulationAreaBounds:
-    m_Center: {x: 0, y: 18.5, z: 0}
-    m_Extent: {x: 55, y: 17.1, z: 55}
+    m_Center: {x: 11.8, y: 13.6, z: 15.5}
+    m_Extent: {x: 36.9, y: 10.7, z: 37.7}
   _simulationSpeedMultiplier: 1
   _globalAffecters:
   - {fileID: 1611986935}
@@ -161800,7 +163932,6 @@ MonoBehaviour:
   _boidsComputeShader: {fileID: 7200000, guid: e1ba5ae94cdf6ac45848e7ef649deae5, type: 3}
   _spatialPartitionGPU: {fileID: 1861546247}
   _gpuBoidSpawners:
-  - {fileID: 0}
   - {fileID: 777996839}
   - {fileID: 1559223346}
   - {fileID: 1031080581}
@@ -161823,13 +163954,12 @@ Transform:
   m_GameObject: {fileID: 1776848801}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalPosition: {x: 1.6, y: -14.9, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1861546246}
   - {fileID: 217255299}
-  - {fileID: 609190416}
   - {fileID: 408358339}
   m_Father: {fileID: 1674192530}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -163451,6 +165581,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 1791310251}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1791371847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1791371848}
+  - component: {fileID: 1791371849}
+  m_Layer: 0
+  m_Name: Reef Obstacle (17)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1791371848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791371847}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.0637728, w: 0.9979645}
+  m_LocalPosition: {x: -12.85, y: -30.72, z: 45.06}
+  m_LocalScale: {x: 3.0248582, y: 2.1893494, z: 2.4421742}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.313}
+--- !u!114 &1791371849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791371847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 10.62199, y: 5.711787, z: 33.907944}
+    Radius: 3.0248582
+    HalfExtents: {x: 3.0248582, y: 2.1893494, z: 2.4421742}
+    Rotation: {x: -0, y: -0, z: -0.0637728, w: 0.9979645}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1792593424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -164886,6 +167072,62 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
+--- !u!1 &1807920400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1807920401}
+  - component: {fileID: 1807920402}
+  m_Layer: 0
+  m_Name: Reef Obstacle (18)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1807920401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807920400}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0930321, y: -0.102868155, z: 0.18012863, w: 0.9738157}
+  m_LocalPosition: {x: -24.3, y: -37.2, z: 73.7}
+  m_LocalScale: {x: 5.901969, y: 2.1788716, z: 7.021325}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -8.287, y: -13.67, z: 21.954}
+--- !u!114 &1807920402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807920400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 5.919018, y: 3.0501919, z: 45.671535}
+    Radius: 5.901969
+    HalfExtents: {x: 5.901969, y: 2.1788716, z: 7.021325}
+    Rotation: {x: -0.0930321, y: -0.102868155, z: 0.18012863, w: 0.9738157}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1808137061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -166128,6 +168370,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 1453296256}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1825682195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1825682196}
+  - component: {fileID: 1825682197}
+  m_Layer: 0
+  m_Name: Reef Obstacle (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1825682196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825682195}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -64.5, y: -27.2, z: 78.3}
+  m_LocalScale: {x: 5.677209, y: 2.588352, z: 10.009271}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1825682197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825682195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: -10.59273, y: 7.157592, z: 47.560944}
+    Radius: 5.677209
+    HalfExtents: {x: 5.677209, y: 2.588352, z: 10.009271}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1826200876
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -168440,6 +170738,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 1847326781}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1848440722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1848440723}
+  - component: {fileID: 1848440724}
+  m_Layer: 0
+  m_Name: Reef Obstacle (12)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1848440723
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848440722}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.07092801, y: 0.29814786, z: -0.02222211, w: 0.95162135}
+  m_LocalPosition: {x: 3.69, y: -18.55, z: 82.63}
+  m_LocalScale: {x: 8.039068, y: 1.9399772, z: 6.656458}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -6.993, y: 35.091, z: -4.889}
+--- !u!114 &1848440724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848440722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 17.41563, y: 10.710493, z: 49.339447}
+    Radius: 8.039068
+    HalfExtents: {x: 8.039068, y: 1.9399772, z: 6.656458}
+    Rotation: {x: -0.07092801, y: 0.29814786, z: -0.02222211, w: 0.95162135}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1849112773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -175387,6 +177741,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 1938809307}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1939285214
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1939285215}
+  - component: {fileID: 1939285216}
+  m_Layer: 0
+  m_Name: Reef Obstacle (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1939285215
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939285214}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -64.6, y: -17.3, z: 84.86}
+  m_LocalScale: {x: 5.7394032, y: 1.5609114, z: 9.217095}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1939285216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939285214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: -10.633802, y: 11.223918, z: 50.255398}
+    Radius: 5.7394032
+    HalfExtents: {x: 5.7394032, y: 1.5609114, z: 9.217095}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1939293181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -176250,6 +178660,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 904170507}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1946993349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1946993350}
+  - component: {fileID: 1946993351}
+  m_Layer: 0
+  m_Name: Reef Obstacle (19)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1946993350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946993349}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0727641, y: -0.118077144, z: -0.000048834474, w: 0.99033487}
+  m_LocalPosition: {x: -28.23, y: -46.43, z: 42.66}
+  m_LocalScale: {x: 5.901969, y: 2.1788716, z: 8.2942915}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -8.287, y: -13.67, z: 0.989}
+--- !u!114 &1946993351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946993349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 4.3048096, y: -0.7409382, z: 32.92217}
+    Radius: 5.901969
+    HalfExtents: {x: 5.901969, y: 2.1788716, z: 8.2942915}
+    Rotation: {x: -0.0727641, y: -0.118077144, z: -0.000048834474, w: 0.99033487}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &1947256601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -177297,6 +179763,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4960dc20c120f09418a1708b494773e8, type: 3}
   m_PrefabInstance: {fileID: 1957777982}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1957843002
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.2394145
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0958369
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 16.096756
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a5e90649be7957b448549096b8c2cd65, type: 2}
+    - target: {fileID: -7635826562936255635, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 46c5504143995a54cb5cd4f1e61044ce, type: 2}
+    - target: {fileID: 919132149155446097, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
+      propertyPath: m_Name
+      value: stingray 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 077f004c1c6fa81459b67292a8dfe50c, type: 3}
 --- !u!1001 &1958464409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186987,6 +189518,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 2082521630}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2082537467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2082537468}
+  - component: {fileID: 2082537469}
+  m_Layer: 0
+  m_Name: Reef Obstacle (21)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2082537468
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082537467}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.15964822, y: -0.11761458, z: -0.010441472, w: 0.98008686}
+  m_LocalPosition: {x: -35.6, y: -42.13, z: 29.67}
+  m_LocalScale: {x: 1.948518, y: 0.7193482, z: 2.7383366}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518656815}
+  m_LocalEulerAnglesHint: {x: -18.385, y: -13.853, z: 1.032}
+--- !u!114 &2082537469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082537467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c793bad51815a459837b9fc5fa4988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.SimulationAffecterComponent
+  _updatePositionAtRuntime: 0
+  _shape: 1
+  _visualizationColor: {r: 1, g: 0, b: 0, a: 1}
+  _simulationAffecter:
+    Position: {x: 1.2776566, y: 1.0252438, z: 27.586655}
+    Radius: 1.948518
+    HalfExtents: {x: 1.948518, y: 0.7193482, z: 2.7383366}
+    Rotation: {x: -0.15964822, y: -0.11761458, z: -0.010441472, w: 0.98008686}
+    Shape: 1
+    Type: 1
+    BoidGroupId: 0
+    BoidSubGroupId: 0
 --- !u!1001 &2082617339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -192715,8 +195302,10 @@ SceneRoots:
   - {fileID: 59291937}
   - {fileID: 1157040162}
   - {fileID: 1674192530}
+  - {fileID: 609190416}
   - {fileID: 1141256679}
   - {fileID: 1694287553}
   - {fileID: 1413266791}
   - {fileID: 1638136875}
   - {fileID: 157791536}
+  - {fileID: 1957843002}

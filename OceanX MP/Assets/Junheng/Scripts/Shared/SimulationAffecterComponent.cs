@@ -4,12 +4,19 @@ namespace OceanX
 {
     /// <summary>
     /// Component that provides visual authoring for the <see cref="SimulationAffecter"/> structures.
+    /// Shape can be a Sphere (radius = transform X scale) or an oriented Box (half-extents =
+    /// transform scale, respecting rotation). Type can be Target, Obstacle (casual avoidance) or
+    /// Predator (flee).
     /// </summary>
     [ExecuteInEditMode]
     public class SimulationAffecterComponent : MonoBehaviour
     {
         [Header("Authoring Settings: ")]
         [SerializeField] private bool _updatePositionAtRuntime = false;
+
+        [Tooltip("Sphere uses the transform's X scale as radius. Box uses the transform's scale as " +
+                 "per-axis half-extents and respects the transform's rotation (oriented box).")]
+        [SerializeField] private SimulationAffecterShape _shape = SimulationAffecterShape.Sphere;
 
         [Header("Visualization: ")]
         [SerializeField] protected Color _visualizationColor = Color.red;
@@ -36,18 +43,45 @@ namespace OceanX
             Color visualizationColor = _visualizationColor;
             visualizationColor.a = 0.25f;
             Gizmos.color = visualizationColor;
-            Gizmos.DrawSphere(transform.position, transform.localScale.x);
+
+            if (_shape == SimulationAffecterShape.Box)
+            {
+                // Draw the oriented influence box (full size = 2 x half-extents = 2 x localScale).
+                Matrix4x4 previous = Gizmos.matrix;
+                Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
+                Vector3 fullSize = transform.localScale * 2f;
+                Gizmos.DrawCube(Vector3.zero, fullSize);
+                Gizmos.color = new Color(visualizationColor.r, visualizationColor.g, visualizationColor.b, 0.9f);
+                Gizmos.DrawWireCube(Vector3.zero, fullSize);
+                Gizmos.matrix = previous;
+            }
+            else
+            {
+                Gizmos.DrawSphere(transform.position, transform.localScale.x);
+            }
         }
 
         private void OnValidate()
         {
-            if(_simulationAffecter.Type == SimulationAffecterType.Obstacle)
+            // Bake shape + transform-derived fields immediately so a static affecter is correct in the
+            // struct the moment it is edited (without waiting for the next Update tick).
+            _simulationAffecter.Shape = _shape;
+            _simulationAffecter.Position = transform.position;
+            _simulationAffecter.Radius = transform.localScale.x;
+            _simulationAffecter.HalfExtents = transform.localScale;
+            _simulationAffecter.Rotation = transform.rotation;
+
+            switch (_simulationAffecter.Type)
             {
-                _visualizationColor = Color.red;
-            }
-            else
-            {
-                _visualizationColor = Color.blue;
+                case SimulationAffecterType.Predator:
+                    _visualizationColor = new Color(1f, 0.35f, 0f); // orange — flee
+                    break;
+                case SimulationAffecterType.Obstacle:
+                    _visualizationColor = Color.red;                // casual avoidance
+                    break;
+                default:
+                    _visualizationColor = Color.blue;               // target
+                    break;
             }
         }
 
@@ -68,6 +102,10 @@ namespace OceanX
             // Positioning the affecter at the position of the transform, for easier initialization in the editor.
             _simulationAffecter.Position = transform.position;
             _simulationAffecter.Radius = transform.localScale.x;
+            // Box influence tracks the transform's scale (per-axis half-extents) and rotation.
+            _simulationAffecter.Shape = _shape;
+            _simulationAffecter.HalfExtents = transform.localScale;
+            _simulationAffecter.Rotation = transform.rotation;
         }
 
         /// <summary>

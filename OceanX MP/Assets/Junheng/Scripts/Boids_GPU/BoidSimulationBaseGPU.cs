@@ -322,10 +322,18 @@ namespace OceanX.BoidsGPU
         /// the provided <paramref name="simulationAffecter"/> in a GPU-readable type.</returns>
         protected virtual AffecterGPU ExtractAffecterInfo(SimulationAffecter simulationAffecter)
         {
+            Quaternion rotation = simulationAffecter.Rotation;
+            // A zero/default quaternion would rotate vectors to zero on the GPU; fall back to identity.
+            if (rotation.x == 0f && rotation.y == 0f && rotation.z == 0f && rotation.w == 0f)
+                rotation = Quaternion.identity;
+
             return new AffecterGPU
             {
                 Position = simulationAffecter.Position,
                 Radius = simulationAffecter.Radius,
+                HalfExtents = simulationAffecter.HalfExtents,
+                Shape = (float)((int)simulationAffecter.Shape),
+                Rotation = rotation,
                 AffecterType = (float)((int)simulationAffecter.Type),
                 BoidGroupId = simulationAffecter.BoidGroupId,
                 BoidSubGroupId = simulationAffecter.BoidSubGroupId,

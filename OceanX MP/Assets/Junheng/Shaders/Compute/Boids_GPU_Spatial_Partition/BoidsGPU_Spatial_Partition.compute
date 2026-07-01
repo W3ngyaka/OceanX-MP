@@ -2,7 +2,21 @@
 #define THREAD_GROUP_SIZE 256
 #define TARGET_AFFECTER_TYPE 0.0
 #define OBSTACLE_AFFECTER_TYPE 1.0
+#define PREDATOR_AFFECTER_TYPE 2.0
 #define AFFECTS_ALL 255
+#define SHAPE_SPHERE 0.5   // shape < 0.5 => sphere, else box
+// How strongly an obstacle bends the boid's schooling direction the moment it enters the zone.
+// This weights the away-vector against the school heading: higher = the away direction dominates,
+// so the fish turns out hard and immediately (a snappy "jerk away") while still keeping a touch of
+// school coherence. It is a STEERING weight only — it never speeds the fish up (still casual, no
+// acceleration; that is reserved for Predator). Bump higher for an even harder turn.
+#define OBSTACLE_AVOID_STRENGTH 6.0
+
+// When reacting to an affecter (predator flee OR obstacle avoidance) the boid SKIPS the slow
+// angular-velocity ramp and turns at this multiple of its max angular velocity, so it snaps toward
+// the escape heading the frame it enters the zone instead of easing in over ~a second. This is a
+// TURN-RATE boost only — it does not change linear speed. Raise for an even snappier reaction.
+#define AVOID_TURN_MULTIPLIER 8.0
 
 #include "Assets/Junheng/Shaders/Compute/BoidSimulationData.hlsl"
 #include "Assets/Junheng/Shaders/Compute/Quaternion.hlsl"
@@ -27,16 +41,69 @@ StructuredBuffer<BoidSchoolInfo> _BoidSchools;
 // can affect the behavior of the boids.
 StructuredBuffer<Affecter> _Affecters;
 
-float InverseLerp(float minValue, float maxValue, float value) 
+float InverseLerp(float minValue, float maxValue, float value)
 {
     return (value - minValue) / (maxValue - minValue);
 }
 
+// -------------------------------------------------------------------------
+// Affecter shape helpers — an affecter's influence volume is either a sphere
+// (radius) or an oriented box (halfExtents + rotation). These give one
+// surface-distance / inside test / away-direction that works for both shapes.
+// -------------------------------------------------------------------------
+
+// Brings a world position into the affecter's local (box) space using the
+// inverse (conjugate) of the box rotation. For a unit quaternion the conjugate
+// is the inverse, so this un-rotates the world offset into axis-aligned space.
+float3 AffecterLocalPosition(Affecter affecter, float3 worldPosition)
+{
+    float4 inverseRotation = float4(-affecter.rotation.xyz, affecter.rotation.w);
+    return Multiply(InitializeQuaternion(inverseRotation), worldPosition - affecter.position);
+}
+
+// Distance from a boid to the affecter's influence surface. 0 when inside.
+float AffecterSurfaceDistance(Affecter affecter, float3 boidPosition)
+{
+    if(affecter.shape < SHAPE_SPHERE)
+    {
+        return max(0.0, length(affecter.position - boidPosition) - affecter.radius);
+    }
+    float3 delta = abs(AffecterLocalPosition(affecter, boidPosition)) - affecter.halfExtents;
+    return length(max(delta, 0.0));
+}
+
+// Is the boid inside the affecter's influence volume?
+bool BoidInsideAffecter(Affecter affecter, float3 boidPosition)
+{
+    if(affecter.shape < SHAPE_SPHERE)
+    {
+        return length(affecter.position - boidPosition) <= affecter.radius;
+    }
+    float3 local = AffecterLocalPosition(affecter, boidPosition);
+    return all(abs(local) <= affecter.halfExtents);
+}
+
+// World-space direction pointing away from the affecter centre (used to steer clear).
+float3 AffecterAwayDirection(Affecter affecter, float3 boidPosition)
+{
+    float3 awayVector = boidPosition - affecter.position;
+    float lengthSquared = dot(awayVector, awayVector);
+    return lengthSquared > 1e-6 ? awayVector * rsqrt(lengthSquared) : float3(0.0, 1.0, 0.0);
+}
+
 // Function returns the closest affecter of the specified affecter type to the current boid.
+// If no affecter of that type exists, returns a harmless "null" affecter (Sphere, radius -1)
+// so that BoidInsideAffecter() / distance tests always report "not affected" instead of
+// reading an uninitialized struct (which could make boids flee/avoid nothing at random).
 Affecter GetClosestAffecter(BoidInfo boidInfo, float affecterType)
 {
-    // Initial variables.
-    Affecter closestAffecter;
+    // Initial variables — closestAffecter defaults to a no-op sphere with negative radius.
+    Affecter closestAffecter = (Affecter)0;
+    closestAffecter.radius = -1.0;                 // negative radius => never "inside"
+    closestAffecter.halfExtents = float3(-1, -1, -1);
+    closestAffecter.shape = 0.0;                    // sphere path (uses the negative radius)
+    closestAffecter.rotation = float4(0, 0, 0, 1); // identity, just in case
+    closestAffecter.affecterType = -1.0;
     float closestAffecterDistance = -1;
 
     int rawBoidIdBits = asint(boidInfo.boidID);
@@ -64,11 +131,10 @@ Affecter GetClosestAffecter(BoidInfo boidInfo, float affecterType)
             continue;
         }
 
-        // Get the distance between the boid and the affecter and 
-        // cache the affecter if it's the closest one. Or if there isn't a closest 
+        // Get the distance between the boid and the affecter (shape-aware: sphere or box) and
+        // cache the affecter if it's the closest one. Or if there isn't a closest
         // affecter initialized yet.
-        float3 boidToAffecterVector = (affecter.position - boidInfo.position);
-        float distanceFromAffecter = max(0, length(boidToAffecterVector) - affecter.radius);
+        float distanceFromAffecter = AffecterSurfaceDistance(affecter, boidInfo.position);
         if(closestAffecterDistance < 0.0 || distanceFromAffecter < closestAffecterDistance) {
             closestAffecterDistance = distanceFromAffecter;
             closestAffecter = affecter;
@@ -131,7 +197,7 @@ void UpdateMovementSpeed(bool shouldAccelerate, BoidSchoolInfo boidSchoolInfo, i
 
 // Function updates the current movement direction of the boid toward the target direction it would like to move
 // based on the current angular acceleration and movement speed.
-void UpdateMovementDirection(float3 targetDirection, BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo) 
+void UpdateMovementDirection(float3 targetDirection, BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo, bool snapTurn)
 {
     // Calculate the angle that the fish would need to steer in order to face the desired movement direction.
     quaternion rotationTowardTarget = LookRotation(targetDirection, float3(0, 1, 0));
@@ -146,10 +212,22 @@ void UpdateMovementDirection(float3 targetDirection, BoidSchoolInfo boidSchoolIn
     float currentAngularAcceleration = clamp(boidInfo.angularAcceleration + (currentAngularJerk - angularDeceleration) * _TimeDelta, 0.0, boidSchoolInfo.maxAngularAcceleration);
     float currentAngularVelocity = clamp(boidInfo.angularVelocity + currentAngularAcceleration * _TimeDelta, 0.0, boidSchoolInfo.maxAngularVelocity);
 
-    // Rotate the direction toward the desired one based on the current angular velocity and the time passed.
-    quaternion newRotation = RotateTowards(currentRotation, rotationTowardTarget, currentAngularVelocity * _TimeDelta);
-    // Smooth the rotation based on the previous one, to produce smoother movement.
-    newRotation = Slerp(currentRotation, newRotation, 0.85);
+    // Affecter reaction snap: bypass the ramp entirely — turn at a high multiple of max angular
+    // velocity and apply the rotation fully — so the boid whips toward the escape heading the frame
+    // it enters the zone. Turn-rate only; linear speed is handled separately (no speed-up here).
+    float appliedAngularVelocity = snapTurn ? boidSchoolInfo.maxAngularVelocity * AVOID_TURN_MULTIPLIER : currentAngularVelocity;
+    float rotationSmoothing = snapTurn ? 1.0 : 0.85;
+
+    // Rotate the direction toward the desired one based on the (possibly boosted) angular velocity.
+    quaternion newRotation = RotateTowards(currentRotation, rotationTowardTarget, appliedAngularVelocity * _TimeDelta);
+    // Smooth the rotation based on the previous one, to produce smoother movement (full apply when snapping).
+    newRotation = Slerp(currentRotation, newRotation, rotationSmoothing);
+
+    // Keep angular velocity primed while snapping so the reaction stays instant across the whole zone.
+    if(snapTurn)
+    {
+        currentAngularVelocity = boidSchoolInfo.maxAngularVelocity;
+    }
 
     // If we haven't increased the angular acceleration this frame, this means that the angular velocity should slowly deteriorate.
     if(currentAngularJerk <= 0.0)
@@ -341,35 +419,59 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     int boidGroupId = rawBoidIdBits & 0xFF;
     BoidSchoolInfo boidSchoolInfo = _BoidSchools[boidGroupId];
 
-    // Getting the closest obstacle to this boid.
-    Affecter closestObstacle = GetClosestAffecter(boidInfo, OBSTACLE_AFFECTER_TYPE);
-    
-    // Check if the obstacle is close enough to this boid that we need to avoid it.
-    float3 obstacleToBoidVector = (boidInfo.position - closestObstacle.position);
-    float distanceFromObstacle = length(obstacleToBoidVector);
-    bool needToAvoidObstacle = distanceFromObstacle <= closestObstacle.radius;
+    // ---- Affecter response ----------------------------------------------------------------
+    // Predator (flee) has priority over Obstacle (casual avoidance):
+    //   Predator  -> panic: steer straight away from it AND accelerate to escape.
+    //   Obstacle  -> casual: bend the schooling direction to curve around it, no speed-up.
+    // -------------------------------------------------------------------------------------------
+    bool fleeingPredator = false;
+    bool reactingToAffecter = false;   // predator flee OR obstacle avoidance => snap the turn (instant)
+    float3 desiredMovementDirection;
 
-    // If we are in proximity of an obstacle, go in the direction away from that obstacle. Otherwise,
-    // calculate the desired movement direction based on the surrounding fish and targets in the simulation.
-    float3 desiredMovementDirection = needToAvoidObstacle ? 
-        normalize(obstacleToBoidVector) : 
-        CalculateSchoolBehaviourDirection(boidIndex, boidSchoolInfo, boidInfo);
-    
-    // Check if the desired direction will lead to leaving the simulation bounds. 
+    Affecter closestPredator = GetClosestAffecter(boidInfo, PREDATOR_AFFECTER_TYPE);
+    if(BoidInsideAffecter(closestPredator, boidInfo.position))
+    {
+        // Flee: hard steer directly away; the speed pass below will accelerate.
+        desiredMovementDirection = AffecterAwayDirection(closestPredator, boidInfo.position);
+        fleeingPredator = true;
+        reactingToAffecter = true;
+    }
+    else
+    {
+        // Not fleeing — compute the normal schooling direction (kept lazy for performance).
+        float3 schoolDirection = CalculateSchoolBehaviourDirection(boidIndex, boidSchoolInfo, boidInfo);
+
+        Affecter closestObstacle = GetClosestAffecter(boidInfo, OBSTACLE_AFFECTER_TYPE);
+        if(BoidInsideAffecter(closestObstacle, boidInfo.position))
+        {
+            // Casual avoidance: blend an away-vector into the school heading so the fish curves
+            // around the obstacle without abandoning the school or panicking (no speed-up), and
+            // snap the turn so it reacts the moment it enters the zone.
+            float3 awayDirection = AffecterAwayDirection(closestObstacle, boidInfo.position);
+            desiredMovementDirection = normalize(schoolDirection + awayDirection * OBSTACLE_AVOID_STRENGTH);
+            reactingToAffecter = true;
+        }
+        else
+        {
+            desiredMovementDirection = schoolDirection;
+        }
+    }
+
+    // Check if the desired direction will lead to leaving the simulation bounds.
     // If so, offset the movement direction towards the center of the simulation area.
-    if(WillLeaveSimulationArea(boidInfo.position, desiredMovementDirection, boidInfo.speed)) 
+    if(WillLeaveSimulationArea(boidInfo.position, desiredMovementDirection, boidInfo.speed))
     {
         desiredMovementDirection = normalize(_SimulationAreaCenter - boidInfo.position);
 
-        // Remove the need for speeding when the boid needs to return inside the simulation bounds.
-        needToAvoidObstacle = false;
+        // Returning to bounds is not a flee — don't accelerate for it.
+        fleeingPredator = false;
     }
 
-    // Steer the boid toward the desired movement direction.
-    UpdateMovementDirection(desiredMovementDirection, boidSchoolInfo, boidInfo);
+    // Steer the boid toward the desired movement direction (snapping instantly when reacting to an affecter).
+    UpdateMovementDirection(desiredMovementDirection, boidSchoolInfo, boidInfo, reactingToAffecter);
 
-    // Speed up or slow down based on desired movement direction and obstacle avoidance.
-    UpdateMovementSpeed(needToAvoidObstacle, boidSchoolInfo, boidInfo);
+    // Only a predator flee accelerates the boid; casual obstacle avoidance keeps normal speed.
+    UpdateMovementSpeed(fleeingPredator, boidSchoolInfo, boidInfo);
 
     // After the movement properties have been updated, update the current position of the boid.
     UpdatePosition(boidInfo);

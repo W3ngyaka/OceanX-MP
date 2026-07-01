@@ -225,14 +225,14 @@ IL2CPP_EXTERN_C String_t* _stringLiteral01A849374C26F36DBF4641EFCBB31ABDCEFF10D2
 IL2CPP_EXTERN_C String_t* _stringLiteral17BEA8808B4AF636DC38E48BA8D38DA1F4AD033D;
 IL2CPP_EXTERN_C String_t* _stringLiteral340459D332B370D10C763FB6869874A9423451DC;
 IL2CPP_EXTERN_C String_t* _stringLiteral34ED1B97895109266462E8A20322BD0A7B927EFE;
-IL2CPP_EXTERN_C String_t* _stringLiteral3719790758126701362C90AC0429DE93C06AE900;
 IL2CPP_EXTERN_C String_t* _stringLiteral3D7C4D61306F3BE1366B781052CA3933CF9743BD;
 IL2CPP_EXTERN_C String_t* _stringLiteral46580D65357E6BC22728934BD6BC047227EFE0E6;
 IL2CPP_EXTERN_C String_t* _stringLiteral49AE794C00022ECA141068DEA9531BF6E0D342B7;
-IL2CPP_EXTERN_C String_t* _stringLiteral6325938A98458962390712A8C4B3A8AA563FC210;
-IL2CPP_EXTERN_C String_t* _stringLiteral64A35B4FCA00D7BFD19D5FF57956C413C42A1750;
+IL2CPP_EXTERN_C String_t* _stringLiteral59300B07AB454890454CC7A272C38A97A8CBA10C;
+IL2CPP_EXTERN_C String_t* _stringLiteral60B7F2E2DA4C4D4438B9801711F5D0F56022ECBF;
 IL2CPP_EXTERN_C String_t* _stringLiteral6A590AEB12CC82EC2762AC483ED0E230A9F1C887;
 IL2CPP_EXTERN_C String_t* _stringLiteral7F0BEBDE84C6A71EB35A23EEA9A8B080FC5A3234;
+IL2CPP_EXTERN_C String_t* _stringLiteral8F4CD0DE441472850227EE211DC456C268CE2F2B;
 IL2CPP_EXTERN_C String_t* _stringLiteralA6B7A7F2ABD92AD9952A932E91E1EA9DBCBCB1FD;
 IL2CPP_EXTERN_C String_t* _stringLiteralB85D8E54326F26FE458EF6E7627BB1DFDEC972C4;
 IL2CPP_EXTERN_C String_t* _stringLiteralD7728838528D3FFE9101E6738DA8F9498575E4EA;
@@ -2064,7 +2064,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_RecordRenderGraph_mE5
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&UniversalRenderer_t31019D4AD52F646128E0D1649E7B87E33BA36D8A_il2cpp_TypeInfo_var);
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral340459D332B370D10C763FB6869874A9423451DC);
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral34ED1B97895109266462E8A20322BD0A7B927EFE);
-		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral6325938A98458962390712A8C4B3A8AA563FC210);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral59300B07AB454890454CC7A272C38A97A8CBA10C);
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral6A590AEB12CC82EC2762AC483ED0E230A9F1C887);
 		s_Il2CppMethodInitialized = true;
 	}
@@ -2077,11 +2077,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_RecordRenderGraph_mE5
 	RenderTextureDescriptor_t69845881CE6437E4E61F92074F2F84079F23FA46 V_5;
 	memset((&V_5), 0, sizeof(V_5));
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:49>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:49>
 		RenderGraph_t73ECE03B3CA3D0D17F1448D64AE020E81592AA1E* L_0 = ___0_renderGraph;
 		NullCheck(L_0);
 		RuntimeObject* L_1;
-		L_1 = RenderGraph_AddRasterRenderPass_TisPassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8_mE93D5DB46D960D42A66640AC8EF8CBA68F2C34DA(L_0, _stringLiteral6A590AEB12CC82EC2762AC483ED0E230A9F1C887, (&V_1), _stringLiteral6325938A98458962390712A8C4B3A8AA563FC210, ((int32_t)49), RenderGraph_AddRasterRenderPass_TisPassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8_mE93D5DB46D960D42A66640AC8EF8CBA68F2C34DA_RuntimeMethod_var);
+		L_1 = RenderGraph_AddRasterRenderPass_TisPassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8_mE93D5DB46D960D42A66640AC8EF8CBA68F2C34DA(L_0, _stringLiteral6A590AEB12CC82EC2762AC483ED0E230A9F1C887, (&V_1), _stringLiteral59300B07AB454890454CC7A272C38A97A8CBA10C, ((int32_t)49), RenderGraph_AddRasterRenderPass_TisPassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8_mE93D5DB46D960D42A66640AC8EF8CBA68F2C34DA_RuntimeMethod_var);
 		V_0 = L_1;
 	}
 	{
@@ -2111,19 +2111,19 @@ IL_00f5:
 		});
 		try
 		{
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:51>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:51>
 			ContextContainer_t384E08F63FABEFF6A7F1A753F5EF02699DAD414C* L_4 = ___1_frameData;
 			NullCheck(L_4);
 			UniversalCameraData_t7904AE9D68B973761A72DFAA7CA3DE915696E1C7* L_5;
 			L_5 = ContextContainer_Get_TisUniversalCameraData_t7904AE9D68B973761A72DFAA7CA3DE915696E1C7_mE62F7903614384541B770CC0B9A99BD2E608A0F8_inline(L_4, ContextContainer_Get_TisUniversalCameraData_t7904AE9D68B973761A72DFAA7CA3DE915696E1C7_mE62F7903614384541B770CC0B9A99BD2E608A0F8_RuntimeMethod_var);
 			V_2 = L_5;
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:53>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:53>
 			ContextContainer_t384E08F63FABEFF6A7F1A753F5EF02699DAD414C* L_6 = ___1_frameData;
 			NullCheck(L_6);
 			UnderwaterRenderingData_t07347FFBCA8CB09FA7466D84D99AB344F6F5BC70* L_7;
 			L_7 = ContextContainer_Get_TisUnderwaterRenderingData_t07347FFBCA8CB09FA7466D84D99AB344F6F5BC70_mEC7CE80E5A74406C3973BDFFE18E0A9CB3EA14A9_inline(L_6, ContextContainer_Get_TisUnderwaterRenderingData_t07347FFBCA8CB09FA7466D84D99AB344F6F5BC70_mEC7CE80E5A74406C3973BDFFE18E0A9CB3EA14A9_RuntimeMethod_var);
 			V_3 = L_7;
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:55>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:55>
 			UniversalCameraData_t7904AE9D68B973761A72DFAA7CA3DE915696E1C7* L_8 = V_2;
 			NullCheck(L_8);
 			RenderTextureDescriptor_t69845881CE6437E4E61F92074F2F84079F23FA46* L_9 = (RenderTextureDescriptor_t69845881CE6437E4E61F92074F2F84079F23FA46*)(&L_8->___cameraTargetDescriptor);
@@ -2135,17 +2135,17 @@ IL_00f5:
 			int32_t L_13;
 			L_13 = RenderTextureDescriptor_get_height_m1006F9AA45029715C552C8A8C2F102F63D3A91EC_inline(L_12, NULL);
 			Vector2Int__ctor_mC20D1312133EB8CB63EC11067088B043660F11CE_inline((&V_4), L_10, L_13, NULL);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:57>
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:58>
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:59>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:57>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:58>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:59>
 			int32_t L_14;
 			L_14 = Vector2Int_get_x_mA2CACB1B6E6B5AD0CCC32B2CD2EDCE3ECEB50576_inline((&V_4), NULL);
 			int32_t L_15;
 			L_15 = Vector2Int_get_y_m48454163ECF0B463FB5A16A0C4FC4B14DB0768B3_inline((&V_4), NULL);
 			RenderTextureDescriptor__ctor_m12E638C1D1D00D64015B37BD16841745629D7929((&V_5), ((int32_t)(L_14/4)), ((int32_t)(L_15/4)), 5, 0, NULL);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:60>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:60>
 			RenderTextureDescriptor_set_msaaSamples_m6910E09489372746391B14FBAF59A7237539D6C4_inline((&V_5), 1, NULL);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:62>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:62>
 			PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* L_16 = V_1;
 			RenderGraph_t73ECE03B3CA3D0D17F1448D64AE020E81592AA1E* L_17 = ___0_renderGraph;
 			RenderTextureDescriptor_t69845881CE6437E4E61F92074F2F84079F23FA46 L_18 = V_5;
@@ -2154,14 +2154,14 @@ IL_00f5:
 			L_19 = UniversalRenderer_CreateRenderGraphTexture_m4BCA4F2339499873D3DE1C8562D3FB7B7DE21613(L_17, L_18, _stringLiteral340459D332B370D10C763FB6869874A9423451DC, (bool)1, 1, 1, NULL);
 			NullCheck(L_16);
 			L_16->___renderTarget = L_19;
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:63>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:63>
 			PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* L_20 = V_1;
 			Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_21;
 			L_21 = UnderwaterUtilities_get_WaterLineMesh_m1B1CAE7E27F73F0E44CA718C797FAD15CF79A0B9(NULL);
 			NullCheck(L_20);
 			L_20->___mesh = L_21;
 			Il2CppCodeGenWriteBarrier((void**)(&L_20->___mesh), (void*)L_21);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:65>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:65>
 			PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* L_22 = V_1;
 			UnderwaterRenderingData_t07347FFBCA8CB09FA7466D84D99AB344F6F5BC70* L_23 = V_3;
 			NullCheck(L_23);
@@ -2171,7 +2171,7 @@ IL_00f5:
 			NullCheck(L_22);
 			L_22->___material = L_25;
 			Il2CppCodeGenWriteBarrier((void**)(&L_22->___material), (void*)L_25);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:66>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:66>
 			PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* L_26 = V_1;
 			PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* L_27 = V_1;
 			NullCheck(L_27);
@@ -2181,14 +2181,14 @@ IL_00f5:
 			L_29 = Material_FindPass_mCCAAC088EE0E39AD5950BA41E965371417DBCFBC(L_28, _stringLiteral34ED1B97895109266462E8A20322BD0A7B927EFE, NULL);
 			NullCheck(L_26);
 			L_26->___passIndex = L_29;
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:77>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:77>
 			RuntimeObject* L_30 = V_0;
 			PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* L_31 = V_1;
 			NullCheck(L_31);
 			TextureHandle_t680ABA3F8B50859351BA5DD66220084F87F37388 L_32 = L_31->___renderTarget;
 			NullCheck(L_30);
 			InterfaceActionInvoker3< TextureHandle_t680ABA3F8B50859351BA5DD66220084F87F37388, int32_t, int32_t >::Invoke(0, IRenderAttachmentRenderGraphBuilder_tA98DFE27A0742D0C5FF054F2785672CB2BB09F73_il2cpp_TypeInfo_var, L_30, L_32, 0, 2);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:78>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:78>
 			RuntimeObject* L_33 = V_0;
 			PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* L_34 = V_1;
 			NullCheck(L_34);
@@ -2197,24 +2197,24 @@ IL_00f5:
 			int32_t L_36 = ((UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_il2cpp_TypeInfo_var))->____UnderwaterMask;
 			NullCheck(L_33);
 			InterfaceActionInvoker2< TextureHandle_t680ABA3F8B50859351BA5DD66220084F87F37388*, int32_t >::Invoke(3, IBaseRenderGraphBuilder_tFFF84F72F862F1BE246A789AB6A59F959B490F3D_il2cpp_TypeInfo_var, L_33, L_35, L_36);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:80>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:80>
 			RuntimeObject* L_37 = V_0;
 			NullCheck(L_37);
 			InterfaceActionInvoker1< bool >::Invoke(11, IBaseRenderGraphBuilder_tFFF84F72F862F1BE246A789AB6A59F959B490F3D_il2cpp_TypeInfo_var, L_37, (bool)0);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:81>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:81>
 			RuntimeObject* L_38 = V_0;
 			NullCheck(L_38);
 			InterfaceActionInvoker1< bool >::Invoke(12, IBaseRenderGraphBuilder_tFFF84F72F862F1BE246A789AB6A59F959B490F3D_il2cpp_TypeInfo_var, L_38, (bool)1);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:83>
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:84>
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:85>
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:86>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:83>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:84>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:85>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:86>
 			RuntimeObject* L_39 = V_0;
 			BaseRenderFunc_2_t6A8B4F783EF533E6DD58582E0D75354C57A4D7B0* L_40 = (BaseRenderFunc_2_t6A8B4F783EF533E6DD58582E0D75354C57A4D7B0*)il2cpp_codegen_object_new(BaseRenderFunc_2_t6A8B4F783EF533E6DD58582E0D75354C57A4D7B0_il2cpp_TypeInfo_var);
 			BaseRenderFunc_2__ctor_m6C188B7719784D0E5F64759DBFA0F02A6F080493(L_40, __this, (intptr_t)((void*)UnderwaterMaskPass_U3CRecordRenderGraphU3Eb__8_0_m9787F93EA1BE10FBB7ACFF894C93D2B0DCA431FB_RuntimeMethod_var), NULL);
 			NullCheck(L_39);
 			GenericInterfaceActionInvoker1< BaseRenderFunc_2_t6A8B4F783EF533E6DD58582E0D75354C57A4D7B0* >::Invoke(IRasterRenderGraphBuilder_SetRenderFunc_TisPassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8_mD19FDCBE64AEF443FD63651076FB39F6B446E6DB_RuntimeMethod_var, L_39, L_40);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:87>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:87>
 			goto IL_00f6;
 		}
 		catch(Il2CppExceptionWrapper& e)
@@ -2225,7 +2225,7 @@ IL_00f5:
 
 IL_00f6:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:88>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:88>
 		return;
 	}
 }
@@ -2233,14 +2233,14 @@ IL_00f6:
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Execute_mE5B6A12DE80E6338CEC9BB2C8403C55361013686 (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___0_context, PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* ___1_data, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:92>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:92>
 		RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 L_0 = ___0_context;
 		RasterCommandBuffer_t4300C4F080EA3CF43C7ACFDBD4F94EA633FE98E8* L_1 = L_0.___cmd;
 		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_2;
 		L_2 = Color_get_black_mB50217951591A045844C61E7FF31EEE3FEF16737_inline(NULL);
 		NullCheck(L_1);
 		RasterCommandBuffer_ClearRenderTarget_m90F72F1560A97DD89193B1AA7049E0E5D5710FB7(L_1, (bool)1, (bool)1, L_2, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:93>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:93>
 		RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 L_3 = ___0_context;
 		RasterCommandBuffer_t4300C4F080EA3CF43C7ACFDBD4F94EA633FE98E8* L_4 = L_3.___cmd;
 		PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* L_5 = ___1_data;
@@ -2256,7 +2256,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Execute_mE5B6A12DE80E
 		int32_t L_11 = L_10->___passIndex;
 		NullCheck(L_4);
 		RasterCommandBuffer_DrawMesh_m56F6001D4DA4E6A1BBE01FD1E913369AACEEB393(L_4, L_6, L_7, L_9, 0, L_11, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:97>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:97>
 		return;
 	}
 }
@@ -2264,7 +2264,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Execute_mE5B6A12DE80E
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Dispose_mA4B124BB2C183BBE26CFB566899B71EB5C60AFF9 (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:102>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:102>
 		return;
 	}
 }
@@ -2272,7 +2272,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Dispose_mA4B124BB2C18
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Configure_m92BF46746B4547099D48A10F3A2EEB245F2BC837 (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, CommandBuffer_tB56007DC84EF56296C325EC32DD12AC1E3DC91F7* ___0_cmd, RenderTextureDescriptor_t69845881CE6437E4E61F92074F2F84079F23FA46 ___1_cameraTextureDescriptor, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:107>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:107>
 		return;
 	}
 }
@@ -2280,7 +2280,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Configure_m92BF46746B
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Execute_m895CDAC98C5EDBB647A625162343D5A914E58D76 (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, ScriptableRenderContext_t5AB09B3602BEB456E0DC3D53926D3A3BDAF08E36 ___0_context, RenderingData_tAAA01190551D6D5954314E3E1E85B58DD45EED71* ___1_renderingData, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:108>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:108>
 		return;
 	}
 }
@@ -2305,12 +2305,12 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass__cctor_m11F78A63DC9A1
 		s_Il2CppMethodInitialized = true;
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:18>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:18>
 		ProfilingSampler_t420D4672EDB44E0EF980B31ADFD9E5747200FECE* L_0 = (ProfilingSampler_t420D4672EDB44E0EF980B31ADFD9E5747200FECE*)il2cpp_codegen_object_new(ProfilingSampler_t420D4672EDB44E0EF980B31ADFD9E5747200FECE_il2cpp_TypeInfo_var);
 		ProfilingSampler__ctor_m26500989FCDB07FA33C9A3BB7F215CBD892F5BB7(L_0, _stringLiteralA6B7A7F2ABD92AD9952A932E91E1EA9DBCBCB1FD, NULL);
 		((UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_il2cpp_TypeInfo_var))->___profilerSampler = L_0;
 		Il2CppCodeGenWriteBarrier((void**)(&((UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_il2cpp_TypeInfo_var))->___profilerSampler), (void*)L_0);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:24>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:24>
 		int32_t L_1;
 		L_1 = Shader_PropertyToID_mE98523D50F5656CAE89B30695C458253EB8956CA(_stringLiteral340459D332B370D10C763FB6869874A9423451DC, NULL);
 		((UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_il2cpp_TypeInfo_var))->____UnderwaterMask = L_1;
@@ -2321,11 +2321,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass__cctor_m11F78A63DC9A1
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_U3CRecordRenderGraphU3Eb__8_0_m9787F93EA1BE10FBB7ACFF894C93D2B0DCA431FB (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* ___0_data, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___1_context, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:85>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:85>
 		RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 L_0 = ___1_context;
 		PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* L_1 = ___0_data;
 		UnderwaterMaskPass_Execute_mE5B6A12DE80E6338CEC9BB2C8403C55361013686(__this, L_0, L_1, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:86>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:86>
 		return;
 	}
 }
@@ -2350,22 +2350,22 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void RenderTargetDebugContext__ctor_m125F915D
 		s_Il2CppMethodInitialized = true;
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:30>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:30>
 		RenderTarget__ctor_m8EE530FDF451442AB134C2D1C7CE276F0F962260(__this, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:32>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:32>
 		((RenderTarget_tF166C9D2D03CF924F50D1F44B8DEF9AC2E086A14*)__this)->___name = _stringLiteral34ED1B97895109266462E8A20322BD0A7B927EFE;
 		Il2CppCodeGenWriteBarrier((void**)(&((RenderTarget_tF166C9D2D03CF924F50D1F44B8DEF9AC2E086A14*)__this)->___name), (void*)_stringLiteral34ED1B97895109266462E8A20322BD0A7B927EFE);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:33>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:33>
 		((RenderTarget_tF166C9D2D03CF924F50D1F44B8DEF9AC2E086A14*)__this)->___description = _stringLiteralB85D8E54326F26FE458EF6E7627BB1DFDEC972C4;
 		Il2CppCodeGenWriteBarrier((void**)(&((RenderTarget_tF166C9D2D03CF924F50D1F44B8DEF9AC2E086A14*)__this)->___description), (void*)_stringLiteralB85D8E54326F26FE458EF6E7627BB1DFDEC972C4);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:34>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:34>
 		((RenderTarget_tF166C9D2D03CF924F50D1F44B8DEF9AC2E086A14*)__this)->___textureName = _stringLiteral340459D332B370D10C763FB6869874A9423451DC;
 		Il2CppCodeGenWriteBarrier((void**)(&((RenderTarget_tF166C9D2D03CF924F50D1F44B8DEF9AC2E086A14*)__this)->___textureName), (void*)_stringLiteral340459D332B370D10C763FB6869874A9423451DC);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:35>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:35>
 		il2cpp_codegen_runtime_class_init_inline(UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_il2cpp_TypeInfo_var);
 		int32_t L_0 = ((UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8_il2cpp_TypeInfo_var))->____UnderwaterMask;
 		((RenderTarget_tF166C9D2D03CF924F50D1F44B8DEF9AC2E086A14*)__this)->___propertyID = L_0;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:36>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterMaskPass.cs:36>
 		return;
 	}
 }
@@ -2397,17 +2397,17 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PassData__ctor_m0C557A0F0379E4BEA20526C4
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Setup_mB44B0E0898DF74BCEEE10828A2477047AE4C1DD0 (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, UnderwaterRenderingSettings_t1C052AF71A2984406B40FEB3A7C9E6BF508D8677* ___0_m_settings, UnderwaterSurface_t8A83FA45B247FB62D60B13E83FDD079EF07641E8* ___1_surface, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:30>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:30>
 		UnderwaterRenderingSettings_t1C052AF71A2984406B40FEB3A7C9E6BF508D8677* L_0 = ___0_m_settings;
 		__this->___settings = L_0;
 		Il2CppCodeGenWriteBarrier((void**)(&__this->___settings), (void*)L_0);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:31>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:31>
 		UnderwaterSurface_t8A83FA45B247FB62D60B13E83FDD079EF07641E8* L_1 = ___1_surface;
 		NullCheck(L_1);
 		Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_2 = L_1->___shadingMaterial;
 		__this->___material = L_2;
 		Il2CppCodeGenWriteBarrier((void**)(&__this->___material), (void*)L_2);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:32>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:32>
 		return;
 	}
 }
@@ -2427,7 +2427,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_RecordRenderGraph_
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&RenderGraph_AddRasterRenderPass_TisPassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D_mBD7F66E89297B194942FBF0CFC37808D9DEFD417_RuntimeMethod_var);
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&UnderwaterShadingPass_U3CRecordRenderGraphU3Eb__5_0_mA6D161A55FCE5AFE8B831400A0E7DA7DF1B5662B_RuntimeMethod_var);
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral17BEA8808B4AF636DC38E48BA8D38DA1F4AD033D);
-		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral3719790758126701362C90AC0429DE93C06AE900);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral8F4CD0DE441472850227EE211DC456C268CE2F2B);
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteralFA256886F129D30471A29AD21E628F1A6C64821C);
 		s_Il2CppMethodInitialized = true;
 	}
@@ -2435,17 +2435,17 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_RecordRenderGraph_
 	RuntimeObject* V_1 = NULL;
 	PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* V_2 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:42>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:42>
 		ContextContainer_t384E08F63FABEFF6A7F1A753F5EF02699DAD414C* L_0 = ___1_frameData;
 		NullCheck(L_0);
 		UniversalResourceData_t1F1DE4101BE122578EAA5E4750D00ACAF1042626* L_1;
 		L_1 = ContextContainer_Get_TisUniversalResourceData_t1F1DE4101BE122578EAA5E4750D00ACAF1042626_m1CAD9250ED48A65B3DE774336F9221928EB054B4_inline(L_0, ContextContainer_Get_TisUniversalResourceData_t1F1DE4101BE122578EAA5E4750D00ACAF1042626_m1CAD9250ED48A65B3DE774336F9221928EB054B4_RuntimeMethod_var);
 		V_0 = L_1;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:44>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:44>
 		RenderGraph_t73ECE03B3CA3D0D17F1448D64AE020E81592AA1E* L_2 = ___0_renderGraph;
 		NullCheck(L_2);
 		RuntimeObject* L_3;
-		L_3 = RenderGraph_AddRasterRenderPass_TisPassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D_mBD7F66E89297B194942FBF0CFC37808D9DEFD417(L_2, _stringLiteral17BEA8808B4AF636DC38E48BA8D38DA1F4AD033D, (&V_2), _stringLiteral3719790758126701362C90AC0429DE93C06AE900, ((int32_t)44), RenderGraph_AddRasterRenderPass_TisPassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D_mBD7F66E89297B194942FBF0CFC37808D9DEFD417_RuntimeMethod_var);
+		L_3 = RenderGraph_AddRasterRenderPass_TisPassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D_mBD7F66E89297B194942FBF0CFC37808D9DEFD417(L_2, _stringLiteral17BEA8808B4AF636DC38E48BA8D38DA1F4AD033D, (&V_2), _stringLiteral8F4CD0DE441472850227EE211DC456C268CE2F2B, ((int32_t)44), RenderGraph_AddRasterRenderPass_TisPassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D_mBD7F66E89297B194942FBF0CFC37808D9DEFD417_RuntimeMethod_var);
 		V_1 = L_3;
 	}
 	{
@@ -2476,25 +2476,25 @@ IL_008e:
 		try
 		{
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:46>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:46>
 				ContextContainer_t384E08F63FABEFF6A7F1A753F5EF02699DAD414C* L_6 = ___1_frameData;
 				NullCheck(L_6);
 				UnderwaterRenderingData_t07347FFBCA8CB09FA7466D84D99AB344F6F5BC70* L_7;
 				L_7 = ContextContainer_Get_TisUnderwaterRenderingData_t07347FFBCA8CB09FA7466D84D99AB344F6F5BC70_mEC7CE80E5A74406C3973BDFFE18E0A9CB3EA14A9_inline(L_6, ContextContainer_Get_TisUnderwaterRenderingData_t07347FFBCA8CB09FA7466D84D99AB344F6F5BC70_mEC7CE80E5A74406C3973BDFFE18E0A9CB3EA14A9_RuntimeMethod_var);
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:48>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:48>
 				PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* L_8 = V_2;
 				Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_9;
 				L_9 = UnderwaterUtilities_get_WaterLineMesh_m1B1CAE7E27F73F0E44CA718C797FAD15CF79A0B9(NULL);
 				NullCheck(L_8);
 				L_8->___mesh = L_9;
 				Il2CppCodeGenWriteBarrier((void**)(&L_8->___mesh), (void*)L_9);
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:49>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:49>
 				PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* L_10 = V_2;
 				Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_11 = __this->___material;
 				NullCheck(L_10);
 				L_10->___material = L_11;
 				Il2CppCodeGenWriteBarrier((void**)(&L_10->___material), (void*)L_11);
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:52>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:52>
 				PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* L_12 = V_2;
 				NullCheck(L_12);
 				Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_13 = L_12->___material;
@@ -2507,24 +2507,24 @@ IL_008e:
 				}
 			}
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:54>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:54>
 				ScriptableRenderPass_ConfigureInput_m15D8C10FC37E33CD358F2E9665ECF5515CB9C687_inline(__this, 5, NULL);
 				goto IL_005c_1;
 			}
 
 IL_0055_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:58>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:58>
 				ScriptableRenderPass_ConfigureInput_m15D8C10FC37E33CD358F2E9665ECF5515CB9C687_inline(__this, 1, NULL);
 			}
 
 IL_005c_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:61>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:61>
 				RuntimeObject* L_15 = V_1;
 				NullCheck(L_15);
 				InterfaceActionInvoker1< bool >::Invoke(11, IBaseRenderGraphBuilder_tFFF84F72F862F1BE246A789AB6A59F959B490F3D_il2cpp_TypeInfo_var, L_15, (bool)0);
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:64>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:64>
 				RuntimeObject* L_16 = V_1;
 				UniversalResourceData_t1F1DE4101BE122578EAA5E4750D00ACAF1042626* L_17 = V_0;
 				NullCheck(L_17);
@@ -2532,16 +2532,16 @@ IL_005c_1:
 				L_18 = UniversalResourceData_get_activeColorTexture_m1B7A0CE5B0282F05AEAE46AC7B45478199DF9188(L_17, NULL);
 				NullCheck(L_16);
 				InterfaceActionInvoker3< TextureHandle_t680ABA3F8B50859351BA5DD66220084F87F37388, int32_t, int32_t >::Invoke(0, IRenderAttachmentRenderGraphBuilder_tA98DFE27A0742D0C5FF054F2785672CB2BB09F73_il2cpp_TypeInfo_var, L_16, L_18, 0, 2);
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:66>
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:67>
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:68>
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:69>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:66>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:67>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:68>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:69>
 				RuntimeObject* L_19 = V_1;
 				BaseRenderFunc_2_tCEBBCE6B2B2F833E9D922969E7B13C4DBB40B9C0* L_20 = (BaseRenderFunc_2_tCEBBCE6B2B2F833E9D922969E7B13C4DBB40B9C0*)il2cpp_codegen_object_new(BaseRenderFunc_2_tCEBBCE6B2B2F833E9D922969E7B13C4DBB40B9C0_il2cpp_TypeInfo_var);
 				BaseRenderFunc_2__ctor_m2B3F954019EEB43415A8658571045500B00B93DD(L_20, __this, (intptr_t)((void*)UnderwaterShadingPass_U3CRecordRenderGraphU3Eb__5_0_mA6D161A55FCE5AFE8B831400A0E7DA7DF1B5662B_RuntimeMethod_var), NULL);
 				NullCheck(L_19);
 				GenericInterfaceActionInvoker1< BaseRenderFunc_2_tCEBBCE6B2B2F833E9D922969E7B13C4DBB40B9C0* >::Invoke(IRasterRenderGraphBuilder_SetRenderFunc_TisPassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D_m82E17118B737271D9CE245B0E255C6B763CA280F_RuntimeMethod_var, L_19, L_20);
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:70>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:70>
 				goto IL_008f;
 			}
 		}
@@ -2553,7 +2553,7 @@ IL_005c_1:
 
 IL_008f:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:71>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:71>
 		return;
 	}
 }
@@ -2561,7 +2561,7 @@ IL_008f:
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Execute_m20AC316118AA40769998A4610E27AF749615526C (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___0_context, PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* ___1_data, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:75>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:75>
 		RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 L_0 = ___0_context;
 		RasterCommandBuffer_t4300C4F080EA3CF43C7ACFDBD4F94EA633FE98E8* L_1 = L_0.___cmd;
 		PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* L_2 = ___1_data;
@@ -2574,7 +2574,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Execute_m20AC31611
 		Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_6 = L_5->___material;
 		NullCheck(L_1);
 		RasterCommandBuffer_DrawMesh_mAD14B7CAFD4DEB3BA60848E80751631A89D34013(L_1, L_3, L_4, L_6, 0, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:76>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:76>
 		return;
 	}
 }
@@ -2582,7 +2582,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Execute_m20AC31611
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Configure_mC3CDF9738180D5DEA016BFDC87828C15EA2AFBE2 (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, CommandBuffer_tB56007DC84EF56296C325EC32DD12AC1E3DC91F7* ___0_cmd, RenderTextureDescriptor_t69845881CE6437E4E61F92074F2F84079F23FA46 ___1_cameraTextureDescriptor, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:81>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:81>
 		return;
 	}
 }
@@ -2590,7 +2590,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Configure_mC3CDF97
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Execute_m14E412227C0A3ED79D8FB70CC1D7F4649DD008ED (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, ScriptableRenderContext_t5AB09B3602BEB456E0DC3D53926D3A3BDAF08E36 ___0_context, RenderingData_tAAA01190551D6D5954314E3E1E85B58DD45EED71* ___1_renderingData, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:83>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:83>
 		return;
 	}
 }
@@ -2606,11 +2606,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass__ctor_m4B4D0BF0966
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_U3CRecordRenderGraphU3Eb__5_0_mA6D161A55FCE5AFE8B831400A0E7DA7DF1B5662B (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* ___0_data, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___1_context, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:68>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:68>
 		RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 L_0 = ___1_context;
 		PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* L_1 = ___0_data;
 		UnderwaterShadingPass_Execute_m20AC316118AA40769998A4610E27AF749615526C(__this, L_0, L_1, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:69>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/UnderwaterShadingPass.cs:69>
 		return;
 	}
 }
@@ -2642,17 +2642,17 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PassData__ctor_m1197E1BC8FB44EA46322A1FE
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Setup_mFD778DB3FDA07E94EA027B88ABA4D9BF19AC3C95 (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, UnderwaterRenderingSettings_t1C052AF71A2984406B40FEB3A7C9E6BF508D8677* ___0_m_settings, UnderwaterSurface_t8A83FA45B247FB62D60B13E83FDD079EF07641E8* ___1_surface, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:25>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:25>
 		UnderwaterRenderingSettings_t1C052AF71A2984406B40FEB3A7C9E6BF508D8677* L_0 = ___0_m_settings;
 		__this->___settings = L_0;
 		Il2CppCodeGenWriteBarrier((void**)(&__this->___settings), (void*)L_0);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:26>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:26>
 		UnderwaterSurface_t8A83FA45B247FB62D60B13E83FDD079EF07641E8* L_1 = ___1_surface;
 		NullCheck(L_1);
 		Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_2 = L_1->___waterlineMaterial;
 		__this->___material = L_2;
 		Il2CppCodeGenWriteBarrier((void**)(&__this->___material), (void*)L_2);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:27>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:27>
 		return;
 	}
 }
@@ -2672,24 +2672,24 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_RecordRenderGraph_mDFA131F
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&RenderGraph_AddRasterRenderPass_TisPassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C_m29E86BF84F70AA368CAAA010996A376698852C99_RuntimeMethod_var);
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&WaterlinePass_U3CRecordRenderGraphU3Eb__4_0_m1CBB6603A922B3FBBCA73B51D6668122BF62085C_RuntimeMethod_var);
 		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral016B6A626D293932B4526EF1312FF4460752C0C0);
-		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral64A35B4FCA00D7BFD19D5FF57956C413C42A1750);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral60B7F2E2DA4C4D4438B9801711F5D0F56022ECBF);
 		s_Il2CppMethodInitialized = true;
 	}
 	UniversalResourceData_t1F1DE4101BE122578EAA5E4750D00ACAF1042626* V_0 = NULL;
 	RuntimeObject* V_1 = NULL;
 	PassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C* V_2 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:37>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:37>
 		ContextContainer_t384E08F63FABEFF6A7F1A753F5EF02699DAD414C* L_0 = ___1_frameData;
 		NullCheck(L_0);
 		UniversalResourceData_t1F1DE4101BE122578EAA5E4750D00ACAF1042626* L_1;
 		L_1 = ContextContainer_Get_TisUniversalResourceData_t1F1DE4101BE122578EAA5E4750D00ACAF1042626_m1CAD9250ED48A65B3DE774336F9221928EB054B4_inline(L_0, ContextContainer_Get_TisUniversalResourceData_t1F1DE4101BE122578EAA5E4750D00ACAF1042626_m1CAD9250ED48A65B3DE774336F9221928EB054B4_RuntimeMethod_var);
 		V_0 = L_1;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:40>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:40>
 		RenderGraph_t73ECE03B3CA3D0D17F1448D64AE020E81592AA1E* L_2 = ___0_renderGraph;
 		NullCheck(L_2);
 		RuntimeObject* L_3;
-		L_3 = RenderGraph_AddRasterRenderPass_TisPassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C_m29E86BF84F70AA368CAAA010996A376698852C99(L_2, _stringLiteral016B6A626D293932B4526EF1312FF4460752C0C0, (&V_2), _stringLiteral64A35B4FCA00D7BFD19D5FF57956C413C42A1750, ((int32_t)40), RenderGraph_AddRasterRenderPass_TisPassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C_m29E86BF84F70AA368CAAA010996A376698852C99_RuntimeMethod_var);
+		L_3 = RenderGraph_AddRasterRenderPass_TisPassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C_m29E86BF84F70AA368CAAA010996A376698852C99(L_2, _stringLiteral016B6A626D293932B4526EF1312FF4460752C0C0, (&V_2), _stringLiteral60B7F2E2DA4C4D4438B9801711F5D0F56022ECBF, ((int32_t)40), RenderGraph_AddRasterRenderPass_TisPassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C_m29E86BF84F70AA368CAAA010996A376698852C99_RuntimeMethod_var);
 		V_1 = L_3;
 	}
 	{
@@ -2719,29 +2719,29 @@ IL_006c:
 		});
 		try
 		{
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:42>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:42>
 			ContextContainer_t384E08F63FABEFF6A7F1A753F5EF02699DAD414C* L_6 = ___1_frameData;
 			NullCheck(L_6);
 			UnderwaterRenderingData_t07347FFBCA8CB09FA7466D84D99AB344F6F5BC70* L_7;
 			L_7 = ContextContainer_Get_TisUnderwaterRenderingData_t07347FFBCA8CB09FA7466D84D99AB344F6F5BC70_mEC7CE80E5A74406C3973BDFFE18E0A9CB3EA14A9_inline(L_6, ContextContainer_Get_TisUnderwaterRenderingData_t07347FFBCA8CB09FA7466D84D99AB344F6F5BC70_mEC7CE80E5A74406C3973BDFFE18E0A9CB3EA14A9_RuntimeMethod_var);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:44>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:44>
 			PassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C* L_8 = V_2;
 			Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_9;
 			L_9 = UnderwaterUtilities_get_WaterLineMesh_m1B1CAE7E27F73F0E44CA718C797FAD15CF79A0B9(NULL);
 			NullCheck(L_8);
 			L_8->___mesh = L_9;
 			Il2CppCodeGenWriteBarrier((void**)(&L_8->___mesh), (void*)L_9);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:45>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:45>
 			PassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C* L_10 = V_2;
 			Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_11 = __this->___material;
 			NullCheck(L_10);
 			L_10->___material = L_11;
 			Il2CppCodeGenWriteBarrier((void**)(&L_10->___material), (void*)L_11);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:47>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:47>
 			RuntimeObject* L_12 = V_1;
 			NullCheck(L_12);
 			InterfaceActionInvoker1< bool >::Invoke(11, IBaseRenderGraphBuilder_tFFF84F72F862F1BE246A789AB6A59F959B490F3D_il2cpp_TypeInfo_var, L_12, (bool)0);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:50>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:50>
 			RuntimeObject* L_13 = V_1;
 			UniversalResourceData_t1F1DE4101BE122578EAA5E4750D00ACAF1042626* L_14 = V_0;
 			NullCheck(L_14);
@@ -2749,16 +2749,16 @@ IL_006c:
 			L_15 = UniversalResourceData_get_activeColorTexture_m1B7A0CE5B0282F05AEAE46AC7B45478199DF9188(L_14, NULL);
 			NullCheck(L_13);
 			InterfaceActionInvoker3< TextureHandle_t680ABA3F8B50859351BA5DD66220084F87F37388, int32_t, int32_t >::Invoke(0, IRenderAttachmentRenderGraphBuilder_tA98DFE27A0742D0C5FF054F2785672CB2BB09F73_il2cpp_TypeInfo_var, L_13, L_15, 0, 2);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:52>
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:53>
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:54>
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:55>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:52>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:53>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:54>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:55>
 			RuntimeObject* L_16 = V_1;
 			BaseRenderFunc_2_t8B429DACF58E0FFB79F1DF0C3908A35BCEA46F0F* L_17 = (BaseRenderFunc_2_t8B429DACF58E0FFB79F1DF0C3908A35BCEA46F0F*)il2cpp_codegen_object_new(BaseRenderFunc_2_t8B429DACF58E0FFB79F1DF0C3908A35BCEA46F0F_il2cpp_TypeInfo_var);
 			BaseRenderFunc_2__ctor_m0343E79E4B94AE79FC54EC659B469060222521A9(L_17, __this, (intptr_t)((void*)WaterlinePass_U3CRecordRenderGraphU3Eb__4_0_m1CBB6603A922B3FBBCA73B51D6668122BF62085C_RuntimeMethod_var), NULL);
 			NullCheck(L_16);
 			GenericInterfaceActionInvoker1< BaseRenderFunc_2_t8B429DACF58E0FFB79F1DF0C3908A35BCEA46F0F* >::Invoke(IRasterRenderGraphBuilder_SetRenderFunc_TisPassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C_mAB4E877C7FC0DF894E7CDDE345BA7FC5551A2659_RuntimeMethod_var, L_16, L_17);
-			//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:56>
+			//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:56>
 			goto IL_006d;
 		}
 		catch(Il2CppExceptionWrapper& e)
@@ -2769,7 +2769,7 @@ IL_006c:
 
 IL_006d:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:57>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:57>
 		return;
 	}
 }
@@ -2777,7 +2777,7 @@ IL_006d:
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Execute_mAC99AADC75F561BF4FF5CA230B62DAE75A8C651F (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___0_context, PassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C* ___1_data, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:61>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:61>
 		RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 L_0 = ___0_context;
 		RasterCommandBuffer_t4300C4F080EA3CF43C7ACFDBD4F94EA633FE98E8* L_1 = L_0.___cmd;
 		PassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C* L_2 = ___1_data;
@@ -2790,7 +2790,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Execute_mAC99AADC75F561BF4
 		Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_6 = L_5->___material;
 		NullCheck(L_1);
 		RasterCommandBuffer_DrawMesh_mAD14B7CAFD4DEB3BA60848E80751631A89D34013(L_1, L_3, L_4, L_6, 1, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:62>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:62>
 		return;
 	}
 }
@@ -2798,7 +2798,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Execute_mAC99AADC75F561BF4
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Configure_m426DB5B9915B83152DEEF39F5543ECB4B2AF4586 (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, CommandBuffer_tB56007DC84EF56296C325EC32DD12AC1E3DC91F7* ___0_cmd, RenderTextureDescriptor_t69845881CE6437E4E61F92074F2F84079F23FA46 ___1_cameraTextureDescriptor, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:67>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:67>
 		return;
 	}
 }
@@ -2806,7 +2806,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Configure_m426DB5B9915B831
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Execute_m5C22792C49E34C19C838C6EE7498D321A15196DC (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, ScriptableRenderContext_t5AB09B3602BEB456E0DC3D53926D3A3BDAF08E36 ___0_context, RenderingData_tAAA01190551D6D5954314E3E1E85B58DD45EED71* ___1_renderingData, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:69>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:69>
 		return;
 	}
 }
@@ -2822,11 +2822,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass__ctor_m4E9312A0BF294B19D9D
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_U3CRecordRenderGraphU3Eb__4_0_m1CBB6603A922B3FBBCA73B51D6668122BF62085C (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, PassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C* ___0_data, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___1_context, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:54>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:54>
 		RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 L_0 = ___1_context;
 		PassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C* L_1 = ___0_data;
 		WaterlinePass_Execute_mAC99AADC75F561BF4FF5CA230B62DAE75A8C651F(__this, L_0, L_1, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:55>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/Passes/WaterlinePass.cs:55>
 		return;
 	}
 }
@@ -2865,7 +2865,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterArea_get_CurrentWaterLevel_mD
 		s_Il2CppMethodInitialized = true;
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:69>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:69>
 		int32_t L_0 = __this->___waterLevelSource;
 		if ((!(((uint32_t)L_0) == ((uint32_t)1))))
 		{
@@ -2883,7 +2883,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterArea_get_CurrentWaterLevel_mD
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:69>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:69>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_3 = __this->___waterLevelTransform;
 		NullCheck(L_3);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_4;
@@ -2894,7 +2894,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterArea_get_CurrentWaterLevel_mD
 
 IL_0027:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:70>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:70>
 		int32_t L_6 = __this->___waterLevelSource;
 		if ((!(((uint32_t)L_6) == ((uint32_t)2))))
 		{
@@ -2912,7 +2912,7 @@ IL_0027:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:70>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:70>
 		float L_9;
 		L_9 = UnderwaterArea_GetColliderPlaneHeight_m9F7FA1517AA2FD99FF74FDE3D561E0B262AD5013(__this, NULL);
 		return L_9;
@@ -2920,7 +2920,7 @@ IL_0027:
 
 IL_0044:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:71>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:71>
 		int32_t L_10 = __this->___waterLevelSource;
 		if ((!(((uint32_t)L_10) == ((uint32_t)3))))
 		{
@@ -2939,7 +2939,7 @@ IL_0044:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:74>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:74>
 		il2cpp_codegen_runtime_class_init_inline(OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_il2cpp_TypeInfo_var);
 		OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA* L_13 = ((OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_StaticFields*)il2cpp_codegen_static_fields_for(OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_il2cpp_TypeInfo_var))->___Instance;
 		NullCheck(L_13);
@@ -2950,14 +2950,14 @@ IL_0044:
 		L_15 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_14, NULL);
 		float L_16 = L_15.___y;
 		__this->___waterLevel = L_16;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:75>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:75>
 		float L_17 = __this->___waterLevel;
 		return L_17;
 	}
 
 IL_007a:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:78>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:78>
 		float L_18 = __this->___waterLevel;
 		return L_18;
 	}
@@ -2983,19 +2983,19 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_Reset_mDC13D40EA216860D8B
 	WaterObject_t1F0E91671812A2A0AF420367F44F9D83841C9405* V_1 = NULL;
 	WaterObject_t1F0E91671812A2A0AF420367F44F9D83841C9405* G_B9_0 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:141>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:141>
 		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_0;
 		L_0 = Component_get_gameObject_m57AEFBB14DB39EC476F740BA000E170355DE691B(__this, NULL);
 		int32_t L_1;
 		L_1 = LayerMask_NameToLayer_m2764C530EDA9EC3226A36E3FD43E020B413AF139(_stringLiteral46580D65357E6BC22728934BD6BC047227EFE0E6, NULL);
 		NullCheck(L_0);
 		GameObject_set_layer_m6E1AF478A2CC86BD222B96317BEB78B7D89B18D0(L_0, L_1, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:143>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:143>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_2;
 		L_2 = Component_GetComponent_TisBoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23_m59698092F1230C6FB7F40D0F58F643A931A732D7(__this, Component_GetComponent_TisBoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23_m59698092F1230C6FB7F40D0F58F643A931A732D7_RuntimeMethod_var);
 		__this->___boxCollider = L_2;
 		Il2CppCodeGenWriteBarrier((void**)(&__this->___boxCollider), (void*)L_2);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:144>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:144>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_3 = __this->___boxCollider;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_4;
@@ -3006,7 +3006,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_Reset_mDC13D40EA216860D8B
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:144>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:144>
 		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_5;
 		L_5 = Component_get_gameObject_m57AEFBB14DB39EC476F740BA000E170355DE691B(__this, NULL);
 		NullCheck(L_5);
@@ -3018,7 +3018,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_Reset_mDC13D40EA216860D8B
 
 IL_003f:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:146>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:146>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_7 = __this->___boxCollider;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_8;
@@ -3029,18 +3029,18 @@ IL_003f:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:148>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:148>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_9 = __this->___boxCollider;
 		NullCheck(L_9);
 		Collider_set_isTrigger_mFCD22F3EB5E28C97863956AB725D53F7F4B7CA78(L_9, (bool)1, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:149>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:149>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_10 = __this->___boxCollider;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_11;
 		memset((&L_11), 0, sizeof(L_11));
 		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&L_11), (100.0f), (50.0f), (100.0f), NULL);
 		NullCheck(L_10);
 		BoxCollider_set_size_m8374267FDE5DD628973E0E5E1331E781552B855A(L_10, L_11, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:150>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:150>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_12 = __this->___boxCollider;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13;
 		memset((&L_13), 0, sizeof(L_13));
@@ -3051,7 +3051,7 @@ IL_003f:
 
 IL_0096:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:153>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:153>
 		il2cpp_codegen_runtime_class_init_inline(OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_il2cpp_TypeInfo_var);
 		OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA* L_14 = ((OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_StaticFields*)il2cpp_codegen_static_fields_for(OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_il2cpp_TypeInfo_var))->___Instance;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
@@ -3063,23 +3063,23 @@ IL_0096:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:155>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:155>
 		il2cpp_codegen_runtime_class_init_inline(OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_il2cpp_TypeInfo_var);
 		OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA* L_16 = ((OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_StaticFields*)il2cpp_codegen_static_fields_for(OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_il2cpp_TypeInfo_var))->___Instance;
 		NullCheck(L_16);
 		Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_17 = L_16->___material;
 		__this->___waterMaterial = L_17;
 		Il2CppCodeGenWriteBarrier((void**)(&__this->___waterMaterial), (void*)L_17);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:156>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:156>
 		__this->___waterLevelSource = 3;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:158>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:158>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_18;
 		L_18 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
 		NullCheck(L_18);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_19;
 		L_19 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_18, NULL);
 		V_0 = L_19;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:159>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:159>
 		OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA* L_20 = ((OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_StaticFields*)il2cpp_codegen_static_fields_for(OceanFollowBehaviour_t09FBA6DCC90E94B563F5F86103E8D2F21642A9FA_il2cpp_TypeInfo_var))->___Instance;
 		NullCheck(L_20);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_21;
@@ -3089,20 +3089,20 @@ IL_0096:
 		L_22 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_21, NULL);
 		float L_23 = L_22.___y;
 		(&V_0)->___y = L_23;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:160>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:160>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_24;
 		L_24 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_25 = V_0;
 		NullCheck(L_24);
 		Transform_set_position_mA1A817124BB41B685043DED2A9BA48CDF37C4156(L_24, L_25, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:162>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:162>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_26 = __this->___boxCollider;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_27;
 		memset((&L_27), 0, sizeof(L_27));
 		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&L_27), (1000.0f), (500.0f), (1000.0f), NULL);
 		NullCheck(L_26);
 		BoxCollider_set_size_m8374267FDE5DD628973E0E5E1331E781552B855A(L_26, L_27, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:163>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:163>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_28 = __this->___boxCollider;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_29;
 		memset((&L_29), 0, sizeof(L_29));
@@ -3114,7 +3114,7 @@ IL_0096:
 
 IL_012f:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:167>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:167>
 		il2cpp_codegen_runtime_class_init_inline(WaterObject_t1F0E91671812A2A0AF420367F44F9D83841C9405_il2cpp_TypeInfo_var);
 		List_1_tA20D0C89DE717B291A62C1385460D2D4A83C263C* L_30 = ((WaterObject_t1F0E91671812A2A0AF420367F44F9D83841C9405_StaticFields*)il2cpp_codegen_static_fields_for(WaterObject_t1F0E91671812A2A0AF420367F44F9D83841C9405_il2cpp_TypeInfo_var))->___Instances;
 		NullCheck(L_30);
@@ -3151,7 +3151,7 @@ IL_014f:
 IL_015a:
 	{
 		V_1 = G_B9_0;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:168>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:168>
 		WaterObject_t1F0E91671812A2A0AF420367F44F9D83841C9405* L_37 = V_1;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_38;
@@ -3162,13 +3162,13 @@ IL_015a:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:170>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:170>
 		WaterObject_t1F0E91671812A2A0AF420367F44F9D83841C9405* L_39 = V_1;
 		NullCheck(L_39);
 		Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_40 = L_39->___material;
 		__this->___waterMaterial = L_40;
 		Il2CppCodeGenWriteBarrier((void**)(&__this->___waterMaterial), (void*)L_40);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:171>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:171>
 		WaterObject_t1F0E91671812A2A0AF420367F44F9D83841C9405* L_41 = V_1;
 		NullCheck(L_41);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_42;
@@ -3182,11 +3182,11 @@ IL_015a:
 
 IL_0185:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:175>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:175>
 		UnderwaterArea_FindShaders_m18D64A46CCE9864E992CBEA7D958E56FD9D71E7A(__this, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:177>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:177>
 		UnderwaterArea_ValidateRenderer_m9F3E67664471BDFA335446CB149667CA8D99BEF0(__this, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:178>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:178>
 		return;
 	}
 }
@@ -3201,14 +3201,14 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_OnEnable_mC1AB9FD2C833BB0
 		s_Il2CppMethodInitialized = true;
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:186>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:186>
 		UnderwaterArea_ValidateRenderer_m9F3E67664471BDFA335446CB149667CA8D99BEF0(__this, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:188>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:188>
 		il2cpp_codegen_runtime_class_init_inline(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var);
 		List_1_tE1794DF0C141B59A8AFAADDD208622E6D7DFC1F5* L_0 = ((UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var))->___Instances;
 		NullCheck(L_0);
 		List_1_Add_mA4FFBC1BDC39849668F8CD1B5C960922F8D1E62E_inline(L_0, __this, List_1_Add_mA4FFBC1BDC39849668F8CD1B5C960922F8D1E62E_RuntimeMethod_var);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:189>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:189>
 		return;
 	}
 }
@@ -3225,13 +3225,13 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_OnDisable_m0414D04A525D6D
 		s_Il2CppMethodInitialized = true;
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:193>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:193>
 		il2cpp_codegen_runtime_class_init_inline(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var);
 		List_1_tE1794DF0C141B59A8AFAADDD208622E6D7DFC1F5* L_0 = ((UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var))->___Instances;
 		NullCheck(L_0);
 		bool L_1;
 		L_1 = List_1_Remove_mAC65AB9E44C90A5E49DFD1C7FFCA1C0E8D7ED0A5(L_0, __this, List_1_Remove_mAC65AB9E44C90A5E49DFD1C7FFCA1C0E8D7ED0A5_RuntimeMethod_var);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:195>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:195>
 		AudioMixer_tE2E8D79241711CDF9AB428C7FB96A35D80E40B04* L_2 = __this->___environmentAudioMixer;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_3;
@@ -3242,7 +3242,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_OnDisable_m0414D04A525D6D
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:197>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:197>
 		AudioMixer_tE2E8D79241711CDF9AB428C7FB96A35D80E40B04* L_4 = __this->___environmentAudioMixer;
 		NullCheck(L_4);
 		bool L_5;
@@ -3251,7 +3251,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_OnDisable_m0414D04A525D6D
 
 IL_002a:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:199>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:199>
 		return;
 	}
 }
@@ -3265,7 +3265,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_HasValidShader_m6E2C42D40
 		s_Il2CppMethodInitialized = true;
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:203>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:203>
 		UnderwaterResources_t2EB21F9FABE6ADE155196B7FFF0CC6EC20532BBF* L_0 = __this->___underwaterResources;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_1;
@@ -3306,7 +3306,7 @@ IL_0030:
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_ValidateRenderer_m9F3E67664471BDFA335446CB149667CA8D99BEF0 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:208>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:208>
 		bool L_0;
 		L_0 = UnderwaterArea_HasValidShader_m6E2C42D40BC3CCC9A3195752E3E16EAACD575E1E(__this, NULL);
 		if (L_0)
@@ -3315,7 +3315,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_ValidateRenderer_m9F3E676
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:210>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:210>
 		Exception_t* L_1 = (Exception_t*)il2cpp_codegen_object_new(((RuntimeClass*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&Exception_t_il2cpp_TypeInfo_var)));
 		Exception__ctor_m9B2BD92CD68916245A75109105D9071C9D430E7F(L_1, ((String_t*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&_stringLiteralD7728838528D3FFE9101E6738DA8F9498575E4EA)), NULL);
 		IL2CPP_RAISE_MANAGED_EXCEPTION(L_1, ((RuntimeMethod*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&UnderwaterArea_ValidateRenderer_m9F3E67664471BDFA335446CB149667CA8D99BEF0_RuntimeMethod_var)));
@@ -3323,7 +3323,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_ValidateRenderer_m9F3E676
 
 IL_0013:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:212>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:212>
 		return;
 	}
 }
@@ -3331,7 +3331,7 @@ IL_0013:
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_UpdateWithCamera_mAF02C287DCAEB75A122966BFFF725452D3541CA5 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_targetCamera, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:220>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:220>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_0 = ___0_targetCamera;
 		NullCheck(L_0);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_1;
@@ -3340,10 +3340,10 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_UpdateWithCamera_mAF02C28
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
 		L_2 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_1, NULL);
 		UnderwaterArea_UpdateParticleEffects_m6015DF1B5554662ABE16000FC0DB0BE185AFDE57(__this, L_2, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:221>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:221>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_3 = ___0_targetCamera;
 		UnderwaterArea_UpdateAudio_m43B83266B6A57E06E1D22A0EEDE16B7E91301D94(__this, L_3, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:222>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:222>
 		return;
 	}
 }
@@ -3361,24 +3361,24 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_UpdateAudio_m43B83266B6A5
 	float V_1 = 0.0f;
 	float V_2 = 0.0f;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:226>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:226>
 		AudioMixer_tE2E8D79241711CDF9AB428C7FB96A35D80E40B04* L_0 = __this->___environmentAudioMixer;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_1;
 		L_1 = Object_op_Implicit_m93896EF7D68FA113C42D3FE2BC6F661FC7EF514A(L_0, NULL);
 		V_0 = L_1;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:232>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:232>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_2 = ___0_targetCamera;
 		float L_3;
 		L_3 = UnderwaterArea_CameraSubmersionAmount_m5E6B15A89DF8EB41EF7E412B53ECEB0A05F15BCF(__this, L_2, NULL);
 		V_1 = L_3;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:234>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:234>
 		float L_4 = __this->___lowPassCutoffFrequency;
 		float L_5 = V_1;
 		float L_6;
 		L_6 = Mathf_Lerp_m47EF2FFB7647BD0A1FDC26DC03E28B19812139B5_inline((22000.0f), L_4, L_5, NULL);
 		V_2 = L_6;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:238>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:238>
 		AudioMixer_tE2E8D79241711CDF9AB428C7FB96A35D80E40B04* L_7 = __this->___environmentAudioMixer;
 		bool L_8;
 		L_8 = Object_op_Implicit_m93896EF7D68FA113C42D3FE2BC6F661FC7EF514A(L_7, NULL);
@@ -3389,7 +3389,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_UpdateAudio_m43B83266B6A5
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:240>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:240>
 		AudioMixer_tE2E8D79241711CDF9AB428C7FB96A35D80E40B04* L_10 = __this->___environmentAudioMixer;
 		float L_11 = V_2;
 		NullCheck(L_10);
@@ -3399,7 +3399,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_UpdateAudio_m43B83266B6A5
 
 IL_0047:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:246>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:246>
 		return;
 	}
 }
@@ -3407,12 +3407,12 @@ IL_0047:
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_FindShaders_m18D64A46CCE9864E992CBEA7D958E56FD9D71E7A (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:251>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:251>
 		UnderwaterResources_t2EB21F9FABE6ADE155196B7FFF0CC6EC20532BBF* L_0;
 		L_0 = UnderwaterResources_Find_m64B9FABD5A758814CDBF8BB49E9438D58F819D96(NULL);
 		__this->___underwaterResources = L_0;
 		Il2CppCodeGenWriteBarrier((void**)(&__this->___underwaterResources), (void*)L_0);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:252>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:252>
 		return;
 	}
 }
@@ -3447,25 +3447,25 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_UpdateParticleEffects_m60
 	ShapeModule_tAA38A0C5305DF2F9D96F89D4B8F762E2D034D8B2 V_11;
 	memset((&V_11), 0, sizeof(V_11));
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:256>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:256>
 		float L_0;
 		L_0 = UnderwaterArea_get_CurrentWaterLevel_mD035B0E4C9897467FC80E454302DAC1DB22C1CED(__this, NULL);
 		V_0 = L_0;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:258>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:258>
 		V_1 = 0;
 		goto IL_017c;
 	}
 
 IL_000e:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:260>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:260>
 		List_1_t8F43F82F3F08355526F253B6F5EDEE8836239D9F* L_1 = __this->___particleEffects;
 		int32_t L_2 = V_1;
 		NullCheck(L_1);
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_3;
 		L_3 = List_1_get_Item_m63D39B7558C197D525F1BC2CCFF4246F853CC48F(L_1, L_2, List_1_get_Item_m63D39B7558C197D525F1BC2CCFF4246F853CC48F_RuntimeMethod_var);
 		V_2 = L_3;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:262>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:262>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_4 = V_2;
 		NullCheck(L_4);
 		ParticleSystem_tB19986EE308BD63D36FB6025EEEAFBEDB97C67C1* L_5 = L_4->___particleSystem;
@@ -3478,36 +3478,36 @@ IL_000e:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:273>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:273>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = ___0_cameraPosition;
 		V_3 = L_7;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:275>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:275>
 		float L_8 = V_0;
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_9 = V_2;
 		NullCheck(L_9);
 		float L_10 = L_9->___maxDepth;
 		V_4 = ((float)il2cpp_codegen_subtract(L_8, L_10));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:276>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:276>
 		float L_11 = V_0;
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_12 = V_2;
 		NullCheck(L_12);
 		float L_13 = L_12->___minDepth;
 		V_5 = ((float)il2cpp_codegen_subtract(L_11, L_13));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:278>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:278>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_14 = V_2;
 		NullCheck(L_14);
 		ParticleSystem_tB19986EE308BD63D36FB6025EEEAFBEDB97C67C1* L_15 = L_14->___particleSystem;
 		NullCheck(L_15);
 		bool L_16;
 		L_16 = ParticleSystem_get_isPlaying_mC5170DA3C904670B88200C8DA1E0F8FC1BC7C42B(L_15, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:280>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:280>
 		if (L_16)
 		{
 			goto IL_005b;
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:280>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:280>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_17 = V_2;
 		NullCheck(L_17);
 		ParticleSystem_tB19986EE308BD63D36FB6025EEEAFBEDB97C67C1* L_18 = L_17->___particleSystem;
@@ -3517,7 +3517,7 @@ IL_000e:
 
 IL_005b:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:283>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:283>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_19 = V_3;
 		float L_20 = L_19.___y;
 		float L_21 = V_4;
@@ -3525,7 +3525,7 @@ IL_005b:
 		float L_23;
 		L_23 = Mathf_Clamp_mEB9AEA827D27D20FCC787F7375156AF46BB12BBF_inline(L_20, L_21, L_22, NULL);
 		(&V_3)->___y = L_23;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:286>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:286>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_24 = V_2;
 		NullCheck(L_24);
 		ParticleSystem_tB19986EE308BD63D36FB6025EEEAFBEDB97C67C1* L_25 = L_24->___particleSystem;
@@ -3544,7 +3544,7 @@ IL_005b:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:288>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:288>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_29 = V_2;
 		NullCheck(L_29);
 		ParticleSystem_tB19986EE308BD63D36FB6025EEEAFBEDB97C67C1* L_30 = L_29->___particleSystem;
@@ -3555,7 +3555,7 @@ IL_005b:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_32;
 		L_32 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_31, NULL);
 		V_8 = L_32;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:290>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:290>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_33 = V_3;
 		float L_34 = L_33.___x;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_35 = V_3;
@@ -3575,20 +3575,20 @@ IL_005b:
 		V_9 = L_43;
 		float L_44;
 		L_44 = Vector2_get_sqrMagnitude_mA16336720C14EEF8BA9B55AE33B98C9EE2082BDC_inline((&V_9), NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:293>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:293>
 		if ((!(((float)L_44) > ((float)(4.0f)))))
 		{
 			goto IL_00f8;
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:297>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:297>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_45 = V_2;
 		NullCheck(L_45);
 		ParticleSystem_tB19986EE308BD63D36FB6025EEEAFBEDB97C67C1* L_46 = L_45->___particleSystem;
 		NullCheck(L_46);
 		ParticleSystem_Stop_m6CA855033D5CE2D3AF7927B6709BC65DBCD632DF(L_46, (bool)1, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:298>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:298>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_47 = V_2;
 		NullCheck(L_47);
 		ParticleSystem_tB19986EE308BD63D36FB6025EEEAFBEDB97C67C1* L_48 = L_47->___particleSystem;
@@ -3598,7 +3598,7 @@ IL_005b:
 
 IL_00f8:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:302>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:302>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_49 = V_2;
 		NullCheck(L_49);
 		ParticleSystem_tB19986EE308BD63D36FB6025EEEAFBEDB97C67C1* L_50 = L_49->___particleSystem;
@@ -3608,7 +3608,7 @@ IL_00f8:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_52 = V_3;
 		NullCheck(L_51);
 		Transform_set_position_mA1A817124BB41B685043DED2A9BA48CDF37C4156(L_51, L_52, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:304>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:304>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_53 = V_2;
 		NullCheck(L_53);
 		bool L_54 = L_53->___alignToSunRotation;
@@ -3618,7 +3618,7 @@ IL_00f8:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:306>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:306>
 		Light_t1E68479B7782AF2050FAA02A5DC612FD034F18F3* L_55;
 		L_55 = RenderSettings_get_sun_m5D3CDD2B31B8F48F77D5DC3830E3BB67A44869EC(NULL);
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
@@ -3630,7 +3630,7 @@ IL_00f8:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:308>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:308>
 		Light_t1E68479B7782AF2050FAA02A5DC612FD034F18F3* L_57;
 		L_57 = RenderSettings_get_sun_m5D3CDD2B31B8F48F77D5DC3830E3BB67A44869EC(NULL);
 		NullCheck(L_57);
@@ -3640,7 +3640,7 @@ IL_00f8:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_59;
 		L_59 = Transform_get_eulerAngles_mCAAF48EFCF628F1ED91C2FFE75A4FD19C039DD6A(L_58, NULL);
 		V_10 = L_59;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:309>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:309>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_60 = V_2;
 		NullCheck(L_60);
 		ParticleSystem_tB19986EE308BD63D36FB6025EEEAFBEDB97C67C1* L_61 = L_60->___particleSystem;
@@ -3657,7 +3657,7 @@ IL_00f8:
 		L_65 = Transform_get_forward_mFCFACF7165FDAB21E80E384C494DF278386CEE2F(L_64, NULL);
 		NullCheck(L_62);
 		Transform_set_forward_mA178B5CF4F0F6133F9AF8ED3A4ECD2C604C60C26(L_62, L_65, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:311>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:311>
 		ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* L_66 = V_2;
 		NullCheck(L_66);
 		ParticleSystem_tB19986EE308BD63D36FB6025EEEAFBEDB97C67C1* L_67 = L_66->___particleSystem;
@@ -3665,7 +3665,7 @@ IL_00f8:
 		ShapeModule_tAA38A0C5305DF2F9D96F89D4B8F762E2D034D8B2 L_68;
 		L_68 = ParticleSystem_get_shape_mD7F072CC18587858138AA7B3A882995493AA7C80(L_67, NULL);
 		V_11 = L_68;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:312>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:312>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_69 = V_10;
 		float L_70 = L_69.___x;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_71;
@@ -3676,14 +3676,14 @@ IL_00f8:
 
 IL_0178:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:258>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:258>
 		int32_t L_72 = V_1;
 		V_1 = ((int32_t)il2cpp_codegen_add(L_72, 1));
 	}
 
 IL_017c:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:258>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:258>
 		int32_t L_73 = V_1;
 		List_1_t8F43F82F3F08355526F253B6F5EDEE8836239D9F* L_74 = __this->___particleEffects;
 		NullCheck(L_74);
@@ -3695,7 +3695,7 @@ IL_017c:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:316>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:316>
 		return;
 	}
 }
@@ -3723,11 +3723,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1B
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_7;
 	memset((&V_7), 0, sizeof(V_7));
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:325>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:325>
 		V_0 = (-1);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:326>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:326>
 		V_1 = ((std::numeric_limits<float>::max)());
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:327>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:327>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_0 = ___0_camera;
 		NullCheck(L_0);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_1;
@@ -3736,14 +3736,14 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1B
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
 		L_2 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_1, NULL);
 		V_2 = L_2;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:329>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:329>
 		V_3 = 0;
 		goto IL_0078;
 	}
 
 IL_0018:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:331>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:331>
 		il2cpp_codegen_runtime_class_init_inline(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var);
 		List_1_tE1794DF0C141B59A8AFAADDD208622E6D7DFC1F5* L_3 = ((UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var))->___Instances;
 		int32_t L_4 = V_3;
@@ -3751,7 +3751,7 @@ IL_0018:
 		UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* L_5;
 		L_5 = List_1_get_Item_m6B37239A043FA360AE6BCEE057AE1C77D5FFFCE2(L_3, L_4, List_1_get_Item_m6B37239A043FA360AE6BCEE057AE1C77D5FFFCE2_RuntimeMethod_var);
 		V_4 = L_5;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:333>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:333>
 		UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* L_6 = V_4;
 		NullCheck(L_6);
 		Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* L_7 = L_6->___waterMaterial;
@@ -3776,7 +3776,7 @@ IL_0018:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:336>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:336>
 		UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* L_12 = V_4;
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_13 = ___0_camera;
 		NullCheck(L_12);
@@ -3788,20 +3788,20 @@ IL_0018:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:338>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:338>
 		UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* L_15 = V_4;
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_16 = ___0_camera;
 		NullCheck(L_15);
 		bool L_17;
 		L_17 = UnderwaterArea_CameraIntersects_m3015DD875BD5FB30838DAC48017A2DA8AFF479C5(L_15, L_16, (&V_5), NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:340>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:340>
 		if (!L_17)
 		{
 			goto IL_0074;
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:343>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:343>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_18 = V_2;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_19 = V_5;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_20;
@@ -3810,7 +3810,7 @@ IL_0018:
 		float L_21;
 		L_21 = Vector3_get_sqrMagnitude_m43C27DEC47C4811FB30AB474FF2131A963B66FC8_inline((&V_7), NULL);
 		V_6 = L_21;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:345>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:345>
 		float L_22 = V_6;
 		float L_23 = V_1;
 		if ((!(((float)L_22) < ((float)L_23))))
@@ -3819,24 +3819,24 @@ IL_0018:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:347>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:347>
 		float L_24 = V_6;
 		V_1 = L_24;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:348>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:348>
 		int32_t L_25 = V_3;
 		V_0 = L_25;
 	}
 
 IL_0074:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:329>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:329>
 		int32_t L_26 = V_3;
 		V_3 = ((int32_t)il2cpp_codegen_add(L_26, 1));
 	}
 
 IL_0078:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:329>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:329>
 		int32_t L_27 = V_3;
 		il2cpp_codegen_runtime_class_init_inline(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var);
 		List_1_tE1794DF0C141B59A8AFAADDD208622E6D7DFC1F5* L_28 = ((UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var))->___Instances;
@@ -3849,7 +3849,7 @@ IL_0078:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:354>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:354>
 		int32_t L_30 = V_0;
 		if ((((int32_t)L_30) < ((int32_t)0)))
 		{
@@ -3857,7 +3857,7 @@ IL_0078:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:358>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:358>
 		il2cpp_codegen_runtime_class_init_inline(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var);
 		List_1_tE1794DF0C141B59A8AFAADDD208622E6D7DFC1F5* L_31 = ((UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var))->___Instances;
 		int32_t L_32 = V_0;
@@ -3869,7 +3869,7 @@ IL_0078:
 
 IL_0095:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:361>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:361>
 		return (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F*)NULL;
 	}
 }
@@ -3890,7 +3890,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_CameraIntersectsFast_mCC3
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_3;
 	memset((&V_3), 0, sizeof(V_3));
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:370>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:370>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_0 = __this->___boxCollider;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_1;
@@ -3923,13 +3923,13 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_CameraIntersectsFast_mCC3
 
 IL_0027:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:370>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:370>
 		return (bool)0;
 	}
 
 IL_0029:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:372>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:372>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_6;
 		L_6 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_7 = __this->___boxCollider;
@@ -3940,7 +3940,7 @@ IL_0029:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_9;
 		L_9 = Transform_TransformVector_mFA6FB7570442728CB15D03C696353148711CDD98(L_6, L_8, NULL);
 		V_0 = L_9;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:373>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:373>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10 = V_0;
 		float L_11 = L_10.___x;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = V_0;
@@ -3951,7 +3951,7 @@ IL_0029:
 		L_16 = Mathf_Max_mF5379E63D2BBAC76D090748695D833934F8AD051_inline(L_13, L_15, NULL);
 		float L_17;
 		L_17 = Mathf_Max_mF5379E63D2BBAC76D090748695D833934F8AD051_inline(L_11, L_16, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:375>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:375>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_18;
 		L_18 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_19 = __this->___boxCollider;
@@ -3962,9 +3962,9 @@ IL_0029:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_21;
 		L_21 = Transform_TransformPoint_m05BFF013DB830D7BFE44A007703694AE1062EE44(L_18, L_20, NULL);
 		V_1 = L_21;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:376>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:376>
 		V_2 = ((float)il2cpp_codegen_add(((float)il2cpp_codegen_multiply(L_17, (0.5f))), (10.0f)));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:378>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:378>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_22 = ___0_targetCamera;
 		NullCheck(L_22);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_23;
@@ -3978,7 +3978,7 @@ IL_0029:
 		V_3 = L_26;
 		float L_27;
 		L_27 = Vector3_get_sqrMagnitude_m43C27DEC47C4811FB30AB474FF2131A963B66FC8_inline((&V_3), NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:380>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:380>
 		float L_28 = V_2;
 		float L_29 = V_2;
 		return (bool)((((int32_t)((!(((float)L_27) <= ((float)((float)il2cpp_codegen_multiply(L_28, L_29)))))? 1 : 0)) == ((int32_t)0))? 1 : 0);
@@ -4003,12 +4003,12 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_CameraIntersects_m3015DD8
 	memset((&V_3), 0, sizeof(V_3));
 	int32_t G_B11_0 = 0;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:391>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:391>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_0 = ___1_closestPoint;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
 		L_1 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
 		*(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)L_0 = L_1;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:393>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:393>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_2 = __this->___boxCollider;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_3;
@@ -4019,13 +4019,13 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_CameraIntersects_m3015DD8
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:393>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:393>
 		return (bool)0;
 	}
 
 IL_001a:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:394>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:394>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_4 = __this->___boxCollider;
 		NullCheck(L_4);
 		bool L_5;
@@ -4036,13 +4036,13 @@ IL_001a:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:394>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:394>
 		return (bool)0;
 	}
 
 IL_0029:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:395>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:395>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_6 = __this->___boxCollider;
 		NullCheck(L_6);
 		bool L_7;
@@ -4053,27 +4053,27 @@ IL_0029:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:395>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:395>
 		return (bool)0;
 	}
 
 IL_0038:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:397>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:397>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_8 = ___0_targetCamera;
 		float L_9 = __this->___waterlineOffset;
 		UnderwaterUtilities_GetNearPlaneCorners_m25704B3DA4B0870A5795285325C119905E728D54(L_8, L_9, (&V_0), (&V_1), (&V_2), (&V_3), NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:400>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:400>
 		float* L_10 = (float*)(&(&V_0)->___y);
 		float* L_11 = L_10;
 		float L_12 = *((float*)L_11);
 		*((float*)L_11) = (float)((float)il2cpp_codegen_subtract(L_12, (3.0f)));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:401>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:401>
 		float* L_13 = (float*)(&(&V_1)->___y);
 		float* L_14 = L_13;
 		float L_15 = *((float*)L_14);
 		*((float*)L_14) = (float)((float)il2cpp_codegen_subtract(L_15, (3.0f)));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:405>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:405>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16 = V_0;
 		bool L_17;
 		L_17 = UnderwaterArea_U3CCameraIntersectsU3Eg__PositionInsideVolumeU7C34_0_mFBB1773B00696FC53751EC84037E5339BC93D36F(__this, L_16, NULL);
@@ -4115,7 +4115,7 @@ IL_0090:
 
 IL_0091:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:407>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:407>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_24 = ___1_closestPoint;
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_25 = ___0_targetCamera;
 		NullCheck(L_25);
@@ -4128,7 +4128,7 @@ IL_0091:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_29;
 		L_29 = UnderwaterUtilities_GetClosestPointOnSurface_m1AD042995158C24EC8571D3DFCFEA65F24CC11E2(L_27, L_28, NULL);
 		*(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)L_24 = L_29;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:409>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:409>
 		return (bool)G_B11_0;
 	}
 }
@@ -4136,7 +4136,7 @@ IL_0091:
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_CameraSubmerged_m5D2AE296F435722248329BE49CB6B35C9A1DA053 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_targetCamera, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:414>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:414>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_0 = ___0_targetCamera;
 		float L_1 = __this->___waterlineOffset;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
@@ -4153,30 +4153,30 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterArea_CameraSubmersionAmount_m
 	float V_0 = 0.0f;
 	float V_1 = 0.0f;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:425>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:425>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_0 = ___0_targetCamera;
 		float L_1 = __this->___waterlineOffset;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
 		L_2 = UnderwaterUtilities_GetNearPlaneTopPosition_m18184EB3DC0CB9CD4F4EB05940CBA7A5779F47BE(L_0, L_1, NULL);
 		float L_3 = L_2.___y;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:426>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:426>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_4 = ___0_targetCamera;
 		float L_5 = __this->___waterlineOffset;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6;
 		L_6 = UnderwaterUtilities_GetNearPlaneBottomPosition_m6989D39C4BCD993DBC4D2D0257B75EB467C31F3D(L_4, L_5, NULL);
 		float L_7 = L_6.___y;
 		V_0 = L_7;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:428>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:428>
 		float L_8 = V_0;
 		V_1 = ((float)il2cpp_codegen_subtract(L_3, L_8));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:430>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:430>
 		float L_9;
 		L_9 = UnderwaterArea_get_CurrentWaterLevel_mD035B0E4C9897467FC80E454302DAC1DB22C1CED(__this, NULL);
 		float L_10 = V_0;
 		float L_11 = V_1;
 		float L_12;
 		L_12 = Mathf_Clamp_mEB9AEA827D27D20FCC787F7375156AF46BB12BBF_inline(((float)il2cpp_codegen_subtract(L_9, L_10)), (0.0f), L_11, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:432>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:432>
 		float L_13 = V_1;
 		return ((float)(L_12/L_13));
 	}
@@ -4187,7 +4187,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterArea_GetColliderPlaneHeight_m
 	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 V_0;
 	memset((&V_0), 0, sizeof(V_0));
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:437>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:437>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_0 = __this->___boxCollider;
 		NullCheck(L_0);
 		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_1;
@@ -4213,7 +4213,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneHeight_m8
 	float V_0 = 0.0f;
 	float V_1 = 0.0f;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:443>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:443>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_0 = __this->___boxCollider;
 		NullCheck(L_0);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
@@ -4233,11 +4233,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneHeight_m8
 		L_8 = BoxCollider_get_size_mC1A2DD270B04DFF5961F9F90DC147C271F72258E(L_7, NULL);
 		float L_9 = L_8.___y;
 		V_0 = ((float)il2cpp_codegen_subtract(((float)il2cpp_codegen_subtract(L_2, L_6)), ((float)il2cpp_codegen_multiply(L_9, (0.5f)))));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:444>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:444>
 		float L_10 = ___0_height;
 		float L_11 = V_0;
 		V_1 = ((float)il2cpp_codegen_subtract(L_10, L_11));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:445>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:445>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_12 = __this->___boxCollider;
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_13 = __this->___boxCollider;
 		NullCheck(L_13);
@@ -4255,7 +4255,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneHeight_m8
 		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&L_20), L_15, L_16, L_19, NULL);
 		NullCheck(L_12);
 		BoxCollider_set_size_m8374267FDE5DD628973E0E5E1331E781552B855A(L_12, L_20, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:446>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:446>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_21 = __this->___boxCollider;
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_22 = __this->___boxCollider;
 		NullCheck(L_22);
@@ -4274,7 +4274,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneHeight_m8
 		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&L_30), L_24, ((float)il2cpp_codegen_add(L_25, ((float)il2cpp_codegen_multiply(L_26, (0.5f))))), L_29, NULL);
 		NullCheck(L_21);
 		BoxCollider_set_center_m0AB0482699735FEE8306A7FCAAE66A76C479F0F0(L_21, L_30, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:447>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:447>
 		return;
 	}
 }
@@ -4283,7 +4283,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneDepth_m55
 {
 	float V_0 = 0.0f;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:452>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:452>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_0 = __this->___boxCollider;
 		NullCheck(L_0);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
@@ -4302,10 +4302,10 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneDepth_m55
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8;
 		L_8 = BoxCollider_get_size_mC1A2DD270B04DFF5961F9F90DC147C271F72258E(L_7, NULL);
 		float L_9 = L_8.___y;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:453>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:453>
 		float L_10 = ___0_depth;
 		V_0 = ((float)il2cpp_codegen_subtract(((float)il2cpp_codegen_add(((float)il2cpp_codegen_subtract(L_2, L_6)), ((float)il2cpp_codegen_multiply(L_9, (0.5f))))), L_10));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:454>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:454>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_11 = __this->___boxCollider;
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_12 = __this->___boxCollider;
 		NullCheck(L_12);
@@ -4323,7 +4323,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneDepth_m55
 		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&L_19), L_14, L_15, L_18, NULL);
 		NullCheck(L_11);
 		BoxCollider_set_size_m8374267FDE5DD628973E0E5E1331E781552B855A(L_11, L_19, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:455>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:455>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_20 = __this->___boxCollider;
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_21 = __this->___boxCollider;
 		NullCheck(L_21);
@@ -4342,7 +4342,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneDepth_m55
 		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&L_29), L_23, ((float)il2cpp_codegen_add(L_24, ((float)il2cpp_codegen_multiply(L_25, (0.5f))))), L_28, NULL);
 		NullCheck(L_20);
 		BoxCollider_set_center_m0AB0482699735FEE8306A7FCAAE66A76C479F0F0(L_20, L_29, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:456>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:456>
 		return;
 	}
 }
@@ -4362,7 +4362,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_OnDrawGizmosSelected_m1AD
 	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 V_2;
 	memset((&V_2), 0, sizeof(V_2));
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:460>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:460>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_0 = __this->___boxCollider;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_1;
@@ -4373,13 +4373,13 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_OnDrawGizmosSelected_m1AD
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:460>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:460>
 		return;
 	}
 
 IL_000e:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:462>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:462>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_2 = __this->___boxCollider;
 		NullCheck(L_2);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_3;
@@ -4404,12 +4404,12 @@ IL_000e:
 		Matrix4x4_tDB70CF134A14BA38190C59AA700BCE10E2AED3E6 L_11;
 		L_11 = Matrix4x4_TRS_mCC04FD47347234B451ACC6CCD2CE6D02E1E0E1E3_inline(L_4, L_7, L_10, NULL);
 		Gizmos_set_matrix_m100B4ACA7FBDFF65CE1BD0000E9E0D7566147A15(L_11, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:463>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:463>
 		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_12;
 		memset((&L_12), 0, sizeof(L_12));
 		Color__ctor_m3786F0D6E510D9CFA544523A955870BD2A514C8C_inline((&L_12), (0.75999999f), (1.0f), (0.50999999f), (0.150000006f), NULL);
 		Gizmos_set_color_m53927A2741937484180B20B55F7F20F8F60C5797(L_12, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:464>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:464>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_13 = __this->___boxCollider;
 		NullCheck(L_13);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_14;
@@ -4419,7 +4419,7 @@ IL_000e:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16;
 		L_16 = BoxCollider_get_size_mC1A2DD270B04DFF5961F9F90DC147C271F72258E(L_15, NULL);
 		Gizmos_DrawWireCube_m343533B3955A2D04A8638280D0EF537274A1FD8B(L_14, L_16, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:468>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:468>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_17 = __this->___boxCollider;
 		NullCheck(L_17);
 		Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 L_18;
@@ -4437,14 +4437,14 @@ IL_000e:
 		L_23 = Bounds_get_size_m0699A53A55A78B3201D7270D6F338DFA91B6FAD4_inline((&V_2), NULL);
 		float L_24 = L_23.___z;
 		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&V_0), L_20, (0.0f), L_24, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:469>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:469>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_25;
 		L_25 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
 		NullCheck(L_25);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_26;
 		L_26 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_25, NULL);
 		V_1 = L_26;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:471>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:471>
 		bool L_27 = __this->___visualizeWaterLevel;
 		if (!L_27)
 		{
@@ -4452,20 +4452,20 @@ IL_000e:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:473>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:473>
 		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_28;
 		memset((&L_28), 0, sizeof(L_28));
 		Color__ctor_m3786F0D6E510D9CFA544523A955870BD2A514C8C_inline((&L_28), (0.75999999f), (1.0f), (0.50999999f), (0.5f), NULL);
 		Gizmos_set_color_m53927A2741937484180B20B55F7F20F8F60C5797(L_28, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:475>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:475>
 		Matrix4x4_tDB70CF134A14BA38190C59AA700BCE10E2AED3E6 L_29;
 		L_29 = Matrix4x4_get_identity_m6568A73831F3E2D587420D20FF423959D7D8AB56_inline(NULL);
 		Gizmos_set_matrix_m100B4ACA7FBDFF65CE1BD0000E9E0D7566147A15(L_29, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:476>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:476>
 		float L_30;
 		L_30 = UnderwaterArea_get_CurrentWaterLevel_mD035B0E4C9897467FC80E454302DAC1DB22C1CED(__this, NULL);
 		(&V_1)->___y = L_30;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:477>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:477>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_31 = V_1;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_32 = V_0;
 		Gizmos_DrawCube_m4417EAEA479EF4AD52445810D840BA8FCBC6EF3F(L_31, L_32, NULL);
@@ -4473,7 +4473,7 @@ IL_000e:
 
 IL_010d:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:483>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:483>
 		return;
 	}
 }
@@ -4488,13 +4488,13 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea__ctor_mD8608AF8CE4035A948
 		s_Il2CppMethodInitialized = true;
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:42>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:42>
 		__this->___waterlineOffset = (0.100000001f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:44>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:44>
 		__this->___waterlineThickness = (0.0500000007f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:63>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:63>
 		__this->___lowPassCutoffFrequency = (800.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:137>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:137>
 		List_1_t8F43F82F3F08355526F253B6F5EDEE8836239D9F* L_0 = (List_1_t8F43F82F3F08355526F253B6F5EDEE8836239D9F*)il2cpp_codegen_object_new(List_1_t8F43F82F3F08355526F253B6F5EDEE8836239D9F_il2cpp_TypeInfo_var);
 		List_1__ctor_m464003A3C8678F59046438F49519A287F3A2B83E(L_0, List_1__ctor_m464003A3C8678F59046438F49519A287F3A2B83E_RuntimeMethod_var);
 		__this->___particleEffects = L_0;
@@ -4515,7 +4515,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea__cctor_mB0FB824E57F999756
 		s_Il2CppMethodInitialized = true;
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:53>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:53>
 		List_1_tE1794DF0C141B59A8AFAADDD208622E6D7DFC1F5* L_0 = (List_1_tE1794DF0C141B59A8AFAADDD208622E6D7DFC1F5*)il2cpp_codegen_object_new(List_1_tE1794DF0C141B59A8AFAADDD208622E6D7DFC1F5_il2cpp_TypeInfo_var);
 		List_1__ctor_mF946ACEFD78D5CFE6E10C56B1C60CE875C20F820(L_0, List_1__ctor_mF946ACEFD78D5CFE6E10C56B1C60CE875C20F820_RuntimeMethod_var);
 		((UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F_il2cpp_TypeInfo_var))->___Instances = L_0;
@@ -4527,7 +4527,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea__cctor_mB0FB824E57F999756
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_U3CCameraIntersectsU3Eg__PositionInsideVolumeU7C34_0_mFBB1773B00696FC53751EC84037E5339BC93D36F (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_position, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:403>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:403>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_0 = ___0_position;
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_1 = __this->___boxCollider;
 		bool L_2;
@@ -4555,27 +4555,27 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_U3CCameraIntersectsU3Eg__
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ShadingSettings__ctor_m94CF867E3CA80FD69FFBD1499065EC68E53DBBA4 (ShadingSettings_t1D43B3E2F05B8BB681BDABB55598D8760D3C853F* __this, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:86>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:86>
 		__this->___fogDensity = (0.25f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:87>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:87>
 		__this->___fogStartDistance = (1.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:89>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:89>
 		__this->___fogBrightness = (1.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:91>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:91>
 		__this->___colorAbsorption = (0.00999999978f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:95>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:95>
 		__this->___heightFogDensity = (4.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:97>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:97>
 		__this->___heightFogStart = (1.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:99>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:99>
 		__this->___heightFogEnd = (20.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:101>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:101>
 		__this->___heightFogBrightness = (0.5f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:105>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:105>
 		__this->___causticsBrightness = (1.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:107>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:107>
 		__this->___translucencyStrength = (0.5f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:109>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:109>
 		__this->___translucencyExponent = (2.0f);
 		Object__ctor_mE837C6B9FA8C6D5D109F4B2EC885D79919AC0EA2(__this, NULL);
 		return;
@@ -4593,13 +4593,13 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ShadingSettings__ctor_m94CF867E3CA80FD69
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ParticleEffect__ctor_m1121E687A1BE9AEE17BF1AAC0813F7EDD392349C (ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* __this, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:123>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:123>
 		__this->___minDepth = (3.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:125>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:125>
 		__this->___maxDepth = (10.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:127>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:127>
 		Object__ctor_mE837C6B9FA8C6D5D109F4B2EC885D79919AC0EA2(__this, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:127>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:127>
 		return;
 	}
 }
@@ -4607,22 +4607,22 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ParticleEffect__ctor_m1121E687A1BE9AEE17
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ParticleEffect__ctor_m9A803194842A32B762E19FD1B36FC3E6367A0CF3 (ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* __this, float ___0_minDepth, float ___1_maxDepth, bool ___2_alignToSunRotation, const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:123>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:123>
 		__this->___minDepth = (3.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:125>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:125>
 		__this->___maxDepth = (10.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:129>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:129>
 		Object__ctor_mE837C6B9FA8C6D5D109F4B2EC885D79919AC0EA2(__this, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:131>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:131>
 		float L_0 = ___0_minDepth;
 		__this->___minDepth = L_0;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:132>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:132>
 		float L_1 = ___1_maxDepth;
 		__this->___maxDepth = L_1;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:133>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:133>
 		bool L_2 = ___2_alignToSunRotation;
 		__this->___alignToSunRotation = L_2;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:134>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterArea.cs:134>
 		return;
 	}
 }
@@ -4638,7 +4638,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ParticleEffect__ctor_m9A803194842A32B762
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR UnderwaterResources_t2EB21F9FABE6ADE155196B7FFF0CC6EC20532BBF* UnderwaterResources_Find_m64B9FABD5A758814CDBF8BB49E9438D58F819D96 (const RuntimeMethod* method) 
 {
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterResources.cs:37>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterResources.cs:37>
 		return (UnderwaterResources_t2EB21F9FABE6ADE155196B7FFF0CC6EC20532BBF*)NULL;
 	}
 }
@@ -4669,7 +4669,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D
 		s_Il2CppMethodInitialized = true;
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:23>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:23>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_0 = ((UnderwaterUtilities_t2F3AA5C303CE87D346E2E1DF00D194CA52D2663A_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterUtilities_t2F3AA5C303CE87D346E2E1DF00D194CA52D2663A_il2cpp_TypeInfo_var))->____WaterLineMesh;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_1;
@@ -4680,7 +4680,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:25>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:25>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_2;
 		L_2 = UnderwaterUtilities_CreateMaskMesh_mFC1FBE690D482728FBB45DE5F73EC57E5D39FE6D(NULL);
 		((UnderwaterUtilities_t2F3AA5C303CE87D346E2E1DF00D194CA52D2663A_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterUtilities_t2F3AA5C303CE87D346E2E1DF00D194CA52D2663A_il2cpp_TypeInfo_var))->____WaterLineMesh = L_2;
@@ -4689,7 +4689,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D
 
 IL_0016:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:28>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:28>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_3 = ((UnderwaterUtilities_t2F3AA5C303CE87D346E2E1DF00D194CA52D2663A_StaticFields*)il2cpp_codegen_static_fields_for(UnderwaterUtilities_t2F3AA5C303CE87D346E2E1DF00D194CA52D2663A_il2cpp_TypeInfo_var))->____WaterLineMesh;
 		return L_3;
 	}
@@ -4724,58 +4724,58 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D
 	int32_t V_13 = 0;
 	int32_t V_14 = 0;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:34>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:34>
 		int32_t L_0;
 		L_0 = Mathf_FloorToInt_m2A39AE881CAEE6B6A4B3BFEF9CA1ED40625F5AB7_inline((50.0f), NULL);
 		V_0 = L_0;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:36>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:36>
 		int32_t L_1 = V_0;
 		V_1 = ((int32_t)il2cpp_codegen_add(L_1, 1));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:37>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:37>
 		V_2 = 2;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:38>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:38>
 		int32_t L_2 = V_0;
 		V_3 = ((int32_t)il2cpp_codegen_multiply(L_2, 6));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:39>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:39>
 		int32_t L_3 = V_1;
 		int32_t L_4 = V_2;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:41>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:41>
 		int32_t L_5 = ((int32_t)il2cpp_codegen_multiply(L_3, L_4));
 		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_6 = (Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C*)(Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C*)SZArrayNew(Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C_il2cpp_TypeInfo_var, (uint32_t)L_5);
 		V_4 = L_6;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:42>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:42>
 		int32_t L_7 = V_3;
 		Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* L_8 = (Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C*)(Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C*)SZArrayNew(Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C_il2cpp_TypeInfo_var, (uint32_t)L_7);
 		V_5 = L_8;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:43>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:43>
 		int32_t L_9 = L_5;
 		Vector2U5BU5D_tFEBBC94BCC6C9C88277BA04047D2B3FDB6ED7FDA* L_10 = (Vector2U5BU5D_tFEBBC94BCC6C9C88277BA04047D2B3FDB6ED7FDA*)(Vector2U5BU5D_tFEBBC94BCC6C9C88277BA04047D2B3FDB6ED7FDA*)SZArrayNew(Vector2U5BU5D_tFEBBC94BCC6C9C88277BA04047D2B3FDB6ED7FDA_il2cpp_TypeInfo_var, (uint32_t)L_9);
 		V_6 = L_10;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:44>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:44>
 		ColorU5BU5D_t612261CF293F6FFC3D80AB52259FF0DC2B2CC389* L_11 = (ColorU5BU5D_t612261CF293F6FFC3D80AB52259FF0DC2B2CC389*)(ColorU5BU5D_t612261CF293F6FFC3D80AB52259FF0DC2B2CC389*)SZArrayNew(ColorU5BU5D_t612261CF293F6FFC3D80AB52259FF0DC2B2CC389_il2cpp_TypeInfo_var, (uint32_t)L_9);
 		V_7 = L_11;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:46>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:46>
 		int32_t L_12 = V_0;
 		V_8 = ((float)((1.0f)/((float)L_12)));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:47>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:47>
 		V_9 = (1.0f);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:49>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:49>
 		V_10 = 0;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:50>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:50>
 		V_11 = 0;
 		goto IL_00d7;
 	}
 
 IL_0053:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:52>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:52>
 		V_12 = 0;
 		goto IL_00cc;
 	}
 
 IL_0058:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:54>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:54>
 		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_13 = V_4;
 		int32_t L_14 = V_10;
 		int32_t L_15 = V_12;
@@ -4787,7 +4787,7 @@ IL_0058:
 		Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline((&L_19), ((float)il2cpp_codegen_subtract(((float)il2cpp_codegen_multiply(((float)L_15), L_16)), (0.5f))), ((float)il2cpp_codegen_subtract(((float)il2cpp_codegen_multiply(((float)L_17), L_18)), (0.5f))), (0.0f), NULL);
 		NullCheck(L_13);
 		(L_13)->SetAt(static_cast<il2cpp_array_size_t>(L_14), (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2)L_19);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:55>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:55>
 		Vector2U5BU5D_tFEBBC94BCC6C9C88277BA04047D2B3FDB6ED7FDA* L_20 = V_6;
 		int32_t L_21 = V_10;
 		int32_t L_22 = V_12;
@@ -4799,7 +4799,7 @@ IL_0058:
 		Vector2__ctor_m9525B79969AFFE3254B303A40997A56DEEB6F548_inline((&L_26), ((float)il2cpp_codegen_multiply(((float)L_22), L_23)), ((float)il2cpp_codegen_multiply(((float)L_24), L_25)), NULL);
 		NullCheck(L_20);
 		(L_20)->SetAt(static_cast<il2cpp_array_size_t>(L_21), (Vector2_t1FD6F485C871E832B347AB2DC8CBA08B739D8DF7)L_26);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:56>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:56>
 		ColorU5BU5D_t612261CF293F6FFC3D80AB52259FF0DC2B2CC389* L_27 = V_7;
 		int32_t L_28 = V_10;
 		int32_t L_29 = V_11;
@@ -4809,17 +4809,17 @@ IL_0058:
 		Color__ctor_m3786F0D6E510D9CFA544523A955870BD2A514C8C_inline((&L_31), (0.0f), (0.0f), ((float)il2cpp_codegen_multiply(((float)L_29), L_30)), (1.0f), NULL);
 		NullCheck(L_27);
 		(L_27)->SetAt(static_cast<il2cpp_array_size_t>(L_28), (Color_tD001788D726C3A7F1379BEED0260B9591F440C1F)L_31);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:57>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:57>
 		int32_t L_32 = V_10;
 		V_10 = ((int32_t)il2cpp_codegen_add(L_32, 1));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:52>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:52>
 		int32_t L_33 = V_12;
 		V_12 = ((int32_t)il2cpp_codegen_add(L_33, 1));
 	}
 
 IL_00cc:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:52>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:52>
 		int32_t L_34 = V_12;
 		int32_t L_35 = V_1;
 		if ((((int32_t)L_34) < ((int32_t)L_35)))
@@ -4828,14 +4828,14 @@ IL_00cc:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:50>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:50>
 		int32_t L_36 = V_11;
 		V_11 = ((int32_t)il2cpp_codegen_add(L_36, 1));
 	}
 
 IL_00d7:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:50>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:50>
 		int32_t L_37 = V_11;
 		int32_t L_38 = V_2;
 		if ((((int32_t)L_37) < ((int32_t)L_38)))
@@ -4844,23 +4844,23 @@ IL_00d7:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:61>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:61>
 		V_10 = 0;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:62>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:62>
 		V_13 = 0;
 		goto IL_0161;
 	}
 
 IL_00e7:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:64>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:64>
 		V_14 = 0;
 		goto IL_0156;
 	}
 
 IL_00ec:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:66>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:66>
 		Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* L_39 = V_5;
 		int32_t L_40 = V_10;
 		int32_t L_41 = V_13;
@@ -4868,7 +4868,7 @@ IL_00ec:
 		int32_t L_43 = V_14;
 		NullCheck(L_39);
 		(L_39)->SetAt(static_cast<il2cpp_array_size_t>(L_40), (int32_t)((int32_t)il2cpp_codegen_add(((int32_t)il2cpp_codegen_multiply(L_41, L_42)), L_43)));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:67>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:67>
 		Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* L_44 = V_5;
 		int32_t L_45 = V_10;
 		int32_t L_46 = V_13;
@@ -4876,7 +4876,7 @@ IL_00ec:
 		int32_t L_48 = V_14;
 		NullCheck(L_44);
 		(L_44)->SetAt(static_cast<il2cpp_array_size_t>(((int32_t)il2cpp_codegen_add(L_45, 1))), (int32_t)((int32_t)il2cpp_codegen_add(((int32_t)il2cpp_codegen_multiply(((int32_t)il2cpp_codegen_add(L_46, 1)), L_47)), L_48)));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:68>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:68>
 		Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* L_49 = V_5;
 		int32_t L_50 = V_10;
 		int32_t L_51 = V_13;
@@ -4884,7 +4884,7 @@ IL_00ec:
 		int32_t L_53 = V_14;
 		NullCheck(L_49);
 		(L_49)->SetAt(static_cast<il2cpp_array_size_t>(((int32_t)il2cpp_codegen_add(L_50, 2))), (int32_t)((int32_t)il2cpp_codegen_add(((int32_t)il2cpp_codegen_add(((int32_t)il2cpp_codegen_multiply(L_51, L_52)), L_53)), 1)));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:70>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:70>
 		Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* L_54 = V_5;
 		int32_t L_55 = V_10;
 		int32_t L_56 = V_13;
@@ -4892,7 +4892,7 @@ IL_00ec:
 		int32_t L_58 = V_14;
 		NullCheck(L_54);
 		(L_54)->SetAt(static_cast<il2cpp_array_size_t>(((int32_t)il2cpp_codegen_add(L_55, 3))), (int32_t)((int32_t)il2cpp_codegen_add(((int32_t)il2cpp_codegen_multiply(((int32_t)il2cpp_codegen_add(L_56, 1)), L_57)), L_58)));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:71>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:71>
 		Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* L_59 = V_5;
 		int32_t L_60 = V_10;
 		int32_t L_61 = V_13;
@@ -4900,7 +4900,7 @@ IL_00ec:
 		int32_t L_63 = V_14;
 		NullCheck(L_59);
 		(L_59)->SetAt(static_cast<il2cpp_array_size_t>(((int32_t)il2cpp_codegen_add(L_60, 4))), (int32_t)((int32_t)il2cpp_codegen_add(((int32_t)il2cpp_codegen_add(((int32_t)il2cpp_codegen_multiply(((int32_t)il2cpp_codegen_add(L_61, 1)), L_62)), L_63)), 1)));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:72>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:72>
 		Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* L_64 = V_5;
 		int32_t L_65 = V_10;
 		int32_t L_66 = V_13;
@@ -4908,17 +4908,17 @@ IL_00ec:
 		int32_t L_68 = V_14;
 		NullCheck(L_64);
 		(L_64)->SetAt(static_cast<il2cpp_array_size_t>(((int32_t)il2cpp_codegen_add(L_65, 5))), (int32_t)((int32_t)il2cpp_codegen_add(((int32_t)il2cpp_codegen_add(((int32_t)il2cpp_codegen_multiply(L_66, L_67)), L_68)), 1)));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:73>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:73>
 		int32_t L_69 = V_10;
 		V_10 = ((int32_t)il2cpp_codegen_add(L_69, 6));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:64>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:64>
 		int32_t L_70 = V_14;
 		V_14 = ((int32_t)il2cpp_codegen_add(L_70, 1));
 	}
 
 IL_0156:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:64>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:64>
 		int32_t L_71 = V_14;
 		int32_t L_72 = V_0;
 		if ((((int32_t)L_71) < ((int32_t)L_72)))
@@ -4927,14 +4927,14 @@ IL_0156:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:62>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:62>
 		int32_t L_73 = V_13;
 		V_13 = ((int32_t)il2cpp_codegen_add(L_73, 1));
 	}
 
 IL_0161:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:62>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:62>
 		int32_t L_74 = V_13;
 		if ((((int32_t)L_74) < ((int32_t)1)))
 		{
@@ -4942,39 +4942,39 @@ IL_0161:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:77>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:77>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_75 = (Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4*)il2cpp_codegen_object_new(Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4_il2cpp_TypeInfo_var);
 		Mesh__ctor_m5A9AECEDDAFFD84811ED8928012BDE97A9CEBD00(L_75, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:79>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:79>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_76 = L_75;
 		Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C* L_77 = V_4;
 		NullCheck(L_76);
 		Mesh_set_vertices_m5BB814D89E9ACA00DBF19F7D8E22CB73AC73FE5C(L_76, L_77, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:80>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:80>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_78 = L_76;
 		Vector2U5BU5D_tFEBBC94BCC6C9C88277BA04047D2B3FDB6ED7FDA* L_79 = V_6;
 		NullCheck(L_78);
 		Mesh_set_uv_m6ED9C50E0DA8166DD48AC40FD6C828B9AD2E9617(L_78, L_79, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:81>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:81>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_80 = L_78;
 		ColorU5BU5D_t612261CF293F6FFC3D80AB52259FF0DC2B2CC389* L_81 = V_7;
 		NullCheck(L_80);
 		Mesh_set_colors_m5558BAAA60676427B7954F1694A1765B000EB0FE(L_80, L_81, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:83>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:83>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_82 = L_80;
 		NullCheck(L_82);
 		Mesh_set_subMeshCount_m8E4DB392DB0621F7DFF8543FF3943A13072B8A28(L_82, 2, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:84>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:84>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_83 = L_82;
 		Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* L_84 = V_5;
 		NullCheck(L_83);
 		Mesh_SetTriangles_mD97664344427EB85BB6DC2EF91479E03B9114258(L_83, L_84, 0, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:85>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:85>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_85 = L_83;
 		Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* L_86 = V_5;
 		NullCheck(L_85);
 		Mesh_SetTriangles_mD97664344427EB85BB6DC2EF91479E03B9114258(L_85, L_86, 1, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:88>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:88>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_87 = L_85;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_88;
 		L_88 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
@@ -4986,11 +4986,11 @@ IL_0161:
 		Bounds__ctor_mAF7B238B9FBF90C495E5D7951760085A93119C5A_inline((&L_90), L_88, L_89, NULL);
 		NullCheck(L_87);
 		Mesh_set_bounds_m2E526E9B61ACA77D644C22A9D8EB49583012B54E(L_87, L_90, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:90>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:90>
 		Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* L_91 = L_87;
 		NullCheck(L_91);
 		Object_set_name_mC79E6DC8FFD72479C90F0C4CC7F42A0FEAF5AE47(L_91, _stringLiteral7F0BEBDE84C6A71EB35A23EEA9A8B080FC5A3234, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:92>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:92>
 		return L_91;
 	}
 }
@@ -5008,20 +5008,20 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_6;
 	memset((&V_6), 0, sizeof(V_6));
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:97>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:97>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_0 = ___0_camera;
 		NullCheck(L_0);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_1;
 		L_1 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(L_0, NULL);
 		V_0 = L_1;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:99>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:99>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_2 = ___0_camera;
 		NullCheck(L_2);
 		float L_3;
 		L_3 = Camera_get_nearClipPlane_m5E8FAF84326E3192CB036BD29DCCDAF6A9861013(L_2, NULL);
 		float L_4 = ___1_nearPlaneOffset;
 		V_1 = ((float)il2cpp_codegen_add(L_3, L_4));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:100>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:100>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_5 = ___0_camera;
 		NullCheck(L_5);
 		float L_6;
@@ -5032,14 +5032,14 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_
 		L_8 = Camera_get_projectionMatrix_m9B943EFDD6418528A055321E14F75F1511DD9B4A(L_7, NULL);
 		float L_9 = L_8.___m11;
 		V_2 = ((float)(L_6/L_9));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:101>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:101>
 		float L_10 = V_2;
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_11 = ___0_camera;
 		NullCheck(L_11);
 		float L_12;
 		L_12 = Camera_get_aspect_m48BF8820EA2D55BE0D154BC5546819FB65BE257D(L_11, NULL);
 		V_3 = ((float)il2cpp_codegen_multiply(L_10, L_12));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:103>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:103>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_13 = V_0;
 		NullCheck(L_13);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_14;
@@ -5054,7 +5054,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_19;
 		L_19 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_14, L_18, NULL);
 		V_4 = L_19;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:104>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:104>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_20 = V_0;
 		NullCheck(L_20);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_21;
@@ -5063,7 +5063,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_23;
 		L_23 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_21, L_22, NULL);
 		V_5 = L_23;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:105>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:105>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_24 = V_0;
 		NullCheck(L_24);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_25;
@@ -5072,7 +5072,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_27;
 		L_27 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_25, L_26, NULL);
 		V_6 = L_27;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:107>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:107>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_28 = ___4_topLeft;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_29 = V_4;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_30 = V_5;
@@ -5082,7 +5082,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_33;
 		L_33 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_31, L_32, NULL);
 		*(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)L_28 = L_33;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:108>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:108>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_34 = ___5_topRight;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_35 = V_4;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_36 = V_5;
@@ -5092,7 +5092,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_39;
 		L_39 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_37, L_38, NULL);
 		*(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)L_34 = L_39;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:109>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:109>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_40 = ___2_bottomLeft;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_41 = V_4;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_42 = V_5;
@@ -5102,7 +5102,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_45;
 		L_45 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_43, L_44, NULL);
 		*(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)L_40 = L_45;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:110>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:110>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_46 = ___3_bottomRight;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_47 = V_4;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_48 = V_5;
@@ -5112,7 +5112,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_51;
 		L_51 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_49, L_50, NULL);
 		*(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)L_46 = L_51;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:111>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:111>
 		return;
 	}
 }
@@ -5122,7 +5122,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterUtilities_GetNearPlaneHeight_
 	Matrix4x4_tDB70CF134A14BA38190C59AA700BCE10E2AED3E6 V_0;
 	memset((&V_0), 0, sizeof(V_0));
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:115>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:115>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_0 = ___0_camera;
 		NullCheck(L_0);
 		Matrix4x4_tDB70CF134A14BA38190C59AA700BCE10E2AED3E6 L_1;
@@ -5139,14 +5139,14 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A
 {
 	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* V_0 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:120>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:120>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_0 = ___0_targetCamera;
 		NullCheck(L_0);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_1;
 		L_1 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(L_0, NULL);
 		V_0 = L_1;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:122>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:123>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:122>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:123>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_2 = V_0;
 		NullCheck(L_2);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3;
@@ -5188,14 +5188,14 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A
 {
 	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* V_0 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:128>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:128>
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_0 = ___0_targetCamera;
 		NullCheck(L_0);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_1;
 		L_1 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(L_0, NULL);
 		V_0 = L_1;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:130>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:131>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:130>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:131>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_2 = V_0;
 		NullCheck(L_2);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3;
@@ -5240,13 +5240,13 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterUtilities_PositionInsideVolume
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_1;
 	memset((&V_1), 0, sizeof(V_1));
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:142>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:142>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_0 = ___1_boxCollider;
 		NullCheck(L_0);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
 		L_1 = BoxCollider_get_center_mC370C79F9FC9398D0DD080500FA2EE14FC6E36C7(L_0, NULL);
 		V_0 = L_1;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:143>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:143>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_2 = ___1_boxCollider;
 		NullCheck(L_2);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3;
@@ -5254,7 +5254,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterUtilities_PositionInsideVolume
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_4;
 		L_4 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_3, (0.5f), NULL);
 		V_1 = L_4;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:146>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:146>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_5 = ___1_boxCollider;
 		NullCheck(L_5);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_6;
@@ -5264,10 +5264,10 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterUtilities_PositionInsideVolume
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8;
 		L_8 = Transform_InverseTransformPoint_m18CD395144D9C78F30E15A5B82B6670E792DBA5D(L_6, L_7, NULL);
 		___0_position = L_8;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:148>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:149>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:150>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:151>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:148>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:149>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:150>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:151>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_9 = ___0_position;
 		float L_10 = L_9.___x;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_11 = V_0;
@@ -5339,7 +5339,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterUtilities_PositionInsideVolume
 
 IL_00a8:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:153>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:153>
 		return (bool)0;
 	}
 }
@@ -5367,7 +5367,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A
 	float V_9 = 0.0f;
 	int32_t G_B7_0 = 0;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:159>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:159>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_0 = ___1_boxCollider;
 		NullCheck(L_0);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_1;
@@ -5377,13 +5377,13 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_3;
 		L_3 = Transform_InverseTransformPoint_m18CD395144D9C78F30E15A5B82B6670E792DBA5D(L_1, L_2, NULL);
 		V_0 = L_3;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:160>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:160>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_4 = ___1_boxCollider;
 		NullCheck(L_4);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_5;
 		L_5 = BoxCollider_get_center_mC370C79F9FC9398D0DD080500FA2EE14FC6E36C7(L_4, NULL);
 		V_1 = L_5;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:161>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:161>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_6 = ___1_boxCollider;
 		NullCheck(L_6);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7;
@@ -5391,10 +5391,10 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8;
 		L_8 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_7, (0.5f), NULL);
 		V_2 = L_8;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:164>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:165>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:166>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:167>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:164>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:165>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:166>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:167>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_9 = V_0;
 		float L_10 = L_9.___x;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_11 = V_1;
@@ -5472,14 +5472,14 @@ IL_00a8:
 
 IL_00a9:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:169>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:169>
 		if (G_B7_0)
 		{
 			goto IL_00b3;
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:172>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:172>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_45 = ___1_boxCollider;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_46 = ___0_position;
 		NullCheck(L_45);
@@ -5490,7 +5490,7 @@ IL_00a9:
 
 IL_00b3:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:176>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:176>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_48 = V_1;
 		float L_49 = L_48.___x;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_50 = V_2;
@@ -5498,7 +5498,7 @@ IL_00b3:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_52 = V_0;
 		float L_53 = L_52.___x;
 		V_3 = ((float)il2cpp_codegen_subtract(((float)il2cpp_codegen_add(L_49, L_51)), L_53));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:177>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:177>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_54 = V_0;
 		float L_55 = L_54.___x;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_56 = V_1;
@@ -5506,7 +5506,7 @@ IL_00b3:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_58 = V_2;
 		float L_59 = L_58.___x;
 		V_4 = ((float)il2cpp_codegen_subtract(L_55, ((float)il2cpp_codegen_subtract(L_57, L_59))));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:178>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:178>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_60 = V_1;
 		float L_61 = L_60.___y;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_62 = V_2;
@@ -5514,7 +5514,7 @@ IL_00b3:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_64 = V_0;
 		float L_65 = L_64.___y;
 		V_5 = ((float)il2cpp_codegen_subtract(((float)il2cpp_codegen_add(L_61, L_63)), L_65));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:179>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:179>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_66 = V_0;
 		float L_67 = L_66.___y;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_68 = V_1;
@@ -5522,7 +5522,7 @@ IL_00b3:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_70 = V_2;
 		float L_71 = L_70.___y;
 		V_6 = ((float)il2cpp_codegen_subtract(L_67, ((float)il2cpp_codegen_subtract(L_69, L_71))));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:180>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:180>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_72 = V_1;
 		float L_73 = L_72.___z;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_74 = V_2;
@@ -5530,7 +5530,7 @@ IL_00b3:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_76 = V_0;
 		float L_77 = L_76.___z;
 		V_7 = ((float)il2cpp_codegen_subtract(((float)il2cpp_codegen_add(L_73, L_75)), L_77));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:181>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:181>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_78 = V_0;
 		float L_79 = L_78.___z;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_80 = V_1;
@@ -5538,11 +5538,11 @@ IL_00b3:
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_82 = V_2;
 		float L_83 = L_82.___z;
 		V_8 = ((float)il2cpp_codegen_subtract(L_79, ((float)il2cpp_codegen_subtract(L_81, L_83))));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:184>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:185>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:186>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:187>
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:188>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:184>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:185>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:186>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:187>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:188>
 		SingleU5BU5D_t89DEFE97BCEDB5857010E79ECE0F52CF6E93B87C* L_84 = (SingleU5BU5D_t89DEFE97BCEDB5857010E79ECE0F52CF6E93B87C*)(SingleU5BU5D_t89DEFE97BCEDB5857010E79ECE0F52CF6E93B87C*)SZArrayNew(SingleU5BU5D_t89DEFE97BCEDB5857010E79ECE0F52CF6E93B87C_il2cpp_TypeInfo_var, (uint32_t)6);
 		SingleU5BU5D_t89DEFE97BCEDB5857010E79ECE0F52CF6E93B87C* L_85 = L_84;
 		float L_86 = V_3;
@@ -5571,7 +5571,7 @@ IL_00b3:
 		float L_97;
 		L_97 = Mathf_Min_mCE17F4139B7DF5BB96192C88AF390D3C99F11858_inline(L_95, NULL);
 		V_9 = L_97;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:191>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:191>
 		float L_98 = V_9;
 		float L_99 = V_3;
 		bool L_100;
@@ -5582,7 +5582,7 @@ IL_00b3:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:192>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:192>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_101 = V_1;
 		float L_102 = L_101.___x;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_103 = V_2;
@@ -5593,7 +5593,7 @@ IL_00b3:
 
 IL_0183:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:193>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:193>
 		float L_105 = V_9;
 		float L_106 = V_4;
 		bool L_107;
@@ -5604,7 +5604,7 @@ IL_0183:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:194>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:194>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_108 = V_1;
 		float L_109 = L_108.___x;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_110 = V_2;
@@ -5615,7 +5615,7 @@ IL_0183:
 
 IL_01a4:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:195>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:195>
 		float L_112 = V_9;
 		float L_113 = V_5;
 		bool L_114;
@@ -5626,7 +5626,7 @@ IL_01a4:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:196>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:196>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_115 = V_1;
 		float L_116 = L_115.___y;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_117 = V_2;
@@ -5637,7 +5637,7 @@ IL_01a4:
 
 IL_01c5:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:197>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:197>
 		float L_119 = V_9;
 		float L_120 = V_6;
 		bool L_121;
@@ -5648,7 +5648,7 @@ IL_01c5:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:198>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:198>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_122 = V_1;
 		float L_123 = L_122.___y;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_124 = V_2;
@@ -5659,7 +5659,7 @@ IL_01c5:
 
 IL_01e6:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:199>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:199>
 		float L_126 = V_9;
 		float L_127 = V_7;
 		bool L_128;
@@ -5670,7 +5670,7 @@ IL_01e6:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:200>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:200>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_129 = V_1;
 		float L_130 = L_129.___z;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_131 = V_2;
@@ -5681,7 +5681,7 @@ IL_01e6:
 
 IL_0207:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:202>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:202>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_133 = V_1;
 		float L_134 = L_133.___z;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_135 = V_2;
@@ -5691,7 +5691,7 @@ IL_0207:
 
 IL_021b:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:205>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/Underwater/UnderwaterUtilities.cs:205>
 		BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* L_137 = ___1_boxCollider;
 		NullCheck(L_137);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_138;

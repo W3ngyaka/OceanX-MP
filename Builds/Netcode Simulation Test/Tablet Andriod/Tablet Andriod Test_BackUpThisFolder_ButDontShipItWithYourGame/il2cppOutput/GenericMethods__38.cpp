@@ -10903,7 +10903,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ScriptableRendererFeature_tF2ED08AD2498105378
 	String_t* G_B5_0 = NULL;
 	ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* G_B5_1 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:380>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:380>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_0 = ___0_renderer;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_1;
@@ -10914,7 +10914,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ScriptableRendererFeature_tF2ED08AD2498105378
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:380>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:380>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_2;
 		L_2 = PipelineUtilities_GetDefaultRenderer_m4A9071F0CC52448BFCB98255EE9EEFDF613823E6((UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232*)NULL, NULL);
 		___0_renderer = L_2;
@@ -10922,7 +10922,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ScriptableRendererFeature_tF2ED08AD2498105378
 
 IL_0011:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:382>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:382>
 		RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_3 = { reinterpret_cast<intptr_t> (il2cpp_rgctx_type(method->rgctx_data, 0)) };
 		il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
 		Type_t* L_4;
@@ -10933,7 +10933,7 @@ IL_0011:
 		ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A* L_6;
 		L_6 = ScriptableObject_CreateInstance_m665B20BF660DA7CC22E9B316B51F5B980BC491B2(L_5, NULL);
 		V_0 = ((ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6*)CastclassClass((RuntimeObject*)L_6, ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6_il2cpp_TypeInfo_var));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:383>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:383>
 		ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_7 = V_0;
 		String_t* L_8 = ___1_name;
 		String_t* L_9 = ((String_t_StaticFields*)il2cpp_codegen_static_fields_for(il2cpp_defaults.string_class))->___Empty;
@@ -10970,7 +10970,7 @@ IL_004b:
 	{
 		NullCheck((Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)G_B5_1);
 		Object_set_name_mC79E6DC8FFD72479C90F0C4CC7F42A0FEAF5AE47((Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)G_B5_1, G_B5_0, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:386>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:386>
 		il2cpp_codegen_runtime_class_init_inline(Application_tDB03BE91CDF0ACA614A5E0B67CFB77C44EB19B21_il2cpp_TypeInfo_var);
 		bool L_15;
 		L_15 = Application_get_isPlaying_m25B0ABDFEF54F5370CD3F263A813540843D00F34(NULL);
@@ -10980,7 +10980,7 @@ IL_004b:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:388>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:388>
 		ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_16 = V_0;
 		NullCheck((RuntimeObject*)L_16);
 		Type_t* L_17;
@@ -10989,7 +10989,7 @@ IL_004b:
 		MethodInfo_t* L_18;
 		L_18 = Type_GetMethod_m9E66B5053F150537A74C490C1DA5174A7875189D(L_17, _stringLiteralA74ACAA1F61DE0EB348EC03946685B0B6270CB36, (int32_t)((int32_t)36), NULL);
 		V_2 = L_18;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:389>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:389>
 		MethodInfo_t* L_19 = V_2;
 		bool L_20;
 		L_20 = MethodInfo_op_Inequality_mB73597A1FCC2F906DBCADDEC68A1B7D5B7E89FA8(L_19, (MethodInfo_t*)NULL, NULL);
@@ -10999,7 +10999,7 @@ IL_004b:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:389>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:389>
 		MethodInfo_t* L_21 = V_2;
 		ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_22 = V_0;
 		NullCheck((MethodBase_t*)L_21);
@@ -11009,7 +11009,7 @@ IL_004b:
 
 IL_007c:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:399>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:399>
 		RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_24 = { reinterpret_cast<intptr_t> (ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7_0_0_0_var) };
 		il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
 		Type_t* L_25;
@@ -11017,36 +11017,36 @@ IL_007c:
 		NullCheck(L_25);
 		FieldInfo_t* L_26;
 		L_26 = VirtualFuncInvoker2< FieldInfo_t*, String_t*, int32_t >::Invoke(83, L_25, _stringLiteral7C8FE30FF4BF8FE70AD821A097AA1FCF7BE7515C, (int32_t)((int32_t)36));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:400>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:400>
 		FieldInfo_t* L_27 = L_26;
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_28 = ___0_renderer;
 		NullCheck(L_27);
 		RuntimeObject* L_29;
 		L_29 = VirtualFuncInvoker1< RuntimeObject*, RuntimeObject* >::Invoke(23, L_27, (RuntimeObject*)L_28);
 		V_1 = ((List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6*)CastclassClass((RuntimeObject*)L_29, List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6_il2cpp_TypeInfo_var));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:403>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:403>
 		List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6* L_30 = V_1;
 		ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_31 = V_0;
 		NullCheck(L_30);
 		List_1_Add_m9C754466AA0D67659DEFB20BF59FF7355899A32A_inline(L_30, L_31, List_1_Add_m9C754466AA0D67659DEFB20BF59FF7355899A32A_RuntimeMethod_var);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:404>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:404>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_32 = ___0_renderer;
 		List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6* L_33 = V_1;
 		NullCheck(L_27);
 		FieldInfo_SetValue_mD8C0DA3A1A0CFF073F971622BBDBAAB6688B4B6C(L_27, (RuntimeObject*)L_32, (RuntimeObject*)L_33, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:407>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:407>
 		RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_34 = { reinterpret_cast<intptr_t> (ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7_0_0_0_var) };
 		Type_t* L_35;
 		L_35 = Type_GetTypeFromHandle_m6062B81682F79A4D6DF2640692EE6D9987858C57(L_34, NULL);
 		NullCheck(L_35);
 		MethodInfo_t* L_36;
 		L_36 = Type_GetMethod_m9E66B5053F150537A74C490C1DA5174A7875189D(L_35, _stringLiteral0E9621576053A15820293E9B2C59B65ABFA5677D, (int32_t)((int32_t)36), NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:408>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:408>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_37 = ___0_renderer;
 		NullCheck((MethodBase_t*)L_36);
 		RuntimeObject* L_38;
 		L_38 = MethodBase_Invoke_mEEF3218648F111A8C338001A7804091A0747C826((MethodBase_t*)L_36, (RuntimeObject*)L_37, (ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918*)NULL, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:415>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:415>
 		StringU5BU5D_t7674CD946EC0CE7B3AE0BE70E6EE85F2ECD9F248* L_39 = (StringU5BU5D_t7674CD946EC0CE7B3AE0BE70E6EE85F2ECD9F248*)(StringU5BU5D_t7674CD946EC0CE7B3AE0BE70E6EE85F2ECD9F248*)SZArrayNew(StringU5BU5D_t7674CD946EC0CE7B3AE0BE70E6EE85F2ECD9F248_il2cpp_TypeInfo_var, (uint32_t)5);
 		StringU5BU5D_t7674CD946EC0CE7B3AE0BE70E6EE85F2ECD9F248* L_40 = L_39;
 		NullCheck(L_40);
@@ -11075,7 +11075,7 @@ IL_007c:
 		L_49 = String_Concat_m647EBF831F54B6DF7D5AFA5FD012CF4EE7571B6A(L_48, NULL);
 		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
 		Debug_Log_m87A9A3C761FF5C43ED8A53B16190A53D08F818BB((RuntimeObject*)L_49, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:417>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:417>
 		ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_50 = V_0;
 		return L_50;
 	}
@@ -11100,7 +11100,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ScriptableRendererFeature_tF2ED08AD2498105378
 	ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* V_3 = NULL;
 	ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* V_4 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:287>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:287>
 		il2cpp_codegen_runtime_class_init_inline(UniversalRenderPipeline_t54B4737DC500C08628C5BE283D8C583C14DED98F_il2cpp_TypeInfo_var);
 		UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232* L_0;
 		L_0 = UniversalRenderPipeline_get_asset_mCDEF564C748A6FE271F3749C82ECA64D0F6DE9E9(NULL);
@@ -11113,27 +11113,27 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ScriptableRendererFeature_tF2ED08AD2498105378
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:287>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:287>
 		return (ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6*)NULL;
 	}
 
 IL_000e:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:289>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:289>
 		il2cpp_codegen_runtime_class_init_inline(UniversalRenderPipeline_t54B4737DC500C08628C5BE283D8C583C14DED98F_il2cpp_TypeInfo_var);
 		UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232* L_2;
 		L_2 = UniversalRenderPipeline_get_asset_mCDEF564C748A6FE271F3749C82ECA64D0F6DE9E9(NULL);
 		ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169* L_3;
 		L_3 = PipelineUtilities_GetRenderDataList_m88E0730E2F97114784EB5B767C78907FDC1B3432(L_2, NULL);
 		V_0 = L_3;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
 		V_1 = 0;
 		goto IL_0076;
 	}
 
 IL_001d:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
 		ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169* L_4 = V_0;
 		int32_t L_5 = V_1;
 		NullCheck(L_4);
@@ -11165,11 +11165,11 @@ FINALLY_0064:
 
 IL_002d_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_10;
 				L_10 = Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_inline((&V_2), Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_RuntimeMethod_var);
 				V_3 = L_10;
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:295>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:295>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_11 = V_3;
 				il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 				bool L_12;
@@ -11196,7 +11196,7 @@ IL_002d_1:
 				}
 			}
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:295>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:295>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_18 = V_3;
 				V_4 = L_18;
 				goto IL_007e;
@@ -11204,7 +11204,7 @@ IL_002d_1:
 
 IL_0059_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
 				bool L_19;
 				L_19 = Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48((&V_2), Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48_RuntimeMethod_var);
 				if (L_19)
@@ -11224,14 +11224,14 @@ IL_0059_1:
 
 IL_0072:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
 		int32_t L_20 = V_1;
 		V_1 = ((int32_t)il2cpp_codegen_add(L_20, 1));
 	}
 
 IL_0076:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
 		int32_t L_21 = V_1;
 		ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169* L_22 = V_0;
 		NullCheck(L_22);
@@ -11241,13 +11241,13 @@ IL_0076:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:299>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:299>
 		return (ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6*)NULL;
 	}
 
 IL_007e:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:300>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:300>
 		ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_23 = V_4;
 		return L_23;
 	}
@@ -11272,7 +11272,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ScriptableRendererFeature_tF2ED08AD2498105378
 	ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* V_3 = NULL;
 	ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* V_4 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:287>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:287>
 		il2cpp_codegen_runtime_class_init_inline(UniversalRenderPipeline_t54B4737DC500C08628C5BE283D8C583C14DED98F_il2cpp_TypeInfo_var);
 		UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232* L_0;
 		L_0 = UniversalRenderPipeline_get_asset_mCDEF564C748A6FE271F3749C82ECA64D0F6DE9E9(NULL);
@@ -11285,27 +11285,27 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ScriptableRendererFeature_tF2ED08AD2498105378
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:287>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:287>
 		return (ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6*)NULL;
 	}
 
 IL_000e:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:289>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:289>
 		il2cpp_codegen_runtime_class_init_inline(UniversalRenderPipeline_t54B4737DC500C08628C5BE283D8C583C14DED98F_il2cpp_TypeInfo_var);
 		UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232* L_2;
 		L_2 = UniversalRenderPipeline_get_asset_mCDEF564C748A6FE271F3749C82ECA64D0F6DE9E9(NULL);
 		ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169* L_3;
 		L_3 = PipelineUtilities_GetRenderDataList_m88E0730E2F97114784EB5B767C78907FDC1B3432(L_2, NULL);
 		V_0 = L_3;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
 		V_1 = 0;
 		goto IL_0076;
 	}
 
 IL_001d:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
 		ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169* L_4 = V_0;
 		int32_t L_5 = V_1;
 		NullCheck(L_4);
@@ -11337,11 +11337,11 @@ FINALLY_0064:
 
 IL_002d_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_10;
 				L_10 = Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_inline((&V_2), Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_RuntimeMethod_var);
 				V_3 = L_10;
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:295>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:295>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_11 = V_3;
 				il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 				bool L_12;
@@ -11368,7 +11368,7 @@ IL_002d_1:
 				}
 			}
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:295>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:295>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_18 = V_3;
 				V_4 = L_18;
 				goto IL_007e;
@@ -11376,7 +11376,7 @@ IL_002d_1:
 
 IL_0059_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:293>
 				bool L_19;
 				L_19 = Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48((&V_2), Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48_RuntimeMethod_var);
 				if (L_19)
@@ -11396,14 +11396,14 @@ IL_0059_1:
 
 IL_0072:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
 		int32_t L_20 = V_1;
 		V_1 = ((int32_t)il2cpp_codegen_add(L_20, 1));
 	}
 
 IL_0076:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:291>
 		int32_t L_21 = V_1;
 		ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169* L_22 = V_0;
 		NullCheck(L_22);
@@ -11413,13 +11413,13 @@ IL_0076:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:299>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:299>
 		return (ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6*)NULL;
 	}
 
 IL_007e:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:300>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:300>
 		ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_23 = V_4;
 		return L_23;
 	}
@@ -11441,7 +11441,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ScriptableRendererFeature_tF2ED08AD2498105378
 	ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* V_1 = NULL;
 	ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* V_2 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:270>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:270>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_0 = ___0_renderer;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_1;
@@ -11452,7 +11452,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ScriptableRendererFeature_tF2ED08AD2498105378
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:270>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:270>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_2;
 		L_2 = PipelineUtilities_GetDefaultRenderer_m4A9071F0CC52448BFCB98255EE9EEFDF613823E6((UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232*)NULL, NULL);
 		___0_renderer = L_2;
@@ -11460,7 +11460,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ScriptableRendererFeature_tF2ED08AD2498105378
 
 IL_0011:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:272>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:272>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_3 = ___0_renderer;
 		NullCheck(L_3);
 		List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6* L_4;
@@ -11488,11 +11488,11 @@ FINALLY_0055:
 
 IL_001f_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:272>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:272>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_6;
 				L_6 = Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_inline((&V_0), Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_RuntimeMethod_var);
 				V_1 = L_6;
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:274>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:274>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_7 = V_1;
 				il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 				bool L_8;
@@ -11519,7 +11519,7 @@ IL_001f_1:
 				}
 			}
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:274>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:274>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_14 = V_1;
 				V_2 = L_14;
 				goto IL_0065;
@@ -11527,7 +11527,7 @@ IL_001f_1:
 
 IL_004a_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:272>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:272>
 				bool L_15;
 				L_15 = Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48((&V_0), Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48_RuntimeMethod_var);
 				if (L_15)
@@ -11547,13 +11547,13 @@ IL_004a_1:
 
 IL_0063:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:277>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:277>
 		return (ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6*)NULL;
 	}
 
 IL_0065:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:278>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:278>
 		ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_16 = V_2;
 		return L_16;
 	}
@@ -11579,7 +11579,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool PipelineUtilities_IsRenderFeatureEnabled
 	ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* V_1 = NULL;
 	bool V_2 = false;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:422>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:422>
 		il2cpp_codegen_runtime_class_init_inline(UniversalRenderPipeline_t54B4737DC500C08628C5BE283D8C583C14DED98F_il2cpp_TypeInfo_var);
 		UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232* L_0;
 		L_0 = UniversalRenderPipeline_get_asset_mCDEF564C748A6FE271F3749C82ECA64D0F6DE9E9(NULL);
@@ -11592,13 +11592,13 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool PipelineUtilities_IsRenderFeatureEnabled
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:422>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:422>
 		return (bool)1;
 	}
 
 IL_000e:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:424>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:424>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_2 = ___0_forwardRenderer;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_3;
@@ -11609,7 +11609,7 @@ IL_000e:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:424>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:424>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_4;
 		L_4 = PipelineUtilities_GetDefaultRenderer_m4A9071F0CC52448BFCB98255EE9EEFDF613823E6((UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232*)NULL, NULL);
 		___0_forwardRenderer = L_4;
@@ -11617,7 +11617,7 @@ IL_000e:
 
 IL_001f:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:426>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:426>
 		RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_5 = { reinterpret_cast<intptr_t> (ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7_0_0_0_var) };
 		il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
 		Type_t* L_6;
@@ -11625,12 +11625,12 @@ IL_001f:
 		NullCheck(L_6);
 		FieldInfo_t* L_7;
 		L_7 = VirtualFuncInvoker2< FieldInfo_t*, String_t*, int32_t >::Invoke(83, L_6, _stringLiteral7C8FE30FF4BF8FE70AD821A097AA1FCF7BE7515C, (int32_t)((int32_t)36));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:427>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:427>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_8 = ___0_forwardRenderer;
 		NullCheck(L_7);
 		RuntimeObject* L_9;
 		L_9 = VirtualFuncInvoker1< RuntimeObject*, RuntimeObject* >::Invoke(23, L_7, (RuntimeObject*)L_8);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:429>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:429>
 		NullCheck(((List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6*)CastclassClass((RuntimeObject*)L_9, List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6_il2cpp_TypeInfo_var)));
 		Enumerator_tAE036FA290FC0CC475BEF0D5890C759A8DA9B786 L_10;
 		L_10 = List_1_GetEnumerator_m0ED7F868DFBF0B8A5F2C3A7252C548079FD8BB4F(((List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6*)CastclassClass((RuntimeObject*)L_9, List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6_il2cpp_TypeInfo_var)), List_1_GetEnumerator_m0ED7F868DFBF0B8A5F2C3A7252C548079FD8BB4F_RuntimeMethod_var);
@@ -11654,11 +11654,11 @@ FINALLY_0097:
 
 IL_0048_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:429>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:429>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_11;
 				L_11 = Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_inline((&V_0), Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_RuntimeMethod_var);
 				V_1 = L_11;
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:431>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:431>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_12 = V_1;
 				il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 				bool L_13;
@@ -11685,7 +11685,7 @@ IL_0048_1:
 				}
 			}
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:433>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:433>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_19 = V_1;
 				NullCheck(L_19);
 				bool L_20;
@@ -11697,7 +11697,7 @@ IL_0048_1:
 				}
 			}
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:435>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:435>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_22 = V_1;
 				NullCheck(L_22);
 				ScriptableRendererFeature_SetActive_mB6647749AB30629D12175825BB21043CF5FC56E3_inline(L_22, (bool)1, NULL);
@@ -11705,7 +11705,7 @@ IL_0048_1:
 
 IL_0083_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:442>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:442>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_23 = V_1;
 				NullCheck(L_23);
 				bool L_24;
@@ -11716,7 +11716,7 @@ IL_0083_1:
 
 IL_008c_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:429>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:429>
 				bool L_25;
 				L_25 = Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48((&V_0), Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48_RuntimeMethod_var);
 				if (L_25)
@@ -11736,13 +11736,13 @@ IL_008c_1:
 
 IL_00a5:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:447>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:447>
 		return (bool)1;
 	}
 
 IL_00a7:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:448>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:448>
 		bool L_26 = V_2;
 		return L_26;
 	}
@@ -11764,7 +11764,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool PipelineUtilities_RenderFeatureAdded_Tis
 	ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* V_1 = NULL;
 	bool V_2 = false;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:310>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:310>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_0 = ___0_renderer;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_1;
@@ -11775,7 +11775,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool PipelineUtilities_RenderFeatureAdded_Tis
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:310>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:310>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_2;
 		L_2 = PipelineUtilities_GetDefaultRenderer_m4A9071F0CC52448BFCB98255EE9EEFDF613823E6((UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232*)NULL, NULL);
 		___0_renderer = L_2;
@@ -11783,7 +11783,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool PipelineUtilities_RenderFeatureAdded_Tis
 
 IL_0011:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:312>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:312>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_3 = ___0_renderer;
 		NullCheck(L_3);
 		List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6* L_4;
@@ -11811,11 +11811,11 @@ FINALLY_0056:
 
 IL_001f_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:312>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:312>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_6;
 				L_6 = Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_inline((&V_0), Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_RuntimeMethod_var);
 				V_1 = L_6;
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:314>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:314>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_7 = V_1;
 				il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 				bool L_8;
@@ -11826,7 +11826,7 @@ IL_001f_1:
 				}
 			}
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:316>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:316>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_9 = V_1;
 				NullCheck((RuntimeObject*)L_9);
 				Type_t* L_10;
@@ -11843,14 +11843,14 @@ IL_001f_1:
 				}
 			}
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:318>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:318>
 				V_2 = (bool)1;
 				goto IL_0066;
 			}
 
 IL_004b_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:312>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:312>
 				bool L_14;
 				L_14 = Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48((&V_0), Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48_RuntimeMethod_var);
 				if (L_14)
@@ -11870,13 +11870,13 @@ IL_004b_1:
 
 IL_0064:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:322>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:322>
 		return (bool)0;
 	}
 
 IL_0066:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:323>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:323>
 		bool L_15 = V_2;
 		return L_15;
 	}
@@ -11900,11 +11900,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool PipelineUtilities_RenderFeatureMissing_T
 	int32_t V_2 = 0;
 	ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* V_3 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:333>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:333>
 		List_1_t309E509CCE018E90D9F1ABC9799BF08611C72424* L_0 = (List_1_t309E509CCE018E90D9F1ABC9799BF08611C72424*)il2cpp_codegen_object_new(List_1_t309E509CCE018E90D9F1ABC9799BF08611C72424_il2cpp_TypeInfo_var);
 		List_1__ctor_m34C8555D6DCC2D0287E23BFB31223CF1D0734217(L_0, List_1__ctor_m34C8555D6DCC2D0287E23BFB31223CF1D0734217_RuntimeMethod_var);
 		V_0 = L_0;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:335>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:335>
 		il2cpp_codegen_runtime_class_init_inline(GraphicsSettings_t01785CE5CB5C5105CB527619AF4D74BEF417EF1A_il2cpp_TypeInfo_var);
 		RenderPipelineAssetU5BU5D_tC7BB451866A6BBD25149EE11138B358256370999* L_1;
 		L_1 = GraphicsSettings_get_allConfiguredRenderPipelines_mF3A743903CA9E0067F931D03561666FA847023CB(NULL);
@@ -11915,17 +11915,17 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool PipelineUtilities_RenderFeatureMissing_T
 
 IL_0010:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:335>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:335>
 		RenderPipelineAssetU5BU5D_tC7BB451866A6BBD25149EE11138B358256370999* L_2 = V_1;
 		int32_t L_3 = V_2;
 		NullCheck(L_2);
 		int32_t L_4 = L_3;
 		RenderPipelineAsset_t5F9BF815BF931E1314B184E7F9070FB649C7054E* L_5 = (L_2)->GetAt(static_cast<il2cpp_array_size_t>(L_4));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:337>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:337>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_6;
 		L_6 = PipelineUtilities_GetDefaultRenderer_m4A9071F0CC52448BFCB98255EE9EEFDF613823E6(((UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232*)CastclassClass((RuntimeObject*)L_5, UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232_il2cpp_TypeInfo_var)), NULL);
 		V_3 = L_6;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:339>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:339>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_7 = V_3;
 		bool L_8;
 		L_8 = ((  bool (*) (ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7*, const RuntimeMethod*))il2cpp_codegen_get_direct_method_pointer(il2cpp_rgctx_method(method->rgctx_data, 0)))(L_7, il2cpp_rgctx_method(method->rgctx_data, 0));
@@ -11935,7 +11935,7 @@ IL_0010:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:341>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:341>
 		List_1_t309E509CCE018E90D9F1ABC9799BF08611C72424* L_9 = V_0;
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_10 = V_3;
 		NullCheck(L_9);
@@ -11950,7 +11950,7 @@ IL_002d:
 
 IL_0031:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:335>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:335>
 		int32_t L_12 = V_2;
 		RenderPipelineAssetU5BU5D_tC7BB451866A6BBD25149EE11138B358256370999* L_13 = V_1;
 		NullCheck(L_13);
@@ -11960,7 +11960,7 @@ IL_0031:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:345>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:345>
 		ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169** L_14 = ___0_renderers;
 		List_1_t309E509CCE018E90D9F1ABC9799BF08611C72424* L_15 = V_0;
 		RuntimeObject* L_16;
@@ -11969,7 +11969,7 @@ IL_0031:
 		L_17 = Enumerable_ToArray_TisScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7_mF4D5966647AE78B5A6766891C3220002EF750546(L_16, Enumerable_ToArray_TisScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7_mF4D5966647AE78B5A6766891C3220002EF750546_RuntimeMethod_var);
 		*((ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169**)L_14) = (ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169*)L_17;
 		Il2CppCodeGenWriteBarrier((void**)(ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169**)L_14, (void*)(ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169*)L_17);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:347>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:347>
 		ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169** L_18 = ___0_renderers;
 		ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169* L_19 = *((ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169**)L_18);
 		NullCheck(L_19);
@@ -11993,11 +11993,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR List_1_t309E509CCE018E90D9F1ABC9799BF08611C72
 	int32_t V_2 = 0;
 	ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* V_3 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:357>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:357>
 		List_1_t309E509CCE018E90D9F1ABC9799BF08611C72424* L_0 = (List_1_t309E509CCE018E90D9F1ABC9799BF08611C72424*)il2cpp_codegen_object_new(List_1_t309E509CCE018E90D9F1ABC9799BF08611C72424_il2cpp_TypeInfo_var);
 		List_1__ctor_m34C8555D6DCC2D0287E23BFB31223CF1D0734217(L_0, List_1__ctor_m34C8555D6DCC2D0287E23BFB31223CF1D0734217_RuntimeMethod_var);
 		V_0 = L_0;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:359>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:359>
 		il2cpp_codegen_runtime_class_init_inline(GraphicsSettings_t01785CE5CB5C5105CB527619AF4D74BEF417EF1A_il2cpp_TypeInfo_var);
 		RenderPipelineAssetU5BU5D_tC7BB451866A6BBD25149EE11138B358256370999* L_1;
 		L_1 = GraphicsSettings_get_allConfiguredRenderPipelines_mF3A743903CA9E0067F931D03561666FA847023CB(NULL);
@@ -12008,17 +12008,17 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR List_1_t309E509CCE018E90D9F1ABC9799BF08611C72
 
 IL_0010:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:359>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:359>
 		RenderPipelineAssetU5BU5D_tC7BB451866A6BBD25149EE11138B358256370999* L_2 = V_1;
 		int32_t L_3 = V_2;
 		NullCheck(L_2);
 		int32_t L_4 = L_3;
 		RenderPipelineAsset_t5F9BF815BF931E1314B184E7F9070FB649C7054E* L_5 = (L_2)->GetAt(static_cast<il2cpp_array_size_t>(L_4));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:361>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:361>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_6;
 		L_6 = PipelineUtilities_GetDefaultRenderer_m4A9071F0CC52448BFCB98255EE9EEFDF613823E6(((UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232*)CastclassClass((RuntimeObject*)L_5, UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232_il2cpp_TypeInfo_var)), NULL);
 		V_3 = L_6;
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:363>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:363>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_7 = V_3;
 		bool L_8;
 		L_8 = ((  bool (*) (ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7*, const RuntimeMethod*))il2cpp_codegen_get_direct_method_pointer(il2cpp_rgctx_method(method->rgctx_data, 0)))(L_7, il2cpp_rgctx_method(method->rgctx_data, 0));
@@ -12028,12 +12028,12 @@ IL_0010:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:365>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:365>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_9 = V_3;
 		String_t* L_10 = ___0_name;
 		ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_11;
 		L_11 = ((  ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* (*) (ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7*, String_t*, const RuntimeMethod*))il2cpp_codegen_get_direct_method_pointer(il2cpp_rgctx_method(method->rgctx_data, 1)))(L_9, L_10, il2cpp_rgctx_method(method->rgctx_data, 1));
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:366>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:366>
 		List_1_t309E509CCE018E90D9F1ABC9799BF08611C72424* L_12 = V_0;
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_13 = V_3;
 		NullCheck(L_12);
@@ -12048,7 +12048,7 @@ IL_0035:
 
 IL_0039:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:359>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:359>
 		int32_t L_15 = V_2;
 		RenderPipelineAssetU5BU5D_tC7BB451866A6BBD25149EE11138B358256370999* L_16 = V_1;
 		NullCheck(L_16);
@@ -12058,7 +12058,7 @@ IL_0039:
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:370>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:370>
 		List_1_t309E509CCE018E90D9F1ABC9799BF08611C72424* L_17 = V_0;
 		return L_17;
 	}
@@ -12079,10 +12079,10 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PipelineUtilities_ToggleRenderFeature_Ti
 	memset((&V_0), 0, sizeof(V_0));
 	ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* V_1 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:452>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:452>
 		ScriptableRendererData_t9005CE645D4881FA4431E52EDC7678203632CAA7* L_0;
 		L_0 = PipelineUtilities_GetDefaultRenderer_m4A9071F0CC52448BFCB98255EE9EEFDF613823E6((UniversalRenderPipelineAsset_tE8A9AA6F030CC3B558CEA2EB54FFF4FC58CA6232*)NULL, NULL);
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:454>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:454>
 		NullCheck(L_0);
 		List_1_t2121653FB628940E808D105AD2C17E0F20AFB3A6* L_1;
 		L_1 = ScriptableRendererData_get_rendererFeatures_m1DF4156F6E0733E01D096AE7A3C43EC6C9D2DD45_inline(L_0, NULL);
@@ -12109,11 +12109,11 @@ FINALLY_004c:
 
 IL_0013_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:454>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:454>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_3;
 				L_3 = Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_inline((&V_0), Enumerator_get_Current_m65E52814F3289E84E69A7324ED46026114A0FFAE_RuntimeMethod_var);
 				V_1 = L_3;
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:456>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:456>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_4 = V_1;
 				il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 				bool L_5;
@@ -12140,7 +12140,7 @@ IL_0013_1:
 				}
 			}
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:456>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:456>
 				ScriptableRendererFeature_tF2ED08AD2498105378D4DAB0386A0F8A144EF4C6* L_11 = V_1;
 				bool L_12 = ___0_state;
 				NullCheck(L_11);
@@ -12149,7 +12149,7 @@ IL_0013_1:
 
 IL_0041_1:
 			{
-				//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:454>
+				//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:454>
 				bool L_13;
 				L_13 = Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48((&V_0), Enumerator_MoveNext_m699A9E1D941711453887F76F5DD8E797A46A5D48_RuntimeMethod_var);
 				if (L_13)
@@ -12169,7 +12169,7 @@ IL_0041_1:
 
 IL_005a:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:462>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:462>
 		return;
 	}
 }
@@ -12183,7 +12183,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PipelineUtilities_ValidateRenderFeatureS
 	}
 	ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169* V_0 = NULL;
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:240>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:240>
 		il2cpp_codegen_runtime_class_init_inline(Application_tDB03BE91CDF0ACA614A5E0B67CFB77C44EB19B21_il2cpp_TypeInfo_var);
 		bool L_0;
 		L_0 = Application_get_isPlaying_m25B0ABDFEF54F5370CD3F263A813540843D00F34(NULL);
@@ -12193,14 +12193,14 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PipelineUtilities_ValidateRenderFeatureS
 		}
 	}
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:242>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:242>
 		bool L_1;
 		L_1 = ((  bool (*) (ScriptableRendererDataU5BU5D_tC674C147618C92B68DB64ECFDC847C8A941C6169**, const RuntimeMethod*))il2cpp_codegen_get_direct_method_pointer(il2cpp_rgctx_method(method->rgctx_data, 0)))((&V_0), il2cpp_rgctx_method(method->rgctx_data, 0));
 	}
 
 IL_000f:
 	{
-		//<source_info:C:/Unity FIles/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:261>
+		//<source_info:C:/Users/aloys/Documents/GitHub/OceanX-MP/OceanX MP/Assets/Stylized Water 3/Runtime/PipelineUtilities.cs:261>
 		return;
 	}
 }

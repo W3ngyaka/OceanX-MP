@@ -5306,7 +5306,7 @@ struct U3CU3Ec_t010C6DD1D6A4662B467F3C1BDE9A8352A3495F34  : public RuntimeObject
 struct U3CU3Ec_tB391A89144AD9017CFBAC1E6A3F88D4E8B347A4D  : public RuntimeObject
 {
 };
-struct U3CU3Ec__DisplayClass11_0_t5BCEC8581DE30303BABB79A91C090AAB8D111800  : public RuntimeObject
+struct U3CU3Ec__DisplayClass13_0_t8A1874BF262C9D974BD656CB6B38372C92C19E60  : public RuntimeObject
 {
 	int32_t ___idx;
 	TabController_t275AE4E7AB8A112DF84288521A5FA0750243BA47* ___U3CU3E4__this;
@@ -30692,7 +30692,7 @@ struct FpsCounterAnchorPositions_t70AFF825629F4309C78468FD5C8C246ADE4735CA
 {
 	int32_t ___value__;
 };
-struct U3CTransitionU3Ed__13_t88E7CD8285E0DAF34778E6FCB16C05A0FCF4A9B3  : public RuntimeObject
+struct U3CTransitionU3Ed__15_t32922D37300F90B1C41B7619DE73E75F7937A3D6  : public RuntimeObject
 {
 	int32_t ___U3CU3E1__state;
 	RuntimeObject* ___U3CU3E2__current;
@@ -48053,6 +48053,8 @@ struct TabController_t275AE4E7AB8A112DF84288521A5FA0750243BA47  : public MonoBeh
 {
 	List_1_tD41AA1A7DF91564D57530825B15D44BC2FACC701* ___tabs;
 	TMP_Text_tE8D677872D43AD4B2AAF0D6101692A17D0B251A9* ___titleText;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___foodWebPrompt;
+	int32_t ___promptTabIndex;
 	Color_tD001788D726C3A7F1379BEED0260B9591F440C1F ___activeColor;
 	Color_tD001788D726C3A7F1379BEED0260B9591F440C1F ___inactiveColor;
 	float ___slideDuration;
@@ -60158,9 +60160,9 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize8373 = { sizeof(SwipeToClose
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize8374;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize8374 = { sizeof(Tab_tA2C81D35CAF2B826EF107CE736ECEBA3128D0AD5), -1, 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize8375;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize8375 = { sizeof(U3CU3Ec__DisplayClass11_0_t5BCEC8581DE30303BABB79A91C090AAB8D111800), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize8375 = { sizeof(U3CU3Ec__DisplayClass13_0_t8A1874BF262C9D974BD656CB6B38372C92C19E60), -1, 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize8376;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize8376 = { sizeof(U3CTransitionU3Ed__13_t88E7CD8285E0DAF34778E6FCB16C05A0FCF4A9B3), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize8376 = { sizeof(U3CTransitionU3Ed__15_t32922D37300F90B1C41B7619DE73E75F7937A3D6), -1, 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize8377;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize8377 = { sizeof(TabController_t275AE4E7AB8A112DF84288521A5FA0750243BA47), -1, 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize8378;

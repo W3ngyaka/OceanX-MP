@@ -2029,7 +2029,7 @@ inline void List_1_AddWithResize_m79A9BF770BEF9C06BE40D5401E55E375F2726CC4 (List
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71225
+// Method Definition Index: 71226
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PassData__ctor_m9B31B921E12E66EE9F245DFB4BF2111E4B056DF7 (PassData_tE22EBD35C3414839ED3FC38151F279AE7F9494C3* __this, const RuntimeMethod* method) 
 {
 	{
@@ -2045,7 +2045,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PassData__ctor_m9B31B921E12E66EE9F245DFB
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71226
+// Method Definition Index: 71227
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_RecordRenderGraph_mE561E78C6F6E5B9868627908EEB9BCFA6AC2E12A (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, RenderGraph_t73ECE03B3CA3D0D17F1448D64AE020E81592AA1E* ___0_renderGraph, ContextContainer_t384E08F63FABEFF6A7F1A753F5EF02699DAD414C* ___1_frameData, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -2229,7 +2229,7 @@ IL_00f6:
 		return;
 	}
 }
-// Method Definition Index: 71227
+// Method Definition Index: 71228
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Execute_mE5B6A12DE80E6338CEC9BB2C8403C55361013686 (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___0_context, PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* ___1_data, const RuntimeMethod* method) 
 {
 	{
@@ -2260,7 +2260,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Execute_mE5B6A12DE80E
 		return;
 	}
 }
-// Method Definition Index: 71228
+// Method Definition Index: 71229
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Dispose_mA4B124BB2C183BBE26CFB566899B71EB5C60AFF9 (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, const RuntimeMethod* method) 
 {
 	{
@@ -2268,7 +2268,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Dispose_mA4B124BB2C18
 		return;
 	}
 }
-// Method Definition Index: 71229
+// Method Definition Index: 71230
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Configure_m92BF46746B4547099D48A10F3A2EEB245F2BC837 (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, CommandBuffer_tB56007DC84EF56296C325EC32DD12AC1E3DC91F7* ___0_cmd, RenderTextureDescriptor_t69845881CE6437E4E61F92074F2F84079F23FA46 ___1_cameraTextureDescriptor, const RuntimeMethod* method) 
 {
 	{
@@ -2276,7 +2276,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Configure_m92BF46746B
 		return;
 	}
 }
-// Method Definition Index: 71230
+// Method Definition Index: 71231
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Execute_m895CDAC98C5EDBB647A625162343D5A914E58D76 (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, ScriptableRenderContext_t5AB09B3602BEB456E0DC3D53926D3A3BDAF08E36 ___0_context, RenderingData_tAAA01190551D6D5954314E3E1E85B58DD45EED71* ___1_renderingData, const RuntimeMethod* method) 
 {
 	{
@@ -2284,7 +2284,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_Execute_m895CDAC98C5E
 		return;
 	}
 }
-// Method Definition Index: 71231
+// Method Definition Index: 71232
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass__ctor_mD6CD09E1A0C231111493D61C7FDF991C81B5E918 (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, const RuntimeMethod* method) 
 {
 	{
@@ -2292,7 +2292,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass__ctor_mD6CD09E1A0C231
 		return;
 	}
 }
-// Method Definition Index: 71232
+// Method Definition Index: 71233
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass__cctor_m11F78A63DC9A1EFB0273D233500739D6C9B45235 (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -2317,7 +2317,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass__cctor_m11F78A63DC9A1
 		return;
 	}
 }
-// Method Definition Index: 71233
+// Method Definition Index: 71234
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_U3CRecordRenderGraphU3Eb__8_0_m9787F93EA1BE10FBB7ACFF894C93D2B0DCA431FB (UnderwaterMaskPass_t02BD3FD7258B1D502C173AAEA16B3860C5E53AE8* __this, PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* ___0_data, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___1_context, const RuntimeMethod* method) 
 {
 	{
@@ -2337,7 +2337,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterMaskPass_U3CRecordRenderGraphU
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71234
+// Method Definition Index: 71235
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void RenderTargetDebugContext__ctor_m125F915DF872FF7971308F4461E6F7580ADC3002 (RenderTargetDebugContext_t6BCF34D2C23BE9AC3C68DFC4C0F4F02FDE3FDDFF* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -2377,7 +2377,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void RenderTargetDebugContext__ctor_m125F915D
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71235
+// Method Definition Index: 71236
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PassData__ctor_m0C557A0F0379E4BEA20526C4B4B361A48207B87F (PassData_t8AAD1604A0B65F277C7CA7F7D54A2817E2CF9BA8* __this, const RuntimeMethod* method) 
 {
 	{
@@ -2393,7 +2393,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PassData__ctor_m0C557A0F0379E4BEA20526C4
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71236
+// Method Definition Index: 71237
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Setup_mB44B0E0898DF74BCEEE10828A2477047AE4C1DD0 (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, UnderwaterRenderingSettings_t1C052AF71A2984406B40FEB3A7C9E6BF508D8677* ___0_m_settings, UnderwaterSurface_t8A83FA45B247FB62D60B13E83FDD079EF07641E8* ___1_surface, const RuntimeMethod* method) 
 {
 	{
@@ -2411,7 +2411,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Setup_mB44B0E0898D
 		return;
 	}
 }
-// Method Definition Index: 71237
+// Method Definition Index: 71238
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_RecordRenderGraph_mB0E0F5115BB6399D67D986FF037A527CC91122E1 (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, RenderGraph_t73ECE03B3CA3D0D17F1448D64AE020E81592AA1E* ___0_renderGraph, ContextContainer_t384E08F63FABEFF6A7F1A753F5EF02699DAD414C* ___1_frameData, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -2557,7 +2557,7 @@ IL_008f:
 		return;
 	}
 }
-// Method Definition Index: 71238
+// Method Definition Index: 71239
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Execute_m20AC316118AA40769998A4610E27AF749615526C (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___0_context, PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* ___1_data, const RuntimeMethod* method) 
 {
 	{
@@ -2578,7 +2578,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Execute_m20AC31611
 		return;
 	}
 }
-// Method Definition Index: 71239
+// Method Definition Index: 71240
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Configure_mC3CDF9738180D5DEA016BFDC87828C15EA2AFBE2 (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, CommandBuffer_tB56007DC84EF56296C325EC32DD12AC1E3DC91F7* ___0_cmd, RenderTextureDescriptor_t69845881CE6437E4E61F92074F2F84079F23FA46 ___1_cameraTextureDescriptor, const RuntimeMethod* method) 
 {
 	{
@@ -2586,7 +2586,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Configure_mC3CDF97
 		return;
 	}
 }
-// Method Definition Index: 71240
+// Method Definition Index: 71241
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Execute_m14E412227C0A3ED79D8FB70CC1D7F4649DD008ED (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, ScriptableRenderContext_t5AB09B3602BEB456E0DC3D53926D3A3BDAF08E36 ___0_context, RenderingData_tAAA01190551D6D5954314E3E1E85B58DD45EED71* ___1_renderingData, const RuntimeMethod* method) 
 {
 	{
@@ -2594,7 +2594,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_Execute_m14E412227
 		return;
 	}
 }
-// Method Definition Index: 71241
+// Method Definition Index: 71242
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass__ctor_m4B4D0BF09663B0285F4D6446E1E4B545AADEA458 (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, const RuntimeMethod* method) 
 {
 	{
@@ -2602,7 +2602,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass__ctor_m4B4D0BF0966
 		return;
 	}
 }
-// Method Definition Index: 71242
+// Method Definition Index: 71243
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_U3CRecordRenderGraphU3Eb__5_0_mA6D161A55FCE5AFE8B831400A0E7DA7DF1B5662B (UnderwaterShadingPass_t14A370D39A25A4DDA4C00EDD50D71BA72A8ED976* __this, PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* ___0_data, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___1_context, const RuntimeMethod* method) 
 {
 	{
@@ -2622,7 +2622,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterShadingPass_U3CRecordRenderGra
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71243
+// Method Definition Index: 71244
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PassData__ctor_m1197E1BC8FB44EA46322A1FE323D1E50672CD01D (PassData_tE0DF09ACEDF8C1F771D91DE3B94B79025A23456D* __this, const RuntimeMethod* method) 
 {
 	{
@@ -2638,7 +2638,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PassData__ctor_m1197E1BC8FB44EA46322A1FE
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71244
+// Method Definition Index: 71245
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Setup_mFD778DB3FDA07E94EA027B88ABA4D9BF19AC3C95 (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, UnderwaterRenderingSettings_t1C052AF71A2984406B40FEB3A7C9E6BF508D8677* ___0_m_settings, UnderwaterSurface_t8A83FA45B247FB62D60B13E83FDD079EF07641E8* ___1_surface, const RuntimeMethod* method) 
 {
 	{
@@ -2656,7 +2656,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Setup_mFD778DB3FDA07E94EA0
 		return;
 	}
 }
-// Method Definition Index: 71245
+// Method Definition Index: 71246
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_RecordRenderGraph_mDFA131F4B55C3219E0F65C790DCE0B53D9519182 (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, RenderGraph_t73ECE03B3CA3D0D17F1448D64AE020E81592AA1E* ___0_renderGraph, ContextContainer_t384E08F63FABEFF6A7F1A753F5EF02699DAD414C* ___1_frameData, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -2773,7 +2773,7 @@ IL_006d:
 		return;
 	}
 }
-// Method Definition Index: 71246
+// Method Definition Index: 71247
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Execute_mAC99AADC75F561BF4FF5CA230B62DAE75A8C651F (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___0_context, PassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C* ___1_data, const RuntimeMethod* method) 
 {
 	{
@@ -2794,7 +2794,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Execute_mAC99AADC75F561BF4
 		return;
 	}
 }
-// Method Definition Index: 71247
+// Method Definition Index: 71248
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Configure_m426DB5B9915B83152DEEF39F5543ECB4B2AF4586 (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, CommandBuffer_tB56007DC84EF56296C325EC32DD12AC1E3DC91F7* ___0_cmd, RenderTextureDescriptor_t69845881CE6437E4E61F92074F2F84079F23FA46 ___1_cameraTextureDescriptor, const RuntimeMethod* method) 
 {
 	{
@@ -2802,7 +2802,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Configure_m426DB5B9915B831
 		return;
 	}
 }
-// Method Definition Index: 71248
+// Method Definition Index: 71249
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Execute_m5C22792C49E34C19C838C6EE7498D321A15196DC (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, ScriptableRenderContext_t5AB09B3602BEB456E0DC3D53926D3A3BDAF08E36 ___0_context, RenderingData_tAAA01190551D6D5954314E3E1E85B58DD45EED71* ___1_renderingData, const RuntimeMethod* method) 
 {
 	{
@@ -2810,7 +2810,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_Execute_m5C22792C49E34C19C
 		return;
 	}
 }
-// Method Definition Index: 71249
+// Method Definition Index: 71250
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass__ctor_m4E9312A0BF294B19D9DC2FACB7569970F2BB9DFB (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, const RuntimeMethod* method) 
 {
 	{
@@ -2818,7 +2818,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass__ctor_m4E9312A0BF294B19D9D
 		return;
 	}
 }
-// Method Definition Index: 71250
+// Method Definition Index: 71251
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_U3CRecordRenderGraphU3Eb__4_0_m1CBB6603A922B3FBBCA73B51D6668122BF62085C (WaterlinePass_tD2662A6C1BCCA67A16F31A85979B8D8417F7BD8A* __this, PassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C* ___0_data, RasterGraphContext_tC4D3E53FF7131476487751ACB0237D56C8327147 ___1_context, const RuntimeMethod* method) 
 {
 	{
@@ -2838,7 +2838,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void WaterlinePass_U3CRecordRenderGraphU3Eb__
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71251
+// Method Definition Index: 71252
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PassData__ctor_m6826D5DE31D069890A6815960A08C8C4BC949FAA (PassData_t1D3BC0D32458F0668CD6C973D2E3844878B8271C* __this, const RuntimeMethod* method) 
 {
 	{
@@ -2854,7 +2854,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PassData__ctor_m6826D5DE31D069890A681596
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71252
+// Method Definition Index: 71253
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterArea_get_CurrentWaterLevel_mD035B0E4C9897467FC80E454302DAC1DB22C1CED (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -2962,7 +2962,7 @@ IL_007a:
 		return L_18;
 	}
 }
-// Method Definition Index: 71253
+// Method Definition Index: 71254
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_Reset_mDC13D40EA216860D8B1B618E5346A8E63EBC696C (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -3190,7 +3190,7 @@ IL_0185:
 		return;
 	}
 }
-// Method Definition Index: 71254
+// Method Definition Index: 71255
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_OnEnable_mC1AB9FD2C833BB0BBB3FDFB3116D3CDAD79CF50D (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -3212,7 +3212,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_OnEnable_mC1AB9FD2C833BB0
 		return;
 	}
 }
-// Method Definition Index: 71255
+// Method Definition Index: 71256
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_OnDisable_m0414D04A525D6D9810F051BBDC57EDDE88852161 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -3255,7 +3255,7 @@ IL_002a:
 		return;
 	}
 }
-// Method Definition Index: 71256
+// Method Definition Index: 71257
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_HasValidShader_m6E2C42D40BC3CCC9A3195752E3E16EAACD575E1E (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -3302,7 +3302,7 @@ IL_0030:
 		return (bool)0;
 	}
 }
-// Method Definition Index: 71257
+// Method Definition Index: 71258
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_ValidateRenderer_m9F3E67664471BDFA335446CB149667CA8D99BEF0 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	{
@@ -3327,7 +3327,7 @@ IL_0013:
 		return;
 	}
 }
-// Method Definition Index: 71258
+// Method Definition Index: 71259
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_UpdateWithCamera_mAF02C287DCAEB75A122966BFFF725452D3541CA5 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_targetCamera, const RuntimeMethod* method) 
 {
 	{
@@ -3347,7 +3347,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_UpdateWithCamera_mAF02C28
 		return;
 	}
 }
-// Method Definition Index: 71259
+// Method Definition Index: 71260
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_UpdateAudio_m43B83266B6A57E06E1D22A0EEDE16B7E91301D94 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_targetCamera, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -3403,7 +3403,7 @@ IL_0047:
 		return;
 	}
 }
-// Method Definition Index: 71260
+// Method Definition Index: 71261
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_FindShaders_m18D64A46CCE9864E992CBEA7D958E56FD9D71E7A (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	{
@@ -3416,7 +3416,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_FindShaders_m18D64A46CCE9
 		return;
 	}
 }
-// Method Definition Index: 71261
+// Method Definition Index: 71262
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_UpdateParticleEffects_m6015DF1B5554662ABE16000FC0DB0BE185AFDE57 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_cameraPosition, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -3699,7 +3699,7 @@ IL_017c:
 		return;
 	}
 }
-// Method Definition Index: 71262
+// Method Definition Index: 71263
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* UnderwaterArea_GetFirstIntersecting_m0A87224602B06B0ED97CF5D10BBB7DB5BBF6200B (Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_camera, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -3873,7 +3873,7 @@ IL_0095:
 		return (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F*)NULL;
 	}
 }
-// Method Definition Index: 71263
+// Method Definition Index: 71264
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_CameraIntersectsFast_mCC3AD4A2BDEDDDACAE6AE489C28C6BB4F5503076 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_targetCamera, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -3984,7 +3984,7 @@ IL_0029:
 		return (bool)((((int32_t)((!(((float)L_27) <= ((float)((float)il2cpp_codegen_multiply(L_28, L_29)))))? 1 : 0)) == ((int32_t)0))? 1 : 0);
 	}
 }
-// Method Definition Index: 71264
+// Method Definition Index: 71265
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_CameraIntersects_m3015DD875BD5FB30838DAC48017A2DA8AFF479C5 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_targetCamera, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___1_closestPoint, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -4132,7 +4132,7 @@ IL_0091:
 		return (bool)G_B11_0;
 	}
 }
-// Method Definition Index: 71265
+// Method Definition Index: 71266
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_CameraSubmerged_m5D2AE296F435722248329BE49CB6B35C9A1DA053 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_targetCamera, const RuntimeMethod* method) 
 {
 	{
@@ -4147,7 +4147,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_CameraSubmerged_m5D2AE296
 		return (bool)((((float)((float)il2cpp_codegen_add(L_3, (3.0f)))) < ((float)((float)il2cpp_codegen_subtract(L_4, (3.0f)))))? 1 : 0);
 	}
 }
-// Method Definition Index: 71266
+// Method Definition Index: 71267
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterArea_CameraSubmersionAmount_m5E6B15A89DF8EB41EF7E412B53ECEB0A05F15BCF (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_targetCamera, const RuntimeMethod* method) 
 {
 	float V_0 = 0.0f;
@@ -4181,7 +4181,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterArea_CameraSubmersionAmount_m
 		return ((float)(L_12/L_13));
 	}
 }
-// Method Definition Index: 71267
+// Method Definition Index: 71268
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterArea_GetColliderPlaneHeight_m9F7FA1517AA2FD99FF74FDE3D561E0B262AD5013 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	Bounds_t367E830C64BBF235ED8C3B2F8CF6254FDCAD39C3 V_0;
@@ -4207,7 +4207,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterArea_GetColliderPlaneHeight_m
 		return ((float)il2cpp_codegen_add(L_3, L_7));
 	}
 }
-// Method Definition Index: 71268
+// Method Definition Index: 71269
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneHeight_m84764902C12FA0640D3DD10C3ECD239C829886AF (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, float ___0_height, const RuntimeMethod* method) 
 {
 	float V_0 = 0.0f;
@@ -4278,7 +4278,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneHeight_m8
 		return;
 	}
 }
-// Method Definition Index: 71269
+// Method Definition Index: 71270
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneDepth_m5510D96BB8F6AA7874F83388454A4DBB1FF680A5 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, float ___0_depth, const RuntimeMethod* method) 
 {
 	float V_0 = 0.0f;
@@ -4346,7 +4346,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_SetColliderPlaneDepth_m55
 		return;
 	}
 }
-// Method Definition Index: 71270
+// Method Definition Index: 71271
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea_OnDrawGizmosSelected_m1AD43F3C174FBEBFA872653F59663C173263D786 (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -4477,7 +4477,7 @@ IL_010d:
 		return;
 	}
 }
-// Method Definition Index: 71271
+// Method Definition Index: 71272
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea__ctor_mD8608AF8CE4035A948CFEC619DEE2107D13B828E (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -4503,7 +4503,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea__ctor_mD8608AF8CE4035A948
 		return;
 	}
 }
-// Method Definition Index: 71272
+// Method Definition Index: 71273
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea__cctor_mB0FB824E57F9997563331C140C2CC1817AAE5338 (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -4523,7 +4523,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterArea__cctor_mB0FB824E57F999756
 		return;
 	}
 }
-// Method Definition Index: 71273
+// Method Definition Index: 71274
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_U3CCameraIntersectsU3Eg__PositionInsideVolumeU7C34_0_mFBB1773B00696FC53751EC84037E5339BC93D36F (UnderwaterArea_tEEACFF75652E67A59BEFCF92B4B1BCED52A38D1F* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_position, const RuntimeMethod* method) 
 {
 	{
@@ -4551,7 +4551,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterArea_U3CCameraIntersectsU3Eg__
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71274
+// Method Definition Index: 71275
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ShadingSettings__ctor_m94CF867E3CA80FD69FFBD1499065EC68E53DBBA4 (ShadingSettings_t1D43B3E2F05B8BB681BDABB55598D8760D3C853F* __this, const RuntimeMethod* method) 
 {
 	{
@@ -4589,7 +4589,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ShadingSettings__ctor_m94CF867E3CA80FD69
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71275
+// Method Definition Index: 71276
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ParticleEffect__ctor_m1121E687A1BE9AEE17BF1AAC0813F7EDD392349C (ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* __this, const RuntimeMethod* method) 
 {
 	{
@@ -4603,7 +4603,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ParticleEffect__ctor_m1121E687A1BE9AEE17
 		return;
 	}
 }
-// Method Definition Index: 71276
+// Method Definition Index: 71277
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ParticleEffect__ctor_m9A803194842A32B762E19FD1B36FC3E6367A0CF3 (ParticleEffect_t34126CCBDB1E85B0052E67BB075AB8CD5AEABDC3* __this, float ___0_minDepth, float ___1_maxDepth, bool ___2_alignToSunRotation, const RuntimeMethod* method) 
 {
 	{
@@ -4634,7 +4634,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ParticleEffect__ctor_m9A803194842A32B762
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71277
+// Method Definition Index: 71278
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR UnderwaterResources_t2EB21F9FABE6ADE155196B7FFF0CC6EC20532BBF* UnderwaterResources_Find_m64B9FABD5A758814CDBF8BB49E9438D58F819D96 (const RuntimeMethod* method) 
 {
 	{
@@ -4642,7 +4642,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR UnderwaterResources_t2EB21F9FABE6ADE155196B7F
 		return (UnderwaterResources_t2EB21F9FABE6ADE155196B7FFF0CC6EC20532BBF*)NULL;
 	}
 }
-// Method Definition Index: 71278
+// Method Definition Index: 71279
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterResources__ctor_m354B5254D0332EE546D8A3E1A0FA01A8B20DE60A (UnderwaterResources_t2EB21F9FABE6ADE155196B7FFF0CC6EC20532BBF* __this, const RuntimeMethod* method) 
 {
 	{
@@ -4658,7 +4658,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterResources__ctor_m354B5254D0332
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 71279
+// Method Definition Index: 71280
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* UnderwaterUtilities_get_WaterLineMesh_m1B1CAE7E27F73F0E44CA718C797FAD15CF79A0B9 (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -4694,7 +4694,7 @@ IL_0016:
 		return L_3;
 	}
 }
-// Method Definition Index: 71280
+// Method Definition Index: 71281
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Mesh_t6D9C539763A09BC2B12AEAEF36F6DFFC98AE63D4* UnderwaterUtilities_CreateMaskMesh_mFC1FBE690D482728FBB45DE5F73EC57E5D39FE6D (const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -4994,7 +4994,7 @@ IL_0161:
 		return L_91;
 	}
 }
-// Method Definition Index: 71281
+// Method Definition Index: 71282
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_m25704B3DA4B0870A5795285325C119905E728D54 (Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_camera, float ___1_nearPlaneOffset, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___2_bottomLeft, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___3_bottomRight, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___4_topLeft, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___5_topRight, const RuntimeMethod* method) 
 {
 	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* V_0 = NULL;
@@ -5116,7 +5116,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UnderwaterUtilities_GetNearPlaneCorners_
 		return;
 	}
 }
-// Method Definition Index: 71282
+// Method Definition Index: 71283
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterUtilities_GetNearPlaneHeight_m3342D437DA2FBB89FA7A7A7360F51E0550D9C102 (Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_camera, const RuntimeMethod* method) 
 {
 	Matrix4x4_tDB70CF134A14BA38190C59AA700BCE10E2AED3E6 V_0;
@@ -5134,7 +5134,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float UnderwaterUtilities_GetNearPlaneHeight_
 		return L_3;
 	}
 }
-// Method Definition Index: 71283
+// Method Definition Index: 71284
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 UnderwaterUtilities_GetNearPlaneBottomPosition_m6989D39C4BCD993DBC4D2D0257B75EB467C31F3D (Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_targetCamera, float ___1_offset, const RuntimeMethod* method) 
 {
 	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* V_0 = NULL;
@@ -5183,7 +5183,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A
 		return L_19;
 	}
 }
-// Method Definition Index: 71284
+// Method Definition Index: 71285
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 UnderwaterUtilities_GetNearPlaneTopPosition_m18184EB3DC0CB9CD4F4EB05940CBA7A5779F47BE (Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___0_targetCamera, float ___1_offset, const RuntimeMethod* method) 
 {
 	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* V_0 = NULL;
@@ -5232,7 +5232,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A
 		return L_19;
 	}
 }
-// Method Definition Index: 71285
+// Method Definition Index: 71286
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool UnderwaterUtilities_PositionInsideVolume_m90E66FA489BBB20346D62F4E8D850BE4555EEA83 (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_position, BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* ___1_boxCollider, const RuntimeMethod* method) 
 {
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
@@ -5343,7 +5343,7 @@ IL_00a8:
 		return (bool)0;
 	}
 }
-// Method Definition Index: 71286
+// Method Definition Index: 71287
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 UnderwaterUtilities_GetClosestPointOnSurface_m1AD042995158C24EC8571D3DFCFEA65F24CC11E2 (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_position, BoxCollider_tFA5D239388334D6DE0B8FFDAD6825C5B03786E23* ___1_boxCollider, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;

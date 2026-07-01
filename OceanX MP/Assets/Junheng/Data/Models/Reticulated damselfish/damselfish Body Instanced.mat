@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4954346976498045276
+--- !u!114 &-7395298095072247423
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,15 +20,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shark Body
-  m_Shader: {fileID: 4800000, guid: 9f40a4435df3af746bb6d40a525c261e, type: 3}
+  m_Name: damselfish Body Instanced
+  m_Shader: {fileID: 4800000, guid: 0b51569ad162c2945b03a3c263c77cd5, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SPECULAR_SETUP
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap:
@@ -40,7 +39,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 9791eb5c313eb8743b7447c0a66bfab8, type: 3}
+        m_Texture: {fileID: 2800000, guid: ef8edd87c52cc63419fa834cea92a9a6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -64,7 +63,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9791eb5c313eb8743b7447c0a66bfab8, type: 3}
+        m_Texture: {fileID: 2800000, guid: ef8edd87c52cc63419fa834cea92a9a6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -100,7 +99,7 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _AutomaticSwimSpeed: 0.49
+    - _AutomaticSwimSpeed: 0
     - _AutomaticSwimVisualization: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -132,17 +131,17 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _TailMaskFalloff: 2.34
-    - _TailRollAmplitude: 0.0125
-    - _TailRollOffset: 0.686
-    - _TailWaveLength: 0.021
-    - _TailYawAmplitude: 0.0331
+    - _TailMaskFalloff: 0
+    - _TailRollAmplitude: 0
+    - _TailRollOffset: -0.2
+    - _TailWaveLength: 0.6
+    - _TailYawAmplitude: 0
     - _UVSec: 0
     - _VisualizeMask: 0
-    - _WorkflowMode: 0
+    - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
-    - _YawRotationAmplitude: 0.007
-    - _YawRotationOffset: -0.268
+    - _YawRotationAmplitude: 0
+    - _YawRotationOffset: 0.35
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

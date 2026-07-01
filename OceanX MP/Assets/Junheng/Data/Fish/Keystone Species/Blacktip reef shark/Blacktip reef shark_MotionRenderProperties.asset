@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeffc396a2a2c474abc9ea526ba9eb47, type: 3}
   m_Name: Blacktip reef shark_MotionRenderProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMotionRenderProperties
-  MinSwimPlaybackSpeed: 0.4
-  MaxSwimPlaybackSpeed: 1.8
-  MinSideToSideAmplitude: 1
-  MaxSideToSideAmplitude: 2.5
-  MinYawRotationAmplitude: 0.0117
-  MaxYawRotationAmplitude: 0.0103
-  MinRollRotationAmplitude: 0.1161
-  MaxRollRotationAmplitude: 0.15
-  MinPanningYawAmplitude: 0.1
-  MaxPanningYawAmplitude: 0
+  MinSwimPlaybackSpeed: 1
+  MaxSwimPlaybackSpeed: 1
+  MinSideToSideAmplitude: 0
+  MaxSideToSideAmplitude: 0
+  MinYawRotationAmplitude: 0.0005
+  MaxYawRotationAmplitude: 0.0005
+  MinRollRotationAmplitude: 0.0371
+  MaxRollRotationAmplitude: 0.0371
+  MinPanningYawAmplitude: 0.0346
+  MaxPanningYawAmplitude: 0.0346

@@ -16,9 +16,9 @@ MonoBehaviour:
   MaxSwimPlaybackSpeed: 1.8
   MinSideToSideAmplitude: 1
   MaxSideToSideAmplitude: 2.5
-  MinYawRotationAmplitude: 0.002
-  MaxYawRotationAmplitude: 0.005
-  MinRollRotationAmplitude: 0.03
-  MaxRollRotationAmplitude: 0.12
-  MinPanningYawAmplitude: 0.03
-  MaxPanningYawAmplitude: 0.09
+  MinYawRotationAmplitude: 0.0117
+  MaxYawRotationAmplitude: 0.0103
+  MinRollRotationAmplitude: 0.1161
+  MaxRollRotationAmplitude: 0.15
+  MinPanningYawAmplitude: 0.1
+  MaxPanningYawAmplitude: 0

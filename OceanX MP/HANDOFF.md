@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-06-30_
+_Last updated: 2026-07-01_
 
 ---
 
@@ -165,7 +165,13 @@ Assets/Junheng/
 ├── Prefabs/ · Settings/ · Visual/   Prefabs, URP/build settings, materials/meshes/textures
 
 Assets/Aloysius/                     UI team (see "Weeks 7–8 — UI Team" section)
-└── Scripts/  Bob.cs · FoodWebLines.cs · Health.cs · ModalController.cs · SpeciesBubble.cs · SwipeToClose.cs
+└── Scripts/  (grown well past the original 6 — verified 2026-07-01)
+    Core UI:    SpeciesBubble.cs · ModalController.cs · SpeciesInfoPanel.cs · TabController.cs · SwipeToClose.cs · DimFader.cs
+    Food web:   FoodWebLines.cs · FoodWebDragReveal.cs · CurrentOrganismsGrid.cs · OrganismCardData.cs
+    Health:     Health.cs (client/netcode bar) · HealthBarBinder.cs (host/large-screen bar, reads EcosystemSimulationGPU.EcoHealth01 direct) · EcoHealthDashboard.cs · EcoHealthChassis.cs
+    Unlock:     GameState.cs + UnlockTester.cs (Aloysius placeholders) · LockedHintPanel.cs · SpeciesUnlockReveal.cs · NotificationManager.cs (used by JunHeng's EcosystemUnlockManagerGPU)
+    NPC/FX:     AluciaController.cs · GodRays.cs · MarineSnow.cs · SonarPulse.cs · Bob.cs
+    Data link:  SpeciesData.cs (UI asset — carries the gpuSpecies → SpeciesDataGPU link)
 ```
 
 ---
@@ -202,7 +208,9 @@ Assets/Aloysius/                     UI team (see "Weeks 7–8 — UI Team" sect
 ### Tablet UI (built by Aloysius, integrated into JunHeng's main `Netcode Simulation Test` scene)
 - **Food web graph** — 12 species bubbles (`SpeciesBubble.cs`) laid out in trophic tiers; `FoodWebLines.cs` edges exist but are hidden pending visual fix
 - **`ModalController.cs`** — species info modal with Add/Remove buttons wired to `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc`; now also greys buttons at cap/0 (connected in `e13e26b`)
-- **Eco-health bar** — ✅ `Health.cs` reads live eco-health from `EcosystemNetworkManagerGPU.GetEcoHealth()` when `readFromSimulation` is on (needs the host running + `fillImage` assigned)
+- **Eco-health bar — two drivers now:**
+  - `Health.cs` (tablet client) reads the **networked** value `EcosystemNetworkManagerGPU.GetEcoHealth()` when `readFromSimulation` is on (needs host running + `fillImage` assigned)
+  - `HealthBarBinder.cs` (host large screen, added by Aloysius `8d600f2`) reads **`EcosystemSimulationGPU.EcoHealth01` directly** — no netcode, auto-finds the sim. ⚠ Depends on JunHeng's `EcoHealth01` staying `public`.
 - **`SwipeToClose.cs`** — swipe to dismiss modal
 - **`Bob.cs`** — bobbing animation on species bubbles
 - **Fish image assets** — PNG sprites for most species in `Assets/Aloysius/Fishes/` and `Assets/Aloysius/iamge/`
@@ -549,6 +557,32 @@ Replaced the old per-species starvation cascade with a **symmetric, global ratio
 
 ---
 
+## What Was Done — 2026-06-30 → 07-01
+
+> Everything here post-dates the 06-30 handoff commit (`d57fbad`). Mostly teammate art/UI, but **two items land directly in JunHeng's host scene** — read the divergence note first.
+
+### ⚠ Scene divergence — THREE "large screen" host scenes now exist (verified on disk 2026-07-01)
+
+| Scene | Owner | Has the sim (`EcosystemSimulationGPU`)? | Health bar? | Notes |
+|-------|-------|:---:|:---:|-------|
+| `Assets/Junheng/Scenes/Boids_Demo.unity` | JunHeng | ✅ | ❌ | Canonical sim host — 12 spawners + netcode host role |
+| `Assets/Aloysius/Boids_Demo.unity` | Aloysius | ✅ | ✅ | **A fork of JunHeng's Boids_Demo** with the large-screen eco-health bar + `HealthBarBinder` added (`8d600f2`) |
+| `Assets/Akil/Scenes/SCENE_MainScene.unity` | Akil | ❌ | ❌ | Environment/art only — baked lighting, sky, reflection probes, coral, bubble particles; **no simulation** |
+
+The sim lives in JunHeng's copy, the health bar in Aloysius's copy, the baked environment in Akil's copy. **These must converge into ONE host scene before the final build**, and until then editing the wrong `Boids_Demo` is a live trap (two of them both contain the sim and will drift apart).
+
+### Aloysius (UI / UX)
+- **Eco-health bar on the large screen (`8d600f2`)** — new script **`Assets/Aloysius/Scripts/HealthBarBinder.cs`**: drives a Filled `Image` + `%` TMP label straight from **`EcosystemSimulationGPU.EcoHealth01`** (auto-finds the sim, exponential smoothing, **no netcode** — host-side). Complements `Health.cs` (networked, tablet-side). Added into `Assets/Aloysius/Boids_Demo.unity` with new bar art (`Assets/Aloysius/New/heaklhtbarr.png`, `hhealthtth.png`) + `Assets/Aloysius/Prefabs/LinearProgress002Blue.prefab`. ⚠ Hard dependency on JunHeng's `EcoHealth01` staying `public`.
+- **White infobox (`dcfa466`)** — new infobox art (`Assets/Aloysius/Info/WHITE KLAY.png`, `lighterbg.png`; removed `FRINGEEEEE.png`, `fish strroke.png`); renamed his client scene `help me burh.unity` → **`Assets/Aloysius/new netcode.unity`**.
+- **`ALOYSIUS_UI_HANDOFF.md` fully rewritten (`99285d7`, `39e361c`)** — Aloysius maintains his own handoff doc at repo root; read it for the UI-side detail (his ~28-script suite, food-web/Alucia/notifications, etc.).
+
+### Akil (akeel-h) — scene environment / lighting
+- **Baked lighting into `Assets/Akil/Scenes/SCENE_MainScene.unity` (`e874fd3`, `90aa18a`, `1199aa0`)** — Lightmaps + `LightingData.asset` + reflection probes + new `Sky.mat`, adjusted scene colours. This is his **own** environment scene (no sim in it).
+- **Bubble particles** added to the scene.
+- ⚠ **Changed the shark material** — `Assets/.../Blacktip reef shark/Materials/defaultMat.mat` (`e874fd3`). Because the shark+water crash below is material/shader-sensitive, **re-test that crash after pulling this**.
+
+---
+
 ## Prototype Specification (`prototype/oceanx-prototype.html`)
 
 _Full interactive reference — open it in a browser. Everything below is derived from reading its source code._
@@ -695,6 +729,9 @@ food-chain table. **Still worth a balance pass** on the prey/predator lists + `M
 > pure simulation data. Remaining UI-only fields (Icon, TrophicTier, FoodWebPosition) can be added
 > to `SpeciesData` as the food-web graph UI is built.
 
+### 1b. Reconcile the three host scenes (NEW — 2026-07-01)
+There are now three "large screen" scenes and only JunHeng's has the live sim. Decide the canonical host scene and merge into it: the **simulation** (from `Assets/Junheng/Scenes/Boids_Demo.unity`), the **large-screen eco-health bar + `HealthBarBinder`** (from `Assets/Aloysius/Boids_Demo.unity`), and the **baked environment/lighting** (from `Assets/Akil/Scenes/SCENE_MainScene.unity`). Do this before the final build — two of the three both contain `EcosystemSimulationGPU` and will keep drifting until merged.
+
 ### 2. Build Tablet UI (Food Web Graph)
 Full spec in **Prototype Specification** section above. Key pieces missing in Unity:
 
@@ -779,6 +816,8 @@ This is the canonical tablet client. `Netcode Simulation Test 1` (Aloysius) is o
   - **Oddity:** with the **shark + water + (some) other GameObject** all present, everything runs smoothly — so it appears to be a fragile state, not a clean reproduction.
   - **Suspected cause:** URP / Stylized Water shader not resolving correctly, likely tied to the **Opaque Texture** setting (camera/URP asset `_CameraOpaqueTexture`). The shark material rendering with the water shader's opaque-texture sampling may be the trigger.
   - **Status:** worked around (commit `b85296d` "fixing Crashing error" in `Boids_Demo.unity`), **not root-caused.** Next step: verify URP asset has Opaque Texture enabled and matches between desktop + mobile renderers, and test the shark material in isolation against the water shader.
+  - ⚠ **Update 2026-07-01:** akeel-h changed the shark material (`Blacktip reef shark/Materials/defaultMat.mat`, `e874fd3`). Since this crash is material/shader-sensitive, re-verify it after pulling that commit.
+- **🔀 Scene divergence — three host/large-screen scenes (2026-07-01).** `Assets/Junheng/Scenes/Boids_Demo.unity` (sim, no bar), `Assets/Aloysius/Boids_Demo.unity` (fork with sim + health bar), `Assets/Akil/Scenes/SCENE_MainScene.unity` (environment/lighting, no sim). Two of the three both contain `EcosystemSimulationGPU` and will drift. Pick the canonical host scene and merge the health bar + baked environment into it before the final build. See the "2026-06-30 → 07-01" section for the table.
 - **Start-at-zero not yet play-tested** — `e13e26b` was committed without an in-editor run. First full add/remove cycle in the editor may surface buffer or affecter regressions.
 - **Food web lines broken** — `FoodWebLines.cs` `LineRenderer` edges are present but hidden (`LINE FOOD WEB HIDE`). Marked "wonky, TO BE CHANGED." Predator arrows need a rework before they can be shown.
 - **Eco-health bar — now wired** (Week 9). `Health.cs` reads `EcosystemNetworkManagerGPU.Instance.GetEcoHealth()` when `readFromSimulation` is on. To work it needs: the network manager spawned (host), `Health.fillImage` assigned, and prey/predator lists filled so the score is meaningful. The **state machine** (Healthy/Unstable/Critical/…) is still not built — only the 0–1 score.

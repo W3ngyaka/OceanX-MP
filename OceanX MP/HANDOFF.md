@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-01_
+_Last updated: 2026-07-02_
 
 ---
 
@@ -583,6 +583,64 @@ The sim lives in JunHeng's copy, the health bar in Aloysius's copy, the baked en
 
 ---
 
+## What Was Done — 2026-07-02
+
+### JunHeng — Fish model asset prep for the swim shader (Blender)
+
+Prepped the marine-creature meshes so they animate correctly under the `Fish_Lit` / `Fish_Swimming_Motion` shader. Done in **Blender 5.1** (driven over the Blender MCP). Source assets live **outside the repo** at `C:\Users\Admin\OneDrive\Documents\TP\year 3 sem 1\MP\assest\<species>\` — one folder per species (`.obj` + body/eye PNG textures, some with a `.mtl`).
+
+**Why:** `Assets/Junheng/Shaders/Fish/Shared/Fish_Swimming_Motion.hlsl` reads its tail mask from **TEXCOORD1** (`float2 tailMaskUV : TEXCOORD1`), as `tailMask = saturate(pow(1.0 - tailMaskUV.x, _TailMaskFalloff))`. Each mesh therefore needs a **second UV channel (UV1)** whose **`.x` is a head→tail gradient (tail = 0.0 → head = 1.0)** — mask ≈1 at the tail (full wave), ≈0 at the head (rigid). UV0 (`UVMap`) stays the texture unwrap.
+
+**⚠ Key point — UV1 is a MATH channel, NOT a texture unwrap.** It must not be seam-cut/unwrapped into islands: an island unwrap restarts U near 0 on every island, so the head of every segment reads as "tail" and wobbles. It's baked per-vertex as `UV1.x = (vert.z − z_min)/(z_max − z_min)` (models are oriented length-on-**Z**, head at **+Z**; head end confirmed via the eye-mesh centroid).
+
+**Per-model pipeline applied:** import `.obj` → wire body/eye textures (MTL auto-wires to Base Color; no-MTL wired manually to the Principled BSDF) → bake UV1 on body + eyes (eye verts normalized in **body-local Z space** so eyes stay rigid at the head) → **join eyes into body** (one mesh, two material slots: body + eye) → clear all seams → save `.blend` next to the `.obj` → export **mesh-only FBX** (`use_selection`, `object_types={'MESH'}`, `mesh_smooth_type='FACE'`, `path_mode='COPY'`).
+
+**⚠ Export must be FBX, not OBJ** — OBJ only stores one UV set and silently drops UV1. Blender writes `UVMap`→TEXCOORD0 and `UV1`→TEXCOORD1.
+
+**Processed (FBX written next to each `.obj`):**
+
+| Species | Source folder | Notes |
+|---------|--------------|-------|
+| Blacktip reef shark | `assest/Blacktip reef shark/` | `sharkv2_lowpoly.fbx` — folder renamed from `shark/`; ⚠ its `.blend` didn't survive the rename (only FBX + `.fbm` texture folder are there) |
+| Bluespotted ribbontail ray | `assest/Bluespotted ribbontail ray/` | `stingray 1.fbx` — ⚠ tail-sway only (see caveat) |
+| Reticulated damselfish | `assest/Reticulated damselfish/` | `damselfish.fbx` — no MTL, textures wired manually |
+| Yellowstripe scad | `assest/Yellowstripe scad/` | `YellowstripeScad.fbx` — eye texture not referenced by MTL, wired manually |
+
+**⚠ Ray caveat:** the ray got the same head→tail gradient, so under the fish tail-shader its **tail sways but the pectoral wings don't flap** (a tail-swimmer shader can't undulate ray wings). If a ray-specific wing shader is added later, its UV1 convention differs — re-bake that one.
+
+**⚠ These FBXs are NOT in the Unity project yet.** They sit in the OneDrive `assest/` folder. To use them: copy each `.fbx` (+ its `.fbm` texture folder) into `Assets/` (Akil owns scene-art import), assign the `Fish_Lit` material, and confirm `UV1` imports as UV1/TEXCOORD1. With `UV1.x` = tail 0 / head 1 against the shader's `1.0 - tailMaskUV.x`, the tail waves while head + eyes stay rigid out of the box. (If the head wobbles instead, the channel got flipped.)
+
+> **Shark rebaked 2026-07-02 (scale fix).** The Blacktip shark FBX was re-exported to fix the unit-scale bug in **Gotcha B** below. New file (UnitScaleFactor 100, UV1 baked) is in `assest/Blacktip reef shark/sharkv2_lowpoly.fbx` + `.blend`. Still needs copying into `Assets/` over the old one.
+
+### ⚠⚠ Fish asset gotchas & checklist — learned the hard way, don't repeat
+
+A whole session was lost to the three traps below. Read this before importing/prepping any new fish.
+
+**A. Why UV1 is *baked*, not unwrapped (and how).**
+The swim shader (`Fish_Swimming_Motion.hlsl`) reads a per-vertex tail-mask from **TEXCOORD1** — `tailMask = saturate(pow(1.0 - tailMaskUV.x, _TailMaskFalloff))`. It needs **one smooth head→tail gradient**, `UV1.x` = **tail 0.0 → head 1.0**. This is a *math* channel, so:
+- **Do NOT seam-cut / Unwrap / Reset / Project-From-View it.** An island unwrap restarts U at ~0 on every island, so the front of every piece reads as "tail" and the whole fish wobbles.
+- **Bake it numerically:** for every vertex `UV1.x = (vert.z − z_min)/(z_max − z_min)` (models are length-on-**Z**, head at **+Z** — confirm head via the eye-mesh centroid). Eyes = a separate mesh, so normalize their verts **in the body's local-Z range** (then join eyes into body) so they read ~1 and stay rigid at the head.
+- Keep `UVMap` (UV0) as the texture unwrap + active-render channel. UV0 = texturing, UV1 = swim math. Never swap them.
+
+**B. FBX unit-scale bug — the "big in scene, tiny when instanced" trap.** ← the one that cost the most time
+- **Symptom:** dragging the FBX into a scene shows it at a normal size, but its Transform reads **scale 100**; when the GPU sim renders it (instanced), it's **tiny**. Other fish are 1-to-1.
+- **Cause:** GPU instancing (`RenderMeshIndirect`) draws the **raw mesh** with only per-boid position+rotation — it **ignores the Transform scale**. If the mesh imported tiny with a 100× root, instancing draws the tiny mesh. The tiny+100root happens when the FBX is exported in **metres** (FBX `UnitScaleFactor = 1`) → Unity applies fileScale **0.01** and compensates with root **100**. Working fish are exported in **centimetres** (`UnitScaleFactor = 100`) → fileScale 1, root 1.
+- **Check it:** in the `.fbx.meta`, a **working** fish has `bakeAxisConversion: 1` and the file-scale (`humanDescription.globalScale`) ≈ **1**; a **broken** one has `bakeAxisConversion: 0` and file-scale **0.01**.
+- **Fix (Blender export):** export with `apply_unit_scale=True` **and** `apply_scale_options='FBX_SCALE_ALL'`, `global_scale=1.0`. Verify the exported FBX's `UnitScaleFactor == 100` (must match the working fish) — parse it from the binary if unsure. Do **not** hand-scale the mesh to "fix" it; that doesn't remove the root-100 and it breaks the swim (see D).
+
+**C. Instanced material gotcha — the `_Boids` D3D12 error.**
+- Error: *`Fish_Lit_Instanced requires a buffer (SRV) _Boids ... none provided`*. It means a `Fish_Lit_Instanced` material is being drawn **outside** the sim's indirect-draw path (the sim binds `_Boids` via a `MaterialPropertyBlock` in `BoidSpawnerGPU.RenderBoids`; a plain scene MeshRenderer, or a mis-set-up material, has no buffer).
+- **Rules:** (1) `Fish_Lit_Instanced` materials belong **only** on a spawner's `BoidMaterial`, never on a scene MeshRenderer (use the non-instanced `Fish_Lit` for scene/hero objects). (2) The material **must have "Enable GPU Instancing" ON** (`m_EnableInstancingVariants: 1`). (3) **Do NOT hand-build the instanced material** (swapping the shader on a URP-Lit base leaves it missing passes/props); **duplicate a known-good one** (`Clownfish_Instanced.mat`) and just change its textures.
+
+**D. Mesh scale ↔ swim tuning are coupled.**
+The swim uses `position.z / _TailWaveLength` (native mesh units) and `sideToSide * 0.01`. If the mesh's native size changes by ×N, the tail wave gets N× tighter and side-to-side gets N× weaker. So **after any mesh-scale change, scale `_TailWaveLength` (and side-to-side amplitude) by the same factor.** Rotation amplitudes (roll/yaw/panning) and `_TailMaskFalloff` are angle/UV-based → scale-invariant, leave them.
+
+**E. Where the swim values live.** Material floats `_TailWaveLength` / `_TailMaskFalloff` stay on the **instanced material** (the sim's `BoidMaterial`). The five *animated* amplitudes are runtime-injected from each species' **`FishMotionRenderProperties`** asset (referenced by `SpeciesDataGPU`) — material values there are overwritten at runtime. Map material→SO: `_AutomaticSwimSpeed`→SwimPlaybackSpeed, `_SideToSideAmplitude`→SideToSide, `_YawRotationAmplitude`→Yaw, `_TailRollAmplitude`→Roll, `_TailYawAmplitude`→PanningYaw (each Min=cruise, Max=full-accel).
+
+**New-fish checklist:** import OBJ → wire body/eye textures → **bake** UV1 (A) → join eyes → clear seams → export FBX with `FBX_SCALE_ALL`, verify `UnitScaleFactor==100` (B) → in Unity, duplicate a working `*_Instanced.mat` + swap textures (C) → point the spawner's `BoidMesh`/`BoidMaterial` at it → set swim `_TailWaveLength` for the mesh's true size (D) → convert tuned amplitudes into the species' `FishMotionRenderProperties` (E).
+
+---
+
 ## Prototype Specification (`prototype/oceanx-prototype.html`)
 
 _Full interactive reference — open it in a browser. Everything below is derived from reading its source code._
@@ -824,6 +882,7 @@ This is the canonical tablet client. `Netcode Simulation Test 1` (Aloysius) is o
 - **NetworkConfig mismatch** — client and host must have identical Network Prefabs Lists
 - **`EcosystemDefinitionGPU.asset` species order** — all 12 species must be added in a fixed, shared order so index-based RPCs match between host and tablet
 - **Species UI fields split across two assets** — unlock config (`startUnlocked`, `minHealth`, `requires`, hints) lives on **`SpeciesData`** (linked to the sim via `gpuSpecies`); `SpeciesDataGPU` stays pure sim data. Remaining UI-only fields (Icon, TrophicTier, FoodWebPosition) still to add to `SpeciesData` for the food-web graph
+- **🐟 Fish FBXs prepped but not imported (2026-07-02).** Blacktip reef shark, Bluespotted ribbontail ray, Reticulated damselfish, Yellowstripe scad each have a `UV1` tail-mask gradient baked and a mesh-only FBX exported — but the FBXs live in the OneDrive `assest/` folder, **not in `Assets/`**. Copy them in (+ `.fbm`), assign `Fish_Lit`, and verify `UV1`→TEXCOORD1 imports. The ray only tail-sways (no wing flap). See "What Was Done — 2026-07-02" for the full pipeline.
 - **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active
 - **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene
 - **Add/Remove wiring is a re-link trap when duplicating client scenes** — the decoupled input layer (`BubbleSelectHook` on every bubble + a `TabletAddRemoveUIGPU` with its buttons assigned) lives in the scene, not on a prefab, so a copied/new client scene (e.g. `ALOYLOU VEFR @`) loses it and taps do nothing until it's re-added. If population shows but Add/Remove are dead, check: hooks present on bubbles, controller present + buttons assigned, and `TabletEcosystemUIGPU.Ecosystem` points at the **same** `EcosystemDefinitionGPU` (same order) as the host.

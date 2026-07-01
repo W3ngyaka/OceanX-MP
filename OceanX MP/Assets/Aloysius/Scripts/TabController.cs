@@ -24,6 +24,12 @@ public class TabController : MonoBehaviour
     [Tooltip("The shared title text at the top that changes per tab.")]
     public TMPro.TMP_Text titleText;
 
+    [Header("Food Web prompt")]
+    [Tooltip("The 'Tap on any species' hint. Shown only on the Food Web tab (index 0). Auto-found by name 'prompt' if left null.")]
+    public GameObject foodWebPrompt;
+    [Tooltip("Index of the tab the prompt belongs to.")]
+    public int promptTabIndex = 0;
+
     [Header("Button tint")]
     public Color activeColor = new Color(0.20f, 0.55f, 0.95f, 1f);
     public Color inactiveColor = new Color(1f, 1f, 1f, 0.12f);
@@ -66,6 +72,7 @@ public class TabController : MonoBehaviour
         }
         _current = defaultTab;
         SetTitle(defaultTab);
+        UpdatePrompt(defaultTab);
 
         // Refresh the default panel's content if it needs it.
         if (tabs.Count > 0 && tabs[defaultTab].panel != null)
@@ -92,6 +99,7 @@ public class TabController : MonoBehaviour
 
         for (int i = 0; i < tabs.Count; i++) TintButton(i, i == to);
         SetTitle(to);
+        UpdatePrompt(to);
 
         Vector2 inHome = _homePos.ContainsKey(inPanel) ? _homePos[inPanel] : Vector2.zero;
         var inRT = inPanel.GetComponent<RectTransform>();
@@ -131,6 +139,16 @@ public class TabController : MonoBehaviour
 
         _current = to;
         _animating = false;
+    }
+
+    void UpdatePrompt(int index)
+    {
+        if (foodWebPrompt == null)
+        {
+            var t = transform.Find("prompt");
+            if (t != null) foodWebPrompt = t.gameObject;
+        }
+        if (foodWebPrompt != null) foodWebPrompt.SetActive(index == promptTabIndex);
     }
 
     void SetTitle(int index)

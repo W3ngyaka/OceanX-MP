@@ -8425,7 +8425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19660197b0d03e49ae11276c185ab54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarineSnow
-  particleCount: 15
+  particleCount: 25
   fallSpeed: 32
   swayAmount: 22
   swaySpeed: 0.8

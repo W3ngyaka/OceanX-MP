@@ -153,6 +153,8 @@ extern void U3CAutoHideU3Ed__4_System_Collections_Generic_IEnumeratorU3CSystem_O
 extern void U3CAutoHideU3Ed__4_System_Collections_IEnumerator_Reset_m77A379E834DC64677F9035D6C7D1E2820728CA0E (void);
 extern void U3CAutoHideU3Ed__4_System_Collections_IEnumerator_get_Current_mED900FB884F8D92999C2607EA6424F0872C79E39 (void);
 extern void OrganismCardData_Setup_m6E140E5E473C4DDB56D99D31EA470731641983F3 (void);
+extern void OrganismCardData_Update_mBFE2B143045CEA262692C3CF6800558D5252D2E3 (void);
+extern void OrganismCardData_SetCount_mE12B3FCEF45F9CA980D0485625A8D2C93E734727 (void);
 extern void OrganismCardData_OnTapRemoveOne_mDF6E781B34C071B6C9B9488E8E05D74B326BE60E (void);
 extern void OrganismCardData__ctor_m75A4762EA0847330AD7DD798B15A8DBD8DF0400D (void);
 extern void SonarPulse_Awake_mE5111D5F6497D5D28610F16475629927AFBE016C (void);
@@ -894,7 +896,7 @@ extern void AutomaticFishSwimming_SimulationHasObstacles_m4F8625580155A27B8C3782
 extern void AutomaticFishSwimming_GetClosestObstacle_mBC79BF29946738C0236FB12C018EDE5D0CBC4C84 (void);
 extern void AutomaticFishSwimming__ctor_m3D6183B9E91F2D868C85C6125906ADB4548927A5 (void);
 extern void NetworkVariableSerializationHelper_InitializeSerialization_mA4F17C9D8F4934C552263003358AF8CC0E55E6E3 (void);
-static Il2CppMethodPointer s_methodPointers[893] = 
+static Il2CppMethodPointer s_methodPointers[895] = 
 {
 	AluciaController_Awake_mF80239E7E387CEF9E736C2BC6344850F01860422,
 	AluciaController_Start_m807B0E5AFDA29875B3FB596DAB0B81C2E09CA8A3,
@@ -1042,6 +1044,8 @@ static Il2CppMethodPointer s_methodPointers[893] =
 	U3CAutoHideU3Ed__4_System_Collections_IEnumerator_Reset_m77A379E834DC64677F9035D6C7D1E2820728CA0E,
 	U3CAutoHideU3Ed__4_System_Collections_IEnumerator_get_Current_mED900FB884F8D92999C2607EA6424F0872C79E39,
 	OrganismCardData_Setup_m6E140E5E473C4DDB56D99D31EA470731641983F3,
+	OrganismCardData_Update_mBFE2B143045CEA262692C3CF6800558D5252D2E3,
+	OrganismCardData_SetCount_mE12B3FCEF45F9CA980D0485625A8D2C93E734727,
 	OrganismCardData_OnTapRemoveOne_mDF6E781B34C071B6C9B9488E8E05D74B326BE60E,
 	OrganismCardData__ctor_m75A4762EA0847330AD7DD798B15A8DBD8DF0400D,
 	SonarPulse_Awake_mE5111D5F6497D5D28610F16475629927AFBE016C,
@@ -1794,10 +1798,10 @@ extern void SimulationAffecter_get_AffectsAllGroups_m46A7F87D814EF21248FF8DD4CF0
 extern void SimulationAffecter_get_AffectsAllSubGroups_mD96D5641112B0895420CAFEAD990C57696FB4A5F_AdjustorThunk (void);
 static Il2CppTokenAdjustorThunkPair s_adjustorThunks[2] = 
 {
-	{ 0x060002F3, SimulationAffecter_get_AffectsAllGroups_m46A7F87D814EF21248FF8DD4CF0353FC21AE39F0_AdjustorThunk },
-	{ 0x060002F4, SimulationAffecter_get_AffectsAllSubGroups_mD96D5641112B0895420CAFEAD990C57696FB4A5F_AdjustorThunk },
+	{ 0x060002F5, SimulationAffecter_get_AffectsAllGroups_m46A7F87D814EF21248FF8DD4CF0353FC21AE39F0_AdjustorThunk },
+	{ 0x060002F6, SimulationAffecter_get_AffectsAllSubGroups_mD96D5641112B0895420CAFEAD990C57696FB4A5F_AdjustorThunk },
 };
-static const int32_t s_InvokerIndices[893] = 
+static const int32_t s_InvokerIndices[895] = 
 {
 	16742,
 	16742,
@@ -1945,6 +1949,8 @@ static const int32_t s_InvokerIndices[893] =
 	16742,
 	16525,
 	1824,
+	16742,
+	12433,
 	16742,
 	16742,
 	16742,
@@ -2697,7 +2703,7 @@ IL2CPP_EXTERN_C const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	893,
+	895,
 	s_methodPointers,
 	2,
 	s_adjustorThunks,

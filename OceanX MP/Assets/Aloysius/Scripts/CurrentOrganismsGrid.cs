@@ -6,6 +6,8 @@ public class CurrentOrganismsGrid : MonoBehaviour
     [Header("References")]
     public Transform gridContent;       // parent with Grid Layout Group
     public GameObject organismCardPrefab;
+    [Tooltip("Shown when no species are in the ecosystem (e.g. 'NO ORGANISMS IN ECOSYSTEM').")]
+    public GameObject emptyState;   // auto-found by name if left null
     public List<SpeciesBubble> allBubbles = new List<SpeciesBubble>(); // drag all 12 bubbles here
 
     private List<GameObject> spawnedCards = new List<GameObject>();
@@ -57,5 +59,13 @@ public class CurrentOrganismsGrid : MonoBehaviour
 
             spawnedCards.Add(cardGO);
         }
+
+        // Empty state: show message when nothing is in the ecosystem.
+        if (emptyState == null)
+        {
+            var t = transform.Find("EmptyState");
+            if (t != null) emptyState = t.gameObject;
+        }
+        if (emptyState != null) emptyState.SetActive(spawnedCards.Count == 0);
     }
 }

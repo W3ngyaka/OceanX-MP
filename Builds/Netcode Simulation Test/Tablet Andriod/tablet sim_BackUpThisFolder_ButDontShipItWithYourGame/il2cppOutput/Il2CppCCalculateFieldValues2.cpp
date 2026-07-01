@@ -34142,6 +34142,7 @@ struct CurrentOrganismsGrid_t1A8BB4BED24880115B57D8626D086912ADB2B298  : public 
 {
 	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___gridContent;
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___organismCardPrefab;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___emptyState;
 	List_1_t9F790B339FD0CA1C5BB9A8E2D6F512586A5A54FD* ___allBubbles;
 	List_1_tB951CE80B58D1BF9650862451D8DAD8C231F207B* ___spawnedCards;
 };
@@ -34708,7 +34709,10 @@ struct OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46  : public Mono
 	Image_tBC1D03F63BF71132E9A5E472B8742F172A011E7E* ___iconImage;
 	TMP_Text_tE8D677872D43AD4B2AAF0D6101692A17D0B251A9* ___countText;
 	TMP_Text_tE8D677872D43AD4B2AAF0D6101692A17D0B251A9* ___nameText;
+	float ___pollInterval;
 	int32_t ___speciesIndex;
+	int32_t ___lastCount;
+	float ___pollTimer;
 };
 struct ParticleTrailEmitter_t1A1F5AA66DAC5C915E4DC464DA3A02BE5776AEB8  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
 {
@@ -44916,9 +44920,9 @@ IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8336[24] =
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8337[4] = 
 {
 	static_cast<int32_t>(offsetof(Bob_t889BC6086A791FA802AF080C1F6FAA6C5D7FEF42, ___speed)),static_cast<int32_t>(offsetof(Bob_t889BC6086A791FA802AF080C1F6FAA6C5D7FEF42, ___height)),static_cast<int32_t>(offsetof(Bob_t889BC6086A791FA802AF080C1F6FAA6C5D7FEF42, ___startPos)),static_cast<int32_t>(offsetof(Bob_t889BC6086A791FA802AF080C1F6FAA6C5D7FEF42, ___offset)),};
-IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8338[4] = 
+IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8338[5] = 
 {
-	static_cast<int32_t>(offsetof(CurrentOrganismsGrid_t1A8BB4BED24880115B57D8626D086912ADB2B298, ___gridContent)),static_cast<int32_t>(offsetof(CurrentOrganismsGrid_t1A8BB4BED24880115B57D8626D086912ADB2B298, ___organismCardPrefab)),static_cast<int32_t>(offsetof(CurrentOrganismsGrid_t1A8BB4BED24880115B57D8626D086912ADB2B298, ___allBubbles)),static_cast<int32_t>(offsetof(CurrentOrganismsGrid_t1A8BB4BED24880115B57D8626D086912ADB2B298, ___spawnedCards)),};
+	static_cast<int32_t>(offsetof(CurrentOrganismsGrid_t1A8BB4BED24880115B57D8626D086912ADB2B298, ___gridContent)),static_cast<int32_t>(offsetof(CurrentOrganismsGrid_t1A8BB4BED24880115B57D8626D086912ADB2B298, ___organismCardPrefab)),static_cast<int32_t>(offsetof(CurrentOrganismsGrid_t1A8BB4BED24880115B57D8626D086912ADB2B298, ___emptyState)),static_cast<int32_t>(offsetof(CurrentOrganismsGrid_t1A8BB4BED24880115B57D8626D086912ADB2B298, ___allBubbles)),static_cast<int32_t>(offsetof(CurrentOrganismsGrid_t1A8BB4BED24880115B57D8626D086912ADB2B298, ___spawnedCards)),};
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8339[8] = 
 {
 	static_cast<int32_t>(offsetof(U3CFadeU3Ed__4_tD10FBF754F3836AB65C19138A3EAA10E8CF6D92F, ___U3CU3E1__state)),static_cast<int32_t>(offsetof(U3CFadeU3Ed__4_tD10FBF754F3836AB65C19138A3EAA10E8CF6D92F, ___U3CU3E2__current)),static_cast<int32_t>(offsetof(U3CFadeU3Ed__4_tD10FBF754F3836AB65C19138A3EAA10E8CF6D92F, ___U3CU3E4__this)),static_cast<int32_t>(offsetof(U3CFadeU3Ed__4_tD10FBF754F3836AB65C19138A3EAA10E8CF6D92F, ___duration)),static_cast<int32_t>(offsetof(U3CFadeU3Ed__4_tD10FBF754F3836AB65C19138A3EAA10E8CF6D92F, ___target)),static_cast<int32_t>(offsetof(U3CFadeU3Ed__4_tD10FBF754F3836AB65C19138A3EAA10E8CF6D92F, ___onComplete)),static_cast<int32_t>(offsetof(U3CFadeU3Ed__4_tD10FBF754F3836AB65C19138A3EAA10E8CF6D92F, ___U3CfromU3E5__2)),static_cast<int32_t>(offsetof(U3CFadeU3Ed__4_tD10FBF754F3836AB65C19138A3EAA10E8CF6D92F, ___U3CtU3E5__3)),};
@@ -44979,9 +44983,9 @@ IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8357[3] =
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8358[2] = 
 {
 	static_cast<int32_t>(offsetof(NotificationManager_t420578B78ECCF624ABE7E8D4618BD10D09AFDF51_StaticFields, ___Instance)),static_cast<int32_t>(offsetof(NotificationManager_t420578B78ECCF624ABE7E8D4618BD10D09AFDF51, ___messageText)),};
-IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8359[4] = 
+IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8359[7] = 
 {
-	static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___iconImage)),static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___countText)),static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___nameText)),static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___speciesIndex)),};
+	static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___iconImage)),static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___countText)),static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___nameText)),static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___pollInterval)),static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___speciesIndex)),static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___lastCount)),static_cast<int32_t>(offsetof(OrganismCardData_t2423AC0633499064AB5C036DCA6825A1270BDA46, ___pollTimer)),};
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable8360[3] = 
 {
 	static_cast<int32_t>(offsetof(Pulse_t45FE0D3D869EFF5C1D59507A2D20833D841EB114, ___rt)),static_cast<int32_t>(offsetof(Pulse_t45FE0D3D869EFF5C1D59507A2D20833D841EB114, ___img)),static_cast<int32_t>(offsetof(Pulse_t45FE0D3D869EFF5C1D59507A2D20833D841EB114, ___age)),};

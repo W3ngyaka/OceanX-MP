@@ -4451,7 +4451,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &654011401
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8425,7 +8425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19660197b0d03e49ae11276c185ab54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarineSnow
-  particleCount: 15
+  particleCount: 25
   fallSpeed: 32
   swayAmount: 22
   swaySpeed: 0.8

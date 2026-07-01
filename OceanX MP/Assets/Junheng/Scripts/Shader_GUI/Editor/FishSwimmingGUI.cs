@@ -178,14 +178,20 @@ namespace OceanX
             DrawFloatSliderProperty(materialEditor, properties.sideToSideAmplitudeProp, 0f, 10.0f, Styles.sideToSideAmplitude);
             DrawFloatSliderProperty(materialEditor, properties.sideToSideOffsetProp, -1f, 1f, Styles.sideToSideOffset);
 
-            DrawFloatSliderProperty(materialEditor, properties.yawRotationAmplitudeProp, 0f, 1f, Styles.yawRotationAmplitude);
+            // Rotation amplitudes are multiplied by 360 in the shader, so a slider max of 1 = 360 deg
+            // and the whole usable range is squeezed into the first sliver. Tightened the maxes so the
+            // sliders are fine + gentle: yaw 0.05 (~18 deg), tail roll/yaw 0.1 (~36 deg). Editor-only —
+            // does not change stored values or the runtime sim.
+            DrawFloatSliderProperty(materialEditor, properties.yawRotationAmplitudeProp, 0f, 0.05f, Styles.yawRotationAmplitude);
             DrawFloatSliderProperty(materialEditor, properties.yawRotationOffsetProp, -1f, 1f, Styles.yawRotationOffset);
 
-            DrawFloatSliderProperty(materialEditor, properties.tailMaskFalloffProp, 0f, 4f, Styles.tailMaskFalloff);
-            DrawFloatSliderProperty(materialEditor, properties.tailRollAmplitudeProp, 0f, 1f, Styles.tailRollAmplitude);
+            // Falloff cap raised 4 -> 12 so the body can be made much stiffer (motion concentrated at the tail).
+            DrawFloatSliderProperty(materialEditor, properties.tailMaskFalloffProp, 0f, 12f, Styles.tailMaskFalloff);
+            DrawFloatSliderProperty(materialEditor, properties.tailRollAmplitudeProp, 0f, 0.1f, Styles.tailRollAmplitude);
             DrawFloatSliderProperty(materialEditor, properties.tailRollOffsetProp, -1f, 1f, Styles.tailRollOffset);
-            DrawFloatSliderProperty(materialEditor, properties.tailWaveLengthProp, 0f, 1f, Styles.tailWaveLength);
-            DrawFloatSliderProperty(materialEditor, properties.tailYawAmplitudeProp, 0f, 1f, Styles.tailYawAmplitude);
+            // Wave length max raised 1 -> 2 so a longer/smoother single body curve is reachable.
+            DrawFloatSliderProperty(materialEditor, properties.tailWaveLengthProp, 0f, 2f, Styles.tailWaveLength);
+            DrawFloatSliderProperty(materialEditor, properties.tailYawAmplitudeProp, 0f, 0.1f, Styles.tailYawAmplitude);
         }
 
         internal static Rect GetRect(MaterialProperty prop)

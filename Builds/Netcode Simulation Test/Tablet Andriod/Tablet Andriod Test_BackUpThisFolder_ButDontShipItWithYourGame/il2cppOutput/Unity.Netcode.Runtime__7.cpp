@@ -49,7 +49,7 @@ struct Void_t4861ACF8F4594C3437BB48B6E56783494B843915
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 54675
+// Method Definition Index: 54691
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void NetworkVariableSerializationHelper_InitializeSerialization_m44C3F70315C203414A4A85996E9EC3ED2458C8C3 (const RuntimeMethod* method) 
 {
 	{

@@ -21,9 +21,7 @@ MonoBehaviour:
   requires:
   - species: {fileID: 11400000, guid: b6fb41d81fc1c5f4aa9fc125c2dd1f05, type: 2}
     count: 2
-  - species: {fileID: 11400000, guid: f283ade99c2bdb54f89c72a7f577559b, type: 2}
-    count: 2
-  hint1: Schooling fish like scad need a stable prey base first.
+  hint1: Schooling fish like scad love small fish like damselfish.
   hint2: You need Damselfish x2 and Mullet x2 to attract scad.
-  hint3: "Almost there \u2014 build up your damselfish and mullet populations."
+  hint3: 
   addedMessage: Yellowstripe scad are forming schooling groups in open water.

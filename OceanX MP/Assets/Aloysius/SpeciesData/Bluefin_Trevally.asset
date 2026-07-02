@@ -16,14 +16,14 @@ MonoBehaviour:
   sciName: Caranx melampygus
   tier: Secondary Consumer
   startUnlocked: 0
-  minHealth: 0
+  minHealth: 10
   gpuSpecies: {fileID: 11400000, guid: 892ea29c7c18d0044bbe2dcb3933ad9d, type: 2}
   requires:
   - species: {fileID: 11400000, guid: f283ade99c2bdb54f89c72a7f577559b, type: 2}
     count: 3
   - species: {fileID: 11400000, guid: cafaf2c4b30e8fb44837dc6c5675d763, type: 2}
     count: 2
-  hint1: Fast predators like trevally need abundant small fish.
+  hint1: Fast predators like trevally prey on mullets and parrotfish
   hint2: You need Mullet x3 and Parrotfish x2 to attract trevally.
   hint3: "Almost there \u2014 add more mullet and parrotfish."
   addedMessage: Bluefin trevally are hunting schooling fish across the reef.

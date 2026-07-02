@@ -13,11 +13,11 @@ EditorBuildSettings:
     guid: e7ccdcad0920db143821c291983c9565
   - enabled: 0
     path: Assets/Junheng/Scenes/Netcode Simulation Test.unity
-    guid: 690fcf5520d110a458b746ee355b5427
-  - enabled: 0
+    guid: 6bab01f999b787a4481f43b0f945ccb5
+  - enabled: 1
     path: Assets/Aloysius/new netcode.unity
     guid: f6d1c539dc993c2479f369ea4c2f7d85
-  - enabled: 1
+  - enabled: 0
     path: Assets/Junheng/Scenes/MainScene.unity
     guid: 412e61decf86d444084304c920bbe910
   m_configObjects:

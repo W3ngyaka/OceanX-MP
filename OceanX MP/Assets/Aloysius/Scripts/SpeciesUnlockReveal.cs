@@ -93,12 +93,10 @@ public class SpeciesUnlockReveal : MonoBehaviour
         yield return new WaitForSeconds(revealHoldSeconds);
         yield return Fade(revealGroup, 0f, fadeDuration);
 
-        // --- Then hint the next fish ---
-        yield return new WaitForSeconds(hintDelayAfterReveal);
-        HintNextLocked();
+        // Hint moved to SpeciesAddedReveal (fires on fish ADDED, not on unlock).
     }
 
-    void HintNextLocked()
+    public void HintNextLocked()
     {
         if (alucia == null || _mgr == null) return;
 

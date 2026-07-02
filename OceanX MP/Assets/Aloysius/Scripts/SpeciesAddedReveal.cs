@@ -35,6 +35,12 @@ public class SpeciesAddedReveal : MonoBehaviour
     public float fadeDuration = 0.4f;
     public float pollInterval = 0.25f;
 
+    [Header("Hint after add")]
+    [Tooltip("Source of the 'next fish' hint logic (the SpeciesUnlockReveal on AluciaCanvas). Auto-found if null.")]
+    public SpeciesUnlockReveal hintSource;
+    [Tooltip("Delay after the added card fades before Alucia hints the next species.")]
+    public float hintDelayAfterAdd = 0.4f;
+
     [Header("Behaviour")]
     [Tooltip("Show only the FIRST time each species appears. If false, shows every 0->1+ transition.")]
     public bool onlyFirstTime = true;
@@ -67,6 +73,7 @@ public class SpeciesAddedReveal : MonoBehaviour
         }
         _net = EcosystemNetworkManagerGPU.Instance;
         _sim = Object.FindObjectOfType<EcosystemSimulationGPU>();
+        if (hintSource == null) hintSource = Object.FindObjectOfType<SpeciesUnlockReveal>();
         BuildIndexMap();
 
         // Seed baseline so species already present at startup don't all pop cards.
@@ -147,6 +154,13 @@ public class SpeciesAddedReveal : MonoBehaviour
         {
             var species = _pending.Dequeue();
             yield return Show(species);
+
+            // After the added card, hint the next closest-to-unlockable species.
+            if (hintSource != null)
+            {
+                if (hintDelayAfterAdd > 0f) yield return new WaitForSeconds(hintDelayAfterAdd);
+                hintSource.HintNextLocked();
+            }
         }
         _playing = false;
     }

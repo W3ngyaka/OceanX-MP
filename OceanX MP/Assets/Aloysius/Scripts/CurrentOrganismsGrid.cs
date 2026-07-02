@@ -4,18 +4,16 @@ using System.Collections.Generic;
 public class CurrentOrganismsGrid : MonoBehaviour
 {
     [Header("References")]
-    public Transform gridContent;       // parent with Grid Layout Group
+    public Transform gridContent;       
     public GameObject organismCardPrefab;
     [Tooltip("Shown when no species are in the ecosystem (e.g. 'NO ORGANISMS IN ECOSYSTEM').")]
-    public GameObject emptyState;   // auto-found by name if left null
-    public List<SpeciesBubble> allBubbles = new List<SpeciesBubble>(); // drag all 12 bubbles here
+    public GameObject emptyState;   
+    public List<SpeciesBubble> allBubbles = new List<SpeciesBubble>(); 
 
     private List<GameObject> spawnedCards = new List<GameObject>();
 
-    // Call this every time the popup opens
     public void Refresh()
     {
-        // clear old cards
         foreach (var card in spawnedCards)
             if (card != null) Destroy(card);
         spawnedCards.Clear();

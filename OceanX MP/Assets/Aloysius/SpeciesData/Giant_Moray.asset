@@ -16,14 +16,16 @@ MonoBehaviour:
   sciName: Gymnothorax javanicus
   tier: Tertiary Consumer
   startUnlocked: 0
-  minHealth: 0
+  minHealth: 40
   gpuSpecies: {fileID: 11400000, guid: 14da079c95523e54cbaaac13fca15745, type: 2}
   requires:
   - species: {fileID: 11400000, guid: d35c87e6d560cb645bfd49d6025d499b, type: 2}
     count: 2
-  - species: {fileID: 11400000, guid: b39a0af90408e7b4099758d98c5d3356, type: 2}
+  - species: {fileID: 11400000, guid: cafaf2c4b30e8fb44837dc6c5675d763, type: 2}
     count: 1
-  hint1: Moray eels hunt in reef crevices and need prey fish.
+  hint1: 'Moray eels hunt in reef crevices, targeting prey like Russel Snappers and
+    Parrotfish. '
   hint2: You need Snapper x2 and Ray x1 to attract the giant moray.
   hint3: "Almost there \u2014 build up snapper and ray populations."
-  addedMessage: Giant moray eels are patrolling the reef crevices.
+  addedMessage: Large Indo-Pacific ambush predators with prey-grabbing pharyngeal
+    jaws.

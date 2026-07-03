@@ -8728,7 +8728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 8da02fb278092b44e9ea8359885bbb19, type: 2}
-  cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
+  cardImage: {fileID: 21300000, guid: d19359bc442833144a44cf0e9b490b7c, type: 3}
   lockOverlay: {fileID: 1880508276}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1397172175}

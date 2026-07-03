@@ -6749,6 +6749,10 @@ MonoBehaviour:
   badgeText: {fileID: 1379598227}
   descriptionText: {fileID: 733974823}
   viewDetailsButton: {fileID: 1681137652}
+  lockedName: ???
+  lockedBadge: ???
+  lockedDescription: This species hasn't been discovered yet. Build the ecosystem
+    to reveal it.
 --- !u!114 &983577950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9839,7 +9843,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -230, y: -2}
+  m_AnchoredPosition: {x: -221, y: -2}
   m_SizeDelta: {x: 60, y: 32}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1379598227

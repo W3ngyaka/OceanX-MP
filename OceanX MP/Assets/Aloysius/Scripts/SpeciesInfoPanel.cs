@@ -21,6 +21,11 @@ public class SpeciesInfoPanel : MonoBehaviour
     public TMP_Text descriptionText;
     public Button viewDetailsButton;
 
+    [Header("Locked (mystery) display")]
+    public string lockedName = "???";
+    public string lockedBadge = "???";
+    [TextArea] public string lockedDescription = "This species hasn't been discovered yet. Build the ecosystem to reveal it.";
+
     // current selection (for the View Details button)
     private Sprite _cardSprite;
     private int _speciesIndex = -1;
@@ -56,6 +61,20 @@ public class SpeciesInfoPanel : MonoBehaviour
         // Always show the button when a species is selected; the click handles missing modal/card gracefully.
         if (viewDetailsButton != null)
             viewDetailsButton.gameObject.SetActive(true);
+    }
+
+    // Locked/mystery display: tapped a locked bubble. Hides real data behind '???'.
+    public void ShowLocked(SpeciesData data)
+    {
+        _cardSprite = null;
+        _speciesIndex = -1;
+        if (emptyState != null) emptyState.SetActive(false);
+        if (detailRoot != null) detailRoot.SetActive(true);
+        if (nameText != null) nameText.text = lockedName;
+        if (badgeText != null) badgeText.text = lockedBadge;
+        if (descriptionText != null) descriptionText.text = lockedDescription;
+        if (speciesImage != null) speciesImage.enabled = false;
+        if (viewDetailsButton != null) viewDetailsButton.gameObject.SetActive(false);
     }
 
     public void Clear()

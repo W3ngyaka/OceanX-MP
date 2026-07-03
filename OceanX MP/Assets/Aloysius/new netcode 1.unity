@@ -6275,6 +6275,7 @@ GameObject:
   - component: {fileID: 917995249}
   - component: {fileID: 917995248}
   - component: {fileID: 917995247}
+  - component: {fileID: 917995252}
   m_Layer: 5
   m_Name: TabletCanvas (1)
   m_TagString: Untagged
@@ -6324,7 +6325,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 2000, y: 1200}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -6374,6 +6375,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &917995252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917995246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96899508be5447a4bba17bc5023daf68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodWebFitScaler
+  designSize: {x: 2000, y: 1200}
+  contentRoots:
+  - {fileID: 1429282709}
+  fitMargin: 1
+  clampToOne: 1
+  measureAgainstCanvas: 1
+  fitSelfRenderedSize: 0
+  _persistentBaseScales:
+  - {x: 1.0270158, y: 1.3639201, z: 0.9678078}
+  _hasPersistentBase: 1
 --- !u!1 &924900498
 GameObject:
   m_ObjectHideFlags: 0
@@ -10340,14 +10363,14 @@ RectTransform:
   m_GameObject: {fileID: 1408810321}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.0000012933}
-  m_LocalScale: {x: 0.7670493, y: 0.56913155, z: 0.7670493}
+  m_LocalScale: {x: 0.7724953, y: 0.5731724, z: 0.7724953}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1429282709}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5, y: 12}
+  m_AnchoredPosition: {x: 2, y: 12}
   m_SizeDelta: {x: 2715, y: 1544.4214}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1408810323
@@ -10777,7 +10800,7 @@ RectTransform:
   m_GameObject: {fileID: 1429282708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0270158, y: 1.3639201, z: 0.9678078}
+  m_LocalScale: {x: 0.99416107, y: 1.3202877, z: 0.9368472}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1408810322}

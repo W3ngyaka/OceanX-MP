@@ -159,13 +159,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             ModalController.Instance.Open(cardImage, speciesIndex); // fallback: open modal directly
     }
 
-    void PlayPunch()
-    {
-        if (punchRoutine != null) StopCoroutine(punchRoutine);
-        transform.localScale = baseScale;
-        punchRoutine = StartCoroutine(TapPunch());
-    }
-
     System.Collections.IEnumerator TapPunch()
     {
         Vector3 original = baseScale;
@@ -194,12 +187,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     void ShowLockedHint()
     {
         if (data == null) return;
-
-        PlayPunch();
-
-        // Show the mystery (??? ???) state in the right-side info panel.
-        if (SpeciesInfoPanel.Instance != null)
-            SpeciesInfoPanel.Instance.ShowLocked(data);
 
         int taps;
         if (EcosystemUnlockManagerGPU.Instance != null)

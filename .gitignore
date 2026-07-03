@@ -1,2 +1,5 @@
 
 .claude/settings.local.json
+
+# Compiled player builds — large binaries, no need to version them
+Builds/

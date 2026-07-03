@@ -12,10 +12,12 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ADVANCED_SHADING
   - _CAUSTICS
   - _INTERSECTION_FOAM
   - _NORMALMAP
   - _REFRACTION
+  - _SURFACE_FOAM_SINGLE
   - _TRANSLUCENCY
   m_InvalidKeywords:
   - _FOAMON_ON

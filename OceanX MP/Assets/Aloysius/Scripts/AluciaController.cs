@@ -45,6 +45,11 @@ public class AluciaController : MonoBehaviour
     public Color warnColor = new Color(1f, 0.93f, 0.85f, 0.92f);
     public Color winColor  = new Color(0.86f, 0.99f, 0.94f, 0.92f);
 
+    [Header("Mood sprites (Alucia poses) — leave empty to keep current")]
+    public Sprite calmSprite;
+    public Sprite warnSprite;
+    public Sprite winSprite;
+
     [Header("Intro lines")]
     [TextArea] public string introLine1 = "Hey, my name's Alucia!";
     [TextArea] public string introLine2 = "As you can see, this ecosystem isn't doing too well...";
@@ -89,6 +94,11 @@ public class AluciaController : MonoBehaviour
 
         if (bubbleText != null) bubbleText.text = message;
         if (_bubbleBg != null) _bubbleBg.color = MoodColor(mood);
+        if (characterImage != null)
+        {
+            Sprite s = MoodSprite(mood);
+            if (s != null) characterImage.sprite = s;
+        }
 
         if (_hideRoutine != null) StopCoroutine(_hideRoutine);
         StartCoroutine(FadeBoth(1f, 0.3f));
@@ -163,6 +173,16 @@ public class AluciaController : MonoBehaviour
     }
 
     // ---------- Helpers ----------
+
+    Sprite MoodSprite(Mood m)
+    {
+        switch (m)
+        {
+            case Mood.Warn: return warnSprite;
+            case Mood.Win:  return winSprite;
+            default:        return calmSprite;
+        }
+    }
 
     Color MoodColor(Mood m)
     {

@@ -40,6 +40,14 @@ struct BoidInfo {
     // boids back to their original position in the buffer after the simulation so that
     // the rendering system could render correct meshes for correct boids.
     float originalIndex;
+
+    // Seconds of "entry sprint" still owed to this boid. Refilled to _EntryBoostDuration every
+    // frame the boid is strictly OUTSIDE the simulation bounds (freshly spawned off-screen), then
+    // counts down once it crosses in — so the fish keeps rushing for a moment after entering before
+    // settling to cruising speed. 0 for normal, already-settled fish. (Adds a 17th float: the struct
+    // is no longer a clean multiple of 16 bytes, which is fine for a StructuredBuffer stride — the
+    // 16-byte-slot note above is a footprint nicety, not a correctness requirement.)
+    float entryBoostTimeRemaining;
 };
 
 // Structure defining properties that affect the look of the swimming motion of a boid.

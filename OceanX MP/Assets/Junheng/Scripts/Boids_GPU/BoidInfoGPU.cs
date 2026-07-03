@@ -17,8 +17,9 @@ namespace OceanX.BoidsGPU
 
         /// <summary>
         /// Total size of the struct, in bytes. Manually pre-calculated.
+        /// 17 floats: the 16 original fields + <see cref="EntryBoostTimeRemaining"/>.
         /// </summary>
-        public const int Size = sizeof(float) * 16;
+        public const int Size = sizeof(float) * 17;
 
         /// <summary>
         /// World position of the boid.
@@ -77,5 +78,14 @@ namespace OceanX.BoidsGPU
         /// so that the rendering shader could render the correct boid instance with the correct mesh.
         /// </summary>
         public float OriginalIndex;
+
+        /// <summary>
+        /// Seconds of "entry sprint" still owed to this boid. The compute shader refills it to
+        /// _EntryBoostDuration while the boid is strictly outside the simulation bounds (freshly
+        /// spawned off-screen), then counts it down once inside so the fish keeps swimming fast for
+        /// a moment after entering before settling. 0 for normal fish. Left at its default (0) on
+        /// spawn — the shader manages it entirely.
+        /// </summary>
+        public float EntryBoostTimeRemaining;
     }
 }

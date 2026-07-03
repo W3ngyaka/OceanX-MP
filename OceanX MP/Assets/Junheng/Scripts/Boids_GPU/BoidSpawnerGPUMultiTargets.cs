@@ -25,6 +25,30 @@ namespace OceanX.BoidsGPU
         /// <summary>The species data asset driving this spawner, if assigned.</summary>
         public SpeciesDataGPU SpeciesData => _speciesData;
 
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        // When set, the NEXT rebuild spawns this spawner's newly added school (the last sub-group)
+        // clustered at this off-screen world position facing _pendingSpawnInwardDirection, instead of
+        // behind its in-bounds target. Consumed (cleared) by the rebuild that follows. Existing fish
+        // are untouched — position preservation only reuses spawn positions for brand-new fish.
+        private bool    _hasPendingSpawnOrigin = false;
+        private Vector3 _pendingSpawnOrigin = Vector3.zero;
+        private Vector3 _pendingSpawnInwardDirection = Vector3.forward;
+
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Tells the spawner to place the school added on the next rebuild at <paramref name="worldPosition"/>
+        /// (an off-screen entry point outside the bounds), oriented toward <paramref name="inwardDirection"/>
+        /// so the fish immediately swim into the simulation. Applies to the newly added school only.
+        /// </summary>
+        public void SetPendingSpawnOrigin(Vector3 worldPosition, Vector3 inwardDirection)
+        {
+            _hasPendingSpawnOrigin = true;
+            _pendingSpawnOrigin = worldPosition;
+            _pendingSpawnInwardDirection = inwardDirection.sqrMagnitude > 1e-6f
+                ? inwardDirection.normalized
+                : Vector3.forward;
+        }
+
         /// <inheritdoc/>
         protected override void InitializeBoidsSpawnData(Bounds simulationAreaBounds)
         {
@@ -48,6 +72,7 @@ namespace OceanX.BoidsGPU
             SimulationAffecterComponent[] targets = _boidSpawnData.Targets;
             if(targets == null || targets.Length < _initialGroupsCount)
             {
+                _hasPendingSpawnOrigin = false; // don't let a pending origin leak into a later rebuild
                 base.InitializeBoidsSpawnData(simulationAreaBounds);
                 return;
             }
@@ -100,6 +125,38 @@ namespace OceanX.BoidsGPU
                     totalBoidsSpawned++;
                 }
                 currentBoidSubGroup++;
+            }
+
+            // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+            // If an off-screen entry point was requested, move the just-added school (the last
+            // sub-group, i.e. the last contiguous block of fish) out to that point facing inward.
+            // Only these brand-new fish are relocated; existing fish keep their preserved positions.
+            if (_hasPendingSpawnOrigin && boidGroupsSpawnData.Length > 0)
+            {
+                int lastGroupCount = boidGroupsSpawnData[boidGroupsSpawnData.Length - 1].SpawnPositions.Length;
+                int lastGroupStart = totalBoidsCount - lastGroupCount;
+                RelocateGroupToEntryPoint(lastGroupStart, lastGroupCount);
+            }
+            _hasPendingSpawnOrigin = false;
+        }
+
+        // Recenters the fish in the index range [start, start + count) onto the pending entry point,
+        // preserving their tight in-school offsets, and points them all toward the simulation center so
+        // they swim straight in. The compute shader's out-of-bounds sprint then rushes them into the box.
+        private void RelocateGroupToEntryPoint(int start, int count)
+        {
+            if (count <= 0) return;
+
+            Vector3 groupCenter = Vector3.zero;
+            for (int i = start; i < start + count; i++) groupCenter += _boids[i].Position;
+            groupCenter /= count;
+
+            for (int i = start; i < start + count; i++)
+            {
+                BoidInfoGPU b = _boids[i];
+                b.Position  = _pendingSpawnOrigin + (b.Position - groupCenter);
+                b.Direction = _pendingSpawnInwardDirection;
+                _boids[i]   = b;
             }
         }
 

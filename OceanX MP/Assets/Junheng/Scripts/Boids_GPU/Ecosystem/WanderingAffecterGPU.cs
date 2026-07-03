@@ -34,6 +34,9 @@ namespace OceanX.BoidsGPU.Ecosystem
         private Bounds  _bounds;
         private Vector3 _wanderDirection;
         private bool    _initialized;
+        // When true the wanderer stops roaming and holds a fixed position (used to park a removed
+        // school's target outside the bounds so its fish swim out).
+        private bool    _parked;
 
         // -------------------------------------------------------------------------
         // Public setup
@@ -61,6 +64,19 @@ namespace OceanX.BoidsGPU.Ecosystem
             _initialized = true;
         }
 
+        /// <summary>
+        /// Stops wandering and pins this target at <paramref name="worldPosition"/> (typically an
+        /// off-screen point outside the bounds). Fish following this target then swim straight to it,
+        /// out of the simulation — the compute shader treats any school whose target sits outside the
+        /// bounds as "exiting". Called by <see cref="EcosystemSimulationGPU"/> when removing a school.
+        /// </summary>
+        public void ParkAt(Vector3 worldPosition)
+        {
+            _parked = true;
+            transform.position = worldPosition;
+            AffecterPosition   = worldPosition;
+        }
+
         // -------------------------------------------------------------------------
         // Per-frame wander update
         // -------------------------------------------------------------------------
@@ -72,6 +88,13 @@ namespace OceanX.BoidsGPU.Ecosystem
         private void Update()
         {
             if (!_initialized) return;
+
+            // Parked (a removed school swimming out): hold position, don't wander or clamp to bounds.
+            if (_parked)
+            {
+                AffecterPosition = transform.position;
+                return;
+            }
 
             float dt = Time.deltaTime;
 

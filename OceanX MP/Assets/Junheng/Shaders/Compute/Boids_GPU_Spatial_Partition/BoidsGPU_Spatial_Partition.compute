@@ -28,6 +28,11 @@ int _TotalAffectersCount;
 float _TimeDelta;
 float3 _SimulationAreaCenter;
 float3 _SimulationAreaSize;
+// How long (seconds) a boid keeps sprinting after it crosses INTO the simulation bounds. While a
+// boid is strictly outside the bounds (freshly spawned off-screen) its per-boid timer is held full;
+// once inside, the timer counts down and the boid accelerates until it expires, then settles to
+// cruising speed. Driven from BoidSimulationGPU each frame so it is tunable live in the Inspector.
+float _EntryBoostDuration;
 
 // Buffer containing all boids in the simulation.
 StructuredBuffer<BoidInfo> _Boids;
@@ -399,6 +404,18 @@ bool WillLeaveSimulationArea(float3 boidPosition, float3 movementDirection, floa
     return any(boidPosition < minBound) || any(boidPosition > maxBound) || any(newBoidPosition < minBound) || any(newBoidPosition > maxBound);
 }
 
+// True only when the boid is CURRENTLY, strictly outside the simulation box (not merely predicted to
+// leave). Used to drive the entry sprint: freshly spawned off-screen fish read true here and get their
+// boost timer refilled + accelerate; fish already inside (even hugging the edge) read false, so normal
+// edge behaviour is unchanged.
+bool IsStrictlyOutsideBounds(float3 boidPosition)
+{
+    float3 simulationAreaExtents = _SimulationAreaSize * 0.5f;
+    float3 minBound = _SimulationAreaCenter - simulationAreaExtents;
+    float3 maxBound = _SimulationAreaCenter + simulationAreaExtents;
+    return any(boidPosition < minBound) || any(boidPosition > maxBound);
+}
+
 // The main kernel of the compute shader, it updates the position, rotation and movement properties for each
 // boid in the simulation based on affecting factors (other boids, obstacles and targets).
 [numthreads(THREAD_GROUP_SIZE, 1, 1)]
@@ -425,11 +442,26 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     //   Obstacle  -> casual: bend the schooling direction to curve around it, no speed-up.
     // -------------------------------------------------------------------------------------------
     bool fleeingPredator = false;
-    bool reactingToAffecter = false;   // predator flee OR obstacle avoidance => snap the turn (instant)
+    bool reactingToAffecter = false;   // predator flee OR obstacle avoidance OR exit => snap the turn (instant)
     float3 desiredMovementDirection;
 
+    // ---- Exit response (highest priority) ---------------------------------------------------
+    // A school being removed has its target PARKED outside the simulation bounds. Any boid whose
+    // matched target is a real Target sitting outside the box is "exiting": it beelines to that
+    // target, ignores the return-to-bounds steering below, and accelerates — so it swims out of
+    // view before EcosystemSimulationGPU culls it. Normal schools always keep their target inside
+    // the box, so they never trigger this.
+    Affecter exitTarget = GetClosestAffecter(boidInfo, TARGET_AFFECTER_TYPE);
+    bool exiting = (exitTarget.affecterType == TARGET_AFFECTER_TYPE) && IsStrictlyOutsideBounds(exitTarget.position);
+
     Affecter closestPredator = GetClosestAffecter(boidInfo, PREDATOR_AFFECTER_TYPE);
-    if(BoidInsideAffecter(closestPredator, boidInfo.position))
+    if(exiting)
+    {
+        // Beeline straight to the parked exit target and snap the turn toward it.
+        desiredMovementDirection = normalize(exitTarget.position - boidInfo.position);
+        reactingToAffecter = true;
+    }
+    else if(BoidInsideAffecter(closestPredator, boidInfo.position))
     {
         // Flee: hard steer directly away; the speed pass below will accelerate.
         desiredMovementDirection = AffecterAwayDirection(closestPredator, boidInfo.position);
@@ -459,7 +491,8 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
 
     // Check if the desired direction will lead to leaving the simulation bounds.
     // If so, offset the movement direction towards the center of the simulation area.
-    if(WillLeaveSimulationArea(boidInfo.position, desiredMovementDirection, boidInfo.speed))
+    // Exiting boids are ALLOWED to leave — only non-exiting boids get pulled back inside.
+    if(!exiting && WillLeaveSimulationArea(boidInfo.position, desiredMovementDirection, boidInfo.speed))
     {
         desiredMovementDirection = normalize(_SimulationAreaCenter - boidInfo.position);
 
@@ -467,11 +500,28 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
         fleeingPredator = false;
     }
 
+    // ---- Entry sprint --------------------------------------------------------------------------
+    // Freshly spawned fish appear OUTSIDE the box (off-screen) and rush in. While strictly outside,
+    // hold the per-boid timer full; once inside, count it down. The boid accelerates the whole time
+    // the timer is alive, so it keeps sprinting for _EntryBoostDuration seconds after crossing in,
+    // then settles to cruising speed. Interior fish (timer 0) are unaffected.
+    bool outsideBounds = IsStrictlyOutsideBounds(boidInfo.position);
+    if(outsideBounds)
+    {
+        boidInfo.entryBoostTimeRemaining = _EntryBoostDuration;
+    }
+    else if(boidInfo.entryBoostTimeRemaining > 0.0)
+    {
+        boidInfo.entryBoostTimeRemaining = max(0.0, boidInfo.entryBoostTimeRemaining - _TimeDelta);
+    }
+    bool entrySprint = outsideBounds || boidInfo.entryBoostTimeRemaining > 0.0;
+
     // Steer the boid toward the desired movement direction (snapping instantly when reacting to an affecter).
     UpdateMovementDirection(desiredMovementDirection, boidSchoolInfo, boidInfo, reactingToAffecter);
 
-    // Only a predator flee accelerates the boid; casual obstacle avoidance keeps normal speed.
-    UpdateMovementSpeed(fleeingPredator, boidSchoolInfo, boidInfo);
+    // A predator flee, an entry sprint OR an exit sprint accelerates the boid; casual obstacle
+    // avoidance keeps normal speed.
+    UpdateMovementSpeed(fleeingPredator || entrySprint || exiting, boidSchoolInfo, boidInfo);
 
     // After the movement properties have been updated, update the current position of the boid.
     UpdatePosition(boidInfo);

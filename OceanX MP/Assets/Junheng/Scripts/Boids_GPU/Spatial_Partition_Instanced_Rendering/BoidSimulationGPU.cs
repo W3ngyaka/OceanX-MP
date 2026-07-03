@@ -30,6 +30,13 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             "useful when tweaking the behavior settings of the fish species.")]
         [SerializeField] private bool _updateSchoolSettingsEveryFrame = false;
 
+        [Tooltip("How long (seconds) a newly added fish keeps sprinting AFTER it swims into the " +
+            "simulation from its off-screen spawn point, before settling to cruising speed. Fish " +
+            "always sprint while still outside the bounds; this only controls the extra momentum " +
+            "carried once they cross in. 0 = drop to cruising speed the instant they enter.")]
+        [Min(0f)]
+        [SerializeField] private float _entryBoostDuration = 1.5f;
+
         private ComputeBuffer _sortedBoidsComputeBuffer = null;
         private ComputeBuffer _boidSchoolsRenderInfoBuffer = null;
 
@@ -122,6 +129,35 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             return _gpuBoidSpawners;
         }
 
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Reads the current GPU positions of the boids in the global buffer range
+        /// [<paramref name="startIndex"/>, startIndex + count) and outputs their average (centroid).
+        /// Reads from whichever ping-pong buffer holds the latest simulation output. Returns false if
+        /// the buffers are not ready or the range is out of bounds. Used by EcosystemSimulationGPU to
+        /// detect when a removed school has reached its off-screen exit point.
+        /// </summary>
+        public bool TryGetBoidsCentroid(int startIndex, int count, out Vector3 centroid)
+        {
+            centroid = Vector3.zero;
+            if (count <= 0 || _boidsCount == 0) return false;
+            if (startIndex < 0 || startIndex + count > _boidsCount) return false;
+
+            ComputeBuffer readBuffer = _sortedBoidsBufferIsOutput
+                ? _sortedBoidsComputeBuffer
+                : _boidsComputeBuffer;
+            if (readBuffer == null) return false;
+
+            BoidInfoGPU[] slice = new BoidInfoGPU[count];
+            // GetData(dest, destOffset, sourceOffset, count) — read only this school's slice.
+            readBuffer.GetData(slice, 0, startIndex, count);
+
+            Vector3 sum = Vector3.zero;
+            for (int i = 0; i < count; i++) sum += slice[i].Position;
+            centroid = sum / count;
+            return true;
+        }
+
         /// <inheritdoc/>
         protected override void SpawnBoids()
         {
@@ -204,6 +240,8 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
 
             // Update properties that change every frame to the compute shader.
             _boidsComputeShader.SetFloat("_TimeDelta", timeDelta);
+            // Push the entry-sprint duration every frame so it can be tuned live in the Inspector.
+            _boidsComputeShader.SetFloat("_EntryBoostDuration", _entryBoostDuration);
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_Affecters", _affectersComputeBuffer);
 
             // Update the affecters data on the GPU to reflect their newly updated position.

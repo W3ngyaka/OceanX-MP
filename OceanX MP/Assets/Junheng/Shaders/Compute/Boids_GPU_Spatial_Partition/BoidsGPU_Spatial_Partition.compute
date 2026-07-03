@@ -442,7 +442,8 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     //   Obstacle  -> casual: bend the schooling direction to curve around it, no speed-up.
     // -------------------------------------------------------------------------------------------
     bool fleeingPredator = false;
-    bool reactingToAffecter = false;   // predator flee OR obstacle avoidance OR exit => snap the turn (instant)
+    bool reactingToAffecter = false;   // predator flee OR obstacle avoidance => snap the turn (instant).
+                                       // Exit deliberately does NOT snap — it banks out via angular jerk.
     float3 desiredMovementDirection;
 
     // ---- Exit response (highest priority) ---------------------------------------------------
@@ -457,9 +458,11 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     Affecter closestPredator = GetClosestAffecter(boidInfo, PREDATOR_AFFECTER_TYPE);
     if(exiting)
     {
-        // Beeline straight to the parked exit target and snap the turn toward it.
+        // Head to the parked exit target. Do NOT snap (reactingToAffecter stays false): let the
+        // normal angular-jerk ramp in UpdateMovementDirection bank the fish smoothly toward the exit
+        // instead of whipping around. Speed still sprints — 'exiting' feeds UpdateMovementSpeed below,
+        // so the fish accelerates to max speed (via movementJerk) while it turns out.
         desiredMovementDirection = normalize(exitTarget.position - boidInfo.position);
-        reactingToAffecter = true;
     }
     else if(BoidInsideAffecter(closestPredator, boidInfo.position))
     {

@@ -33,6 +33,10 @@ float3 _SimulationAreaSize;
 // once inside, the timer counts down and the boid accelerates until it expires, then settles to
 // cruising speed. Driven from BoidSimulationGPU each frame so it is tunable live in the Inspector.
 float _EntryBoostDuration;
+// Distance (metres) within which an EXITING boid is considered to have reached its parked exit point:
+// it then stops dead (speed 0) and holds there instead of overshooting and circling the point, until
+// EcosystemSimulationGPU culls the school. Driven from BoidSimulationGPU each frame.
+float _ExitStopDistance;
 
 // Buffer containing all boids in the simulation.
 StructuredBuffer<BoidInfo> _Boids;
@@ -455,6 +459,10 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     Affecter exitTarget = GetClosestAffecter(boidInfo, TARGET_AFFECTER_TYPE);
     bool exiting = (exitTarget.affecterType == TARGET_AFFECTER_TYPE) && IsStrictlyOutsideBounds(exitTarget.position);
 
+    // True once an exiting boid is within _ExitStopDistance of its parked exit point: it has arrived,
+    // so it stops dead there instead of overshooting and circling the point (see the speed pass below).
+    bool reachedExit = false;
+
     Affecter closestPredator = GetClosestAffecter(boidInfo, PREDATOR_AFFECTER_TYPE);
     if(exiting)
     {
@@ -462,7 +470,18 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
         // normal angular-jerk ramp in UpdateMovementDirection bank the fish smoothly toward the exit
         // instead of whipping around. Speed still sprints — 'exiting' feeds UpdateMovementSpeed below,
         // so the fish accelerates to max speed (via movementJerk) while it turns out.
-        desiredMovementDirection = normalize(exitTarget.position - boidInfo.position);
+        float3 toExit = exitTarget.position - boidInfo.position;
+        float distToExit = length(toExit);
+        if(distToExit <= _ExitStopDistance)
+        {
+            // Arrived: freeze in place (keep the current heading) rather than sail past and loop back.
+            reachedExit = true;
+            desiredMovementDirection = boidInfo.direction;
+        }
+        else
+        {
+            desiredMovementDirection = toExit / distToExit; // normalize (distToExit > 0 here)
+        }
     }
     else if(BoidInsideAffecter(closestPredator, boidInfo.position))
     {
@@ -522,9 +541,19 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     // Steer the boid toward the desired movement direction (snapping instantly when reacting to an affecter).
     UpdateMovementDirection(desiredMovementDirection, boidSchoolInfo, boidInfo, reactingToAffecter);
 
-    // A predator flee, an entry sprint OR an exit sprint accelerates the boid; casual obstacle
-    // avoidance keeps normal speed.
-    UpdateMovementSpeed(fleeingPredator || entrySprint || exiting, boidSchoolInfo, boidInfo);
+    if(reachedExit)
+    {
+        // Reached the exit point: stop dead and hold here (no cruising-speed floor) so the fish doesn't
+        // overshoot and circle. It waits, motionless, the moment or two until the school is culled.
+        boidInfo.speed = 0.0;
+        boidInfo.acceleration = 0.0;
+    }
+    else
+    {
+        // A predator flee, an entry sprint OR an exit sprint accelerates the boid; casual obstacle
+        // avoidance keeps normal speed.
+        UpdateMovementSpeed(fleeingPredator || entrySprint || exiting, boidSchoolInfo, boidInfo);
+    }
 
     // After the movement properties have been updated, update the current position of the boid.
     UpdatePosition(boidInfo);

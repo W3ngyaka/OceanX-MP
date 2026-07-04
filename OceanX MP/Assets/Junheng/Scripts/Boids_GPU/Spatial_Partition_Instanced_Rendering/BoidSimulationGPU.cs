@@ -37,6 +37,12 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         [Min(0f)]
         [SerializeField] private float _entryBoostDuration = 1.5f;
 
+        [Tooltip("How close (metres) an exiting fish must get to its parked exit point before it STOPS " +
+            "there instead of overshooting and circling the point. Keep this at or below the ecosystem's " +
+            "Exit Arrival Radius so a stopped fish still counts as arrived and its school gets culled.")]
+        [Min(0.1f)]
+        [SerializeField] private float _exitStopDistance = 1.5f;
+
         private ComputeBuffer _sortedBoidsComputeBuffer = null;
         private ComputeBuffer _boidSchoolsRenderInfoBuffer = null;
 
@@ -59,6 +65,40 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         /// reflects the new group configuration.
         /// </summary>
         public void ReinitializeBuffers()
+        {
+            // Deferred on purpose: the actual teardown/rebuild runs at the START of the next Update (see
+            // FlushPendingReinitialize), never mid-frame. If we disposed the compute buffers here, a
+            // RenderMeshIndirect draw already submitted this frame would still reference them via its
+            // MaterialPropertyBlock, and the GPU would throw "Fish_Lit_Instanced requires a buffer (SRV)
+            // _Boids ... none provided" when it executes at end of frame. Callers just request a rebuild.
+            _reinitializePending = true;
+        }
+
+        // True while a rebuild has been requested but not yet applied. Coalesces multiple requests made in
+        // one frame (e.g. several adds draining the op queue) into a single rebuild.
+        private bool _reinitializePending = false;
+
+        // Applies a pending ReinitializeBuffers request. Called at the top of Update, before any draw is
+        // submitted this frame, so buffers are only ever torn down/recreated between frames.
+        private void FlushPendingReinitialize()
+        {
+            if (!_reinitializePending) return;
+            _reinitializePending = false;
+            PerformReinitializeBuffers();
+        }
+
+        /// <inheritdoc/>
+        protected override void Update()
+        {
+            // Rebuild BEFORE base.Update() runs the simulation and submits this frame's draws, so the sim
+            // and render always use freshly created buffers and no in-flight draw references a disposed one.
+            FlushPendingReinitialize();
+            base.Update();
+        }
+
+        // Performs the actual buffer teardown + full re-init. Do not call directly — request a rebuild via
+        // ReinitializeBuffers() so it happens at a frame-safe point.
+        private void PerformReinitializeBuffers()
         {
             // Before tearing anything down, read the live boid positions back from the GPU
             // so each spawner can restore its fish to where they currently are instead of
@@ -158,6 +198,36 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             return true;
         }
 
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Reads the GPU positions of the boids in the global buffer range [<paramref name="startIndex"/>,
+        /// startIndex + count) and counts how many are within <paramref name="radius"/> of
+        /// <paramref name="point"/>. Used by the removal flow to cull an exiting school the moment every one
+        /// of its fish has reached its off-screen exit point (reachedCount == count), with no fixed timer.
+        /// Returns false (and reachedCount 0) if the buffers are not ready or the range is out of bounds.
+        /// </summary>
+        public bool TryCountBoidsWithinRadius(int startIndex, int count, Vector3 point, float radius, out int reachedCount)
+        {
+            reachedCount = 0;
+            if (count <= 0 || _boidsCount == 0) return false;
+            if (startIndex < 0 || startIndex + count > _boidsCount) return false;
+
+            ComputeBuffer readBuffer = _sortedBoidsBufferIsOutput
+                ? _sortedBoidsComputeBuffer
+                : _boidsComputeBuffer;
+            if (readBuffer == null) return false;
+
+            BoidInfoGPU[] slice = new BoidInfoGPU[count];
+            readBuffer.GetData(slice, 0, startIndex, count);
+
+            float radiusSqr = radius * radius;
+            for (int i = 0; i < count; i++)
+            {
+                if ((slice[i].Position - point).sqrMagnitude <= radiusSqr) reachedCount++;
+            }
+            return true;
+        }
+
         /// <inheritdoc/>
         protected override void SpawnBoids()
         {
@@ -242,6 +312,8 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             _boidsComputeShader.SetFloat("_TimeDelta", timeDelta);
             // Push the entry-sprint duration every frame so it can be tuned live in the Inspector.
             _boidsComputeShader.SetFloat("_EntryBoostDuration", _entryBoostDuration);
+            // Push the exit-stop distance too (where a leaving fish halts at its exit point).
+            _boidsComputeShader.SetFloat("_ExitStopDistance", _exitStopDistance);
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_Affecters", _affectersComputeBuffer);
 
             // Update the affecters data on the GPU to reflect their newly updated position.

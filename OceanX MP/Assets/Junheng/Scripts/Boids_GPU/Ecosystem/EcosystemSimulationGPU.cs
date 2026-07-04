@@ -42,24 +42,17 @@ namespace OceanX.BoidsGPU.Ecosystem
         }
 
         [Header("Removal animation (swim-out)")]
-        [Tooltip("A removed school is culled once its fish REACH the off-screen exit point — specifically " +
-                 "when the school's average position is within this many metres of the point. The school " +
-                 "count / eco-health commit at that moment. Keep it a few metres so the beelining school " +
-                 "reliably lands inside it.")]
+        [Tooltip("How close (metres) a swimming-out fish must get to its exit point to count as having " +
+                 "reached it. A school is culled the instant ALL of its fish are within this distance of " +
+                 "their exit point — no fixed timer. A few metres works; too small and a stray fish can " +
+                 "stop the school being removed.")]
         [Min(0.5f)]
         [SerializeField] private float _exitArrivalRadius = 3f;
 
-        [Tooltip("How often (seconds) to check whether a swimming-out school has reached its exit point. " +
-                 "Each check reads that school's positions back from the GPU, so keep it modest.")]
+        [Tooltip("How often (seconds) to check whether a swimming-out school's fish have all reached their " +
+                 "exit point. Each check reads those fish positions back from the GPU, so keep it modest.")]
         [Min(0.05f)]
         [SerializeField] private float _exitPollInterval = 0.2f;
-
-        [Tooltip("Safety net: a swimming-out school is culled at most this many seconds after it starts " +
-                 "leaving, even if the GPU arrival check never registers it as arrived. Set a bit longer " +
-                 "than it actually takes a school to sprint off-screen. This is what guarantees removal " +
-                 "always completes; the arrival check above just makes it snappier when it works.")]
-        [Min(0.5f)]
-        [SerializeField] private float _exitTimeout = 5f;
 
         [Header("Predator-Prey Balance (global)")]
         [Tooltip("Lower edge of the balanced prey:predator ratio (measured in SCHOOL counts). " +
@@ -461,17 +454,15 @@ namespace OceanX.BoidsGPU.Ecosystem
                 StartCoroutine(BatchExitRoutine(species, spawner));
         }
 
-        // Polls every swimming-out school of this species and culls them together once they have ALL
-        // reached their exit points (each school's centroid within _exitArrivalRadius of its own parked
-        // target). No timeout: exiting fish beeline at sprint speed (the shader's exit branch overrides
-        // predator / obstacle / return-to-bounds steering), so they always arrive. Committing the whole
-        // top block at once means no surviving school's index shifts mid-flight. More Removes arriving
-        // while this runs simply grow the block; the batch then waits for the latest additions too.
+        // Watches every swimming-out school of this species and culls the whole top block the instant ALL
+        // of their fish have reached their exit point (each fish within _exitArrivalRadius of its own
+        // school's parked exit point) — no timer. The exiting schools are the contiguous top block of
+        // sub-groups, so committing them together keeps surviving school indices stable. More Removes
+        // arriving mid-swim just grow the block, so the cull naturally waits for the latest-added schools too.
         private IEnumerator BatchExitRoutine(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
         {
             int fishPerSchool = FishPerSchool(species);
             WaitForSeconds wait = new WaitForSeconds(_exitPollInterval);
-            float arrivalSqr = _exitArrivalRadius * _exitArrivalRadius;
 
             while (true)
             {
@@ -481,29 +472,29 @@ namespace OceanX.BoidsGPU.Ecosystem
                 if (e <= 0) break; // nothing exiting (shouldn't happen)
 
                 int n = CountGroups(species);
-                if (n <= 0) { _exitingCount[species] = 0; break; } // safety — nothing left
+                if (n <= 0) { _exitingCount[species] = 0; break; } // nothing left
 
                 e = Mathf.Min(e, n);
-                int firstExiting = n - e; // exiting schools are sub-groups [firstExiting, n - 1]
+                int firstExiting = n - e; // exiting schools are the contiguous top block [firstExiting, n-1]
 
-                // Every exiting school must have arrived before we cull the block. RenderingOffset is
-                // re-read each poll in case a rebuild for another species shifted this spawner's slice.
-                bool allArrived = true;
+                // Each exiting school beelines to its OWN exit point, so count arrivals per school against
+                // that school's parked target. When every fish of every exiting school is within the arrival
+                // radius, they have all reached the exit point — cull the whole block right then.
+                // RenderingOffset is re-read each poll in case a rebuild for another species shifted the slice.
+                int reached = 0;
+                bool readOk = true;
                 for (int j = firstExiting; j < n; j++)
                 {
                     WanderingAffecterGPU target = GetWanderingTargetAt(species, j);
                     Vector3 exitPoint = target != null ? target.AffecterPosition : SimulationBounds.center;
 
                     int startIndex = spawner.RenderingOffset + j * fishPerSchool;
-                    if (_simulation.TryGetBoidsCentroid(startIndex, fishPerSchool, out Vector3 centroid)
-                        && (centroid - exitPoint).sqrMagnitude <= arrivalSqr)
-                        continue; // this school has arrived
-
-                    allArrived = false;
-                    break;
+                    if (_simulation.TryCountBoidsWithinRadius(startIndex, fishPerSchool, exitPoint, _exitArrivalRadius, out int within))
+                        reached += within;
+                    else { readOk = false; break; } // buffers not ready this poll — try again next tick
                 }
 
-                if (allArrived)
+                if (readOk && reached >= e * fishPerSchool)
                 {
                     if (CommitRemoveSchools(species, spawner, e))
                         _simulation.ReinitializeBuffers();
@@ -554,12 +545,16 @@ namespace OceanX.BoidsGPU.Ecosystem
         // a random horizontal direction, so fish always have somewhere off-screen to swim out to.
         private Vector3 PickExitPoint()
         {
+            Bounds b = SimulationBounds;
+
+            // Use a placed exit marker only if it is actually OUTSIDE the volume. A marker mistakenly left
+            // inside the bounds would keep the exiting fish on-screen forever and stall the (timer-less)
+            // cull, so treat it as absent and fall back to a guaranteed-outside point.
             FishEntryPointGPU point = PickMarker(forEntry: false);
-            if (point != null) return point.Position;
+            if (point != null && !b.Contains(point.Position)) return point.Position;
 
             // Fallback: a point just outside the bounds along a random horizontal direction, so fish
-            // still have somewhere off-screen to swim out to even if no exit-capable marker is placed.
-            Bounds b = SimulationBounds;
+            // always have somewhere off-screen to swim out to and reliably leave the volume.
             Vector2 dir = Random.insideUnitCircle.normalized;
             if (dir == Vector2.zero) dir = Vector2.right;
             Vector3 outward = new Vector3(dir.x, 0f, dir.y);

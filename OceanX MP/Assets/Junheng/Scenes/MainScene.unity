@@ -163971,8 +163971,9 @@ MonoBehaviour:
   _simulation: {fileID: 1776848803}
   _enablePopulationDynamics: 0
   _tickInterval: 5
-  _exitArrivalRadius: 3
+  _exitArrivalRadius: 1
   _exitPollInterval: 0.2
+  _exitTimeout: 8
   _ratioBandLow: 1
   _ratioBandHigh: 3
   _growRate: 0.3

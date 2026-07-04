@@ -28,6 +28,8 @@ public class SpeciesUnlockReveal : MonoBehaviour
 
     [Header("Links")]
     public AluciaController alucia;
+
+    private readonly System.Collections.Generic.Dictionary<SpeciesData,int> _hintRotation = new System.Collections.Generic.Dictionary<SpeciesData,int>();
     public List<SpeciesData> allSpecies = new List<SpeciesData>();
 
     [Header("Timing")]
@@ -131,11 +133,7 @@ public class SpeciesUnlockReveal : MonoBehaviour
     string BuildHint(SpeciesData sp, bool healthMet, int minHealth,
                      List<EcosystemUnlockManagerGPU.RequirementStatus> reqs)
     {
-        // Prefer the species' own first hint if it has one.
-        if (!string.IsNullOrEmpty(sp.hint1))
-            return sp.hint1;
-
-        // Otherwise build from requirements.
+        // Build a progress-aware requirement phrase.
         var parts = new List<string>();
         if (!healthMet && minHealth > 0)
             parts.Add("get eco-health to " + minHealth + "%");
@@ -144,12 +142,38 @@ public class SpeciesUnlockReveal : MonoBehaviour
                 if (!r.Met && r.Species != null)
                 {
                     int need = Mathf.Max(0, r.Required - r.Current);
-                    parts.Add("add " + need + " more " + r.Species.speciesName);
+                    string nm = r.Species.speciesName;
+                    parts.Add(need == 1 ? ("one more " + nm) : (need + " more " + nm));
                 }
+        string reqPhrase = parts.Count > 0 ? string.Join(", and ", parts) : null;
 
-        if (parts.Count == 0)
-            return "Something new is almost ready to appear...";
-        return "To unlock " + sp.speciesName + ", try to " + string.Join(", and ", parts) + ".";
+        // Rotate through several phrasings so repeats don't feel identical.
+        int rot = 0;
+        if (_hintRotation.TryGetValue(sp, out int v)) rot = v;
+        _hintRotation[sp] = rot + 1;
+
+        string name = sp.speciesName;
+        // Pool of variant templates. {0}=species, {1}=requirement phrase.
+        string[] withReq = new string[]
+        {
+            "To bring in the " + name + ", you'll need to " + reqPhrase + ".",
+            "Almost there! Just " + reqPhrase + " and the " + name + " will appear.",
+            "The " + name + " is waiting \u2014 " + reqPhrase + ".",
+            "Keep going! " + reqPhrase + " to attract the " + name + ".",
+        };
+        // Variants that lean on the species' own flavour hints when available.
+        var flavour = new List<string>();
+        if (!string.IsNullOrEmpty(sp.hint1)) flavour.Add(sp.hint1);
+        if (!string.IsNullOrEmpty(sp.hint2)) flavour.Add(sp.hint2);
+        if (!string.IsNullOrEmpty(sp.hint3)) flavour.Add(sp.hint3);
+
+        // Interleave: even rotations use flavour (if any), odd use progress phrasing.
+        if (reqPhrase == null)
+            return flavour.Count > 0 ? flavour[rot % flavour.Count] : "Something new is almost ready to appear...";
+
+        if (flavour.Count > 0 && rot % 2 == 0)
+            return flavour[(rot / 2) % flavour.Count];
+        return withReq[rot % withReq.Length];
     }
 
 

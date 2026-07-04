@@ -54,6 +54,13 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Min(0.05f)]
         [SerializeField] private float _exitPollInterval = 0.2f;
 
+        [Tooltip("Safety net: a swimming-out school is culled at most this many seconds after it starts " +
+                 "leaving, even if the GPU arrival check never registers it as arrived. Set a bit longer " +
+                 "than it actually takes a school to sprint off-screen. This is what guarantees removal " +
+                 "always completes; the arrival check above just makes it snappier when it works.")]
+        [Min(0.5f)]
+        [SerializeField] private float _exitTimeout = 5f;
+
         [Header("Predator-Prey Balance (global)")]
         [Tooltip("Lower edge of the balanced prey:predator ratio (measured in SCHOOL counts). " +
                  "Below this, there are too many predators for the prey — prey shrinks, predators starve.")]
@@ -93,17 +100,22 @@ namespace OceanX.BoidsGPU.Ecosystem
         private readonly Dictionary<SpeciesDataGPU, List<SimulationAffecterComponent>> _managedTargets
             = new Dictionary<SpeciesDataGPU, List<SimulationAffecterComponent>>();
 
-        // Species that currently have a school swimming out (an exit animation is in flight). While a
-        // species is in this set, further add/remove on it is ignored so the "the last school is the
-        // exiting one" invariant holds until the coroutine commits the removal.
-        private readonly HashSet<SpeciesDataGPU> _exitingSpecies = new HashSet<SpeciesDataGPU>();
+        // Per-species count of schools currently swimming out (an exit animation in flight). Removals are
+        // immediate and concurrent: each Remove parks one more of the species' TOP schools off-screen so
+        // it beelines out right away, incrementing this count. The exiting schools are always the highest
+        // K sub-groups — a contiguous block — so a single BatchExitRoutine can cull them together once
+        // they have all reached their exit points, with no mid-flight buffer reindexing.
+        private readonly Dictionary<SpeciesDataGPU, int> _exitingCount = new Dictionary<SpeciesDataGPU, int>();
+
+        private bool IsExiting(SpeciesDataGPU species) => _exitingCount.TryGetValue(species, out int e) && e > 0;
+        private int  ExitingCount(SpeciesDataGPU species) => _exitingCount.TryGetValue(species, out int e) ? e : 0;
 
         // Reusable scratch list for filtering entry/exit markers by mode (avoids per-call allocation).
         private readonly List<FishEntryPointGPU> _markerScratch = new List<FishEntryPointGPU>();
 
-        // FIFO of pending +1 (add) / -1 (remove) operations per species, so rapid taps and mixed
-        // add/remove are honoured in order and animate one at a time. Adds apply instantly; a remove
-        // pauses the pump until its school finishes swimming out, then the pump resumes.
+        // FIFO of pending +1 (add) operations per species. Removes execute immediately (see
+        // StartRemoveExitImmediate); only Adds queue — and only while the species is busy swimming schools
+        // out — so an Add pressed mid-exit lands after the batch commits instead of colliding with it.
         private readonly Dictionary<SpeciesDataGPU, Queue<int>> _opQueue
             = new Dictionary<SpeciesDataGPU, Queue<int>>();
 
@@ -156,13 +168,13 @@ namespace OceanX.BoidsGPU.Ecosystem
             PumpQueue(species, spawner);
         }
 
-        /// <summary>Queues removing one school from this species (fish swim out, then are culled).
-        /// Honoured in order with any other pending add/remove; stops at extinction. Called by UI / netcode.</summary>
+        /// <summary>Removes one school from this species immediately: its fish start swimming out the
+        /// moment this is called, concurrently with any other schools already leaving. Spamming Remove
+        /// sends several schools out at once. Stops at extinction. Called by UI / netcode.</summary>
         public void RemoveSpecies(SpeciesDataGPU species)
         {
             if (!ValidateSpecies(species, out BoidSpawnerGPUMultiTargets spawner)) return;
-            EnqueueOp(species, -1);
-            PumpQueue(species, spawner);
+            StartRemoveExitImmediate(species, spawner);
         }
 
         // -------------------------------------------------------------------------
@@ -180,14 +192,15 @@ namespace OceanX.BoidsGPU.Ecosystem
             q.Enqueue(delta);
         }
 
-        // Processes queued ops in order until the queue empties or a remove starts a swim-out (which
-        // pauses the pump until FinishExitRoutine resumes it). Adds apply instantly.
+        // Drains queued ops. Adds apply instantly; a queued remove starts an immediate swim-out. The pump
+        // is held off while the species is busy swimming schools out (BatchExitRoutine re-runs it once the
+        // batch commits) so queued Adds land after the exiting block is gone, not tangled up with it.
         private void PumpQueue(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
         {
-            if (_exitingSpecies.Contains(species)) return; // busy swimming a school out; resumes later
+            if (IsExiting(species)) return; // busy swimming schools out; resumes after the batch commits
             if (!_opQueue.TryGetValue(species, out Queue<int> q)) return;
 
-            while (q.Count > 0 && !_exitingSpecies.Contains(species))
+            while (q.Count > 0 && !IsExiting(species))
             {
                 int op = q.Dequeue();
                 if (op > 0)
@@ -197,7 +210,7 @@ namespace OceanX.BoidsGPU.Ecosystem
                 }
                 else
                 {
-                    StartRemoveExit(species, spawner); // sets _exitingSpecies (pausing the loop) if a school leaves
+                    StartRemoveExitImmediate(species, spawner);
                 }
             }
         }
@@ -253,7 +266,7 @@ namespace OceanX.BoidsGPU.Ecosystem
             {
                 if (species == null) continue;
                 if (!snapshot.TryGetValue(species, out int n) || n <= 0) continue; // extinct / not present
-                if (_exitingSpecies.Contains(species)) continue;                    // mid swim-out — leave it alone
+                if (IsExiting(species)) continue;                                   // mid swim-out — leave it alone
 
                 BoidSpawnerGPUMultiTargets spawner = FindSpawner(species);
                 if (spawner == null) continue;
@@ -266,7 +279,7 @@ namespace OceanX.BoidsGPU.Ecosystem
                 else if (pressure < 0)
                 {
                     // Shrink animates a swim-out (async); no immediate rebuild needed here.
-                    if (Random.value < _shrinkRate) StartRemoveExit(species, spawner);
+                    if (Random.value < _shrinkRate) StartRemoveExitImmediate(species, spawner);
                 }
             }
 
@@ -416,36 +429,45 @@ namespace OceanX.BoidsGPU.Ecosystem
             return true;
         }
 
-        // Begins a school's swim-out (the last sub-group). The count and GPU buffers do NOT change yet:
-        // the school's target is parked outside the bounds so its fish beeline out of view, then a
-        // coroutine culls them once they arrive. Sets _exitingSpecies to pause the op pump until then.
-        private void StartRemoveExit(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
+        // Starts ONE more school of this species swimming out, immediately and concurrently with any
+        // others already leaving. Each call parks the highest not-yet-exiting school's target at an
+        // off-screen exit point, so its fish beeline out the moment Remove is pressed — spamming Remove
+        // sends several schools out at once instead of draining them one at a time. The exiting schools
+        // are always the species' TOP K sub-groups (a contiguous block); a single BatchExitRoutine culls
+        // the whole block together once they have all arrived. The count / GPU buffers do NOT change here.
+        private void StartRemoveExitImmediate(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
         {
-            int n = _schoolCount.TryGetValue(species, out int current) ? current : 0;
-            if (n <= 0) return;                            // nothing to remove — drop this op
-            if (_exitingSpecies.Contains(species)) return; // already exiting (shouldn't happen via the pump)
+            int n = CountGroups(species);
+            int alreadyExiting = ExitingCount(species);
+            int settled = n - alreadyExiting;
+            if (settled <= 0) return; // every remaining school is already swimming out — nothing to do
 
-            // Park the last school's target at an off-screen point so its fish swim out. If there is
-            // no target to animate (shouldn't happen), cull immediately and keep the pump going.
-            WanderingAffecterGPU exitingTarget = GetLastWanderingTarget(species);
+            // Park the highest settled school (sub-group index settled - 1) so it starts exiting now.
+            WanderingAffecterGPU exitingTarget = GetWanderingTargetAt(species, settled - 1);
             if (exitingTarget == null)
             {
-                if (CommitRemoveSchool(species, spawner))
+                // No target to animate (shouldn't happen) — cull one immediately so counts stay consistent.
+                if (CommitRemoveSchools(species, spawner, 1))
                     _simulation.ReinitializeBuffers();
                 return;
             }
 
-            Vector3 exitPoint = PickExitPoint();
-            exitingTarget.ParkAt(exitPoint);
-            _exitingSpecies.Add(species);
-            StartCoroutine(FinishExitRoutine(species, spawner, exitPoint));
+            exitingTarget.ParkAt(PickExitPoint());
+            _exitingCount[species] = alreadyExiting + 1;
+
+            // Start the batch cull coroutine only on the 0 -> 1 transition. If one is already running it
+            // picks up this newly parked school on its next poll (it reads the live exiting count).
+            if (alreadyExiting == 0)
+                StartCoroutine(BatchExitRoutine(species, spawner));
         }
 
-        // Polls the swimming-out school's GPU positions and culls it once the school REACHES the exit
-        // point (its centroid lands within _exitArrivalRadius). No timeout: exiting fish beeline
-        // unconditionally at sprint speed (the shader's exit branch overrides predator / obstacle /
-        // return-to-bounds steering), so they always arrive.
-        private IEnumerator FinishExitRoutine(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner, Vector3 exitPoint)
+        // Polls every swimming-out school of this species and culls them together once they have ALL
+        // reached their exit points (each school's centroid within _exitArrivalRadius of its own parked
+        // target). No timeout: exiting fish beeline at sprint speed (the shader's exit branch overrides
+        // predator / obstacle / return-to-bounds steering), so they always arrive. Committing the whole
+        // top block at once means no surviving school's index shifts mid-flight. More Removes arriving
+        // while this runs simply grow the block; the batch then waits for the latest additions too.
+        private IEnumerator BatchExitRoutine(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
         {
             int fishPerSchool = FishPerSchool(species);
             WaitForSeconds wait = new WaitForSeconds(_exitPollInterval);
@@ -455,54 +477,77 @@ namespace OceanX.BoidsGPU.Ecosystem
             {
                 yield return wait;
 
-                int n = CountGroups(species);
-                if (n <= 0) break; // safety — nothing left to remove
+                int e = ExitingCount(species);
+                if (e <= 0) break; // nothing exiting (shouldn't happen)
 
-                // The exiting school is the last sub-group: the final fishPerSchool boids of this
-                // spawner's slice in the global buffer. RenderingOffset is re-read each poll in case a
-                // rebuild for another species shifted it.
-                int startIndex = spawner.RenderingOffset + (n - 1) * fishPerSchool;
-                if (_simulation.TryGetBoidsCentroid(startIndex, fishPerSchool, out Vector3 centroid))
+                int n = CountGroups(species);
+                if (n <= 0) { _exitingCount[species] = 0; break; } // safety — nothing left
+
+                e = Mathf.Min(e, n);
+                int firstExiting = n - e; // exiting schools are sub-groups [firstExiting, n - 1]
+
+                // Every exiting school must have arrived before we cull the block. RenderingOffset is
+                // re-read each poll in case a rebuild for another species shifted this spawner's slice.
+                bool allArrived = true;
+                for (int j = firstExiting; j < n; j++)
                 {
-                    if ((centroid - exitPoint).sqrMagnitude <= arrivalSqr) break; // reached the exit point
+                    WanderingAffecterGPU target = GetWanderingTargetAt(species, j);
+                    Vector3 exitPoint = target != null ? target.AffecterPosition : SimulationBounds.center;
+
+                    int startIndex = spawner.RenderingOffset + j * fishPerSchool;
+                    if (_simulation.TryGetBoidsCentroid(startIndex, fishPerSchool, out Vector3 centroid)
+                        && (centroid - exitPoint).sqrMagnitude <= arrivalSqr)
+                        continue; // this school has arrived
+
+                    allArrived = false;
+                    break;
+                }
+
+                if (allArrived)
+                {
+                    if (CommitRemoveSchools(species, spawner, e))
+                        _simulation.ReinitializeBuffers();
+                    _exitingCount[species] = 0;
+                    break;
                 }
             }
 
-            if (CommitRemoveSchool(species, spawner))
-                _simulation.ReinitializeBuffers();
-
-            _exitingSpecies.Remove(species);
-
-            // Resume any queued ops for this species (e.g. a second queued removal, or an add).
+            // Resume any Adds that were queued while this species was busy swimming schools out.
             PumpQueue(species, spawner);
         }
 
-        // Immediately drops the last school: decrement N, destroy its (parked) target, shrink the
+        // Drops the top `count` schools at once: decrement N, destroy their (parked) targets, shrink the
         // spawner. No GPU rebuild here — the caller rebuilds once. Returns true if the count changed.
-        private bool CommitRemoveSchool(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
+        // Because the exiting schools are the top-most sub-groups, removing them together leaves every
+        // surviving school's index unchanged.
+        private bool CommitRemoveSchools(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner, int count)
         {
             int n = _schoolCount.TryGetValue(species, out int current) ? current : 0;
-            if (n <= 0) return false;
+            if (n <= 0 || count <= 0) return false;
 
+            count = Mathf.Min(count, n);
             int fishPerSchool = FishPerSchool(species);
-            int newN = n - 1;
+            int newN = n - count;
             _schoolCount[species] = newN;
 
-            // Destroy the last school's target (the parked one) so targets and schools stay in
+            // Destroy the parked targets (the last `count` in the list) so targets and schools stay in
             // lockstep and no GameObjects leak.
-            DestroyLastTarget(species, spawner);
+            for (int i = 0; i < count; i++)
+                DestroyLastTarget(species, spawner);
 
             // newN == 0 deactivates the spawner (excluded from the simulation entirely).
             spawner.SetSchoolConfiguration(newN, fishPerSchool);
             return true;
         }
 
-        // The most recently created roaming target for a species (the last school's), or null.
-        private WanderingAffecterGPU GetLastWanderingTarget(SpeciesDataGPU species)
+        // The roaming target for a specific sub-group (school) of a species, or null if out of range.
+        private WanderingAffecterGPU GetWanderingTargetAt(SpeciesDataGPU species, int subGroupIndex)
         {
-            if (!_managedTargets.TryGetValue(species, out List<SimulationAffecterComponent> targets) || targets.Count == 0)
+            if (!_managedTargets.TryGetValue(species, out List<SimulationAffecterComponent> targets))
                 return null;
-            return targets[targets.Count - 1] as WanderingAffecterGPU;
+            if (subGroupIndex < 0 || subGroupIndex >= targets.Count)
+                return null;
+            return targets[subGroupIndex] as WanderingAffecterGPU;
         }
 
         // A random placed entry/exit marker, or (if none placed) a point just outside the bounds along

@@ -20746,6 +20746,7 @@ MonoBehaviour:
   - {fileID: 1974675774}
   _updateSchoolSettingsEveryFrame: 0
   _entryBoostDuration: 1.5
+  _exitStopDistance: 1.5
 --- !u!4 &222838833
 Transform:
   m_ObjectHideFlags: 0
@@ -20786,7 +20787,6 @@ MonoBehaviour:
   _tickInterval: 5
   _exitArrivalRadius: 3
   _exitPollInterval: 0.2
-  _exitTimeout: 5
   _ratioBandLow: 1
   _ratioBandHigh: 3
   _growRate: 0.3
@@ -74713,7 +74713,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &776685395
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -130224,7 +130224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &1313800689
 MeshCollider:
   m_ObjectHideFlags: 0

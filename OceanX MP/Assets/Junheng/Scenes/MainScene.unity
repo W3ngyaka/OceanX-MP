@@ -13649,6 +13649,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 156682581}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &157313733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 157313734}
+  - component: {fileID: 157313735}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &157313734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157313733}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 39.8, y: 3.6, z: -10.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1776848804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &157313735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157313733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f81b0196a3000f43b17cd8fe38d05e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.FishEntryPointGPU
+  _mode: 2
 --- !u!1001 &157559682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31655,6 +31700,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 356343123}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &356868914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 356868915}
+  - component: {fileID: 356868916}
+  m_Layer: 0
+  m_Name: GameObject (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &356868915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356868914}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18, y: 3.6, z: -34.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1776848804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &356868916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356868914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f81b0196a3000f43b17cd8fe38d05e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.FishEntryPointGPU
+  _mode: 2
 --- !u!1 &358056663
 GameObject:
   m_ObjectHideFlags: 0
@@ -31830,6 +31920,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 359472786}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &359552056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 359552057}
+  - component: {fileID: 359552058}
+  m_Layer: 0
+  m_Name: GameObject (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &359552057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359552056}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -35.8, y: -1.8, z: 13.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1776848804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &359552058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359552056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f81b0196a3000f43b17cd8fe38d05e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.FishEntryPointGPU
+  _mode: 2
 --- !u!1001 &359707222
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50884,6 +51019,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 564631525}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &565217458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 565217459}
+  - component: {fileID: 565217460}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &565217459
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565217458}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.8, y: 3.6, z: 51}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1776848804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &565217460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565217458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f81b0196a3000f43b17cd8fe38d05e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.FishEntryPointGPU
+  _mode: 2
 --- !u!1001 &566113970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64182,6 +64362,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 721706912}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &722266452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 722266453}
+  - component: {fileID: 722266454}
+  m_Layer: 0
+  m_Name: GameObject (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &722266453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722266452}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -23.1, y: -5.4, z: -29.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1776848804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &722266454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722266452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f81b0196a3000f43b17cd8fe38d05e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.FishEntryPointGPU
+  _mode: 2
 --- !u!1 &722665855
 GameObject:
   m_ObjectHideFlags: 0
@@ -69873,7 +70098,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &776685395
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -70281,7 +70506,7 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: -5495902117074765545, guid: 811d81b22734bb04891dc8db665d4391, type: 3}
+    BoidMesh: {fileID: -5495902117074765545, guid: 963e266e13d3950429e55c006f2e7798, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 4a7ee81ec711fab40b5fc06591a267d7, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: 1a9e8698e0ddb734689594b712273353, type: 2}
     Targets:
@@ -93842,7 +94067,7 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: -5495902117074765545, guid: cbac95745fc5c9f42a841c3f88acde0b, type: 3}
+    BoidMesh: {fileID: -5495902117074765545, guid: 2df54e3a4a714e540a405fe1d178133b, type: 3}
     BoidMaterial: {fileID: 2100000, guid: b883ae805f0a4614ebb692e075e1d35c, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: e5057589a9bfe4340bf4b696e3866375, type: 2}
     Targets:
@@ -100312,6 +100537,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 1097511424}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1097636687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1097636688}
+  - component: {fileID: 1097636689}
+  m_Layer: 0
+  m_Name: GameObject (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1097636688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097636687}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -36, y: 1.9, z: -10.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1776848804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1097636689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097636687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f81b0196a3000f43b17cd8fe38d05e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.FishEntryPointGPU
+  _mode: 2
 --- !u!1001 &1097720583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106427,7 +106697,7 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: -5495902117074765545, guid: bb80696a092b5984e92fe68773b7c751, type: 3}
+    BoidMesh: {fileID: -5495902117074765545, guid: 4680356d39934be4480b711b97b6192c, type: 3}
     BoidMaterial: {fileID: 2100000, guid: f299d3c6fd24e5e4995699b695326839, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: 8fffb4203f662d043ac15c88ecccaf1e, type: 2}
     Targets:
@@ -121827,7 +122097,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1313800689
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -130068,6 +130338,9 @@ MonoBehaviour:
   calmColor: {r: 0.85, g: 0.96, b: 1, a: 0.92}
   warnColor: {r: 1, g: 0.93, b: 0.85, a: 0.92}
   winColor: {r: 0.86, g: 0.99, b: 0.94, a: 0.92}
+  calmSprite: {fileID: 0}
+  warnSprite: {fileID: 0}
+  winSprite: {fileID: 0}
   introLine1: Hey, my name's Alucia!
   introLine2: As you can see, this ecosystem isn't doing too well...
   introLine3: Please help me save it!
@@ -163698,6 +163971,8 @@ MonoBehaviour:
   _simulation: {fileID: 1776848803}
   _enablePopulationDynamics: 0
   _tickInterval: 5
+  _exitArrivalRadius: 3
+  _exitPollInterval: 0.2
   _ratioBandLow: 1
   _ratioBandHigh: 3
   _growRate: 0.3
@@ -163719,7 +163994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _simulationAreaBounds:
     m_Center: {x: 11.8, y: 13.6, z: 15.5}
-    m_Extent: {x: 36.9, y: 10.7, z: 37.7}
+    m_Extent: {x: 29.3, y: 10.7, z: 27.1}
   _simulationSpeedMultiplier: 1
   _globalAffecters:
   - {fileID: 1611986935}
@@ -163743,6 +164018,7 @@ MonoBehaviour:
   - {fileID: 697831546}
   - {fileID: 1160620840}
   _updateSchoolSettingsEveryFrame: 0
+  _entryBoostDuration: 1.5
 --- !u!4 &1776848804
 Transform:
   m_ObjectHideFlags: 0
@@ -163759,6 +164035,12 @@ Transform:
   - {fileID: 1861546246}
   - {fileID: 217255299}
   - {fileID: 408358339}
+  - {fileID: 565217459}
+  - {fileID: 722266453}
+  - {fileID: 359552057}
+  - {fileID: 1097636688}
+  - {fileID: 157313734}
+  - {fileID: 356868915}
   m_Father: {fileID: 1674192530}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1776984321
@@ -185558,7 +185840,7 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: -5495902117074765545, guid: f6b12f6fcca7e504cbd69d520d7bf5fc, type: 3}
+    BoidMesh: {fileID: -5495902117074765545, guid: f8b1737a5f52e974e880103f57e71dde, type: 3}
     BoidMaterial: {fileID: 2100000, guid: a62bda33214ca0641b0d3954d8bd8d17, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: e739b98a03c861d44860eafbb568b102, type: 2}
     Targets:

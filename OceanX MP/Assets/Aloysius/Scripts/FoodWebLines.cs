@@ -41,14 +41,18 @@ public class FoodWebLines : MonoBehaviour
             }
         }
 
-        // draw lines
+        // Draw each link in the direction energy flows — from the eaten toward the eater —
+        // with an arrowhead at the tip. The source is eaten by its predators (source -> predator)
+        // and eats its prey (prey -> source), so the arrow always points at the predator.
+        Color lineColor = new Color(0f, 0.85f, 1f, 1f);
+
         foreach (var predator in source.predators)
             if (predator != null)
-                DrawLine(source.transform, predator.transform, new Color(0f, 0.85f, 1f, 1f));
+                DrawLine(source.transform, predator.transform, lineColor);
 
         foreach (var prey in source.prey)
             if (prey != null)
-                DrawLine(source.transform, prey.transform, new Color(0f, 0.85f, 1f, 0.6f));
+                DrawLine(prey.transform, source.transform, lineColor);
 
         Debug.Log($"activeLines after draw: {activeLines.Count}");
     }
@@ -84,29 +88,57 @@ public class FoodWebLines : MonoBehaviour
         float dist = dir.magnitude;
         if (dist < 0.001f) return;
         Vector2 unit = dir / dist;
+
+        // Trim the endpoints back to each bubble's rim so the line touches the edge
+        // instead of running under the fish art (only if there's room between them).
+        float rFrom = BubbleRadius(from);
+        float rTo = BubbleRadius(to);
+        if (rFrom + rTo < dist)
+        {
+            start += unit * rFrom;
+            end -= unit * rTo;
+            dir = end - start;
+            dist = dir.magnitude;
+            if (dist < 0.001f) return;
+            unit = dir / dist;
+        }
+
         Vector2 mid = (start + end) / 2f;
-
-        // Perpendicular directions to bow toward.
         Vector2 perp = new Vector2(-unit.y, unit.x);
-        float bow = Mathf.Clamp(dist * 0.42f, 60f, 400f);
 
-        // Gather other bubbles (exclude the two endpoints) to test clearance against.
+        // Gather the other bubbles (exclude the two endpoints) with their radii so we
+        // can keep the line clear of them.
         var obstacles = new List<Vector2>();
+        var radii = new List<float>();
         var allBubbles = FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None);
         foreach (var b in allBubbles)
         {
             if (b.transform == from || b.transform == to) continue;
             obstacles.Add(b.transform.position);
+            radii.Add(BubbleRadius(b.transform));
         }
 
-        // Try bowing each way; pick the side whose curve stays farthest from obstacles.
-        Vector2 controlA = mid + perp * bow;
-        Vector2 controlB = mid - perp * bow;
-        float clearA = MinClearance(start, controlA, end, obstacles);
-        float clearB = MinClearance(start, controlB, end, obstacles);
-        Vector2 control = (clearA >= clearB) ? controlA : controlB;
+        // Keep the line straight whenever the direct path is already clear; only bow —
+        // by the smallest amount that works — when a bubble is actually in the way.
+        const float margin = 12f;
+        Vector2 control = mid;                                   // bow = 0 -> straight line
+        float bestPenalty = PathPenalty(start, control, end, obstacles, radii, margin);
+        if (bestPenalty > 0f)
+        {
+            float maxBow = Mathf.Clamp(dist * 0.6f, 40f, 500f);
+            for (float bow = 30f; bow <= maxBow; bow += 30f)
+            {
+                Vector2 cA = mid + perp * bow;
+                Vector2 cB = mid - perp * bow;
+                float pA = PathPenalty(start, cA, end, obstacles, radii, margin);
+                float pB = PathPenalty(start, cB, end, obstacles, radii, margin);
+                if (pA < bestPenalty) { bestPenalty = pA; control = cA; }
+                if (pB < bestPenalty) { bestPenalty = pB; control = cB; }
+                if (bestPenalty <= 0f) break;                    // fully clear — stop growing the bow
+            }
+        }
 
-        int segments = 16;
+        int segments = 20;
         Vector2 prev = start;
         for (int i = 1; i <= segments; i++)
         {
@@ -115,25 +147,47 @@ public class FoodWebLines : MonoBehaviour
             DrawSegment(prev, point, color);
             prev = point;
         }
+
+        // Arrowhead at the tip, aligned with the curve's tangent there (points at the predator).
+        Vector2 tangent = end - control;                        // quadratic Bezier tangent at t = 1
+        if (tangent.sqrMagnitude < 0.0001f) tangent = unit;
+        AddArrowHead(end, tangent.normalized, color);
     }
 
-    // Smallest distance from any sampled point on the curve to the nearest obstacle.
-    float MinClearance(Vector2 a, Vector2 c, Vector2 b, List<Vector2> obstacles)
+    // Two short barbs forming a "V" at the tip. dir = unit direction of travel toward the tip.
+    void AddArrowHead(Vector2 tip, Vector2 dir, Color color)
     {
-        if (obstacles.Count == 0) return float.MaxValue;
-        float min = float.MaxValue;
-        int samples = 8;
+        const float len = 16f;
+        const float ang = 28f * Mathf.Deg2Rad;
+        Vector2 back = -dir;
+        DrawSegment(tip, tip + Rotate(back, ang) * len, color);
+        DrawSegment(tip, tip + Rotate(back, -ang) * len, color);
+    }
+
+    Vector2 Rotate(Vector2 v, float rad)
+    {
+        float c = Mathf.Cos(rad), s = Mathf.Sin(rad);
+        return new Vector2(v.x * c - v.y * s, v.x * s + v.y * c);
+    }
+
+    // How far the curve intrudes into any bubble (sum of overlaps). 0 = the path is clear.
+    float PathPenalty(Vector2 a, Vector2 c, Vector2 b, List<Vector2> obstacles, List<float> radii, float margin)
+    {
+        if (obstacles.Count == 0) return 0f;
+        float penalty = 0f;
+        int samples = 12;
         for (int i = 1; i < samples; i++)
         {
             float t = i / (float)samples;
             Vector2 p = Bezier(a, c, b, t);
-            foreach (var o in obstacles)
+            for (int o = 0; o < obstacles.Count; o++)
             {
-                float d = Vector2.Distance(p, o);
-                if (d < min) min = d;
+                float need = radii[o] + margin;
+                float d = Vector2.Distance(p, obstacles[o]);
+                if (d < need) penalty += need - d;
             }
         }
-        return min;
+        return penalty;
     }
 
     Vector2 Bezier(Vector2 a, Vector2 b, Vector2 c, float t)

@@ -11,6 +11,10 @@
 // school coherence. It is a STEERING weight only — it never speeds the fish up (still casual, no
 // acceleration; that is reserved for Predator). Bump higher for an even harder turn.
 #define OBSTACLE_AVOID_STRENGTH 6.0
+// Distance (metres) from an obstacle's surface at which a boid starts steering away. A bit of lead time
+// so a fast/sprinting fish banks around in time instead of punching through before it is even inside.
+// Raise this if fast in/out fish still clip obstacles; lower it if fish give obstacles too wide a berth.
+#define OBSTACLE_AVOID_MARGIN 3.0
 
 // When reacting to an affecter (predator flee OR obstacle avoidance) the boid SKIPS the slow
 // angular-velocity ramp and turns at this multiple of its max angular velocity, so it snaps toward
@@ -492,23 +496,9 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     }
     else
     {
-        // Not fleeing — compute the normal schooling direction (kept lazy for performance).
-        float3 schoolDirection = CalculateSchoolBehaviourDirection(boidIndex, boidSchoolInfo, boidInfo);
-
-        Affecter closestObstacle = GetClosestAffecter(boidInfo, OBSTACLE_AFFECTER_TYPE);
-        if(BoidInsideAffecter(closestObstacle, boidInfo.position))
-        {
-            // Casual avoidance: blend an away-vector into the school heading so the fish curves
-            // around the obstacle without abandoning the school or panicking (no speed-up), and
-            // snap the turn so it reacts the moment it enters the zone.
-            float3 awayDirection = AffecterAwayDirection(closestObstacle, boidInfo.position);
-            desiredMovementDirection = normalize(schoolDirection + awayDirection * OBSTACLE_AVOID_STRENGTH);
-            reactingToAffecter = true;
-        }
-        else
-        {
-            desiredMovementDirection = schoolDirection;
-        }
+        // Not fleeing — just the normal schooling direction (kept lazy for performance). Obstacle
+        // avoidance is applied below to EVERY steering state, not only here.
+        desiredMovementDirection = CalculateSchoolBehaviourDirection(boidIndex, boidSchoolInfo, boidInfo);
     }
 
     // Check if the desired direction will lead to leaving the simulation bounds.
@@ -520,6 +510,24 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
 
         // Returning to bounds is not a flee — don't accelerate for it.
         fleeingPredator = false;
+    }
+
+    // ---- Obstacle avoidance (applies to EVERY steering state above) ----------------------------
+    // Rocks / coral must be dodged whether the fish is schooling, sprinting IN from its spawn point,
+    // being pulled back into bounds, or swimming OUT to an exit point — so this runs AFTER all of those
+    // have set the heading, blending an away-vector into it. It fires a little before the surface (not
+    // only once inside) so a fast fish still has room to bank clear. A stopped, arrived exit fish is
+    // left alone (it is about to be culled).
+    if(!reachedExit)
+    {
+        Affecter closestObstacle = GetClosestAffecter(boidInfo, OBSTACLE_AFFECTER_TYPE);
+        if(closestObstacle.affecterType == OBSTACLE_AFFECTER_TYPE
+           && AffecterSurfaceDistance(closestObstacle, boidInfo.position) <= OBSTACLE_AVOID_MARGIN)
+        {
+            float3 awayDirection = AffecterAwayDirection(closestObstacle, boidInfo.position);
+            desiredMovementDirection = normalize(desiredMovementDirection + awayDirection * OBSTACLE_AVOID_STRENGTH);
+            reactingToAffecter = true; // snap-turn so it actually clears the obstacle
+        }
     }
 
     // ---- Entry sprint --------------------------------------------------------------------------

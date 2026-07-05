@@ -50,17 +50,33 @@ namespace OceanX.BoidsGPU
         {
             InitializeBoidsSpawnData(simulationAreaBounds);
 
-            // Restore positions and directions of fish that existed before this rebuild so they
-            // don't teleport. New fish (indices beyond the preserved count) keep their spawn positions.
+            // Restore the LIVE state of fish that existed before this rebuild so they carry on seamlessly
+            // instead of snapping back to a spawn pose. As well as position + direction, this preserves the
+            // motion (speed / acceleration / angular velocity) AND the swim-animation state
+            // (CurrentSwimTime = animation phase, SwimMotionIntensity), so adding/removing a school no
+            // longer resets existing fishes' tail animation — which was making them visibly "tweak".
+            // New fish (indices beyond the preserved count) keep their fresh spawn values. BoidID and
+            // OriginalIndex stay FRESH — they encode this rebuild's group layout — as do the per-species
+            // Min/MaxPlaybackSpeed constants.
             if (_preservedBoids != null)
             {
                 int copyCount = Mathf.Min(_preservedBoids.Length, _boids.Length);
                 for (int i = 0; i < copyCount; i++)
                 {
-                    BoidInfoGPU b = _boids[i];
-                    b.Position  = _preservedBoids[i].Position;
-                    b.Direction = _preservedBoids[i].Direction;
-                    _boids[i]   = b;
+                    BoidInfoGPU fresh = _boids[i];
+                    BoidInfoGPU old   = _preservedBoids[i];
+
+                    fresh.Position                = old.Position;
+                    fresh.Direction               = old.Direction;
+                    fresh.Speed                   = old.Speed;
+                    fresh.Acceleration            = old.Acceleration;
+                    fresh.AngularVelocity         = old.AngularVelocity;
+                    fresh.AngularAcceleration     = old.AngularAcceleration;
+                    fresh.CurrentSwimTime         = old.CurrentSwimTime;
+                    fresh.SwimMotionIntensity     = old.SwimMotionIntensity;
+                    fresh.EntryBoostTimeRemaining = old.EntryBoostTimeRemaining;
+
+                    _boids[i] = fresh;
                 }
                 _preservedBoids = null;
             }

@@ -25,6 +25,17 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public List<SpeciesBubble> prey = new List<SpeciesBubble>();
     public List<SpeciesBubble> predators = new List<SpeciesBubble>();
 
+    [Header("Hold-to-reveal ring")]
+    [Tooltip("Ring sprite drawn as a radial fill while the user holds the bubble. " +
+             "If holdRing is left empty, a ring child is auto-created from this sprite at runtime.")]
+    public Sprite holdRingSprite;
+    [Tooltip("The radial-fill ring Image. Auto-created from holdRingSprite if left empty.")]
+    public Image holdRing;
+    [Tooltip("Tint of the progress ring as it fills.")]
+    public Color holdRingColor = new Color(0.15f, 0.9f, 1f, 1f);
+    [Tooltip("Ring size relative to the bubble (1 = same size).")]
+    public float holdRingScale = 1.06f;
+
     private float holdDuration = 0.5f;
     private float holdTimer = 0f;
     private bool isHolding = false;
@@ -37,6 +48,49 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         baseScale = transform.localScale;
         Refresh();
+        EnsureHoldRing();
+    }
+
+    // Build a radial-fill ring child once, so no per-bubble manual wiring is needed.
+    void EnsureHoldRing()
+    {
+        if (holdRing != null || holdRingSprite == null) return;
+
+        var go = new GameObject("HoldProgressRing", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        var rt = (RectTransform)go.transform;
+        rt.SetParent(transform, false);
+
+        var brt = transform as RectTransform;
+        Vector2 size = brt != null ? brt.rect.size : new Vector2(140f, 140f);
+        rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.anchoredPosition = Vector2.zero;
+        rt.sizeDelta = size * holdRingScale;
+        rt.SetAsLastSibling(); // draw on top of the bubble art
+
+        holdRing = go.GetComponent<Image>();
+        holdRing.sprite = holdRingSprite;
+        holdRing.type = Image.Type.Filled;
+        holdRing.fillMethod = Image.FillMethod.Radial360;
+        holdRing.fillOrigin = (int)Image.Origin360.Top;
+        holdRing.fillClockwise = true;
+        holdRing.fillAmount = 0f;
+        holdRing.color = holdRingColor;
+        holdRing.raycastTarget = false;
+        holdRing.enabled = false;
+    }
+
+    void SetHoldRing(float progress)
+    {
+        if (holdRing == null) return;
+        holdRing.enabled = true;
+        holdRing.fillAmount = Mathf.Clamp01(progress);
+    }
+
+    void HideHoldRing()
+    {
+        if (holdRing == null) return;
+        holdRing.enabled = false;
+        holdRing.fillAmount = 0f;
     }
 
     public void Refresh()
@@ -88,17 +142,25 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     void Update()
     {
-        if (locked) return;
+        if (locked) { HideHoldRing(); return; }
         if (!isHolding) return;
 
         holdTimer += Time.unscaledDeltaTime;
 
-        if (holdTimer >= holdDuration && !longPressTriggered)
+        if (!longPressTriggered)
         {
-            longPressTriggered = true;
+            // Grow the ring toward completion so holding reads as a deliberate gesture.
+            float progress = Mathf.Clamp01(holdTimer / holdDuration);
+            SetHoldRing(progress);
 
-            if (FoodWebLines.Instance != null)
-                FoodWebLines.Instance.ShowConnections(this);
+            if (progress >= 1f)
+            {
+                longPressTriggered = true;
+                HideHoldRing(); // the food-web lines are the feedback now
+
+                if (FoodWebLines.Instance != null)
+                    FoodWebLines.Instance.ShowConnections(this);
+            }
         }
     }
 
@@ -120,6 +182,7 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
 
         isHolding = false;
+        HideHoldRing(); // clear a partial ring if the user let go early
 
         if (longPressTriggered)
         {

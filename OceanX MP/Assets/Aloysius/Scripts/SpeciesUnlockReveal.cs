@@ -78,24 +78,20 @@ public class SpeciesUnlockReveal : MonoBehaviour
     {
         Debug.Log("[Reveal] HandleUnlock fired for: " + (species != null ? species.speciesName : "NULL"), this);
         if (species == null) return;
-        StopAllCoroutines();
-        StartCoroutine(RevealThenHint(species));
+
+        // Route through the shared queue so an unlock card waits its turn instead of
+        // slamming on top of an added card (they share the same center-stage slot).
+        RevealQueue.Get().Enqueue(revealGroup, () => FillCard(species), revealHoldSeconds, fadeDuration);
+        // Hint moved to SpeciesAddedReveal (fires on fish ADDED, not on unlock).
     }
 
-    IEnumerator RevealThenHint(SpeciesData species)
+    void FillCard(SpeciesData species)
     {
-        // --- Fill + show reveal card ---
         if (nameText != null) nameText.text = species.speciesName;
         if (sciText != null) sciText.text = species.sciName;
         if (tierText != null) tierText.text = species.tier;
         if (msgText != null) msgText.text = species.addedMessage;
         if (revealImage != null) revealImage.enabled = (revealImage.sprite != null);
-
-        yield return Fade(revealGroup, 1f, fadeDuration);
-        yield return new WaitForSeconds(revealHoldSeconds);
-        yield return Fade(revealGroup, 0f, fadeDuration);
-
-        // Hint moved to SpeciesAddedReveal (fires on fish ADDED, not on unlock).
     }
 
     public void HintNextLocked()
@@ -129,6 +125,8 @@ public class SpeciesUnlockReveal : MonoBehaviour
         if (best != null && !string.IsNullOrEmpty(bestHint))
             alucia.Say(bestHint, AluciaController.Mood.Calm);
     }
+
+
 
     string BuildHint(SpeciesData sp, bool healthMet, int minHealth,
                      List<EcosystemUnlockManagerGPU.RequirementStatus> reqs)
@@ -174,20 +172,5 @@ public class SpeciesUnlockReveal : MonoBehaviour
         if (flavour.Count > 0 && rot % 2 == 0)
             return flavour[(rot / 2) % flavour.Count];
         return withReq[rot % withReq.Length];
-    }
-
-
-
-    IEnumerator Fade(CanvasGroup cg, float target, float dur)
-    {
-        if (cg == null) yield break;
-        float start = cg.alpha, t = 0f;
-        while (t < 1f)
-        {
-            t += Time.unscaledDeltaTime / dur;
-            cg.alpha = Mathf.Lerp(start, target, Mathf.Clamp01(t));
-            yield return null;
-        }
-        cg.alpha = target;
     }
 }

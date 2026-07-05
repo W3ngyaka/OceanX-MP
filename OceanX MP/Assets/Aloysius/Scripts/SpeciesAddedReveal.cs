@@ -51,8 +51,6 @@ public class SpeciesAddedReveal : MonoBehaviour
     private readonly Dictionary<SpeciesData, Sprite> _dataToSprite = new Dictionary<SpeciesData, Sprite>();
     private readonly Dictionary<int, int> _lastPop = new Dictionary<int, int>();
     private readonly HashSet<int> _seen = new HashSet<int>();
-    private readonly Queue<SpeciesData> _pending = new Queue<SpeciesData>();
-    private bool _playing;
     private float _pollTimer;
 
     void Awake()
@@ -139,36 +137,26 @@ public class SpeciesAddedReveal : MonoBehaviour
             {
                 if (onlyFirstTime && _seen.Contains(idx)) continue;
                 _seen.Add(idx);
-                _pending.Enqueue(kv.Value);
+                SubmitReveal(kv.Value);
             }
         }
-
-        if (!_playing && _pending.Count > 0)
-            StartCoroutine(PlayQueue());
     }
 
-    IEnumerator PlayQueue()
+    // Hand the card to the shared queue so it can never overlap an unlock reveal.
+    // Content is filled by FillCard the instant before the card fades in.
+    void SubmitReveal(SpeciesData species)
     {
-        _playing = true;
-        while (_pending.Count > 0)
-        {
-            var species = _pending.Dequeue();
-            yield return Show(species);
-
-            // After the added card, hint the next closest-to-unlockable species.
-            if (hintSource != null)
-            {
-                if (hintDelayAfterAdd > 0f) yield return new WaitForSeconds(hintDelayAfterAdd);
-                hintSource.HintNextLocked();
-            }
-        }
-        _playing = false;
+        if (species == null) return;
+        RevealQueue.Get().Enqueue(
+            revealGroup,
+            () => FillCard(species),
+            holdSeconds,
+            fadeDuration,
+            () => OnCardShown());
     }
 
-    IEnumerator Show(SpeciesData species)
+    void FillCard(SpeciesData species)
     {
-        if (species == null) yield break;
-
         if (nameText != null) nameText.text = species.speciesName;
         if (tierText != null) tierText.text = species.tier;
         if (msgText != null) msgText.text = species.addedMessage;
@@ -178,23 +166,18 @@ public class SpeciesAddedReveal : MonoBehaviour
             revealImage.sprite = img;
             revealImage.enabled = (img != null);
         }
-
-        yield return Fade(1f);
-        yield return new WaitForSeconds(holdSeconds);
-        yield return Fade(0f);
     }
 
-    IEnumerator Fade(float target)
+    // After the added card fades out, hint the next closest-to-unlockable species.
+    void OnCardShown()
     {
-        if (revealGroup == null) yield break;
-        float start = revealGroup.alpha;
-        float e = 0f;
-        while (e < fadeDuration)
-        {
-            e += Time.unscaledDeltaTime;
-            revealGroup.alpha = Mathf.Lerp(start, target, e / fadeDuration);
-            yield return null;
-        }
-        revealGroup.alpha = target;
+        if (hintSource != null && isActiveAndEnabled)
+            StartCoroutine(HintAfterDelay());
+    }
+
+    IEnumerator HintAfterDelay()
+    {
+        if (hintDelayAfterAdd > 0f) yield return new WaitForSeconds(hintDelayAfterAdd);
+        if (hintSource != null) hintSource.HintNextLocked();
     }
 }

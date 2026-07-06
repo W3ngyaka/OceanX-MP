@@ -2952,6 +2952,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1847912408}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey:
   - {fileID: 2015562268}
   - {fileID: 648665375}
@@ -3724,7 +3726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.05, g: 0.25, b: 0.4, a: 0.25}
+  m_Color: {r: 0.05, g: 0.25, b: 0.4, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4340,6 +4342,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 0}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey: []
   predators:
   - {fileID: 1160316767}
@@ -4465,6 +4469,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1200253572}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey: []
   predators: []
   holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
@@ -4557,7 +4563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &654011401
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6959,6 +6965,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 396436258}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey: []
   predators: []
   holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
@@ -7164,6 +7172,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 425673934}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey: []
   predators: []
   holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
@@ -7478,6 +7488,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1496209746}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey: []
   predators: []
   holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
@@ -8426,6 +8438,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1993546680}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey:
   - {fileID: 2015562268}
   predators: []
@@ -8766,6 +8780,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 434304783}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey:
   - {fileID: 2015562268}
   predators: []
@@ -9245,14 +9261,14 @@ RectTransform:
   m_GameObject: {fileID: 1327557228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0703, y: 1, z: 1}
+  m_LocalScale: {x: 1.4562502, y: 1.3606, z: 1.3606}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1429282709}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -72}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1327557233
@@ -9584,6 +9600,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1067737456}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey:
   - {fileID: 1811861558}
   - {fileID: 1051391725}
@@ -12613,6 +12631,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1329607695}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey: []
   predators: []
   holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
@@ -12777,6 +12797,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1871884586}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey: []
   predators: []
   holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
@@ -13333,6 +13355,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 191577053}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey:
   - {fileID: 648665375}
   - {fileID: 2015562268}
@@ -14626,6 +14650,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1468270428}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey:
   - {fileID: 498641586}
   - {fileID: 1335586775}
@@ -14784,6 +14810,8 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 0}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  overpopulatedOverlay: {fileID: 0}
+  overpopCheckInterval: 0.4
   prey: []
   predators: []
   holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}

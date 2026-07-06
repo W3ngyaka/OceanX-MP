@@ -73,7 +73,9 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         {
             SpeciesDataGPU s = _simulation.Ecosystem.Species[i];
             if (s != null && i < _populationCounts.Count)
-                _populationCounts[i] = _simulation.CountGroups(s);
+                // Committed count (excludes schools mid swim-out) so the tablet number drops the
+                // instant Remove is pressed, instead of waiting for the fish to finish leaving.
+                _populationCounts[i] = _simulation.CountCommittedGroups(s);
         }
         _ecoHealth.Value = _simulation.EcoHealth01;   // push the live health score to clients
         _syncTimer = 0f;   // reset so the periodic tick doesn't immediately re-fire

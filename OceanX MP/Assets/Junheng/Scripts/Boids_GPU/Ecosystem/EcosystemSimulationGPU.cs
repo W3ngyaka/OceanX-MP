@@ -233,12 +233,27 @@ namespace OceanX.BoidsGPU.Ecosystem
 
         /// <summary>
         /// Returns the current number of schools for this species (one unit = one school).
-        /// 0 means the species is extinct / not yet added.
+        /// 0 means the species is extinct / not yet added. This is the RAW count including
+        /// schools currently swimming out — the internal swim-out logic depends on that, so
+        /// UI should read CountCommittedGroups instead.
         /// </summary>
         public int CountGroups(SpeciesDataGPU species)
         {
             if (species == null) return 0;
             return _schoolCount.TryGetValue(species, out int n) ? n : 0;
+        }
+
+        /// <summary>
+        /// School count the player has committed to, i.e. excluding schools currently swimming
+        /// out. Drops the instant Remove is pressed (which parks a school for exit) while its
+        /// fish still animate away on-screen. This is what the UI/netcode should display so the
+        /// tablet number updates immediately on removal instead of waiting for the swim-out.
+        /// </summary>
+        public int CountCommittedGroups(SpeciesDataGPU species)
+        {
+            if (species == null) return 0;
+            int raw = _schoolCount.TryGetValue(species, out int n) ? n : 0;
+            return Mathf.Max(0, raw - ExitingCount(species));
         }
 
         /// <summary>Static per-species cap on the number of schools. 0 if the species is null.</summary>

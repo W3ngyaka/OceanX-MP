@@ -223,7 +223,11 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             float radiusSqr = radius * radius;
             for (int i = 0; i < count; i++)
             {
-                if ((slice[i].Position - point).sqrMagnitude <= radiusSqr) reachedCount++;
+                // A fish counts as arrived if it is within the radius OR it has stopped dead. The compute
+                // shader freezes an exiting fish (speed 0) once it is inside its own capture radius, which
+                // for big fast species (shark) is its turning circle — possibly larger than `radius`. No
+                // normal fish ever has speed 0 (clamped to cruising speed), so stopped == arrived-at-exit.
+                if ((slice[i].Position - point).sqrMagnitude <= radiusSqr || slice[i].Speed <= 0f) reachedCount++;
             }
             return true;
         }

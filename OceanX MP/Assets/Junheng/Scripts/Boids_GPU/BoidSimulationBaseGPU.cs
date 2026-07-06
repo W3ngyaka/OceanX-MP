@@ -40,6 +40,27 @@ namespace OceanX.BoidsGPU
         /// <inheritdoc/>
         protected override void InitializeBoidsSimulation()
         {
+            // Auto-register every enabled Obstacle-type affecter in the scene as a global affecter.
+            // Rocks/coral are environment-wide by nature, but wiring each one into a spawner or the
+            // GlobalAffectersInjector by hand kept getting missed (the injector's InjectObstacles was
+            // never even called), leaving obstacles that no fish ever saw. AddGlobalAffecters
+            // de-duplicates and _globalAffecters survives buffer rebuilds, so this is idempotent
+            // across ReinitializeBuffers calls.
+            if (_globalAffecters == null)
+            {
+                _globalAffecters = new List<SimulationAffecterComponent>();
+            }
+            SimulationAffecterComponent[] sceneAffecters = FindObjectsByType<SimulationAffecterComponent>(FindObjectsSortMode.None);
+            List<SimulationAffecterComponent> sceneObstacles = new List<SimulationAffecterComponent>(sceneAffecters.Length);
+            foreach (SimulationAffecterComponent affecter in sceneAffecters)
+            {
+                if (affecter.Affecter.Type == SimulationAffecterType.Obstacle)
+                {
+                    sceneObstacles.Add(affecter);
+                }
+            }
+            AddGlobalAffecters(sceneObstacles.ToArray());
+
             base.InitializeBoidsSimulation();
 
             BoidSpawnerBase[] boidSpawners = GetBoidSpawners();
@@ -327,6 +348,19 @@ namespace OceanX.BoidsGPU
             if (rotation.x == 0f && rotation.y == 0f && rotation.z == 0f && rotation.w == 0f)
                 rotation = Quaternion.identity;
 
+            // Obstacles are environment (rocks / coral) — they must block EVERY fish. Authored group IDs
+            // on obstacle affecters are usually just the Inspector default (0), which the compute shader
+            // reads as "only affects species group 0, school 0" — making every other school swim straight
+            // through. Normalize obstacles to affect-all here, at upload time, so scene authoring can't
+            // silently break avoidance. Targets/predators keep their authored IDs (they ARE per-school).
+            int boidGroupId    = simulationAffecter.BoidGroupId;
+            int boidSubGroupId = simulationAffecter.BoidSubGroupId;
+            if (simulationAffecter.Type == SimulationAffecterType.Obstacle)
+            {
+                boidGroupId    = SimulationAffecter.ALL_BOIDS_AFFECTER_ID;
+                boidSubGroupId = SimulationAffecter.ALL_BOIDS_AFFECTER_ID;
+            }
+
             return new AffecterGPU
             {
                 Position = simulationAffecter.Position,
@@ -335,8 +369,8 @@ namespace OceanX.BoidsGPU
                 Shape = (float)((int)simulationAffecter.Shape),
                 Rotation = rotation,
                 AffecterType = (float)((int)simulationAffecter.Type),
-                BoidGroupId = simulationAffecter.BoidGroupId,
-                BoidSubGroupId = simulationAffecter.BoidSubGroupId,
+                BoidGroupId = boidGroupId,
+                BoidSubGroupId = boidSubGroupId,
                 EmptyFiller = 0f
             };
         }

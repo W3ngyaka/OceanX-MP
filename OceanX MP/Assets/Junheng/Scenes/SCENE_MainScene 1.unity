@@ -20745,7 +20745,7 @@ MonoBehaviour:
   - {fileID: 2033070669}
   - {fileID: 1974675774}
   _updateSchoolSettingsEveryFrame: 0
-  _entryBoostDuration: 1.5
+  _entryBoostDuration: 0.5
   _exitStopDistance: 1.5
 --- !u!4 &222838833
 Transform:
@@ -20787,6 +20787,10 @@ MonoBehaviour:
   _tickInterval: 5
   _exitArrivalRadius: 3
   _exitPollInterval: 0.2
+  _targetRadius: 3
+  _targetSpeedFractionRange: {x: 0.45, y: 0.7}
+  _pathBoundsSafeZone: 3
+  _pathSizeMultiplierRange: {x: 0.35, y: 0.9}
   _ratioBandLow: 1
   _ratioBandHigh: 3
   _growRate: 0.3

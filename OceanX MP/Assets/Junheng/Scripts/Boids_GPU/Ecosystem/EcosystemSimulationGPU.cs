@@ -54,6 +54,29 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Min(0.05f)]
         [SerializeField] private float _exitPollInterval = 0.2f;
 
+        [Header("Swim Path Targets (demo-style Target + Target Animator per school)")]
+        [Tooltip("Influence radius of each spawned target (sets the Target object's scale, like the " +
+                 "demo spawner's Target Radius).")]
+        [Min(0.1f)]
+        [SerializeField] private float _targetRadius = 3f;
+
+        [Tooltip("Each target's path speed is a random fraction (in this range) of ITS species' cruising " +
+                 "speed. Keep it slightly ABOVE 1: fish are hard-clamped to never swim slower than their " +
+                 "cruising speed, so a SLOWER target gets overtaken and the school mills around it in a " +
+                 "loose scattered cloud. A target a touch faster stays just ahead and the school streams " +
+                 "behind it in a tight line (the demo ratio was ~1.15).")]
+        [SerializeField] private Vector2 _targetSpeedFractionRange = new Vector2(1.05f, 1.3f);
+
+        [Tooltip("Metres from the simulation-bounds edge kept free of paths so a target can never leave " +
+                 "the volume (a target outside the bounds reads as 'exiting' to the compute shader and " +
+                 "would pull its whole school off-screen).")]
+        [Min(0f)]
+        [SerializeField] private float _pathBoundsSafeZone = 3f;
+
+        [Tooltip("Random range for each school's path size, as a fraction of the largest size that fits " +
+                 "inside the bounds — so schools get small and large routes.")]
+        [SerializeField] private Vector2 _pathSizeMultiplierRange = new Vector2(0.35f, 0.9f);
+
         [Header("Predator-Prey Balance (global)")]
         [Tooltip("Lower edge of the balanced prey:predator ratio (measured in SCHOOL counts). " +
                  "Below this, there are too many predators for the prey — prey shrinks, predators starve.")]
@@ -436,7 +459,7 @@ namespace OceanX.BoidsGPU.Ecosystem
             if (settled <= 0) return; // every remaining school is already swimming out — nothing to do
 
             // Park the highest settled school (sub-group index settled - 1) so it starts exiting now.
-            WanderingAffecterGPU exitingTarget = GetWanderingTargetAt(species, settled - 1);
+            EcosystemTargetGPU exitingTarget = GetTargetAt(species, settled - 1);
             if (exitingTarget == null)
             {
                 // No target to animate (shouldn't happen) — cull one immediately so counts stay consistent.
@@ -485,7 +508,7 @@ namespace OceanX.BoidsGPU.Ecosystem
                 bool readOk = true;
                 for (int j = firstExiting; j < n; j++)
                 {
-                    WanderingAffecterGPU target = GetWanderingTargetAt(species, j);
+                    EcosystemTargetGPU target = GetTargetAt(species, j);
                     Vector3 exitPoint = target != null ? target.AffecterPosition : SimulationBounds.center;
 
                     int startIndex = spawner.RenderingOffset + j * fishPerSchool;
@@ -531,14 +554,14 @@ namespace OceanX.BoidsGPU.Ecosystem
             return true;
         }
 
-        // The roaming target for a specific sub-group (school) of a species, or null if out of range.
-        private WanderingAffecterGPU GetWanderingTargetAt(SpeciesDataGPU species, int subGroupIndex)
+        // The swim target for a specific sub-group (school) of a species, or null if out of range.
+        private EcosystemTargetGPU GetTargetAt(SpeciesDataGPU species, int subGroupIndex)
         {
             if (!_managedTargets.TryGetValue(species, out List<SimulationAffecterComponent> targets))
                 return null;
             if (subGroupIndex < 0 || subGroupIndex >= targets.Count)
                 return null;
-            return targets[subGroupIndex] as WanderingAffecterGPU;
+            return targets[subGroupIndex] as EcosystemTargetGPU;
         }
 
         // A random placed entry/exit marker, or (if none placed) a point just outside the bounds along
@@ -562,22 +585,31 @@ namespace OceanX.BoidsGPU.Ecosystem
         }
 
         // -------------------------------------------------------------------------
-        // Runtime target lifecycle — one animated roaming target per school, for ALL
-        // species. This unifies the previously apex-only WanderingAffecterGPU path so
-        // every role behaves the same: groups, targets, animators and N move together.
+        // Runtime target lifecycle — one Target + Target Animator PAIR per school,
+        // for ALL species, mirroring the original Boids_Demo setup exactly:
+        //
+        //   Boids_Spawner_<Species>
+        //   ├── Targets
+        //   │   └── Target (N)            EcosystemTargetGPU (the affecter fish follow)
+        //   └── Target Animators
+        //       └── Target Animator (N)   TransformAnimator (moves that target along its path)
+        //
+        // The animator is configured per school with a randomized shape / centre /
+        // height / size / direction, its speed derived from the species' cruising
+        // speed, and the whole path fitted inside the simulation bounds.
         // -------------------------------------------------------------------------
 
         private void CreateTarget(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner, int subGroupIndex)
         {
-            WanderingAffecterGPU wanderer = CreateAndInitWanderer(species, subGroupIndex);
-            spawner.AddTarget(wanderer);
+            EcosystemTargetGPU target = CreateTargetPair(species, spawner, subGroupIndex);
+            spawner.AddTarget(target);
 
             if (!_managedTargets.TryGetValue(species, out List<SimulationAffecterComponent> targets))
             {
                 targets = new List<SimulationAffecterComponent>();
                 _managedTargets[species] = targets;
             }
-            targets.Add(wanderer);
+            targets.Add(target);
         }
 
         private void DestroyLastTarget(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
@@ -592,21 +624,174 @@ namespace OceanX.BoidsGPU.Ecosystem
             if (target != null)
             {
                 spawner.RemoveTarget(target);
+
+                // Destroy the paired Target Animator too — a leaked animator would keep running
+                // with a destroyed TargetTransform and throw every frame.
+                if (target is EcosystemTargetGPU ecosystemTarget && ecosystemTarget.Animator != null)
+                {
+                    Destroy(ecosystemTarget.Animator.gameObject);
+                }
                 Destroy(target.gameObject);
             }
         }
 
-        // Creates a WanderingAffecterGPU on a new child GameObject and configures its sub-group ID.
-        private WanderingAffecterGPU CreateAndInitWanderer(SpeciesDataGPU species, int subGroupIndex)
+        // Creates the demo-style pair for one school: a Target (EcosystemTargetGPU, what the fish
+        // follow) and a Target Animator (TransformAnimator, what moves it), both parented under the
+        // species' spawner so the Hierarchy shows exactly what each school is doing.
+        private EcosystemTargetGPU CreateTargetPair(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner, int subGroupIndex)
         {
-            GameObject go = new GameObject($"{species.SpeciesName}_Target_SubGroup{subGroupIndex}");
-            go.transform.SetParent(transform);
+            // --- Target (the simulation affecter the school follows) ---
+            GameObject targetGO = new GameObject($"Target ({subGroupIndex})");
+            targetGO.transform.SetParent(GetOrCreateContainer(spawner, "Targets"), false);
 
-            WanderingAffecterGPU wanderer = go.AddComponent<WanderingAffecterGPU>();
-            wanderer.SetSubGroupID(subGroupIndex);
-            wanderer.SetAffecterType(SimulationAffecterType.Target);
-            wanderer.Initialize(SimulationBounds);
-            return wanderer;
+            EcosystemTargetGPU target = targetGO.AddComponent<EcosystemTargetGPU>();
+            target.SetSubGroupID(subGroupIndex);
+            target.SetAffecterType(SimulationAffecterType.Target);
+            target.SetUpdatePositionEveryFrame(true);
+            targetGO.transform.localScale = Vector3.one * _targetRadius;
+
+            // --- Target Animator (moves the target along its path) ---
+            GameObject animatorGO = new GameObject($"Target Animator ({subGroupIndex})");
+            animatorGO.transform.SetParent(GetOrCreateContainer(spawner, "Target Animators"), false);
+
+            TransformAnimator animator = animatorGO.AddComponent<TransformAnimator>();
+            animator.TargetTransform = targetGO.transform;
+            target.SetAnimator(animator);
+
+            ConfigureAnimator(animator, species);
+
+            // Place the target on its path right away so it never sits at the container origin for
+            // a frame (a target outside the bounds would read as "exiting" to the compute shader).
+            animator.SetupInitialTargetPosition();
+            return target;
+        }
+
+        // Configures one school's Target Animator: shape from the species' PathStyle, randomized
+        // centre / swim height / size / direction so no two schools trace the same route, speed
+        // derived from the species' cruising speed so the school can always keep up, and the whole
+        // path fitted inside the simulation bounds (minus a safe zone) so the target never leaves
+        // the volume.
+        private void ConfigureAnimator(TransformAnimator animator, SpeciesDataGPU species)
+        {
+            Bounds bounds = SimulationBounds;
+            float  margin = _pathBoundsSafeZone;
+
+            // Speed matched to the SPECIES — a target faster than the fish makes the school
+            // perpetually max-rotate at it and jitter. Fallback for missing movement data.
+            FishMovementProperties movement = species.MovementProperties;
+            float cruisingSpeed = movement != null ? movement.CruisingSpeed : 0f;
+            float speed = cruisingSpeed > 0f
+                ? cruisingSpeed * Random.Range(_targetSpeedFractionRange.x, _targetSpeedFractionRange.y)
+                : 2f;
+
+            float sizeMultiplier = Random.Range(_pathSizeMultiplierRange.x, _pathSizeMultiplierRange.y);
+            float heightRange    = Mathf.Max(0f, bounds.extents.y - margin);
+            float height         = bounds.center.y + Random.Range(-heightRange, heightRange);
+
+            float anchorRangeX;
+            float anchorRangeZ;
+            float yaw;
+
+            TransformAnimator.PositionAnimationShape shape = ResolvePathShape(species.PathStyle);
+            switch (shape)
+            {
+                case TransformAnimator.PositionAnimationShape.Circle:
+                {
+                    float maxRadius = Mathf.Max(2f, Mathf.Min(bounds.extents.x, bounds.extents.z) - margin);
+                    float radius    = Mathf.Clamp(maxRadius * sizeMultiplier, 2f, maxRadius);
+
+                    // Respect what the fish can TURN: circling radius r at speed s demands s/r rad/s of
+                    // sustained turning. GROW the circle until following it needs only half the species'
+                    // max turn rate — never slow the target below cruising speed instead (fish can't swim
+                    // slower than cruising, so a slower target makes the school mill around it and
+                    // scatter). Only if even the biggest circle that fits is too tight, slow the target
+                    // as a last resort.
+                    if (movement != null && movement.MaxAngularVelocity > 0f)
+                    {
+                        float minRadiusForSpeed = speed / ((movement.MaxAngularVelocity * Mathf.Deg2Rad) * 0.5f);
+                        radius = Mathf.Clamp(minRadiusForSpeed, radius, maxRadius);
+                        if (radius < minRadiusForSpeed)
+                        {
+                            speed = radius * (movement.MaxAngularVelocity * Mathf.Deg2Rad) * 0.5f;
+                        }
+                    }
+                    animator.CircleRadius = radius;
+
+                    anchorRangeX = Mathf.Max(0f, bounds.extents.x - radius - margin);
+                    anchorRangeZ = Mathf.Max(0f, bounds.extents.z - radius - margin);
+                    yaw          = Random.Range(0f, 360f);
+                    break;
+                }
+                case TransformAnimator.PositionAnimationShape.Rectangle:
+                {
+                    // Width and depth rolled independently for more variety. Yaw stays axis-aligned
+                    // (0 or 180 like the demo) so the bounds-fit math below holds exactly.
+                    float halfWidth  = Mathf.Clamp((bounds.extents.x - margin) * Random.Range(_pathSizeMultiplierRange.x, _pathSizeMultiplierRange.y), 2f, Mathf.Max(2f, bounds.extents.x - margin));
+                    float halfLength = Mathf.Clamp((bounds.extents.z - margin) * Random.Range(_pathSizeMultiplierRange.x, _pathSizeMultiplierRange.y), 2f, Mathf.Max(2f, bounds.extents.z - margin));
+                    animator.RectangleWidth  = halfWidth * 2f;
+                    animator.RectangleLength = halfLength * 2f;
+
+                    anchorRangeX = Mathf.Max(0f, bounds.extents.x - halfWidth - margin);
+                    anchorRangeZ = Mathf.Max(0f, bounds.extents.z - halfLength - margin);
+                    yaw          = Random.value < 0.5f ? 0f : 180f;
+                    break;
+                }
+                default: // Line
+                {
+                    float maxHalfLength = Mathf.Max(2f, Mathf.Min(bounds.extents.x, bounds.extents.z) - margin);
+                    float halfLength    = Mathf.Clamp(maxHalfLength * sizeMultiplier, 2f, maxHalfLength);
+                    animator.LineLength = halfLength * 2f;
+
+                    // The line can face any way, so reserve its half-length on BOTH axes.
+                    anchorRangeX = Mathf.Max(0f, bounds.extents.x - halfLength - margin);
+                    anchorRangeZ = Mathf.Max(0f, bounds.extents.z - halfLength - margin);
+                    yaw          = Random.Range(0f, 180f);
+                    break;
+                }
+            }
+
+            animator.AnimationShape       = shape;
+            animator.MovementSpeed        = speed;
+            animator.MovingClockwise      = Random.value < 0.5f;
+            // Scale the arrival threshold with speed so a fast target can't overshoot its next
+            // waypoint every frame and orbit it.
+            animator.EdgeReachingDistance = Mathf.Max(0.5f, speed * 0.05f);
+
+            animator.transform.position = new Vector3(
+                bounds.center.x + Random.Range(-anchorRangeX, anchorRangeX),
+                height,
+                bounds.center.z + Random.Range(-anchorRangeZ, anchorRangeZ));
+            animator.transform.localEulerAngles = new Vector3(0f, yaw, 0f);
+        }
+
+        // Finds or creates a named container child under a species' spawner, mirroring the
+        // Targets / Target Animators grouping of the original Boids_Demo hierarchy.
+        private static Transform GetOrCreateContainer(BoidSpawnerGPUMultiTargets spawner, string name)
+        {
+            Transform container = spawner.transform.Find(name);
+            if (container == null)
+            {
+                GameObject go = new GameObject(name);
+                go.transform.SetParent(spawner.transform, false);
+                container = go.transform;
+            }
+            return container;
+        }
+
+        // Maps a species' authored path style to a concrete TransformAnimator shape for one school.
+        private static TransformAnimator.PositionAnimationShape ResolvePathShape(SpeciesPathStyleGPU style)
+        {
+            switch (style)
+            {
+                case SpeciesPathStyleGPU.Circle:    return TransformAnimator.PositionAnimationShape.Circle;
+                case SpeciesPathStyleGPU.Rectangle: return TransformAnimator.PositionAnimationShape.Rectangle;
+                case SpeciesPathStyleGPU.Line:      return TransformAnimator.PositionAnimationShape.Line;
+                default: // RandomShape — roll one of the three per school so even one species varies
+                    int roll = Random.Range(0, 3);
+                    return roll == 0 ? TransformAnimator.PositionAnimationShape.Circle
+                         : roll == 1 ? TransformAnimator.PositionAnimationShape.Rectangle
+                                     : TransformAnimator.PositionAnimationShape.Line;
+            }
         }
 
         // -------------------------------------------------------------------------

@@ -12,6 +12,21 @@ namespace OceanX.BoidsGPU.Ecosystem
     }
 
     /// <summary>
+    /// Shape of the path a school's Target Animator (TransformAnimator) moves its target along —
+    /// the same three shapes as the original Boids_Demo. RandomShape (the default, so existing
+    /// assets pick it up without editing) rolls one of the three per school. Whatever the shape,
+    /// every school gets its OWN randomized centre, swim height, size, speed and direction — no
+    /// two schools trace the same path — and the whole path always fits inside the simulation bounds.
+    /// </summary>
+    public enum SpeciesPathStyleGPU
+    {
+        RandomShape = 0,
+        Circle,
+        Rectangle,
+        Line
+    }
+
+    /// <summary>
     /// Single source of truth for a GPU species.
     /// All four simulation scriptable objects live here so every species property
     /// can be configured from one asset. BoidSpawnerGPUMultiTargets reads from here
@@ -46,6 +61,12 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Tooltip("Maximum number of schools the player can add for this species. " +
                  "Add greys out once the school count reaches this cap.")]
         [Range(1, 50)] public int MaxSchools = 5;
+
+        [Header("Movement Path")]
+        [Tooltip("Path shape each school's roaming target follows. RandomShape picks Circle or Rectangle " +
+                 "per school. Every school also gets its own randomized centre, height, size, speed and " +
+                 "phase (inside the simulation bounds), so no two schools swim the same route.")]
+        public SpeciesPathStyleGPU PathStyle = SpeciesPathStyleGPU.RandomShape;
 
         [Header("Predator-Prey Relationships")]
         public List<SpeciesDataGPU> PreySpecies     = new List<SpeciesDataGPU>();

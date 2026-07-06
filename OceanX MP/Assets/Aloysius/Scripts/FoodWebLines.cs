@@ -10,11 +10,52 @@ public class FoodWebLines : MonoBehaviour
     public List<GameObject> activeLines = new List<GameObject>();
     public List<Image> glowRings = new List<Image>();
 
+    [Header("Energy flow animation")]
+    [Tooltip("Animate dots drifting prey -> predator along each revealed line.")]
+    public bool animateFlow = true;
+    [Tooltip("How fast a dot travels the line, in fractions of the line per second.")]
+    public float flowSpeed = 0.35f;
+    [Tooltip("Dots per line (spaced evenly).")]
+    public int dotsPerLine = 3;
+    [Tooltip("Dot diameter in pixels.")]
+    public float dotSize = 14f;
+
     private List<CanvasGroup> dimmedBubbles = new List<CanvasGroup>();
+
+    // One flow per drawn line: the curve it rides plus its dot images.
+    private class Flow { public Vector2 a, c, b; public Image[] dots; }
+    private readonly List<Flow> _flows = new List<Flow>();
+    private float _flowT;
+    private Sprite _dotSprite;
 
     void Awake()
     {
         Instance = this;
+    }
+
+    void Update()
+    {
+        if (!animateFlow || _flows.Count == 0) return;
+
+        _flowT += Time.unscaledDeltaTime * flowSpeed;
+        foreach (var f in _flows)
+        {
+            if (f.dots == null) continue;
+            for (int i = 0; i < f.dots.Length; i++)
+            {
+                var img = f.dots[i];
+                if (img == null) continue;
+
+                // Evenly-offset dots looping along the curve, prey (t=0) -> predator (t=1).
+                float t = Mathf.Repeat(_flowT + i / (float)f.dots.Length, 1f);
+                img.rectTransform.position = Bezier(f.a, f.c, f.b, t);
+
+                // Fade in as it leaves the prey and out as it reaches the predator.
+                const float edge = 0.18f;
+                float a = Mathf.Clamp01(Mathf.Min(t, 1f - t) / edge);
+                var col = img.color; col.a = a; img.color = col;
+            }
+        }
     }
 
     public void ShowConnections(SpeciesBubble source)
@@ -66,11 +107,12 @@ public class FoodWebLines : MonoBehaviour
             if (cg != null) cg.alpha = 1f;
         dimmedBubbles.Clear();
 
-        // destroy lines
+        // destroy lines (dots are registered in activeLines too, so they go with them)
         for (int i = activeLines.Count - 1; i >= 0; i--)
             if (activeLines[i] != null)
                 DestroyImmediate(activeLines[i]);
         activeLines.Clear();
+        _flows.Clear();
 
         // hide glow rings
         foreach (var ring in glowRings)
@@ -152,6 +194,53 @@ public class FoodWebLines : MonoBehaviour
         Vector2 tangent = end - control;                        // quadratic Bezier tangent at t = 1
         if (tangent.sqrMagnitude < 0.0001f) tangent = unit;
         AddArrowHead(end, tangent.normalized, color);
+
+        // Energy dots riding this curve from prey (start) toward predator (end).
+        if (animateFlow && dotsPerLine > 0)
+            SpawnFlow(start, control, end, color);
+    }
+
+    // Create the dots for one line and register them for animation in Update.
+    void SpawnFlow(Vector2 a, Vector2 c, Vector2 b, Color color)
+    {
+        var dots = new Image[dotsPerLine];
+        for (int i = 0; i < dotsPerLine; i++)
+        {
+            var go = new GameObject("FlowDot", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            var rt = (RectTransform)go.transform;
+            rt.SetParent(transform, false);
+            rt.sizeDelta = new Vector2(dotSize, dotSize);
+
+            var img = go.GetComponent<Image>();
+            img.sprite = DotSprite();
+            img.color = new Color(color.r, color.g, color.b, 0f); // Update sets alpha
+            img.raycastTarget = false;
+            rt.position = Bezier(a, c, b, i / (float)dotsPerLine);
+
+            activeLines.Add(go); // so HideConnections cleans it up
+            dots[i] = img;
+        }
+        _flows.Add(new Flow { a = a, c = c, b = b, dots = dots });
+    }
+
+    // A soft round dot, generated once at runtime so there's no asset to manage.
+    Sprite DotSprite()
+    {
+        if (_dotSprite != null) return _dotSprite;
+
+        const int size = 32;
+        var tex = new Texture2D(size, size, TextureFormat.RGBA32, false) { wrapMode = TextureWrapMode.Clamp };
+        float r = size / 2f;
+        for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+            {
+                float d = Vector2.Distance(new Vector2(x + 0.5f, y + 0.5f), new Vector2(r, r)) / r;
+                float a = Mathf.Clamp01(1f - d);
+                tex.SetPixel(x, y, new Color(1f, 1f, 1f, a * a)); // soft falloff
+            }
+        tex.Apply();
+        _dotSprite = Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 100f);
+        return _dotSprite;
     }
 
     // Two short barbs forming a "V" at the tip. dir = unit direction of travel toward the tip.

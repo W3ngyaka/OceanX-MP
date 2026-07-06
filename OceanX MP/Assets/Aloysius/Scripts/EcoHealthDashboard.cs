@@ -16,6 +16,9 @@ public class EcoHealthDashboard : MonoBehaviour
     public TMP_Text percentText;
     public TMP_Text statusText;
     public bool colorStatus = true;
+    [Tooltip("Tint the arc fill itself green->amber->red by health. Requires a white/neutral " +
+             "arc sprite so the tint shows (a pre-colored green sprite can't be tinted red).")]
+    public bool colorFill = true;
     [Tooltip("Optional 'X / 12 species present' text.")]
     public TMP_Text speciesCountText;
     [Tooltip("Total species in the ecosystem (denominator).")]
@@ -41,7 +44,11 @@ public class EcoHealthDashboard : MonoBehaviour
             _displayed01 = Mathf.MoveTowards(_displayed01, target, smoothSpeed * Time.deltaTime);
         else
             _displayed01 = target;
-        if (fillImage != null) fillImage.fillAmount = _displayed01;
+        if (fillImage != null)
+        {
+            fillImage.fillAmount = _displayed01;
+            if (colorFill) fillImage.color = HealthColor(_displayed01);
+        }
         if (percentText != null) percentText.text = Mathf.RoundToInt(_displayed01 * 100f) + "%";
         if (statusText != null)
         {
@@ -76,6 +83,16 @@ public class EcoHealthDashboard : MonoBehaviour
         if (h >= 0.60f) return new Color(0.35f, 0.9f, 0.5f);   // green
         if (h >= 0.35f) return new Color(1f, 0.75f, 0.2f);     // amber
         return new Color(0.95f, 0.3f, 0.3f);                   // red
+    }
+
+    // Smooth green -> amber -> red gradient for the arc fill, so it eases into red as health drops.
+    static readonly Color HealthRed   = new Color(0.95f, 0.30f, 0.30f);
+    static readonly Color HealthAmber = new Color(1f, 0.75f, 0.20f);
+    static readonly Color HealthGreen = new Color(0.35f, 0.90f, 0.50f);
+    Color HealthColor(float h)
+    {
+        if (h <= 0.5f) return Color.Lerp(HealthRed, HealthAmber, Mathf.Clamp01(h / 0.5f));
+        return Color.Lerp(HealthAmber, HealthGreen, Mathf.Clamp01((h - 0.5f) / 0.5f));
     }
 
     float GetHealth01()

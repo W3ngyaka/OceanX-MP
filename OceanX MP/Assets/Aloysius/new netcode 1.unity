@@ -2952,8 +2952,14 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1847912408}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
-  prey: []
+  prey:
+  - {fileID: 2015562268}
+  - {fileID: 648665375}
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &498641587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4341,6 +4347,10 @@ MonoBehaviour:
   - {fileID: 498641586}
   - {fileID: 1208796832}
   - {fileID: 1051391725}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &648665376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4457,6 +4467,10 @@ MonoBehaviour:
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &651877516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4543,7 +4557,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &654011401
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6947,6 +6961,10 @@ MonoBehaviour:
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &1027214597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7148,6 +7166,10 @@ MonoBehaviour:
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &1032516378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7458,6 +7480,10 @@ MonoBehaviour:
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &1051391726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8400,8 +8426,13 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1993546680}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
-  prey: []
+  prey:
+  - {fileID: 2015562268}
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &1160316768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8735,8 +8766,13 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 434304783}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
-  prey: []
+  prey:
+  - {fileID: 2015562268}
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &1208796833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9548,8 +9584,15 @@ MonoBehaviour:
   lockedNameText: ???
   fishImage: {fileID: 1067737456}
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
-  prey: []
+  prey:
+  - {fileID: 1811861558}
+  - {fileID: 1051391725}
+  - {fileID: 1160316767}
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &1335586776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12572,6 +12615,10 @@ MonoBehaviour:
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &1694656288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12732,6 +12779,10 @@ MonoBehaviour:
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &1708969468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13286,6 +13337,10 @@ MonoBehaviour:
   - {fileID: 648665375}
   - {fileID: 2015562268}
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 856dd1984ca28044daf785682733aaa5, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &1811861559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14581,6 +14636,10 @@ MonoBehaviour:
   - {fileID: 1160316767}
   - {fileID: 1708969467}
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &2003371145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14727,6 +14786,10 @@ MonoBehaviour:
   lockedTint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
   prey: []
   predators: []
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRing: {fileID: 0}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
 --- !u!114 &2015562269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15939,6 +16002,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1045821173}
     m_Modifications:
+    - target: {fileID: 2704471089967960307, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 32550fa4d91d3f04d966b2af825919ae, type: 3}
+    - target: {fileID: 2704471089967960307, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704471089967960307, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704471089967960307, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: m_Color.r
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 2704471090199120230, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: m_Name
       value: Dashboard001
@@ -16037,7 +16116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2704471090946486986, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: m_text
-      value: 50%
+      value: 60%
       objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: statusText
@@ -16045,7 +16124,7 @@ PrefabInstance:
       objectReference: {fileID: 748468811}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: manualHealth01
-      value: 0.5
+      value: 0.599
       objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: speciesCountText

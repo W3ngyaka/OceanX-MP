@@ -740,8 +740,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Species
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 396b32e4de413264987437c1faee536c, type: 2}
+  m_sharedMaterial: {fileID: 3428264576480750596, guid: 396b32e4de413264987437c1faee536c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2903,6 +2903,7 @@ GameObject:
   - component: {fileID: 498641587}
   - component: {fileID: 498641586}
   - component: {fileID: 498641590}
+  - component: {fileID: 498641591}
   m_Layer: 5
   m_Name: parrot bubble
   m_TagString: Untagged
@@ -2958,10 +2959,6 @@ MonoBehaviour:
   - {fileID: 2015562268}
   - {fileID: 648665375}
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &498641587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3056,6 +3053,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &498641591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498641584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1001 &502391445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4102,6 +4116,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7118194484329517317, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8557370571499723840}
+    - targetCorrespondingSourceObject: {fileID: 7118194484329517317, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8557370571499723842}
   m_SourcePrefab: {fileID: 100100000, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
 --- !u!1 &644115237
 GameObject:
@@ -4256,6 +4273,7 @@ GameObject:
   - component: {fileID: 648665377}
   - component: {fileID: 648665378}
   - component: {fileID: 648665379}
+  - component: {fileID: 648665380}
   m_Layer: 5
   m_Name: Seagrassbubble
   m_TagString: Untagged
@@ -4351,10 +4369,6 @@ MonoBehaviour:
   - {fileID: 498641586}
   - {fileID: 1208796832}
   - {fileID: 1051391725}
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &648665376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4439,6 +4453,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &648665380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648665371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1 &651877513 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
@@ -4473,10 +4504,6 @@ MonoBehaviour:
   overpopCheckInterval: 0.4
   prey: []
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &651877516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4544,6 +4571,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &651877521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651877513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1 &654011400
 GameObject:
   m_ObjectHideFlags: 0
@@ -4563,7 +4607,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &654011401
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6915,6 +6959,7 @@ GameObject:
   - component: {fileID: 1027214597}
   - component: {fileID: 1027214596}
   - component: {fileID: 1027214600}
+  - component: {fileID: 1027214601}
   m_Layer: 5
   m_Name: Scad Bubble
   m_TagString: Untagged
@@ -6969,10 +7014,6 @@ MonoBehaviour:
   overpopCheckInterval: 0.4
   prey: []
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &1027214597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7067,6 +7108,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &1027214601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027214594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1 &1027824018
 GameObject:
   m_ObjectHideFlags: 0
@@ -7176,10 +7234,6 @@ MonoBehaviour:
   overpopCheckInterval: 0.4
   prey: []
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &1032516378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7247,6 +7301,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &1032516383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032516375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1 &1035722074
 GameObject:
   m_ObjectHideFlags: 0
@@ -7439,6 +7510,7 @@ GameObject:
   - component: {fileID: 1051391726}
   - component: {fileID: 1051391725}
   - component: {fileID: 1051391729}
+  - component: {fileID: 1051391730}
   m_Layer: 5
   m_Name: eyestripe bubble
   m_TagString: Untagged
@@ -7492,10 +7564,6 @@ MonoBehaviour:
   overpopCheckInterval: 0.4
   prey: []
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &1051391726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7590,6 +7658,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &1051391730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051391723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1 &1055919525
 GameObject:
   m_ObjectHideFlags: 0
@@ -8389,6 +8474,7 @@ GameObject:
   - component: {fileID: 1160316768}
   - component: {fileID: 1160316767}
   - component: {fileID: 1160316771}
+  - component: {fileID: 1160316772}
   m_Layer: 5
   m_Name: Damsel bubblke
   m_TagString: Untagged
@@ -8443,10 +8529,6 @@ MonoBehaviour:
   prey:
   - {fileID: 2015562268}
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &1160316768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8541,6 +8623,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &1160316772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160316765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1 &1166526229
 GameObject:
   m_ObjectHideFlags: 0
@@ -8731,6 +8830,7 @@ GameObject:
   - component: {fileID: 1208796833}
   - component: {fileID: 1208796832}
   - component: {fileID: 1208796836}
+  - component: {fileID: 1208796837}
   m_Layer: 5
   m_Name: Streaked bubble
   m_TagString: Untagged
@@ -8785,10 +8885,6 @@ MonoBehaviour:
   prey:
   - {fileID: 2015562268}
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &1208796833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8883,6 +8979,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &1208796837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208796830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1 &1233059426 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7047485706591861722, guid: 271c779a24010e44ca07e55edc89efcf, type: 3}
@@ -9044,6 +9157,99 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261258031}
   m_CullTransparentMesh: 1
+--- !u!1 &1299177929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1299177930}
+  - component: {fileID: 1299177933}
+  - component: {fileID: 1299177932}
+  - component: {fileID: 1299177931}
+  m_Layer: 5
+  m_Name: Holdmullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1299177930
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299177929}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.2953862, y: 1.1556, z: 1.1556}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1811861557}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.2, y: 0.2}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1299177931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299177929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 1299177932}
+  holdRingSprite: {fileID: 0}
+  holdRingColor: {r: 1, g: 1, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
+--- !u!114 &1299177932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299177929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 2b7c1fcb3ce10d943ac66ab4ebb335f2, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 2
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1299177933
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299177929}
+  m_CullTransparentMesh: 1
 --- !u!1 &1303446752
 GameObject:
   m_ObjectHideFlags: 0
@@ -9103,8 +9309,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: NEXT TO DISCOVER
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 15f937ff135e67548aa36b6516104381, type: 2}
+  m_sharedMaterial: {fileID: 1329013161203325420, guid: 15f937ff135e67548aa36b6516104381, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9550,6 +9756,7 @@ GameObject:
   - component: {fileID: 1335586776}
   - component: {fileID: 1335586775}
   - component: {fileID: 1335586779}
+  - component: {fileID: 1335586780}
   m_Layer: 5
   m_Name: Snapper bubble
   m_TagString: Untagged
@@ -9607,10 +9814,6 @@ MonoBehaviour:
   - {fileID: 1051391725}
   - {fileID: 1160316767}
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &1335586776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9705,6 +9908,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &1335586780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335586773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1001 &1339720224
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9869,6 +10089,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 651877519}
+    - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 651877521}
   m_SourcePrefab: {fileID: 100100000, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
 --- !u!1 &1379598225
 GameObject:
@@ -10573,7 +10796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1415037589
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12581,6 +12804,7 @@ GameObject:
   - component: {fileID: 1694656288}
   - component: {fileID: 1694656287}
   - component: {fileID: 1694656291}
+  - component: {fileID: 1694656292}
   m_Layer: 5
   m_Name: Trevally Bubble
   m_TagString: Untagged
@@ -12635,10 +12859,6 @@ MonoBehaviour:
   overpopCheckInterval: 0.4
   prey: []
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &1694656288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12733,6 +12953,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &1694656292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694656285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1 &1708969465
 GameObject:
   m_ObjectHideFlags: 0
@@ -12747,6 +12984,7 @@ GameObject:
   - component: {fileID: 1708969468}
   - component: {fileID: 1708969467}
   - component: {fileID: 1708969471}
+  - component: {fileID: 1708969472}
   m_Layer: 5
   m_Name: Ray bubble
   m_TagString: Untagged
@@ -12801,10 +13039,6 @@ MonoBehaviour:
   overpopCheckInterval: 0.4
   prey: []
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &1708969468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12899,6 +13133,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &1708969472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708969465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1 &1757445267 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 591040946678386339, guid: 2fefb093f65b6df42a711e1decb0ce01, type: 3}
@@ -13328,6 +13579,7 @@ RectTransform:
   - {fileID: 116770309}
   - {fileID: 191577052}
   - {fileID: 327334448}
+  - {fileID: 1299177930}
   m_Father: {fileID: 1839946919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -13361,10 +13613,6 @@ MonoBehaviour:
   - {fileID: 648665375}
   - {fileID: 2015562268}
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 856dd1984ca28044daf785682733aaa5, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &1811861559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13809,7 +14057,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: 0, y: -142}
   m_SizeDelta: {x: 980, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1839907762
@@ -13834,8 +14082,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Hint appears here.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 396b32e4de413264987437c1faee536c, type: 2}
+  m_sharedMaterial: {fileID: 3428264576480750596, guid: 396b32e4de413264987437c1faee536c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14254,6 +14502,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1032516381}
+    - targetCorrespondingSourceObject: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1032516383}
   m_SourcePrefab: {fileID: 100100000, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
 --- !u!1 &1880508276
 GameObject:
@@ -14662,10 +14913,6 @@ MonoBehaviour:
   - {fileID: 1160316767}
   - {fileID: 1708969467}
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &2003371145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14724,6 +14971,7 @@ GameObject:
   - component: {fileID: 2015562268}
   - component: {fileID: 2015562269}
   - component: {fileID: 2015562270}
+  - component: {fileID: 2015562271}
   m_Layer: 5
   m_Name: macroalgae bubble
   m_TagString: Untagged
@@ -14814,10 +15062,6 @@ MonoBehaviour:
   overpopCheckInterval: 0.4
   prey: []
   predators: []
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRing: {fileID: 0}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
 --- !u!114 &2015562269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14844,6 +15088,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &2015562271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015562264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1 &2019048936
 GameObject:
   m_ObjectHideFlags: 0
@@ -16199,6 +16460,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
+--- !u!114 &8557370571499723842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7118194483855968724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
+  holdRing: {fileID: 0}
+  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
+  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
+  holdRingScale: 1.06
+  holdDuration: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

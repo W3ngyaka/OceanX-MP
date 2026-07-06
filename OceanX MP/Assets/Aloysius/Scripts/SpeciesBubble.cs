@@ -32,24 +32,12 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public List<SpeciesBubble> prey = new List<SpeciesBubble>();
     public List<SpeciesBubble> predators = new List<SpeciesBubble>();
 
-    [Header("Hold-to-reveal ring")]
-    [Tooltip("Ring sprite drawn as a radial fill while the user holds the bubble. " +
-             "If holdRing is left empty, a ring child is auto-created from this sprite at runtime.")]
-    public Sprite holdRingSprite;
-    [Tooltip("The radial-fill ring Image. Auto-created from holdRingSprite if left empty.")]
-    public Image holdRing;
-    [Tooltip("Tint of the progress ring as it fills.")]
-    public Color holdRingColor = new Color(0.15f, 0.9f, 1f, 1f);
-    [Tooltip("Ring size relative to the bubble (1 = same size).")]
-    public float holdRingScale = 1.06f;
-
-    private float holdDuration = 0.5f;
-    private float holdTimer = 0f;
-    private bool isHolding = false;
-    private bool longPressTriggered = false;
     private Vector3 baseScale = Vector3.one;
     private Coroutine punchRoutine;
     private bool locked = false;
+
+    // The extracted hold-to-reveal ring component; owns the press-and-hold gesture + ring visual.
+    private SpeciesBubbleHoldRing _holdRing;
 
     // Overpopulation overlay state. _speciesIndex is resolved lazily: -2 = not yet
     // resolved, -1 = species not in the netcode ecosystem (cosmetic-only bubble).
@@ -61,53 +49,11 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         baseScale = transform.localScale;
         Refresh();
-        EnsureHoldRing();
+        _holdRing = GetComponentInChildren<SpeciesBubbleHoldRing>(true);
 
         // Baseline the overlay to hidden so its scene-authored state can't leave it stuck on.
         if (overpopulatedOverlay != null) overpopulatedOverlay.SetActive(false);
         _overpopShown = false;
-    }
-
-    // Build a radial-fill ring child once, so no per-bubble manual wiring is needed.
-    void EnsureHoldRing()
-    {
-        if (holdRing != null || holdRingSprite == null) return;
-
-        var go = new GameObject("HoldProgressRing", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-        var rt = (RectTransform)go.transform;
-        rt.SetParent(transform, false);
-
-        var brt = transform as RectTransform;
-        Vector2 size = brt != null ? brt.rect.size : new Vector2(140f, 140f);
-        rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = Vector2.zero;
-        rt.sizeDelta = size * holdRingScale;
-        rt.SetAsLastSibling(); // draw on top of the bubble art
-
-        holdRing = go.GetComponent<Image>();
-        holdRing.sprite = holdRingSprite;
-        holdRing.type = Image.Type.Filled;
-        holdRing.fillMethod = Image.FillMethod.Radial360;
-        holdRing.fillOrigin = (int)Image.Origin360.Top;
-        holdRing.fillClockwise = true;
-        holdRing.fillAmount = 0f;
-        holdRing.color = holdRingColor;
-        holdRing.raycastTarget = false;
-        holdRing.enabled = false;
-    }
-
-    void SetHoldRing(float progress)
-    {
-        if (holdRing == null) return;
-        holdRing.enabled = true;
-        holdRing.fillAmount = Mathf.Clamp01(progress);
-    }
-
-    void HideHoldRing()
-    {
-        if (holdRing == null) return;
-        holdRing.enabled = false;
-        holdRing.fillAmount = 0f;
     }
 
     public void Refresh()
@@ -176,26 +122,8 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             UpdateOverpopulation();
         }
 
-        if (locked) { HideHoldRing(); return; }
-        if (!isHolding) return;
-
-        holdTimer += Time.unscaledDeltaTime;
-
-        if (!longPressTriggered)
-        {
-            // Grow the ring toward completion so holding reads as a deliberate gesture.
-            float progress = Mathf.Clamp01(holdTimer / holdDuration);
-            SetHoldRing(progress);
-
-            if (progress >= 1f)
-            {
-                longPressTriggered = true;
-                HideHoldRing(); // the food-web lines are the feedback now
-
-                if (FoodWebLines.Instance != null)
-                    FoodWebLines.Instance.ShowConnections(this);
-            }
-        }
+        if (locked) { if (_holdRing != null) _holdRing.CancelHold(); return; }
+        if (_holdRing != null) _holdRing.Tick();
     }
 
     // Resolve (once) this species' netcode index from its GPU sim link. -1 = not in the
@@ -239,10 +167,7 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnPointerDown(PointerEventData eventData)
     {
         if (locked) return;
-
-        isHolding = true;
-        holdTimer = 0f;
-        longPressTriggered = false;
+        if (_holdRing != null) _holdRing.BeginHold();
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -253,20 +178,11 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             return;
         }
 
-        isHolding = false;
-        HideHoldRing(); // clear a partial ring if the user let go early
-
-        if (longPressTriggered)
-        {
-            longPressTriggered = false;
-
-            if (FoodWebLines.Instance != null)
-                FoodWebLines.Instance.HideConnections();
-        }
-        else
-        {
+        // EndHold returns true when this press was a completed hold (connections were
+        // revealed); in that case it is not a tap.
+        bool wasHold = _holdRing != null && _holdRing.EndHold();
+        if (!wasHold)
             OnTap();
-        }
     }
 
     void OnTap()

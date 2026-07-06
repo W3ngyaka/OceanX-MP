@@ -21,6 +21,13 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [Tooltip("Tint applied to the fish image while locked.")]
     public Color lockedTint = new Color(0.45f, 0.45f, 0.45f, 1f);
 
+    [Header("Overpopulation")]
+    [Tooltip("Status overlay shown when this species has grown to its carrying capacity " +
+             "(overpopulated). Auto-found (child named 'Overpopulated') if left empty.")]
+    public GameObject overpopulatedOverlay;
+    [Tooltip("How often (seconds) to re-check the live population against the cap.")]
+    public float overpopCheckInterval = 0.4f;
+
     [Header("Food Web")]
     public List<SpeciesBubble> prey = new List<SpeciesBubble>();
     public List<SpeciesBubble> predators = new List<SpeciesBubble>();
@@ -44,11 +51,21 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Coroutine punchRoutine;
     private bool locked = false;
 
+    // Overpopulation overlay state. _speciesIndex is resolved lazily: -2 = not yet
+    // resolved, -1 = species not in the netcode ecosystem (cosmetic-only bubble).
+    private int _speciesIndex = -2;
+    private float _overpopCheckTimer;
+    private bool _overpopShown;
+
     void Start()
     {
         baseScale = transform.localScale;
         Refresh();
         EnsureHoldRing();
+
+        // Baseline the overlay to hidden so its scene-authored state can't leave it stuck on.
+        if (overpopulatedOverlay != null) overpopulatedOverlay.SetActive(false);
+        _overpopShown = false;
     }
 
     // Build a radial-fill ring child once, so no per-bubble manual wiring is needed.
@@ -111,6 +128,15 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (lockOverlay != null)
             lockOverlay.SetActive(locked);
 
+        // Auto-find the overpopulation status overlay (child named 'Overpopulated').
+        if (overpopulatedOverlay == null)
+        {
+            var op = transform.Find("Overpopulated");
+            if (op != null) overpopulatedOverlay = op.gameObject;
+        }
+        // A locked/extinct species is never "overpopulated"; drop the badge immediately.
+        if (locked) UpdateOverpopulation();
+
         // Auto-find the name label (first TMP child) if not assigned.
         if (nameLabel == null)
             nameLabel = GetComponentInChildren<TMPro.TMP_Text>(true);
@@ -142,6 +168,14 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     void Update()
     {
+        // Poll the live population vs. cap on a throttled cadence and toggle the badge.
+        _overpopCheckTimer += Time.unscaledDeltaTime;
+        if (_overpopCheckTimer >= overpopCheckInterval)
+        {
+            _overpopCheckTimer = 0f;
+            UpdateOverpopulation();
+        }
+
         if (locked) { HideHoldRing(); return; }
         if (!isHolding) return;
 
@@ -161,6 +195,44 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 if (FoodWebLines.Instance != null)
                     FoodWebLines.Instance.ShowConnections(this);
             }
+        }
+    }
+
+    // Resolve (once) this species' netcode index from its GPU sim link. -1 = not in the
+    // ecosystem list (a cosmetic-only bubble), so it can never report a population.
+    void ResolveSpeciesIndex()
+    {
+        if (_speciesIndex != -2) return;
+        _speciesIndex = (data != null && data.gpuSpecies != null && TabletEcosystemUIGPU.Instance != null)
+            ? TabletEcosystemUIGPU.Instance.GetSpeciesIndex(data.gpuSpecies)
+            : -1;
+    }
+
+    // Show the 'Overpopulated' badge when the species has grown to its carrying capacity
+    // (schools >= MaxSchools) — which only happens when it is under-predated (e.g. its
+    // predator was removed). Both values come already-synced from the host via the netcode
+    // layer, so no server round-trip is needed. Locked/extinct species never qualify.
+    void UpdateOverpopulation()
+    {
+        if (overpopulatedOverlay == null) return;
+
+        bool over = false;
+        if (!locked && Application.isPlaying)
+        {
+            ResolveSpeciesIndex();
+            var net = EcosystemNetworkManagerGPU.Instance;
+            if (_speciesIndex >= 0 && net != null)
+            {
+                int pop = net.GetPopulation(_speciesIndex);
+                int max = net.GetMaxSchools(_speciesIndex);
+                over = max > 0 && pop >= max;
+            }
+        }
+
+        if (over != _overpopShown)
+        {
+            _overpopShown = over;
+            overpopulatedOverlay.SetActive(over);
         }
     }
 

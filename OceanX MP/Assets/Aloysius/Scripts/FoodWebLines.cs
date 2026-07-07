@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class FoodWebLines : MonoBehaviour
@@ -20,6 +21,32 @@ public class FoodWebLines : MonoBehaviour
     [Tooltip("Dot diameter in pixels.")]
     public float dotSize = 14f;
 
+    [Header("Ambient web (pulses ONE link at a time)")]
+    [Tooltip("Softly cycle a single predator/prey connection at a time so the layout reads as a web without any clutter.")]
+    public bool showAmbientWeb = true;
+    [Tooltip("Colour + alpha of the pulsing link. Defaults to match the hold-reveal exactly.")]
+    public Color ambientColor = new Color(0f, 0.85f, 1f, 1f);
+    [Tooltip("Thickness (px) of the pulsing link. Matches the hold-reveal (4).")]
+    public float ambientThickness = 4f;
+    [Tooltip("Arrowhead (prey -> predator) on the pulsing link.")]
+    public bool ambientArrows = true;
+    [Tooltip("How much clear links bow into an arc, as a fraction of link length. 0 = straight.")]
+    [Range(0f, 0.3f)] public float ambientArc = 0.15f;
+    [Tooltip("Max arc bow in pixels (caps the curve on long links so they can't swoop).")]
+    public float ambientArcMax = 120f;
+    [Tooltip("Length (px) of each dash/segment. Keeps dashes the SAME size on short and long links.")]
+    public float segmentLength = 18f;
+    [Tooltip("Draw links as dashes (dash-gap-dash) instead of one solid line.")]
+    public bool dashed = true;
+    [Tooltip("Seconds to fade the link in.")]
+    public float pulseFadeIn = 0.35f;
+    [Tooltip("Seconds the link stays full while the energy dot travels.")]
+    public float pulseHold = 0.8f;
+    [Tooltip("Seconds to fade the link out.")]
+    public float pulseFadeOut = 0.35f;
+    [Tooltip("Seconds of blank space between links.")]
+    public float pulseGap = 0.12f;
+
     private List<CanvasGroup> dimmedBubbles = new List<CanvasGroup>();
 
     // One flow per drawn line: the curve it rides plus its dot images.
@@ -28,9 +55,20 @@ public class FoodWebLines : MonoBehaviour
     private float _flowT;
     private Sprite _dotSprite;
 
+    // Always-on ambient web (pulse mode).
+    private Transform _ambientRoot;
+    private readonly List<GameObject> _pulseObjs = new List<GameObject>();
+    private GameObject _pulseContainer;
+    private bool _revealActive;   // a bright hold-reveal is up -> pause the pulse
+
     void Awake()
     {
         Instance = this;
+    }
+
+    void Start()
+    {
+        if (showAmbientWeb) StartCoroutine(PulseLoop());
     }
 
     void Update()
@@ -58,17 +96,17 @@ public class FoodWebLines : MonoBehaviour
         }
     }
 
+    // ---------------------------------------------------------------------------
+    // Interactive reveal — bright, on hold.
+    // ---------------------------------------------------------------------------
+
     public void ShowConnections(SpeciesBubble source)
     {
-        Debug.Log($"ShowConnections: {source.name}, prey={source.prey.Count}, predators={source.predators.Count}");
-
-        // build connected set
         var connected = new HashSet<SpeciesBubble>();
         connected.Add(source);
         foreach (var p in source.prey) if (p != null) connected.Add(p);
         foreach (var p in source.predators) if (p != null) connected.Add(p);
 
-        // dim all unconnected bubbles using CanvasGroup
         dimmedBubbles.Clear();
         var allBubbles = FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None);
         foreach (var b in allBubbles)
@@ -82,45 +120,147 @@ public class FoodWebLines : MonoBehaviour
             }
         }
 
-        // Draw each link in the direction energy flows — from the eaten toward the eater —
-        // with an arrowhead at the tip. The source is eaten by its predators (source -> predator)
-        // and eats its prey (prey -> source), so the arrow always points at the predator.
+        // Pause + clear the ambient pulse so the bright reveal is clean.
+        _revealActive = true;
+        ClearPulse();
+
         Color lineColor = new Color(0f, 0.85f, 1f, 1f);
 
         foreach (var predator in source.predators)
             if (predator != null)
-                DrawLine(source.transform, predator.transform, lineColor);
+                DrawLineInto(transform, activeLines, source.transform, predator.transform, lineColor, 4f, true, animateFlow);
 
         foreach (var prey in source.prey)
             if (prey != null)
-                DrawLine(prey.transform, source.transform, lineColor);
-
-        Debug.Log($"activeLines after draw: {activeLines.Count}");
+                DrawLineInto(transform, activeLines, prey.transform, source.transform, lineColor, 4f, true, animateFlow);
     }
 
     public void HideConnections()
     {
-        Debug.Log($"HideConnections: {activeLines.Count} lines");
-
-        // restore all dimmed bubbles
         foreach (var cg in dimmedBubbles)
             if (cg != null) cg.alpha = 1f;
         dimmedBubbles.Clear();
 
-        // destroy lines (dots are registered in activeLines too, so they go with them)
         for (int i = activeLines.Count - 1; i >= 0; i--)
             if (activeLines[i] != null)
                 DestroyImmediate(activeLines[i]);
         activeLines.Clear();
         _flows.Clear();
 
-        // hide glow rings
         foreach (var ring in glowRings)
             if (ring != null) ring.enabled = false;
         glowRings.Clear();
+
+        _revealActive = false; // ambient pulse resumes
     }
 
-    void DrawLine(Transform from, Transform to, Color color)
+    // ---------------------------------------------------------------------------
+    // Ambient web — one link pulses at a time (clean, no tangle).
+    // ---------------------------------------------------------------------------
+
+    IEnumerator PulseLoop()
+    {
+        yield return null;
+        yield return null; // let any runtime layout settle
+        EnsureAmbientRoot();
+
+        // Collect each unique prey -> predator link once.
+        var links = new List<KeyValuePair<Transform, Transform>>();
+        var bubbles = FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None);
+        var seen = new HashSet<long>();
+        foreach (var b in bubbles)
+        {
+            foreach (var prey in b.prey)
+                if (prey != null && seen.Add(Key(prey, b)))
+                    links.Add(new KeyValuePair<Transform, Transform>(prey.transform, b.transform));
+            foreach (var pred in b.predators)
+                if (pred != null && seen.Add(Key(b, pred)))
+                    links.Add(new KeyValuePair<Transform, Transform>(b.transform, pred.transform));
+        }
+        if (links.Count == 0) yield break;
+
+        int idx = 0;
+        while (true)
+        {
+            while (_revealActive) yield return null;   // paused during a hold reveal
+
+            var link = links[idx % links.Count];
+            idx++;
+            Transform from = link.Key, to = link.Value;
+            if (from == null || to == null) { yield return null; continue; }
+
+            // Draw the link with the SAME renderer the hold-reveal uses (curved line +
+            // arrow + animated energy dots), inside a CanvasGroup we fade in/out.
+            var container = new GameObject("PulseLink", typeof(RectTransform), typeof(CanvasGroup));
+            var crt = (RectTransform)container.transform;
+            crt.SetParent(_ambientRoot, false);
+            crt.anchorMin = Vector2.zero; crt.anchorMax = Vector2.one;
+            crt.offsetMin = Vector2.zero; crt.offsetMax = Vector2.zero;
+            _pulseContainer = container;
+            var cg = container.GetComponent<CanvasGroup>();
+            cg.alpha = 0f; cg.blocksRaycasts = false;
+
+            DrawLineInto(container.transform, _pulseObjs, from, to,
+                         new Color(ambientColor.r, ambientColor.g, ambientColor.b, 1f),
+                         ambientThickness, ambientArrows, true);
+
+            float total = pulseFadeIn + pulseHold + pulseFadeOut;
+            float t = 0f;
+            while (t < total && !_revealActive)
+            {
+                t += Time.unscaledDeltaTime;
+                cg.alpha = t < pulseFadeIn ? t / pulseFadeIn
+                         : t < pulseFadeIn + pulseHold ? 1f
+                         : Mathf.Clamp01(1f - (t - pulseFadeIn - pulseHold) / pulseFadeOut);
+                yield return null;
+            }
+
+            ClearPulse();
+            if (!_revealActive) yield return new WaitForSeconds(pulseGap);
+        }
+    }
+
+    void EnsureAmbientRoot()
+    {
+        if (_ambientRoot != null) return;
+        Transform layer = transform.parent != null ? transform.parent : transform;
+        Transform existing = layer.Find("AmbientWeb");
+        if (existing != null) { _ambientRoot = existing; }
+        else
+        {
+            var go = new GameObject("AmbientWeb", typeof(RectTransform));
+            var rt = (RectTransform)go.transform;
+            rt.SetParent(layer, false);
+            rt.anchorMin = Vector2.zero; rt.anchorMax = Vector2.one;
+            rt.offsetMin = Vector2.zero; rt.offsetMax = Vector2.zero;
+            _ambientRoot = rt;
+        }
+        _ambientRoot.SetAsFirstSibling(); // behind the bubbles
+    }
+
+    void ClearPulse()
+    {
+        _pulseObjs.Clear(); // these are children of the container, destroyed with it below
+        if (_pulseContainer != null) { DestroyImmediate(_pulseContainer); _pulseContainer = null; }
+        // Drop flow entries whose dots were destroyed with the container (avoids a slow leak).
+        _flows.RemoveAll(f => f.dots == null || AllNull(f.dots));
+    }
+
+    static bool AllNull(Image[] dots)
+    {
+        foreach (var d in dots) if (d != null) return false;
+        return true;
+    }
+
+    static long Key(Object from, Object to)
+        => ((long)from.GetInstanceID() << 32) ^ (uint)to.GetInstanceID();
+
+    // ---------------------------------------------------------------------------
+    // Shared drawing primitives.
+    // ---------------------------------------------------------------------------
+
+    void DrawLineInto(Transform parent, List<GameObject> list, Transform from, Transform to,
+                      Color color, float thickness, bool drawArrow, bool drawFlow)
     {
         if (linePrefab == null) { Debug.LogError("linePrefab is null!"); return; }
 
@@ -131,8 +271,6 @@ public class FoodWebLines : MonoBehaviour
         if (dist < 0.001f) return;
         Vector2 unit = dir / dist;
 
-        // Trim the endpoints back to each bubble's rim so the line touches the edge
-        // instead of running under the fish art (only if there's room between them).
         float rFrom = BubbleRadius(from);
         float rTo = BubbleRadius(to);
         if (rFrom + rTo < dist)
@@ -145,85 +283,54 @@ public class FoodWebLines : MonoBehaviour
             unit = dir / dist;
         }
 
-        Vector2 mid = (start + end) / 2f;
-        Vector2 perp = new Vector2(-unit.y, unit.x);
-
-        // Gather the other bubbles (exclude the two endpoints) with their radii so we
-        // can keep the line clear of them.
-        var obstacles = new List<Vector2>();
-        var radii = new List<float>();
-        var allBubbles = FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None);
-        foreach (var b in allBubbles)
-        {
-            if (b.transform == from || b.transform == to) continue;
-            obstacles.Add(b.transform.position);
-            radii.Add(BubbleRadius(b.transform));
-        }
-
-        // Keep the line straight whenever the direct path is already clear; only bow —
-        // by the smallest amount that works — when a bubble is actually in the way.
-        const float margin = 12f;
-        Vector2 control = mid;                                   // bow = 0 -> straight line
-        float bestPenalty = PathPenalty(start, control, end, obstacles, radii, margin);
-        if (bestPenalty > 0f)
-        {
-            float maxBow = Mathf.Clamp(dist * 0.6f, 40f, 500f);
-            for (float bow = 30f; bow <= maxBow; bow += 30f)
-            {
-                Vector2 cA = mid + perp * bow;
-                Vector2 cB = mid - perp * bow;
-                float pA = PathPenalty(start, cA, end, obstacles, radii, margin);
-                float pB = PathPenalty(start, cB, end, obstacles, radii, margin);
-                if (pA < bestPenalty) { bestPenalty = pA; control = cA; }
-                if (pB < bestPenalty) { bestPenalty = pB; control = cB; }
-                if (bestPenalty <= 0f) break;                    // fully clear — stop growing the bow
-            }
-        }
-
-        int segments = 20;
+        Vector2 control = ComputeCurveControl(start, end, from, to);
+        // Segment count scales with the curve length so every dash is the same size,
+        // whether the link is short or long.
+        float approxLen = Vector2.Distance(start, control) + Vector2.Distance(control, end);
+        int segments = Mathf.Clamp(Mathf.RoundToInt(approxLen / Mathf.Max(4f, segmentLength)), 1, 80);
         Vector2 prev = start;
         for (int i = 1; i <= segments; i++)
         {
             float t = i / (float)segments;
             Vector2 point = Bezier(start, control, end, t);
-            DrawSegment(prev, point, color);
+            if (!dashed || (i % 2) == 1)   // dashed -> draw every other segment (dash, gap, dash)
+                DrawSegmentInto(parent, list, prev, point, color, thickness);
             prev = point;
         }
 
-        // Arrowhead at the tip, aligned with the curve's tangent there (points at the predator).
-        Vector2 tangent = end - control;                        // quadratic Bezier tangent at t = 1
-        if (tangent.sqrMagnitude < 0.0001f) tangent = unit;
-        AddArrowHead(end, tangent.normalized, color);
+        if (drawArrow)
+        {
+            Vector2 tangent = end - control;
+            if (tangent.sqrMagnitude < 0.0001f) tangent = unit;
+            AddArrowHeadInto(parent, list, end, tangent.normalized, color, thickness);
+        }
 
-        // Energy dots riding this curve from prey (start) toward predator (end).
-        if (animateFlow && dotsPerLine > 0)
-            SpawnFlow(start, control, end, color);
+        if (drawFlow && dotsPerLine > 0)
+            SpawnFlow(parent, list, start, control, end, color);
     }
 
-    // Create the dots for one line and register them for animation in Update.
-    void SpawnFlow(Vector2 a, Vector2 c, Vector2 b, Color color)
+    void SpawnFlow(Transform parent, List<GameObject> list, Vector2 a, Vector2 c, Vector2 b, Color color)
     {
         var dots = new Image[dotsPerLine];
         for (int i = 0; i < dotsPerLine; i++)
         {
             var go = new GameObject("FlowDot", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
             var rt = (RectTransform)go.transform;
-            rt.SetParent(transform, false);
+            rt.SetParent(parent, false);
             rt.sizeDelta = new Vector2(dotSize, dotSize);
 
             var img = go.GetComponent<Image>();
             img.sprite = DotSprite();
-            img.color = new Color(color.r, color.g, color.b, 0f); // Update sets alpha
+            img.color = new Color(color.r, color.g, color.b, 0f);
             img.raycastTarget = false;
             rt.position = Bezier(a, c, b, i / (float)dotsPerLine);
 
-            activeLines.Add(go); // so HideConnections cleans it up
+            list.Add(go);
             dots[i] = img;
         }
         _flows.Add(new Flow { a = a, c = c, b = b, dots = dots });
     }
 
-    // A soft round dot, generated once at runtime so there's no asset to manage.
     Sprite DotSprite()
     {
         if (_dotSprite != null) return _dotSprite;
@@ -236,21 +343,20 @@ public class FoodWebLines : MonoBehaviour
             {
                 float d = Vector2.Distance(new Vector2(x + 0.5f, y + 0.5f), new Vector2(r, r)) / r;
                 float a = Mathf.Clamp01(1f - d);
-                tex.SetPixel(x, y, new Color(1f, 1f, 1f, a * a)); // soft falloff
+                tex.SetPixel(x, y, new Color(1f, 1f, 1f, a * a));
             }
         tex.Apply();
         _dotSprite = Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 100f);
         return _dotSprite;
     }
 
-    // Two short barbs forming a "V" at the tip. dir = unit direction of travel toward the tip.
-    void AddArrowHead(Vector2 tip, Vector2 dir, Color color)
+    void AddArrowHeadInto(Transform parent, List<GameObject> list, Vector2 tip, Vector2 dir, Color color, float thickness)
     {
         const float len = 16f;
         const float ang = 28f * Mathf.Deg2Rad;
         Vector2 back = -dir;
-        DrawSegment(tip, tip + Rotate(back, ang) * len, color);
-        DrawSegment(tip, tip + Rotate(back, -ang) * len, color);
+        DrawSegmentInto(parent, list, tip, tip + Rotate(back, ang) * len, color, thickness);
+        DrawSegmentInto(parent, list, tip, tip + Rotate(back, -ang) * len, color, thickness);
     }
 
     Vector2 Rotate(Vector2 v, float rad)
@@ -259,7 +365,58 @@ public class FoodWebLines : MonoBehaviour
         return new Vector2(v.x * c - v.y * s, v.x * s + v.y * c);
     }
 
-    // How far the curve intrudes into any bubble (sum of overlaps). 0 = the path is clear.
+    // Pick a bezier control point for a nice curved link: bow around any bubbles in the
+    // way, and — when the path is already clear — still apply a gentle arc bowing away from
+    // the layout centre so no link is dead straight.
+    Vector2 ComputeCurveControl(Vector2 start, Vector2 end, Transform from, Transform to)
+    {
+        Vector2 mid = (start + end) / 2f;
+        Vector2 dir = end - start;
+        float dist = dir.magnitude;
+        if (dist < 0.001f) return mid;
+        Vector2 unit = dir / dist;
+        Vector2 perp = new Vector2(-unit.y, unit.x);
+
+        var obstacles = new List<Vector2>();
+        var radii = new List<float>();
+        Vector2 centroid = Vector2.zero;
+        int n = 0;
+        foreach (var b in FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None))
+        {
+            centroid += (Vector2)b.transform.position; n++;
+            if (b.transform == from || b.transform == to) continue;
+            obstacles.Add(b.transform.position);
+            radii.Add(BubbleRadius(b.transform));
+        }
+        if (n > 0) centroid /= n;
+
+        const float margin = 12f;
+        Vector2 control = mid;
+        float bestPenalty = PathPenalty(start, control, end, obstacles, radii, margin);
+        if (bestPenalty > 0f)
+        {
+            float maxBow = Mathf.Clamp(dist * 0.6f, 40f, 500f);
+            for (float bow = 30f; bow <= maxBow; bow += 30f)
+            {
+                Vector2 cA = mid + perp * bow;
+                Vector2 cB = mid - perp * bow;
+                float pA = PathPenalty(start, cA, end, obstacles, radii, margin);
+                float pB = PathPenalty(start, cB, end, obstacles, radii, margin);
+                if (pA < bestPenalty) { bestPenalty = pA; control = cA; }
+                if (pB < bestPenalty) { bestPenalty = pB; control = cB; }
+                if (bestPenalty <= 0f) break;
+            }
+        }
+
+        // Clear path -> apply a GENTLE arc bowing outward from the layout centre.
+        if (control == mid && ambientArc > 0f)
+        {
+            float side = Vector2.Dot(mid - centroid, perp) >= 0f ? 1f : -1f;
+            control = mid + perp * side * Mathf.Min(dist * ambientArc, ambientArcMax);
+        }
+        return control;
+    }
+
     float PathPenalty(Vector2 a, Vector2 c, Vector2 b, List<Vector2> obstacles, List<float> radii, float margin)
     {
         if (obstacles.Count == 0) return 0f;
@@ -285,31 +442,30 @@ public class FoodWebLines : MonoBehaviour
         return u * u * a + 2f * u * t * b + t * t * c;
     }
 
-    void DrawSegment(Vector2 p1, Vector2 p2, Color color)
+    void DrawSegmentInto(Transform parent, List<GameObject> list, Vector2 p1, Vector2 p2, Color color, float thickness)
     {
-        GameObject line = Instantiate(linePrefab, transform);
+        GameObject line = Instantiate(linePrefab, parent);
         line.SetActive(true);
-        activeLines.Add(line);
+        list.Add(line);
 
         RectTransform rt = line.GetComponent<RectTransform>();
         Image img = line.GetComponent<Image>();
         img.color = color;
+        img.raycastTarget = false;
 
         Vector2 d = p2 - p1;
         float len = d.magnitude;
         rt.position = (p1 + p2) / 2f;
-        rt.sizeDelta = new Vector2(len + 1f, 4f);
+        rt.sizeDelta = new Vector2(len + 1f, thickness);
         float angle = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
         rt.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    // Approximate a bubble's on-screen radius from its RectTransform.
     float BubbleRadius(Transform bubble)
     {
         var brt = bubble as RectTransform;
         if (brt == null) brt = bubble.GetComponent<RectTransform>();
         if (brt == null) return 0f;
-        // half the smaller world-space dimension, with a little extra gap
         Vector3[] corners = new Vector3[4];
         brt.GetWorldCorners(corners);
         float w = Vector3.Distance(corners[0], corners[3]);

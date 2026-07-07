@@ -116,11 +116,11 @@ public class AluciaController : MonoBehaviour
     IEnumerator IntroSequence()
     {
         yield return new WaitForSeconds(introStartDelay);
-        Say(introLine1, Mood.Calm);
+        Say(AluciaLines.Get("intro.1", introLine1), Mood.Calm);
         yield return new WaitForSeconds(introLineGap);
-        Say(introLine2, Mood.Warn);
+        Say(AluciaLines.Get("intro.2", introLine2), Mood.Warn);
         yield return new WaitForSeconds(introLineGap);
-        Say(introLine3, Mood.Calm);
+        Say(AluciaLines.Get("intro.3", introLine3), Mood.Calm);
     }
 
     // ---------- Health reactions ----------
@@ -144,17 +144,17 @@ public class AluciaController : MonoBehaviour
         switch (band)
         {
             case Band.Critical:
-                Say("The reef is collapsing — we're losing species fast!", Mood.Warn);
+                Say(AluciaLines.Get("health.critical", "The reef is collapsing — we're losing species fast!"), Mood.Warn);
                 break;
             case Band.Unstable:
-                if (improving) Say("It's stabilising a little... keep going!", Mood.Calm);
-                else Say("Things are slipping — the balance is breaking down.", Mood.Warn);
+                if (improving) Say(AluciaLines.Get("health.unstable.up", "It's stabilising a little... keep going!"), Mood.Calm);
+                else Say(AluciaLines.Get("health.unstable.down", "Things are slipping — the balance is breaking down."), Mood.Warn);
                 break;
             case Band.Healthy:
-                Say("The reef's looking much healthier now!", Mood.Calm);
+                Say(AluciaLines.Get("health.healthy", "The reef's looking much healthier now!"), Mood.Calm);
                 break;
             case Band.Thriving:
-                Say("You did it — the ecosystem is thriving again! \ud83e\udea8", Mood.Win, sticky: true);
+                Say(AluciaLines.Get("health.thriving", "You did it — the ecosystem is thriving again! \ud83e\udea8"), Mood.Win, sticky: true);
                 break;
         }
     }

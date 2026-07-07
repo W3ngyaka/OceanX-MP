@@ -151,13 +151,15 @@ public class SpeciesUnlockReveal : MonoBehaviour
         _hintRotation[sp] = rot + 1;
 
         string name = sp.speciesName;
-        // Pool of variant templates. {0}=species, {1}=requirement phrase.
+        string rp = reqPhrase ?? "";
+        // Templates are checker-editable in StreamingAssets/alucia_lines.csv; the
+        // string here is the fallback if the CSV/key is missing. {species}=name, {req}=requirements.
         string[] withReq = new string[]
         {
-            "To bring in the " + name + ", you'll need to " + reqPhrase + ".",
-            "Almost there! Just " + reqPhrase + " and the " + name + " will appear.",
-            "The " + name + " is waiting \u2014 " + reqPhrase + ".",
-            "Keep going! " + reqPhrase + " to attract the " + name + ".",
+            AluciaLines.Get("hint.withReq.1", "To bring in the {species}, you'll need to {req}.").Replace("{species}", name).Replace("{req}", rp),
+            AluciaLines.Get("hint.withReq.2", "Almost there! Just {req} and the {species} will appear.").Replace("{species}", name).Replace("{req}", rp),
+            AluciaLines.Get("hint.withReq.3", "The {species} is waiting \u2014 {req}.").Replace("{species}", name).Replace("{req}", rp),
+            AluciaLines.Get("hint.withReq.4", "Keep going! {req} to attract the {species}.").Replace("{species}", name).Replace("{req}", rp),
         };
         // Variants that lean on the species' own flavour hints when available.
         var flavour = new List<string>();
@@ -167,7 +169,7 @@ public class SpeciesUnlockReveal : MonoBehaviour
 
         // Interleave: even rotations use flavour (if any), odd use progress phrasing.
         if (reqPhrase == null)
-            return flavour.Count > 0 ? flavour[rot % flavour.Count] : "Something new is almost ready to appear...";
+            return flavour.Count > 0 ? flavour[rot % flavour.Count] : AluciaLines.Get("hint.fallback", "Something new is almost ready to appear...");
 
         if (flavour.Count > 0 && rot % 2 == 0)
             return flavour[(rot / 2) % flavour.Count];

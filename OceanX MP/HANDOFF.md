@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-02_
+_Last updated: 2026-07-07_
 
 ---
 
@@ -641,6 +641,47 @@ The swim uses `position.z / _TailWaveLength` (native mesh units) and `sideToSide
 
 ---
 
+## What Was Done — 2026-07-07 (JunHeng)
+
+### 🐟 Fish render bug fixed — ray / scad / damsel spawned stacked at bounds centre
+- **Symptom:** these three species *simulated* (boided) correctly but every fish **rendered collapsed at the simulation-bounds centre** (a stack of mesh boxes), not at its live boid position.
+- **Root cause:** their `BoidMaterial` used the **non-instanced `Fish_Lit`** shader instead of **`Fish_Lit_Instanced`**. The non-instanced shader never reads per-boid positions from the `_Boids` GPU buffer, so all instances draw at one point. (The materials were even named `…Instanced.mat` — just pointed at the wrong shader on import.)
+- **Fix:** swapped the shader to `Fish_Lit_Instanced` on the 3 materials — Reticulated damselfish `MainTex Instanced.mat`, Bluespotted ray `MainTex Instanced.mat`, Yellowstripe scad `Main_Tex Instanced.mat`. All 12 spawner materials now verified on the instanced shader.
+
+### 🐠 Species behaviour/flocking tuning pass — all 12 species (biology-driven)
+Previously **all 12 species shared identical** SchoolProperties / MovementProperties / Behavior (zero per-species tuning). Researched real-world size + schooling per species and tuned by **5 archetypes** — dense schoolers (scad, damsel), loose shoalers (parrotfish/mullet/surgeonfish/spinefoot/snapper), solitary/territorial (grouper, moray), roving predators (shark, trevally), benthic (ray). ~45 asset files edited:
+- **`FishSchoolProperties`** — per-species Vision / SeparationRange / Cohesion / Alignment / Target weights.
+- **`FishMovementProperties`** — per-species CruisingSpeed / MaxSpeed (moray 0.3/4 … trevally 2.5/14).
+- **`SpeciesBehaviorPropertiesGPU`** — flee/hunt/detection values (⚠ currently inert — see next item).
+- **`FishMotionRenderProperties`** — authored by archetype for grouper/moray/trevally/scad/damsel (shark/ray already bespoke; the 5 mid shoalers kept the standard profile).
+- **`FishPerSchool`** — grouper→1, moray→1 (solitary), trevally→4, scad→15 (baitball); rest stay 10.
+- ⏸ **Relative fish scaling deferred** — there is **no per-boid scale field** (size = FBX import scale × mesh), and 6 species still use placeholder meshes. Do scale in-editor after real meshes land.
+
+### 🚨 Finding: prey do NOT flee predators in the current scene (feature gap)
+Confirmed the *visual* predator-prey reaction is **not wired**:
+- The `Behavior` asset (`SpeciesBehaviorPropertiesGPU`) is **dead data** — `SpeciesDataGPU` holds a reference but **no runtime code reads `FleeRange`/`HuntWeight`/etc.** (so the Behavior tuning above does nothing yet).
+- `PreySpecies` / `PredatorSpecies` only drive **population counts** (the ratio tick), not movement.
+- The compute shader's flee path fires only inside a **`Predator`-type affecter's** range, and there are **zero** in the scene; predator *fish* are never registered as predator affecters.
+- **Net:** the keystone "remove the shark → prey panic" moment is only a slow **number** change today, never visible fleeing. The darting/scatter currently seen is the **entry-sprint + new speed/target-weight tuning**, not fear.
+- **To build (planned):** each predator school emits a `Predator` affecter (radius = its detection range) so nearby prey flee — that's where the `Behavior` asset's FleeRange/FleeWeight finally get consumed.
+
+### 🗣️ Alucia dialogue → CSV (Phase 1: her spoken lines) — checker-editable, no Inspector
+So fact-checkers can edit what Alucia says in a spreadsheet instead of the Inspector/code. On the **Windows host** the CSV is editable *inside the build* (no rebuild).
+- **New `Assets/StreamingAssets/alucia_lines.csv`** — all 14 lines (3 intro, 5 health reactions, unlock pop-up, 4 hint templates, 1 fallback). Columns: `Key,Context,Mood,Text`.
+- **New `Assets/Aloysius/Scripts/AluciaLines.cs`** — static loader; reads the CSV from StreamingAssets at launch into a key→text lookup (quoted-CSV parser + BOM strip). **`Get(key, fallback)`** returns the original hardcoded line if the file/key is missing → edits can't break the build.
+- Swapped hardcoded strings to `AluciaLines.Get(...)` in `AluciaController` (intro + health), `NotificationManager` (`{species}` token), `SpeciesUnlockReveal.BuildHint` (4 templates + fallback, `{species}`/`{req}` tokens). Fallbacks preserve the exact current copy.
+- **Checker workflow:** edit the `Text` column → relaunch the host → new words. On the **Android tablet** the CSV is sealed in the APK (needs a rebuild) — StreamingAssets is host-live only.
+- ⚠ These are **Aloysius's scripts** — edits are minimal one-line swaps + preserved fallbacks; coordinate on merge.
+- **Phase 2 (not done):** per-species facts (`species_copy.csv` → scientific names, tier, blurbs, hints on the 12 `SpeciesData` assets) — the real fact-check surface; reuses this setup. `HintsPanel` (tablet hint tab) is still hardcoded, deferred with Phase 2. Several species info cards are **baked-text PNGs** (`Assets/Aloysius/Info/*.png`) and must be rebuilt as TMP text before their facts can be CSV-driven.
+
+### 🔗 Re-linked the tablet Add/Remove layer into `ALOYLOU VEFR @.unity`
+- `ALOYLOU VEFR @` (JunHeng's newer WIP client scene, 14 bubbles) was **missing** the decoupled input layer that `Netcode Simulation Test` has. Injected 11 `BubbleSelectHook` (plain bubbles) + 1 `TabletAddRemoveUIGPU` (on "Ecosystem Panel"); the 3 prefab-instanced bubbles (Shark, grouper, moray) + the controller's button refs were wired in-editor.
+
+### 🧹 Housekeeping
+- `.gitignore` now ignores `.claude/`; untracked `.claude/settings.local.json` (kept on disk). `CLAUDE.md` stays tracked (shared context).
+
+---
+
 ## Prototype Specification (`prototype/oceanx-prototype.html`)
 
 _Full interactive reference — open it in a browser. Everything below is derived from reading its source code._
@@ -820,6 +861,12 @@ Resolve NetworkConfig mismatch — both host and client NetworkManagers must hav
 ### 5. Preset Scenarios
 - **Balanced Ocean**, **Shark Removed**, **Overpopulation**, **Collapse**, **Recovery**
 
+### 6. Visible predator-prey flee (make the keystone demo real)
+Today only population *numbers* react to predators; fish don't visibly flee (confirmed 2026-07-07 — no `Predator` affecters exist and the `Behavior` asset is unread). To make "remove the shark → prey scatter" visible: have each predator school emit a **`Predator`-type affecter** (radius from its `Behavior.DetectionRange`), so nearby prey hit the compute shader's existing flee path. This finally consumes the per-species `Behavior` values (FleeRange/FleeWeight/DetectionRange) that were tuned but are currently inert.
+
+### 7. Alucia/UI copy → CSV, Phase 2
+Phase 1 (Alucia's spoken lines → `StreamingAssets/alucia_lines.csv`) is done. Phase 2: per-species facts (`species_copy.csv` → scientific names, tier, blurbs, hints on the 12 `SpeciesData` assets) + convert the baked-text info-card PNGs (`Assets/Aloysius/Info/*.png`) to TMP so their facts become checkable.
+
 ---
 
 ## Population Dynamics Values
@@ -886,6 +933,8 @@ This is the canonical tablet client. `Netcode Simulation Test 1` (Aloysius) is o
 - **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active
 - **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene
 - **Add/Remove wiring is a re-link trap when duplicating client scenes** — the decoupled input layer (`BubbleSelectHook` on every bubble + a `TabletAddRemoveUIGPU` with its buttons assigned) lives in the scene, not on a prefab, so a copied/new client scene (e.g. `ALOYLOU VEFR @`) loses it and taps do nothing until it's re-added. If population shows but Add/Remove are dead, check: hooks present on bubbles, controller present + buttons assigned, and `TabletEcosystemUIGPU.Ecosystem` points at the **same** `EcosystemDefinitionGPU` (same order) as the host.
+- **Wrong shader on a fish material → fish render stacked at the bounds centre.** The GPU sim needs each species' `BoidMaterial` on **`Fish_Lit_Instanced`** (reads per-boid position from `_Boids`). A material on the plain **`Fish_Lit`** shader draws every instance at one point. Newly-imported fish assets often come in on `Fish_Lit` — always verify the shader. (Hit ray/scad/damsel on 2026-07-07; fixed.)
+- **Predator-prey flee is NOT wired (visual).** Prey do not flee predator fish — there are no `Predator`-type affecters and the `Behavior` asset (`SpeciesBehaviorPropertiesGPU`) is unread by runtime code. The relationship only changes population *numbers*. See "What Needs Building Next" to make it visible.
 
 ---
 

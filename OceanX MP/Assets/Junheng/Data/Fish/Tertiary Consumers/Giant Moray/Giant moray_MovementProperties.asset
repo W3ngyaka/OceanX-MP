@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea515cf7ff883e43a388de93c907d69, type: 3}
   m_Name: Giant moray_MovementProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMovementProperties
-  CruisingSpeed: 1.75
-  MaxSpeed: 12
+  CruisingSpeed: 0.3
+  MaxSpeed: 4
   WaterFriction: 0.45
   Deceleration: 15
   MaxAcceleration: 20

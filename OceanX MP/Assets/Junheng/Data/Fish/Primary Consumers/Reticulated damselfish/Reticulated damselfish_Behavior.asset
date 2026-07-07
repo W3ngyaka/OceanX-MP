@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8440451382fba341a7c30892d50d915, type: 3}
   m_Name: Reticulated damselfish_Behavior
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesBehaviorPropertiesGPU
-  FleeRange: 12
-  FleeWeight: 4
-  PanicDuration: 3
+  FleeRange: 6
+  FleeWeight: 5
+  PanicDuration: 2
   DetectionRange: 20
   AttackRange: 1.5
   HuntWeight: 3

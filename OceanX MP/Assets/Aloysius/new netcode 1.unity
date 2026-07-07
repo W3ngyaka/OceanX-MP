@@ -12053,7 +12053,7 @@ RectTransform:
   m_GameObject: {fileID: 1415037588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8261384, y: 0.5938525, z: 1.5838464}
+  m_LocalScale: {x: 0.74581295, y: 0.53611225, z: 1.429849}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 436483748}
@@ -13844,6 +13844,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1672225264}
   - component: {fileID: 1672225263}
+  - component: {fileID: 1672225265}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -13862,11 +13863,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 65fd3cfe9285d3944bcc5175f536f3b2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.581
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -13963,6 +13964,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1672225265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672225262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e27dd9ad0f7f48549b7c3ac0c6fe2989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISoundManager
+  tapSound: {fileID: 8300000, guid: 6b50ee20d5a8a08479d5a5c985ea6b21, type: 3}
+  tapVolume: 1
 --- !u!1 &1681137650
 GameObject:
   m_ObjectHideFlags: 0

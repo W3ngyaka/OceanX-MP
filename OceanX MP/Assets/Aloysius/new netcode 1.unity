@@ -12112,6 +12112,18 @@ MonoBehaviour:
   flowSpeed: 0.35
   dotsPerLine: 3
   dotSize: 14
+  showAmbientWeb: 1
+  ambientColor: {r: 0, g: 0.85, b: 1, a: 1}
+  ambientThickness: 4
+  ambientArrows: 1
+  ambientArc: 0.15
+  ambientArcMax: 120
+  segmentLength: 18
+  dashed: 1
+  pulseFadeIn: 0.35
+  pulseHold: 0.8
+  pulseFadeOut: 0.35
+  pulseGap: 0.12
 --- !u!1 &1468270426
 GameObject:
   m_ObjectHideFlags: 0
@@ -14470,7 +14482,10 @@ MonoBehaviour:
   prey:
   - {fileID: 648665375}
   - {fileID: 2015562268}
-  predators: []
+  predators:
+  - {fileID: 2003371144}
+  - {fileID: 651877515}
+  - {fileID: 1335586775}
 --- !u!114 &1811861559
 MonoBehaviour:
   m_ObjectHideFlags: 0

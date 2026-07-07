@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeffc396a2a2c474abc9ea526ba9eb47, type: 3}
   m_Name: Yellowstripe scad_MotionRenderProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMotionRenderProperties
-  MinSwimPlaybackSpeed: 0.75
-  MaxSwimPlaybackSpeed: 4.25
+  MinSwimPlaybackSpeed: 1
+  MaxSwimPlaybackSpeed: 4.5
   MinSideToSideAmplitude: 1
   MaxSideToSideAmplitude: 3
   MinYawRotationAmplitude: 0.004
   MaxYawRotationAmplitude: 0.008
-  MinRollRotationAmplitude: 0.014
-  MaxRollRotationAmplitude: 0.082
-  MinPanningYawAmplitude: 0.01
-  MaxPanningYawAmplitude: 0.05
+  MinRollRotationAmplitude: 0.02
+  MaxRollRotationAmplitude: 0.08
+  MinPanningYawAmplitude: 0.02
+  MaxPanningYawAmplitude: 0.06

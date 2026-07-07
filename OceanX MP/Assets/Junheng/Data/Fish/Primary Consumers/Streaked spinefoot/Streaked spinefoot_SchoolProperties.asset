@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12896b1716abdbf4b84f5a1d7de3c13b, type: 3}
   m_Name: Streaked spinefoot_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
-  VisionRange: 15
+  VisionRange: 10
   ObstacleAvoidanceRange: 3
-  SeparationRange: 0.35
-  CohesionWeight: 0.4
-  AlignmentWeight: 0.35
+  SeparationRange: 0.6
+  CohesionWeight: 0.6
+  AlignmentWeight: 0.6
   SeparationWeight: 1
-  TargetWeight: 0.85
+  TargetWeight: 0.9
   MovementProperties: {fileID: 0}
   MotionRenderProperties: {fileID: 0}

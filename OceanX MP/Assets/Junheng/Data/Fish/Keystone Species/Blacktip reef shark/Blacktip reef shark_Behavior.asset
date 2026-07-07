@@ -15,9 +15,9 @@ MonoBehaviour:
   FleeRange: 12
   FleeWeight: 4
   PanicDuration: 3
-  DetectionRange: 20
-  AttackRange: 1.5
-  HuntWeight: 3
+  DetectionRange: 25
+  AttackRange: 2
+  HuntWeight: 3.5
   HungerRate: 0.02
   HuntThreshold: 0.3
   HungerAfterKill: 0

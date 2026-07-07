@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8440451382fba341a7c30892d50d915, type: 3}
   m_Name: Streaked spinefoot_Behavior
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesBehaviorPropertiesGPU
-  FleeRange: 12
+  FleeRange: 11
   FleeWeight: 4
   PanicDuration: 3
   DetectionRange: 20

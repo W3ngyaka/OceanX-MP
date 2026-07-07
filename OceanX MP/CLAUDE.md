@@ -43,8 +43,11 @@ Namespace: `OceanX.BoidsGPU.Ecosystem` (note: `BoidSimulationGPU` itself is in `
 | `EcosystemDefinitionGPU.cs` | Top-level asset — species list + simulation bounds |
 | `SpeciesDataGPU.cs` | Per-species data (Role, SchoolProperties, prey/predator lists, pop dynamics) |
 | `SpeciesBehaviorPropertiesGPU.cs` | Flee/hunt/hunger settings |
-| `WanderingAffecterGPU.cs` | Randomly wandering target — one per school, all roles |
-| `EcosystemUIAdapterGPU.cs` | UI→GPU bridge (⚠ only self-referenced in code — verify if still used) |
+| `EcosystemTargetGPU.cs` | Per-school swim target (REPLACED `WanderingAffecterGPU`); `ParkAt` drives the swim-out on removal |
+| `EcosystemUnlockManagerGPU.cs` | Eco-health/prey-gated species unlock system (singleton) |
+| `EcosystemDebugHarnessGPU.cs` | In-editor OnGUI add/remove panel (no netcode) — dev-only |
+| `FishEntryPointGPU.cs` | Off-screen entry/exit markers — schools swim in / out via these |
+| `EcosystemUIAdapterGPU.cs` | UI→GPU bridge (⚠ DEAD — zero external references, confirmed 2026-07-08) |
 | `BoidSimulationGPU.cs` (Spatial_Partition_Instanced_Rendering) | GPU simulation + `ReinitializeBuffers()` |
 | `BoidSpawnerGPU.cs` | GPU spawner — holds position-preservation logic for buffer rebuilds |
 
@@ -66,11 +69,11 @@ Empty-ocean / last-extinction is crash-safe: all buffers sized `Mathf.Max(1, cou
 ## Population dynamics (how the cascade works)
 `EcosystemSimulationGPU` runs a coroutine every tick interval (default 5s).
 
-⚠ **Natural births and natural deaths were removed in Week 8.** Population now changes only from:
-- **Starvation cascade (ratio-based)** — a species loses a school when any prey species drops below `StarvationThreshold` fraction of its capacity, rolled at `StarvationDeathRate`. Can remove the last school (extinction).
+⚠ **Natural births/deaths (Week 8) AND the per-species starvation fields (Week 9) are gone.** Population now changes only from:
+- **Global ratio-driven dynamics** — each species feels a prey:predator school-count ratio against a shared dead-band (`RatioBandLow`/`RatioBandHigh`, default 1–3). Out-of-band species grow/shrink at `GrowRate`/`ShrinkRate` per tick; a predator with no prey is a hard shrink (starves). Can remove the last school (extinction).
 - **Manual add/remove** via UI buttons / netcode RPCs.
 
-`ReproductionRate` and `NaturalDeathRate` fields were deleted from `SpeciesDataGPU`. Carrying capacity is derived from `MaxSchools × FishPerSchool`. The cascade is emergent — no hardcoded chain reaction logic.
+`ReproductionRate` / `NaturalDeathRate` (Week 8) and `StarvationDeathRate` / `StarvationThreshold` (Week 9) were all deleted from `SpeciesDataGPU`. Balance is now **global**; per-species behaviour comes from `FishPerSchool` / `MaxSchools` / prey-predator lists. Carrying capacity = `MaxSchools × FishPerSchool`. Eco-health (`EcoHealth01`) derives from the same ratios. The cascade is emergent — no hardcoded chain-reaction logic.
 
 ## What needs building next
 1. Finalise the **12 canonical species** (list locked — see HANDOFF): create **Giant moray** assets, remove **Great barracuda**, then wire all 12 into `EcosystemDefinitionGPU` in fixed order (currently only the Clownfish placeholder is wired)

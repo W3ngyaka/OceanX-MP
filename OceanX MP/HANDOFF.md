@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-07_
+_Last updated: 2026-07-07 (rev 2)_
 
 ---
 
@@ -608,7 +608,7 @@ Prepped the marine-creature meshes so they animate correctly under the `Fish_Lit
 
 **⚠ Ray caveat:** the ray got the same head→tail gradient, so under the fish tail-shader its **tail sways but the pectoral wings don't flap** (a tail-swimmer shader can't undulate ray wings). If a ray-specific wing shader is added later, its UV1 convention differs — re-bake that one.
 
-**⚠ These FBXs are NOT in the Unity project yet.** They sit in the OneDrive `assest/` folder. To use them: copy each `.fbx` (+ its `.fbm` texture folder) into `Assets/` (Akil owns scene-art import), assign the `Fish_Lit` material, and confirm `UV1` imports as UV1/TEXCOORD1. With `UV1.x` = tail 0 / head 1 against the shader's `1.0 - tailMaskUV.x`, the tail waves while head + eyes stay rigid out of the box. (If the head wobbles instead, the channel got flipped.)
+**⚠ [SUPERSEDED 2026-07-07 — now imported.]** These FBXs have since been copied into the project at `Assets/Junheng/Data/Models/<species>/` (see "What Was Done — 2026-07-07 (session 2)"). Original note kept for the pipeline detail: they were prepped in the OneDrive `assest/` folder; to use them, copy each `.fbx` (+ its `.fbm` texture folder) into `Assets/`, assign the `Fish_Lit` material, and confirm `UV1` imports as UV1/TEXCOORD1. With `UV1.x` = tail 0 / head 1 against the shader's `1.0 - tailMaskUV.x`, the tail waves while head + eyes stay rigid out of the box. (If the head wobbles instead, the channel got flipped.)
 
 > **Shark rebaked 2026-07-02 (scale fix).** The Blacktip shark FBX was re-exported to fix the unit-scale bug in **Gotcha B** below. New file (UnitScaleFactor 100, UV1 baked) is in `assest/Blacktip reef shark/sharkv2_lowpoly.fbx` + `.blend`. Still needs copying into `Assets/` over the old one.
 
@@ -679,6 +679,71 @@ So fact-checkers can edit what Alucia says in a spreadsheet instead of the Inspe
 
 ### 🧹 Housekeeping
 - `.gitignore` now ignores `.claude/`; untracked `.claude/settings.local.json` (kept on disk). `CLAUDE.md` stays tracked (shared context).
+
+---
+
+## What Was Done — 2026-07-07 (session 2 — models imported, CSV Phase 2, audio)
+
+> Post-dates the handoff-update commit `e1cb283`. Real fish meshes landed in the
+> project, per-species facts moved to a CSV, and a UI sound layer was added.
+
+### 🐟 Fish FBXs now IMPORTED into the project — new `Assets/Junheng/Data/Models/`
+**Supersedes the earlier "prepped but NOT imported" note.** The prepped meshes (plus
+two new ones) now live *inside* Unity at **`Assets/Junheng/Data/Models/<species>/`**,
+each with a `.fbm` texture folder and duplicated `*_Instanced` materials:
+
+| Species | Mesh file | Source |
+|---------|-----------|--------|
+| Blacktip reef shark | `sharkv2_lowpoly.fbx` | JunHeng (Blender prep) |
+| Bluespotted ribbontail ray | `stingray.fbx` | JunHeng |
+| Reticulated damselfish | `damselfish.fbx` | JunHeng |
+| Yellowstripe scad | `YellowstripeScad.fbx` | JunHeng |
+| Bullethead Parrotfish | `parrotfish.fbx` | akeel-h (`f983fbf`) |
+| Eyestripe surgeonfish | `surgeonfish.fbx` | JunHeng `f9cc3f0` + akeel-h `382e8a6` |
+| Streaked spinefoot | `rabbitfish.fbx` | JunHeng `d6c0cee` + akeel-h `9b475e6` |
+
+⚠ **Streaked spinefoot = "rabbitfish"** — *Siganus javus* is commonly called the
+rabbitfish, so the mesh/folder churn naming it `rabbitfish.fbx` (and akeel-h's
+`d222255` "FBX changes for damselfish and rabbitfish") is the **same species**, not a
+new one.
+
+**7 of 12 species now have real meshes.** Remaining **5 on placeholder**:
+brown-marbled grouper, giant moray, bluefin trevally, Russell's snapper, fringelip
+mullet.
+- ⚠ Fish-checklist gotchas **B–E** still apply to each new mesh — verify
+  `UnitScaleFactor == 100`, the material is on `Fish_Lit_Instanced` with GPU Instancing
+  **ON**, and `_TailWaveLength` is scaled to the mesh's true size.
+
+### 📄 Species facts → CSV (Phase 2 STARTED) — `SpeciesContent.csv`
+The per-species fact-check surface flagged as "not done" is now underway.
+- **New `Assets/StreamingAssets/SpeciesContent.csv`** — columns
+  `speciesName, sciName, iucnStatus, description, diet, habitat, imageFile`; filled for
+  the 12 species (several `diet`/`habitat` cells still blank).
+- **New `Assets/StreamingAssets/SpeciesImages/`** — per-species card PNGs referenced by
+  the `imageFile` column (blacktip, reticulated, Parrotfish, Eyestripe,
+  Streakedspinefoot, Mullet + a README).
+- **Aloysius wired the modal panels to read it** (`97e90ab`, `2172974`,
+  `4dad8fa` "Update Primary producers modal panels") — species info now comes from the
+  CSV, editable without a rebuild on the host (same StreamingAssets model as Alucia's
+  lines; sealed in the APK on tablet).
+- ⏳ Still to do: fill the blank `diet`/`habitat` cells; convert the remaining
+  baked-text info-card PNGs (`Assets/Aloysius/Info/*.png`) to TMP; per-species hints.
+
+### 🔊 UI sound layer (Aloysius) — new `UISoundManager.cs` + `Assets/Sounds/`
+- **New `Assets/Aloysius/Scripts/UISoundManager.cs`** — tiny singleton `AudioSource`
+  wrapper (`Instance`, `PlayTap()` one-shot + `tapVolume`). Drop one on a scene object,
+  assign the clip.
+- **`SpeciesBubble.OnTap` now calls `UISoundManager.Instance?.PlayTap()`** (shared
+  script — affects canonical scenes; null-guarded, harmless when absent).
+- **New `Assets/Sounds/`** — `Tap.mp3` (bubble tap) + `Ambient.mp3` (reef ambience).
+
+### 🎬 Scene consolidation (Aloysius / Akil)
+- Aloysius **deleted** `Assets/Aloysius/MainScene.unity`, `SCENE_MainScene.unity`, and
+  `new netcode.unity`; the live UI client copy is now
+  **`Assets/Aloysius/new netcode 1.unity`** (`SCENE_MainScene 1.unity` kept).
+- Akil updated `Assets/Akil/Scenes/SCENE_MainScene.unity` (`18c84bd`) + FBX/material
+  passes for damselfish/rabbitfish (`d222255`, `189a5c2`). The three-host-scene
+  divergence note below still stands — nothing has converged yet.
 
 ---
 
@@ -864,8 +929,8 @@ Resolve NetworkConfig mismatch — both host and client NetworkManagers must hav
 ### 6. Visible predator-prey flee (make the keystone demo real)
 Today only population *numbers* react to predators; fish don't visibly flee (confirmed 2026-07-07 — no `Predator` affecters exist and the `Behavior` asset is unread). To make "remove the shark → prey scatter" visible: have each predator school emit a **`Predator`-type affecter** (radius from its `Behavior.DetectionRange`), so nearby prey hit the compute shader's existing flee path. This finally consumes the per-species `Behavior` values (FleeRange/FleeWeight/DetectionRange) that were tuned but are currently inert.
 
-### 7. Alucia/UI copy → CSV, Phase 2
-Phase 1 (Alucia's spoken lines → `StreamingAssets/alucia_lines.csv`) is done. Phase 2: per-species facts (`species_copy.csv` → scientific names, tier, blurbs, hints on the 12 `SpeciesData` assets) + convert the baked-text info-card PNGs (`Assets/Aloysius/Info/*.png`) to TMP so their facts become checkable.
+### 7. Alucia/UI copy → CSV, Phase 2 (🔶 started 2026-07-07)
+Phase 1 (Alucia's spoken lines → `StreamingAssets/alucia_lines.csv`) is done. **Phase 2 is now underway:** per-species facts live in **`StreamingAssets/SpeciesContent.csv`** (`speciesName, sciName, iucnStatus, description, diet, habitat, imageFile`) with card art in `StreamingAssets/SpeciesImages/`, and the modal panels read from it (Aloysius). **Remaining:** fill the blank `diet`/`habitat` cells; per-species hints; convert the baked-text info-card PNGs (`Assets/Aloysius/Info/*.png`) to TMP so their facts become checkable.
 
 ---
 
@@ -929,7 +994,7 @@ This is the canonical tablet client. `Netcode Simulation Test 1` (Aloysius) is o
 - **NetworkConfig mismatch** — client and host must have identical Network Prefabs Lists
 - **`EcosystemDefinitionGPU.asset` species order** — all 12 species must be added in a fixed, shared order so index-based RPCs match between host and tablet
 - **Species UI fields split across two assets** — unlock config (`startUnlocked`, `minHealth`, `requires`, hints) lives on **`SpeciesData`** (linked to the sim via `gpuSpecies`); `SpeciesDataGPU` stays pure sim data. Remaining UI-only fields (Icon, TrophicTier, FoodWebPosition) still to add to `SpeciesData` for the food-web graph
-- **🐟 Fish FBXs prepped but not imported (2026-07-02).** Blacktip reef shark, Bluespotted ribbontail ray, Reticulated damselfish, Yellowstripe scad each have a `UV1` tail-mask gradient baked and a mesh-only FBX exported — but the FBXs live in the OneDrive `assest/` folder, **not in `Assets/`**. Copy them in (+ `.fbm`), assign `Fish_Lit`, and verify `UV1`→TEXCOORD1 imports. The ray only tail-sways (no wing flap). See "What Was Done — 2026-07-02" for the full pipeline.
+- **🐟 Fish meshes — ✅ 7/12 imported (updated 2026-07-07).** Blacktip reef shark, Bluespotted ribbontail ray, Reticulated damselfish, Yellowstripe scad, Bullethead parrotfish, Eyestripe surgeonfish, and Streaked spinefoot (rabbitfish) are now in `Assets/Junheng/Data/Models/`. **5 still on placeholder:** grouper, moray, trevally, snapper, mullet. The ray only tail-sways (no wing flap). When importing the remaining 5, verify `UV1`→TEXCOORD1 and the `Fish_Lit_Instanced` shader (checklist gotchas A–E in "What Was Done — 2026-07-02").
 - **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active
 - **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene
 - **Add/Remove wiring is a re-link trap when duplicating client scenes** — the decoupled input layer (`BubbleSelectHook` on every bubble + a `TabletAddRemoveUIGPU` with its buttons assigned) lives in the scene, not on a prefab, so a copied/new client scene (e.g. `ALOYLOU VEFR @`) loses it and taps do nothing until it's re-added. If population shows but Add/Remove are dead, check: hooks present on bubbles, controller present + buttons assigned, and `TabletEcosystemUIGPU.Ecosystem` points at the **same** `EcosystemDefinitionGPU` (same order) as the host.

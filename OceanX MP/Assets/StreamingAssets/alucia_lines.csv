@@ -6,7 +6,7 @@ health.critical,"Eco-health drops below ~35%",Warn,"The reef is collapsing — w
 health.unstable.up,"Eco-health recovering up into the middle band",Calm,"It's stabilising a little... keep going!"
 health.unstable.down,"Eco-health slipping down into the middle band",Warn,"Things are slipping — the balance is breaking down."
 health.healthy,"Eco-health rises above ~70%",Calm,"The reef's looking much healthier now!"
-health.thriving,"Eco-health reaches 100% (win, stays on screen)",Win,"You did it — the ecosystem is thriving again! 🪨"
+health.thriving,"Eco-health reaches 100% (win, stays on screen)",Win,"You did it — the ecosystem is thriving again!"
 notify.unlocked,"Pop-up when a species unlocks. {species} = the species name",Calm,"You've unlocked the {species}!"
 hint.withReq.1,"Next-fish hint. {species} = name, {req} = what's still needed",Calm,"To bring in the {species}, you'll need to {req}."
 hint.withReq.2,"Next-fish hint (variant)",Calm,"Almost there! Just {req} and the {species} will appear."

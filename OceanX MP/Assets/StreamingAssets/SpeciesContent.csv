@@ -1,0 +1,15 @@
+speciesName,sciName,role,iucnStatus,description,diet,habitat,funFact,imageFile
+Blacktip Reef Shark,Carcharhinus melanopterus,Keystone Species,,"The reef's apex predator. As a keystone species it keeps prey populations in check, and the whole ecosystem depends on its presence to stay in balance.",,,,blacktip_reef_shark.png
+Giant Moray,Gymnothorax javanicus,Tertiary Consumer,,A large ambush predator that hides in reef crevices by day and hunts fish and crustaceans at night.,,,,giant_moray.png
+Brown-Marbled Grouper,Epinephelus fuscoguttatus,Tertiary Consumer,,A heavy-bodied ambush predator that lurks near the reef and engulfs prey with a powerful suction strike.,,,,brown_marbled_grouper.png
+Bluefin Trevally,Caranx melampygus,Secondary Consumer,,"A fast, roaming hunter that chases down schooling fish across the reef.",,,,bluefin_trevally.png
+Russells Snapper,Lutjanus russellii,Secondary Consumer,,A schooling predator that patrols the reef edge feeding on smaller fish and invertebrates.,,,,russells_snapper.png
+Bluespotted Ray,Taeniura lymma,Secondary Consumer,,"A ribbontail ray that glides over the sand, using electroreception to find buried prey.",,,,bluespotted_ray.png
+Yellowstripe Scad,Selaroides leptolepis,Secondary Consumer,,"A schooling baitfish that moves in tight, shimmering groups for safety in numbers.",,,,yellowstripe_scad.png
+Streaked Spinefoot,Siganus javus,Primary Consumer,,"A medium schooling rabbitfish that grazes algae, armed with venomous spines for defense.",,,,streaked_spinefoot.png
+Bullethead Parrotfish,Chlorurus sordidus,Primary Consumer,,"A reef herbivore that scrapes algae off coral, producing sand as it feeds.",,,,Parrotfish.png
+Eyestripe Surgeonfish,Acanthurus dussumieri,Primary Consumer,,A solitary herbivore that scrapes algal films from reef surfaces.,,,,eyestripe_surgeonfish.png
+Fringelip Mullet,Crenemugil crenilabis,Primary Consumer,,A schooling herbivore that grazes algae and sifts detritus from the sandy bottom.,,,,Mullet.png
+Reticulated Damselfish,Dascyllus reticulatus,Primary Consumer,Least Concern,"Reticulated damselfish are small, 9 cm territorial omnivores found across central Indo-Pacific coral reefs. Despite their size, they aggressively harass intruders, feeding by day on algae, plankton, and invertebrates, and sheltering in coral at night.","Zooplankton, phytoplankton, benthic algae",Central Indo-Pacific coral reefs,,reticulated_damselfish.png
+Seagrass,Halophila,Primary Producer,,"A marine flowering plant that forms meadows, providing food and shelter and oxygenating the water.",,,,seagrass.png
+Macroalgae,,Primary Producer,,"Large algae that photosynthesize and form the base of the reef food web, feeding the grazers above.",,,,macroalgae.png

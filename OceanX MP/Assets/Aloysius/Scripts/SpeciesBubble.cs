@@ -206,8 +206,8 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         // Fill the right-side info panel (summary). Its 'View Details' button opens the full modal.
         if (SpeciesInfoPanel.Instance != null)
             SpeciesInfoPanel.Instance.Show(data, cardImage, speciesIndex);
-        else if (ModalController.Instance != null && cardImage != null)
-            ModalController.Instance.Open(cardImage, speciesIndex); // fallback: open modal directly
+        else if (ModalController.Instance != null)
+            ModalController.Instance.Open(data); // fallback: open modal directly (data-driven)
     }
 
     void PlayPunch()

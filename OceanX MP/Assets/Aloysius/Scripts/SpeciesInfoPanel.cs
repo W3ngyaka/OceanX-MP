@@ -27,6 +27,7 @@ public class SpeciesInfoPanel : MonoBehaviour
     [TextArea] public string lockedDescription = "This species hasn't been discovered yet. Build the ecosystem to reveal it.";
 
     // current selection (for the View Details button)
+    private SpeciesData _data;
     private Sprite _cardSprite;
     private int _speciesIndex = -1;
 
@@ -42,6 +43,7 @@ public class SpeciesInfoPanel : MonoBehaviour
     {
         if (data == null) { Clear(); return; }
 
+        _data = data;
         _cardSprite = cardSprite;
         _speciesIndex = speciesIndex;
 
@@ -66,6 +68,7 @@ public class SpeciesInfoPanel : MonoBehaviour
     // Locked/mystery display: tapped a locked bubble. Hides real data behind '???'.
     public void ShowLocked(SpeciesData data)
     {
+        _data = null;
         _cardSprite = null;
         _speciesIndex = -1;
         if (emptyState != null) emptyState.SetActive(false);
@@ -81,13 +84,14 @@ public class SpeciesInfoPanel : MonoBehaviour
     {
         if (emptyState != null) emptyState.SetActive(true);
         if (detailRoot != null) detailRoot.SetActive(false);
+        _data = null;
         _cardSprite = null;
         _speciesIndex = -1;
     }
 
     void OpenModal()
     {
-        if (ModalController.Instance == null || _cardSprite == null) return;
-        ModalController.Instance.Open(_cardSprite, _speciesIndex);
+        if (ModalController.Instance == null || _data == null) return;
+        ModalController.Instance.Open(_data);   // data-driven: modal pulls text + image from the CSV
     }
 }

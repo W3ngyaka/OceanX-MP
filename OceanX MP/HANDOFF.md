@@ -93,7 +93,7 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 
 The dead Ecosystem CPU layer has been removed. The active product runs entirely on the GPU simulation pipeline.
 
-> ⚠ **Verified against the actual tree (2026-06-12).** All simulation scripts live directly under `Assets/Junheng/Scripts/` — the old `Junheng/Ecosystem/Scripts/` and `Junheng/Simulation/Scripts/` split no longer exists, and there is no `03_` prefix on the spatial-partition folder.
+> ⚠ **Verified against the actual tree (2026-06-12; every one of the 58 scripts re-read & re-verified 2026-07-08).** All simulation scripts live directly under `Assets/Junheng/Scripts/` — the old `Junheng/Ecosystem/Scripts/` and `Junheng/Simulation/Scripts/` split no longer exists, and there is no `03_` prefix on the spatial-partition folder. The 2026-07-08 audit added `EcosystemTargetGPU` / `EcosystemUnlockManagerGPU` / `EcosystemDebugHarnessGPU` / `FishEntryPointGPU` / `OptimisticPopulationStore` to the tree below and removed the now-deleted `WanderingAffecterGPU` (replaced by `EcosystemTargetGPU`). See the 2026-07-08 audit note for details.
 
 ```
 Assets/Junheng/
@@ -111,11 +111,14 @@ Assets/Junheng/
 │   │   ├── BoidSwirlSpawnerGPU.cs
 │   │   ├── Ecosystem/
 │   │   │   ├── EcosystemDefinitionGPU.cs   Species list + simulation bounds asset
-│   │   │   ├── EcosystemSimulationGPU.cs   Tick cascade + start-at-zero add/remove API
-│   │   │   ├── EcosystemUIAdapterGPU.cs    UI→GPU bridge (⚠ only self-referenced — verify if still used)
-│   │   │   ├── SpeciesBehaviorPropertiesGPU.cs  Flee/hunt/hunger settings SO
-│   │   │   ├── SpeciesDataGPU.cs           Single source of truth per species
-│   │   │   └── WanderingAffecterGPU.cs     Random-wander target (one per school, all roles)
+│   │   │   ├── EcosystemSimulationGPU.cs   Population tick + start-at-zero add/remove + entry/exit swim-in-out
+│   │   │   ├── EcosystemTargetGPU.cs       Per-school swim target (ParkAt drives swim-out) — REPLACED the deleted WanderingAffecterGPU
+│   │   │   ├── EcosystemUnlockManagerGPU.cs Eco-health/prey-gated species unlock system (singleton); prod replacement for Aloysius's GameState
+│   │   │   ├── EcosystemDebugHarnessGPU.cs  In-editor OnGUI add/remove panel (no netcode) — dev-only test harness
+│   │   │   ├── FishEntryPointGPU.cs         Marker for off-screen entry/exit points; schools swim in / out via these (auto-registers)
+│   │   │   ├── EcosystemUIAdapterGPU.cs    UI→GPU bridge — ⚠ DEAD (zero external refs, confirmed 2026-07-08); safe to delete
+│   │   │   ├── SpeciesBehaviorPropertiesGPU.cs  Flee/hunt/hunger SO (⚠ currently UNREAD by runtime — see flee-gap note)
+│   │   │   └── SpeciesDataGPU.cs           Per-species SoT: Role, ScientificName, School/Movement/MotionRender/Behavior props, PathStyle, prey/predator lists, FishPerSchool, MaxSchools
 │   │   ├── GPU_Spatial_Partition/
 │   │   │   └── SpatialPartitionGPU.cs      GPU spatial grid compute shader wrapper
 │   │   └── Spatial_Partition_Instanced_Rendering/
@@ -123,17 +126,18 @@ Assets/Junheng/
 │   ├── Boids_CPU/                   Only two files remain — used by GPU base classes
 │   │   ├── BoidInformation.cs       Per-boid movement state struct (used by FishSwimmingUtility)
 │   │   └── BoidSpawnData.cs         Spawn config struct (used by BoidSpawnerBase)
-│   ├── Automatic_Fish_Swimming_CPU/
+│   ├── Automatic_Fish_Swimming_CPU/   ⚠ Legacy single-fish CPU demo — no C# refs, but GameObjects using these still sit in several scenes (incl. Boids_Demo); disabled leftovers, LOOK before deleting
 │   │   ├── AutomaticFishSwimSimulation.cs
 │   │   └── AutomaticFishSwimming.cs
 │   ├── Networking/
 │   │   ├── BubbleSelectHook.cs              Per-bubble tap → selects species in TabletAddRemoveUIGPU (no SpeciesBubble edits)
 │   │   ├── ConnectionScreenUI.cs           Client IP input + connect button
-│   │   ├── EcosystemNetworkManagerGPU.cs   Syncs school counts + eco-health via NetworkList/NetworkVariable, RPCs
-│   │   ├── HostSpawner.cs                  Spawns network manager prefab on server start
+│   │   ├── EcosystemNetworkManagerGPU.cs   Syncs school counts + max-schools + eco-health via NetworkList/NetworkVariable, add/remove RPCs
+│   │   ├── HostSpawner.cs                  Spawns net-manager prefab on server start (⚠ likely redundant — NetworkBootstrap also spawns it)
 │   │   ├── LanDiscovery.cs                 UDP broadcast — tablet auto-finds host on WiFi
-│   │   ├── NetworkBootstrap.cs             Host/Client role setup, starts NGO
-│   │   ├── TabletAddRemoveUIGPU.cs          Singleton Add/Remove controller — fires RPCs for the selected species, greys at cap/0
+│   │   ├── NetworkBootstrap.cs             Host/Client role setup, starts NGO, spawns net-manager
+│   │   ├── OptimisticPopulationStore.cs    Client-side optimistic count overlay — pending taps over synced counts so the tablet number updates instantly (per-species-index; fixes remove-lag / snap-back)
+│   │   ├── TabletAddRemoveUIGPU.cs          Singleton Add/Remove controller — fires RPCs, greys at cap/0, reads display counts via OptimisticPopulationStore
 │   │   └── TabletEcosystemUIGPU.cs         Pure species→index lookup service
 │   ├── Shader_GUI/Editor/          Custom material inspectors for the Fish_Lit shaders
 │   │   ├── FishLitBaseShaderGUI.cs / FishLitDetailGUI.cs / FishLitShaderGUI.cs
@@ -345,7 +349,7 @@ The GPU ecosystem now starts from a completely empty ocean and the player builds
 - `AddSpecies`: increments N up to `MaxSchools`, calls `ReinitializeBuffers`
 - `RemoveSpecies`: decrements N down to 0 (extinction), calls `ReinitializeBuffers`
 - Starvation tick can now remove the last school (species goes fully extinct)
-- One `WanderingAffecterGPU` target per school for all roles — unifies the old apex-only wandering path, no memory leaks on rebuild
+- One `WanderingAffecterGPU` target per school for all roles — unifies the old apex-only wandering path, no memory leaks on rebuild _(⚠ `WanderingAffecterGPU` was later replaced by `EcosystemTargetGPU` — see the 2026-07-08 audit)_
 
 **Empty-ocean / extinction crash safety:**
 - All GPU compute buffers and spatial grid sized `Mathf.Max(1, count)` — zero is never passed to `new ComputeBuffer`
@@ -759,6 +763,28 @@ The per-species fact-check surface flagged as "not done" is now underway.
   - `_entrySpawnJitterRadius` (default `4`) — sideways nudge radius; `0` = old spawn-exactly-on-marker behaviour.
   - `_entrySpawnMinSeparation` (default `3`) — preferred gap between a new origin and recent ones (~one school's cluster diameter).
 - ⚠ **With only ONE entry marker under heavy spam** there's a hard space limit — add more entry markers (they round-robin) or raise the jitter radius. ⚠ **Not yet play-tested in-editor.**
+
+### 🔍 Full script audit + handoff reconciliation (all 58 Junheng scripts read)
+Read every `.cs` under `Assets/Junheng/` and reconciled this doc's file tree + claims against ground truth.
+
+**Systems that existed in code but were missing/undocumented here (now added to the tree):**
+- **`EcosystemTargetGPU`** — the per-school swim target. `AddSchool` creates one (+ a `TransformAnimator` on a Line/Circle/Rectangle path) per school; `ParkAt(exitPoint)` drives the swim-out on Remove. **This replaced the old `WanderingAffecterGPU`** (deleted — grep confirms the type no longer exists).
+- **`FishEntryPointGPU`** — drop-in marker (Entry / Exit / Both) placed OUTSIDE the bounds. New schools spawn at a random entry marker and swim in; removed schools swim out to a random exit marker. Auto-registers into a static list (no wiring). This is the system the spawn-spreading fix above operates on.
+- **`EcosystemDebugHarnessGPU`** — in-editor OnGUI panel (toggle key) with per-species +/− buttons calling the sim's Add/Remove directly — test the ecosystem with **no tablet / no netcode**.
+- **`OptimisticPopulationStore`** (Networking) — static client-side overlay: records each +/− tap and reports `synced + pending` so the tablet count updates **instantly** instead of lagging until removed fish finish swimming out; keyed per-species-index so it survives card/panel rebuilds (kills the old snap-back). Written by `TabletAddRemoveUIGPU` + Aloysius's `OrganismCardData`; read by those plus `CurrentOrganismsGrid`.
+- **`EcosystemUnlockManagerGPU`** — was described in the 2026-06-18 section but missing from the tree; now listed.
+
+**Removal / swim-out model (was undocumented):** Remove is immediate + concurrent — each press parks one more of the species' TOP schools at an off-screen exit point so it beelines out now; a single `BatchExitRoutine` culls the whole exiting block once all its fish reach the exit (no fixed timer). Spamming Remove sends several out at once. Tunables live in the **"Removal animation (swim-out)"** Inspector group on `EcosystemSimulationGPU` (`_exitArrivalRadius`, `_exitPollInterval`).
+
+**Dead / stale confirmed:**
+- **`EcosystemUIAdapterGPU`** — zero external references anywhere; genuinely dead. Safe to delete (was previously flagged "verify if still used").
+- **`Automatic_Fish_Swimming_CPU/` (both files)** — legacy single-fish CPU demo; **no C# references, BUT their script GUIDs are still on GameObjects in several scenes** (incl. `Boids_Demo`, `MainScene`, `SCENE_MainScene 1`). Almost certainly disabled leftovers — **look at the scene objects before deleting**, don't blind-delete (a plain name-grep misses these GUID refs).
+- `SpeciesDataGPU` — reconfirmed: `StarvationDeathRate` / `StarvationThreshold` / `ReproductionRate` / `NaturalDeathRate` all gone; population is global-ratio only.
+- **`HostSpawner`** looks redundant with `NetworkBootstrap` (both spawn the net-manager on server start) — worth consolidating to one.
+
+**Everything else matched:** Boids_GPU core, Shared, Other, Shader_GUI, and the two live `Boids_CPU` structs (`BoidInformation` / `BoidSpawnData` — still used by the GPU spawners + `FishSwimmingUtility`, NOT dead). `BoidSpawnerBase` has the start-at-zero API (`SchoolCount` / `IsActive` / `SetSchoolConfiguration`) as documented.
+
+> Note: `CLAUDE.md` (project root) still lists `WanderingAffecterGPU.cs` in its GPU Ecosystem Layer table and references `StarvationThreshold`/`StarvationDeathRate` in its Population-dynamics section — both stale. Fix there too when convenient (not done in this pass).
 
 ---
 

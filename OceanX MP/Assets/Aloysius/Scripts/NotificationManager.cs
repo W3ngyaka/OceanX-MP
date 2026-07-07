@@ -15,7 +15,7 @@ public class NotificationManager : MonoBehaviour
 
     public void ShowUnlocked(SpeciesData s)
     {
-        messageText.text = $"You've unlocked the {s.speciesName}!";
+        messageText.text = AluciaLines.Get("notify.unlocked", "You've unlocked the {species}!").Replace("{species}", s.speciesName);
         gameObject.SetActive(true);
         StopAllCoroutines();
         StartCoroutine(AutoHide());

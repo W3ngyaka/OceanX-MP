@@ -376,6 +376,11 @@ namespace OceanX.BoidsGPU.Ecosystem
 
         private float ComputeEcoHealth01()
         {
+            // Health reads the COMMITTED counts (schools mid swim-out already subtracted) so the
+            // bar — on both the big screen and the tablet — reacts the instant Remove is pressed,
+            // in lockstep with the population number, instead of waiting for the fish to leave.
+            Dictionary<SpeciesDataGPU, int> committed = BuildCommittedCounts();
+
             int totalSpecies = 0;
             int aliveSpecies = 0;
             int considered = 0;   // alive species that participate in the food web
@@ -387,7 +392,7 @@ namespace OceanX.BoidsGPU.Ecosystem
                 if (species == null) continue;
                 totalSpecies++;
 
-                int n = CountGroups(species);
+                int n = CountIn(committed, species);
                 if (n <= 0) continue;
                 aliveSpecies++;
 
@@ -396,7 +401,7 @@ namespace OceanX.BoidsGPU.Ecosystem
                 if (HasAny(species.PredatorSpecies) || HasAny(species.PreySpecies))
                 {
                     considered++;
-                    if (PopulationPressure(species, _schoolCount) == 0) balanced++;
+                    if (PopulationPressure(species, committed) == 0) balanced++;
                 }
             }
 
@@ -411,6 +416,21 @@ namespace OceanX.BoidsGPU.Ecosystem
                           + _healthBalanceWeight   * balance
                           + _healthApexWeight      * apex) / weightSum;
             return Mathf.Clamp01(health);
+        }
+
+        // Reused scratch dict for the committed-count snapshot (raw minus schools swimming out) so
+        // eco-health can be recomputed every frame without allocating.
+        private readonly Dictionary<SpeciesDataGPU, int> _committedScratch = new Dictionary<SpeciesDataGPU, int>();
+
+        // Builds a per-species snapshot of COMMITTED school counts: the raw count minus any schools
+        // currently swimming out. This is the count the player has effectively committed to, and what
+        // the UI (population numbers + eco-health) should reflect the instant Remove is pressed.
+        private Dictionary<SpeciesDataGPU, int> BuildCommittedCounts()
+        {
+            _committedScratch.Clear();
+            foreach (KeyValuePair<SpeciesDataGPU, int> kv in _schoolCount)
+                _committedScratch[kv.Key] = Mathf.Max(0, kv.Value - ExitingCount(kv.Key));
+            return _committedScratch;
         }
 
         // Count/sum helpers over a snapshot or the live dictionary.

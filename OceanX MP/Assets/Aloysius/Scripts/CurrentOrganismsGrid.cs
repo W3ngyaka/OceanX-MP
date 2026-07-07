@@ -27,8 +27,11 @@ public class CurrentOrganismsGrid : MonoBehaviour
             int index = TabletEcosystemUIGPU.Instance.GetSpeciesIndex(bubble.data.gpuSpecies);
             if (index < 0) continue;
 
+            // Use the optimistic count (host count + not-yet-confirmed taps) so a species the
+            // player just removed to zero doesn't get a card recreated on panel switch while its
+            // fish are still swimming out, and an optimistically-added one shows up right away.
             int pop = EcosystemNetworkManagerGPU.Instance != null
-                ? EcosystemNetworkManagerGPU.Instance.GetPopulation(index)
+                ? OptimisticPopulationStore.Display(index)
                 : 0;
 
             if (pop <= 0) continue; // only show species actually added

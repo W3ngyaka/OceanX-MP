@@ -1,26 +1,28 @@
-speciesName,sciName,role,iucnStatus,description,diet,habitat,funFact,imageFile
-Blacktip Reef Shark,Carcharhinus melanopterus,Keystone Species,,"The reef's apex predator. As a keystone species it keeps prey populations in check, and the whole ecosystem depends on its presence to stay in balance.",,,,blacktip_reef_shark.png
-Giant Moray,Gymnothorax javanicus,Tertiary Consumer,,A large ambush predator that hides in reef crevices by day and hunts fish and crustaceans at night.,,,,giant_moray.png
-Brown-Marbled Grouper,Epinephelus fuscoguttatus,Tertiary Consumer,,A heavy-bodied ambush predator that lurks near the reef and engulfs prey with a powerful suction strike.,,,,brown_marbled_grouper.png
-Bluefin Trevally,Caranx melampygus,Secondary Consumer,,"A fast, roaming hunter that chases down schooling fish across the reef.",,,,bluefin_trevally.png
-Russells Snapper,Lutjanus russellii,Secondary Consumer,,A schooling predator that patrols the reef edge feeding on smaller fish and invertebrates.,,,,russells_snapper.png
-Bluespotted Ray,Taeniura lymma,Secondary Consumer,,"A ribbontail ray that glides over the sand, using electroreception to find buried prey.",,,,bluespotted_ray.png
-Yellowstripe Scad,Selaroides leptolepis,Secondary Consumer,,"A schooling baitfish that moves in tight, shimmering groups for safety in numbers.",,,,yellowstripe_scad.png
-Streaked Spinefoot,Siganus javus,Primary Consumer,Least Concern,"Streaked spinefoot are medium-sized schooling rabbitfish of Indo-Pacific coastal waters, lagoons, and reefs. 
+speciesName,sciName,iucnStatus,description,diet,habitat,imageFile
+Blacktip Reef Shark,Carcharhinus melanopterus,Vulnerable ,"Blacktip reef sharks are medium, sedentary predators of tropical Indo-Pacific coral reefs. They hunt small fish, mollusks, crustaceans, and occasionally small rays. 
 
-Feeding in small groups on algae, seagrass, and sponges, they help control algal growth and defend themselves with venomous fin spines.","Benthic algae, floating phytoplankton",,,Streakedspinefoot.png
-Bullethead Parrotfish,Chlorurus sordidus,Primary Consumer,Vulnerable,"Bullethead parrotfish are medium-sized Indo-Pacific herbivores that scrape algae from coral with fused beak-like teeth. 
+Generally timid and solitary, they gather only during mass hunting or for mating.","Fish, mollusks, crustaceans, rays",,blacktip.png
+Giant Moray,Gymnothorax javanicus,Least Concern,A large ambush predator that hides in reef crevices by day and hunts fish and crustaceans at night.,,,giant_moray.png
+Brown-Marbled Grouper,Epinephelus fuscoguttatus,Vulnerable,A heavy-bodied ambush predator that lurks near the reef and engulfs prey with a powerful suction strike.,,,brown_marbled_grouper.png
+Bluefin Trevally,Caranx melampygus,Least Concern,"A fast, roaming hunter that chases down schooling fish across the reef.",,,bluefin_trevally.png
+Russells Snapper,Lutjanus russellii,Least Concern,A schooling predator that patrols the reef edge feeding on smaller fish and invertebrates.,,,russells_snapper.png
+Bluespotted Ray,Taeniura lymma,Near Threatened,"A ribbontail ray that glides over the sand, using electroreception to find buried prey.",,,bluespotted_ray.png
+Yellowstripe Scad,Selaroides leptolepis,Least Concern,"A schooling baitfish that moves in tight, shimmering groups for safety in numbers.",,,yellowstripe_scad.png
+Streaked Spinefoot,Siganus javus,Least Concern,"Streaked spinefoot are medium-sized schooling rabbitfish of Indo-Pacific coastal waters, lagoons, and reefs. 
+
+Feeding in small groups on algae, seagrass, and sponges, they help control algal growth and defend themselves with venomous fin spines.","Benthic algae, floating phytoplankton",,Streakedspinefoot.png
+Bullethead Parrotfish,Chlorurus sordidus,Vulnerable,"Bullethead parrotfish are medium-sized Indo-Pacific herbivores that scrape algae from coral with fused beak-like teeth. 
 
 They can change sex, females becoming terminal males displaying vivid blue-green bodies with pinkish scale margins and bluish snouts.
-"," Benthic microalgae, zooplankton",,,Parrotfish.png
-Eyestripe Surgeonfish,Acanthurus dussumieri,Primary Consumer,Least Concern,"A large Indo-Pacific herbivore, the eyestripe surgeonfish grazes algal films and detritus from reef surfaces and sand, helping control algal growth. 
+"," Benthic microalgae, zooplankton",,Parrotfish.png
+Eyestripe Surgeonfish,Acanthurus dussumieri,Least Concern,"A large Indo-Pacific herbivore, the eyestripe surgeonfish grazes algal films and detritus from reef surfaces and sand, helping control algal growth. 
 
-Like all surgeonfish, it carries a sharp spine near its tail for defence and territorial disputes.","Algae, detritus, floating diatoms, planktonic particles",,,Eyestripe.png
-Fringelip Mullet,Crenemugil crenilabis,Primary Consumer,Least Concern,"Fringelip mullets are medium-sized schooling herbivores of shallow tropical Indo Pacific reefs and coasts. 
+Like all surgeonfish, it carries a sharp spine near its tail for defence and territorial disputes.","Algae, detritus, floating diatoms, planktonic particles",,Eyestripe.png
+Fringelip Mullet,Crenemugil crenilabis,Least Concern,"Fringelip mullets are medium-sized schooling herbivores of shallow tropical Indo Pacific reefs and coasts. 
 
-They graze on algae, detritus, and zooplankton from sandy substrates using their distinctive fringed lips.","Benthic microalgae, zooplankton",,,Mullet.png
-Reticulated Damselfish,Dascyllus reticulatus,Primary Consumer,Least Concern,"Reticulated damselfish are small, 9 cm territorial omnivores found across central Indo-Pacific coral reefs. 
+They graze on algae, detritus, and zooplankton from sandy substrates using their distinctive fringed lips.","Benthic microalgae, zooplankton",,Mullet.png
+Reticulated Damselfish,Dascyllus reticulatus,Least Concern,"Reticulated damselfish are small, 9 cm territorial omnivores found across central Indo-Pacific coral reefs. 
 
-Despite their size, they aggressively harass intruders, feeding by day on algae, plankton, and invertebrates, and sheltering in coral at night.","Zooplankton, phytoplankton, benthic algae",Central Indo-Pacific coral reefs,,reticulated.png
-Seagrass,Halophila,Primary Producer,,"A marine flowering plant that forms meadows, providing food and shelter and oxygenating the water.",,,,seagrass.png
-Macroalgae,,Primary Producer,,"Large algae that photosynthesize and form the base of the reef food web, feeding the grazers above.",,,,macroalgae.png
+Despite their size, they aggressively harass intruders, feeding by day on algae, plankton, and invertebrates, and sheltering in coral at night.","Zooplankton, phytoplankton, benthic algae",Central Indo-Pacific coral reefs,reticulated.png
+Seagrass,Halophila,,"A marine flowering plant that forms meadows, providing food and shelter and oxygenating the water.",,,seagrass.png
+Macroalgae,,,"Large algae that photosynthesize and form the base of the reef food web, feeding the grazers above.",,,macroalgae.png

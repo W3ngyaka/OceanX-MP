@@ -193,6 +193,9 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             return;
         }
 
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayTap();
+
         if (punchRoutine != null) StopCoroutine(punchRoutine);
         transform.localScale = baseScale;
         punchRoutine = StartCoroutine(TapPunch());   // tap-punch animation (Aloysius)

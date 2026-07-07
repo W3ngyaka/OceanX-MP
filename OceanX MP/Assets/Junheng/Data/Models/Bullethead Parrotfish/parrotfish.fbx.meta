@@ -1,24 +1,14 @@
 fileFormatVersion: 2
-guid: 4df26dd2ae7047946b63cbf3f4857a44
+guid: abc72da2598c7164fb77221e0f1d6a83
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: EyeTex
-    second: {fileID: 2100000, guid: 2e940ebe243044b42a7125c584e92c30, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MainTex
-    second: {fileID: 2100000, guid: 8c195e2a9c21f514a8ce24b65b91c7d4, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

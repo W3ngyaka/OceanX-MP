@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4df26dd2ae7047946b63cbf3f4857a44
+guid: 7ed5f236dbdc5ba40b210b29e0833153
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,13 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: EyeTex
-    second: {fileID: 2100000, guid: 2e940ebe243044b42a7125c584e92c30, type: 2}
+      name: Material.001
+    second: {fileID: 2100000, guid: 6d8983e2531310e48b989de13b682869, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MainTex
-    second: {fileID: 2100000, guid: 8c195e2a9c21f514a8ce24b65b91c7d4, type: 2}
+      name: Material.002
+    second: {fileID: 2100000, guid: 01bccdc59ede259478b84a891ade192b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-07 (rev 2)_
+_Last updated: 2026-07-08_
 
 ---
 
@@ -744,6 +744,21 @@ The per-species fact-check surface flagged as "not done" is now underway.
 - Akil updated `Assets/Akil/Scenes/SCENE_MainScene.unity` (`18c84bd`) + FBX/material
   passes for damselfish/rabbitfish (`d222255`, `189a5c2`). The three-host-scene
   divergence note below still stands — nothing has converged yet.
+
+---
+
+## What Was Done — 2026-07-08 (JunHeng)
+
+### 🐟 Fixed schools spawning on top of each other when spam-adding
+- **Symptom:** spamming Add spawned several schools **stacked inside each other** at the same spot.
+- **Cause:** new schools swim in from `FishEntryPointGPU` markers, which are **single points with no size**. `ApplyEntrySpawnOrigin` picked a marker **uniformly at random each Add** and placed the whole school exactly on `marker.Position`, so back-to-back Adds (and two species entering at once) piled onto the same point before any school had moved off it.
+- **Fix — all in `EcosystemSimulationGPU`** (exit logic untouched — `PickMarker` / `PickExitPoint` unchanged):
+  - **`PickEntryMarker()`** avoids reusing the previous Add's marker when more than one entry point exists → consecutive schools fan out across gates.
+  - **`ChooseSpreadOrigin()`** jitters each new school **sideways** off the marker (perpendicular to its swim-in direction, so it stays off-screen) and retries a few times to stay clear of the **last 8 spawn origins** (shared across all species); falls back to the most-separated attempt.
+- **Two new Inspector knobs** on `EcosystemSimulationGPU` → **"Entry Spawn Spreading (anti-stacking)"**:
+  - `_entrySpawnJitterRadius` (default `4`) — sideways nudge radius; `0` = old spawn-exactly-on-marker behaviour.
+  - `_entrySpawnMinSeparation` (default `3`) — preferred gap between a new origin and recent ones (~one school's cluster diameter).
+- ⚠ **With only ONE entry marker under heavy spam** there's a hard space limit — add more entry markers (they round-robin) or raise the jitter radius. ⚠ **Not yet play-tested in-editor.**
 
 ---
 

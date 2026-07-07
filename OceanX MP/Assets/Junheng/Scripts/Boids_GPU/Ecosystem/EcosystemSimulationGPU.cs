@@ -77,6 +77,20 @@ namespace OceanX.BoidsGPU.Ecosystem
                  "inside the bounds — so schools get small and large routes.")]
         [SerializeField] private Vector2 _pathSizeMultiplierRange = new Vector2(0.35f, 0.9f);
 
+        [Header("Entry Spawn Spreading (anti-stacking)")]
+        [Tooltip("Sideways jitter radius applied around a chosen entry marker. A marker is a single point, " +
+                 "so schools added in quick succession (spam-Add) would otherwise spawn exactly on top of " +
+                 "each other; this nudges each new school off the marker, perpendicular to its swim-in " +
+                 "direction so it stays off-screen. 0 = spawn exactly on the marker (old behaviour).")]
+        [Min(0f)]
+        [SerializeField] private float _entrySpawnJitterRadius = 4f;
+
+        [Tooltip("Preferred minimum distance between a new school's spawn origin and recently spawned " +
+                 "schools. The jitter above is retried a few times to satisfy this; if it can't, the " +
+                 "farthest-apart attempt is used. Roughly one school's cluster diameter is a good value.")]
+        [Min(0f)]
+        [SerializeField] private float _entrySpawnMinSeparation = 3f;
+
         [Header("Predator-Prey Balance (global)")]
         [Tooltip("Lower edge of the balanced prey:predator ratio (measured in SCHOOL counts). " +
                  "Below this, there are too many predators for the prey — prey shrinks, predators starve.")]
@@ -128,6 +142,12 @@ namespace OceanX.BoidsGPU.Ecosystem
 
         // Reusable scratch list for filtering entry/exit markers by mode (avoids per-call allocation).
         private readonly List<FishEntryPointGPU> _markerScratch = new List<FishEntryPointGPU>();
+
+        // Anti-stacking spawn spreading: the last few entry origins used (most-recent last) plus the last
+        // marker chosen, so back-to-back Adds fan out across different gates and don't pile up on one point.
+        private readonly List<Vector3> _recentEntryOrigins = new List<Vector3>();
+        private FishEntryPointGPU _lastEntryMarker = null;
+        private const int RecentEntryOriginMemory = 8;
 
         // FIFO of pending +1 (add) operations per species. Removes execute immediately (see
         // StartRemoveExitImmediate); only Adds queue — and only while the species is busy swimming schools
@@ -833,17 +853,86 @@ namespace OceanX.BoidsGPU.Ecosystem
         // Off-screen entry points — fish swim in from a marker placed outside the bounds.
         // -------------------------------------------------------------------------
 
-        // Picks a random placed FishEntryPointGPU and tells the spawner to spawn its next school there,
-        // facing the simulation center. If no entry points exist, the spawner keeps its default
-        // in-bounds spawn behaviour (nothing breaks in scenes without markers).
+        // Picks an entry FishEntryPointGPU and tells the spawner to spawn its next school there, facing the
+        // simulation center. To stop schools added in quick succession (spam-Add) piling up on one point,
+        // it (a) avoids reusing the previous marker when more than one exists and (b) jitters the origin
+        // sideways, keeping clear of recently used origins. If no entry points exist, the spawner keeps its
+        // default in-bounds spawn behaviour (nothing breaks in scenes without markers).
         private void ApplyEntrySpawnOrigin(BoidSpawnerGPUMultiTargets spawner)
         {
-            FishEntryPointGPU point = PickMarker(forEntry: true);
+            FishEntryPointGPU point = PickEntryMarker();
             if (point == null) return; // no entry-capable point placed — keep the default in-bounds spawn
 
-            Vector3 origin = point.Position;
+            Vector3 origin = ChooseSpreadOrigin(point);
             Vector3 inward = SimulationBounds.center - origin;
             spawner.SetPendingSpawnOrigin(origin, inward);
+
+            _recentEntryOrigins.Add(origin);
+            if (_recentEntryOrigins.Count > RecentEntryOriginMemory) _recentEntryOrigins.RemoveAt(0);
+            _lastEntryMarker = point;
+        }
+
+        // Picks a random entry-capable marker, preferring one different from the previous spawn's marker so
+        // consecutive schools fan out across the available gates instead of clumping at one.
+        private FishEntryPointGPU PickEntryMarker()
+        {
+            IReadOnlyList<FishEntryPointGPU> all = FishEntryPointGPU.All;
+            if (all == null || all.Count == 0) return null;
+
+            _markerScratch.Clear();
+            for (int i = 0; i < all.Count; i++)
+            {
+                FishEntryPointGPU m = all[i];
+                if (m != null && m.CanEntry) _markerScratch.Add(m);
+            }
+            if (_markerScratch.Count == 0) return null;
+            if (_markerScratch.Count == 1) return _markerScratch[0];
+
+            int idx = Random.Range(0, _markerScratch.Count);
+            if (_markerScratch[idx] == _lastEntryMarker) idx = (idx + 1) % _markerScratch.Count;
+            return _markerScratch[idx];
+        }
+
+        // Nudges the spawn origin off the marker — sideways (perpendicular to the swim-in direction, so it
+        // stays off-screen at the same depth) and away from recently used origins. Tries a handful of
+        // jittered candidates and takes the first that clears _entrySpawnMinSeparation, else the farthest.
+        private Vector3 ChooseSpreadOrigin(FishEntryPointGPU marker)
+        {
+            Vector3 basePos = marker.Position;
+            if (_entrySpawnJitterRadius <= 0f) return basePos;
+
+            Vector3 inward = (SimulationBounds.center - basePos).normalized;
+            if (inward.sqrMagnitude < 1e-6f) inward = Vector3.forward;
+            Vector3 right = Vector3.Cross(Vector3.up, inward);
+            if (right.sqrMagnitude < 1e-6f) right = Vector3.Cross(Vector3.forward, inward);
+            right.Normalize();
+            Vector3 up = Vector3.Cross(inward, right).normalized;
+
+            Vector3 best = basePos;
+            float bestMinDist = -1f;
+            const int tries = 6;
+            for (int t = 0; t < tries; t++)
+            {
+                Vector2 disk = Random.insideUnitCircle * _entrySpawnJitterRadius;
+                Vector3 candidate = basePos + right * disk.x + up * disk.y;
+
+                float minDist = NearestRecentOriginDistance(candidate);
+                if (minDist >= _entrySpawnMinSeparation) return candidate; // clears the gap — good enough
+                if (minDist > bestMinDist) { bestMinDist = minDist; best = candidate; }
+            }
+            return best; // nothing cleared the gap — use the most-separated attempt
+        }
+
+        // Distance from p to the closest recently used spawn origin (+Infinity when there are none yet).
+        private float NearestRecentOriginDistance(Vector3 p)
+        {
+            float min = float.PositiveInfinity;
+            for (int i = 0; i < _recentEntryOrigins.Count; i++)
+            {
+                float d = Vector3.Distance(p, _recentEntryOrigins[i]);
+                if (d < min) min = d;
+            }
+            return min;
         }
 
         // Picks a random enabled marker usable for entry (or exit). Returns null if none match.

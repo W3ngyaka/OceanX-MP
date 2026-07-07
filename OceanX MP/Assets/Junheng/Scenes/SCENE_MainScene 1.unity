@@ -20892,8 +20892,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _simulationAreaBounds:
-    m_Center: {x: 11.8, y: 13.6, z: 15.5}
-    m_Extent: {x: 23.5, y: 10.7, z: 28.7}
+    m_Center: {x: 1.65, y: 12.7, z: 15.5}
+    m_Extent: {x: 18.4, y: 9.2, z: 24.6}
   _simulationSpeedMultiplier: 1
   _globalAffecters:
   - {fileID: 1667039964}
@@ -20928,7 +20928,7 @@ Transform:
   m_GameObject: {fileID: 222838831}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.6, y: -14.9, z: 0.7}
+  m_LocalPosition: {x: 1.6, y: -15.8, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20966,6 +20966,8 @@ MonoBehaviour:
   _targetSpeedFractionRange: {x: 0.45, y: 0.7}
   _pathBoundsSafeZone: 3
   _pathSizeMultiplierRange: {x: 0.35, y: 0.9}
+  _entrySpawnJitterRadius: 4
+  _entrySpawnMinSeparation: 3
   _ratioBandLow: 1
   _ratioBandHigh: 3
   _growRate: 0.3
@@ -27986,7 +27988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spatialPartitionComputeShader: {fileID: 7200000, guid: 52276fbcb8d5464489c76666df714906, type: 3}
   _safetyBufferCellCount: 12
-  _cellSize: 6
+  _cellSize: 8
   _visualizeOccupancy: 1
   _occupancyVisualizationColor: {r: 1, g: 0, b: 0, a: 1}
   _cellCountX: 0
@@ -71444,7 +71446,7 @@ Transform:
   m_GameObject: {fileID: 745618423}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.2, y: 28.5, z: 14.8}
+  m_LocalPosition: {x: 0.05, y: 28.5, z: 14.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -87346,7 +87348,7 @@ MonoBehaviour:
   _shape: 0
   _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
   _simulationAffecter:
-    Position: {x: 14.059882, y: 8.900002, z: 30.342724}
+    Position: {x: 3.9098823, y: 8, z: 30.342724}
     Radius: 1
     HalfExtents: {x: 1, y: 1, z: 1}
     Rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -136450,7 +136452,7 @@ MonoBehaviour:
   _shape: 0
   _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
   _simulationAffecter:
-    Position: {x: 27.339104, y: 11.2494335, z: 21.947197}
+    Position: {x: 17.189104, y: 10.349432, z: 21.947197}
     Radius: 1
     HalfExtents: {x: 1, y: 1, z: 1}
     Rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -169017,7 +169019,7 @@ MonoBehaviour:
   _shape: 0
   _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
   _simulationAffecter:
-    Position: {x: 23.929964, y: 11.2494335, z: 15.087839}
+    Position: {x: 13.779964, y: 10.349432, z: 15.087839}
     Radius: 1
     HalfExtents: {x: 1, y: 1, z: 1}
     Rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -181458,7 +181460,7 @@ MonoBehaviour:
   _shape: 0
   _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
   _simulationAffecter:
-    Position: {x: 23.929964, y: 11.2494335, z: 23.508009}
+    Position: {x: 13.779964, y: 10.349432, z: 23.508009}
     Radius: 1
     HalfExtents: {x: 1, y: 1, z: 1}
     Rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -201723,7 +201725,7 @@ MonoBehaviour:
   _shape: 0
   _visualizationColor: {r: 0, g: 0, b: 1, a: 1}
   _simulationAffecter:
-    Position: {x: 13.990055, y: 11.2494335, z: 7.8177414}
+    Position: {x: 3.8400557, y: 10.349432, z: 7.8177414}
     Radius: 1
     HalfExtents: {x: 1, y: 1, z: 1}
     Rotation: {x: -0, y: -0, z: -0, w: 1}

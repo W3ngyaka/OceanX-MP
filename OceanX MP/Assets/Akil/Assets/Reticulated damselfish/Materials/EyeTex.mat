@@ -99,7 +99,7 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _AutomaticSwimSpeed: 1.4
+    - _AutomaticSwimSpeed: 1.7
     - _AutomaticSwimVisualization: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -134,7 +134,7 @@ Material:
     - _TailMaskFalloff: 1.6
     - _TailRollAmplitude: 0
     - _TailRollOffset: 0
-    - _TailWaveLength: 0.73
+    - _TailWaveLength: 0.049
     - _TailYawAmplitude: 0.016
     - _UVSec: 0
     - _VisualizeMask: 0

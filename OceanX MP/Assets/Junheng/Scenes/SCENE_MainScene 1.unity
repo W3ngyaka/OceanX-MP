@@ -659,15 +659,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.330444
+      value: -12.452566
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.296752
+      value: -13.062998
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.9939115
+      value: 3.326752
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalRotation.w
@@ -30190,15 +30190,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.330444
+      value: -12.452566
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.296752
+      value: -13.062998
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.9939115
+      value: 3.326752
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -42349,8 +42349,8 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: -6252075464324718682, guid: 215ad0656eb147b4ba5995984edcfa25, type: 3}
-    BoidMaterial: {fileID: 2100000, guid: e3efbcb4d764fb443bfe4ca7629fdfb2, type: 2}
+    BoidMesh: {fileID: -5495902117074765545, guid: 47b3ddb44b3e5b24aa0b7f58b966a117, type: 3}
+    BoidMaterial: {fileID: 2100000, guid: 8bce15053aa6f4042ad1a6fd11bb4fa5, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: 1ad5c3d90a7d9a147ad18ee8018a1008, type: 2}
     Targets:
     - {fileID: 0}
@@ -151582,15 +151582,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.330444
+      value: -12.452566
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.296752
+      value: -13.062998
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.9939115
+      value: 3.326752
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -157620,8 +157620,8 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: 4023981112819473776, guid: 09b07def93206674c838a112bb9c6e43, type: 3}
-    BoidMaterial: {fileID: 2100000, guid: 5cb625ec19658aa4db5014d6bad643d3, type: 2}
+    BoidMesh: {fileID: 2821799040723017115, guid: dfa24d62b9fa9a148a8abbe1506fe3f2, type: 3}
+    BoidMaterial: {fileID: 2100000, guid: a2891ae8528222e4390d8275984f628f, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: a02bbd14df4f6c44e9e79331a78c8ccf, type: 2}
     Targets:
     - {fileID: 0}

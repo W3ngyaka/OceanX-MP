@@ -24,15 +24,16 @@ public class ModalController : MonoBehaviour
     public CanvasGroup DimOverlay;
     public float dimFadeDuration = 0.25f;
 
-    [Header("Content slots — drag YOUR text/image elements here")]
-    [Tooltip("Species photo.")]                       public Image photo;
-    [Tooltip("Species (common) name.")]               public TMP_Text titleText;
-    [Tooltip("Scientific name value.")]               public TMP_Text sciNameText;
-    [Tooltip("Diet value.")]                          public TMP_Text dietText;
-    [Tooltip("IUCN status value, e.g. 'Least Concern'.")] public TMP_Text iucnStatusText;
-    [Tooltip("Description body.")]                     public TMP_Text descriptionText;
+    
+    public Image photo;
+    public Image IUCNPhoto;
+    public TMP_Text titleText;
+    public TMP_Text sciNameText;
+    public TMP_Text dietText;
+    public TMP_Text iucnStatusText;
+    public TMP_Text descriptionText;
 
-    private Image img;                  // the panel background
+    private Image img;                  
     private DimFader dimFader;
 
     void Awake()
@@ -82,14 +83,29 @@ public class ModalController : MonoBehaviour
         SetText(sciNameText, e != null && !string.IsNullOrWhiteSpace(e.sciName) ? e.sciName : (data != null ? data.sciName : ""));
         SetText(dietText, e?.diet);
         SetText(iucnStatusText, e?.iucnStatus);
+        if (iucnStatusText != null)
+        {
+            var col = IucnColor(e?.iucnStatus);
+            if (col.HasValue) iucnStatusText.color = col.Value;   // else keep its authored colour
+        }
         SetText(descriptionText, e?.description);
 
+        // Main species photo.
         Sprite pic = e != null ? SpeciesContentDB.GetImage(e.imageFile) : null;
         if (photo != null)
         {
             photo.sprite = pic;
             photo.enabled = pic != null;
             photo.preserveAspect = true;
+        }
+
+        // Extra image (e.g. IUCN badge) — its own 'iucnImage' CSV column + its own slot.
+        Sprite iucnPic = e != null ? SpeciesContentDB.GetImage(e.iucnImage) : null;
+        if (IUCNPhoto != null)
+        {
+            IUCNPhoto.sprite = iucnPic;
+            IUCNPhoto.enabled = iucnPic != null;
+            IUCNPhoto.preserveAspect = true;
         }
     }
 
@@ -98,6 +114,21 @@ public class ModalController : MonoBehaviour
     {
         if (t != null) t.text = val ?? "";
     }
+
+    // IUCN status -> label colour. Returns null to leave the text's own colour untouched
+    // (so any status not listed here keeps whatever colour you set in the design).
+    static Color? IucnColor(string status)
+    {
+        switch ((status ?? "").Trim().ToLowerInvariant())
+        {
+            case "least concern":   return Hex("008E6A");
+            case "vulnerable":      return Hex("cc9900");
+            case "near threatened": return Hex("006666");
+            default: return null;
+        }
+    }
+
+    static Color Hex(string hex) { ColorUtility.TryParseHtmlString("#" + hex, out var c); return c; }
 
     void Show()
     {

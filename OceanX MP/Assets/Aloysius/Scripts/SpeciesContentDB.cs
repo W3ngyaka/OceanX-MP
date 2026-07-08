@@ -9,7 +9,7 @@ public static class SpeciesContentDB
 {
     public class Entry
     {
-        public string speciesName, sciName, role, iucnStatus, description, diet, habitat, funFact, imageFile;
+        public string speciesName, sciName, role, iucnStatus, description, diet, habitat, funFact, imageFile, iucnImage;
     }
 
     const string CsvFile = "SpeciesContent.csv";
@@ -76,6 +76,7 @@ public static class SpeciesContentDB
                 habitat     = Field(row, col, "habitat"),
                 funFact     = Field(row, col, "funfact"),
                 imageFile   = Field(row, col, "imagefile"),
+                iucnImage   = Field(row, col, "iucnimage"),
             };
         }
     }

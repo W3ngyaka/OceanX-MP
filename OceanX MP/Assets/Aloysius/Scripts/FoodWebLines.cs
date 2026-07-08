@@ -264,26 +264,28 @@ public class FoodWebLines : MonoBehaviour
     {
         if (linePrefab == null) { Debug.LogError("linePrefab is null!"); return; }
 
-        Vector2 start = from.position;
-        Vector2 end = to.position;
-        Vector2 dir = end - start;
-        float dist = dir.magnitude;
-        if (dist < 0.001f) return;
-        Vector2 unit = dir / dist;
+        Vector2 startC = from.position;   // bubble centres
+        Vector2 endC = to.position;
+        if (Vector2.Distance(startC, endC) < 0.001f) return;
 
-        float rFrom = BubbleRadius(from);
-        float rTo = BubbleRadius(to);
-        if (rFrom + rTo < dist)
-        {
-            start += unit * rFrom;
-            end -= unit * rTo;
-            dir = end - start;
-            dist = dir.magnitude;
-            if (dist < 0.001f) return;
-            unit = dir / dist;
-        }
+        // Curve shape from the centres so it stays stable regardless of edge-trimming.
+        Vector2 control = ComputeCurveControl(startC, endC, from, to);
 
-        Vector2 control = ComputeCurveControl(start, end, from, to);
+        // Trim each end back to the bubble rim ALONG the curve's approach direction
+        // (control -> centre), so the line meets the edge and the arrowhead points AT the
+        // bubble's centre instead of grazing its side.
+        Vector2 endTan = endC - control;
+        if (endTan.sqrMagnitude < 0.0001f) endTan = endC - startC;
+        endTan.Normalize();
+        Vector2 startTan = startC - control;
+        if (startTan.sqrMagnitude < 0.0001f) startTan = startC - endC;
+        startTan.Normalize();
+
+        Vector2 start = startC - startTan * BubbleRadius(from);
+        Vector2 end = endC - endTan * BubbleRadius(to);
+
+        // If the bubbles are so close the trims cross over, fall back to centre-to-centre.
+        if (Vector2.Dot(end - start, endC - startC) <= 0f) { start = startC; end = endC; }
         // Segment count scales with the curve length so every dash is the same size,
         // whether the link is short or long.
         float approxLen = Vector2.Distance(start, control) + Vector2.Distance(control, end);
@@ -301,7 +303,7 @@ public class FoodWebLines : MonoBehaviour
         if (drawArrow)
         {
             Vector2 tangent = end - control;
-            if (tangent.sqrMagnitude < 0.0001f) tangent = unit;
+            if (tangent.sqrMagnitude < 0.0001f) tangent = endTan;
             AddArrowHeadInto(parent, list, end, tangent.normalized, color, thickness);
         }
 

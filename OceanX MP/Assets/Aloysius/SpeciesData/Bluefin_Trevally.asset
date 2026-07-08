@@ -15,7 +15,7 @@ MonoBehaviour:
   speciesName: Bluefin Trevally
   sciName: Caranx melampygus
   tier: Secondary Consumer
-  startUnlocked: 0
+  startUnlocked: 1
   minHealth: 10
   gpuSpecies: {fileID: 11400000, guid: 892ea29c7c18d0044bbe2dcb3933ad9d, type: 2}
   requires:

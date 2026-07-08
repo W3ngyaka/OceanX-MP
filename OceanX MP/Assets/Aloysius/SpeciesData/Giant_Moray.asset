@@ -15,7 +15,7 @@ MonoBehaviour:
   speciesName: Giant Moray
   sciName: Gymnothorax javanicus
   tier: Tertiary Consumer
-  startUnlocked: 0
+  startUnlocked: 1
   minHealth: 40
   gpuSpecies: {fileID: 11400000, guid: 14da079c95523e54cbaaac13fca15745, type: 2}
   requires:

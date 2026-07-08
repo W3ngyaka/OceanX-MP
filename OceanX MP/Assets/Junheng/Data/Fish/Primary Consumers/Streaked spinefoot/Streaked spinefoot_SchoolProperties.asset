@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 10
   ObstacleAvoidanceRange: 3
-  SeparationRange: 0.6
-  CohesionWeight: 0.6
-  AlignmentWeight: 0.6
+  SeparationRange: 0.5
+  CohesionWeight: 0.75
+  AlignmentWeight: 0.8
   SeparationWeight: 1
-  TargetWeight: 0.9
+  TargetWeight: 0.85
   MovementProperties: {fileID: 0}
   MotionRenderProperties: {fileID: 0}

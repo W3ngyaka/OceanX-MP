@@ -786,6 +786,41 @@ Read every `.cs` under `Assets/Junheng/` and reconciled this doc's file tree + c
 
 > Note: `CLAUDE.md` (project root) still lists `WanderingAffecterGPU.cs` in its GPU Ecosystem Layer table and references `StarvationThreshold`/`StarvationDeathRate` in its Population-dynamics section — both stale. Fix there too when convenient (not done in this pass).
 
+### 🐟 Fish flocking + numbers rebuilt from the research doc (SUPERSEDES the 2026-07-07 archetype pass)
+
+Re-tuned all 12 species' `FishSchoolProperties` + `FishPerSchool`/`MaxSchools` **directly from the biology** in `OceanX MP Research Document.docx` (Akil Hussain — per-species *roaming* + *social* behaviour), instead of the earlier 5-archetype grouping. **Fixes the "solitary fish still flock" bug** (previously several solitary/small-group species carried schooling values, e.g. parrotfish & surgeonfish at 10 fish/school with Clownfish-style cohesion).
+
+**Key lever:** cohesion + alignment only bind fish *within the same school*, so `FishPerSchool = 1` makes a species physically unable to flock (multiple individuals then only *repel* via separation → realistic for solitary/territorial fish).
+
+**Behaviour tiers (from the doc's "Social behaviour" line):**
+- **Solitary — never school** (`FishPerSchool 1`, cohesion/align 0.05–0.15, wide separation): Blacktip shark, Brown-marbled grouper, Giant moray, Bluespotted ray, **Bullethead parrotfish**.
+- **Pairs / small loose groups** (`FishPerSchool 2–3`, cohesion ~0.25–0.3): Bluefin trevally, Eyestripe surgeonfish.
+- **Loose aggregation** (`FishPerSchool 7`, cohesion 0.4): Russell's snapper.
+- **Tight / large schools** (high `FishPerSchool` + high cohesion/align, tight separation): Yellowstripe scad (25), Fringelip mullet (18), Streaked spinefoot (9), Reticulated damselfish (8).
+
+**Final values** (`ObstacleAvoidanceRange 3` and `SeparationWeight 1` unchanged on all):
+
+| Species | Vision | SepRange | Cohesion | Align | Target | FishPerSchool | MaxSchools |
+|---|---|---|---|---|---|---|---|
+| Blacktip reef shark | 22 | 3 | 0.15 | 0.15 | 0.7 | 1 | 3 |
+| Brown-marbled grouper | 8 | 3 | 0.05 | 0.05 | 1.4 | 1 | 4 |
+| Giant moray | 8 | 3 | 0.05 | 0.05 | 1.5 | 1 | 4 |
+| Bluefin trevally | 18 | 1.5 | 0.25 | 0.3 | 0.85 | 2 | 5 |
+| Russell's snapper | 12 | 1 | 0.4 | 0.3 | 0.85 | 7 | 5 |
+| Yellowstripe scad | 14 | 0.3 | 1.3 | 1.5 | 0.6 | 25 | 6 |
+| Bluespotted ribbontail ray | 8 | 2.5 | 0.1 | 0.1 | 1.2 | 1 | 5 |
+| Fringelip mullet | 12 | 0.5 | 0.9 | 1 | 0.8 | 18 | 7 |
+| Bullethead parrotfish | 12 | 3 | 0.1 | 0.1 | 1.2 | 1 | 6 |
+| Streaked spinefoot | 10 | 0.5 | 0.75 | 0.8 | 0.85 | 9 | 6 |
+| Eyestripe surgeonfish | 12 | 1.3 | 0.3 | 0.35 | 0.9 | 3 | 6 |
+| Reticulated damselfish | 8 | 0.35 | 1 | 0.7 | 1.2 | 8 | 7 |
+
+**⚠ Bullethead parrotfish = the MODELLED SEX drives behaviour.** Doc: "males highly solitary, females move in small groups." Our texture/model is the **terminal-phase male** (vivid blue-green), so it's set **solitary** (`FishPerSchool 1`, cohesion 0.1, wide separation, territorial). If a **female/initial-phase** parrotfish model is added later, give *that* asset the small-group values (`FishPerSchool ~3`, cohesion ~0.3) — don't overwrite the male's.
+
+- **`MaxSchools`** now follows a trophic pyramid (apex 3 → tertiary 4 → secondary 5–6 → primary 6–7) so "remove the shark → prey overpopulate" reads more clearly.
+- **Speed untouched** — `FishMovementProperties` (CruisingSpeed/MaxSpeed) was NOT changed this pass; the doc has size/speed hints (e.g. moray "stealth not speed", scad "rapid directional changes") if a per-species speed pass is wanted next.
+- ⚠ **Not yet play-tested in-editor.**
+
 ---
 
 ## Prototype Specification (`prototype/oceanx-prototype.html`)

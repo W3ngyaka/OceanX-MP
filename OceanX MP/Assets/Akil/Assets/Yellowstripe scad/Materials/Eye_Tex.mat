@@ -86,7 +86,7 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _AutomaticSwimSpeed: 0.84
+    - _AutomaticSwimSpeed: 1.14
     - _AutomaticSwimVisualization: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -121,14 +121,14 @@ Material:
     - _TailMaskFalloff: 1.7
     - _TailRollAmplitude: 0.057
     - _TailRollOffset: -0.2
-    - _TailWaveLength: 1
-    - _TailYawAmplitude: 0.045
+    - _TailWaveLength: 0.25
+    - _TailYawAmplitude: 0.035
     - _UVSec: 0
     - _VisualizeMask: 0
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
-    - _YawRotationAmplitude: 0.0017
-    - _YawRotationOffset: -0.51
+    - _YawRotationAmplitude: 0.0092
+    - _YawRotationOffset: -1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

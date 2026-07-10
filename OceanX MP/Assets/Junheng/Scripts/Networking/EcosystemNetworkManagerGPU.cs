@@ -21,6 +21,13 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     private readonly NetworkVariable<float> _ecoHealth = new NetworkVariable<float>(0f);
     private float _syncTimer;
 
+    // Server-authoritative "the experience has begun" flag for the cross-device attract flow:
+    // the large screen sits on its title/attract state and the tablet shows "Tap to Start"; the
+    // tablet's tap calls RequestStartRpc(), the host flips this, and BOTH screens react.
+    private readonly NetworkVariable<bool> _hasStarted = new NetworkVariable<bool>(false);
+    public bool HasStarted => _hasStarted.Value;
+    public event System.Action OnStarted;   // fires on host + client when the flag turns true
+
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -32,6 +39,9 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         Instance = this;
+
+        // Both host and client watch the shared start flag so their screens leave the attract state together.
+        _hasStarted.OnValueChanged += (_, now) => { if (now) OnStarted?.Invoke(); };
 
         if (!IsServer) return;
 
@@ -98,6 +108,14 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         if ((uint)speciesIndex >= (uint)_simulation.Ecosystem.Species.Count) return;
         _simulation.RemoveSpecies(_simulation.Ecosystem.Species[speciesIndex]);
         SyncPopulations();   // reflect the change on the tablet right away
+    }
+
+    // Called from the tablet's "Tap to Start" — runs on the host and flips the shared start flag
+    // that both the large screen and tablet watch (via OnStarted / HasStarted).
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void RequestStartRpc()
+    {
+        if (!_hasStarted.Value) _hasStarted.Value = true;
     }
 
     // Read by the tablet UI (ModalController) every frame.

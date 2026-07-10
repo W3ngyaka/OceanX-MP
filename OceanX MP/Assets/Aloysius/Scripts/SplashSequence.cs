@@ -9,8 +9,12 @@ using UnityEngine.SceneManagement;
 public class SplashSequence : MonoBehaviour
 {
     [Header("Scene")]
-    [Tooltip("Scene to load on tap. MUST be added to Build Settings.")]
-    public string gameScene = "new netcode 1";
+    [Tooltip("Scene the splash leads to (large screen). MUST be in Build Settings.")]
+    public string gameScene = "SceneTemp";
+
+    [Tooltip("On a mobile (tablet) build, skip the logo splash and boot straight into this scene " +
+             "instead. Leave empty to always run the full splash.")]
+    public string tabletScene = "new netcode 1";
 
     [Header("Logos (shown in order)")]
     [Tooltip("The single Image the logos are shown in (reused for each).")]
@@ -20,7 +24,12 @@ public class SplashSequence : MonoBehaviour
     public float fadeDuration = 0.4f;
     public float holdDuration = 1.3f;
 
-    [Header("Tap to start")]
+    [Header("After the logos")]
+    [Tooltip("ON  = show 'Tap to Start' and wait for a tap  (use on the interactive TABLET).\n" +
+             "OFF = auto-advance into the game once logos finish + scene loads (use on the passive LARGE SCREEN).")]
+    public bool waitForTap = true;
+
+    [Header("Tap to start (only used when Wait For Tap is ON)")]
     [Tooltip("The 'Tap to Start!' prompt — hidden until the logos finish.")]
     public GameObject tapToStart;
     [Tooltip("Full-screen button that catches the tap (wired automatically).")]
@@ -43,8 +52,21 @@ public class SplashSequence : MonoBehaviour
 
     IEnumerator Run()
     {
-        // Preload the game scene in the background, but don't switch to it yet.
-        _load = SceneManager.LoadSceneAsync(gameScene);
+        // Route to whichever destination is actually IN THIS build: the large-screen scene if
+        // present, else the tablet scene. This lets one splash serve BOTH builds — the large-screen
+        // build ships SceneTemp, the tablet build ships new netcode 1, and each auto-picks its own.
+        string target = gameScene;
+        if (!Application.CanStreamedLevelBeLoaded(gameScene) &&
+            !string.IsNullOrEmpty(tabletScene) && Application.CanStreamedLevelBeLoaded(tabletScene))
+            target = tabletScene;
+
+        // Preload the destination in the background, but don't switch to it yet.
+        _load = SceneManager.LoadSceneAsync(target);
+        if (_load == null)
+        {
+            Debug.LogError($"[SplashSequence] Neither '{gameScene}' nor '{tabletScene}' is in Build Settings.");
+            yield break;
+        }
         _load.allowSceneActivation = false;
 
         // Play the logos.
@@ -66,13 +88,16 @@ public class SplashSequence : MonoBehaviour
             logoImage.enabled = false;
         }
 
-        // Show the tap prompt, then wait for a tap AND the scene to have finished loading.
-        if (tapToStart != null) tapToStart.SetActive(true);
-        _ready = true;
+        if (waitForTap)
+        {
+            // Interactive tablet: show the prompt and wait for a tap.
+            if (tapToStart != null) tapToStart.SetActive(true);
+            _ready = true;
+            while (!_tapped) yield return null;
+        }
+        // else: passive large screen — auto-advance once the scene is ready.
 
-        while (!_tapped) yield return null;
         while (_load != null && _load.progress < 0.9f) yield return null;
-
         if (_load != null) _load.allowSceneActivation = true;
     }
 

@@ -823,6 +823,95 @@ Re-tuned all 12 species' `FishSchoolProperties` + `FishPerSchool`/`MaxSchools` *
 
 ---
 
+## What Was Done — 2026-07-11 (JunHeng) — Editable content pipeline (CSV + live-fetch)
+
+Reworked the fact-checkable text so non-technical checkers (incl. overseas) can edit what the game says
+in a spreadsheet, and — with a published-sheet URL — see it in the game **on next launch with no rebuild**,
+on the host **and** the tablet. Everything degrades gracefully (nothing breaks offline / with no sheet).
+
+### ✅ Alucia dialogue → event/variant model (`StreamingAssets/alucia_lines.csv`)
+- New columns: **`Event, Species, Mood, Weight, Text, Notes`** (was `Key, Context, Mood, Text`).
+  - **Event** = the stable ID the game matches on (old keys preserved: `intro.1`, `health.critical`, `hint.withReq.1-4`, …).
+  - **Multiple rows per Event = variants** — the game picks one (weighted, no immediate repeat) so she doesn't
+    sound repetitive. Checkers add a variant by copying a row.
+  - **Species** (optional) scopes a line to one fish; blank = any fish. Species-specific rows win over generic.
+  - **Mood** (Calm/Warn/Win) now actually drives the bubble tint for the new ecological lines.
+  - Rows whose Event starts with `#` are comments (there's a built-in instructions/legend block at the top).
+- **New ecological events** (per-species): `species.overpopulated`, `species.underpopulated`, `species.extinct`,
+  `species.added` — this is the "add a hint if a certain fish overpopulates" ask, now **data-only** for checkers.
+- `AluciaLines.Get(key, fallback)` is unchanged, so `AluciaController` / `NotificationManager` /
+  `SpeciesUnlockReveal` were **not touched**. New `AluciaLines.GetLine(event, species)` returns text + mood.
+
+### ✅ Species info cards → stable ids (`StreamingAssets/SpeciesContent.csv`)
+- Added a stable **`id`** column (e.g. `blacktip_reef_shark`) as the real match key, with `speciesName` as
+  display text — so a name can be reworded/translated later **without breaking the card**. Also added
+  `habitat` / `funFact` columns the code already expected. `SpeciesContentDB` now indexes by **both** id and
+  name, so either resolves. `SpeciesData.contentId` (new, optional) + one line in `ModalController` use it.
+
+### ✅ Live-fetch content service (new)
+- **`Assets/Junheng/Scripts/Content/ContentService.cs`** — downloads each CSV from its published URL at launch
+  → caches to `persistentDataPath` → falls back to the baked `StreamingAssets` copy → then the hardcoded lines.
+  This also **fixes tablet editing**: baked StreamingAssets is unreadable on Android, but the downloaded cache is.
+- **`ContentService.LocalPathFor(file)`** is what the loaders read; it works with or without a `ContentService`
+  in the scene (no service = baked copy, exactly like before).
+- **`Assets/Junheng/Scripts/Content/CsvUtil.cs`** — one robust RFC-4180 parser (quotes, commas, embedded
+  newlines) now shared by both loaders (previously `AluciaLines` couldn't handle a line break inside a cell).
+
+### ✅ Ecosystem → Alucia reactions (new)
+- **`Assets/Junheng/Scripts/Content/AluciaEcologyEvents.cs`** — polls the sim, detects a species going
+  over/under-populated / extinct / added, and speaks the matching CSV line via `AluciaController.Say`.
+- Added **`EcosystemSimulationGPU.GetBalance(species)`** + `SpeciesBalance` enum (reuses the existing ratio
+  logic) so the reaction agrees with the actual dynamics.
+
+### Files touched
+- **New:** `Junheng/Scripts/Content/{CsvUtil,ContentService,AluciaEcologyEvents}.cs`.
+- **Changed:** `Junheng/…/EcosystemSimulationGPU.cs` (additive `GetBalance`); **Aloysius**
+  `AluciaLines.cs` (reworked, back-compat), `SpeciesContentDB.cs` (reworked, back-compat), `SpeciesData.cs`
+  (+`contentId`), `ModalController.cs` (1 line). ⚠ 4 Aloysius files touched — all backward-compatible, coordinate on merge.
+- **Data:** `StreamingAssets/alucia_lines.csv` + `SpeciesContent.csv` regenerated (all original wording preserved;
+  minor whitespace/"Indo-Pacific" tidy-ups on the species sheet).
+
+### Google Sheet (the editable content workbook)
+- **"OceanX Content"** — created + populated in **junheng's** Google account (2026-07-11), two tabs
+  `alucia_lines` (34 rows) and `SpeciesContent` (15 rows), imported from the two `StreamingAssets` CSVs.
+- **URL:** https://docs.google.com/spreadsheets/d/1yjne2lD4rmjwjPwED5OUm1_14MigDqRZOFVaaG7YjqU/edit
+- Currently **private**. To go live: for **each tab** → File → Share → **Publish to web** → pick that tab →
+  **CSV** → Publish → copy the `.../pub?gid=…&output=csv` URL (one per tab). Publish only exposes a read-only
+  CSV endpoint; it does not change who can edit the doc.
+
+### Wiring still needed in Unity (not done here — no Unity access)
+- **Publish the two tabs** (above) and grab the two CSV URLs. ← JunHeng doing next (2026-07-12).
+- Put a **`ContentService`** on an always-active object in each content scene (host → `alucia_lines.csv`;
+  tablet → `SpeciesContent.csv`) and paste each tab's Publish-to-web CSV URL into its Sources.
+- Put **`AluciaEcologyEvents`** in the host scene; assign the `EcosystemSimulationGPU` + `AluciaController`.
+- (Optional) fill **`contentId`** on the 12 `SpeciesData` assets. Add the missing `seagrass.png` /
+  `macroalgae.png` to `StreamingAssets/SpeciesImages/` (those two cards are blank without them).
+- **Status:** Phase A (compile + no-regression) and Phase B (ecological reactions) **confirmed by JunHeng.**
+  Phase C — Google Sheet **created + populated**; **remaining = publish the 2 tabs + paste URLs into the two
+  `ContentService`s** (JunHeng, next session).
+
+### ⚠ Editing tool — Google Sheets vs Excel
+The live-fetch needs a URL that returns **CSV text**. **Google Sheets** does this cleanly (File → Share →
+Publish to web → CSV). **Excel does not** publish a CSV URL — an Excel Online / OneDrive link returns the web
+viewer (HTML) or the binary `.xlsx`, neither of which the loader reads. With Excel the options are (a) manual
+"Save As CSV → drop it in" (no live updates), or (b) keep a `.csv` (not `.xlsx`) on OneDrive/Dropbox/GitHub with
+a direct link (semi-live; must re-upload to change). **For live, no-rebuild editing, use Google Sheets.**
+
+### 🔮 FUTURE / POSSIBLE — multi-language content (NOT built; deferred on purpose)
+Teacher flagged overseas use → multiple languages. **Do NOT make a separate build per language** (that would
+mean re-pasting a URL + rebuilding each time). The intended design, cheap to add later because the schema is
+already localization-ready (stable ids, all text in one column):
+- **One Google Sheet workbook, one tab per language** (English / Spanish / Malay / …), each published as its
+  own CSV URL.
+- **One build** that picks the active language **at runtime** → no rebuild to switch or update a language.
+- Choose the language by: tablet **system-language auto-detect** + an **in-app override menu** (recommended for
+  an exhibit), or an editable config value.
+- Implementation: extend `ContentService` from one URL per file to a **`{language → URL}` map** + a "current
+  language" setting (~20 lines). Nothing already built needs redoing; today's single URL becomes the "English" entry.
+- Translating is then just retyping the display text in each tab — no structural changes.
+
+---
+
 ## Prototype Specification (`prototype/oceanx-prototype.html`)
 
 _Full interactive reference — open it in a browser. Everything below is derived from reading its source code._
@@ -1007,6 +1096,18 @@ Today only population *numbers* react to predators; fish don't visibly flee (con
 
 ### 7. Alucia/UI copy → CSV, Phase 2 (🔶 started 2026-07-07)
 Phase 1 (Alucia's spoken lines → `StreamingAssets/alucia_lines.csv`) is done. **Phase 2 is now underway:** per-species facts live in **`StreamingAssets/SpeciesContent.csv`** (`speciesName, sciName, iucnStatus, description, diet, habitat, imageFile`) with card art in `StreamingAssets/SpeciesImages/`, and the modal panels read from it (Aloysius). **Remaining:** fill the blank `diet`/`habitat` cells; per-species hints; convert the baked-text info-card PNGs (`Assets/Aloysius/Info/*.png`) to TMP so their facts become checkable.
+
+> ✅ **Superseded/advanced 2026-07-11** — the whole content layer was reworked into an **editable CSV + live-fetch
+> pipeline** (event/variant Alucia lines, stable species ids, `ContentService` remote fetch, ecological reaction
+> events). See **"What Was Done — 2026-07-11"**. Remaining checker tasks (fill blank cells, per-species hints,
+> TMP-ify the baked PNG cards) still stand.
+
+### 8. Multi-language content (FUTURE — not started)
+Overseas use → translations. **Do NOT build one player per language.** Add a runtime language pick to
+`ContentService`: one Google-Sheet workbook with a **tab per language** (each a published CSV URL), one build
+that selects the active language at launch (system-language auto-detect + in-app override). No rebuild to switch
+or update a language; schema is already localization-ready (stable ids). Full note under **"What Was Done —
+2026-07-11 → 🔮 FUTURE"**.
 
 ---
 

@@ -77,7 +77,11 @@ public class ModalController : MonoBehaviour
 
     void Populate(SpeciesData data)
     {
-        var e = data != null ? SpeciesContentDB.Get(data.speciesName) : null;
+        // Prefer the stable contentId (rename/translation-safe); fall back to the display name.
+        // SpeciesContentDB is indexed by both, so either resolves the same row.
+        string lookupKey = data == null ? null
+            : (!string.IsNullOrEmpty(data.contentId) ? data.contentId : data.speciesName);
+        var e = lookupKey != null ? SpeciesContentDB.Get(lookupKey) : null;
 
         SetText(titleText, data != null ? data.speciesName : "");
         SetText(sciNameText, e != null && !string.IsNullOrWhiteSpace(e.sciName) ? e.sciName : (data != null ? data.sciName : ""));

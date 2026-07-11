@@ -1,15 +1,34 @@
-Key,Context,Mood,Text
-intro.1,Intro — line 1 (plays on startup),Calm,"Hey, my name's Alucia!"
-intro.2,Intro — line 2,Warn,"As you can see, this ecosystem isn't doing too well..."
-intro.3,Intro — line 3,Calm,Please help me save it!
-health.critical,Eco-health drops below ~35%,Warn,The reef is collapsing — we're losing species fast!
-health.unstable.up,Eco-health recovering up into the middle band,Calm,It's stabilising a little... keep going!
-health.unstable.down,Eco-health slipping down into the middle band,Warn,Things are slipping — the balance is breaking down.
-health.healthy,Eco-health rises above ~70%,Calm,The reef's looking much healthier now!
-health.thriving,"Eco-health reaches 100% (win, stays on screen)",Win,You did it — the ecosystem is thriving again!
-notify.unlocked,Pop-up when a species unlocks. {species} = the species name,Calm,You've unlocked the {species}!
-hint.withReq.1,"Next-fish hint. {species} = name, {req} = what's still needed",Calm,"To bring in the {species}, you'll need to {req}."
-hint.withReq.2,Next-fish hint (variant),Calm,Almost there! Just {req} and the {species} will appear.
-hint.withReq.3,Next-fish hint (variant),Calm,The {species} is waiting — {req}.
-hint.withReq.4,Next-fish hint (variant),Calm,Keep going! {req} to attract the {species}.
-hint.fallback,Shown when a hint has no specific requirement to name,Calm,Something new is almost ready to appear...
+﻿Event,Species,Mood,Weight,Text,Notes
+# HOW TO EDIT THIS SHEET,,,,,Lines Alucia (the guide) says. Edit the Text column freely.
+# 1. NEVER change the 'Event' column,,,,,It is the ID the game matches on. Only the dev team adds new Event names.
+# 2. Add a VARIANT,,,,,Copy a row and change its Text. The game picks one at random so she doesn't repeat.
+# 3. 'Species' column,,,,,Leave blank = used for any fish. Put an exact species name = only when THAT fish triggers it.
+# 4. 'Mood' column,,,,,Calm / Warn / Win  -> tints her speech bubble. Nothing else is allowed.
+# 5. 'Weight' column,,,,,Optional number. Higher = shown more often. Blank = 1.
+# 6. Keep the {tokens},,,,,"{species}=fish name, {req}=what's still needed, {count}=how many. The game fills them in."
+# 7. Rows starting with # are notes,,,,,The game ignores them. Use them for your own reminders.
+# ---- VALID EVENT NAMES ----,,,,,"intro.1/2/3, health.critical, health.unstable.up, health.unstable.down, health.healthy, health.thriving, notify.unlocked, hint.withReq.1-4, hint.fallback, species.overpopulated, species.underpopulated, species.extinct, species.added"
+intro.1,,Calm,,"Hey, my name's Alucia!",Startup line 1
+intro.2,,Warn,,"As you can see, this ecosystem isn't doing too well...",Startup line 2
+intro.3,,Calm,,Please help me save it!,Startup line 3
+health.critical,,Warn,,The reef is collapsing — we're losing species fast!,
+health.critical,,Warn,1,It's falling apart out here — we have to act now!,Extra variant (demo)
+health.unstable.up,,Calm,,It's stabilising a little... keep going!,
+health.unstable.down,,Warn,,Things are slipping — the balance is breaking down.,
+health.healthy,,Calm,,The reef's looking much healthier now!,
+health.thriving,,Win,,You did it — the ecosystem is thriving again!,Stays on screen (win)
+notify.unlocked,,Calm,,You've unlocked the {species}!,{species} = the fish name
+hint.withReq.1,,Calm,,"To bring in the {species}, you'll need to {req}.",
+hint.withReq.2,,Calm,,Almost there! Just {req} and the {species} will appear.,
+hint.withReq.3,,Calm,,The {species} is waiting — {req}.,
+hint.withReq.4,,Calm,,Keep going! {req} to attract the {species}.,
+hint.fallback,,Calm,,Something new is almost ready to appear...,When there's no specific requirement to name
+species.overpopulated,,Warn,,The {species} are booming — nothing's keeping them in check!,Generic: any fish over-populating
+species.overpopulated,,Warn,1,"Whoa, that's a lot of {species}. They'll eat everything below them.",Generic variant
+species.overpopulated,Yellowstripe Scad,Warn,,The scad are exploding — their predators can't eat them fast enough!,Example: species-specific
+species.overpopulated,Reticulated Damselfish,Warn,,So many damselfish! Something's not eating enough of them.,Example: species-specific
+species.underpopulated,,Warn,,The {species} are struggling — too many predators are hunting them.,Generic: any fish being over-hunted
+species.underpopulated,,Warn,1,We're running low on {species}. The ones above them will start to starve.,Generic variant
+species.extinct,,Warn,,The {species} are gone from the reef entirely.,Generic: a fish hit zero
+species.extinct,Blacktip Reef Shark,Warn,,"Without the sharks, nothing keeps the reef in balance — watch what happens now.",The keystone lesson
+species.added,,Calm,,A new group of {species} just swam in!,Optional — fires when the player adds a fish

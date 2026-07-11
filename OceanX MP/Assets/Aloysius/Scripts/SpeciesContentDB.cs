@@ -2,14 +2,21 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-// Loads species content (text + image filename) from a CSV in StreamingAssets so the
-// content can be edited in a spreadsheet without touching Unity. Images are loaded from
-// StreamingAssets/SpeciesImages/<file> at runtime. Keyed by species name (case-insensitive).
+/// <summary>
+/// Loads species info cards from <c>SpeciesContent.csv</c> so the text can be fact-checked in a
+/// spreadsheet (online or on disk) without touching Unity. Images load from
+/// <c>StreamingAssets/SpeciesImages/&lt;file&gt;</c>.
+///
+/// Columns: <c>id, speciesName, sciName, iucnStatus, description, diet, habitat, funFact, imageFile, IUCNImage</c>.
+/// The parser is header-driven — reorder or add columns freely; unknown columns are ignored, missing
+/// ones read as empty. Rows are indexed by BOTH their stable <c>id</c> and their <c>speciesName</c>, so a
+/// lookup works whether you pass the id (rename/translation-safe) or the display name.
+/// </summary>
 public static class SpeciesContentDB
 {
     public class Entry
     {
-        public string speciesName, sciName, role, iucnStatus, description, diet, habitat, funFact, imageFile, iucnImage;
+        public string id, speciesName, sciName, role, iucnStatus, description, diet, habitat, funFact, imageFile, iucnImage;
     }
 
     const string CsvFile = "SpeciesContent.csv";
@@ -18,14 +25,15 @@ public static class SpeciesContentDB
     static Dictionary<string, Entry> _entries;
     static readonly Dictionary<string, Sprite> _spriteCache = new Dictionary<string, Sprite>();
 
-    public static Entry Get(string speciesName)
+    /// <summary>Look up a species by its stable <c>id</c> OR its display name (case-insensitive). Null if unknown.</summary>
+    public static Entry Get(string idOrName)
     {
         EnsureLoaded();
-        if (string.IsNullOrEmpty(speciesName)) return null;
-        return _entries.TryGetValue(Norm(speciesName), out var e) ? e : null;
+        if (string.IsNullOrEmpty(idOrName)) return null;
+        return _entries.TryGetValue(Norm(idOrName), out var e) ? e : null;
     }
 
-    // Force a re-read (handy after editing the CSV; call from a debug button if wanted).
+    /// <summary>Force a re-read (called after a live download, or from a debug button).</summary>
     public static void Reload() { _entries = null; _spriteCache.Clear(); EnsureLoaded(); }
 
     static string Norm(string s) => s == null ? "" : s.Trim().ToLowerInvariant();
@@ -35,7 +43,7 @@ public static class SpeciesContentDB
         if (_entries != null) return;
         _entries = new Dictionary<string, Entry>();
 
-        string path = Path.Combine(Application.streamingAssetsPath, CsvFile);
+        string path = ContentService.LocalPathFor(CsvFile);
         if (!File.Exists(path))
         {
             Debug.LogWarning($"[SpeciesContentDB] CSV not found at {path}");
@@ -45,15 +53,14 @@ public static class SpeciesContentDB
         string text;
         try
         {
-            // FileShare.ReadWrite lets us read even while the CSV is open in Excel (which
-            // otherwise locks it and throws a sharing violation).
+            // FileShare.ReadWrite lets us read even while the CSV is open in Excel.
             using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (var sr = new StreamReader(fs))
                 text = sr.ReadToEnd();
         }
         catch (System.Exception ex) { Debug.LogError($"[SpeciesContentDB] read failed: {ex.Message}"); return; }
 
-        var rows = ParseCsv(text);
+        var rows = CsvUtil.Parse(text);
         if (rows.Count < 2) return;
 
         var header = rows[0];
@@ -64,9 +71,12 @@ public static class SpeciesContentDB
         {
             var row = rows[r];
             string name = Field(row, col, "speciesname");
-            if (string.IsNullOrWhiteSpace(name)) continue;
-            _entries[Norm(name)] = new Entry
+            string id   = Field(row, col, "id");
+            if (string.IsNullOrWhiteSpace(name) && string.IsNullOrWhiteSpace(id)) continue; // blank/comment row
+
+            var entry = new Entry
             {
+                id          = id,
                 speciesName = name,
                 sciName     = Field(row, col, "sciname"),
                 role        = Field(row, col, "role"),
@@ -78,13 +88,17 @@ public static class SpeciesContentDB
                 imageFile   = Field(row, col, "imagefile"),
                 iucnImage   = Field(row, col, "iucnimage"),
             };
+
+            // Index under both the stable id and the display name so either resolves the same entry.
+            if (!string.IsNullOrWhiteSpace(id))   _entries[Norm(id)]   = entry;
+            if (!string.IsNullOrWhiteSpace(name)) _entries[Norm(name)] = entry;
         }
     }
 
     static string Field(List<string> row, Dictionary<string, int> col, string key)
         => col.TryGetValue(key, out int i) && i < row.Count ? row[i] : "";
 
-    // Load a sprite for an entry's image from StreamingAssets/SpeciesImages. Cached; null if missing.
+    /// <summary>Load a sprite for an entry's image from StreamingAssets/SpeciesImages. Cached; null if missing.</summary>
     public static Sprite GetImage(string imageFile)
     {
         if (string.IsNullOrWhiteSpace(imageFile)) return null;
@@ -105,39 +119,5 @@ public static class SpeciesContentDB
         }
         _spriteCache[imageFile] = sprite; // cache even null so we don't re-hit disk each open
         return sprite;
-    }
-
-    // --- Minimal RFC-4180-ish CSV parser: handles quotes, embedded commas/newlines, "" escapes ---
-    static List<List<string>> ParseCsv(string text)
-    {
-        var rows = new List<List<string>>();
-        var row = new List<string>();
-        var sb = new System.Text.StringBuilder();
-        bool inQuotes = false;
-
-        for (int i = 0; i < text.Length; i++)
-        {
-            char c = text[i];
-            if (inQuotes)
-            {
-                if (c == '"')
-                {
-                    if (i + 1 < text.Length && text[i + 1] == '"') { sb.Append('"'); i++; }
-                    else inQuotes = false;
-                }
-                else sb.Append(c);
-            }
-            else
-            {
-                if (c == '"') inQuotes = true;
-                else if (c == ',') { row.Add(sb.ToString()); sb.Clear(); }
-                else if (c == '\r') { }
-                else if (c == '\n') { row.Add(sb.ToString()); sb.Clear(); rows.Add(row); row = new List<string>(); }
-                else sb.Append(c);
-            }
-        }
-        if (sb.Length > 0 || row.Count > 0) { row.Add(sb.ToString()); rows.Add(row); }
-        rows.RemoveAll(r => r.Count == 1 && string.IsNullOrEmpty(r[0]));
-        return rows;
     }
 }

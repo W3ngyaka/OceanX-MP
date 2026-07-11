@@ -6,6 +6,12 @@ using OceanX.BoidsGPU.Ecosystem;
 public class SpeciesData : ScriptableObject
 {
     public string speciesName;
+
+    [Tooltip("Stable ID used to match this species to its row in SpeciesContent.csv (e.g. " +
+             "\"blacktip_reef_shark\"). Leave blank to fall back to matching by speciesName. Using an id " +
+             "means the display name can be reworded or translated without breaking the info card.")]
+    public string contentId;
+
     public string sciName;
     public string tier;
     public bool startUnlocked;

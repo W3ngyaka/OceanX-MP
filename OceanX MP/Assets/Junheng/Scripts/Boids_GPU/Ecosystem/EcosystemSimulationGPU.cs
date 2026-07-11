@@ -283,6 +283,27 @@ namespace OceanX.BoidsGPU.Ecosystem
             return MaxSchoolsOf(species);
         }
 
+        /// <summary>How a species' population is trending against the global balance band.</summary>
+        public enum SpeciesBalance { Absent, Underpopulated, Balanced, Overpopulated }
+
+        /// <summary>
+        /// Live balance state for a species, derived from the SAME prey:predator ratio the population
+        /// tick uses (on committed counts). <see cref="SpeciesBalance.Absent"/> when it has no schools.
+        /// Read by the UI / Alucia layer so its reactions agree with the actual dynamics.
+        /// </summary>
+        public SpeciesBalance GetBalance(SpeciesDataGPU species)
+        {
+            if (species == null) return SpeciesBalance.Absent;
+            Dictionary<SpeciesDataGPU, int> committed = BuildCommittedCounts();
+            int n = CountIn(committed, species);
+            if (n <= 0) return SpeciesBalance.Absent;
+
+            int pressure = PopulationPressure(species, committed);
+            if (pressure > 0) return SpeciesBalance.Overpopulated; // under-predated / well-fed → trending up
+            if (pressure < 0) return SpeciesBalance.Underpopulated; // over-predated / starving → trending down
+            return SpeciesBalance.Balanced;
+        }
+
         // -------------------------------------------------------------------------
         // Population tick — symmetric, ratio-driven predator-prey dynamics.
         //

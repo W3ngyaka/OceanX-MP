@@ -21465,6 +21465,7 @@ MonoBehaviour:
   _healthDiversityWeight: 0.4
   _healthBalanceWeight: 0.4
   _healthApexWeight: 0.2
+  _overpopulatedAtFraction: 0.8
 --- !u!1001 &224031778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -115817,8 +115818,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1166684577}
   - component: {fileID: 1166684576}
+  - component: {fileID: 1166684578}
   m_Layer: 0
-  m_Name: 'AluciaEcologyEvents '
+  m_Name: CSV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115837,14 +115839,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AluciaEcologyEvents
   simulation: {fileID: 222838834}
-  alucia: {fileID: 0}
+  alucia: {fileID: 621817932}
+  reactStarving: 1
+  reactOverpredated: 1
   reactOverpopulated: 1
-  reactUnderpopulated: 1
   reactExtinct: 1
   reactAdded: 0
   checkInterval: 2
   perSpeciesCooldown: 25
   startupGrace: 8
+  settleSeconds: 5
 --- !u!4 &1166684577
 Transform:
   m_ObjectHideFlags: 0
@@ -115860,6 +115864,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1166684578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166684575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391267a26d59a6843b1bdb3842c768dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentService
+  enableRemoteFetch: 1
+  timeoutSeconds: 6
+  refreshIntervalSeconds: 0
+  sources:
+  - fileName: alucia_lines.csv
+    publishedCsvUrl: https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=1093782534&single=true&output=csv
 --- !u!1001 &1167192057
 PrefabInstance:
   m_ObjectHideFlags: 0

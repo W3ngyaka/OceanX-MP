@@ -3,19 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// Splash / start screen: fades through a list of logos, then shows a "Tap to Start"
-// prompt and waits for a tap before switching to the game scene. The game scene is
-// preloaded in the background during the logos, so the cut-in on tap is instant.
+// Splash / start screen: fades through a list of logos, then (optionally) shows a "Tap to Start"
+// prompt before advancing to the game scene. The destination is simply the NEXT scene in Build
+// Settings (put this splash at index 0 and the game scene at index 1) — no scene name to keep in
+// sync, and the SAME splash works for both the large-screen and tablet builds, since each build
+// ships its own scene 1. The next scene is preloaded in the background during the logos, so the
+// cut-in is instant.
 public class SplashSequence : MonoBehaviour
 {
-    [Header("Scene")]
-    [Tooltip("Scene the splash leads to (large screen). MUST be in Build Settings.")]
-    public string gameScene = "SceneTemp";
-
-    [Tooltip("On a mobile (tablet) build, skip the logo splash and boot straight into this scene " +
-             "instead. Leave empty to always run the full splash.")]
-    public string tabletScene = "new netcode 1";
-
     [Header("Composed logo group (all shown at once)")]
     [Tooltip("Parent CanvasGroup holding the images you PLACED in the scene (left/middle/right). " +
              "If set, all of them fade in together and the sprite-cycle 'Logos' list below is ignored.")]
@@ -59,21 +54,25 @@ public class SplashSequence : MonoBehaviour
 
     IEnumerator Run()
     {
-        // Route to whichever destination is actually IN THIS build: the large-screen scene if
-        // present, else the tablet scene. This lets one splash serve BOTH builds — the large-screen
-        // build ships SceneTemp, the tablet build ships new netcode 1, and each auto-picks its own.
-        string target = gameScene;
-        if (!Application.CanStreamedLevelBeLoaded(gameScene) &&
-            !string.IsNullOrEmpty(tabletScene) && Application.CanStreamedLevelBeLoaded(tabletScene))
-            target = tabletScene;
-
-        // Preload the destination in the background, but don't switch to it yet.
-        _load = SceneManager.LoadSceneAsync(target);
-        if (_load == null)
+        // Destination = the NEXT scene in Build Settings (this splash at index 0 -> game at index 1).
+        // No scene name to maintain, and it auto-picks the right "scene 1" in each build (tablet or large screen).
+        int current = SceneManager.GetActiveScene().buildIndex;
+        int nextIndex = current + 1;
+        if (current < 0)
         {
-            Debug.LogError($"[SplashSequence] Neither '{gameScene}' nor '{tabletScene}' is in Build Settings.");
+            Debug.LogError("[SplashSequence] This splash scene isn't in Build Settings — add it (as index 0), " +
+                           "with the game scene right after it (index 1). File > Build Settings.");
             yield break;
         }
+        if (nextIndex >= SceneManager.sceneCountInBuildSettings)
+        {
+            Debug.LogError($"[SplashSequence] No scene at build index {nextIndex}. Put the game scene right after " +
+                           "this splash in Build Settings (File > Build Settings).");
+            yield break;
+        }
+
+        // Preload the next scene in the background, but don't switch to it yet.
+        _load = SceneManager.LoadSceneAsync(nextIndex);
         _load.allowSceneActivation = false;
 
         // Show the splash logos.

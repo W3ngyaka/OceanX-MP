@@ -875,20 +875,23 @@ on the host **and** the tablet. Everything degrades gracefully (nothing breaks o
 - **"OceanX Content"** — created + populated in **junheng's** Google account (2026-07-11), two tabs
   `alucia_lines` (34 rows) and `SpeciesContent` (15 rows), imported from the two `StreamingAssets` CSVs.
 - **URL:** https://docs.google.com/spreadsheets/d/1yjne2lD4rmjwjPwED5OUm1_14MigDqRZOFVaaG7YjqU/edit
-- Currently **private**. To go live: for **each tab** → File → Share → **Publish to web** → pick that tab →
-  **CSV** → Publish → copy the `.../pub?gid=…&output=csv` URL (one per tab). Publish only exposes a read-only
-  CSV endpoint; it does not change who can edit the doc.
+- **Published to web as CSV (2026-07-11)** — read-only endpoints the game fetches (editing stays private to
+  whoever the doc is shared with; un-publish anytime via File → Share → Publish to web → Stop publishing).
+  Both verified returning valid CSV; sheet edits propagate after a short Google cache delay (~minutes):
+  - **`alucia_lines.csv`** → `https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=1093782534&single=true&output=csv`
+  - **`SpeciesContent.csv`** → `https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=196784187&single=true&output=csv`
 
 ### Wiring still needed in Unity (not done here — no Unity access)
-- **Publish the two tabs** (above) and grab the two CSV URLs. ← JunHeng doing next (2026-07-12).
-- Put a **`ContentService`** on an always-active object in each content scene (host → `alucia_lines.csv`;
-  tablet → `SpeciesContent.csv`) and paste each tab's Publish-to-web CSV URL into its Sources.
+- ~~Publish the two tabs and grab the two CSV URLs~~ ✅ done — URLs above.
+- Put a **`ContentService`** on an always-active object in each content scene and paste the URLs above into
+  its Sources — host → `alucia_lines.csv` (gid 1093782534); tablet → `SpeciesContent.csv` (gid 196784187).
+  ← JunHeng doing next.
 - Put **`AluciaEcologyEvents`** in the host scene; assign the `EcosystemSimulationGPU` + `AluciaController`.
 - (Optional) fill **`contentId`** on the 12 `SpeciesData` assets. Add the missing `seagrass.png` /
   `macroalgae.png` to `StreamingAssets/SpeciesImages/` (those two cards are blank without them).
 - **Status:** Phase A (compile + no-regression) and Phase B (ecological reactions) **confirmed by JunHeng.**
-  Phase C — Google Sheet **created + populated**; **remaining = publish the 2 tabs + paste URLs into the two
-  `ContentService`s** (JunHeng, next session).
+  Phase C — Google Sheet **created + populated + published (URLs verified live)**; **remaining = add the two
+  `ContentService`s and paste the URLs in** (JunHeng, next session).
 
 ### ⚠ Editing tool — Google Sheets vs Excel
 The live-fetch needs a URL that returns **CSV text**. **Google Sheets** does this cleanly (File → Share →

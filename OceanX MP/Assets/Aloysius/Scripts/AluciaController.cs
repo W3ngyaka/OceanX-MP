@@ -56,6 +56,11 @@ public class AluciaController : MonoBehaviour
     [TextArea] public string introLine3 = "Please help me save it!";
     public float introLineGap = 3f;
 
+    [Header("Start gating")]
+    [Tooltip("Wait for the tablet's 'tap to begin' (networked OnStarted) before playing the intro " +
+             "and reacting to health, so players don't miss it. Turn off to play on scene load.")]
+    public bool waitForExperienceStart = true;
+
     private Image _bubbleBg;            // optional bg image on the bubble for tinting
     private float _lastMsgTime = -99f;
     private Coroutine _hideRoutine;
@@ -66,6 +71,11 @@ public class AluciaController : MonoBehaviour
     private Band _lastBand = Band.Critical;
     private bool _bandInit;
 
+    // Start gating
+    private bool _started;
+    private bool _introPlayed;
+    private bool _subscribed;
+
     void Awake()
     {
         if (bubbleGroup != null) { bubbleGroup.alpha = 0f; _bubbleBg = bubbleGroup.GetComponent<Image>(); }
@@ -74,14 +84,48 @@ public class AluciaController : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(IntroSequence());
+        // When not gating on the networked start, play the intro immediately (e.g. standalone testing).
+        if (!waitForExperienceStart)
+            HandleStarted();
     }
 
     void Update()
     {
+        // Begin only once the tablet's "tap to begin" flips the shared HasStarted flag,
+        // so the intro isn't spoken to an empty title screen.
+        if (waitForExperienceStart && !_subscribed)
+        {
+            var net = EcosystemNetworkManagerGPU.Instance;
+            if (net != null)
+            {
+                _subscribed = true;
+                net.OnStarted += HandleStarted;
+                if (net.HasStarted) HandleStarted();   // already started (e.g. joined late)
+            }
+        }
+
+        if (!_started) return;                          // no intro / health chatter before we begin
         if (simulation == null) return;
         float h = Mathf.Clamp01(simulation.EcoHealth01) * 100f;
         EvaluateHealth(h);
+    }
+
+    // Fires once, when the experience actually begins.
+    void HandleStarted()
+    {
+        if (_started) return;
+        _started = true;
+        if (!_introPlayed)
+        {
+            _introPlayed = true;
+            StartCoroutine(IntroSequence());
+        }
+    }
+
+    void OnDestroy()
+    {
+        var net = EcosystemNetworkManagerGPU.Instance;
+        if (net != null) net.OnStarted -= HandleStarted;
     }
 
     // ---------- Public API ----------

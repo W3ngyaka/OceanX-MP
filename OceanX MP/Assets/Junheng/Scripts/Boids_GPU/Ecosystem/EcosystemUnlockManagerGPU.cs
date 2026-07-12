@@ -177,6 +177,20 @@ public class EcosystemUnlockManagerGPU : MonoBehaviour
     }
 
     /// <summary>
+    /// Unlock state by GPU species — the add/remove UI works in gpuSpecies/index terms, but the
+    /// unlock config lives on the SpeciesData assets. Species this manager doesn't track are treated
+    /// as unlocked, so this can never block something the unlock system isn't meant to govern.
+    /// </summary>
+    public bool IsUnlocked(SpeciesDataGPU gpu)
+    {
+        if (gpu == null) return true;
+        foreach (var sd in _allSpecies)
+            if (sd != null && sd.gpuSpecies == gpu)
+                return IsUnlocked(sd);
+        return true; // not governed by the unlock system -> don't gate adds
+    }
+
+    /// <summary>
     /// Records a tap on a locked species and returns the PRE-increment tap index (0,1,2,…),
     /// so the UI can show progressively clearer hints. Mirrors GameState.tapCounts.
     /// </summary>

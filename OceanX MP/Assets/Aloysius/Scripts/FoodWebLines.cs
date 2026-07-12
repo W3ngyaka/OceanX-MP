@@ -474,14 +474,4 @@ public class FoodWebLines : MonoBehaviour
         float h = Vector3.Distance(corners[0], corners[1]);
         return Mathf.Min(w, h) * 0.5f + 8f;
     }
-
-    void HighlightBubble(SpeciesBubble bubble, bool bright)
-    {
-        if (bubble.glowRing == null) return;
-        Image ring = bubble.glowRing.GetComponent<Image>();
-        if (ring == null) return;
-        ring.enabled = true;
-        ring.color = bright ? new Color(0f, 0.85f, 1f, 1f) : new Color(0f, 0.85f, 1f, 0.4f);
-        glowRings.Add(ring);
-    }
 }

@@ -64,14 +64,14 @@ public class SpeciesAddedReveal : MonoBehaviour
     {
         float t = 0f;
         while ((EcosystemNetworkManagerGPU.Instance == null ||
-                Object.FindObjectOfType<EcosystemSimulationGPU>() == null) && t < 15f)
+                Object.FindFirstObjectByType<EcosystemSimulationGPU>() == null) && t < 15f)
         {
             t += Time.deltaTime;
             yield return null;
         }
         _net = EcosystemNetworkManagerGPU.Instance;
-        _sim = Object.FindObjectOfType<EcosystemSimulationGPU>();
-        if (hintSource == null) hintSource = Object.FindObjectOfType<SpeciesUnlockReveal>();
+        _sim = Object.FindFirstObjectByType<EcosystemSimulationGPU>();
+        if (hintSource == null) hintSource = Object.FindFirstObjectByType<SpeciesUnlockReveal>();
         BuildIndexMap();
 
         // Seed baseline so species already present at startup don't all pop cards.

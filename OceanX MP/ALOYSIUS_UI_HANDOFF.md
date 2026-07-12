@@ -1,13 +1,18 @@
 # OceanX MP — UI/UX Handoff (Aloysius)
-_Last updated: 2026-06-30 (rev 4)_
+_Last updated: 2026-07-12 (rev 5)_
 
 > Companion to JunHeng's main handoff. Covers UI/UX work across recent sessions.
 > Scope: food-web layout, species info card, atmospheric FX, bug fixes, the
 > **Alucia** host guide, the **unlock reveal + hint**, a **disabled-unlock-manager
-> bug fix**, and the latest tablet work — **3-tab nav with swipe, eco-health
+> bug fix**, and the tablet work — **3-tab nav with swipe, eco-health
 > dashboard gauge + status word, and a right-side species info panel**, plus
 > **producer unlock-registration, a new Macroalgae species, and a host
-> health-bar binding** (this session).
+> health-bar binding**.
+> **This session (2026-07-12):** food-web line/arrow routing + energy-flow
+> animation, hold-to-reveal progress ring, health-gauge red-when-low, a shared
+> popup **RevealQueue** (fixes clashing add/unlock cards), tap SFX, Alucia intro
+> gated on the tablet start-tap, **locked species can no longer be added**, the
+> shark/predator `startUnlocked` data corrected, and a safe deprecation cleanup.
 
 ---
 
@@ -21,9 +26,21 @@ _Last updated: 2026-06-30 (rev 4)_
    **copy** by enabling it. **Check whether it's also disabled in canonical
    `Boids_Demo` — if so, host-side unlocking is broken there too.**
 
-2. **`Blacktip Reef Shark` has `startUnlocked = True`** in its `SpeciesData` —
-   likely a data error (it's the apex with the heaviest requirements). Recommend
-   setting it to `False`.
+2. ~~**`Blacktip Reef Shark` has `startUnlocked = True`**~~ **RESOLVED (2026-07-12).**
+   The whole `startUnlocked` set is now correct: the 7 zero-requirement base species
+   (Seagrass, Macroalgae, Parrotfish, Surgeonfish, Mullet, Damselfish, Spinefoot)
+   start unlocked; the 7 species that have requirements (Scad, Snapper, Ray, Trevally,
+   Grouper, Moray, and the Shark) start **locked**. Verified across all 14 assets.
+   NOTE: the earlier "mostly True" state re-appeared briefly mid-session and then
+   self-corrected via a git pull — if it regresses again, re-check the assets.
+
+2b. **Locked species could be ADDED (2026-07-12 — now fixed).** The food web drew
+   padlocks from `EcosystemUnlockManagerGPU`, but the Add path
+   (`TabletAddRemoveUIGPU.OnAdd`) never checked unlock state, so a locked species
+   could be selected and added. **Fixed:** added `EcosystemUnlockManagerGPU.IsUnlocked(SpeciesDataGPU)`
+   and gated Add on it (blocks the RPC + greys the Add button while a locked species
+   is selected). This is a **client-side UI gate**; a host-side authority check on
+   `RequestAddSpeciesRpc` would be stronger hardening if desired.
 
 3. **Shared scripts edited** (affect canonical scenes): `SpeciesBubble.cs`
    (TapPunch bug fix + OnTap now routes to the side info panel). Commit + mention.
@@ -46,6 +63,82 @@ _Last updated: 2026-06-30 (rev 4)_
 
 ---
 
+## This session (2026-07-12) — food-web polish, popups, audio, lock enforcement
+
+### Scene roles (important — they are SEPARATE, not duplicates)
+- **`Assets/Aloysius/new netcode 1.unity` = the TABLET (client).** Bubbles, food web,
+  hold-to-reveal, eco-health gauge, add/remove, tap SFX. **No reveal popups.**
+- **`Assets/Aloysius/SCENE_MainScene 1.unity` = the LARGE SHARED SCREEN (host).** The
+  center-stage "New Species!" reveal cards (`SpeciesAddedReveal` / `SpeciesUnlockReveal`)
+  live here. **No `EcoHealthDashboard`.**
+- Splash flow: `Start scene` (logos + "Tap to Start") -> `SceneTemp` (large screen).
+  `SplashSequence` auto-routes: large-screen build -> `SceneTemp`, tablet build ->
+  `new netcode 1`. The networked "tap the tablet to begin" is a SEPARATE handshake
+  (`ExperienceStartGate` + `EcosystemNetworkManagerGPU.OnStarted`) — hard-requires the
+  tablet to be **connected** to the host, or the tap silently no-ops.
+- Apply tablet-side changes in `new netcode 1`; reveal/host-screen changes in
+  `SCENE_MainScene 1`. Shared scripts affect both; per-scene sprite/ref assignments must
+  be saved into the correct scene. **Re-check `GetActiveScene()` before saving.**
+
+### Food web — lines, arrows, energy flow (`FoodWebLines.cs`)
+- **Routing rewrite:** lines are straight when the direct path is clear, and only bow —
+  by the minimum needed — when a bubble is actually in the way (`PathPenalty` picks the
+  smallest clearing bow). Endpoints trim to each bubble's rim. Kills the old always-42%
+  swoopy arcs that clashed with bubbles.
+- **Directional arrows:** each link is drawn prey -> predator with an arrowhead at the
+  tip. Rule for reading the web: **the arrow always points at the predator (the eater).**
+- **Energy-flow animation:** soft cyan dots drift prey -> predator along each revealed
+  curve (fade in at prey, out at predator). Runtime-generated dot sprite — no asset.
+  Tunables on the component: `animateFlow`, `flowSpeed`, `dotsPerLine`, `dotSize`.
+- Only shows on the hold-to-reveal gesture, so there's no always-on clutter.
+
+### Hold-to-reveal progress ring (`SpeciesBubble.cs`)
+- Pressing a bubble now grows a radial ring toward the 0.5s long-press threshold, then
+  the food-web lines appear — teaches the hold gesture by touch. Auto-creates a ring
+  child from `holdRingSprite` (assigned `Assets/Aloysius/New/lastring.png` to all 14
+  bubbles in `new netcode 1`). Tunables: `holdRingColor`, `holdRingScale`.
+- **Text-hint half of the prompt is still TODO** (the "Tap on any species!" banner is a
+  baked image `aa.png`; rewording needs new art or converting it to live text).
+
+### Health gauge turns red when low (`EcoHealthDashboard.cs`)
+- The arc fill now tints **green -> amber -> red** smoothly with health (`HealthColor`),
+  matching the status word. New `colorFill` toggle.
+- The original `healt.png` arc is a baked green gradient (tint can only darken, so it
+  can't go red). Generated a white copy **`Assets/Aloysius/New/healt_white.png`** (same
+  shape/alpha, RGB=white) and assigned it to the fill Image in `new netcode 1` so the
+  tint fully drives the colour.
+
+### Shared popup queue — fixes clashing cards (`RevealQueue.cs`, NEW)
+- The large screen ran **two** independent reveal systems at the **same center position**:
+  `SpeciesAddedReveal` (queued) and `SpeciesUnlockReveal` (which did `StopAllCoroutines()`
+  and popped instantly). Spam-adding fired adds + the unlocks they trigger together, so
+  cards stacked on cards.
+- **Fix:** a single `RevealQueue` singleton owns the center slot; both scripts submit
+  their card to it instead of fading their own `CanvasGroup`. One card at a time, filled
+  the instant before it shows. Backlog cap: >2 waiting -> hold drops to 1.5s so bursts
+  clear fast. Auto-creates itself at runtime (no scene object required).
+
+### Tap SFX (`UISoundManager.cs`, NEW)
+- Tiny shared one-shot player. `SpeciesBubble.OnTap` calls `UISoundManager.Instance.PlayTap()`.
+  A `UISoundManager` object exists in `new netcode 1` — **drop a clip in its `Tap Sound`
+  slot** (2D AudioSource, playOnAwake off). Fires on an unlocked-bubble tap only.
+
+### Alucia intro gated on the start-tap (`AluciaController.cs`)
+- **Bug:** the intro fired on scene load, so on the large screen Alucia talked to the
+  "Tap the tablet to begin" title and players missed it. **Fix:** the intro (and health
+  reactions) now wait for the networked `OnStarted` event — the same tap-to-begin the
+  reef reveal uses. New `waitForExperienceStart` toggle (default on; turn off to play on
+  load for standalone testing). Handles late-joining tablets.
+
+### Safe deprecation cleanup (no behaviour change, no wiring touched)
+- `FindObjectOfType` -> `FindFirstObjectByType` in `SpeciesAddedReveal`, `RevealQueue`,
+  `HealthBarBinder`. Removed unused `HealthBarBinder.percentFormat` field and the dead
+  `FoodWebLines.HighlightBubble()` method. All Aloysius-script warnings now clear.
+- Still flagged (out of Aloysius scope): `NetworkBootstrap._hostAddress` unused,
+  `EcosystemUIAdapterGPU` dead (both JunHeng's).
+
+---
+
 ## Where This Work Lives
 
 | Thing | Scene / Path | Notes |
@@ -57,6 +150,11 @@ _Last updated: 2026-06-30 (rev 4)_
 
 > Scene-level work is in **copies**; only the **scripts** (shared) touch canonical
 > scenes. Integration into JunHeng's scenes is a separate step.
+>
+> **Current live scenes (2026-07-12):** the tablet copy is now
+> `Assets/Aloysius/new netcode 1.unity` and the host/large-screen scene is
+> `Assets/Aloysius/SCENE_MainScene 1.unity` (+ `SceneTemp` as the splash target).
+> See **"This session -> Scene roles"** above for the authoritative split.
 
 ---
 
@@ -190,9 +288,10 @@ working via forced-event test.
   component is **enabled** (see the bug above).
 - Config per `SpeciesData`: `startUnlocked`, `minHealth`, `requires`, `hint1/2/3`,
   `addedMessage`, `tier`, `gpuSpecies`.
-- Current data: all `minHealth = 0`, so unlocking depends **only on prey counts** now.
-  Start-unlocked: the 5 grazers + 2 producers (Seagrass, Macroalgae) +
-  (erroneously) the Shark. Manager `_allSpecies` now has 14 entries.
+- Most species have `minHealth = 0` (Bluefin Trevally = 10, Giant Moray = 40), so
+  unlocking depends mostly on prey counts. Start-unlocked (corrected 2026-07-12):
+  the 5 grazers + 2 producers (Seagrass, Macroalgae) only — the Shark and the other
+  6 gated predators now start **locked**. Manager `_allSpecies` has 14 entries.
 
 ### Current unlock requirements (from the assets)
 | Species | Requires |
@@ -205,7 +304,7 @@ working via forced-event test.
 | Bluespotted Ray | Parrotfish x2, Spinefoot x2 |
 | Brown-Marbled Grouper | Scad x2, Trevally x1, Snapper x1 |
 | Giant Moray | Snapper x2, Ray x1 |
-| Blacktip Reef Shark | Grouper x1, Moray x1, Trevally x2, Scad x3 — **startUnlocked=True (bug)** |
+| Blacktip Reef Shark | Grouper x1, Moray x1, Trevally x2, Scad x3 — **startUnlocked=False (fixed 2026-07-12)** |
 
 ---
 
@@ -226,8 +325,20 @@ working via forced-event test.
 
 **For JunHeng:**
 - Re-check the unlock manager is ENABLED in canonical `Boids_Demo`.
-- Fix Shark `startUnlocked -> False`.
+- ~~Fix Shark `startUnlocked -> False`~~ — done 2026-07-12 (all gated species now locked).
 - Balance pass on requirements.
+- Note: I edited two of your scripts this session — `TabletAddRemoveUIGPU.cs` (Add now
+  gated on unlock) and `EcosystemUnlockManagerGPU.cs` (new `IsUnlocked(SpeciesDataGPU)`).
+  Consider a host-side authority check on `RequestAddSpeciesRpc` too (mine is client-side).
+
+**This session (2026-07-12) — open items:**
+- **Text-hint half of the hold prompt** — the "Tap on any species!" banner (`aa.png`,
+  baked image) still doesn't mention holding. Needs a new pill image or conversion to
+  live text (decision pending).
+- **Drop a tap-sound clip** into the `UISoundManager` object's `Tap Sound` slot in
+  `new netcode 1` (wiring is in place; clip not assigned).
+- Optional: sound for locked-bubble tap and Add/Remove.
+- Optional: host-side authority check on adds (see JunHeng note above).
 
 **This session (producers / host bar):**
 - Fill Macroalgae `sciName` (left blank).
@@ -271,12 +382,31 @@ working via forced-event test.
 - `TabController.cs` — 3-tab nav with swipe
 - `EcoHealthDashboard.cs` — eco-health arc gauge + status word
 - `SpeciesInfoPanel.cs` — right-side species detail panel
+- `RevealQueue.cs` — shared center-stage popup queue (2026-07-12)
+- `UISoundManager.cs` — shared UI SFX one-shot player / tap sound (2026-07-12)
 
-**Edited:**
+**Edited (2026-07-12):**
+- `FoodWebLines.cs` — line routing rewrite, directional arrows, energy-flow dots;
+  removed dead `HighlightBubble()`
+- `SpeciesBubble.cs` (shared) — hold-to-reveal progress ring; tap SFX call
+- `EcoHealthDashboard.cs` — `HealthColor` green->amber->red arc tint (`colorFill`)
+- `SpeciesAddedReveal.cs` / `SpeciesUnlockReveal.cs` — route through `RevealQueue`
+- `AluciaController.cs` — intro gated on `OnStarted` (`waitForExperienceStart`)
+- `TabletAddRemoveUIGPU.cs` (JunHeng's) + `EcosystemUnlockManagerGPU.cs` (JunHeng's) —
+  Add gated on unlock state; new `IsUnlocked(SpeciesDataGPU)` overload
+- `HealthBarBinder.cs` — deprecation fix; removed unused `percentFormat`
+
+**Edited (earlier):**
 - `SpeciesBubble.cs` (shared) — TapPunch fix + OnTap routes to the info panel
 - `HealthBarBinder.cs` — added `using OceanX.BoidsGPU.Ecosystem;`; ease-out `Update()`
 
-**New assets (this session):**
+**New assets (2026-07-12):**
+- `Assets/Aloysius/New/healt_white.png` — white copy of the eco-health arc (so the
+  gauge can tint red); assigned to the fill Image in `new netcode 1`
+- `Assets/Aloysius/New/lastring.png` — assigned as the hold-progress ring on all 14
+  bubbles in `new netcode 1` (existing sprite, newly wired)
+
+**New assets (earlier session):**
 - `Assets/Aloysius/SpeciesData/Macroalgae.asset` (UI species data)
 - edited `Seagrass.asset` (registered), `Fringelip_Mullet.asset` /
   `Eyestripe_Surgeonfish.asset` (`addedMessage`)

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Yellowstripe_Scad
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
   speciesName: Yellowstripe Scad
+  contentId: 
   sciName: Selaroides leptolepis
   tier: Secondary Consumer
-  startUnlocked: 1
+  startUnlocked: 0
   minHealth: 0
   gpuSpecies: {fileID: 11400000, guid: 689b9216c078756428f919978d9e2a3e, type: 2}
   requires:

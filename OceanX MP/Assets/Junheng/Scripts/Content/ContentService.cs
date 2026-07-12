@@ -90,18 +90,25 @@ public class ContentService : MonoBehaviour
         using (UnityWebRequest req = UnityWebRequest.Get(s.publishedCsvUrl.Trim()))
         {
             req.timeout = Mathf.Max(1, Mathf.CeilToInt(timeoutSeconds));
+            req.redirectLimit = 32; // published-sheet CSV 307-redirects to googleusercontent — follow it
             yield return req.SendWebRequest();
 
             if (req.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogWarning($"[ContentService] Fetch failed for '{s.fileName}': {req.error}. Keeping cached/baked copy.");
+                Debug.LogWarning($"[ContentService] Fetch failed for '{s.fileName}': {req.error} (HTTP {req.responseCode}). Keeping cached/baked copy.");
                 yield break;
             }
 
             string body = req.downloadHandler.text;
             if (!LooksLikeCsv(body))
             {
-                Debug.LogWarning($"[ContentService] '{s.fileName}' download didn't look like CSV (wrong/unpublished link?) — ignored.");
+                // Show what actually came back so a truncated / wrong link is obvious. A Google published-CSV
+                // URL MUST end in '&output=csv'; without it Google returns an HTML page (starts with '<').
+                string peek = string.IsNullOrEmpty(body)
+                    ? "(empty body)"
+                    : body.Substring(0, Mathf.Min(120, body.Length)).Replace("\r", " ").Replace("\n", " ");
+                Debug.LogWarning($"[ContentService] '{s.fileName}' download wasn't CSV — ignored (kept cached/baked). " +
+                                 $"Make sure the URL ends in '&output=csv'. HTTP {req.responseCode} · url={req.url} · body starts: {peek}");
                 yield break;
             }
 

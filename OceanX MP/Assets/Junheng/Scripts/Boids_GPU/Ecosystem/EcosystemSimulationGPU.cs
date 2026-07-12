@@ -283,25 +283,62 @@ namespace OceanX.BoidsGPU.Ecosystem
             return MaxSchoolsOf(species);
         }
 
-        /// <summary>How a species' population is trending against the global balance band.</summary>
-        public enum SpeciesBalance { Absent, Underpopulated, Balanced, Overpopulated }
-
         /// <summary>
-        /// Live balance state for a species, derived from the SAME prey:predator ratio the population
-        /// tick uses (on committed counts). <see cref="SpeciesBalance.Absent"/> when it has no schools.
-        /// Read by the UI / Alucia layer so its reactions agree with the actual dynamics.
+        /// Cause-aware population status for UI / Alucia messaging (this does NOT drive the tick — that
+        /// still uses <see cref="PopulationPressure"/>). It distinguishes WHY a species is struggling so the
+        /// guide can say the right thing, and stays quiet for trivial states (e.g. a lone freshly-added
+        /// species with nothing established yet):
+        ///   <b>Starving</b>     — it eats other species, its food WAS present but is now gone/scarce (a real collapse).
+        ///   <b>OverPredated</b> — its predators are present and outnumber it past the band (being over-hunted).
+        ///   <b>Overpopulated</b>— it normally has predators, they are ABSENT, and it has grown near its cap.
+        ///   <b>Balanced</b>     — none of the above (includes a just-added species, or a lone predator whose
+        ///                         prey has never been introduced — which must NOT read as "starving").
         /// </summary>
-        public SpeciesBalance GetBalance(SpeciesDataGPU species)
-        {
-            if (species == null) return SpeciesBalance.Absent;
-            Dictionary<SpeciesDataGPU, int> committed = BuildCommittedCounts();
-            int n = CountIn(committed, species);
-            if (n <= 0) return SpeciesBalance.Absent;
+        public enum SpeciesStatus { Absent, Balanced, Starving, OverPredated, Overpopulated }
 
-            int pressure = PopulationPressure(species, committed);
-            if (pressure > 0) return SpeciesBalance.Overpopulated; // under-predated / well-fed → trending up
-            if (pressure < 0) return SpeciesBalance.Underpopulated; // over-predated / starving → trending down
-            return SpeciesBalance.Balanced;
+        [Header("Messaging thresholds (Alucia reactions only — NOT the tick)")]
+        [Tooltip("A species is only called 'overpopulated' once it has grown to at least this fraction of its " +
+                 "MaxSchools cap AND its predators are absent — so a single freshly-added school is never " +
+                 "labelled overpopulated.")]
+        [Range(0.5f, 1f)] [SerializeField] private float _overpopulatedAtFraction = 0.8f;
+
+        // Per-species memory: has this species' food ever been present? Lets us tell a genuine collapse
+        // ("prey ran out") apart from "prey were never introduced yet" (which must NOT read as starving).
+        private readonly HashSet<SpeciesDataGPU> _foodWasPresent = new HashSet<SpeciesDataGPU>();
+
+        /// <summary>Cause-aware status for a species (committed counts). See <see cref="SpeciesStatus"/>.</summary>
+        public SpeciesStatus GetSpeciesStatus(SpeciesDataGPU species)
+        {
+            if (species == null) return SpeciesStatus.Absent;
+            Dictionary<SpeciesDataGPU, int> counts = BuildCommittedCounts();
+            int n = CountIn(counts, species);
+            if (n <= 0) return SpeciesStatus.Absent;
+
+            bool hasPrey      = HasAny(species.PreySpecies);
+            bool hasPredators = HasAny(species.PredatorSpecies);
+            int  preyN = hasPrey      ? SumCounts(counts, species.PreySpecies)     : 0;
+            int  predN = hasPredators ? SumCounts(counts, species.PredatorSpecies) : 0;
+
+            if (hasPrey && preyN > 0) _foodWasPresent.Add(species); // remember its food has existed at least once
+
+            // Starving: it eats prey, that food WAS present before, and now it is gone or too scarce.
+            // (A lone predator whose prey has never been added stays Balanced — no false alarm.)
+            if (hasPrey && _foodWasPresent.Contains(species)
+                && (preyN <= 0 || (float)preyN / n < _ratioBandLow))
+                return SpeciesStatus.Starving;
+
+            // Over-predated: predators are actually present and outnumber it past the low band.
+            if (predN > 0 && (float)n / predN < _ratioBandLow)
+                return SpeciesStatus.OverPredated;
+
+            // Overpopulated: it SHOULD be kept in check by predators, they are absent, and it has grown near cap.
+            if (hasPredators && predN <= 0 && MaxSchoolsOf(species) >= 2)
+            {
+                int overpopAt = Mathf.Max(2, Mathf.CeilToInt(MaxSchoolsOf(species) * _overpopulatedAtFraction));
+                if (n >= overpopAt) return SpeciesStatus.Overpopulated;
+            }
+
+            return SpeciesStatus.Balanced;
         }
 
         // -------------------------------------------------------------------------

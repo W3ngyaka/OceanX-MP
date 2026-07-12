@@ -7,7 +7,8 @@
 # 5. 'Weight' column,,,,,Optional number. Higher = shown more often. Blank = 1.
 # 6. Keep the {tokens},,,,,"{species}=fish name, {req}=what's still needed, {count}=how many. The game fills them in."
 # 7. Rows starting with # are notes,,,,,The game ignores them. Use them for your own reminders.
-# ---- VALID EVENT NAMES ----,,,,,"intro.1/2/3, health.critical, health.unstable.up, health.unstable.down, health.healthy, health.thriving, notify.unlocked, hint.withReq.1-4, hint.fallback, species.overpopulated, species.underpopulated, species.extinct, species.added"
+# ---- VALID EVENT NAMES ----,,,,,"intro.1/2/3, health.critical, health.unstable.up, health.unstable.down, health.healthy, health.thriving, notify.unlocked, hint.withReq.1-4, hint.fallback, species.overpopulated, species.overpredated, species.starving, species.extinct, species.added"
+# ---- Ecological events: use the RIGHT one ----,,,,,"overpopulated = too many, no predators. overpredated = too many predators eating it. starving = its FOOD ran out. Don't mix them up."
 intro.1,,Calm,,"Hey, my name's Alucia!",Startup line 1
 intro.2,,Warn,,"As you can see, this ecosystem isn't doing too well...",Startup line 2
 intro.3,,Calm,,Please help me save it!,Startup line 3
@@ -23,12 +24,16 @@ hint.withReq.2,,Calm,,Almost there! Just {req} and the {species} will appear.,
 hint.withReq.3,,Calm,,The {species} is waiting — {req}.,
 hint.withReq.4,,Calm,,Keep going! {req} to attract the {species}.,
 hint.fallback,,Calm,,Something new is almost ready to appear...,When there's no specific requirement to name
-species.overpopulated,,Warn,,The {species} are booming — nothing's keeping them in check!,Generic: any fish over-populating
-species.overpopulated,,Warn,1,"Whoa, that's a lot of {species}. They'll eat everything below them.",Generic variant
-species.overpopulated,Yellowstripe Scad,Warn,,The scad are exploding — their predators can't eat them fast enough!,Example: species-specific
-species.overpopulated,Reticulated Damselfish,Warn,,So many damselfish! Something's not eating enough of them.,Example: species-specific
-species.underpopulated,,Warn,,The {species} are struggling — too many predators are hunting them.,Generic: any fish being over-hunted
-species.underpopulated,,Warn,1,We're running low on {species}. The ones above them will start to starve.,Generic variant
+species.overpopulated,,Warn,,The {species} are overpopulating — nothing's keeping them in check!,"Generic: no predators, grown near its cap"
+species.overpopulated,,Warn,1,"Whoa, that's a lot of {species}. With no predators they'll eat everything below them.",Generic variant
+species.overpopulated,Yellowstripe Scad,Warn,,The scad are everywhere — nothing's hunting them anymore!,Example: species-specific
+species.overpopulated,Reticulated Damselfish,Warn,,So many damselfish now — their predators are gone.,Example: species-specific
+species.overpredated,,Warn,,The {species} are being hunted faster than they can recover — too many predators.,Generic: predators present and outnumber it
+species.overpredated,,Warn,1,We're losing {species} — the predators are eating them faster than they breed.,Generic variant
+species.overpredated,Yellowstripe Scad,Warn,,The scad are getting wiped out — too many hunters are after them.,Example: species-specific
+species.starving,,Warn,,The {species} have run out of food — there's nothing left for them to eat.,"Generic: its prey was present, now gone/scarce"
+species.starving,,Warn,1,The {species} are going hungry — their food source has collapsed.,Generic variant
+species.starving,Blacktip Reef Shark,Warn,,"With nothing left to hunt, the sharks are starving — the whole chain is unravelling.",The keystone lesson
 species.extinct,,Warn,,The {species} are gone from the reef entirely.,Generic: a fish hit zero
 species.extinct,Blacktip Reef Shark,Warn,,"Without the sharks, nothing keeps the reef in balance — watch what happens now.",The keystone lesson
 species.added,,Calm,,A new group of {species} just swam in!,Optional — fires when the player adds a fish

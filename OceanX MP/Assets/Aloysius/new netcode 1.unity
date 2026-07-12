@@ -6686,6 +6686,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858569342}
   m_CullTransparentMesh: 1
+--- !u!1 &862528876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 862528878}
+  - component: {fileID: 862528877}
+  m_Layer: 0
+  m_Name: CSV
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &862528877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862528876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391267a26d59a6843b1bdb3842c768dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentService
+  enableRemoteFetch: 1
+  timeoutSeconds: 6
+  refreshIntervalSeconds: 0
+  sources:
+  - fileName: SpeciesContent.csv
+    publishedCsvUrl: https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=196784187&single=true&output=csv
+--- !u!4 &862528878
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862528876}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 26.51023, y: -0, z: 16.47802}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &873776078
 GameObject:
   m_ObjectHideFlags: 0
@@ -12682,7 +12732,7 @@ RectTransform:
   m_GameObject: {fileID: 1429282708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0270158, y: 1.3639201, z: 0.9678078}
+  m_LocalScale: {x: 0.9944038, y: 1.32061, z: 0.9370759}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1408810322}
@@ -19609,3 +19659,4 @@ SceneRoots:
   - {fileID: 917995251}
   - {fileID: 1672225264}
   - {fileID: 1843461427}
+  - {fileID: 862528878}

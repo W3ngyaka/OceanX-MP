@@ -44,7 +44,7 @@ public class RevealQueue : MonoBehaviour
     {
         if (Instance == null)
         {
-            var existing = FindObjectOfType<RevealQueue>();
+            var existing = FindFirstObjectByType<RevealQueue>();
             Instance = existing != null ? existing : new GameObject("RevealQueue").AddComponent<RevealQueue>();
         }
         return Instance;

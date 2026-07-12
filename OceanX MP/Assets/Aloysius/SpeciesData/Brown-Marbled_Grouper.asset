@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Brown-Marbled_Grouper
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
   speciesName: Brown-Marbled Grouper
+  contentId: 
   sciName: Epinephelus fuscoguttatus
   tier: Tertiary Consumer
-  startUnlocked: 1
+  startUnlocked: 0
   minHealth: 0
   gpuSpecies: {fileID: 11400000, guid: 06e91a47e0ce37648b59657851cf6383, type: 2}
   requires:

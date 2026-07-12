@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Russells_Snapper
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
   speciesName: Russell's Snapper
+  contentId: 
   sciName: Lutjanus russellii
   tier: Secondary Consumer
-  startUnlocked: 1
+  startUnlocked: 0
   minHealth: 0
   gpuSpecies: {fileID: 11400000, guid: a84af6e7a4568ad45b12ab35abec7305, type: 2}
   requires:

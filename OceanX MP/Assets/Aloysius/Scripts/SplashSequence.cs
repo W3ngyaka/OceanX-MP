@@ -16,10 +16,17 @@ public class SplashSequence : MonoBehaviour
              "instead. Leave empty to always run the full splash.")]
     public string tabletScene = "new netcode 1";
 
-    [Header("Logos (shown in order)")]
-    [Tooltip("The single Image the logos are shown in (reused for each).")]
+    [Header("Composed logo group (all shown at once)")]
+    [Tooltip("Parent CanvasGroup holding the images you PLACED in the scene (left/middle/right). " +
+             "If set, all of them fade in together and the sprite-cycle 'Logos' list below is ignored.")]
+    public CanvasGroup logosGroup;
+    [Tooltip("Fade the group back out after the hold. Off = leave it on screen until the scene changes.")]
+    public bool fadeLogosOut = false;
+
+    [Header("Logos (legacy — single slot, one sprite at a time)")]
+    [Tooltip("The single Image the logos are shown in (reused for each). Ignored when a Logos Group is set.")]
     public Image logoImage;
-    [Tooltip("Logos shown one after another.")]
+    [Tooltip("Logos shown one after another. Ignored when a Logos Group is set.")]
     public Sprite[] logos;
     public float fadeDuration = 0.4f;
     public float holdDuration = 1.3f;
@@ -69,9 +76,22 @@ public class SplashSequence : MonoBehaviour
         }
         _load.allowSceneActivation = false;
 
-        // Play the logos.
-        if (logoImage != null)
+        // Show the splash logos.
+        if (logosGroup != null)
         {
+            // Preferred: images placed in the scene, revealed together as one composed group.
+            logosGroup.gameObject.SetActive(true);
+            // Visibility is driven by the CanvasGroup alpha, so make sure the placed graphics
+            // are actually enabled (duplicated logos often come in disabled).
+            foreach (var g in logosGroup.GetComponentsInChildren<Graphic>(true)) g.enabled = true;
+            logosGroup.alpha = 0f;
+            yield return FadeGroup(logosGroup, 0f, 1f);
+            yield return new WaitForSecondsRealtime(holdDuration);
+            if (fadeLogosOut) yield return FadeGroup(logosGroup, 1f, 0f);
+        }
+        else if (logoImage != null)
+        {
+            // Legacy: cycle each sprite through a single image slot, one at a time.
             SetAlpha(0f);
             if (logos != null)
             {
@@ -128,6 +148,19 @@ public class SplashSequence : MonoBehaviour
             yield return null;
         }
         SetAlpha(to);
+    }
+
+    // Fade a whole placed-logo group in/out together.
+    IEnumerator FadeGroup(CanvasGroup cg, float from, float to)
+    {
+        float t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            cg.alpha = Mathf.Lerp(from, to, fadeDuration <= 0f ? 1f : t / fadeDuration);
+            yield return null;
+        }
+        cg.alpha = to;
     }
 
     void SetAlpha(float a)

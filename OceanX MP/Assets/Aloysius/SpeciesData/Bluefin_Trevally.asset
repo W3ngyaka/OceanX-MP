@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Bluefin_Trevally
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
   speciesName: Bluefin Trevally
+  contentId: 
   sciName: Caranx melampygus
   tier: Secondary Consumer
-  startUnlocked: 1
+  startUnlocked: 0
   minHealth: 10
   gpuSpecies: {fileID: 11400000, guid: 892ea29c7c18d0044bbe2dcb3933ad9d, type: 2}
   requires:

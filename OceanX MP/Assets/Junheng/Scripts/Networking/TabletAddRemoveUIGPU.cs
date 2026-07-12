@@ -36,6 +36,8 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
 
     // Netcode index of the currently-selected species, or -1 when nothing is selected.
     private int _index = -1;
+    // The selected species, kept so Add can be gated on its unlock state.
+    private SpeciesDataGPU _selected;
 
     private void Awake()
     {
@@ -48,16 +50,25 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
     /// <summary>Called from each bubble's Button.onClick (pass that bubble's SpeciesDataGPU asset).</summary>
     public void Select(SpeciesDataGPU species)
     {
+        _selected = species;
         _index = TabletEcosystemUIGPU.Instance != null
             ? TabletEcosystemUIGPU.Instance.GetSpeciesIndex(species)
             : -1;
         RefreshButtons();
     }
 
+    // A locked (not-yet-discovered) species can't be added. Permitted when no unlock manager exists.
+    private bool SelectedUnlocked()
+    {
+        var mgr = EcosystemUnlockManagerGPU.Instance;
+        return mgr == null || mgr.IsUnlocked(_selected);
+    }
+
     private void OnAdd()
     {
         var net = EcosystemNetworkManagerGPU.Instance;
         if (_index < 0 || net == null) return;
+        if (!SelectedUnlocked()) return; // locked species can't be added until discovered
         int max = net.GetMaxSchools(_index);
         if (max > 0 && OptimisticPopulationStore.Display(_index) >= max) return; // already at cap optimistically
 
@@ -96,7 +107,7 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
 
         int disp = OptimisticPopulationStore.Display(_index);
         int max = net.GetMaxSchools(_index);
-        if (addButton != null)    addButton.interactable    = !(max > 0 && disp >= max); // off at cap
+        if (addButton != null)    addButton.interactable    = !(max > 0 && disp >= max) && SelectedUnlocked(); // off at cap or while locked
         if (removeButton != null) removeButton.interactable = disp > 0;                   // off at zero
         if (populationLabel != null) populationLabel.text = disp.ToString();
     }

@@ -20,13 +20,12 @@ public class HealthBarBinder : MonoBehaviour
     [Header("Options")]
     [SerializeField] private bool smooth = true;
     [SerializeField] private float smoothSpeed = 4f;
-    [SerializeField] private string percentFormat = "0"; // "0" -> 79, "0.0" -> 78.6
 
     private float _displayed;
 
     void Awake()
     {
-        if (sim == null) sim = FindObjectOfType<EcosystemSimulationGPU>();
+        if (sim == null) sim = FindFirstObjectByType<EcosystemSimulationGPU>();
 
         if (fillImage == null)
         {
@@ -55,7 +54,7 @@ public class HealthBarBinder : MonoBehaviour
     {
         if (sim == null)
         {
-            sim = FindObjectOfType<EcosystemSimulationGPU>();
+            sim = FindFirstObjectByType<EcosystemSimulationGPU>();
             if (sim == null) return;
         }
 

@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Junheng/Scenes/MainScene.unity
     guid: 412e61decf86d444084304c920bbe910
-  - enabled: 0
+  - enabled: 1
     path: Assets/Aloysius/new netcode 1.unity
     guid: 8a3b650040a16b543b625d396b047629
   - enabled: 0

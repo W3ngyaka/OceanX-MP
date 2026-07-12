@@ -4786,7 +4786,7 @@ MonoBehaviour:
   refreshIntervalSeconds: 0
   sources:
   - fileName: SpeciesContent.csv
-    publishedCsvUrl: https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pubhtml?gid=196784187&single=true
+    publishedCsvUrl: https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=196784187&single=true&output=csv
 --- !u!4 &621741834
 Transform:
   m_ObjectHideFlags: 0

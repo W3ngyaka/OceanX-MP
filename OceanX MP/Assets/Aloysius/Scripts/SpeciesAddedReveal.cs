@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using OceanX.BoidsGPU.Ecosystem;
 
 // Shows a center-stage info card on the HOST/large screen the FIRST time each
@@ -23,7 +24,7 @@ public class SpeciesAddedReveal : MonoBehaviour
     public Image revealImage;      // optional
     public Text nameText;
     public Text tierText;
-    public Text msgText;
+    public TMP_Text msgText;
 
     [Header("Species data (index resolved at runtime)")]
     public List<SpeciesData> allSpecies = new List<SpeciesData>();

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using OceanX.BoidsGPU.Ecosystem;
 
 // Shows a center-stage info card on the HOST/large screen the FIRST time each
@@ -21,11 +22,10 @@ public class SpeciesAddedReveal : MonoBehaviour
     [Header("Card refs")]
     public CanvasGroup revealGroup;
     public Image revealImage;      // optional
-    // Legacy UnityEngine.UI.Text (NOT TextMeshPro) so these can be wired to the AddedRevealCard's
-    // text objects, which are UI.Text — same convention as the sibling SpeciesUnlockReveal.
-    public Text nameText;
-    public Text tierText;
-    public Text msgText;
+    // The card's texts are TextMeshPro (TMP_Text).
+    public TMP_Text nameText;
+    public TMP_Text tierText;
+    public TMP_Text msgText;
 
     [Header("Species data (index resolved at runtime)")]
     public List<SpeciesData> allSpecies = new List<SpeciesData>();

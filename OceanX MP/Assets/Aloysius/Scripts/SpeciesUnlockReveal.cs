@@ -161,11 +161,16 @@ public class SpeciesUnlockReveal : MonoBehaviour
             AluciaLines.Get("hint.withReq.3", "The {species} is waiting \u2014 {req}.").Replace("{species}", name).Replace("{req}", rp),
             AluciaLines.Get("hint.withReq.4", "Keep going! {req} to attract the {species}.").Replace("{species}", name).Replace("{req}", rp),
         };
-        // Variants that lean on the species' own flavour hints when available.
-        var flavour = new List<string>();
-        if (!string.IsNullOrEmpty(sp.hint1)) flavour.Add(sp.hint1);
-        if (!string.IsNullOrEmpty(sp.hint2)) flavour.Add(sp.hint2);
-        if (!string.IsNullOrEmpty(sp.hint3)) flavour.Add(sp.hint3);
+        // Variants that lean on the species' own flavour hints. These come from the CSV first (event
+        // 'hint.flavour', scoped to this species) so fact-checkers can edit them in the sheet; if the CSV
+        // has no rows for this fish, fall back to the SpeciesData asset's hint1/2/3 so nothing breaks.
+        var flavour = AluciaLines.GetVariants("hint.flavour", name);
+        if (flavour.Count == 0)
+        {
+            if (!string.IsNullOrEmpty(sp.hint1)) flavour.Add(sp.hint1);
+            if (!string.IsNullOrEmpty(sp.hint2)) flavour.Add(sp.hint2);
+            if (!string.IsNullOrEmpty(sp.hint3)) flavour.Add(sp.hint3);
+        }
 
         // Interleave: even rotations use flavour (if any), odd use progress phrasing.
         if (reqPhrase == null)

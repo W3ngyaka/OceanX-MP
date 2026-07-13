@@ -93,6 +93,42 @@ public static class AluciaLines
         return result;
     }
 
+    /// <summary>
+    /// Returns EVERY text variant for an event, scoped to a species (species-specific rows win over
+    /// generic ones; blank list if none). Unlike <see cref="GetLine"/> — which picks one — this hands back
+    /// the whole set so the caller can rotate through them itself (e.g. Alucia's per-species flavour hints).
+    /// Empty means "no CSV rows" so the caller can fall back to its own built-in lines.
+    /// </summary>
+    public static List<string> GetVariants(string eventKey, string species)
+    {
+        EnsureLoaded();
+        var result = new List<string>();
+        if (_events == null || string.IsNullOrEmpty(eventKey)) return result;
+        if (!_events.TryGetValue(eventKey.Trim().ToLowerInvariant(), out List<Variant> variants) || variants.Count == 0)
+            return result;
+
+        List<Variant> scoped = null, generic = null;
+        for (int i = 0; i < variants.Count; i++)
+        {
+            if (!string.IsNullOrEmpty(species) &&
+                string.Equals(variants[i].Species, species, System.StringComparison.OrdinalIgnoreCase))
+            {
+                if (scoped == null) scoped = new List<Variant>();
+                scoped.Add(variants[i]);
+            }
+            else if (string.IsNullOrEmpty(variants[i].Species))
+            {
+                if (generic == null) generic = new List<Variant>();
+                generic.Add(variants[i]);
+            }
+        }
+
+        List<Variant> pool = scoped ?? generic ?? variants;
+        for (int i = 0; i < pool.Count; i++)
+            if (!string.IsNullOrEmpty(pool[i].Text)) result.Add(pool[i].Text);
+        return result;
+    }
+
     // Weighted random selection that avoids repeating the last line shown for this event+species.
     private static Variant Pick(List<Variant> pool, string memoryKey)
     {

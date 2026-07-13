@@ -19,7 +19,7 @@ MonoBehaviour:
   minHealth: 0
   gpuSpecies: {fileID: 11400000, guid: 29daa50a06fc5b845b98845c301ffe0e, type: 2}
   requires: []
-  hint1: Schooling fish like scad need a stable prey base first.
-  hint2: You need Damselfish x2 and Mullet x2 to attract scad.
-  hint3: "Almost there \u2014 build up your damselfish and mullet populations."
-  addedMessage: Yellowstripe scad are forming schooling groups in open water.
+  hint1: Seagrass meadows are the foundation of the reef, feeding grazers and giving fish shelter.
+  hint2: Healthy seagrass supports herbivores like parrotfish and surgeonfish.
+  hint3: More seagrass helps the whole food web thrive.
+  addedMessage: Seagrass meadows are taking root, giving the reef food, shelter and oxygen.

@@ -106,7 +106,8 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Header("Eco-Health weights (sum ~1)")]
         [Tooltip("How much species diversity (fraction of species alive) contributes to eco-health.")]
         [Range(0f, 1f)] [SerializeField] private float _healthDiversityWeight = 0.4f;
-        [Tooltip("How much food-web balance (fraction of species within the ratio band) contributes.")]
+        [Tooltip("How much food-web balance contributes (fraction of food-web species that are stable or " +
+                 "growing — i.e. not starving, over-hunted, or overpopulated).")]
         [Range(0f, 1f)] [SerializeField] private float _healthBalanceWeight = 0.4f;
         [Tooltip("How much apex-predator presence contributes (the shark is the keystone).")]
         [Range(0f, 1f)] [SerializeField] private float _healthApexWeight = 0.2f;
@@ -296,11 +297,16 @@ namespace OceanX.BoidsGPU.Ecosystem
         /// </summary>
         public enum SpeciesStatus { Absent, Balanced, Starving, OverPredated, Overpopulated }
 
-        [Header("Messaging thresholds (Alucia reactions only — NOT the tick)")]
-        [Tooltip("A species is only called 'overpopulated' once it has grown to at least this fraction of its " +
-                 "MaxSchools cap AND its predators are absent — so a single freshly-added school is never " +
-                 "labelled overpopulated.")]
-        [Range(0.5f, 1f)] [SerializeField] private float _overpopulatedAtFraction = 0.8f;
+        [Header("Overpopulation thresholds (Alucia reactions + eco-health balance)")]
+        [Tooltip("A species that outnumbers its combined predators by MORE than this ratio (in school counts) " +
+                 "counts as overpopulated even while some predators remain — they can no longer keep it in " +
+                 "check. Below this it is merely 'growing'. Set above RatioBandHigh (the growing threshold).")]
+        [SerializeField] private float _overpopulatedRatio = 7f;
+        [Tooltip("The OTHER overpopulation trigger: when a species' predators are ENTIRELY gone, it is " +
+                 "overpopulated once it has MORE than this many schools (so a freshly-added school or two is " +
+                 "never labelled overpopulated). A flat count, independent of the species' cap, so the warning " +
+                 "appears promptly the moment its predators are wiped out.")]
+        [SerializeField] private int _overpopulatedFreeCount = 3;
 
         // Per-species memory: has this species' food ever been present? Lets us tell a genuine collapse
         // ("prey ran out") apart from "prey were never introduced yet" (which must NOT read as starving).
@@ -332,13 +338,32 @@ namespace OceanX.BoidsGPU.Ecosystem
                 return SpeciesStatus.OverPredated;
 
             // Overpopulated: it SHOULD be kept in check by predators, they are absent, and it has grown near cap.
-            if (hasPredators && predN <= 0 && MaxSchoolsOf(species) >= 2)
-            {
-                int overpopAt = Mathf.Max(2, Mathf.CeilToInt(MaxSchoolsOf(species) * _overpopulatedAtFraction));
-                if (n >= overpopAt) return SpeciesStatus.Overpopulated;
-            }
+            if (IsOverpopulated(species, counts)) return SpeciesStatus.Overpopulated;
 
             return SpeciesStatus.Balanced;
+        }
+
+        /// <summary>
+        /// Genuine runaway overpopulation: a species that SHOULD be regulated by predators, but all of
+        /// them are gone, and it has grown to near its cap. An apex with no natural predators is never
+        /// "overpopulated" (its growth toward its cap is normal). Shared by the status classifier and
+        /// eco-health so both agree on what counts as "too many".
+        /// </summary>
+        private bool IsOverpopulated(SpeciesDataGPU species, Dictionary<SpeciesDataGPU, int> counts)
+        {
+            if (!HasAny(species.PredatorSpecies)) return false; // apex / no natural predators -> never overpopulated
+            int n     = CountIn(counts, species);
+            int predN = SumCounts(counts, species.PredatorSpecies);
+
+            // Overpopulated if EITHER it has run away past the overpopulation ratio while some predators still
+            // remain (they can no longer hold it back), OR its predators are entirely gone and it has grown
+            // near its cap. (This is an OR: either condition alone flags it.)
+            if (predN > 0)
+                return (float)n / predN > _overpopulatedRatio;
+
+            // Predators entirely gone: overpopulated once it has more than a few schools (nothing left to hold
+            // it back). Flat count, not a fraction of cap, so the warning appears promptly.
+            return n > _overpopulatedFreeCount;
         }
 
         // -------------------------------------------------------------------------
@@ -462,7 +487,7 @@ namespace OceanX.BoidsGPU.Ecosystem
             int totalSpecies = 0;
             int aliveSpecies = 0;
             int considered = 0;   // alive species that participate in the food web
-            int balanced = 0;     // ...of those, how many sit inside the ratio band
+            int healthy = 0;      // ...of those, how many are stable or growing (not declining / runaway)
             bool apexAlive = false;
 
             foreach (SpeciesDataGPU species in _ecosystem.Species)
@@ -479,14 +504,19 @@ namespace OceanX.BoidsGPU.Ecosystem
                 if (HasAny(species.PredatorSpecies) || HasAny(species.PreySpecies))
                 {
                     considered++;
-                    if (PopulationPressure(species, committed) == 0) balanced++;
+                    // "Growing" counts as healthy just like "stable" — a well-fed apex filling out toward
+                    // its cap is not a problem. Only a species that is actively DECLINING (starving or
+                    // being over-hunted -> negative pressure) or has genuinely run away (its predators are
+                    // gone and it has ballooned near its cap) is unhealthy.
+                    bool declining = PopulationPressure(species, committed) < 0;
+                    if (!declining && !IsOverpopulated(species, committed)) healthy++;
                 }
             }
 
             if (totalSpecies == 0) return 0f;
 
             float diversity = (float)aliveSpecies / totalSpecies;
-            float balance   = considered > 0 ? (float)balanced / considered : 0f;
+            float balance   = considered > 0 ? (float)healthy / considered : 0f;
             float apex      = apexAlive ? 1f : 0f;
 
             float weightSum = Mathf.Max(0.0001f, _healthDiversityWeight + _healthBalanceWeight + _healthApexWeight);

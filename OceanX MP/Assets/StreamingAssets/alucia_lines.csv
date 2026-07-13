@@ -3,7 +3,7 @@
 # 1. NEVER change the 'Event' or 'Species' columns,,,,,They are IDs the game matches on. Only edit Text / Mood / Weight.
 # 2. Add a VARIANT,,,,,Copy a row and change its Text. The game picks one at random so she doesn't repeat.
 # 3. 'Species' column,,,,,Blank = any fish. A name = only when THAT fish triggers it. Must match the game's species name exactly.
-# 4. 'Mood' column,,,,,Calm / Warn / Win  ->  tints her speech bubble. Nothing else is allowed.
+# 4. 'Mood' column,,,,,Calm / Warn / Win -> tints her speech bubble. Nothing else is allowed.
 # 5. 'Weight' column,,,,,Optional number. Higher = shown more often. Blank = 1.
 # 6. Keep the {tokens},,,,,"{species}=fish name, {req}=what's still needed, {count}=how many. The game fills them in."
 # ---- VALID EVENTS ----,,,,,"intro.1/2/3, health.critical, health.unstable.up, health.unstable.down, health.healthy, health.thriving, notify.unlocked, hint.withReq.1-4, hint.fallback, species.overpopulated, species.overpredated, species.starving, species.extinct, species.added"
@@ -65,3 +65,42 @@ species.starving,Yellowstripe scad,Warn,,The Yellowstripe Scad have nothing to e
 species.extinct,,Warn,,The {species} are gone from the reef entirely.,Generic
 species.extinct,Blacktip Reef Shark,Warn,,"Without the sharks, nothing keeps the reef in balance. Watch what happens now!",Keystone lesson
 species.added,,Calm,,A new group of {species} just swam in!,Fires only on the first-ever add
+# hint.flavour,,,,Per-species 'fun fact' hint Alucia says while pointing to the next species to unlock. One is picked at random.,Captured from the SpeciesData assets (hint1/2/3).
+hint.flavour,Blacktip Reef Shark,Calm,1,The reef shark needs a fully functioning food web to return.,flavour hint 1
+hint.flavour,Blacktip Reef Shark,Calm,1,"You need Grouper x1, Moray x1, Trevally x2 and Scad x3.",flavour hint 2
+hint.flavour,Blacktip Reef Shark,Calm,1,"Almost there, the shark is close to returning to the reef!",flavour hint 3
+hint.flavour,Bluefin Trevally,Calm,1,Fast predators like trevally prey on mullets and parrotfish,flavour hint 1
+hint.flavour,Bluefin Trevally,Calm,1,You need Mullet x3 and Parrotfish x2 to attract trevally.,flavour hint 2
+hint.flavour,Bluefin Trevally,Calm,1,"Almost there, add more mullet and parrotfish.",flavour hint 3
+hint.flavour,Bluespotted Ribbontail Ray,Calm,1,Rays feed on the reef floor and need herbivores nearby.,flavour hint 1
+hint.flavour,Bluespotted Ribbontail Ray,Calm,1,You need Parrotfish x2 and Spinefoot x2 to attract rays.,flavour hint 2
+hint.flavour,Bluespotted Ribbontail Ray,Calm,1,"Almost there, add more parrotfish and spinefoot.",flavour hint 3
+hint.flavour,Brown-Marbled Grouper,Calm,1,Grouper are ambush predators that need schooling prey.,flavour hint 1
+hint.flavour,Brown-Marbled Grouper,Calm,1,"You need Scad x2, Trevally x1 and Snapper x1 to attract grouper.",flavour hint 2
+hint.flavour,Brown-Marbled Grouper,Calm,1,"Almost there, stabilise your secondary consumer population.",flavour hint 3
+hint.flavour,Bullethead Parrotfish,Calm,1,Parrotfish graze algae and keep coral healthy.,flavour hint 1
+hint.flavour,Bullethead Parrotfish,Calm,1,A stable parrotfish population supports larger reef predators.,flavour hint 2
+hint.flavour,Bullethead Parrotfish,Calm,1,More parrotfish will help attract secondary consumers.,flavour hint 3
+hint.flavour,Eyestripe Surgeonfish,Calm,1,Surgeonfish keep algae under control on the reef.,flavour hint 1
+hint.flavour,Eyestripe Surgeonfish,Calm,1,A stable surgeonfish population supports the next trophic level.,flavour hint 2
+hint.flavour,Eyestripe Surgeonfish,Calm,1,Add more surgeonfish to unlock secondary consumers.,flavour hint 3
+hint.flavour,Fringelip Mullet,Calm,1,Mullet are a key food source for larger reef predators.,flavour hint 1
+hint.flavour,Fringelip Mullet,Calm,1,Build up mullet numbers to attract secondary consumers.,flavour hint 2
+hint.flavour,Fringelip Mullet,Calm,1,Add more mullet to stabilise the base of the food web.,flavour hint 3
+hint.flavour,Giant Moray,Calm,1,"Moray eels hunt in reef crevices, targeting prey like Russell's snappers and parrotfish.",flavour hint 1
+hint.flavour,Giant Moray,Calm,1,You need Snapper x2 and Ray x1 to attract the giant moray.,flavour hint 2
+hint.flavour,Giant Moray,Calm,1,"Almost there, build up snapper and ray populations.",flavour hint 3
+hint.flavour,Reticulated Damselfish,Calm,1,Damselfish are small but vital prey for reef predators.,flavour hint 1
+hint.flavour,Reticulated Damselfish,Calm,1,Build damselfish numbers to attract schooling predators.,flavour hint 2
+hint.flavour,Reticulated Damselfish,Calm,1,More damselfish will unlock secondary consumers.,flavour hint 3
+hint.flavour,Russell's Snapper,Calm,1,Snappers are ambush predators that need prey on mullets and damselfish.,flavour hint 1
+hint.flavour,Russell's Snapper,Calm,1,You need Damselfish x2 and Surgeonfish x2 to attract snapper.,flavour hint 2
+hint.flavour,Russell's Snapper,Calm,1,"Almost there, build up damselfish and surgeonfish.",flavour hint 3
+hint.flavour,Seagrass,Calm,1,"Seagrass meadows are the foundation of the reef, feeding grazers and giving fish shelter.",flavour hint 1
+hint.flavour,Seagrass,Calm,1,Healthy seagrass supports herbivores like parrotfish and surgeonfish.,flavour hint 2
+hint.flavour,Seagrass,Calm,1,More seagrass helps the whole food web thrive.,flavour hint 3
+hint.flavour,Streaked Spinefoot,Calm,1,Spinefoot are algae grazers that support reef health.,flavour hint 1
+hint.flavour,Streaked Spinefoot,Calm,1,Stable herbivores attract secondary consumers like rays.,flavour hint 2
+hint.flavour,Streaked Spinefoot,Calm,1,Add more spinefoot to complete the primary consumer tier.,flavour hint 3
+hint.flavour,Yellowstripe Scad,Calm,1,Schooling fish like scad love small fish like damselfish.,flavour hint 1
+hint.flavour,Yellowstripe Scad,Calm,1,You need Damselfish x2 and Mullet x2 to attract scad.,flavour hint 2

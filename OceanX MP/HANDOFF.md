@@ -917,6 +917,57 @@ already localization-ready (stable ids, all text in one column):
 
 ---
 
+## What Was Done — 2026-07-14 (JunHeng) — Eco-health rework + overpopulation model + flavour hints
+
+### 🩺 Eco-health now rewards "stable OR growing" (100% is reachable)
+The `balance` term of `EcoHealth01` counted a food-web species only when its `PopulationPressure == 0`
+(perfectly still). With the dense food web + `MaxSchools` caps that was **impossible for every species at once**,
+so eco-health topped out around **87%** — 100% was unreachable.
+- **`ComputeEcoHealth01`** now counts a species as healthy when it is **not declining** (`PopulationPressure >= 0`,
+  i.e. stable or growing) **and not overpopulated**. A well-fed apex filling out toward its cap is fine; only a
+  species actively starving / being over-hunted, or genuinely running away, drags health down. → **100% reachable.**
+- Matches the intent of the HTML prototype (`prototype/oceanx-prototype.html`): generous, apex exempt, reaches 100%
+  without demanding perfect balance.
+
+### 🐟 Overpopulation is now ratio + count based (was "predators gone + near cap")
+Extracted a shared **`IsOverpopulated(species, counts)`** helper used by BOTH `GetSpeciesStatus` and the eco-health
+balance term (bar + Alucia warnings always agree). New rule (an **OR**):
+- **predators present** → overpopulated if it outnumbers its combined predators by **> `_overpopulatedRatio`** (default **7:1**);
+- **predators entirely gone** → overpopulated if it has **> `_overpopulatedFreeCount`** schools (default **3**).
+- New Inspector fields **`_overpopulatedRatio = 7`** + **`_overpopulatedFreeCount = 3`** REPLACE the old
+  `_overpopulatedAtFraction` (0.8-of-cap). Apex species (no natural predators) are never overpopulated.
+
+### 🔧 Raised grazer `MaxSchools` (headroom to actually overpopulate)
+Raised the 5 primary-consumer caps: **Parrotfish 6→10, Surgeonfish 6→10, Mullet 7→10, Damselfish 7→12,
+Spinefoot 6→10** (Mullet kept at 10 — 18 fish/school). Predator/mid-fish caps unchanged.
+- **100% recipe (bands low=1 high=3):** grazers at their predator-count (Parrotfish 4, Surgeonfish 5, Mullet 5,
+  Damselfish 6, Spinefoot 4), **1 of everything else**. Each grazer can range from that floor up to its cap and stay
+  at 100%; the predators are locked at 1 (each extra predator raises the grazers' floor).
+
+### 💬 Alucia flavour hints ("fun facts") are now CSV-driven
+The per-species hints Alucia says while pointing at the next unlock (`SpeciesData.hint1/2/3`) were baked into the
+assets — editing the sheet did nothing.
+- **`AluciaLines.GetVariants(event, species)`** (new) returns every variant for an event scoped to a species.
+- **`SpeciesUnlockReveal.BuildHint`** reads flavour from the CSV first (**`hint.flavour`**, scoped to the fish),
+  falling back to `SpeciesData.hint1/2/3`. Fact-checkers can now edit/shorten them in the sheet.
+- **`alucia_lines.csv` + the `alucia_lines` sheet tab** — added **`hint.flavour`** rows for all 13 species (38 lines).
+- Data fixes: **Seagrass** rows carried Scad's text → proper seagrass hints (CSV + sheet + asset, incl. its
+  `addedMessage`); **Giant Moray** *"Russel Snappers"* typo → *"Russell's snappers"*.
+
+### 🧹 Em dashes → commas across Alucia's lines
+Replaced every em/en dash and spaced-hyphen-as-punctuation with a comma in `alucia_lines.csv` AND the sheet (the
+sheet stored them as `â€"` mojibake from an earlier mis-encoded push — now clean). Compound hyphens (Brown-marbled)
+left intact.
+
+### ✅ Alucia wiring CONFIRMED (supersedes the "pending wiring" note in the 2026-07-13 section)
+In `SCENE_MainScene 1` (the only scene with Alucia) all three are already wired in the committed scene:
+`AluciaController.simulation` → EcosystemSimulationGPU (fileID 222838834), `AluciaEcologyEvents.alucia` →
+AluciaController (621817932), and its `simulation` too. Health-band lines (`health.critical/unstable.up/
+unstable.down/healthy/thriving`) fire via `AluciaController.EvaluateHealth(simulation.EcoHealth01)`.
+`waitForExperienceStart = 1` is intentional (waits for the networked tap-to-begin); set 0 for standalone testing.
+
+---
+
 ## What Was Done — 2026-07-13 (JunHeng)
 
 ### 🩺 Cause-aware species status for Alucia (REPLACES `GetBalance` / `SpeciesBalance`)

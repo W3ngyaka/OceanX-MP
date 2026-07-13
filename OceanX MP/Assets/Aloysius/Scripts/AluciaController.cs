@@ -137,6 +137,10 @@ public class AluciaController : MonoBehaviour
         _sticky = sticky;
 
         if (bubbleText != null) bubbleText.text = message;
+        // The bubble auto-sizes to the text (VerticalLayoutGroup + ContentSizeFitter on AluciaBubble);
+        // force an immediate rebuild so it resizes the same frame the text changes.
+        if (bubbleGroup != null)
+            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)bubbleGroup.transform);
         if (_bubbleBg != null) _bubbleBg.color = MoodColor(mood);
         if (characterImage != null)
         {

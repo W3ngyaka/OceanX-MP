@@ -10,10 +10,10 @@ Users add/remove marine species and watch cascading effects in real time, learni
 | 3 | ✅ | EcosystemManager + species ScriptableObjects |
 | 4 | ✅ | Spawning, removal, population tracking |
 | 5 | ✅ | Food chain relationships + predator-prey logic |
-| 6 | 🔶 | Population growth/decline (tick system done, health score pending) |
-| 7 | 🔶 | Cascading effects done; ecosystem state machine not started; CPU layer removed |
+| 6 | ✅ | Population growth/decline + eco-health score (ratio-driven dynamics; 100% reachable, gradual ramp) |
+| 7 | 🔶 | Cascading effects done; formal state-machine enum not built (health-band Alucia reactions cover it); CPU layer removed |
 | 8 | ✅ | Flocking + predator movement (done ahead of schedule) |
-| 9 | 🔶 | Start-at-zero/extinction done; netcode + tablet add/remove working; C# events not wired |
+| 9 | ✅ | Start-at-zero/extinction, netcode + tablet add/remove, and C# events (species / unlock / health-band) all wired |
 | 10 | ❌ | Preset scenarios |
 | 11–12 | ❌ | Debugging, optimisation, final build |
 
@@ -76,12 +76,17 @@ Empty-ocean / last-extinction is crash-safe: all buffers sized `Mathf.Max(1, cou
 `ReproductionRate` / `NaturalDeathRate` (Week 8) and `StarvationDeathRate` / `StarvationThreshold` (Week 9) were all deleted from `SpeciesDataGPU`. Balance is now **global**; per-species behaviour comes from `FishPerSchool` / `MaxSchools` / prey-predator lists. Carrying capacity = `MaxSchools × FishPerSchool`. Eco-health (`EcoHealth01`) derives from the same ratios. The cascade is emergent — no hardcoded chain-reaction logic.
 
 ## What needs building next
-1. Finalise the **12 canonical species** (list locked — see HANDOFF): create **Giant moray** assets, remove **Great barracuda**, then wire all 12 into `EcosystemDefinitionGPU` in fixed order (currently only the Clownfish placeholder is wired)
-2. Play-test the start-at-zero model in-editor (committed in `e13e26b` without an editor run)
-3. Ecosystem health score + state machine (`Healthy / Unstable / Critical / Collapsing / Recovering`); wire `Health.cs` bar to GPU data
-4. C# event system — fires on population change, health change, state change (bridge to UI team)
-5. ~~Runtime add/remove species API~~ ✅ Done · ~~Start-at-zero/extinction~~ ✅ Done (`e13e26b`)
-6. Preset scenarios (Balanced Ocean, Shark Removed, Overpopulation, Collapse, Recovery)
+1. **Preset scenarios** (Balanced Ocean, Shark Removed, Overpopulation, Collapse, Recovery) — not started
+2. **Converge the host scenes** — sim, health bar, and baked environment live in separate `Boids_Demo` / `SCENE_MainScene` copies; merge into one before the final build (see HANDOFF scene-divergence notes)
+3. **Re-point Build Settings** — it still references the renamed `Junheng/Scenes/SCENE_MainScene 1.unity`; point it at `SCENE_MainScene.unity` and prune dead scene entries
+4. **Strip debug logging** before the final build (e.g. `AluciaEcologyEvents.debugLog`)
+5. Final optimisation, balancing, and build (Weeks 11–12)
+
+### Done since this list was last written
+- ✅ 12 canonical species created + wired (Giant moray added, Great barracuda removed)
+- ✅ Runtime add/remove API + start-at-zero / extinction model (`e13e26b`)
+- ✅ Eco-health score — 100% reachable, gradual ramp (`d17fdea`); drives `Health.cs` (tablet) + `HealthBarBinder` (large screen)
+- ✅ C# events — species (starving / overpredated / overpopulated), unlock (`OnSpeciesUnlocked` / `OnUnlockStateChanged`), health-band Alucia lines
 
 ## Team structure
 - Simulation/backend: JunHeng

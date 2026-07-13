@@ -839,6 +839,7 @@ on the host **and** the tablet. Everything degrades gracefully (nothing breaks o
   - Rows whose Event starts with `#` are comments (there's a built-in instructions/legend block at the top).
 - **New ecological events** (per-species): `species.overpopulated`, `species.underpopulated`, `species.extinct`,
   `species.added` — this is the "add a hint if a certain fish overpopulates" ask, now **data-only** for checkers.
+  > ⚠ **Superseded 2026-07-13:** `species.underpopulated` was replaced by cause-aware `species.starving` + `species.overpredated`. See the 2026-07-13 section.
 - `AluciaLines.Get(key, fallback)` is unchanged, so `AluciaController` / `NotificationManager` /
   `SpeciesUnlockReveal` were **not touched**. New `AluciaLines.GetLine(event, species)` returns text + mood.
 
@@ -862,6 +863,7 @@ on the host **and** the tablet. Everything degrades gracefully (nothing breaks o
   over/under-populated / extinct / added, and speaks the matching CSV line via `AluciaController.Say`.
 - Added **`EcosystemSimulationGPU.GetBalance(species)`** + `SpeciesBalance` enum (reuses the existing ratio
   logic) so the reaction agrees with the actual dynamics.
+  > ⚠ **Replaced 2026-07-13** by cause-aware `GetSpeciesStatus` / `SpeciesStatus`. See the 2026-07-13 section.
 
 ### Files touched
 - **New:** `Junheng/Scripts/Content/{CsvUtil,ContentService,AluciaEcologyEvents}.cs`.
@@ -912,6 +914,51 @@ already localization-ready (stable ids, all text in one column):
 - Implementation: extend `ContentService` from one URL per file to a **`{language → URL}` map** + a "current
   language" setting (~20 lines). Nothing already built needs redoing; today's single URL becomes the "English" entry.
 - Translating is then just retyping the display text in each tab — no structural changes.
+
+---
+
+## What Was Done — 2026-07-13 (JunHeng)
+
+### 🩺 Cause-aware species status for Alucia (REPLACES `GetBalance` / `SpeciesBalance`)
+Adding a lone species whose prey/predators aren't in the ocean yet was wrongly announced as
+"underpopulated — too many predators" (because `PopulationPressure` returns −1 for any species whose prey list
+is non-empty but currently absent). Fixed by separating the **messaging** read-out from the population **tick**.
+- **`EcosystemSimulationGPU`** — `GetBalance(species)` + `enum SpeciesBalance {Absent, Underpopulated, Balanced, Overpopulated}`
+  **removed**, replaced by **`GetSpeciesStatus(species)`** + **`enum SpeciesStatus {Absent, Balanced, Starving, OverPredated, Overpopulated}`**.
+  Cause-aware, computed on committed counts, **messaging-only — does NOT drive the population tick** (that still uses `PopulationPressure`):
+  - **Starving** — it eats prey, that food *was* present at least once, and is now gone / below the low band (a real collapse).
+  - **OverPredated** — its predators are actually present and outnumber it past the low band.
+  - **Overpopulated** — it normally has predators, they are absent, and it has grown to ≥ `_overpopulatedAtFraction` of its cap.
+  - **Balanced** — none of the above, including a just-added species or a lone predator whose prey was never introduced (no false alarm).
+  - New Inspector field **`_overpopulatedAtFraction`** (default `0.8`, under a "Messaging thresholds" header) + a per-species
+    `_foodWasPresent` memory set that tells a genuine "prey ran out" apart from "prey were never added yet".
+  - ⚠ **API rename — any caller of `GetBalance` / `SpeciesBalance` must switch to `GetSpeciesStatus` / `SpeciesStatus`.**
+- **`AluciaEcologyEvents`** — now fires **per-cause** events `species.starving` / `species.overpredated` /
+  `species.overpopulated` (+ `species.extinct`), with a settle window after a count change and fire-once-per-entry;
+  `species.added` now fires only on the **first-ever** add of a species.
+- **`alucia_lines.csv`** — dropped `species.underpopulated`; added `species.starving` (no "too many predators" wording)
+  and `species.overpredated`; legend updated. Google Sheet `alucia_lines` tab updated to match.
+
+### 🔒 Locked species can no longer be added from the tablet
+- **`EcosystemUnlockManagerGPU`** — new **`IsUnlocked(SpeciesDataGPU gpu)`** overload (resolves the gpu-species to its
+  `SpeciesData`; a species the manager doesn't track is treated as unlocked, so it never blocks something the unlock
+  system isn't meant to govern).
+- **`TabletAddRemoveUIGPU`** — remembers the selected species; **Add is blocked and the Add button greys out while that
+  species is still locked** (not yet discovered). Remove and adds of unlocked species are unchanged.
+
+### 🌐 ContentService — follow the published-CSV redirect + clearer failures
+- Set **`redirectLimit = 32`** (a Google published-CSV URL 307-redirects to `googleusercontent` — the fetch must follow it).
+- Non-CSV downloads now log the **HTTP code, final URL, and a 120-char body snippet** + a reminder the URL must end in
+  `&output=csv`, so a wrong/unpublished link is obvious instead of silently falling back to the baked copy.
+
+### 🐟 Russell's snapper real mesh imported + animated
+- **8 of 12 species now have real meshes** (was 7). Remaining **4 on placeholder:** brown-marbled grouper, giant moray,
+  bluefin trevally, fringelip mullet.
+
+### Teammates (UI / art) — for context
+- **Aloysius** — splash-screen sequence reworked + **3 splash logos**; large-screen **add-popup UI box** redesigned +
+  new add-button image; fixed a splash-screen bug.
+- **Akil** — reworked `SCENE_MainScene` + **rebaked lighting**.
 
 ---
 

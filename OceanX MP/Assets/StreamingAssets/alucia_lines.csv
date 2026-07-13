@@ -1,39 +1,67 @@
 ﻿Event,Species,Mood,Weight,Text,Notes
 # HOW TO EDIT THIS SHEET,,,,,Lines Alucia (the guide) says. Edit the Text column freely.
-# 1. NEVER change the 'Event' column,,,,,It is the ID the game matches on. Only the dev team adds new Event names.
+# 1. NEVER change the 'Event' or 'Species' columns,,,,,They are IDs the game matches on. Only edit Text / Mood / Weight.
 # 2. Add a VARIANT,,,,,Copy a row and change its Text. The game picks one at random so she doesn't repeat.
-# 3. 'Species' column,,,,,Leave blank = used for any fish. Put an exact species name = only when THAT fish triggers it.
-# 4. 'Mood' column,,,,,Calm / Warn / Win  -> tints her speech bubble. Nothing else is allowed.
+# 3. 'Species' column,,,,,Blank = any fish. A name = only when THAT fish triggers it. Must match the game's species name exactly.
+# 4. 'Mood' column,,,,,Calm / Warn / Win  ->  tints her speech bubble. Nothing else is allowed.
 # 5. 'Weight' column,,,,,Optional number. Higher = shown more often. Blank = 1.
 # 6. Keep the {tokens},,,,,"{species}=fish name, {req}=what's still needed, {count}=how many. The game fills them in."
-# 7. Rows starting with # are notes,,,,,The game ignores them. Use them for your own reminders.
-# ---- VALID EVENT NAMES ----,,,,,"intro.1/2/3, health.critical, health.unstable.up, health.unstable.down, health.healthy, health.thriving, notify.unlocked, hint.withReq.1-4, hint.fallback, species.overpopulated, species.overpredated, species.starving, species.extinct, species.added"
-# ---- Ecological events: use the RIGHT one ----,,,,,"overpopulated = too many, no predators. overpredated = too many predators eating it. starving = its FOOD ran out. Don't mix them up."
+# ---- VALID EVENTS ----,,,,,"intro.1/2/3, health.critical, health.unstable.up, health.unstable.down, health.healthy, health.thriving, notify.unlocked, hint.withReq.1-4, hint.fallback, species.overpopulated, species.overpredated, species.starving, species.extinct, species.added"
+# ---- Ecological events ----,,,,,"overpopulated = too many, add a predator. overpredated = too many predators, remove one. starving = no food, add its prey."
 intro.1,,Calm,,"Hey, my name's Alucia!",Startup line 1
 intro.2,,Warn,,"As you can see, this ecosystem isn't doing too well...",Startup line 2
 intro.3,,Calm,,Please help me save it!,Startup line 3
-health.critical,,Warn,,The reef is collapsing — we're losing species fast!,
-health.critical,,Warn,1,It's falling apart out here — we have to act now!,Extra variant (demo)
+health.critical,,Warn,,"The reef is collapsing, we're losing species fast!",
+health.critical,,Warn,1,"It's falling apart out here, we have to act now!",Extra variant
 health.unstable.up,,Calm,,It's stabilising a little... keep going!,
-health.unstable.down,,Warn,,Things are slipping — the balance is breaking down.,
+health.unstable.down,,Warn,,"Things are slipping, the balance is breaking down.",
 health.healthy,,Calm,,The reef's looking much healthier now!,
-health.thriving,,Win,,You did it — the ecosystem is thriving again!,Stays on screen (win)
+health.thriving,,Win,,You did it! The ecosystem is thriving again!,Stays on screen (win)
 notify.unlocked,,Calm,,You've unlocked the {species}!,{species} = the fish name
 hint.withReq.1,,Calm,,"To bring in the {species}, you'll need to {req}.",
 hint.withReq.2,,Calm,,Almost there! Just {req} and the {species} will appear.,
-hint.withReq.3,,Calm,,The {species} is waiting — {req}.,
+hint.withReq.3,,Calm,,The {species} is waiting! {req}.,
 hint.withReq.4,,Calm,,Keep going! {req} to attract the {species}.,
 hint.fallback,,Calm,,Something new is almost ready to appear...,When there's no specific requirement to name
-species.overpopulated,,Warn,,The {species} are overpopulating — nothing's keeping them in check!,"Generic: no predators, grown near its cap"
-species.overpopulated,,Warn,1,"Whoa, that's a lot of {species}. With no predators they'll eat everything below them.",Generic variant
-species.overpopulated,Yellowstripe Scad,Warn,,The scad are everywhere — nothing's hunting them anymore!,Example: species-specific
-species.overpopulated,Reticulated Damselfish,Warn,,So many damselfish now — their predators are gone.,Example: species-specific
-species.overpredated,,Warn,,The {species} are being hunted faster than they can recover — too many predators.,Generic: predators present and outnumber it
-species.overpredated,,Warn,1,We're losing {species} — the predators are eating them faster than they breed.,Generic variant
-species.overpredated,Yellowstripe Scad,Warn,,The scad are getting wiped out — too many hunters are after them.,Example: species-specific
-species.starving,,Warn,,The {species} have run out of food — there's nothing left for them to eat.,"Generic: its prey was present, now gone/scarce"
-species.starving,,Warn,1,The {species} are going hungry — their food source has collapsed.,Generic variant
-species.starving,Blacktip Reef Shark,Warn,,"With nothing left to hunt, the sharks are starving — the whole chain is unravelling.",The keystone lesson
-species.extinct,,Warn,,The {species} are gone from the reef entirely.,Generic: a fish hit zero
-species.extinct,Blacktip Reef Shark,Warn,,"Without the sharks, nothing keeps the reef in balance — watch what happens now.",The keystone lesson
-species.added,,Calm,,A new group of {species} just swam in!,Optional — fires when the player adds a fish
+species.overpopulated,,Warn,,"Uh oh, the {species} are overpopulating and nothing is keeping them in check! Try adding one of their predators to balance the reef.",Generic fallback
+species.overpredated,,Warn,,"Oh no, the {species} are being hunted too hard! Try removing one of their predators so they can recover.",Generic fallback
+species.starving,,Warn,,The {species} have run out of food! Try adding some of the fish they like to eat.,Generic fallback
+species.overpopulated,Blacktip Reef Shark,Warn,,"Wow, there are so many Blacktip Reef Sharks! As the top hunter they need lots to eat. Try adding more prey like Fringelip Mullet or Yellowstripe Scad, or remove a shark or two to balance the reef!",
+species.overpredated,Blacktip Reef Shark,Calm,,"The Blacktip Reef Sharks are the top hunters here, so nothing preys on them. If they look unhappy, it is usually because they are low on food!",
+species.starving,Blacktip Reef Shark,Warn,,"Oh no, the Blacktip Reef Sharks are going hungry! They have nothing to hunt. Try adding some Fringelip Mullet or Yellowstripe Scad for them to eat!",
+species.overpopulated,Bluefin trevally,Warn,,"Whoa, the Bluefin Trevally are taking over! They are a top hunter, so try adding more prey like Yellowstripe Scad for them, or remove a few to balance things out!",
+species.overpredated,Bluefin trevally,Calm,,"The Bluefin Trevally are fast top hunters, so nothing chases them. Keep an eye on their food instead!",
+species.starving,Bluefin trevally,Warn,,The Bluefin Trevally are starving! Try adding some Yellowstripe Scad or Fringelip Mullet so they have something to hunt!,
+species.overpopulated,Brown-marbled grouper,Warn,,"There sure are a lot of Brown Marbled Groupers! They are big hunters, so try adding more prey like Bullethead Parrotfish, or remove a grouper or two to keep balance!",
+species.overpredated,Brown-marbled grouper,Calm,,"The Brown Marbled Groupers are strong hunters with no predators of their own. If they struggle, check their food supply!",
+species.starving,Brown-marbled grouper,Warn,,"Uh oh, the Brown Marbled Groupers have run out of food! Try adding some Bullethead Parrotfish or Fringelip Mullet for them to eat!",
+species.overpopulated,Giant moray,Warn,,"So many Giant Morays! These sneaky hunters have no predators, so try adding more prey like Streaked Spinefoot, or remove a moray to balance the reef!",
+species.overpredated,Giant moray,Calm,,"The Giant Morays are ambush hunters that nothing preys on. If they are unhappy, they are probably hungry!",
+species.starving,Giant moray,Warn,,The Giant Morays are hungry with nothing to hunt! Try adding some Yellowstripe Scad or Streaked Spinefoot to feed them!,
+species.overpopulated,Bluespotted ribbontail ray,Warn,,"Wow, the Bluespotted Ribbontail Rays are everywhere and nothing is hunting them! Try adding a Blacktip Reef Shark to keep their numbers in check!",
+species.overpredated,Bluespotted ribbontail ray,Warn,,"Oh no, the Bluespotted Ribbontail Rays are getting eaten up fast! Try removing a Blacktip Reef Shark to give them a chance to recover!",
+species.starving,Bluespotted ribbontail ray,Calm,,"The Bluespotted Ribbontail Rays find their food buried in the sand, so they never go hungry here!",
+species.overpopulated,Bullethead parrotfish,Warn,,"Uh oh, the Bullethead Parrotfish are taking over the reef! Try adding a hunter like a Brown Marbled Grouper or a Bluefin Trevally to balance things out!",
+species.overpredated,Bullethead parrotfish,Warn,,"Yikes, the Bullethead Parrotfish are being hunted too hard! Try removing a Brown Marbled Grouper or a Bluefin Trevally so they can bounce back!",
+species.starving,Bullethead parrotfish,Calm,,"The Bullethead Parrotfish love scraping algae off the coral, so they always have plenty to eat!",
+species.overpopulated,Eyestripe surgeonfish,Warn,,So many Eyestripe Surgeonfish! With no predators around they just keep growing. Try adding a Giant Moray or a Russell's Snapper to hunt a few!,
+species.overpredated,Eyestripe surgeonfish,Warn,,"The Eyestripe Surgeonfish are disappearing fast, too many hunters are after them! Try removing a Giant Moray or a Russell's Snapper to give them a break!",
+species.starving,Eyestripe surgeonfish,Calm,,"The Eyestripe Surgeonfish graze on algae all day, so they always have plenty to munch on!",
+species.overpopulated,Fringelip mullet,Warn,,The Fringelip Mullet are booming and nothing is eating them! Try adding a Bluefin Trevally or a Brown Marbled Grouper to keep them balanced!,
+species.overpredated,Fringelip mullet,Warn,,"Oh no, the Fringelip Mullet are getting wiped out! Try removing a Bluefin Trevally or a Brown Marbled Grouper so they can recover!",
+species.starving,Fringelip mullet,Calm,,"The Fringelip Mullet sift tasty bits from the sand, so they always find enough to eat!",
+species.overpopulated,Reticulated damselfish,Warn,,"Whoa, the Reticulated Damselfish are everywhere! Try adding a Yellowstripe Scad or a Bluefin Trevally to snack on some and even things out!",
+species.overpredated,Reticulated damselfish,Warn,,The Reticulated Damselfish are vanishing fast! Try removing a Yellowstripe Scad or a Bluefin Trevally to ease the hunting!,
+species.starving,Reticulated damselfish,Calm,,"The Reticulated Damselfish nibble on algae and plankton, so they never run out of food!",
+species.overpopulated,Russell’s snapper,Warn,,The Russell's Snappers are overpopulating and nothing is hunting them! Try adding a Giant Moray or a Blacktip Reef Shark to keep them in check!,
+species.overpredated,Russell’s snapper,Warn,,"Uh oh, the Russell's Snappers are being eaten faster than they can recover! Try removing a Giant Moray or a Blacktip Reef Shark to help them out!",
+species.starving,Russell’s snapper,Warn,,The Russell's Snappers are going hungry! Try adding some Fringelip Mullet or Reticulated Damselfish for them to eat!,
+species.overpopulated,Streaked spinefoot,Warn,,Too many Streaked Spinefoot! Try adding a hunter like a Giant Moray or a Bluefin Trevally to balance the reef!,
+species.overpredated,Streaked spinefoot,Warn,,The Streaked Spinefoot are getting hunted too hard! Try removing a Giant Moray or a Bluefin Trevally so they can recover!,
+species.starving,Streaked spinefoot,Calm,,"The Streaked Spinefoot feast on algae and seagrass, so they always have plenty to eat!",
+species.overpopulated,Yellowstripe scad,Warn,,The Yellowstripe Scad are exploding in number! Try adding a Bluefin Trevally or a Blacktip Reef Shark to hunt a few and balance things out!,
+species.overpredated,Yellowstripe scad,Warn,,"Oh no! The Yellowstripe Scad are getting wiped out, too many hunters are after them! Try removing a Brown Marbled Grouper or a Bluefin Trevally to balance the ecosystem!",
+species.starving,Yellowstripe scad,Warn,,The Yellowstripe Scad have nothing to eat! Try adding some Reticulated Damselfish to feed them!,
+species.extinct,,Warn,,The {species} are gone from the reef entirely.,Generic
+species.extinct,Blacktip Reef Shark,Warn,,"Without the sharks, nothing keeps the reef in balance. Watch what happens now!",Keystone lesson
+species.added,,Calm,,A new group of {species} just swam in!,Fires only on the first-ever add

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Reticulated_Damselfish
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
   speciesName: Reticulated Damselfish
+  contentId: 
   sciName: Dascyllus reticulatus
   tier: Primary Consumer
   startUnlocked: 1
@@ -23,4 +24,4 @@ MonoBehaviour:
   hint2: Build damselfish numbers to attract schooling predators.
   hint3: More damselfish will unlock secondary consumers.
   addedMessage: Small territorial Indo-Pacific reef omnivores, aggressive daytime
-    feeders sheltering nightly.
+    feeders that shelter nightly.

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Seagrass
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
   speciesName: Seagrass
+  contentId: 
   sciName: Halophila
   tier: Primary Producer
   startUnlocked: 1
@@ -22,4 +23,5 @@ MonoBehaviour:
   hint1: Schooling fish like scad need a stable prey base first.
   hint2: You need Damselfish x2 and Mullet x2 to attract scad.
   hint3: "Almost there \u2014 build up your damselfish and mullet populations."
-  addedMessage: Yellowstripe scad are forming schooling groups in open water.
+  addedMessage: Underwater flowering plants that form dense meadows, shelter marine
+    life, and oxygenate water.

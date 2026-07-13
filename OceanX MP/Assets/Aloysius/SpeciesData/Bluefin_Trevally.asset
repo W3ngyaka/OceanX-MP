@@ -27,4 +27,5 @@ MonoBehaviour:
   hint1: Fast predators like trevally prey on mullets and parrotfish
   hint2: You need Mullet x3 and Parrotfish x2 to attract trevally.
   hint3: "Almost there \u2014 add more mullet and parrotfish."
-  addedMessage: Bluefin trevally are hunting schooling fish across the reef.
+  addedMessage: Fast blue-finned reef predator that hunts fish using ambush and cooperative
+    tactics.

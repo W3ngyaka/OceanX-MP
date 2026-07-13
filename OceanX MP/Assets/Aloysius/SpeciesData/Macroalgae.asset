@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Macroalgae
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
   speciesName: Macroalgae
+  contentId: 
   sciName: 
   tier: Primary Producer
   startUnlocked: 1
@@ -22,4 +23,5 @@ MonoBehaviour:
   hint1: 
   hint2: 
   hint3: 
-  addedMessage: 
+  addedMessage: Large marine algae anchored to reefs, producing oxygen and feeding
+    grazers.

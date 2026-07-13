@@ -10,20 +10,24 @@ using UnityEngine;
 /// while the tablet shows the long, detailed description. Two sheets, two audiences, edited independently
 /// by the fact-checkers.
 ///
-/// Columns: <c>id, speciesName, role, blurb</c>. The parser is header-driven — reorder or add columns
-/// freely; unknown columns are ignored, missing ones read as empty. Rows are indexed by BOTH their stable
-/// <c>id</c> and their <c>speciesName</c>, so a lookup works whether you pass the id or the display name.
+/// Columns: <c>id, speciesName, role, blurb, imageFile</c>. The parser is header-driven — reorder or add
+/// columns freely; unknown columns are ignored, missing ones read as empty. Rows are indexed by BOTH their
+/// stable <c>id</c> and their <c>speciesName</c>. The big-screen photos live in their OWN folder
+/// (<c>StreamingAssets/RevealImages</c>) so they never collide with the TABLET's images (which the tablet
+/// loads from <c>StreamingAssets/SpeciesImages</c> via <see cref="SpeciesContentDB"/>).
 /// </summary>
 public static class RevealContentDB
 {
     public class Entry
     {
-        public string id, speciesName, role, blurb;
+        public string id, speciesName, role, blurb, imageFile;
     }
 
     const string CsvFile = "RevealContent.csv";
+    const string ImageFolder = "RevealImages";
 
     static Dictionary<string, Entry> _entries;
+    static readonly Dictionary<string, Sprite> _spriteCache = new Dictionary<string, Sprite>();
 
     /// <summary>Look up a species by its stable <c>id</c> OR its display name (case-insensitive). Null if unknown.</summary>
     public static Entry Get(string idOrName)
@@ -34,7 +38,7 @@ public static class RevealContentDB
     }
 
     /// <summary>Force a re-read (called after a live download, or from a debug button).</summary>
-    public static void Reload() { _entries = null; EnsureLoaded(); }
+    public static void Reload() { _entries = null; _spriteCache.Clear(); EnsureLoaded(); }
 
     static string Norm(string s) => s == null ? "" : s.Trim().ToLowerInvariant();
 
@@ -80,6 +84,7 @@ public static class RevealContentDB
                 speciesName = name,
                 role        = Field(row, col, "role"),
                 blurb       = Field(row, col, "blurb"),
+                imageFile   = Field(row, col, "imagefile"),
             };
 
             // Index under both the stable id and the display name so either resolves the same entry.
@@ -90,4 +95,28 @@ public static class RevealContentDB
 
     static string Field(List<string> row, Dictionary<string, int> col, string key)
         => col.TryGetValue(key, out int i) && i < row.Count ? row[i] : "";
+
+    /// <summary>Load a big-screen photo from StreamingAssets/RevealImages (SEPARATE from the tablet's
+    /// SpeciesImages). Cached; null if the file is missing or blank.</summary>
+    public static Sprite GetImage(string imageFile)
+    {
+        if (string.IsNullOrWhiteSpace(imageFile)) return null;
+        if (_spriteCache.TryGetValue(imageFile, out var cached)) return cached;
+
+        string path = Path.Combine(Application.streamingAssetsPath, ImageFolder, imageFile);
+        Sprite sprite = null;
+        if (File.Exists(path))
+        {
+            try
+            {
+                var bytes = File.ReadAllBytes(path);
+                var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                if (tex.LoadImage(bytes))
+                    sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100f);
+            }
+            catch (System.Exception ex) { Debug.LogWarning($"[RevealContentDB] image load failed '{imageFile}': {ex.Message}"); }
+        }
+        _spriteCache[imageFile] = sprite; // cache even null so we don't re-hit disk each open
+        return sprite;
+    }
 }

@@ -186,14 +186,13 @@ public class SpeciesAddedReveal : MonoBehaviour
 
         if (revealImage != null)
         {
-            // Text-only for now: the image stays hidden unless useCsvImage is turned on. When it is, the
-            // per-species photo still comes from the tablet sheet (SpeciesContent.csv 'imageFile'),
-            // falling back to the inspector cardImages list. RevealContent.csv is text-only by design.
+            // When useCsvImage is on, the big-screen photo comes from RevealContent.csv's 'imageFile',
+            // loaded from StreamingAssets/RevealImages -- the big screen's OWN images, SEPARATE from the
+            // tablet's SpeciesImages. Falls back to the inspector cardImages list if the CSV has none.
             Sprite img = null;
             if (useCsvImage)
             {
-                var sc = SpeciesContentDB.Get(key);
-                img = (sc != null) ? SpeciesContentDB.GetImage(sc.imageFile) : null;
+                img = (e != null) ? RevealContentDB.GetImage(e.imageFile) : null;
                 if (img == null) _dataToSprite.TryGetValue(species, out img);
             }
             revealImage.sprite = img;

@@ -40,6 +40,11 @@ public class SplashSequence : MonoBehaviour
     public bool pulsePrompt = true;
     public float pulseSpeed = 2f;
 
+    [Header("Screen fade")]
+    [Tooltip("Full-screen black Image faded IN at the start and OUT before the game loads.")]
+    public Image fadeOverlay;
+    public float screenFadeDuration = 0.6f;
+
     private AsyncOperation _load;
     private bool _ready;     // logos done, prompt showing
     private bool _tapped;
@@ -54,6 +59,12 @@ public class SplashSequence : MonoBehaviour
 
     IEnumerator Run()
     {
+        // Start on a full black screen; the fader does the fade IN and OUT. Logos are shown at full
+        // so the black lifting reveals them, and re-darkening covers them again on the way out.
+        if (fadeOverlay != null) SetFade(1f);
+        if (logosGroup != null) logosGroup.alpha = 1f;
+        else if (logoImage != null) SetAlpha(1f);
+
         // Destination = the NEXT scene in Build Settings (this splash at index 0 -> game at index 1).
         // No scene name to maintain, and it auto-picks the right "scene 1" in each build (tablet or large screen).
         int current = SceneManager.GetActiveScene().buildIndex;
@@ -75,37 +86,19 @@ public class SplashSequence : MonoBehaviour
         _load = SceneManager.LoadSceneAsync(nextIndex);
         _load.allowSceneActivation = false;
 
-        // Show the splash logos.
+        // Make sure the logo group is on and fully visible — the fader does the fading.
         if (logosGroup != null)
         {
-            // Preferred: images placed in the scene, revealed together as one composed group.
             logosGroup.gameObject.SetActive(true);
-            // Visibility is driven by the CanvasGroup alpha, so make sure the placed graphics
-            // are actually enabled (duplicated logos often come in disabled).
             foreach (var g in logosGroup.GetComponentsInChildren<Graphic>(true)) g.enabled = true;
-            logosGroup.alpha = 0f;
-            yield return FadeGroup(logosGroup, 0f, 1f);
-            yield return new WaitForSecondsRealtime(holdDuration);
-            if (fadeLogosOut) yield return FadeGroup(logosGroup, 1f, 0f);
+            logosGroup.alpha = 1f;
         }
-        else if (logoImage != null)
-        {
-            // Legacy: cycle each sprite through a single image slot, one at a time.
-            SetAlpha(0f);
-            if (logos != null)
-            {
-                foreach (var logo in logos)
-                {
-                    if (logo == null) continue;
-                    logoImage.sprite = logo;
-                    logoImage.enabled = true;
-                    yield return Fade(0f, 1f);
-                    yield return new WaitForSecondsRealtime(holdDuration);
-                    yield return Fade(1f, 0f);
-                }
-            }
-            logoImage.enabled = false;
-        }
+
+        // FADE IN — the black screen lifts to reveal the logos.
+        if (fadeOverlay != null) yield return FadeScreen(1f, 0f);
+
+        // Hold on the logos.
+        yield return new WaitForSecondsRealtime(holdDuration);
 
         if (waitForTap)
         {
@@ -117,6 +110,9 @@ public class SplashSequence : MonoBehaviour
         // else: passive large screen — auto-advance once the scene is ready.
 
         while (_load != null && _load.progress < 0.9f) yield return null;
+
+        // Fade the screen out to black, then switch to the game scene.
+        if (fadeOverlay != null) yield return FadeScreen(0f, 1f);
         if (_load != null) _load.allowSceneActivation = true;
     }
 
@@ -147,6 +143,29 @@ public class SplashSequence : MonoBehaviour
             yield return null;
         }
         SetAlpha(to);
+    }
+
+    // Fade the full-screen black overlay (the screen fade in/out).
+    IEnumerator FadeScreen(float from, float to)
+    {
+        if (fadeOverlay == null) yield break;
+        fadeOverlay.gameObject.SetActive(true);
+        SetFade(from);
+        yield return null;   // skip the (often huge) first frame after a scene load so the fade is smooth
+        float t = 0f;
+        while (t < screenFadeDuration)
+        {
+            t += Mathf.Min(Time.unscaledDeltaTime, 0.05f);   // clamp so a frame hitch can't jump the fade
+            SetFade(Mathf.Lerp(from, to, screenFadeDuration <= 0f ? 1f : t / screenFadeDuration));
+            yield return null;
+        }
+        SetFade(to);
+    }
+
+    void SetFade(float a)
+    {
+        if (fadeOverlay == null) return;
+        var c = fadeOverlay.color; c.a = a; fadeOverlay.color = c;
     }
 
     // Fade a whole placed-logo group in/out together.

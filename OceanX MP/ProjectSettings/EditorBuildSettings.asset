@@ -26,7 +26,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Junheng/Scenes/SCENE_MainScene 1.unity
     guid: ac71e95be9b869f4b99bd946a4e33d16
-  - enabled: 1
+  - enabled: 0
     path: Assets/Aloysius/SCENE_MainScene 1.unity
     guid: 3fb74f851e9049e4da6f2d8188dc7e39
   m_configObjects:

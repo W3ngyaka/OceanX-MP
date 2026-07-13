@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-08_
+_Last updated: 2026-07-14_
 
 ---
 
@@ -958,6 +958,12 @@ so eco-health topped out around **87%** — 100% was unreachable.
   species actively starving / being over-hunted, or genuinely running away, drags health down. → **100% reachable.**
 - Matches the intent of the HTML prototype (`prototype/oceanx-prototype.html`): generous, apex exempt, reaches 100%
   without demanding perfect balance.
+
+### 📈 Eco-health now ramps up gradually as the reef is built (`d17fdea`)
+The `balance` term divided healthy species by `considered` (only the species currently *present*), so the very first
+fish added read as a **full** balance score — eco-health jumped rather than climbing. Now it divides by **`totalSpecies`**
+(the whole roster): a single healthy fish contributes ~1/N, and balance climbs smoothly as the player builds the reef.
+**100% still requires every species alive AND healthy** — same ceiling, gentler ramp.
 
 ### 🐟 Overpopulation is now ratio + count based (was "predators gone + near cap")
 Extracted a shared **`IsOverpopulated(species, counts)`** helper used by BOTH `GetSpeciesStatus` and the eco-health

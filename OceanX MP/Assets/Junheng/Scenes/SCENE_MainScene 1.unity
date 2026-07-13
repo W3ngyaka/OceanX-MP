@@ -37192,7 +37192,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &390126336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59930,9 +59930,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesAddedReveal
   revealGroup: {fileID: 1916208874}
   revealImage: {fileID: 732817611}
-  nameText: {fileID: 261435216}
-  tierText: {fileID: 732151819}
-  msgText: {fileID: 1231601646}
+  nameText: {fileID: 0}
+  tierText: {fileID: 0}
+  msgText: {fileID: 0}
   allSpecies:
   - {fileID: 11400000, guid: 6dfb9df93974eb6469c12d2cd7f8ce73, type: 2}
   - {fileID: 11400000, guid: efb62a89b9b8fbb4ba41c83625e8b84d, type: 2}
@@ -82791,8 +82791,8 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: -7765064267178454846, guid: 4a8bbbb15880f8248998da776e61942e, type: 3}
-    BoidMaterial: {fileID: 2100000, guid: f958b40abe8607941bf3533772403eda, type: 2}
+    BoidMesh: {fileID: -5495902117074765545, guid: a0fcc6396a06d7b4f95663b47c11c381, type: 3}
+    BoidMaterial: {fileID: 2100000, guid: 0354574ddc1859f46b1ea79a5ff0eff3, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: 46d3e8b5923c3d1479f33b342f9e9bb8, type: 2}
     Targets:
     - {fileID: 0}

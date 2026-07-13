@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using OceanX.BoidsGPU.Ecosystem;
 
 // Shows a center-stage info card on the HOST/large screen the FIRST time each
@@ -22,9 +21,11 @@ public class SpeciesAddedReveal : MonoBehaviour
     [Header("Card refs")]
     public CanvasGroup revealGroup;
     public Image revealImage;      // optional
-    public TMP_Text nameText;
-    public TMP_Text tierText;
-    public TMP_Text msgText;
+    // Legacy UnityEngine.UI.Text (NOT TextMeshPro) so these can be wired to the AddedRevealCard's
+    // text objects, which are UI.Text — same convention as the sibling SpeciesUnlockReveal.
+    public Text nameText;
+    public Text tierText;
+    public Text msgText;
 
     [Header("Species data (index resolved at runtime)")]
     public List<SpeciesData> allSpecies = new List<SpeciesData>();
@@ -45,6 +46,13 @@ public class SpeciesAddedReveal : MonoBehaviour
     [Header("Behaviour")]
     [Tooltip("Show only the FIRST time each species appears. If false, shows every 0->1+ transition.")]
     public bool onlyFirstTime = true;
+
+    [Header("Card image")]
+    [Tooltip("OFF = text-only card (no photo — the current design). ON = show the fish photo from " +
+             "SpeciesContent.csv (the 'imageFile' column). Turn this ON only after the RevealImage slot " +
+             "is laid out as a proper sized image area with Preserve Aspect, so the photo doesn't overlap " +
+             "the text.")]
+    public bool useCsvImage = false;
 
     private EcosystemNetworkManagerGPU _net;
     private EcosystemSimulationGPU _sim;
@@ -158,12 +166,36 @@ public class SpeciesAddedReveal : MonoBehaviour
 
     void FillCard(SpeciesData species)
     {
-        if (nameText != null) nameText.text = species.speciesName;
-        if (tierText != null) tierText.text = species.tier;
-        if (msgText != null) msgText.text = species.addedMessage;
+        if (species == null) return;
+
+        // The big screen shows the SHORT "new arrival" blurb from RevealContent.csv — its OWN sheet,
+        // separate from the tablet's SpeciesContent.csv (which holds the long, detailed description).
+        // Matched by the species' stable contentId, falling back to its display name (RevealContentDB is
+        // indexed by both). Every field falls back to the SpeciesData asset if the CSV row/value is
+        // missing, so the card never goes blank offline.
+        string key = !string.IsNullOrEmpty(species.contentId) ? species.contentId : species.speciesName;
+        RevealContentDB.Entry e = RevealContentDB.Get(key);
+
+        string name  = (e != null && !string.IsNullOrWhiteSpace(e.speciesName)) ? e.speciesName : species.speciesName;
+        string role  = (e != null && !string.IsNullOrWhiteSpace(e.role))        ? e.role        : species.tier;
+        string blurb = (e != null && !string.IsNullOrWhiteSpace(e.blurb))       ? e.blurb       : species.addedMessage;
+
+        if (nameText != null) nameText.text = name;
+        if (tierText != null) tierText.text = role;
+        if (msgText  != null) msgText.text  = blurb;
+
         if (revealImage != null)
         {
-            Sprite img = _dataToSprite.TryGetValue(species, out var s) ? s : null;
+            // Text-only for now: the image stays hidden unless useCsvImage is turned on. When it is, the
+            // per-species photo still comes from the tablet sheet (SpeciesContent.csv 'imageFile'),
+            // falling back to the inspector cardImages list. RevealContent.csv is text-only by design.
+            Sprite img = null;
+            if (useCsvImage)
+            {
+                var sc = SpeciesContentDB.Get(key);
+                img = (sc != null) ? SpeciesContentDB.GetImage(sc.imageFile) : null;
+                if (img == null) _dataToSprite.TryGetValue(species, out img);
+            }
             revealImage.sprite = img;
             revealImage.enabled = (img != null);
         }

@@ -142,7 +142,8 @@ public class ContentService : MonoBehaviour
         switch (fileName)
         {
             case "alucia_lines.csv":   AluciaLines.Reload();     break;
-            case "SpeciesContent.csv": SpeciesContentDB.Reload(); break;
+            case "SpeciesContent.csv": SpeciesContentDB.Reload(); break; // TABLET info card (long)
+            case "RevealContent.csv":  RevealContentDB.Reload();  break; // HOST/big-screen arrival blurb (short)
             // Future tablet-text sheet: add its loader's Reload() here.
         }
     }

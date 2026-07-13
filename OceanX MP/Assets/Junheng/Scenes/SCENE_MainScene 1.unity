@@ -5889,9 +5889,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1916208873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 150}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -60}
   m_SizeDelta: {x: 640, y: 46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &59670151
@@ -59930,9 +59930,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesAddedReveal
   revealGroup: {fileID: 1916208874}
   revealImage: {fileID: 732817611}
-  nameText: {fileID: 0}
-  tierText: {fileID: 0}
-  msgText: {fileID: 0}
+  nameText: {fileID: 261435216}
+  tierText: {fileID: 732151819}
+  msgText: {fileID: 1231601646}
   allSpecies:
   - {fileID: 11400000, guid: 6dfb9df93974eb6469c12d2cd7f8ce73, type: 2}
   - {fileID: 11400000, guid: efb62a89b9b8fbb4ba41c83625e8b84d, type: 2}
@@ -59953,6 +59953,7 @@ MonoBehaviour:
   hintSource: {fileID: 621817931}
   hintDelayAfterAdd: 0.4
   onlyFirstTime: 1
+  useCsvImage: 0
 --- !u!114 &621817931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115882,6 +115883,8 @@ MonoBehaviour:
   sources:
   - fileName: alucia_lines.csv
     publishedCsvUrl: https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=1093782534&single=true&output=csv
+  - fileName: RevealContent.csv
+    publishedCsvUrl: https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=1248841811&single=true&output=csv
 --- !u!1001 &1167192057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -122806,10 +122809,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1916208873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: 600, y: 120}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -60}
+  m_SizeDelta: {x: 600, y: -300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1232345847
 PrefabInstance:

@@ -955,9 +955,70 @@ is non-empty but currently absent). Fixed by separating the **messaging** read-o
 - **8 of 12 species now have real meshes** (was 7). Remaining **4 on placeholder:** brown-marbled grouper, giant moray,
   bluefin trevally, fringelip mullet.
 
+### 🗣️ Per-species ecological hints — specific, kid-friendly, food-web-accurate
+- **`alucia_lines.csv` (now ~67 rows)** — for `species.overpopulated / overpredated / starving`, every one of the 12
+  fish has a **species-scoped** line that names its **real predators/prey** (pulled from the `SpeciesDataGPU`
+  prey/predator lists) and tells the player what to do, e.g. scad overpredated → *"remove a Brown Marbled Grouper or a
+  Bluefin Trevally"*. No dashes/hyphens in visible text (kids/families). **Moods set by meaning**: real problems = `Warn`,
+  reassuring "this fish is fine" lines (top predators can't be over-predated, grazers/ray can't starve) = `Calm`.
+  - ⚠ The `Species` column must equal `SpeciesDataGPU.SpeciesName` EXACTLY (case-insensitive) — keeps original spelling
+    incl. the grouper's hyphen and **Russell's snapper's curly apostrophe (’)**.
+  - Which actually fire: overpop+overpredated for the 8 fish with predators; starving for the 6 that hunt.
+  - Pushed to the Google Sheet `alucia_lines` tab. **`Weight` left blank** (one line per species+event → no effect;
+    add variants later if repetition matters).
+
+### 📄 Big-screen vs tablet content split — TWO separate sheets
+The host "NEW ARRIVAL" card and the tablet modal want **different-length copy** (big screen = short punchy blurb,
+tablet = full detail), so they read from **two separate CSVs / sheet tabs**:
+- **`RevealContent.csv`** (NEW) — columns `id, speciesName, role, blurb`. Drives the HOST big-screen arrival card.
+  Populated with Aloysius's original per-species big-screen copy (his `SpeciesData.addedMessage` values); the two
+  broken ones were fixed (Seagrass had scad's text by a copy-paste slip; Macroalgae was blank). New reader
+  **`RevealContentDB.cs`** mirrors `SpeciesContentDB` (header-driven, indexed by id + name, live-reloadable).
+- **`SpeciesContent.csv`** — the TABLET modal only. **Reverted to its original columns** (the temporary `role` column
+  that was added while the big screen briefly shared this sheet has been removed from both the CSV and the sheet tab —
+  the tablet never used it; role now lives in `RevealContent`). Descriptions/rows untouched.
+- **`SpeciesAddedReveal.FillCard()`** reads **name / role / blurb from `RevealContentDB`** (matched by
+  `SpeciesData.contentId` → falls back to `speciesName`), with the `SpeciesData` asset as fallback so it's never blank.
+- New **`useCsvImage`** toggle on `SpeciesAddedReveal` (default **OFF = text-only**, the current card design). Turn ON
+  only after the `RevealImage` slot is laid out (sized + Preserve Aspect); the photo still comes from the tablet sheet
+  (`SpeciesContent.csv` `imageFile`) since `RevealContent` is text-only by design.
+- **Google Sheet** "OceanX Content" now has **3 tabs**: `alucia_lines`, `SpeciesContent`, `RevealContent`
+  (gid `1248841811`). All 3 published-to-web and wired as Sources on the HOST `ContentService` (see below).
+
+### 🎬 SplashSequence — auto-advance by build index (no scene name)
+- **`SplashSequence.cs`** now loads **`GetActiveScene().buildIndex + 1`** instead of a named scene, so splash = build
+  index 0, game scene = index 1 (works for both the host and tablet builds; each ships its own scene 1). Removed the
+  `gameScene`/`tabletScene` name fields. Set **`waitForTap = false`** for pure auto-advance. (Aloysius also added a
+  black screen-fade overlay to this same script — coordinate.)
+
+### 🔀 Merge with Aloysius's scene rewrite (commit `1087342`)
+- Aloysius pushed `cfb2bd3 "update jh scene"` (a ~5000-line `SCENE_MainScene 1.unity` rewrite) that conflicted with
+  JunHeng's ContentService/AluciaEcologyEvents wiring. **Resolved by taking Aloysius's scene** (`git checkout --theirs`)
+  and re-wiring in Unity. ⚠ **Agree with Aloysius who owns that scene** to avoid repeat conflicts.
+
+### ⚠ Wiring STILL pending in `SCENE_MainScene 1` (host) — verified empty on disk
+- **`AluciaController.simulation` = None** → assign `EcosystemSimulationGPU` (else her health-band lines don't fire).
+- **`AluciaEcologyEvents.alucia` = None** → assign `AluciaController` (else NONE of the ecology lines fire; its
+  `simulation` IS assigned).
+- ✅ **Host `ContentService`** → all 3 Sources now wired (`alucia_lines`, `SpeciesContent`, `RevealContent`).
+- `AluciaController.waitForExperienceStart = 1` → Alucia (intro + all) waits for the networked "tap to begin"
+  (`ExperienceStartGate` → `EcosystemNetworkManagerGPU.RequestStartRpc` → `HasStarted`). Set 0 for standalone testing.
+
+### ✅ FIXED — "NEW ARRIVAL" reveal card showed placeholder text (type mismatch)
+- **Symptom:** the host `SpeciesAddedReveal` card faded in but the text stayed the design placeholder
+  **"Species Name / ROLE / Description…"** — it never displayed real content.
+- **Root cause (NOT the CSV):** `SpeciesAddedReveal` declared its text fields as **`TMP_Text`** (TextMeshPro), but the
+  `AddedRevealCard` in the scene was built with **legacy `UnityEngine.UI.Text`** (same convention as the working sibling
+  `SpeciesUnlockReveal`, which uses `public Text`). Unity **cannot** assign a legacy `UI.Text` into a `TMP_Text` slot, so
+  `nameText`/`tierText`/`msgText` were stuck at `fileID: 0` (impossible to drag in) and every `if (nameText != null)`
+  failed. The card had literally never displayed filled text — this was true in committed code, unrelated to any content edit.
+- **Fix:** changed the three fields in `SpeciesAddedReveal` from `TMP_Text` → **`Text`** (dropped `using TMPro;`), then
+  wired them to the card's existing `NameText`/`TierText`/`MsgText` `UI.Text` objects in the scene
+  (fileIDs `261435216` / `732151819` / `1231601646`). `FillCard` only ever calls `.text`, which both types have.
+
 ### Teammates (UI / art) — for context
 - **Aloysius** — splash-screen sequence reworked + **3 splash logos**; large-screen **add-popup UI box** redesigned +
-  new add-button image; fixed a splash-screen bug.
+  new add-button image; fixed a splash-screen bug; added a screen-fade overlay to `SplashSequence`.
 - **Akil** — reworked `SCENE_MainScene` + **rebaked lighting**.
 
 ---

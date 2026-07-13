@@ -516,7 +516,11 @@ namespace OceanX.BoidsGPU.Ecosystem
             if (totalSpecies == 0) return 0f;
 
             float diversity = (float)aliveSpecies / totalSpecies;
-            float balance   = considered > 0 ? (float)healthy / considered : 0f;
+            // Balance is measured against the WHOLE ecosystem (all species), not just the ones currently
+            // present — so a single healthy fish reads as ~1/N of the balance, not a full 100%. This makes
+            // eco-health ramp up gradually as the reef is built, instead of jumping the instant one fish is
+            // added. 100% still needs every species alive AND healthy.
+            float balance   = totalSpecies > 0 ? (float)healthy / totalSpecies : 0f;
             float apex      = apexAlive ? 1f : 0f;
 
             float weightSum = Mathf.Max(0.0001f, _healthDiversityWeight + _healthBalanceWeight + _healthApexWeight);

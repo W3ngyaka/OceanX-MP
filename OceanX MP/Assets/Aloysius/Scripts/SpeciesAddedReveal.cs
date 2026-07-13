@@ -22,8 +22,8 @@ public class SpeciesAddedReveal : MonoBehaviour
     [Header("Card refs")]
     public CanvasGroup revealGroup;
     public Image revealImage;      // optional
-    public Text nameText;
-    public Text tierText;
+    public TMP_Text nameText;
+    public TMP_Text tierText;
     public TMP_Text msgText;
 
     [Header("Species data (index resolved at runtime)")]

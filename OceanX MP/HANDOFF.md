@@ -917,6 +917,36 @@ already localization-ready (stable ids, all text in one column):
 
 ---
 
+## What Was Done — 2026-07-14 (JunHeng, session 2) — Reveal card TMP + CSV images + Alucia event wiring + bubble auto-size
+
+### 🗂️ Scene landscape (IMPORTANT — coordinate)
+Alucia + the reveal card now exist in **7 scenes** after all the merges. The two live ones:
+- **JunHeng's working scene = `Assets/Junheng/Scenes/SCENE_MainScene.unity`** (git renamed it from `SCENE_MainScene 1.unity`; carries Akil's environment).
+- **Aloysius's = `Assets/Aloysius/SCENE_MainScene 1.unity`** (his own copy — DON'T edit his; JunHeng's is the one we fix).
+- ⚠ **Build Settings still points at `Junheng/Scenes/SCENE_MainScene 1.unity`, which was renamed away** → the Start-scene→game build/Play flow references a missing scene. Needs the build list re-pointed to `SCENE_MainScene.unity` (+ prune the dead scene entries).
+
+### 🖼️ New-arrival card → TextMeshPro + CSV-driven images
+- **`SpeciesAddedReveal.cs`** text fields are now **`TMP_Text`** (the card was rebuilt with TMP; legacy-`Text` cards no longer wire). Wired name/role/desc to the TMP objects in JunHeng's scene.
+- **Card images are CSV-driven**: the per-species photos were copied into `StreamingAssets/SpeciesImages/` under the `SpeciesContent.csv` `imageFile` names, and **`useCsvImage = 1`** on the card. A fact-checker can now swap a fish photo via the sheet + a PNG. ⚠ Shark/Grouper/Moray PNGs are tiny (17–26 KB) — likely low-res, replace when possible.
+
+### 🩹 Alucia events wired in JunHeng's scene (this was the "events don't fire" bug)
+- **`AluciaEcologyEvents.alucia` was NULL** → its `Update()` bailed on `alucia == null`, blocking ALL species events (`starving`/`overpredated`/`overpopulated`). **Wired to the AluciaController.** ✅
+- `AluciaController.simulation` wired to the sim + **`waitForExperienceStart = 0`** (so `Start()` sets `_started`, letting health-band lines fire without the networked tap). All react toggles ON; components enabled/active; sim `_ecosystem` assigned; CSV has every event row.
+
+### 💬 Alucia speech bubble auto-sizes to the text
+- Added **VerticalLayoutGroup + ContentSizeFitter (Vertical Fit = Preferred)** to `AluciaBubble` so the bubble grows/shrinks with the line; **`AluciaController.Say()`** now `LayoutRebuilder.ForceRebuildLayoutImmediate`s so it resizes the same frame. ⚠ Bubble sprite should be Image Type = **Sliced** so it doesn't distort.
+
+### 🐞 DEBUG LOGGING — KEEP FOR NOW, then REMOVE before final
+- **`AluciaEcologyEvents.debugLog`** (new bool, default OFF): logs each live species' `count` + `GetSpeciesStatus` + `concerning?` + settle/cooldown/lastReported state, and a `NOT running` line if a ref is null. Turn it ON in the Inspector to trace why Alucia isn't reacting. **Turn OFF for the exhibit and strip the logging before the final build.**
+
+### ⏱️ Why Alucia is slow to react (timing gates on AluciaEcologyEvents)
+`startupGrace = 8s` (ignore first 8s), `settleSeconds = 5s` (waits 5s of NO count change), `checkInterval = 2s`. **Every tick that changes a count resets the 5s settle** — so a still-growing species stays silent until it stabilises at its cap. Lower to **~3 / 2 / 1** for snappier reactions.
+
+### 🎯 100% eco-health recipe (current bands 1–3, stable-or-growing rule)
+Grazers at their predator-count: **Parrotfish 4, Surgeonfish 5, Mullet 5, Damselfish 6, Spinefoot 4**; **1 of every hunter** (Shark/Trevally/Ray/Snapper/Scad/Grouper/Moray). Grazers can range up to their caps and stay 100%; the 7 hunters are locked at 1 (each extra predator raises the grazers' floor).
+
+---
+
 ## What Was Done — 2026-07-14 (JunHeng) — Eco-health rework + overpopulation model + flavour hints
 
 ### 🩺 Eco-health now rewards "stable OR growing" (100% is reachable)

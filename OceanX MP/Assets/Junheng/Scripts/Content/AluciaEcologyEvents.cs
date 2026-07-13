@@ -42,6 +42,10 @@ public class AluciaEcologyEvents : MonoBehaviour
              "before reacting to its balance — so a freshly-added species isn't instantly labelled.")]
     public float settleSeconds = 5f;
 
+    [Header("Debug")]
+    [Tooltip("Log every check to the Console: each live species' count + status, and why it did/didn't speak. Turn OFF for the exhibit.")]
+    public bool debugLog = false;
+
     private readonly Dictionary<SpeciesDataGPU, int> _lastCount = new Dictionary<SpeciesDataGPU, int>();
     private readonly Dictionary<SpeciesDataGPU, EcosystemSimulationGPU.SpeciesStatus> _lastReported
         = new Dictionary<SpeciesDataGPU, EcosystemSimulationGPU.SpeciesStatus>();
@@ -56,7 +60,12 @@ public class AluciaEcologyEvents : MonoBehaviour
 
     void Update()
     {
-        if (simulation == null || simulation.Ecosystem == null || alucia == null) return;
+        if (simulation == null || simulation.Ecosystem == null || alucia == null)
+        {
+            if (debugLog) Debug.Log($"[AluciaEcology] NOT running: simulation={simulation != null}, " +
+                $"ecosystem={simulation != null && simulation.Ecosystem != null}, alucia={alucia != null}");
+            return;
+        }
 
         _age += Time.deltaTime;
         _timer += Time.deltaTime;
@@ -78,6 +87,10 @@ public class AluciaEcologyEvents : MonoBehaviour
 
             int count = simulation.CountCommittedGroups(s);
             EcosystemSimulationGPU.SpeciesStatus status = simulation.GetSpeciesStatus(s);
+
+            if (debugLog && count > 0)
+                Debug.Log($"[AluciaEcology] {(string.IsNullOrEmpty(s.SpeciesName) ? "?" : s.SpeciesName)}: " +
+                    $"count={count} status={status} concerning={IsConcerning(status)} seeded={_seeded} age={_age:F0}/{startupGrace:F0}");
 
             int prevCount = _lastCount.TryGetValue(s, out int pc) ? pc : 0;
             if (count != prevCount) _changedAt[s] = now;
@@ -105,6 +118,9 @@ public class AluciaEcologyEvents : MonoBehaviour
 
                     if (IsConcerning(status))
                     {
+                        if (debugLog) Debug.Log($"[AluciaEcology]   -> {s.SpeciesName} CONCERNING={status}: " +
+                            $"settled={settled}, lastReported={lastReported}, " +
+                            $"cooldownOK={!(_lastSpokeAt.TryGetValue(s, out var dlt) && now - dlt < perSpeciesCooldown)}");
                         // Fire once per fresh entry into a concerning state, only after it has settled.
                         if (settled && status != lastReported)
                         {

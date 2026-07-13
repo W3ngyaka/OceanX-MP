@@ -583,7 +583,7 @@ MonoBehaviour:
   pulsePrompt: 1
   pulseSpeed: 2
   fadeOverlay: {fileID: 1752263719}
-  screenFadeDuration: 0.6
+  screenFadeDuration: 1.2
 --- !u!4 &737094220
 Transform:
   m_ObjectHideFlags: 0

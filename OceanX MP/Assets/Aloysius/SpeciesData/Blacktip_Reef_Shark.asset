@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Blacktip_Reef_Shark
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesData
   speciesName: Blacktip Reef Shark
+  contentId: 
   sciName: Carcharhinus melanopterus
   tier: Keystone Species
   startUnlocked: 0
@@ -30,4 +31,5 @@ MonoBehaviour:
   hint1: The reef shark needs a fully functioning food web to return.
   hint2: You need Grouper x1, Moray x1, Trevally x2 and Scad x3.
   hint3: "Almost there \u2014 the shark is close to returning to the reef!"
-  addedMessage: The blacktip reef shark has returned as the top predator!
+  addedMessage: Timid solitary reef shark that hunts fish, mollusks, crustaceans,
+    and occasionally small rays.

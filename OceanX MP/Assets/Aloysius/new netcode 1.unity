@@ -7913,7 +7913,6 @@ GameObject:
   - component: {fileID: 1027214597}
   - component: {fileID: 1027214596}
   - component: {fileID: 1027214600}
-  - component: {fileID: 1027214601}
   m_Layer: 5
   m_Name: Scad Bubble
   m_TagString: Untagged
@@ -8063,23 +8062,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46116d8ed457be34b90fbe76e8645fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSelectHook
---- !u!114 &1027214601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1027214594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce120744eb6d27148a29c3be08cc2f3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubbleHoldRing
-  holdRing: {fileID: 0}
-  holdRingSprite: {fileID: 21300000, guid: 0db7c569171f85142a18adf46508a0e6, type: 3}
-  holdRingColor: {r: 0.15, g: 0.9, b: 1, a: 1}
-  holdRingScale: 1.06
-  holdDuration: 0.5
 --- !u!1 &1027824018
 GameObject:
   m_ObjectHideFlags: 0
@@ -9239,7 +9221,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 811, y: 12}
+  m_AnchoredPosition: {x: 811, y: -5}
   m_SizeDelta: {x: 259, y: 256}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1090360379
@@ -12188,7 +12170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1415037589
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12493,7 +12475,7 @@ RectTransform:
   m_GameObject: {fileID: 1429282708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.93148535, y: 1.2370516, z: 0.8777847}
+  m_LocalScale: {x: 0.9944038, y: 1.32061, z: 0.9370759}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2099056676}

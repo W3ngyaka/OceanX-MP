@@ -139,7 +139,7 @@ public class SplashSequence : MonoBehaviour
         while (t < fadeDuration)
         {
             t += Time.unscaledDeltaTime;
-            SetAlpha(Mathf.Lerp(from, to, fadeDuration <= 0f ? 1f : t / fadeDuration));
+            SetAlpha(Mathf.Lerp(from, to, EaseInOut(t, fadeDuration)));
             yield return null;
         }
         SetAlpha(to);
@@ -156,7 +156,7 @@ public class SplashSequence : MonoBehaviour
         while (t < screenFadeDuration)
         {
             t += Mathf.Min(Time.unscaledDeltaTime, 0.05f);   // clamp so a frame hitch can't jump the fade
-            SetFade(Mathf.Lerp(from, to, screenFadeDuration <= 0f ? 1f : t / screenFadeDuration));
+            SetFade(Mathf.Lerp(from, to, EaseInOut(t, screenFadeDuration)));
             yield return null;
         }
         SetFade(to);
@@ -168,6 +168,13 @@ public class SplashSequence : MonoBehaviour
         var c = fadeOverlay.color; c.a = a; fadeOverlay.color = c;
     }
 
+    // Smooth ease-in-out (S-curve) so fades start and end gently instead of a hard linear ramp.
+    static float EaseInOut(float t, float duration)
+    {
+        float u = duration <= 0f ? 1f : Mathf.Clamp01(t / duration);
+        return Mathf.SmoothStep(0f, 1f, u);
+    }
+
     // Fade a whole placed-logo group in/out together.
     IEnumerator FadeGroup(CanvasGroup cg, float from, float to)
     {
@@ -175,7 +182,7 @@ public class SplashSequence : MonoBehaviour
         while (t < fadeDuration)
         {
             t += Time.unscaledDeltaTime;
-            cg.alpha = Mathf.Lerp(from, to, fadeDuration <= 0f ? 1f : t / fadeDuration);
+            cg.alpha = Mathf.Lerp(from, to, EaseInOut(t, fadeDuration));
             yield return null;
         }
         cg.alpha = to;

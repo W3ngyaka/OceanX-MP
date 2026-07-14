@@ -827,15 +827,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.8133616
+      value: -9.594522
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -18.24193
+      value: -18.07944
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.760117
+      value: 0.52722526
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalRotation.w
@@ -35652,7 +35652,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.8133616
+      value: -9.594522
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -35660,7 +35660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.760117
+      value: 0.52722526
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38806,7 +38806,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &349226722
 RectTransform:
   m_ObjectHideFlags: 0
@@ -38825,7 +38825,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 310, y: 97}
-  m_SizeDelta: {x: 420, y: 0}
+  m_SizeDelta: {x: 420, y: 57.84456}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &349226723
 MonoBehaviour:
@@ -43649,10 +43649,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 349226722}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 210, y: -28.92228}
+  m_SizeDelta: {x: 384, y: 29.844559}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &399568348
 PrefabInstance:
@@ -136652,8 +136652,8 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: -5495902117074765545, guid: 7ed5f236dbdc5ba40b210b29e0833153, type: 3}
-    BoidMaterial: {fileID: 2100000, guid: da22b047ad4dd104ea2d32ba62827423, type: 2}
+    BoidMesh: {fileID: -5495902117074765545, guid: f60fdc0d9046d3d4cbc89d8c82daea89, type: 3}
+    BoidMaterial: {fileID: 2100000, guid: 7dff81e87b438fc4d83aa659822cab62, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: e5057589a9bfe4340bf4b696e3866375, type: 2}
     Targets:
     - {fileID: 0}
@@ -161623,7 +161623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1434845235
 RectTransform:
   m_ObjectHideFlags: 0
@@ -173835,15 +173835,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.8133616
+      value: -9.594522
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -18.24193
+      value: -18.07944
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.760117
+      value: 0.52722526
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -232565,10 +232565,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesUnlockReveal
   revealGroup: {fileID: 1831359124}
   revealImage: {fileID: 1219500260}
-  nameText: {fileID: 1900128844}
-  sciText: {fileID: 676330619}
-  tierText: {fileID: 870256842}
-  msgText: {fileID: 227970014}
+  nameText: {fileID: 0}
+  sciText: {fileID: 0}
+  tierText: {fileID: 0}
+  msgText: {fileID: 0}
   alucia: {fileID: 2095892614}
   allSpecies:
   - {fileID: 11400000, guid: 6dfb9df93974eb6469c12d2cd7f8ce73, type: 2}
@@ -232601,7 +232601,7 @@ MonoBehaviour:
   characterGroup: {fileID: 1434845238}
   characterImage: {fileID: 1618262729}
   bubbleGroup: {fileID: 349226727}
-  bubbleText: {fileID: 399323280}
+  bubbleText: {fileID: 0}
   simulation: {fileID: 69854442}
   autoHideSeconds: 3
   minGapBetweenMessages: 1.5

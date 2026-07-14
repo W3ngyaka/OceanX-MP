@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea515cf7ff883e43a388de93c907d69, type: 3}
   m_Name: Blacktip reef shark_MovementProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMovementProperties
-  CruisingSpeed: 2.2
-  MaxSpeed: 12
+  CruisingSpeed: 2.7
+  MaxSpeed: 13.5
   WaterFriction: 0.45
   Deceleration: 15
   MaxAcceleration: 20
@@ -22,5 +22,5 @@ MonoBehaviour:
   AngularVelocityReduction: 200
   MaxAngularAcceleration: 85
   AngularDeceleration: 30
-  AngularJerk: 1600
+  AngularJerk: 60
   RotationEffectOnSpeed: 0.05

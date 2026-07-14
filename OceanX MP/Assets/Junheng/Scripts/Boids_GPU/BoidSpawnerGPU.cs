@@ -195,6 +195,10 @@ namespace OceanX.BoidsGPU
                 for (int i = 0; i < boidsCountInThisGroup; i++)
                 {
                     int boidIndex = totalBoidsSpawned;
+                    // Slight per-individual swim-speed variation (±12%) so no two fish tail-beat at exactly
+                    // the same rate — this keeps a school from re-synchronising into one identical wave over
+                    // time. Combined with the randomized starting phase below.
+                    float playbackSpeedVariation = UnityEngine.Random.Range(0.88f, 1.12f);
                     _boids[boidIndex] = new BoidInfoGPU
                     {
                         Position = groupOfBoidsSpawnData.SpawnPositions[i],
@@ -206,9 +210,14 @@ namespace OceanX.BoidsGPU
                         // Boid ID contains sub group ID and group ID packed into single float. By default the
                         // boid group ID is 0, so just store the sub-group ID.
                         BoidID = BitConverter.Int32BitsToSingle((currentBoidSubGroup & 0xFF) << 8),
-                        CurrentSwimTime = 0f,
-                        MaxPlaybackSpeed = schoolProperties.MotionRenderProperties.MaxSwimPlaybackSpeed,
-                        MinPlaybackSpeed = schoolProperties.MotionRenderProperties.MinSwimPlaybackSpeed,
+                        // Randomize each fish's starting animation phase so individuals are desynced the moment
+                        // they spawn instead of all tail-beating in lockstep. One full tail cycle == a
+                        // CurrentSwimTime of 1, so a [0,1) start covers the entire phase. NOTE: this per-boid
+                        // swim time only drives the visual once the fish material's _AutomaticSwimVisualization
+                        // is OFF — otherwise the shader animates every fish off a single shared global clock.
+                        CurrentSwimTime = UnityEngine.Random.value,
+                        MaxPlaybackSpeed = schoolProperties.MotionRenderProperties.MaxSwimPlaybackSpeed * playbackSpeedVariation,
+                        MinPlaybackSpeed = schoolProperties.MotionRenderProperties.MinSwimPlaybackSpeed * playbackSpeedVariation,
                         SwimMotionIntensity = 0f,
                         OriginalIndex = boidIndex
                     };

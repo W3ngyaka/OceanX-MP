@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8453035fa4cd68445a0c68b4a64283f0, type: 3}
   m_Name: Blacktip reef shark_Data
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SpeciesDataGPU
-  SpeciesName: Blacktip Reef Shark
+  SpeciesName: Blacktip reef shark
   ScientificName: Carcharinus melanopterus
   Role: 0
   SchoolProperties: {fileID: 11400000, guid: 1a9e8698e0ddb734689594b712273353, type: 2}
@@ -21,6 +21,7 @@ MonoBehaviour:
   BehaviorProperties: {fileID: 11400000, guid: b0fcf9460995643499b94c2fc50a8efc, type: 2}
   FishPerSchool: 1
   MaxSchools: 3
+  PathStyle: 0
   PreySpecies:
   - {fileID: 11400000, guid: 030fe1af58270a04c843fdda6fe90410, type: 2}
   - {fileID: 11400000, guid: a84af6e7a4568ad45b12ab35abec7305, type: 2}

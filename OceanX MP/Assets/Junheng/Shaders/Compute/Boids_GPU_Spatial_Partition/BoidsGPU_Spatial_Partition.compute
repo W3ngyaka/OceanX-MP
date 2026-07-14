@@ -5,17 +5,19 @@
 #define PREDATOR_AFFECTER_TYPE 2.0
 #define AFFECTS_ALL 255
 #define SHAPE_SPHERE 0.5   // shape < 0.5 => sphere, else box
-// How strongly an obstacle bends the boid's schooling direction the moment it enters the zone.
-// This weights the away-vector against the school heading: higher = the away direction dominates,
-// so the fish turns out hard and immediately (a snappy "jerk away") while still keeping a touch of
-// school coherence. It is a STEERING weight only — it never speeds the fish up (still casual, no
-// acceleration; that is reserved for Predator). Bump higher for an even harder turn.
-#define OBSTACLE_AVOID_STRENGTH 6.0
-// Distance (metres) from an obstacle's surface at which a boid starts steering away. Keep this SMALL:
-// every trigger snap-turns the fish out of formation, so a big margin makes schools near rocks look
-// scattered. Tunnelling at speed is already prevented by the hard ResolveObstaclePenetration pass, so
-// this only needs enough lead for a visually smooth dodge.
-#define OBSTACLE_AVOID_MARGIN 1.0
+// How strongly an obstacle bends the boid's schooling heading. This weights the away-vector against
+// the school heading; it is scaled by proximity (0 at the margin edge, full at the surface) so the
+// bend eases in smoothly instead of snapping on. The turn itself is rate-limited by the boid's normal
+// angular velocity (obstacle avoidance does NOT snap-turn — see the avoidance block below), so even at
+// full strength the fish banks around the rock/coral in a smooth arc rather than jerking away. It is a
+// STEERING weight only — it never speeds the fish up (that is reserved for Predator). Lower for a
+// lazier curve, higher for a tighter one.
+#define OBSTACLE_AVOID_STRENGTH 5.0
+// Distance (metres) from an obstacle's surface at which a boid starts steering away. Because avoidance
+// now eases in with proximity (no snap-turn), this can afford a little more lead than before, so the
+// fish begins its gentle bank early and curves clear without a last-moment swerve. Tunnelling at speed
+// is still backstopped by the hard ResolveObstaclePenetration pass.
+#define OBSTACLE_AVOID_MARGIN 2.0
 
 // When reacting to an affecter (predator flee OR obstacle avoidance) the boid SKIPS the slow
 // angular-velocity ramp and turns at this multiple of its max angular velocity, so it snaps toward
@@ -598,12 +600,25 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     // left alone (it is about to be culled).
     Affecter closestObstacle = GetClosestAffecter(boidInfo, OBSTACLE_AFFECTER_TYPE);
     bool hasObstacle = closestObstacle.affecterType == OBSTACLE_AFFECTER_TYPE;
-    if(!reachedExit && hasObstacle
-       && AffecterSurfaceDistance(closestObstacle, boidInfo.position) <= OBSTACLE_AVOID_MARGIN)
+    if(!reachedExit && hasObstacle)
     {
-        float3 awayDirection = AffecterAwayDirection(closestObstacle, boidInfo.position);
-        desiredMovementDirection = normalize(desiredMovementDirection + awayDirection * OBSTACLE_AVOID_STRENGTH);
-        reactingToAffecter = true; // snap-turn so it actually clears the obstacle
+        float obstacleSurfaceDistance = AffecterSurfaceDistance(closestObstacle, boidInfo.position);
+        if(obstacleSurfaceDistance <= OBSTACLE_AVOID_MARGIN)
+        {
+            // Ease the avoidance in with proximity: ~0 at the margin edge, full at the surface, so the
+            // heading bends gradually as the fish nears the obstacle instead of stepping on the instant
+            // it crosses the margin. Squared for an even softer onset near the edge.
+            float obstacleProximity = saturate(1.0 - obstacleSurfaceDistance / OBSTACLE_AVOID_MARGIN);
+            obstacleProximity *= obstacleProximity;
+
+            float3 awayDirection = AffecterAwayDirection(closestObstacle, boidInfo.position);
+            desiredMovementDirection = normalize(desiredMovementDirection + awayDirection * (OBSTACLE_AVOID_STRENGTH * obstacleProximity));
+
+            // Deliberately DO NOT set reactingToAffecter here. Obstacle avoidance steers with the boid's
+            // normal angular ramp so it banks smoothly around the rock/coral (a casual curve, not a panic
+            // jerk). Only predator flee / off-screen exit snap-turn. The hard ResolveObstaclePenetration
+            // pass below still guarantees the fish can never tunnel through, snap or no snap.
+        }
     }
 
     // ---- Entry sprint --------------------------------------------------------------------------

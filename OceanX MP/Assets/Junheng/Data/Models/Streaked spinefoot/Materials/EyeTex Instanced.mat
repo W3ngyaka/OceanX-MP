@@ -100,7 +100,7 @@ Material:
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _AutomaticSwimSpeed: 0.65
-    - _AutomaticSwimVisualization: 1
+    - _AutomaticSwimVisualization: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1

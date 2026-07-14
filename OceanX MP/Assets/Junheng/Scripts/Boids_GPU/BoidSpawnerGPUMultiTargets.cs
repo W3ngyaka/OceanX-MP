@@ -107,6 +107,9 @@ namespace OceanX.BoidsGPU
                 for (int boidIndexInGroup = 0; boidIndexInGroup < boidsCountInThisGroup; boidIndexInGroup++)
                 {
                     int boidIndex = totalBoidsSpawned;
+                    // Slight per-individual swim-speed variation (±12%) so no two fish tail-beat at exactly the
+                    // same rate — this keeps a school from re-synchronising into one identical wave over time.
+                    float playbackSpeedVariation = UnityEngine.Random.Range(0.88f, 1.12f);
                     _boids[boidIndex] = new BoidInfoGPU
                     {
                         Position = groupOfBoidsSpawnData.SpawnPositions[boidIndexInGroup] + originalCenterToTargetVector,
@@ -116,9 +119,14 @@ namespace OceanX.BoidsGPU
                         AngularAcceleration = 0f,
                         AngularVelocity = 0f,
                         BoidID = BitConverter.Int32BitsToSingle((currentBoidSubGroup & 0xFF) << 8),
-                        CurrentSwimTime = 0f,
-                        MaxPlaybackSpeed = renderProps != null ? renderProps.MaxSwimPlaybackSpeed : 0f,
-                        MinPlaybackSpeed = renderProps != null ? renderProps.MinSwimPlaybackSpeed : 0f,
+                        // Randomize each fish's starting animation phase so individuals are desynced the moment
+                        // they spawn instead of all tail-beating in lockstep. One full tail cycle == a
+                        // CurrentSwimTime of 1, so a [0,1) start covers the entire phase. NOTE: this per-boid
+                        // swim time only drives the visual once the fish material's _AutomaticSwimVisualization
+                        // is OFF — otherwise the shader animates every fish off a single shared global clock.
+                        CurrentSwimTime = UnityEngine.Random.value,
+                        MaxPlaybackSpeed = (renderProps != null ? renderProps.MaxSwimPlaybackSpeed : 0f) * playbackSpeedVariation,
+                        MinPlaybackSpeed = (renderProps != null ? renderProps.MinSwimPlaybackSpeed : 0f) * playbackSpeedVariation,
                         SwimMotionIntensity = 0f,
                         OriginalIndex = boidIndex
                     };

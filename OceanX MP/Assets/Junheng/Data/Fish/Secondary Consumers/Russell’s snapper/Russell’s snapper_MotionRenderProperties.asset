@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeffc396a2a2c474abc9ea526ba9eb47, type: 3}
   m_Name: "Russell\u2019s snapper_MotionRenderProperties"
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMotionRenderProperties
-  MinSwimPlaybackSpeed: 0.75
-  MaxSwimPlaybackSpeed: 4.25
-  MinSideToSideAmplitude: 1
-  MaxSideToSideAmplitude: 3
-  MinYawRotationAmplitude: 0.004
-  MaxYawRotationAmplitude: 0.008
-  MinRollRotationAmplitude: 0.014
-  MaxRollRotationAmplitude: 0.082
-  MinPanningYawAmplitude: 0.01
-  MaxPanningYawAmplitude: 0.05
+  MinSwimPlaybackSpeed: 0.7
+  MaxSwimPlaybackSpeed: 1.4
+  MinSideToSideAmplitude: 0
+  MaxSideToSideAmplitude: 0
+  MinYawRotationAmplitude: 0.0039
+  MaxYawRotationAmplitude: 0.0039
+  MinRollRotationAmplitude: 0.032
+  MaxRollRotationAmplitude: 0.032
+  MinPanningYawAmplitude: 0.031
+  MaxPanningYawAmplitude: 0.031

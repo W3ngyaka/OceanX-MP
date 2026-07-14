@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeffc396a2a2c474abc9ea526ba9eb47, type: 3}
   m_Name: Bluefin trevally_MotionRenderProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMotionRenderProperties
-  MinSwimPlaybackSpeed: 1
-  MaxSwimPlaybackSpeed: 5
-  MinSideToSideAmplitude: 0.5
-  MaxSideToSideAmplitude: 2
-  MinYawRotationAmplitude: 0.004
-  MaxYawRotationAmplitude: 0.01
-  MinRollRotationAmplitude: 0.02
-  MaxRollRotationAmplitude: 0.09
-  MinPanningYawAmplitude: 0.01
-  MaxPanningYawAmplitude: 0.05
+  MinSwimPlaybackSpeed: 0.6
+  MaxSwimPlaybackSpeed: 1.2
+  MinSideToSideAmplitude: 0
+  MaxSideToSideAmplitude: 0
+  MinYawRotationAmplitude: 0
+  MaxYawRotationAmplitude: 0
+  MinRollRotationAmplitude: 0.023
+  MaxRollRotationAmplitude: 0.023
+  MinPanningYawAmplitude: 0.02
+  MaxPanningYawAmplitude: 0.02

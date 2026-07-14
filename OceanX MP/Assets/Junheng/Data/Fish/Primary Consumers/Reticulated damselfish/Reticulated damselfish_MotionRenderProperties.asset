@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeffc396a2a2c474abc9ea526ba9eb47, type: 3}
   m_Name: Reticulated damselfish_MotionRenderProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMotionRenderProperties
-  MinSwimPlaybackSpeed: 0.75
-  MaxSwimPlaybackSpeed: 3.5
-  MinSideToSideAmplitude: 0.5
-  MaxSideToSideAmplitude: 2
-  MinYawRotationAmplitude: 0.004
-  MaxYawRotationAmplitude: 0.008
-  MinRollRotationAmplitude: 0.01
-  MaxRollRotationAmplitude: 0.05
-  MinPanningYawAmplitude: 0.01
-  MaxPanningYawAmplitude: 0.04
+  MinSwimPlaybackSpeed: 1.7
+  MaxSwimPlaybackSpeed: 3.4
+  MinSideToSideAmplitude: 0
+  MaxSideToSideAmplitude: 0
+  MinYawRotationAmplitude: 0.0054
+  MaxYawRotationAmplitude: 0.0054
+  MinRollRotationAmplitude: 0
+  MaxRollRotationAmplitude: 0
+  MinPanningYawAmplitude: 0.016
+  MaxPanningYawAmplitude: 0.016

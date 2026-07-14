@@ -930,6 +930,16 @@ Follows session 2 (which made the **arrival** card TMP + CSV-driven). This sessi
 - **`RevealContentDB.Entry`** gains `sciName`, `firstAddedMessage`, `unlockMessage` (replacing `blurb`); `SpeciesAddedReveal` now reads `firstAddedMessage` for the arrival card.
 - **`unlockMessage` was seeded from each species' `SpeciesData.addedMessage`** (the descriptions) so it starts sensible, but the two lines can now **diverge** — the "you unlocked X" line no longer has to match the "X just arrived" line.
 
+### 🖼️ Two big-screen cards, TWO image columns (same folder)
+- **`RevealContent.csv` (+ sheet, col H)** gained **`unlockImageFile`**. The **arrival** card loads its photo from `imageFile`, the **unlock** card from `unlockImageFile` — **both from the same `StreamingAssets/RevealImages/` folder**, just different filenames. `SpeciesUnlockReveal` falls back to `imageFile` (the arrival photo) when `unlockImageFile` is blank, so the card is never image-less.
+- The friend dropped 12 unlock-specific photos (`SharkUnlock.png`, `MorayUnlock.png`, `ParrotfishUnlock.png`, …) into `RevealImages/` (git-tracked); the column now points at them. Mapping isn't 1:1 with the arrival names (e.g. `blacktip.png`→`SharkUnlock.png`, `RusselsSnapper.png`→`RusselUnlock.png`).
+
+### 🐟 Tablet vs big-screen images fully separated (`564c036`)
+- The tablet modal (`SpeciesContentDB` → `StreamingAssets/SpeciesImages/`) and the big-screen cards (`RevealContentDB` → `StreamingAssets/RevealImages/`) had been sharing `SpeciesImages`, so copying the friend's card art in there clobbered the tablet's photos. Restored the tablet originals from git and gave the big screen its **own** `RevealImages/` folder + `imageFile` column. The two are now independent — editing one never touches the other.
+
+### ⚠ CSV ↔ Google Sheet workflow (learned the hard way)
+- The **Google Sheet is the source of truth** once the team edits it directly. A full-column push of the local CSV once **overwrote a teammate's live sheet edits**. Rule going forward: **pull the sheet → local CSV**, and only ever push *new* columns / individual header cells, never overwrite existing data columns. (Overwritten edits are recoverable via the sheet's **File → Version history**.)
+
 ### 🎬 Scene rebuild (`863ee47`)
 - Rebuilt `Assets/Junheng/Scenes/SCENE_MainScene.unity`; trimmed the `Oswald Bold SDF` / `LiberationSans SDF - Fallback` TMP font atlases (large deletions — regenerated glyph tables).
 

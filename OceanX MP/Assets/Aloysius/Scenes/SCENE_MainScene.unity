@@ -60864,7 +60864,7 @@ MonoBehaviour:
   percentText: {fileID: 430459168}
   smooth: 1
   smoothSpeed: 4
-  debugOverride: 1
+  debugOverride: 0
   debugHealth01: 0
   colorFill: 1
   colorPercentText: 0

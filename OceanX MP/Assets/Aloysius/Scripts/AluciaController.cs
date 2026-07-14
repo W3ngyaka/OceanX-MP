@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using OceanX.BoidsGPU.Ecosystem;
 
 // Alucia — 2D character overlay on the large/host screen.
@@ -24,7 +25,7 @@ public class AluciaController : MonoBehaviour
     public CanvasGroup characterGroup;     // CanvasGroup on the character (for fade in/out)
     public Image characterImage;          // Alucia sprite (placeholder for now)
     public CanvasGroup bubbleGroup;        // speech bubble container
-    public Text bubbleText;                // message text (swap to TMP if you use it)
+    public TMP_Text bubbleText;            // message text (TextMeshPro)
 
     [Header("Simulation (host)")]
     [Tooltip("EcosystemSimulationGPU in this scene. Leave null to skip health reactions.")]

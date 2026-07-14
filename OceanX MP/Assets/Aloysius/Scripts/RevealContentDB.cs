@@ -23,7 +23,9 @@ public static class RevealContentDB
     public class Entry
     {
         // firstAddedMessage = the ADDED/arrival card line; unlockMessage = the UNLOCK card line (may differ).
-        public string id, speciesName, role, sciName, firstAddedMessage, unlockMessage, imageFile;
+        // imageFile = the ADDED/arrival card photo; unlockImageFile = the UNLOCK card photo (both from
+        // StreamingAssets/RevealImages). Leave unlockImageFile blank to reuse the arrival photo.
+        public string id, speciesName, role, sciName, firstAddedMessage, unlockMessage, imageFile, unlockImageFile;
     }
 
     const string CsvFile = "RevealContent.csv";
@@ -89,7 +91,8 @@ public static class RevealContentDB
                 sciName           = Field(row, col, "sciname"),
                 firstAddedMessage = Field(row, col, "firstaddedmessage"),
                 unlockMessage     = Field(row, col, "unlockmessage"),
-                imageFile     = Field(row, col, "imagefile"),
+                imageFile         = Field(row, col, "imagefile"),
+                unlockImageFile   = Field(row, col, "unlockimagefile"),
             };
 
             // Index under both the stable id and the display name so either resolves the same entry.

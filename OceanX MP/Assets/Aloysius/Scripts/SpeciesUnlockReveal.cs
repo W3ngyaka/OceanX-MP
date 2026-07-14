@@ -107,9 +107,13 @@ public class SpeciesUnlockReveal : MonoBehaviour
 
         if (revealImage != null)
         {
-            // Per-species photo from RevealContent.csv (imageFile -> StreamingAssets/RevealImages), shared with
-            // the arrival card. Keeps whatever sprite was pre-assigned in the scene if the CSV has none.
-            Sprite img = (e != null) ? RevealContentDB.GetImage(e.imageFile) : null;
+            // The unlock card has its OWN photo column (unlockImageFile), loaded from the SAME folder as the
+            // arrival card (StreamingAssets/RevealImages), just a different filename. If unlockImageFile is blank
+            // it falls back to the arrival photo (imageFile), so the card is never image-less while the friend
+            // hasn't dropped the unlock-specific pics yet. Then to any sprite pre-assigned in the scene.
+            string imgFile = (e != null && !string.IsNullOrWhiteSpace(e.unlockImageFile)) ? e.unlockImageFile
+                            : (e != null ? e.imageFile : null);
+            Sprite img = RevealContentDB.GetImage(imgFile);
             if (img != null) revealImage.sprite = img;
             revealImage.enabled = (revealImage.sprite != null);
         }

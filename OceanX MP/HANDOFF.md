@@ -917,6 +917,34 @@ already localization-ready (stable ids, all text in one column):
 
 ---
 
+## What Was Done — 2026-07-14 (JunHeng, session 3) — Unlock card is CSV-driven; arrival vs unlock messages split
+
+Follows session 2 (which made the **arrival** card TMP + CSV-driven). This session brings the **unlock** card onto the same content pipeline and separates the two messages so each big-screen card can say its own thing.
+
+### 🗂️ Unlock card now reads from `RevealContent.csv` (`c10aee3`)
+- **`SpeciesUnlockReveal.FillCard`** was hardcoded to the `SpeciesData` asset (name/sciName/tier/`addedMessage`). It now reads **name / sciName / role / unlockMessage + per-species image** from **`RevealContentDB`** (`RevealContent.csv`), matched by the species' stable **`contentId`** (falling back to `speciesName`). **Every field falls back to the `SpeciesData` asset** when the CSV row/value is missing, so the card never goes blank offline.
+- Shares the **same `RevealContent` sheet + `StreamingAssets/RevealImages/` folder** as the arrival card (`SpeciesAddedReveal`) — one sheet, two big-screen cards, edited independently by the fact-checkers. Per-species photo comes from the `imageFile` column; keeps whatever sprite was pre-assigned in the scene if the CSV has none.
+
+### 🔀 Arrival vs unlock messages are now separate columns
+- **`RevealContent.csv` (+ the Google sheet)** gained **`sciName`** and **`unlockMessage`** columns, and the old arrival column **`blurb` was renamed → `FirstAddedMessage`**. Parser is header-driven, so column order doesn't matter; unknown columns are ignored.
+- **`RevealContentDB.Entry`** gains `sciName`, `firstAddedMessage`, `unlockMessage` (replacing `blurb`); `SpeciesAddedReveal` now reads `firstAddedMessage` for the arrival card.
+- **`unlockMessage` was seeded from each species' `SpeciesData.addedMessage`** (the descriptions) so it starts sensible, but the two lines can now **diverge** — the "you unlocked X" line no longer has to match the "X just arrived" line.
+
+### 🖼️ Two big-screen cards, TWO image columns (same folder)
+- **`RevealContent.csv` (+ sheet, col H)** gained **`unlockImageFile`**. The **arrival** card loads its photo from `imageFile`, the **unlock** card from `unlockImageFile` — **both from the same `StreamingAssets/RevealImages/` folder**, just different filenames. `SpeciesUnlockReveal` falls back to `imageFile` (the arrival photo) when `unlockImageFile` is blank, so the card is never image-less.
+- The friend dropped 12 unlock-specific photos (`SharkUnlock.png`, `MorayUnlock.png`, `ParrotfishUnlock.png`, …) into `RevealImages/` (git-tracked); the column now points at them. Mapping isn't 1:1 with the arrival names (e.g. `blacktip.png`→`SharkUnlock.png`, `RusselsSnapper.png`→`RusselUnlock.png`).
+
+### 🐟 Tablet vs big-screen images fully separated (`564c036`)
+- The tablet modal (`SpeciesContentDB` → `StreamingAssets/SpeciesImages/`) and the big-screen cards (`RevealContentDB` → `StreamingAssets/RevealImages/`) had been sharing `SpeciesImages`, so copying the friend's card art in there clobbered the tablet's photos. Restored the tablet originals from git and gave the big screen its **own** `RevealImages/` folder + `imageFile` column. The two are now independent — editing one never touches the other.
+
+### ⚠ CSV ↔ Google Sheet workflow (learned the hard way)
+- The **Google Sheet is the source of truth** once the team edits it directly. A full-column push of the local CSV once **overwrote a teammate's live sheet edits**. Rule going forward: **pull the sheet → local CSV**, and only ever push *new* columns / individual header cells, never overwrite existing data columns. (Overwritten edits are recoverable via the sheet's **File → Version history**.)
+
+### 🎬 Scene rebuild (`863ee47`)
+- Rebuilt `Assets/Junheng/Scenes/SCENE_MainScene.unity`; trimmed the `Oswald Bold SDF` / `LiberationSans SDF - Fallback` TMP font atlases (large deletions — regenerated glyph tables).
+
+---
+
 ## What Was Done — 2026-07-14 (JunHeng, session 2) — Reveal card TMP + CSV images + Alucia event wiring + bubble auto-size
 
 ### 🗂️ Scene landscape (IMPORTANT — coordinate)

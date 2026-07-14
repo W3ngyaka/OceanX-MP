@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 // Shows a "New Species Discovered" reveal card on the host screen when a species
 // unlocks for the first time, then asks Alucia to hint the closest-to-unlockable
@@ -21,10 +22,10 @@ public class SpeciesUnlockReveal : MonoBehaviour
     [Header("Reveal card refs")]
     public CanvasGroup revealGroup;
     public Image revealImage;       // optional; leave null for text-only
-    public Text nameText;
-    public Text sciText;
-    public Text tierText;
-    public Text msgText;
+    public TMP_Text nameText;
+    public TMP_Text sciText;
+    public TMP_Text tierText;
+    public TMP_Text msgText;
 
     [Header("Links")]
     public AluciaController alucia;

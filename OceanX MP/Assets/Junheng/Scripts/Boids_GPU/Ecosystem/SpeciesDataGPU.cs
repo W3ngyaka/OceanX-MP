@@ -68,6 +68,15 @@ namespace OceanX.BoidsGPU.Ecosystem
                  "phase (inside the simulation bounds), so no two schools swim the same route.")]
         public SpeciesPathStyleGPU PathStyle = SpeciesPathStyleGPU.RandomShape;
 
+        [Tooltip("Depth band this species prefers to roam in, as a FRACTION of the simulation area's " +
+                 "height: x = bottom of the band, y = top, where 0 is the floor of the simulation bounds " +
+                 "(the sand) and 1 is the ceiling. Each school's roaming target is placed at a random " +
+                 "height inside this band, so the species settles into that slice of the water column: " +
+                 "(0, 0.1) pins a ray to the seabed, (0.6, 0.95) keeps scad up near the pillar tops.\n\n" +
+                 "Stored as a fraction, not a world Y, so the bands still mean the same thing if the " +
+                 "simulation bounds are resized. Leave at (0, 1) to roam the whole water column.")]
+        public Vector2 PreferredDepthBand = new Vector2(0f, 1f);
+
         [Header("Predator-Prey Relationships")]
         public List<SpeciesDataGPU> PreySpecies     = new List<SpeciesDataGPU>();
         public List<SpeciesDataGPU> PredatorSpecies = new List<SpeciesDataGPU>();

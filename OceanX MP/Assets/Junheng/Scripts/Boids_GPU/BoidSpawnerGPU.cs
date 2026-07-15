@@ -50,6 +50,23 @@ namespace OceanX.BoidsGPU
         {
             InitializeBoidsSpawnData(simulationAreaBounds);
 
+            // Arm the entry sprint, once, for the fish that were placed OUTSIDE the simulation bounds —
+            // i.e. a school relocated to an off-screen entry point (see BoidSpawnerGPUMultiTargets.
+            // RelocateGroupToEntryPoint). -1 is the "spawned outside, hasn't crossed in yet" sentinel the
+            // compute shader looks for; it sprints until it enters, then counts down _EntryBoostDuration
+            // and settles. Fish spawned inside the box start at 0 and never sprint.
+            //
+            // Arming it here rather than in the shader is what lets the shader stop treating "currently
+            // outside the bounds" as "newly arrived" — a settled fish that later strays over the boundary
+            // is now left alone instead of being re-launched at MaxSpeed. Runs BEFORE the preservation
+            // pass below on purpose, so existing fish keep their own live entry state.
+            for (int i = 0; i < _boids.Length; i++)
+            {
+                BoidInfoGPU boid = _boids[i];
+                boid.EntryBoostTimeRemaining = simulationAreaBounds.Contains(boid.Position) ? 0f : -1f;
+                _boids[i] = boid;
+            }
+
             // Restore the LIVE state of fish that existed before this rebuild so they carry on seamlessly
             // instead of snapping back to a spawn pose. As well as position + direction, this preserves the
             // motion (speed / acceleration / angular velocity) AND the swim-animation state
@@ -82,19 +99,40 @@ namespace OceanX.BoidsGPU
             }
 
             // Initialize the draw arguments buffer for indirect issuing of draw calls for rendering fish.
-            _drawArgumentsBuffer = new GraphicsBuffer(GraphicsBuffer.Target.IndirectArguments, 1, GraphicsBuffer.IndirectDrawIndexedArgs.size);
-            _drawArguments = new GraphicsBuffer.IndirectDrawIndexedArgs[1]
+            // One entry PER SUB-MESH so a multi-material mesh (e.g. body + eyes) can be drawn with a
+            // separate material per sub-mesh. Each entry points at that sub-mesh's index range.
+            Mesh mesh = _boidSpawnData.BoidMesh;
+            int subMeshCount = Mathf.Max(1, mesh.subMeshCount);
+
+            _drawArgumentsBuffer = new GraphicsBuffer(GraphicsBuffer.Target.IndirectArguments, subMeshCount, GraphicsBuffer.IndirectDrawIndexedArgs.size);
+            _drawArguments = new GraphicsBuffer.IndirectDrawIndexedArgs[subMeshCount];
+            for (int subMesh = 0; subMesh < subMeshCount; subMesh++)
             {
-                new GraphicsBuffer.IndirectDrawIndexedArgs
+                _drawArguments[subMesh] = new GraphicsBuffer.IndirectDrawIndexedArgs
                 {
-                    baseVertexIndex = 0,
-                    startIndex = 0,
-                    startInstance= 0,
-                    indexCountPerInstance = _boidSpawnData.BoidMesh.GetIndexCount(0),
-                    instanceCount = (uint)_boidSpawnData.BoidsCount
-                }
-            };
+                    baseVertexIndex       = mesh.GetBaseVertex(subMesh),
+                    startIndex            = mesh.GetIndexStart(subMesh),
+                    startInstance         = 0,
+                    indexCountPerInstance = mesh.GetIndexCount(subMesh),
+                    instanceCount         = (uint)_boidSpawnData.BoidsCount
+                };
+            }
             _drawArgumentsBuffer.SetData(_drawArguments);
+        }
+
+        /// <summary>
+        /// Returns the material to use for the given sub-mesh of <see cref="BoidSpawnData.BoidMesh"/>:
+        /// sub-mesh 0 = body, sub-mesh 1 = eyes. Returns null when no material is assigned for that
+        /// sub-mesh, in which case it isn't drawn.
+        /// </summary>
+        protected Material GetMaterialForSubMesh(int subMesh)
+        {
+            switch (subMesh)
+            {
+                case 0:  return _boidSpawnData.BoidMaterial;
+                case 1:  return _boidSpawnData.BoidEyeMaterial;
+                default: return null;
+            }
         }
 
         /// <summary>
@@ -118,21 +156,35 @@ namespace OceanX.BoidsGPU
         /// <param name="simulationAreaBounds">Bounds representing the simulation area of the boids.</param>
         public void RenderBoids(ComputeBuffer boidsComputeBuffer, ComputeBuffer boidSchoolsRenderInfosBuffer, Bounds simulationAreaBounds)
         {
-            RenderParams renderParams = new RenderParams(_boidSpawnData.BoidMaterial);
-            renderParams.matProps = new MaterialPropertyBlock();
-            renderParams.matProps.SetBuffer("_Boids", boidsComputeBuffer);
-            renderParams.matProps.SetBuffer("_BoidsRenderInfos", boidSchoolsRenderInfosBuffer);
-            renderParams.matProps.SetInt("_BoidsBufferOffset", _renderingOffset);
-            renderParams.matProps.SetVector("_SimulationAreaCenter", simulationAreaBounds.center);
-            renderParams.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            renderParams.receiveShadows = false;
-            renderParams.layer = gameObject.layer;
-            // Increase the culling area a bit so that some fish don't randomly 
+            if (_drawArgumentsBuffer == null || _drawArguments == null) return;
+
+            // All sub-meshes share the same per-instance boid data, so build the property block once.
+            MaterialPropertyBlock matProps = new MaterialPropertyBlock();
+            matProps.SetBuffer("_Boids", boidsComputeBuffer);
+            matProps.SetBuffer("_BoidsRenderInfos", boidSchoolsRenderInfosBuffer);
+            matProps.SetInt("_BoidsBufferOffset", _renderingOffset);
+            matProps.SetVector("_SimulationAreaCenter", simulationAreaBounds.center);
+
+            // Increase the culling area a bit so that some fish don't randomly
             // disappear when they get close to the edges of the simulation area.
             simulationAreaBounds.extents *= 1.25f;
-            renderParams.worldBounds = simulationAreaBounds;
 
-            Graphics.RenderMeshIndirect(renderParams, _boidSpawnData.BoidMesh, _drawArgumentsBuffer);
+            // Draw each sub-mesh with its own material (e.g. sub-mesh 0 = body, sub-mesh 1 = eyes).
+            // startCommand selects this sub-mesh's entry in the indirect args buffer.
+            for (int subMesh = 0; subMesh < _drawArguments.Length; subMesh++)
+            {
+                Material material = GetMaterialForSubMesh(subMesh);
+                if (material == null) continue;   // no material assigned for this sub-mesh — skip it
+
+                RenderParams renderParams = new RenderParams(material);
+                renderParams.matProps = matProps;
+                renderParams.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                renderParams.receiveShadows = false;
+                renderParams.layer = gameObject.layer;
+                renderParams.worldBounds = simulationAreaBounds;
+
+                Graphics.RenderMeshIndirect(renderParams, _boidSpawnData.BoidMesh, _drawArgumentsBuffer, 1, subMesh);
+            }
         }
 
         // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove

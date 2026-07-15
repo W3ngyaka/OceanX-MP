@@ -1,0 +1,678 @@
+﻿#pragma kernel BoidSimulationKernel
+#define THREAD_GROUP_SIZE 256
+#define TARGET_AFFECTER_TYPE 0.0
+#define OBSTACLE_AFFECTER_TYPE 1.0
+#define PREDATOR_AFFECTER_TYPE 2.0
+#define AFFECTS_ALL 255
+#define SHAPE_SPHERE 0.5   // shape < 0.5 => sphere, else box
+// How strongly an obstacle bends the boid's schooling heading. This weights the away-vector against
+// the school heading; it is scaled by proximity (0 at the margin edge, full at the surface) so the
+// bend eases in smoothly instead of snapping on. The turn itself is rate-limited by the boid's normal
+// angular velocity (obstacle avoidance does NOT snap-turn — see the avoidance block below), so even at
+// full strength the fish banks around the rock/coral in a smooth arc rather than jerking away. It is a
+// STEERING weight only — it never speeds the fish up (that is reserved for Predator). Lower for a
+// lazier curve, higher for a tighter one.
+#define OBSTACLE_AVOID_STRENGTH 5.0
+// Distance (metres) from an obstacle's surface at which a boid starts steering away. Because avoidance
+// now eases in with proximity (no snap-turn), this can afford a little more lead than before, so the
+// fish begins its gentle bank early and curves clear without a last-moment swerve. Tunnelling at speed
+// is still backstopped by the hard ResolveObstaclePenetration pass.
+#define OBSTACLE_AVOID_MARGIN 2.0
+
+// When reacting to an affecter (predator flee OR obstacle avoidance) the boid SKIPS the slow
+// angular-velocity ramp and turns at this multiple of its max angular velocity, so it snaps toward
+// the escape heading the frame it enters the zone instead of easing in over ~a second. This is a
+// TURN-RATE boost only — it does not change linear speed. Raise for an even snappier reaction.
+#define AVOID_TURN_MULTIPLIER 8.0
+
+#include "Assets/Junheng/Shaders/Compute/BoidSimulationData.hlsl"
+#include "Assets/Junheng/Shaders/Compute/Quaternion.hlsl"
+#include "Assets/Junheng/Shaders/Compute/GPU_Grid_Spatial_Partition/SpatialPartitionUtils.hlsl"
+
+// General simulation properties.
+int _TotalBoidCount;
+int _TotalAffectersCount;
+float _TimeDelta;
+float3 _SimulationAreaCenter;
+float3 _SimulationAreaSize;
+// How long (seconds) a boid keeps sprinting after it crosses INTO the simulation bounds. While a
+// boid is strictly outside the bounds (freshly spawned off-screen) its per-boid timer is held full;
+// once inside, the timer counts down and the boid accelerates until it expires, then settles to
+// cruising speed. Driven from BoidSimulationGPU each frame so it is tunable live in the Inspector.
+float _EntryBoostDuration;
+// Distance (metres) within which an EXITING boid is considered to have reached its parked exit point:
+// it then stops dead (speed 0) and holds there instead of overshooting and circling the point, until
+// EcosystemSimulationGPU culls the school. Driven from BoidSimulationGPU each frame.
+float _ExitStopDistance;
+
+// Buffer containing all boids in the simulation.
+StructuredBuffer<BoidInfo> _Boids;
+RWStructuredBuffer<BoidInfo> _BoidsOutput;
+// Buffer containing offset for each cell in the spatial partition based on 
+// the total number of boids in cells before. 
+StructuredBuffer<uint> _CellsOffsetsBuffer;
+// Buffer containing informations about every boid school used in the simulation.
+StructuredBuffer<BoidSchoolInfo> _BoidSchools;
+// Buffer containing all obstacles and targets of the simulation that
+// can affect the behavior of the boids.
+StructuredBuffer<Affecter> _Affecters;
+
+float InverseLerp(float minValue, float maxValue, float value)
+{
+    return (value - minValue) / (maxValue - minValue);
+}
+
+// -------------------------------------------------------------------------
+// Affecter shape helpers — an affecter's influence volume is either a sphere
+// (radius) or an oriented box (halfExtents + rotation). These give one
+// surface-distance / inside test / away-direction that works for both shapes.
+// -------------------------------------------------------------------------
+
+// Brings a world position into the affecter's local (box) space using the
+// inverse (conjugate) of the box rotation. For a unit quaternion the conjugate
+// is the inverse, so this un-rotates the world offset into axis-aligned space.
+float3 AffecterLocalPosition(Affecter affecter, float3 worldPosition)
+{
+    float4 inverseRotation = float4(-affecter.rotation.xyz, affecter.rotation.w);
+    return Multiply(InitializeQuaternion(inverseRotation), worldPosition - affecter.position);
+}
+
+// Distance from a boid to the affecter's influence surface. 0 when inside.
+float AffecterSurfaceDistance(Affecter affecter, float3 boidPosition)
+{
+    if(affecter.shape < SHAPE_SPHERE)
+    {
+        return max(0.0, length(affecter.position - boidPosition) - affecter.radius);
+    }
+    float3 delta = abs(AffecterLocalPosition(affecter, boidPosition)) - affecter.halfExtents;
+    return length(max(delta, 0.0));
+}
+
+// Is the boid inside the affecter's influence volume?
+bool BoidInsideAffecter(Affecter affecter, float3 boidPosition)
+{
+    if(affecter.shape < SHAPE_SPHERE)
+    {
+        return length(affecter.position - boidPosition) <= affecter.radius;
+    }
+    float3 local = AffecterLocalPosition(affecter, boidPosition);
+    return all(abs(local) <= affecter.halfExtents);
+}
+
+// World-space direction pointing away from the affecter centre (used to steer clear).
+float3 AffecterAwayDirection(Affecter affecter, float3 boidPosition)
+{
+    float3 awayVector = boidPosition - affecter.position;
+    float lengthSquared = dot(awayVector, awayVector);
+    return lengthSquared > 1e-6 ? awayVector * rsqrt(lengthSquared) : float3(0.0, 1.0, 0.0);
+}
+
+// HARD separation — the guarantee behind the steering. If a boid still ended the frame INSIDE an
+// obstacle (a sprinting entry/exit fish can outrun its own turn rate, or a school push can shove one
+// in), snap it back out to the nearest surface point and slide its heading along that surface. With
+// this in place fish can never visibly tunnel through rocks, regardless of speed or steering state.
+void ResolveObstaclePenetration(Affecter obstacle, inout BoidInfo boidInfo)
+{
+    if(obstacle.shape < SHAPE_SPHERE)
+    {
+        float3 fromCenter = boidInfo.position - obstacle.position;
+        float distanceFromCenter = length(fromCenter);
+        if(distanceFromCenter >= obstacle.radius) return;
+
+        float3 surfaceNormal = distanceFromCenter > 1e-4 ? fromCenter / distanceFromCenter : float3(0.0, 1.0, 0.0);
+        boidInfo.position = obstacle.position + surfaceNormal * (obstacle.radius + 0.05);
+        float inwardAmount = dot(boidInfo.direction, surfaceNormal);
+        if(inwardAmount < 0.0)
+        {
+            boidInfo.direction = normalize(boidInfo.direction - surfaceNormal * inwardAmount);
+        }
+        return;
+    }
+
+    float3 localPosition = AffecterLocalPosition(obstacle, boidInfo.position);
+    if(any(abs(localPosition) >= obstacle.halfExtents)) return;
+
+    // Inside the box: push out through the face with the smallest penetration.
+    float3 penetration = obstacle.halfExtents - abs(localPosition);
+    float3 localNormal;
+    if(penetration.x <= penetration.y && penetration.x <= penetration.z)
+    {
+        float side = localPosition.x >= 0.0 ? 1.0 : -1.0;
+        localNormal = float3(side, 0.0, 0.0);
+        localPosition.x = side * (obstacle.halfExtents.x + 0.05);
+    }
+    else if(penetration.y <= penetration.z)
+    {
+        float side = localPosition.y >= 0.0 ? 1.0 : -1.0;
+        localNormal = float3(0.0, side, 0.0);
+        localPosition.y = side * (obstacle.halfExtents.y + 0.05);
+    }
+    else
+    {
+        float side = localPosition.z >= 0.0 ? 1.0 : -1.0;
+        localNormal = float3(0.0, 0.0, side);
+        localPosition.z = side * (obstacle.halfExtents.z + 0.05);
+    }
+
+    // Back to world space (rotate with the box's own rotation, the inverse of AffecterLocalPosition).
+    boidInfo.position = Multiply(InitializeQuaternion(obstacle.rotation), localPosition) + obstacle.position;
+    float3 worldNormal = Multiply(InitializeQuaternion(obstacle.rotation), localNormal);
+    float inwardAmount = dot(boidInfo.direction, worldNormal);
+    if(inwardAmount < 0.0)
+    {
+        boidInfo.direction = normalize(boidInfo.direction - worldNormal * inwardAmount);
+    }
+}
+
+// Function returns the closest affecter of the specified affecter type to the current boid.
+// If no affecter of that type exists, returns a harmless "null" affecter (Sphere, radius -1)
+// so that BoidInsideAffecter() / distance tests always report "not affected" instead of
+// reading an uninitialized struct (which could make boids flee/avoid nothing at random).
+Affecter GetClosestAffecter(BoidInfo boidInfo, float affecterType)
+{
+    // Initial variables — closestAffecter defaults to a no-op sphere with negative radius.
+    Affecter closestAffecter = (Affecter)0;
+    closestAffecter.radius = -1.0;                 // negative radius => never "inside"
+    closestAffecter.halfExtents = float3(-1, -1, -1);
+    closestAffecter.shape = 0.0;                    // sphere path (uses the negative radius)
+    closestAffecter.rotation = float4(0, 0, 0, 1); // identity, just in case
+    closestAffecter.affecterType = -1.0;
+    float closestAffecterDistance = -1;
+
+    int rawBoidIdBits = asint(boidInfo.boidID);
+    int boidId = rawBoidIdBits & 0xFF;
+    int boidSubGroupId = (rawBoidIdBits >> 8) & 0xFF;
+
+    // Go through all affecters and find the one closest to the provided boid position.
+    for(int i = 0; i < _TotalAffectersCount; i++)
+    {
+        // Fetch the affecter and check its type. If its type is not the one we're focues on,
+        // just skip over it. 
+        Affecter affecter = _Affecters[i];
+        if(affecter.affecterType != affecterType)
+        {
+            continue;
+        }
+
+        // If the affecter doesn't affect this boid group, skip it.
+        // Also, if the affecter targets specific sub-group inside the boid group, check that as well.
+        int affecterGroupId = (int)affecter.boidGroupId;
+        int affecterSubGroupId = (int)affecter.boidSubGroupId;
+        if((affecterGroupId != AFFECTS_ALL && boidId != affecterGroupId) || 
+           (affecterSubGroupId != AFFECTS_ALL && boidSubGroupId != affecterSubGroupId)) 
+        {
+            continue;
+        }
+
+        // Get the distance between the boid and the affecter (shape-aware: sphere or box) and
+        // cache the affecter if it's the closest one. Or if there isn't a closest
+        // affecter initialized yet.
+        float distanceFromAffecter = AffecterSurfaceDistance(affecter, boidInfo.position);
+        if(closestAffecterDistance < 0.0 || distanceFromAffecter < closestAffecterDistance) {
+            closestAffecterDistance = distanceFromAffecter;
+            closestAffecter = affecter;
+        }
+    }
+
+    // Return the closest affecter to the boid position.
+    return closestAffecter;
+}
+
+// Update the swim motion time based on the current swimming motion intensity. This time is used by the rendering shader
+// to correctly visualize the swimming motion pattern of this boid.
+void UpdateSwimMotionTime(inout BoidInfo boidInfo) 
+{
+    float swimPlaybackSpeed = lerp(boidInfo.minPlaybackSpeed, boidInfo.maxPlaybackSpeed, boidInfo.swimMotionIntensity);
+    boidInfo.currentSwimTime += _TimeDelta * swimPlaybackSpeed;
+}
+
+// Update the swim motion intensity of the boid based on the current total acceleration. NOTE: The swim intensity
+// is guided by acceleration, not velocity!
+void UpdateSwimMotionIntensity(BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo)
+{
+    float movementIntensity = InverseLerp(0.0, boidSchoolInfo.maxAcceleration, boidInfo.acceleration);
+    float rotationIntensity = InverseLerp(0.0, boidSchoolInfo.maxAngularAcceleration, boidInfo.angularAcceleration);
+    boidInfo.swimMotionIntensity = saturate(max(movementIntensity, rotationIntensity));
+}
+
+// Update the current position of the boid based on the current movement direction, speed and time passed.
+void UpdatePosition(inout BoidInfo boidInfo)
+{
+    float3 newPosition = boidInfo.position + boidInfo.direction * _TimeDelta * boidInfo.speed;
+    boidInfo.position = newPosition;
+}
+
+// Function updates the movement speed and acceleration of the boid based on its need to accelerate this frame or not.
+void UpdateMovementSpeed(bool shouldAccelerate, BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo)
+{
+    // If the boid should accelerate, adde the increase the movement jerk (rate of change in acceleration).
+    float currentJerk = shouldAccelerate ? boidSchoolInfo.movementJerk : 0.0;
+    float deceleration = currentJerk > 0.0 ? 0.0 : boidSchoolInfo.deceleration;
+    // Update the current acceleration and speed.
+    float currentAcceleration = clamp(boidInfo.acceleration + (currentJerk - deceleration) * _TimeDelta, 0.0, boidSchoolInfo.maxAcceleration);
+    float currentMovementSpeed = boidInfo.speed;
+
+    // If the current speed will be lower than the cruising speed that the boid is constantly trying to maintain, increase
+    // the acceleration to correct the movement speed to the desired cruising speed.
+    if((currentMovementSpeed + (currentAcceleration - boidSchoolInfo.waterFriction * currentMovementSpeed) * _TimeDelta) < boidSchoolInfo.cruisingSpeed) 
+    {
+        currentAcceleration = boidSchoolInfo.cruisingSpeed * boidSchoolInfo.waterFriction;
+    }
+
+    // Update the current movement speed and clamp its value between the desired range.
+    currentMovementSpeed += (currentAcceleration - boidSchoolInfo.waterFriction * currentMovementSpeed) * _TimeDelta;
+    currentMovementSpeed = clamp(currentMovementSpeed, boidSchoolInfo.cruisingSpeed, boidSchoolInfo.maxSpeed);
+
+    // Update the boid movement properties.
+    boidInfo.acceleration = currentAcceleration;
+    boidInfo.speed = currentMovementSpeed;
+}
+
+// Function updates the current movement direction of the boid toward the target direction it would like to move
+// based on the current angular acceleration and movement speed.
+void UpdateMovementDirection(float3 targetDirection, BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo, bool snapTurn)
+{
+    // Calculate the angle that the fish would need to steer in order to face the desired movement direction.
+    quaternion rotationTowardTarget = LookRotation(targetDirection, float3(0, 1, 0));
+    quaternion currentRotation = LookRotation(boidInfo.direction, float3(0, 1, 0));
+    float angleTowardTarget = Angle(currentRotation, rotationTowardTarget);
+
+    // Based on the angle the fish needs to steer, check if we need to increase the angular acceleration or not.
+    // Using 50 degrees as an angle threshold for starting to speed up at maximum acceleration.
+    float currentAngularJerk = boidInfo.angularVelocity < angleTowardTarget ? lerp(0.0, boidSchoolInfo.angularJerk, (angleTowardTarget - boidInfo.angularVelocity) / 50.0) : 0.0;
+    float angularDeceleration = currentAngularJerk > 0.0 ? 0.0 : boidSchoolInfo.angularDeceleration;
+    // Update the current angular acceleration and speed.
+    float currentAngularAcceleration = clamp(boidInfo.angularAcceleration + (currentAngularJerk - angularDeceleration) * _TimeDelta, 0.0, boidSchoolInfo.maxAngularAcceleration);
+    float currentAngularVelocity = clamp(boidInfo.angularVelocity + currentAngularAcceleration * _TimeDelta, 0.0, boidSchoolInfo.maxAngularVelocity);
+
+    // Affecter reaction snap: bypass the ramp entirely — turn at a high multiple of max angular
+    // velocity and apply the rotation fully — so the boid whips toward the escape heading the frame
+    // it enters the zone. Turn-rate only; linear speed is handled separately (no speed-up here).
+    float appliedAngularVelocity = snapTurn ? boidSchoolInfo.maxAngularVelocity * AVOID_TURN_MULTIPLIER : currentAngularVelocity;
+    float rotationSmoothing = snapTurn ? 1.0 : 0.85;
+
+    // Rotate the direction toward the desired one based on the (possibly boosted) angular velocity.
+    quaternion newRotation = RotateTowards(currentRotation, rotationTowardTarget, appliedAngularVelocity * _TimeDelta);
+    // Smooth the rotation based on the previous one, to produce smoother movement (full apply when snapping).
+    newRotation = Slerp(currentRotation, newRotation, rotationSmoothing);
+
+    // Keep angular velocity primed while snapping so the reaction stays instant across the whole zone.
+    if(snapTurn)
+    {
+        currentAngularVelocity = boidSchoolInfo.maxAngularVelocity;
+    }
+
+    // If we haven't increased the angular acceleration this frame, this means that the angular velocity should slowly deteriorate.
+    if(currentAngularJerk <= 0.0)
+    {
+        currentAngularVelocity = clamp(currentAngularVelocity - boidSchoolInfo.angularVelocityReduction * _TimeDelta, 0.0, boidSchoolInfo.maxAngularVelocity);
+    }
+
+    // Update the current movement acceleration based on the percentage of the angular acceleration for this frame. 
+    // This is due to translation of movement energy released while swimming to rotate.
+    float currentAcceleration = boidInfo.acceleration + currentAngularAcceleration * boidSchoolInfo.rotationEffectOnSpeed * _TimeDelta;
+
+    // Calculate the current movement direction based on the current rotation.
+    float3 currentMovementDirection = Multiply(newRotation, float3(0, 0, 1));
+
+    // Update boid movement properties that were changed during these direction updates.
+    boidInfo.acceleration = currentAcceleration;
+    boidInfo.direction = currentMovementDirection;
+    boidInfo.angularVelocity = currentAngularVelocity;
+    boidInfo.angularAcceleration = currentAngularAcceleration;
+}
+
+// Function calculates the separation vector of the boid that will steer it away from the neighboring boid.
+// The closer the boids are, the stronger the separation vector.
+float3 GetSeparationVector(float3 boidPosition, float3 neighborPosition, float inverseSeparationRangeSquared)
+{
+    float3 vectorAwayFromNeighbor = boidPosition - neighborPosition;
+    float distanceSquared = dot(vectorAwayFromNeighbor, vectorAwayFromNeighbor);
+
+    return vectorAwayFromNeighbor * saturate(1.0 - distanceSquared * inverseSeparationRangeSquared);
+}
+
+// Function calculates the new desired movement direction of the boid based on its neighboring boids and the 
+// closest target that the boid is trying to reach. The neighboring boids affect the movement since the 
+// boid is trying to move in the same direction as them, while keeping a safe distance from each boid in the group.
+float3 CalculateSchoolBehaviourDirection(int boidIndex, BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo) 
+{
+    // Initialize parameters for behavior.
+    float3 separation = float3(0,0,0);
+    float3 alignmentDirection = boidInfo.direction;
+    float3 cohesionPosition = boidInfo.position;
+    
+    // Find the closest target to this boid, this is the target that this boid will try to reach.
+    Affecter target = GetClosestAffecter(boidInfo, TARGET_AFFECTER_TYPE);
+    
+    // Caching the inverse of the separation range so that we could use multiplication instead of division
+    // when calculating the separation intensity of each neighboring boid.
+    float inverseSeparationRangeSquared = 1.0 / boidSchoolInfo.separationRangeSquared;
+
+    // Get ID of the cell that this boid belons to.
+    uint cellID = GetCellID(boidInfo.position);
+    uint cellOffsetY = _CellCountX;
+    uint cellOffsetZ = _CellCountX * _CellCountZ;
+
+    // Initialize helper variables for averaging directions and their strength.
+    int neighborsCount = 0;
+    int separationNeighborsCount = 0;
+
+    // Get the Boid group ID of this boid.
+    int thisBoidId = asint(boidInfo.boidID) & 0xFF;
+    int thisBoidSubGroupId = (asint(boidInfo.boidID) >> 8) & 0xFF; 
+
+    // For each neighboring cell, of the one that the boid is currently located in, check the distance of neighboring
+    // boids and update the cohesion, alignment and separation vectors.
+    for(uint cellIndexZ = cellID - cellOffsetZ; cellIndexZ <= cellID + cellOffsetZ; cellIndexZ += cellOffsetZ)
+    {
+        for(uint cellIndexY = cellIndexZ - cellOffsetY; cellIndexY <= cellIndexZ + cellOffsetY; cellIndexY += cellOffsetY)
+        {
+            // Indices of the first and the last neighboring cell that we're interested in. Make sure to clamp
+            // the indices between the total number of cells.
+            uint firstCellIndex = max(0, cellIndexY - 1);
+            uint lastCellIndex = min(_TotalCellCount - 1, cellIndexY + 1);
+
+            // Since each cell contains the total number of boids in that cell and all other cells before it, we can 
+            // use that value of one cell before to get an index of the first boid of the desired cell. Of course,
+            // if the current cell is the first one, the first index is 0 since there is no cell before this one.
+            uint startBoidIndex = firstCellIndex == 0 ? 0 : _CellsOffsetsBuffer[firstCellIndex - 1];
+            uint endBoidIndex = _CellsOffsetsBuffer[lastCellIndex];
+
+            // For each boid located in those cells, calculate the cohesion, separation and alignment vectors.
+            for(uint i = startBoidIndex; i < endBoidIndex; i++) {
+                // The boid shouldn't affect itself.
+                if(i == (uint)boidIndex) 
+                {
+                    continue;
+                }
+
+                BoidInfo otherBoidInfo = _Boids[i];
+                int otherBoidID = asint(otherBoidInfo.boidID) & 0xFF;
+                // If the boid is a smaller fish species, it shouldn't affect our behaviour.
+                if(otherBoidID < thisBoidId)
+                {
+                    continue;
+                }
+
+                // Check the distance to the other boid and see if its outside our vision distance. This is the distance
+                // each boid uses as a "sensing distance" to feel the presence of other boids.
+                float3 boidToOtherBoidVector = (otherBoidInfo.position - boidInfo.position);
+                float distanceSquared = dot(boidToOtherBoidVector, boidToOtherBoidVector);
+                if(distanceSquared > boidSchoolInfo.visionRangeSquared || distanceSquared <= 0.0) 
+                {
+                    continue;
+                }
+
+                // If the neighboring boid is very cloe to us, check if we should start separating from it or not.
+                if(distanceSquared < boidSchoolInfo.separationRangeSquared)
+                {
+                    separation += GetSeparationVector(boidInfo.position, otherBoidInfo.position, inverseSeparationRangeSquared);
+                    separationNeighborsCount++;
+                }
+
+                // Only calculating cohesion and alignment with the same fish species and the same sub-group inside the fish species. 
+                // Note that the separation was calculated based on the same species as well as for all larger fish.
+                int otherBoidSubGroupId = (asint(otherBoidInfo.boidID) >> 8) & 0xFF; 
+                if(otherBoidID != thisBoidId || otherBoidSubGroupId != thisBoidSubGroupId) 
+                {
+                    continue;
+                }
+
+                // Updating alignment and cohesion vectors.
+                alignmentDirection += otherBoidInfo.direction;
+                cohesionPosition += otherBoidInfo.position;
+                neighborsCount++;
+            }
+        }
+    }
+
+    // Average the alignment direction and cohesion position based on the total number of neighboring boids that were affecting this one.
+    float averagingFactor = neighborsCount == 0 ? 1.0 : 1.0 / neighborsCount;
+    alignmentDirection *= averagingFactor;
+    cohesionPosition *= averagingFactor;
+
+    // Average the separation direction.
+    if(separationNeighborsCount > 0) {
+        separation /= separationNeighborsCount;
+    }
+
+    // If there were no neighbors affecting this boid, the cohesion will be the current direction of movement.
+    float3 cohesionDirection = neighborsCount == 0 ? boidInfo.direction : normalize(cohesionPosition - boidInfo.position);
+
+    // Scale the separation vector based on the distance from the closest neighbor.
+    float separationSquaredLength = dot(separation, separation);
+    float3 separationDirection = separationNeighborsCount > 0 && separationSquaredLength > 0 ? normalize(separation) : boidInfo.direction;
+
+    // Check if the boid has already reached the "reaching" distance from the target. If so, just continue moving in the current direction.
+    float3 boidToTargetVector = target.position - boidInfo.position;
+    float targetWeight = dot(boidToTargetVector, boidToTargetVector) > (target.radius * target.radius) ? boidSchoolInfo.targetFollowWeight : 0.0;
+    float3 directionTowardsTarget = targetWeight > 0.0 ? normalize(boidToTargetVector) : boidInfo.direction;
+
+    // Calculate the final movement direction vector based on the strength of each vectors.
+    float3 newDesiredDirection = 
+        cohesionDirection * boidSchoolInfo.cohesionWeight + 
+        separationDirection * boidSchoolInfo.separationWeight + 
+        alignmentDirection * boidSchoolInfo.alignmentWeight +
+        directionTowardsTarget * targetWeight;
+
+    return normalize(newDesiredDirection);
+}
+
+// Function checks if the boid is currently outside the simulation area or will it leave the area based on
+// current movement direction and speed.
+bool WillLeaveSimulationArea(float3 boidPosition, float3 movementDirection, float speed) 
+{
+    float3 simulationAreaExtents = _SimulationAreaSize * 0.5f;
+    float3 minBound = _SimulationAreaCenter - simulationAreaExtents;
+    float3 maxBound = _SimulationAreaCenter + simulationAreaExtents;
+
+    // Predicting the new position that the boid will have in one second of simulation if he keeps moving in the same direction.
+    float3 newBoidPosition = boidPosition + normalize(movementDirection) * speed * 0.25;
+    return any(boidPosition < minBound) || any(boidPosition > maxBound) || any(newBoidPosition < minBound) || any(newBoidPosition > maxBound);
+}
+
+// True only when the boid is CURRENTLY, strictly outside the simulation box (not merely predicted to
+// leave). Used to drive the entry sprint: freshly spawned off-screen fish read true here and get their
+// boost timer refilled + accelerate; fish already inside (even hugging the edge) read false, so normal
+// edge behaviour is unchanged.
+bool IsStrictlyOutsideBounds(float3 boidPosition)
+{
+    float3 simulationAreaExtents = _SimulationAreaSize * 0.5f;
+    float3 minBound = _SimulationAreaCenter - simulationAreaExtents;
+    float3 maxBound = _SimulationAreaCenter + simulationAreaExtents;
+    return any(boidPosition < minBound) || any(boidPosition > maxBound);
+}
+
+// The main kernel of the compute shader, it updates the position, rotation and movement properties for each
+// boid in the simulation based on affecting factors (other boids, obstacles and targets).
+[numthreads(THREAD_GROUP_SIZE, 1, 1)]
+void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
+{
+    // Index of the boid in the _Boids array.
+    int boidIndex = (int)id.x;
+
+    // Making sure we don't execute excess threads.
+    if(boidIndex >= _TotalBoidCount) 
+    {
+        return;
+    }
+
+    // Fetch the information about this boid instance.
+    BoidInfo boidInfo = _Boids[boidIndex];
+    int rawBoidIdBits = asint(boidInfo.boidID);
+    int boidGroupId = rawBoidIdBits & 0xFF;
+    BoidSchoolInfo boidSchoolInfo = _BoidSchools[boidGroupId];
+
+    // ---- Affecter response ----------------------------------------------------------------
+    // Predator (flee) has priority over Obstacle (casual avoidance):
+    //   Predator  -> panic: steer straight away from it AND accelerate to escape.
+    //   Obstacle  -> casual: bend the schooling direction to curve around it, no speed-up.
+    // -------------------------------------------------------------------------------------------
+    bool fleeingPredator = false;
+    bool reactingToAffecter = false;   // predator flee OR obstacle avoidance => snap the turn (instant).
+                                       // Exit banks smoothly while still INSIDE the bounds (visible),
+                                       // then snaps once off-screen so it reliably homes onto the point.
+    float3 desiredMovementDirection;
+
+    // ---- Exit response (highest priority) ---------------------------------------------------
+    // A school being removed has its target PARKED outside the simulation bounds. Any boid whose
+    // matched target is a real Target sitting outside the box is "exiting": it beelines to that
+    // target, ignores the return-to-bounds steering below, and accelerates — so it swims out of
+    // view before EcosystemSimulationGPU culls it. Normal schools always keep their target inside
+    // the box, so they never trigger this.
+    Affecter exitTarget = GetClosestAffecter(boidInfo, TARGET_AFFECTER_TYPE);
+    bool exiting = (exitTarget.affecterType == TARGET_AFFECTER_TYPE) && IsStrictlyOutsideBounds(exitTarget.position);
+
+    // True once an exiting boid is within _ExitStopDistance of its parked exit point: it has arrived,
+    // so it stops dead there instead of overshooting and circling the point (see the speed pass below).
+    bool reachedExit = false;
+
+    Affecter closestPredator = GetClosestAffecter(boidInfo, PREDATOR_AFFECTER_TYPE);
+    if(exiting)
+    {
+        // Head to the parked exit target. Do NOT snap (reactingToAffecter stays false): let the
+        // normal angular-jerk ramp in UpdateMovementDirection bank the fish smoothly toward the exit
+        // instead of whipping around. Speed still sprints — 'exiting' feeds UpdateMovementSpeed below,
+        // so the fish accelerates to max speed (via movementJerk) while it turns out.
+        float3 toExit = exitTarget.position - boidInfo.position;
+        float distToExit = length(toExit);
+
+        // Capture radius must be at least the boid's TURNING CIRCLE (speed / max turn rate): a big,
+        // fast fish (shark) physically cannot steer inside a small fixed radius — it would orbit the
+        // exit point forever. The 1.2 headroom covers the angular-acceleration ramp. Everything here
+        // is off-screen, so stopping a few metres early is invisible.
+        float turnRateRadians = radians(max(boidSchoolInfo.maxAngularVelocity, 1.0));
+        float captureRadius = max(_ExitStopDistance, 1.2 * boidInfo.speed / turnRateRadians);
+        if(distToExit <= captureRadius)
+        {
+            // Arrived: freeze in place (keep the current heading) rather than sail past and loop back.
+            reachedExit = true;
+            desiredMovementDirection = boidInfo.direction;
+        }
+        else
+        {
+            desiredMovementDirection = toExit / distToExit; // normalize (distToExit > 0 here)
+
+            // Once the boid is OFF-SCREEN (strictly outside the bounds), snap the heading straight
+            // at the exit point instead of banking. The banked turn's rate is geometry-limited
+            // (angular jerk only feeds while angularVelocity < angleTowardTarget), so an agile fish
+            // in a ~90-degree orbit sustains far less than its max turn rate and can circle the
+            // point forever without ever entering the capture radius. Snapping guarantees a
+            // straight-line approach and capture — and nothing out there is visible anyway. Inside
+            // the bounds the exit keeps the smooth bank (that part is on-screen).
+            if(IsStrictlyOutsideBounds(boidInfo.position))
+            {
+                reactingToAffecter = true;
+            }
+        }
+    }
+    else if(BoidInsideAffecter(closestPredator, boidInfo.position))
+    {
+        // Flee: hard steer directly away; the speed pass below will accelerate.
+        desiredMovementDirection = AffecterAwayDirection(closestPredator, boidInfo.position);
+        fleeingPredator = true;
+        reactingToAffecter = true;
+    }
+    else
+    {
+        // Not fleeing — just the normal schooling direction (kept lazy for performance). Obstacle
+        // avoidance is applied below to EVERY steering state, not only here.
+        desiredMovementDirection = CalculateSchoolBehaviourDirection(boidIndex, boidSchoolInfo, boidInfo);
+    }
+
+    // Check if the desired direction will lead to leaving the simulation bounds.
+    // If so, offset the movement direction towards the center of the simulation area.
+    // Exiting boids are ALLOWED to leave — only non-exiting boids get pulled back inside.
+    if(!exiting && WillLeaveSimulationArea(boidInfo.position, desiredMovementDirection, boidInfo.speed))
+    {
+        desiredMovementDirection = normalize(_SimulationAreaCenter - boidInfo.position);
+
+        // Returning to bounds is not a flee — don't accelerate for it.
+        fleeingPredator = false;
+    }
+
+    // ---- Obstacle avoidance (applies to EVERY steering state above) ----------------------------
+    // Rocks / coral must be dodged whether the fish is schooling, sprinting IN from its spawn point,
+    // being pulled back into bounds, or swimming OUT to an exit point — so this runs AFTER all of those
+    // have set the heading, blending an away-vector into it. It fires a little before the surface (not
+    // only once inside) so a fast fish still has room to bank clear. A stopped, arrived exit fish is
+    // left alone (it is about to be culled).
+    Affecter closestObstacle = GetClosestAffecter(boidInfo, OBSTACLE_AFFECTER_TYPE);
+    bool hasObstacle = closestObstacle.affecterType == OBSTACLE_AFFECTER_TYPE;
+    if(!reachedExit && hasObstacle)
+    {
+        float obstacleSurfaceDistance = AffecterSurfaceDistance(closestObstacle, boidInfo.position);
+        if(obstacleSurfaceDistance <= OBSTACLE_AVOID_MARGIN)
+        {
+            // Ease the avoidance in with proximity: ~0 at the margin edge, full at the surface, so the
+            // heading bends gradually as the fish nears the obstacle instead of stepping on the instant
+            // it crosses the margin. Squared for an even softer onset near the edge.
+            float obstacleProximity = saturate(1.0 - obstacleSurfaceDistance / OBSTACLE_AVOID_MARGIN);
+            obstacleProximity *= obstacleProximity;
+
+            float3 awayDirection = AffecterAwayDirection(closestObstacle, boidInfo.position);
+            desiredMovementDirection = normalize(desiredMovementDirection + awayDirection * (OBSTACLE_AVOID_STRENGTH * obstacleProximity));
+
+            // Deliberately DO NOT set reactingToAffecter here. Obstacle avoidance steers with the boid's
+            // normal angular ramp so it banks smoothly around the rock/coral (a casual curve, not a panic
+            // jerk). Only predator flee / off-screen exit snap-turn. The hard ResolveObstaclePenetration
+            // pass below still guarantees the fish can never tunnel through, snap or no snap.
+        }
+    }
+
+    // ---- Entry sprint --------------------------------------------------------------------------
+    // Freshly spawned fish appear OUTSIDE the box (off-screen) and rush in. While strictly outside,
+    // hold the per-boid timer full; once inside, count it down. The boid accelerates the whole time
+    // the timer is alive, so it keeps sprinting for _EntryBoostDuration seconds after crossing in,
+    // then settles to cruising speed. Interior fish (timer 0) are unaffected.
+    bool outsideBounds = IsStrictlyOutsideBounds(boidInfo.position);
+    if(outsideBounds)
+    {
+        boidInfo.entryBoostTimeRemaining = _EntryBoostDuration;
+    }
+    else if(boidInfo.entryBoostTimeRemaining > 0.0)
+    {
+        boidInfo.entryBoostTimeRemaining = max(0.0, boidInfo.entryBoostTimeRemaining - _TimeDelta);
+    }
+    bool entrySprint = outsideBounds || boidInfo.entryBoostTimeRemaining > 0.0;
+
+    // Steer the boid toward the desired movement direction (snapping instantly when reacting to an affecter).
+    UpdateMovementDirection(desiredMovementDirection, boidSchoolInfo, boidInfo, reactingToAffecter);
+
+    if(reachedExit)
+    {
+        // Reached the exit point: stop dead and hold here (no cruising-speed floor) so the fish doesn't
+        // overshoot and circle. It waits, motionless, the moment or two until the school is culled.
+        boidInfo.speed = 0.0;
+        boidInfo.acceleration = 0.0;
+    }
+    else
+    {
+        // A predator flee, an entry sprint OR an exit sprint accelerates the boid; casual obstacle
+        // avoidance keeps normal speed.
+        UpdateMovementSpeed(fleeingPredator || entrySprint || exiting, boidSchoolInfo, boidInfo);
+    }
+
+    // After the movement properties have been updated, update the current position of the boid.
+    UpdatePosition(boidInfo);
+
+    // Hard guarantee: if the frame's movement still landed this boid inside the nearest obstacle
+    // (steering can be outrun by sprinting entry/exit fish), snap it back out to the surface.
+    if(hasObstacle)
+    {
+        ResolveObstaclePenetration(closestObstacle, boidInfo);
+    }
+
+    // Update the swimming motion properties based on the current acceleration. These properties affect
+    // the movement motion that the rendering shader will visualize.
+    UpdateSwimMotionIntensity(boidSchoolInfo, boidInfo);
+
+    // Based on the swimming motion intensity, update the current time that drives the swimming movement motion.
+    // Basically this is the time that is passed into sine functions to offset the vertices in the vertex shsader.
+    UpdateSwimMotionTime(boidInfo);
+    
+    // Write the updated boid info into the output boids buffer at the original position of the boid. We need to
+    // write to the original position since the rendering shader uses those original positions to render correct meshes.
+    _BoidsOutput[boidInfo.originalIndex] = boidInfo;
+}

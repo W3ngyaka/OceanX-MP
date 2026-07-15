@@ -73,6 +73,16 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Min(0f)]
         [SerializeField] private float _pathBoundsSafeZone = 3f;
 
+        [Tooltip("Vertical-only version of the safe zone: metres kept free at the FLOOR and CEILING of the " +
+                 "simulation bounds. Separate from Path Bounds Safe Zone because that one reserves room for " +
+                 "a path's horizontal extent, whereas a path is flat — its height is a single value, so it " +
+                 "only needs enough clearance that the target is never AT the boundary (a target outside " +
+                 "the bounds reads as 'exiting' and pulls its school off-screen). Keep this small, or it " +
+                 "eats into the seabed and surface ends of the species depth bands: at the default 3m " +
+                 "safe zone a bottom-dwelling species could not get near the sand at all.")]
+        [Min(0.1f)]
+        [SerializeField] private float _pathVerticalClearance = 1.5f;
+
         [Tooltip("Random range for each school's path size, as a fraction of the largest size that fits " +
                  "inside the bounds — so schools get small and large routes.")]
         [SerializeField] private Vector2 _pathSizeMultiplierRange = new Vector2(0.35f, 0.9f);
@@ -832,8 +842,26 @@ namespace OceanX.BoidsGPU.Ecosystem
                 : 2f;
 
             float sizeMultiplier = Random.Range(_pathSizeMultiplierRange.x, _pathSizeMultiplierRange.y);
-            float heightRange    = Mathf.Max(0f, bounds.extents.y - margin);
-            float height         = bounds.center.y + Random.Range(-heightRange, heightRange);
+
+            // Swim height comes from the SPECIES' preferred depth band rather than the whole water column,
+            // so each species settles into its own slice of the reef (rays on the sand, scad up at the
+            // pillar tops) instead of every school roaming the same mid-water layer. The band is a
+            // fraction of the bounds height, so it survives the simulation area being resized.
+            // Min/Max rather than .x/.y directly: an inverted band authored in the Inspector should read as
+            // the range it looks like, not silently collapse (Random.Range(hi, lo) would still work, but
+            // the Clamp01 below would not be doing what it appears to).
+            float bandLow  = Mathf.Clamp01(Mathf.Min(species.PreferredDepthBand.x, species.PreferredDepthBand.y));
+            float bandHigh = Mathf.Clamp01(Mathf.Max(species.PreferredDepthBand.x, species.PreferredDepthBand.y));
+
+            // Clearance is vertical-only (see _pathVerticalClearance): a path is flat, so its height needs
+            // no room for horizontal extent — only enough that the target is never AT the boundary, which
+            // would read as "exiting" and drag the school off-screen. Clamped to at most half the bounds
+            // height so a shallow simulation area can't invert the range.
+            float clearance = Mathf.Min(_pathVerticalClearance, bounds.extents.y * 0.5f);
+            float height    = Mathf.Clamp(
+                Mathf.Lerp(bounds.min.y, bounds.max.y, Random.Range(bandLow, bandHigh)),
+                bounds.min.y + clearance,
+                bounds.max.y - clearance);
 
             float anchorRangeX;
             float anchorRangeZ;

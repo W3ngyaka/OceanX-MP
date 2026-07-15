@@ -350,9 +350,14 @@ float3 CalculateSchoolBehaviourDirection(int boidIndex, BoidSchoolInfo boidSchoo
     float inverseSeparationRangeSquared = 1.0 / boidSchoolInfo.separationRangeSquared;
 
     // Get ID of the cell that this boid belons to.
+    // These strides MUST match the 1D layout GetCellID() writes: cellID = (X*Y)*z + X*y + x.
+    // So one step in Y is _CellCountX cells, and one step in Z is _CellCountX * _CellCountY cells.
+    // (This read _CellCountX * _CellCountZ, which only coincides with the real stride on a grid where
+    // CellCountY == CellCountZ. On a wide, shallow ocean grid the Z steps landed on unrelated cells,
+    // so a fish never saw the neighbours in the slabs in front of and behind it.)
     uint cellID = GetCellID(boidInfo.position);
     uint cellOffsetY = _CellCountX;
-    uint cellOffsetZ = _CellCountX * _CellCountZ;
+    uint cellOffsetZ = _CellCountX * _CellCountY;
 
     // Initialize helper variables for averaging directions and their strength.
     int neighborsCount = 0;
@@ -427,8 +432,14 @@ float3 CalculateSchoolBehaviourDirection(int boidIndex, BoidSchoolInfo boidSchoo
         }
     }
 
-    // Average the alignment direction and cohesion position based on the total number of neighboring boids that were affecting this one.
-    float averagingFactor = neighborsCount == 0 ? 1.0 : 1.0 / neighborsCount;
+    // Average the alignment direction and cohesion position over every sample that went into them.
+    // Both accumulators were SEEDED with this boid's own direction/position before the neighbour loop,
+    // so the sample count is neighborsCount + 1, not neighborsCount. Dividing by neighborsCount scaled
+    // the centroid by (N+1)/N about the WORLD ORIGIN, which dragged the cohesion target |centroid| / N
+    // metres away from the school — 1-2 m for a full school, but tens of metres whenever a fish had only
+    // a neighbour or two. With no neighbours the factor is 1.0, which leaves the seeds untouched (the
+    // neighborsCount == 0 cases below then fall back to the boid's own heading, as before).
+    float averagingFactor = 1.0 / (neighborsCount + 1);
     alignmentDirection *= averagingFactor;
     cohesionPosition *= averagingFactor;
 
@@ -622,20 +633,36 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     }
 
     // ---- Entry sprint --------------------------------------------------------------------------
-    // Freshly spawned fish appear OUTSIDE the box (off-screen) and rush in. While strictly outside,
-    // hold the per-boid timer full; once inside, count it down. The boid accelerates the whole time
-    // the timer is alive, so it keeps sprinting for _EntryBoostDuration seconds after crossing in,
-    // then settles to cruising speed. Interior fish (timer 0) are unaffected.
+    // Freshly spawned fish appear OUTSIDE the box (off-screen) and rush in. entryBoostTimeRemaining
+    // carries the entry state, armed ONCE by the spawner (see BoidSpawnerGPU.SpawnBoids):
+    //   < 0  : spawned at an off-screen entry point, has not crossed into the bounds yet => sprint.
+    //   > 0  : has crossed in; burning off the post-entry momentum, counting down to 0.
+    //   == 0 : entry finished, or the fish spawned inside the box to begin with => never sprints.
+    // Only a boid still in the "< 0" state reacts to being outside the box. This used to refill the
+    // timer for ANY boid found outside, which meant a settled fish that drifted over the boundary was
+    // mistaken for a new arrival and sprinted at MaxSpeed; it then overshot out the far side, re-armed
+    // itself, and pinballed across the box indefinitely instead of ever settling to cruising speed.
     bool outsideBounds = IsStrictlyOutsideBounds(boidInfo.position);
-    if(outsideBounds)
+    bool entrySprint;
+    if(boidInfo.entryBoostTimeRemaining < 0.0)
     {
-        boidInfo.entryBoostTimeRemaining = _EntryBoostDuration;
+        // Still on the way in. The frame it crosses the boundary, start the post-entry countdown —
+        // which may be 0, meaning "settle to cruising speed the instant it enters".
+        if(!outsideBounds)
+        {
+            boidInfo.entryBoostTimeRemaining = _EntryBoostDuration;
+        }
+        entrySprint = true;
     }
     else if(boidInfo.entryBoostTimeRemaining > 0.0)
     {
         boidInfo.entryBoostTimeRemaining = max(0.0, boidInfo.entryBoostTimeRemaining - _TimeDelta);
+        entrySprint = true;
     }
-    bool entrySprint = outsideBounds || boidInfo.entryBoostTimeRemaining > 0.0;
+    else
+    {
+        entrySprint = false;
+    }
 
     // Steer the boid toward the desired movement direction (snapping instantly when reacting to an affecter).
     UpdateMovementDirection(desiredMovementDirection, boidSchoolInfo, boidInfo, reactingToAffecter);

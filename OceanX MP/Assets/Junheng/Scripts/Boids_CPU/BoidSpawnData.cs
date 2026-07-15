@@ -19,8 +19,12 @@ namespace OceanX.BoidsCPU
         [Header("Fish Info: ")]
         [Tooltip("Mesh asset that will be assigned to each newly spawned boid to visually represent it.")]
         public Mesh BoidMesh;
-        [Tooltip("Material that will be assigned to each newly spawned boid.")]
+        [Tooltip("Material that will be assigned to each newly spawned boid (sub-mesh 0 — the fish body).")]
         public Material BoidMaterial;
+        [Tooltip("Material for sub-mesh 1 of BoidMesh (the fish eyes). Leave empty for a single-material mesh. " +
+            "IMPORTANT: must use the same GPU-instanced fish shader as BoidMaterial, otherwise the eyes " +
+            "won't follow/animate with the boids.")]
+        public Material BoidEyeMaterial;
         [Tooltip("Reference to the scriptable object containing movement properties of all boids in" +
             " relation to each other. How much distance should they keep between them, how strongly do they " +
             "want to follow the target, etc.")]

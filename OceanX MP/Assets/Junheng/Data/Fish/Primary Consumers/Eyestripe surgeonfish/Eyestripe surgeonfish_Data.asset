@@ -23,6 +23,17 @@ MonoBehaviour:
   MaxSchools: 7
   PathStyle: 0
   PreferredDepthBand: {x: 0.1, y: 0.39}
+  AllowSchoolMerging: 0
+  MergeChancePerTick: 0.25
+  SplitChancePerTick: 0.08
+  MergeDistance: 8
+  AllowMixedSpeciesSchooling: 1
+  MixedMergeChancePerTick: 0.05
+  MixedSplitChancePerTick: 0.15
+  ShoalsWith:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 4b46331ffc6eb6e41aec9bd29a6762b0, type: 2}
+  - {fileID: 11400000, guid: 1cf137833ce32454a999ba54ac57956a, type: 2}
   PreySpecies: []
   PredatorSpecies:
   - {fileID: 11400000, guid: 28ab075c094107a46a43ca11a323eeee, type: 2}

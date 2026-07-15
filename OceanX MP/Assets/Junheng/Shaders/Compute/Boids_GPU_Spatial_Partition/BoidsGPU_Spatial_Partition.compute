@@ -5,13 +5,13 @@
 #define PREDATOR_AFFECTER_TYPE 2.0
 #define AFFECTS_ALL 255
 #define SHAPE_SPHERE 0.5   // shape < 0.5 => sphere, else box
-// How strongly an obstacle bends the boid's schooling heading. This weights the away-vector against
-// the school heading; it is scaled by proximity (0 at the margin edge, full at the surface) so the
-// bend eases in smoothly instead of snapping on. The turn itself is rate-limited by the boid's normal
-// angular velocity (obstacle avoidance does NOT snap-turn — see the avoidance block below), so even at
-// full strength the fish banks around the rock/coral in a smooth arc rather than jerking away. It is a
-// STEERING weight only — it never speeds the fish up (that is reserved for Predator). Lower for a
-// lazier curve, higher for a tighter one.
+// How quickly obstacle avoidance ramps to its FULL effect as a boid closes on a surface. The effect
+// itself is a deflection: the heading is bent until it runs tangential to the obstacle, never further,
+// so the fish arcs around a rock instead of rebounding off it (see the avoidance block below).
+// Multiplied by proximity and capped, so a value of 5 means "fully tangential once ~55% of the way
+// through the margin". Lower = the fish commits to its turn later and cuts it finer; higher = it
+// straightens along the obstacle sooner and gives it a wider berth. It is a STEERING rate only — it
+// never speeds the fish up (that is reserved for Predator).
 #define OBSTACLE_AVOID_STRENGTH 5.0
 // NOTE: the distance at which a boid starts steering away from an obstacle is NOT a constant — it is
 // per-species, read from boidSchoolInfo.obstacleAvoidanceRangeSquared (authored as
@@ -99,11 +99,41 @@ bool BoidInsideAffecter(Affecter affecter, float3 boidPosition)
 }
 
 // World-space direction pointing away from the affecter centre (used to steer clear).
+// For a SPHERE this is away from the centre — exact, and what a predator flee wants.
+// For a BOX it is away from the CLOSEST POINT ON THE SURFACE, not the centre. Measuring the distance to
+// the surface (AffecterSurfaceDistance) but the direction from the centre used the two reference points
+// inconsistently: the escape heading then depended on the rock's overall shape rather than on the part of
+// it the fish was about to hit, so a fish swimming alongside a long, low rock whose centre sat below it
+// was pushed UP instead of sideways, and the direction swung around as it passed.
 float3 AffecterAwayDirection(Affecter affecter, float3 boidPosition)
 {
-    float3 awayVector = boidPosition - affecter.position;
-    float lengthSquared = dot(awayVector, awayVector);
-    return lengthSquared > 1e-6 ? awayVector * rsqrt(lengthSquared) : float3(0.0, 1.0, 0.0);
+    if(affecter.shape < SHAPE_SPHERE)
+    {
+        float3 awayVector = boidPosition - affecter.position;
+        float lengthSquared = dot(awayVector, awayVector);
+        return lengthSquared > 1e-6 ? awayVector * rsqrt(lengthSquared) : float3(0.0, 1.0, 0.0);
+    }
+
+    // Box: the closest point on it is the local position clamped to the half-extents.
+    float3 localPosition = AffecterLocalPosition(affecter, boidPosition);
+    float3 closestLocal  = clamp(localPosition, -affecter.halfExtents, affecter.halfExtents);
+    float3 localAway     = localPosition - closestLocal;
+    if(dot(localAway, localAway) > 1e-6)
+    {
+        return normalize(Multiply(InitializeQuaternion(affecter.rotation), localAway));
+    }
+
+    // Inside the box, where "outward" is undefined — use the nearest face's normal, matching what
+    // ResolveObstaclePenetration picks when it pushes a boid back out.
+    float3 penetration = affecter.halfExtents - abs(localPosition);
+    float3 localNormal;
+    if(penetration.x <= penetration.y && penetration.x <= penetration.z)
+        localNormal = float3(localPosition.x >= 0.0 ? 1.0 : -1.0, 0.0, 0.0);
+    else if(penetration.y <= penetration.z)
+        localNormal = float3(0.0, localPosition.y >= 0.0 ? 1.0 : -1.0, 0.0);
+    else
+        localNormal = float3(0.0, 0.0, localPosition.z >= 0.0 ? 1.0 : -1.0);
+    return normalize(Multiply(InitializeQuaternion(affecter.rotation), localNormal));
 }
 
 // HARD separation — the guarantee behind the steering. If a boid still ended the frame INSIDE an
@@ -220,6 +250,66 @@ Affecter GetClosestAffecter(BoidInfo boidInfo, float affecterType)
 
     // Return the closest affecter to the boid position.
     return closestAffecter;
+}
+
+// Sums an escape direction from EVERY obstacle within the boid's avoid margin, each weighted by how
+// close it is, and reports the strongest single proximity through outProximity.
+//
+// Why not just use the closest obstacle (GetClosestAffecter)? Because "closest" is a step function. The
+// reef is 381 overlapping boxes, over 150 of them more than 6m across, so as a fish swims the nearest
+// one keeps changing — and each obstacle's away-vector points somewhere completely different. Measured
+// along a 40m path through this reef, the escape direction teleported by up to 58 DEGREES between two
+// consecutive 5cm steps. The fish then chases that discontinuity at its full turn rate, which is the
+// abrupt jerk. No amount of smoothing downstream can rescue a target direction that is itself
+// discontinuous — it has to be continuous at the source.
+//
+// A proximity-weighted sum is continuous: as one obstacle fades out of range and another fades in, their
+// contributions cross over smoothly and the blended direction rotates instead of snapping. It also
+// behaves better in a crevice, where several rocks each push a little and the fish threads between them
+// rather than fixating on whichever is momentarily nearest.
+float3 AccumulateObstacleAvoidance(BoidInfo boidInfo, float avoidMargin, out float outProximity)
+{
+    float3 accumulated = float3(0.0, 0.0, 0.0);
+    outProximity = 0.0;
+
+    int rawBoidIdBits = asint(boidInfo.boidID);
+    int boidId = rawBoidIdBits & 0xFF;
+    int boidFlockId = (rawBoidIdBits >> 8) & 0xFF;
+
+    for(int i = 0; i < _TotalAffectersCount; i++)
+    {
+        Affecter affecter = _Affecters[i];
+        if(affecter.affecterType != OBSTACLE_AFFECTER_TYPE)
+        {
+            continue;
+        }
+
+        // Same group/flock filtering GetClosestAffecter applies, so an obstacle can still be scoped to
+        // one species or one flock if it is ever authored that way.
+        int affecterGroupId = (int)affecter.boidGroupId;
+        int affecterFlockId = (int)affecter.boidSubGroupId;
+        if((affecterGroupId != AFFECTS_ALL && boidId != affecterGroupId) ||
+           (affecterFlockId != AFFECTS_ALL && boidFlockId != affecterFlockId))
+        {
+            continue;
+        }
+
+        float surfaceDistance = AffecterSurfaceDistance(affecter, boidInfo.position);
+        if(surfaceDistance > avoidMargin)
+        {
+            continue;
+        }
+
+        // 0 at the margin edge, 1 at the surface. Squared for a softer onset, and — the point here — it
+        // reaches exactly 0 at the margin edge, so an obstacle's contribution fades IN and OUT smoothly
+        // instead of appearing and vanishing.
+        float proximity = saturate(1.0 - surfaceDistance / avoidMargin);
+        proximity *= proximity;
+
+        accumulated += AffecterAwayDirection(affecter, boidInfo.position) * proximity;
+        outProximity = max(outProximity, proximity);
+    }
+    return accumulated;
 }
 
 // Update the swim motion time based on the current swimming motion intensity. This time is used by the rendering shader
@@ -568,7 +658,13 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
         // fast fish (shark) physically cannot steer inside a small fixed radius — it would orbit the
         // exit point forever. The 1.2 headroom covers the angular-acceleration ramp. Everything here
         // is off-screen, so stopping a few metres early is invisible.
-        float turnRateRadians = radians(max(boidSchoolInfo.maxAngularVelocity, 1.0));
+        // Size this from the SNAP turn rate, not the boid's cruising one: the exit approach sets
+        // reactingToAffecter once the boid is off-screen (see below), so it homes on the point at
+        // AVOID_TURN_MULTIPLIER times its max angular velocity and can steer far tighter than its normal
+        // turning circle. Sizing it from the cruising rate made a slow-turning species claim to have
+        // arrived while still tens of metres out — a shark at 22 deg/s stopped 42m short, which can be
+        // inside the bounds and in full view — and freeze there.
+        float turnRateRadians = radians(max(boidSchoolInfo.maxAngularVelocity, 1.0)) * AVOID_TURN_MULTIPLIER;
         float captureRadius = max(_ExitStopDistance, 1.2 * boidInfo.speed / turnRateRadians);
         if(distToExit <= captureRadius)
         {
@@ -624,6 +720,9 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     // have set the heading, blending an away-vector into it. It fires a little before the surface (not
     // only once inside) so a fast fish still has room to bank clear. A stopped, arrived exit fish is
     // left alone (it is about to be culled).
+    // The closest obstacle is still needed for the hard penetration backstop at the bottom of the kernel,
+    // but NOT for the steering — see AccumulateObstacleAvoidance for why steering off a single "closest"
+    // obstacle produces a discontinuous escape direction.
     Affecter closestObstacle = GetClosestAffecter(boidInfo, OBSTACLE_AFFECTER_TYPE);
     bool hasObstacle = closestObstacle.affecterType == OBSTACLE_AFFECTER_TYPE;
     if(!reachedExit && hasObstacle)
@@ -638,17 +737,47 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
         // Guarded to a sane minimum so a species authored at 0 does not divide by zero below.
         float obstacleAvoidMargin = max(sqrt(boidSchoolInfo.obstacleAvoidanceRangeSquared), 0.01);
 
-        float obstacleSurfaceDistance = AffecterSurfaceDistance(closestObstacle, boidInfo.position);
-        if(obstacleSurfaceDistance <= obstacleAvoidMargin)
+        // Blend the escape direction over every obstacle in range, weighted by proximity, so it moves
+        // continuously as the fish threads through the reef. obstacleProximity comes back as the closest
+        // single obstacle's proximity, which is what should drive how committed the turn is.
+        float obstacleProximity;
+        float3 accumulatedAway = AccumulateObstacleAvoidance(boidInfo, obstacleAvoidMargin, obstacleProximity);
+        if(dot(accumulatedAway, accumulatedAway) > 1e-6)
         {
-            // Ease the avoidance in with proximity: ~0 at the margin edge, full at the surface, so the
-            // heading bends gradually as the fish nears the obstacle instead of stepping on the instant
-            // it crosses the margin. Squared for an even softer onset near the edge.
-            float obstacleProximity = saturate(1.0 - obstacleSurfaceDistance / obstacleAvoidMargin);
-            obstacleProximity *= obstacleProximity;
+            float3 awayDirection = normalize(accumulatedAway);
 
-            float3 awayDirection = AffecterAwayDirection(closestObstacle, boidInfo.position);
-            desiredMovementDirection = normalize(desiredMovementDirection + awayDirection * (OBSTACLE_AVOID_STRENGTH * obstacleProximity));
+            // Steer AROUND the obstacle rather than away from it.
+            //
+            // Cancelling exactly the component of the heading that points INTO the surface leaves a
+            // heading TANGENTIAL to it, so the fish banks around the rock in a smooth arc, still going
+            // roughly where it wanted to. The old code instead added the away-vector radially at
+            // OBSTACLE_AVOID_STRENGTH times the heading's own weight, which told a fish swimming at a
+            // rock to head straight back the way it came — a ~180 degree reversal that it then executed
+            // at up to its full angular velocity. That was the unnatural jerk.
+            //
+            // The deflection is capped AT the tangent and never past it, so avoidance can only ever slide
+            // a fish along an obstacle, never bounce it backwards. Clearance comes from the margin
+            // instead: the fish starts arcing well before it arrives. Tunnelling is still backstopped by
+            // ResolveObstaclePenetration below.
+            float inwardAmount = -dot(desiredMovementDirection, awayDirection); // > 0 => heading into it
+            if(inwardAmount > 0.0)
+            {
+                // OBSTACLE_AVOID_STRENGTH now sets how fast the deflection reaches full tangent as the
+                // fish closes in, rather than how hard it is shoved. saturate() is the cap at tangent.
+                float deflect = saturate(obstacleProximity * OBSTACLE_AVOID_STRENGTH) * inwardAmount;
+                float3 steered = desiredMovementDirection + awayDirection * deflect;
+
+                // A dead-on approach cancels to a zero vector — no tangent is implied, since both ways
+                // round are equally good. Pick one deterministically so the fish commits to a side
+                // instead of stalling on a degenerate direction.
+                if(dot(steered, steered) < 1e-4)
+                {
+                    float3 side = cross(awayDirection, float3(0.0, 1.0, 0.0));
+                    if(dot(side, side) < 1e-6) side = cross(awayDirection, float3(1.0, 0.0, 0.0));
+                    steered = side;
+                }
+                desiredMovementDirection = normalize(steered);
+            }
 
             // Deliberately DO NOT set reactingToAffecter here. Obstacle avoidance steers with the boid's
             // normal angular ramp so it banks smoothly around the rock/coral (a casual curve, not a panic

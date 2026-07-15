@@ -5,7 +5,7 @@ using OceanX.BoidsGPU.Ecosystem;
 /// <summary>
 /// Watches the live simulation and asks Alucia to react when a species' situation genuinely changes:
 /// it goes extinct, is added, starts starving (its food ran out), gets over-predated (too many predators),
-/// or overpopulates (its predators are gone and it has grown near its cap). The wording comes from
+/// or overpopulates (too few predators left to keep it in check). The wording comes from
 /// <c>alucia_lines.csv</c> — events <c>species.starving / species.overpredated / species.overpopulated /
 /// species.extinct / species.added</c> — scoped per species where a checker authored a species-specific row.
 ///

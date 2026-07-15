@@ -17,6 +17,10 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     private NetworkList<int> _populationCounts;
     // Static per-species school cap, synced once on spawn so clients can grey the Add button at the cap.
     private NetworkList<int> _maxSchools;
+    // Live per-species classification (EcosystemSimulationGPU.SpeciesStatus stored as int, because
+    // NetworkList needs an unmanaged serialisable type). Written by the server each sync so the
+    // tablet's Overpopulated badge uses the simulation's own rule instead of re-deriving one.
+    private NetworkList<int> _speciesStatus;
     // Live ecosystem health in 0..1, written by the server each sync, read by the tablet health bar.
     private readonly NetworkVariable<float> _ecoHealth = new NetworkVariable<float>(0f);
     private float _syncTimer;
@@ -34,6 +38,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         Instance = this;
         _populationCounts = new NetworkList<int>();
         _maxSchools = new NetworkList<int>();
+        _speciesStatus = new NetworkList<int>();
     }
 
     public override void OnNetworkSpawn()
@@ -58,6 +63,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         for (int i = 0; i < speciesCount; i++)
         {
             _populationCounts.Add(0);
+            _speciesStatus.Add((int)EcosystemSimulationGPU.SpeciesStatus.Absent);
             SpeciesDataGPU s = _simulation.Ecosystem.Species[i];
             _maxSchools.Add(s != null ? _simulation.GetMaxSchools(s) : 0);
         }
@@ -82,10 +88,13 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         for (int i = 0; i < _simulation.Ecosystem.Species.Count; i++)
         {
             SpeciesDataGPU s = _simulation.Ecosystem.Species[i];
-            if (s != null && i < _populationCounts.Count)
+            if (s == null) continue;
+            if (i < _populationCounts.Count)
                 // Committed count (excludes schools mid swim-out) so the tablet number drops the
                 // instant Remove is pressed, instead of waiting for the fish to finish leaving.
                 _populationCounts[i] = _simulation.CountCommittedGroups(s);
+            if (i < _speciesStatus.Count)
+                _speciesStatus[i] = (int)_simulation.GetSpeciesStatus(s);
         }
         _ecoHealth.Value = _simulation.EcoHealth01;   // push the live health score to clients
         _syncTimer = 0f;   // reset so the periodic tick doesn't immediately re-fire
@@ -136,4 +145,17 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
 
     // Read by the tablet eco-health bar (Health.cs). 0..1, replicated from the host.
     public float GetEcoHealth() => _ecoHealth.Value;
+
+    // The species' live classification as the SIMULATION sees it (not a UI-side guess).
+    // Absent until the first sync arrives.
+    public EcosystemSimulationGPU.SpeciesStatus GetSpeciesStatus(int speciesIndex)
+    {
+        if (speciesIndex < 0 || speciesIndex >= _speciesStatus.Count)
+            return EcosystemSimulationGPU.SpeciesStatus.Absent;
+        return (EcosystemSimulationGPU.SpeciesStatus)_speciesStatus[speciesIndex];
+    }
+
+    // Convenience for the tablet badges: is the sim currently calling this species overpopulated?
+    public bool IsOverpopulated(int speciesIndex) =>
+        GetSpeciesStatus(speciesIndex) == EcosystemSimulationGPU.SpeciesStatus.Overpopulated;
 }

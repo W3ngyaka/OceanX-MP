@@ -180,12 +180,7 @@ Affecter GetClosestAffecter(BoidInfo boidInfo, float affecterType)
 
     int rawBoidIdBits = asint(boidInfo.boidID);
     int boidId = rawBoidIdBits & 0xFF;
-    // Bits 8-15 are the boid's FLOCK id (globally unique, see CalculateSchoolBehaviourDirection).
-    // A school's Target carries its flock id in boidSubGroupId and AFFECTS_ALL in boidGroupId, so the
-    // match below is on flock alone. That is what lets a merged shoal -- possibly of two different
-    // species -- follow one shared target, which it must: if the merged schools kept separate targets,
-    // cohesion would hold them together while their targets pulled them apart.
-    int boidFlockId = (rawBoidIdBits >> 8) & 0xFF;
+    int boidSubGroupId = (rawBoidIdBits >> 8) & 0xFF;
 
     // Go through all affecters and find the one closest to the provided boid position.
     for(int i = 0; i < _TotalAffectersCount; i++)
@@ -198,12 +193,12 @@ Affecter GetClosestAffecter(BoidInfo boidInfo, float affecterType)
             continue;
         }
 
-        // Skip affecters that don't apply to this boid: either they target a different species, or they
-        // target a specific flock that this boid is not in. AFFECTS_ALL on either field means "any".
+        // If the affecter doesn't affect this boid group, skip it.
+        // Also, if the affecter targets specific sub-group inside the boid group, check that as well.
         int affecterGroupId = (int)affecter.boidGroupId;
-        int affecterFlockId = (int)affecter.boidSubGroupId;
-        if((affecterGroupId != AFFECTS_ALL && boidId != affecterGroupId) ||
-           (affecterFlockId != AFFECTS_ALL && boidFlockId != affecterFlockId))
+        int affecterSubGroupId = (int)affecter.boidSubGroupId;
+        if((affecterGroupId != AFFECTS_ALL && boidId != affecterGroupId) || 
+           (affecterSubGroupId != AFFECTS_ALL && boidSubGroupId != affecterSubGroupId)) 
         {
             continue;
         }
@@ -367,14 +362,9 @@ float3 CalculateSchoolBehaviourDirection(int boidIndex, BoidSchoolInfo boidSchoo
     int neighborsCount = 0;
     int separationNeighborsCount = 0;
 
-    // Species ID (bits 0-7) and flock ID (bits 8-15) of this boid.
-    //   species = what this fish IS: it indexes _BoidSchools[] for physics, and its ordering encodes
-    //             body size (see the separation test below).
-    //   flock   = who this fish SWIMS WITH. Globally unique across all species, assigned on the CPU.
-    // Keeping those two separate is what allows a mixed-species shoal: two schools of different species
-    // can share a flock ID and cohere as one group while each fish keeps its own speed and size rank.
+    // Get the Boid group ID of this boid.
     int thisBoidId = asint(boidInfo.boidID) & 0xFF;
-    int thisFlockId = (asint(boidInfo.boidID) >> 8) & 0xFF;
+    int thisBoidSubGroupId = (asint(boidInfo.boidID) >> 8) & 0xFF; 
 
     // For each neighboring cell, of the one that the boid is currently located in, check the distance of neighboring
     // boids and update the cohesion, alignment and separation vectors.
@@ -425,16 +415,10 @@ float3 CalculateSchoolBehaviourDirection(int boidIndex, BoidSchoolInfo boidSchoo
                     separationNeighborsCount++;
                 }
 
-                // Cohere and align ONLY with boids in the same flock. Flock IDs are globally unique, so for
-                // an ordinary school this is exactly the old "same species and same sub-group" test. It
-                // differs only when the CPU has deliberately given two schools the same flock ID: a merge.
-                // Because the species is NOT re-checked here, that merge may join two schools of DIFFERENT
-                // species into one mixed shoal -- they cohere and align as one group while each fish keeps
-                // its own physics (via its own species ID above) and its own size rank in the separation
-                // test. Separation is unaffected: it still applies to same-species and all larger fish,
-                // flock or no flock.
-                int otherFlockId = (asint(otherBoidInfo.boidID) >> 8) & 0xFF;
-                if(otherFlockId != thisFlockId)
+                // Only calculating cohesion and alignment with the same fish species and the same sub-group inside the fish species. 
+                // Note that the separation was calculated based on the same species as well as for all larger fish.
+                int otherBoidSubGroupId = (asint(otherBoidInfo.boidID) >> 8) & 0xFF; 
+                if(otherBoidID != thisBoidId || otherBoidSubGroupId != thisBoidSubGroupId) 
                 {
                     continue;
                 }

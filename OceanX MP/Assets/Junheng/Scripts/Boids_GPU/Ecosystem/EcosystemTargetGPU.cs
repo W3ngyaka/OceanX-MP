@@ -24,6 +24,15 @@ namespace OceanX.BoidsGPU.Ecosystem
         /// <summary>The paired Target Animator driving this target, if any.</summary>
         public TransformAnimator Animator => _animator;
 
+        /// <summary>
+        /// Ecosystem targets are keyed to a globally unique FLOCK id (in BoidSubGroupId) and are
+        /// deliberately species-agnostic (BoidGroupId = ALL_BOIDS_AFFECTER_ID), so that a mixed-species
+        /// shoal — whose fish share a flock but not a species — can all follow the one target. Letting
+        /// BoidSpawnerBase.SetId stamp its spawner's species ID over that on every rebuild would re-bind
+        /// the target to one species and tear mixed shoals apart.
+        /// </summary>
+        public override bool KeepsOwnAffecterID => true;
+
         /// <summary>Links this target to the animator that moves it.</summary>
         public void SetAnimator(TransformAnimator animator) => _animator = animator;
 

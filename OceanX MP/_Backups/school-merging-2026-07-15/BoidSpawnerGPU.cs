@@ -261,9 +261,7 @@ namespace OceanX.BoidsGPU
                         AngularVelocity = 0f,
                         // Boid ID contains sub group ID and group ID packed into single float. By default the
                         // boid group ID is 0, so just store the sub-group ID.
-                        // Bits 8-15 are the GLOBAL flock id (see BoidSpawnerBase.FlockIdForSchool), bits 0-7
-                        // the species id, which SetId/UpdateBoidGroupId ORs in afterwards.
-                        BoidID = BitConverter.Int32BitsToSingle((FlockIdForSchool(currentBoidSubGroup) & 0xFF) << 8),
+                        BoidID = BitConverter.Int32BitsToSingle((currentBoidSubGroup & 0xFF) << 8),
                         // Randomize each fish's starting animation phase so individuals are desynced the moment
                         // they spawn instead of all tail-beating in lockstep. One full tail cycle == a
                         // CurrentSwimTime of 1, so a [0,1) start covers the entire phase. NOTE: this per-boid

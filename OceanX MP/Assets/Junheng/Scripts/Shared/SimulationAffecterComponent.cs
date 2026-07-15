@@ -109,6 +109,15 @@ namespace OceanX
         }
 
         /// <summary>
+        /// Whether <see cref="BoidSpawnerBase.SetId"/> may stamp its spawner's species ID onto this
+        /// affecter. False for ordinary affecters, which belong to exactly one species. Overridden to true
+        /// by affecters that deliberately set their own IDs and must survive a rebuild — see
+        /// <c>EcosystemTargetGPU</c>, whose targets are keyed to a globally unique FLOCK and are species-
+        /// agnostic so that a mixed-species shoal can follow one shared target.
+        /// </summary>
+        public virtual bool KeepsOwnAffecterID => false;
+
+        /// <summary>
         /// Function updates the ID of the boid group that this affecter affects.
         /// </summary>
         /// <param name="boidGroupID">ID of the boid group that this affecter should affect.</param>

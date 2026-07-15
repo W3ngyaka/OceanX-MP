@@ -20,16 +20,6 @@ namespace OceanX
         protected int _boidGroupId = 0;
 
         // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
-        // First flock ID owned by this spawner. Its schools take _flockIdBase + 0 .. + (schools-1).
-        // Flock IDs live in bits 8-15 of BoidID and must be unique ACROSS ALL SPECIES, because the
-        // compute shader coheres purely on flock (that is what lets two different species merge into a
-        // mixed shoal). EcosystemSimulationGPU reserves each species a contiguous block of MaxSchools
-        // ids at setup. 0 for spawners the ecosystem never touches (e.g. the standalone boid demos):
-        // those keep the old per-spawner 0..N-1 numbering, which is still unique because such scenes
-        // have a single spawner.
-        protected int _flockIdBase = 0;
-
-        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
         // Number of schools this spawner currently represents. 0 = excluded from the
         // simulation entirely (no boids, no targets, no draw call). Only meaningful once
         // EcosystemSimulationGPU takes control via SetSchoolConfiguration.
@@ -106,12 +96,8 @@ namespace OceanX
             UpdateBoidGroupId(boidGroupId);
 
             // Update the boid group ID for every simulation affecter that affects this simulation.
-            // Affecters that manage their own ID are skipped: an ecosystem Target is keyed to a globally
-            // unique flock and is species-agnostic on purpose, so stamping this spawner's species over it
-            // would re-bind it to one species and break mixed-species shoals on the next rebuild.
             foreach (SimulationAffecterComponent simulationAffecterComponent in _boidSpawnData.Targets)
             {
-                if (simulationAffecterComponent == null || simulationAffecterComponent.KeepsOwnAffecterID) continue;
                 simulationAffecterComponent.SetAffecterID(boidGroupId);
             }
             foreach (SimulationAffecterComponent simulationAffecterComponent in _boidSpawnData.Obstacles)
@@ -150,44 +136,6 @@ namespace OceanX
         // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
         /// <summary>Sets the number of initial boid sub-groups on this spawner. Minimum 1.</summary>
         public void SetInitialGroupsCount(int count) => _initialGroupsCount = Mathf.Max(1, count);
-
-        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
-        /// <summary>
-        /// Reserves this spawner's block of globally unique flock IDs, starting at
-        /// <paramref name="flockIdBase"/>. See <see cref="_flockIdBase"/>.
-        /// </summary>
-        public void SetFlockIdBase(int flockIdBase) => _flockIdBase = Mathf.Max(0, flockIdBase);
-
-        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
-        /// <summary>First flock ID owned by this spawner; its schools run from here.</summary>
-        public int FlockIdBase { get => _flockIdBase; }
-
-        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
-        // Per-school flock ID, overriding the default base + index. Non-null only while some of this
-        // species' schools have merged into another flock. A rebuild re-derives every boid's BoidID from
-        // scratch, so without this a merged shoal would silently come apart the next time the player added
-        // or removed a school.
-        protected int[] _flockIdOverrides = null;
-
-        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
-        /// <summary>
-        /// Sets the current flock ID of each school, by school index. Pass null to return every school to
-        /// its natural flock (base + index).
-        /// </summary>
-        public void SetFlockIdOverrides(int[] flockIdsPerSchool) => _flockIdOverrides = flockIdsPerSchool;
-
-        /// <summary>
-        /// Flock ID that the boids of <paramref name="schoolIndex"/> should carry: the merge override if
-        /// one is set for it, otherwise this spawner's natural id for that school.
-        /// </summary>
-        protected int FlockIdForSchool(int schoolIndex)
-        {
-            if (_flockIdOverrides != null && schoolIndex >= 0 && schoolIndex < _flockIdOverrides.Length)
-            {
-                return _flockIdOverrides[schoolIndex];
-            }
-            return _flockIdBase + schoolIndex;
-        }
 
         // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
         /// <summary>Sets the total boid count on this spawner. Minimum 1.</summary>

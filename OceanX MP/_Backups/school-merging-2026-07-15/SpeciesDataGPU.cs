@@ -77,44 +77,6 @@ namespace OceanX.BoidsGPU.Ecosystem
                  "simulation bounds are resized. Leave at (0, 1) to roam the whole water column.")]
         public Vector2 PreferredDepthBand = new Vector2(0f, 1f);
 
-        [Header("Schooling Dynamics")]
-        [Tooltip("Allow two schools OF THIS SPECIES that drift near each other to merge into one bigger " +
-                 "school, and for a merged school to later break back apart. Both are rolled on the " +
-                 "ecosystem tick. Off = schools of this species never combine (the original behaviour).")]
-        public bool AllowSchoolMerging = false;
-
-        [Tooltip("Chance per ecosystem tick that two schools of this species already within Merge Distance " +
-                 "of each other combine. Rolled once per candidate pair.")]
-        [Range(0f, 1f)] public float MergeChancePerTick = 0.25f;
-
-        [Tooltip("Chance per ecosystem tick that a merged school of this species breaks back apart into " +
-                 "the schools it was made of. Keep BELOW Merge Chance or shoals will never hold together.")]
-        [Range(0f, 1f)] public float SplitChancePerTick = 0.08f;
-
-        [Tooltip("How close two schools' centres must be (metres) before they are considered for merging. " +
-                 "Also used for mixed-species shoaling below.")]
-        [Min(0f)] public float MergeDistance = 8f;
-
-        [Space(6)]
-        [Tooltip("Allow schools of this species to form a MIXED shoal with a different species listed in " +
-                 "Shoals With. Each fish keeps its own speed, size and behaviour - they just swim as one " +
-                 "group. Independent of Allow School Merging: you can have either, both, or neither.")]
-        public bool AllowMixedSpeciesSchooling = false;
-
-        [Tooltip("Chance per ecosystem tick that this species forms a mixed shoal with a nearby eligible " +
-                 "species. Deliberately rarer than the same-species Merge Chance - mixed shoals are the " +
-                 "exception on a reef, not the norm.")]
-        [Range(0f, 1f)] public float MixedMergeChancePerTick = 0.05f;
-
-        [Tooltip("Chance per ecosystem tick that a mixed shoal breaks apart. Usually HIGHER than the " +
-                 "same-species split chance: a mixed shoal is a looser, less stable association.")]
-        [Range(0f, 1f)] public float MixedSplitChancePerTick = 0.15f;
-
-        [Tooltip("Species this one is willing to form a mixed shoal with. Empty = none, so nothing mixes " +
-                 "until you say what mixes with what. Only consulted when Allow Mixed Species Schooling " +
-                 "is on. The pairing is checked from BOTH sides, so add each species to the other's list.")]
-        public List<SpeciesDataGPU> ShoalsWith = new List<SpeciesDataGPU>();
-
         [Header("Predator-Prey Relationships")]
         public List<SpeciesDataGPU> PreySpecies     = new List<SpeciesDataGPU>();
         public List<SpeciesDataGPU> PredatorSpecies = new List<SpeciesDataGPU>();

@@ -160,31 +160,6 @@ namespace OceanX.BoidsGPU.Ecosystem
         private bool IsExiting(SpeciesDataGPU species) => _exitingCount.TryGetValue(species, out int e) && e > 0;
         private int  ExitingCount(SpeciesDataGPU species) => _exitingCount.TryGetValue(species, out int e) ? e : 0;
 
-        // ---- School merging / mixed-species shoaling -------------------------------------------------
-        // Flock IDs occupy bits 8-15 of BoidID, so there are 256 of them across the WHOLE ecosystem.
-        private const int FlockIdLimit = 256;
-
-        // First flock ID reserved to each species (a contiguous block of MaxSchools ids). A school's
-        // NATURAL flock is simply base + its index; that is the flock it swims in when nothing is merged.
-        private readonly Dictionary<SpeciesDataGPU, int> _flockIdBase = new Dictionary<SpeciesDataGPU, int>();
-
-        // Which flock each of a species' schools is CURRENTLY in, indexed by school. Equal to the natural
-        // flock when the school is on its own; equal to another school's flock when it has merged into it.
-        // Two schools sharing a flock is the entire merge mechanism — the compute shader coheres on flock
-        // alone, so they become one school, and (because flock IDs are global) the two may be different
-        // species, which is what makes a mixed shoal.
-        private readonly Dictionary<SpeciesDataGPU, List<int>> _flockOf = new Dictionary<SpeciesDataGPU, List<int>>();
-
-        private int NaturalFlock(SpeciesDataGPU species, int schoolIndex)
-            => (_flockIdBase.TryGetValue(species, out int b) ? b : 0) + schoolIndex;
-
-        /// <summary>True when this school has merged into some other school's flock.</summary>
-        private bool IsMergedAway(SpeciesDataGPU species, int schoolIndex)
-        {
-            List<int> flocks = _flockOf[species];
-            return schoolIndex < flocks.Count && flocks[schoolIndex] != NaturalFlock(species, schoolIndex);
-        }
-
         // Reusable scratch list for filtering entry/exit markers by mode (avoids per-call allocation).
         private readonly List<FishEntryPointGPU> _markerScratch = new List<FishEntryPointGPU>();
 
@@ -428,11 +403,6 @@ namespace OceanX.BoidsGPU.Ecosystem
             {
                 yield return new WaitForSeconds(_tickInterval);
                 RunPopulationTick();
-                // Deliberately OUTSIDE RunPopulationTick: that one is gated on _enablePopulationDynamics,
-                // and merging is a separate feature. Shoaling reshuffles which schools swim together; it
-                // never changes how many fish exist, so it has no business being switched off by the
-                // population master switch.
-                RunShoalingTick();
             }
         }
 
@@ -634,10 +604,6 @@ namespace OceanX.BoidsGPU.Ecosystem
             _schoolCount[species] = newN;
             spawner.SetSchoolConfiguration(newN, fishPerSchool);
 
-            // The new school starts in its own natural flock (i.e. unmerged).
-            FlocksOf(species).Add(NaturalFlock(species, n));
-            PushFlockOverrides(species, spawner);
-
             // Spawn the new school off-screen at a random entry point so it swims into the ecosystem
             // (instead of popping in). No-op fallback to the normal in-bounds spawn if no entry points
             // are placed in the scene. Applies to both manual add and the automatic population tick.
@@ -657,15 +623,6 @@ namespace OceanX.BoidsGPU.Ecosystem
             int alreadyExiting = ExitingCount(species);
             int settled = n - alreadyExiting;
             if (settled <= 0) return; // every remaining school is already swimming out — nothing to do
-
-            // A merged school cannot be removed as a unit: removal works on the species' TOP school, and
-            // if that school is part of a shoal its fish are following the host's target, not their own,
-            // so parking their target would strand them. Break the whole shoal apart first, so removal
-            // always acts on a plain, self-contained school. (This is the agreed rule: split, then remove.)
-            if (BreakUpShoalAround(species, settled - 1))
-            {
-                _simulation.ReinitializeBuffers();
-            }
 
             // Park the highest settled school (sub-group index settled - 1) so it starts exiting now.
             EcosystemTargetGPU exitingTarget = GetTargetAt(species, settled - 1);
@@ -758,220 +715,10 @@ namespace OceanX.BoidsGPU.Ecosystem
             for (int i = 0; i < count; i++)
                 DestroyLastTarget(species, spawner);
 
-            // Drop the flock entries for the culled schools, keeping _flockOf the same length as the school
-            // count. StartRemoveExitImmediate already broke up any shoal involving them, so none of these
-            // can still be hosting another school's fish.
-            List<int> flocks = FlocksOf(species);
-            for (int i = flocks.Count - 1; i >= newN; i--)
-                flocks.RemoveAt(i);
-
             // newN == 0 deactivates the spawner (excluded from the simulation entirely).
             spawner.SetSchoolConfiguration(newN, fishPerSchool);
-            PushFlockOverrides(species, spawner);
             return true;
         }
-
-        // -------------------------------------------------------------------------
-        // School merging / mixed-species shoaling.
-        //
-        // A "flock" is who a fish coheres with. Normally each school is alone in its own flock, so flock
-        // and school are the same thing. Merging school B into school A just means giving B's fish A's
-        // flock id: the compute shader coheres purely on flock, so they become one school. Because flock
-        // ids are globally unique, A and B may be different species — that is a mixed shoal, and each fish
-        // keeps its own speed, size and behaviour because those come from its species id, which is a
-        // different part of BoidID and is never touched here.
-        //
-        // Nothing is created or destroyed by a merge. B's target simply stops matching anybody (it is keyed
-        // to B's natural flock) and starts mattering again when B splits back out.
-        // -------------------------------------------------------------------------
-
-        private List<int> FlocksOf(SpeciesDataGPU species)
-        {
-            if (!_flockOf.TryGetValue(species, out List<int> flocks))
-            {
-                flocks = new List<int>();
-                _flockOf[species] = flocks;
-            }
-            return flocks;
-        }
-
-        // Hands the spawner the current per-school flock ids so a rebuild re-derives them instead of
-        // resetting every school to its natural flock (which would silently dissolve every shoal).
-        private void PushFlockOverrides(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
-        {
-            List<int> flocks = FlocksOf(species);
-            spawner.SetFlockIdOverrides(flocks.Count > 0 ? flocks.ToArray() : null);
-        }
-
-        // Returns every school that shares `flockId`, across ALL species — a shoal can be mixed.
-        private void CollectShoal(int flockId, List<(SpeciesDataGPU species, int school)> into)
-        {
-            into.Clear();
-            for (int i = 0; i < _ecosystem.Species.Count; i++)
-            {
-                SpeciesDataGPU s = _ecosystem.Species[i];
-                if (s == null || !_flockOf.ContainsKey(s)) continue;
-                List<int> flocks = _flockOf[s];
-                for (int j = 0; j < flocks.Count; j++)
-                    if (flocks[j] == flockId) into.Add((s, j));
-            }
-        }
-
-        // Returns every school currently merged INTO this one (it is their host), plus this school itself.
-        // Breaks the whole shoal apart, returning each member to its natural flock. Returns true if
-        // anything actually changed (so the caller knows a rebuild is needed).
-        private bool BreakUpShoalAround(SpeciesDataGPU species, int schoolIndex)
-        {
-            List<int> flocks = FlocksOf(species);
-            if (schoolIndex < 0 || schoolIndex >= flocks.Count) return false;
-
-            int flockId = flocks[schoolIndex];
-            CollectShoal(flockId, _shoalScratch);
-            if (_shoalScratch.Count <= 1) return false; // it is on its own — nothing to break up
-
-            var touched = new HashSet<SpeciesDataGPU>();
-            foreach ((SpeciesDataGPU s, int j) in _shoalScratch)
-            {
-                _flockOf[s][j] = NaturalFlock(s, j);
-                touched.Add(s);
-            }
-            foreach (SpeciesDataGPU s in touched)
-            {
-                BoidSpawnerGPUMultiTargets sp = FindSpawner(s);
-                if (sp != null) PushFlockOverrides(s, sp);
-            }
-            return true;
-        }
-
-        // Centre of one school, read back from the GPU. Null when the buffers are not ready.
-        private bool TrySchoolCentroid(SpeciesDataGPU species, int schoolIndex, out Vector3 centroid)
-        {
-            centroid = Vector3.zero;
-            BoidSpawnerGPUMultiTargets spawner = FindSpawner(species);
-            if (spawner == null) return false;
-            int fishPerSchool = FishPerSchool(species);
-            int start = spawner.RenderingOffset + schoolIndex * fishPerSchool;
-            return _simulation.TryGetBoidsCentroid(start, fishPerSchool, out centroid);
-        }
-
-        // Rolls merges and splits for every species. Called from the ecosystem tick.
-        private void RunShoalingTick()
-        {
-            bool changed = false;
-
-            // --- splits first, so a school freed this tick can be re-merged next tick, not this one ---
-            for (int i = 0; i < _ecosystem.Species.Count; i++)
-            {
-                SpeciesDataGPU s = _ecosystem.Species[i];
-                if (s == null || !_flockOf.ContainsKey(s)) continue;
-                if (!s.AllowSchoolMerging && !s.AllowMixedSpeciesSchooling) continue;
-                if (IsExiting(s)) continue; // don't reshuffle a species mid-removal
-
-                List<int> flocks = FlocksOf(s);
-                for (int j = 0; j < flocks.Count; j++)
-                {
-                    if (!IsMergedAway(s, j)) continue;
-
-                    // Is this a mixed shoal or a same-species one? They have separate split odds, and a
-                    // mixed one is deliberately the less stable of the two.
-                    CollectShoal(flocks[j], _shoalScratch);
-                    bool mixed = false;
-                    foreach ((SpeciesDataGPU other, int _) in _shoalScratch)
-                        if (other != s) { mixed = true; break; }
-
-                    float splitChance = mixed ? s.MixedSplitChancePerTick : s.SplitChancePerTick;
-                    if (Random.value >= splitChance) continue;
-
-                    flocks[j] = NaturalFlock(s, j);
-                    BoidSpawnerGPUMultiTargets sp = FindSpawner(s);
-                    if (sp != null) PushFlockOverrides(s, sp);
-                    changed = true;
-                }
-            }
-
-            // --- merges ---
-            for (int i = 0; i < _ecosystem.Species.Count; i++)
-            {
-                SpeciesDataGPU a = _ecosystem.Species[i];
-                if (a == null || !_flockOf.ContainsKey(a)) continue;
-                if (!a.AllowSchoolMerging && !a.AllowMixedSpeciesSchooling) continue;
-                if (IsExiting(a)) continue;
-
-                List<int> aFlocks = FlocksOf(a);
-                for (int ja = 0; ja < aFlocks.Count; ja++)
-                {
-                    // The host must be in its own flock. A school that has already merged away is somebody
-                    // else's member, not a host, so it cannot absorb anything.
-                    if (IsMergedAway(a, ja)) continue;
-                    if (!TrySchoolCentroid(a, ja, out Vector3 centreA)) continue;
-
-                    for (int k = 0; k < _ecosystem.Species.Count; k++)
-                    {
-                        SpeciesDataGPU b = _ecosystem.Species[k];
-                        if (b == null || !_flockOf.ContainsKey(b)) continue;
-                        if (IsExiting(b)) continue;
-
-                        bool sameSpecies = (a == b);
-
-                        // Which feature governs this pair, and is it switched on from BOTH sides?
-                        // Same species: one toggle. Mixed: both species must allow it and must list each
-                        // other, so shoaling is never inflicted on a species that did not opt in.
-                        float mergeChance;
-                        if (sameSpecies)
-                        {
-                            if (!a.AllowSchoolMerging) continue;
-                            mergeChance = a.MergeChancePerTick;
-                        }
-                        else
-                        {
-                            if (!a.AllowMixedSpeciesSchooling || !b.AllowMixedSpeciesSchooling) continue;
-                            if (a.ShoalsWith == null || !a.ShoalsWith.Contains(b)) continue;
-                            if (b.ShoalsWith == null || !b.ShoalsWith.Contains(a)) continue;
-                            // Rarer of the two chances wins, so neither species can force a mixing rate on
-                            // the other that it did not agree to.
-                            mergeChance = Mathf.Min(a.MixedMergeChancePerTick, b.MixedMergeChancePerTick);
-                        }
-                        if (mergeChance <= 0f) continue;
-
-                        List<int> bFlocks = FlocksOf(b);
-                        for (int jb = 0; jb < bFlocks.Count; jb++)
-                        {
-                            if (sameSpecies && jb == ja) continue;      // not with itself
-                            if (bFlocks[jb] == aFlocks[ja]) continue;   // already in this shoal
-                            if (IsMergedAway(b, jb)) continue;          // already someone else's member
-
-                            // Don't swallow a school that is itself hosting others: it keeps merges to a
-                            // single level, so a shoal is always "one host plus its members" and splitting
-                            // it is unambiguous.
-                            CollectShoal(bFlocks[jb], _shoalScratch);
-                            if (_shoalScratch.Count > 1) continue;
-
-                            if (!TrySchoolCentroid(b, jb, out Vector3 centreB)) continue;
-                            float mergeDistance = Mathf.Min(a.MergeDistance, b.MergeDistance);
-                            if (Vector3.Distance(centreA, centreB) > mergeDistance) continue;
-
-                            if (Random.value >= mergeChance) continue;
-
-                            // The merge itself: B adopts A's flock. B's fish now cohere with A's and follow
-                            // A's target; B's own target goes quiet until B splits back out.
-                            bFlocks[jb] = aFlocks[ja];
-                            BoidSpawnerGPUMultiTargets spB = FindSpawner(b);
-                            if (spB != null) PushFlockOverrides(b, spB);
-                            changed = true;
-                        }
-                    }
-                }
-            }
-
-            // Flock ids are baked into BoidID at spawn, so the buffers must be rebuilt for any of this to
-            // reach the GPU. The rebuild preserves live positions and motion, so a merge is seamless: the
-            // fish carry on exactly where they were and simply start schooling together.
-            if (changed) _simulation.ReinitializeBuffers();
-        }
-
-        // Reusable scratch for shoal membership queries (avoids allocating on every tick).
-        private readonly List<(SpeciesDataGPU species, int school)> _shoalScratch
-            = new List<(SpeciesDataGPU species, int school)>();
 
         // The swim target for a specific sub-group (school) of a species, or null if out of range.
         private EcosystemTargetGPU GetTargetAt(SpeciesDataGPU species, int subGroupIndex)
@@ -1064,16 +811,7 @@ namespace OceanX.BoidsGPU.Ecosystem
             targetGO.transform.SetParent(GetOrCreateContainer(spawner, "Targets"), false);
 
             EcosystemTargetGPU target = targetGO.AddComponent<EcosystemTargetGPU>();
-            // Key the target to this school's NATURAL flock id, and let it affect any species (the boid's
-            // own flock id is what selects it — flock ids are globally unique, so there is no collision).
-            // Species-agnostic on purpose: a mixed shoal's fish are of different species but share a flock,
-            // and they must all be able to follow the one target.
-            //
-            // A school that merges away adopts the host's flock, and so simply stops matching this target;
-            // the target keeps animating with nobody following it and starts mattering again the moment the
-            // school splits back out. That is why merging never creates or destroys targets.
-            target.SetSubGroupID(NaturalFlock(species, subGroupIndex));
-            target.SetAffecterID(SimulationAffecter.ALL_BOIDS_AFFECTER_ID);
+            target.SetSubGroupID(subGroupIndex);
             target.SetAffecterType(SimulationAffecterType.Target);
             target.SetUpdatePositionEveryFrame(true);
             targetGO.transform.localScale = Vector3.one * _targetRadius;
@@ -1408,12 +1146,6 @@ namespace OceanX.BoidsGPU.Ecosystem
 
         private void SetupAllSpecies()
         {
-            // Flock IDs must be unique across ALL species, not just within one, because the compute
-            // shader coheres purely on flock — that is what lets two species merge into a mixed shoal.
-            // Give each species a contiguous reservation of MaxSchools ids so a school's id is simply
-            // base + its index, stable across rebuilds and derivable without a lookup.
-            int nextFlockIdBase = 0;
-
             for (int i = 0; i < _ecosystem.Species.Count; i++)
             {
                 SpeciesDataGPU species = _ecosystem.Species[i];
@@ -1428,23 +1160,8 @@ namespace OceanX.BoidsGPU.Ecosystem
 
                 species.RuntimeId = i;
 
-                // Flock IDs live in 8 bits of BoidID, so the reservations must fit in 0..255. Overflowing
-                // would silently alias two species' flocks together and merge schools that never asked to
-                // merge, so fail loudly rather than wrap.
-                int reservation = Mathf.Max(1, species.MaxSchools);
-                if (nextFlockIdBase + reservation > FlockIdLimit)
-                {
-                    Debug.LogError($"[EcosystemSimulationGPU] Ran out of flock IDs at '{species.SpeciesName}': " +
-                                   $"{nextFlockIdBase + reservation} needed, only {FlockIdLimit} exist (BoidID gives flock IDs 8 bits). " +
-                                   "Reduce Max Schools across the ecosystem. This species' schools will alias onto another's.");
-                }
-                _flockIdBase[species] = nextFlockIdBase;
-                spawner.SetFlockIdBase(nextFlockIdBase);
-                nextFlockIdBase += reservation;
-
                 _schoolCount[species]    = 0;
                 _managedTargets[species] = new List<SimulationAffecterComponent>();
-                _flockOf[species]        = new List<int>();
 
                 // Start every species at zero schools: clear any inspector-assigned targets and mark the
                 // spawner inactive so it is excluded from the GPU simulation until the player adds a school.

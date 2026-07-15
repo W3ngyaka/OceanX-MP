@@ -110,10 +110,10 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _VisualizeMask: 0
-    - _WingAmpFalloff: 2
-    - _WingFlapAmplitude: 9.09
-    - _WingFlapSpeed: 0.5
-    - _WingSpanWaves: 1.1
+    - _WingAmpFalloff: 2.76
+    - _WingFlapAmplitude: 8.02
+    - _WingFlapSpeed: 0.99
+    - _WingSpanWaves: 0.89
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

@@ -22,6 +22,7 @@ MonoBehaviour:
   FishPerSchool: 1
   MaxSchools: 3
   PathStyle: 0
+  PreferredDepthBand: {x: 0.04, y: 0.21}
   PreySpecies:
   - {fileID: 11400000, guid: 030fe1af58270a04c843fdda6fe90410, type: 2}
   - {fileID: 11400000, guid: 1cf137833ce32454a999ba54ac57956a, type: 2}

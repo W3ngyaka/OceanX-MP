@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bluefin trevally_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 18
-  ObstacleAvoidanceRange: 3
+  ObstacleAvoidanceRange: 2
   SeparationRange: 1.5
   CohesionWeight: 0.25
   AlignmentWeight: 0.3

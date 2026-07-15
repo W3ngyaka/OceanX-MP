@@ -81,7 +81,7 @@ namespace OceanX.BoidsGPU.Ecosystem
                  "eats into the seabed and surface ends of the species depth bands: at the default 3m " +
                  "safe zone a bottom-dwelling species could not get near the sand at all.")]
         [Min(0.1f)]
-        [SerializeField] private float _pathVerticalClearance = 0.5f;
+        [SerializeField] private float _pathVerticalClearance = 1.5f;
 
         [Tooltip("Random range for each school's path size, as a fraction of the largest size that fits " +
                  "inside the bounds — so schools get small and large routes.")]
@@ -100,15 +100,6 @@ namespace OceanX.BoidsGPU.Ecosystem
                  "farthest-apart attempt is used. Roughly one school's cluster diameter is a good value.")]
         [Min(0f)]
         [SerializeField] private float _entrySpawnMinSeparation = 3f;
-
-        [Tooltip("How much deeper/shallower than the BEST-matching entry marker another marker may be and " +
-                 "still be considered for a species' spawn-in. Each species enters through the gates nearest " +
-                 "its own Preferred Depth Band, so a ray slides in along the sand instead of dropping in from " +
-                 "mid-water. 0 = always use the single closest-matching gate (least variety). Larger values " +
-                 "let more gates share the traffic, at the cost of fish sometimes entering off-depth; make it " +
-                 "big enough and depth stops mattering at all.")]
-        [Min(0f)]
-        [SerializeField] private float _entryMarkerDepthTolerance = 3f;
 
         [Header("Predator-Prey Balance (global)")]
         [Tooltip("Lower edge of the balanced prey:predator ratio (measured in SCHOOL counts). " +
@@ -607,7 +598,7 @@ namespace OceanX.BoidsGPU.Ecosystem
             // Spawn the new school off-screen at a random entry point so it swims into the ecosystem
             // (instead of popping in). No-op fallback to the normal in-bounds spawn if no entry points
             // are placed in the scene. Applies to both manual add and the automatic population tick.
-            ApplyEntrySpawnOrigin(species, spawner);
+            ApplyEntrySpawnOrigin(spawner);
             return true;
         }
 
@@ -854,9 +845,13 @@ namespace OceanX.BoidsGPU.Ecosystem
 
             // Swim height comes from the SPECIES' preferred depth band rather than the whole water column,
             // so each species settles into its own slice of the reef (rays on the sand, scad up at the
-            // pillar tops) instead of every school roaming the same mid-water layer.
-            float bandBottomY, bandTopY;
-            GetPreferredDepthRange(species, out bandBottomY, out bandTopY);
+            // pillar tops) instead of every school roaming the same mid-water layer. The band is a
+            // fraction of the bounds height, so it survives the simulation area being resized.
+            // Min/Max rather than .x/.y directly: an inverted band authored in the Inspector should read as
+            // the range it looks like, not silently collapse (Random.Range(hi, lo) would still work, but
+            // the Clamp01 below would not be doing what it appears to).
+            float bandLow  = Mathf.Clamp01(Mathf.Min(species.PreferredDepthBand.x, species.PreferredDepthBand.y));
+            float bandHigh = Mathf.Clamp01(Mathf.Max(species.PreferredDepthBand.x, species.PreferredDepthBand.y));
 
             // Clearance is vertical-only (see _pathVerticalClearance): a path is flat, so its height needs
             // no room for horizontal extent — only enough that the target is never AT the boundary, which
@@ -864,7 +859,7 @@ namespace OceanX.BoidsGPU.Ecosystem
             // height so a shallow simulation area can't invert the range.
             float clearance = Mathf.Min(_pathVerticalClearance, bounds.extents.y * 0.5f);
             float height    = Mathf.Clamp(
-                Random.Range(bandBottomY, bandTopY),
+                Mathf.Lerp(bounds.min.y, bounds.max.y, Random.Range(bandLow, bandHigh)),
                 bounds.min.y + clearance,
                 bounds.max.y - clearance);
 
@@ -983,9 +978,9 @@ namespace OceanX.BoidsGPU.Ecosystem
         // it (a) avoids reusing the previous marker when more than one exists and (b) jitters the origin
         // sideways, keeping clear of recently used origins. If no entry points exist, the spawner keeps its
         // default in-bounds spawn behaviour (nothing breaks in scenes without markers).
-        private void ApplyEntrySpawnOrigin(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
+        private void ApplyEntrySpawnOrigin(BoidSpawnerGPUMultiTargets spawner)
         {
-            FishEntryPointGPU point = PickEntryMarker(species);
+            FishEntryPointGPU point = PickEntryMarker();
             if (point == null) return; // no entry-capable point placed — keep the default in-bounds spawn
 
             Vector3 origin = ChooseSpreadOrigin(point);
@@ -997,12 +992,9 @@ namespace OceanX.BoidsGPU.Ecosystem
             _lastEntryMarker = point;
         }
 
-        // Picks an entry-capable marker for this species, preferring gates that sit at the species' own swim
-        // depth so a school enters at the height it is going to live at — a ray slides in along the sand
-        // instead of dropping in from mid-water and sinking, scad arrive up where the pillars are. Among
-        // gates that are equally good depth-wise it still avoids the previous spawn's marker, so consecutive
-        // schools fan out instead of clumping on one point.
-        private FishEntryPointGPU PickEntryMarker(SpeciesDataGPU species)
+        // Picks a random entry-capable marker, preferring one different from the previous spawn's marker so
+        // consecutive schools fan out across the available gates instead of clumping at one.
+        private FishEntryPointGPU PickEntryMarker()
         {
             IReadOnlyList<FishEntryPointGPU> all = FishEntryPointGPU.All;
             if (all == null || all.Count == 0) return null;
@@ -1016,51 +1008,9 @@ namespace OceanX.BoidsGPU.Ecosystem
             if (_markerScratch.Count == 0) return null;
             if (_markerScratch.Count == 1) return _markerScratch[0];
 
-            // Narrow to the gates closest to this species' depth band. Scored by how far each marker sits
-            // OUTSIDE the band (0 = already at the right depth), keeping everything within
-            // _entryMarkerDepthTolerance of the best score so several good gates still share the traffic.
-            // Skipped when the species has no data, leaving the old depth-agnostic behaviour intact.
-            if (species != null)
-            {
-                float bandBottomY, bandTopY;
-                GetPreferredDepthRange(species, out bandBottomY, out bandTopY);
-
-                float bestMismatch = float.PositiveInfinity;
-                for (int i = 0; i < _markerScratch.Count; i++)
-                    bestMismatch = Mathf.Min(bestMismatch, DepthMismatch(_markerScratch[i], bandBottomY, bandTopY));
-
-                float cutoff = bestMismatch + _entryMarkerDepthTolerance;
-                for (int i = _markerScratch.Count - 1; i >= 0; i--)
-                    if (DepthMismatch(_markerScratch[i], bandBottomY, bandTopY) > cutoff) _markerScratch.RemoveAt(i);
-
-                if (_markerScratch.Count == 1) return _markerScratch[0];
-            }
-
             int idx = Random.Range(0, _markerScratch.Count);
             if (_markerScratch[idx] == _lastEntryMarker) idx = (idx + 1) % _markerScratch.Count;
             return _markerScratch[idx];
-        }
-
-        // How far a marker's height falls OUTSIDE [bandBottomY, bandTopY]; 0 when it is already in the band.
-        private static float DepthMismatch(FishEntryPointGPU marker, float bandBottomY, float bandTopY)
-        {
-            float y = marker.Position.y;
-            if (y < bandBottomY) return bandBottomY - y;
-            if (y > bandTopY)    return y - bandTopY;
-            return 0f;
-        }
-
-        // Resolves a species' PreferredDepthBand (a fraction of the simulation height) into world-space Y
-        // limits. Single source of truth for the band, shared by the roaming-path height and the entry-gate
-        // choice, so a school enters at the depth it will then roam at. Min/Max rather than .x/.y directly:
-        // an inverted band authored in the Inspector should read as the range it looks like.
-        private void GetPreferredDepthRange(SpeciesDataGPU species, out float bandBottomY, out float bandTopY)
-        {
-            Bounds b = SimulationBounds;
-            float bandLow  = Mathf.Clamp01(Mathf.Min(species.PreferredDepthBand.x, species.PreferredDepthBand.y));
-            float bandHigh = Mathf.Clamp01(Mathf.Max(species.PreferredDepthBand.x, species.PreferredDepthBand.y));
-            bandBottomY = Mathf.Lerp(b.min.y, b.max.y, bandLow);
-            bandTopY    = Mathf.Lerp(b.min.y, b.max.y, bandHigh);
         }
 
         // Nudges the spawn origin off the marker — sideways (perpendicular to the swim-in direction, so it

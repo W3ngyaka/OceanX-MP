@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Eyestripe surgeonfish_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 12
-  ObstacleAvoidanceRange: 3
+  ObstacleAvoidanceRange: 2
   SeparationRange: 1.3
   CohesionWeight: 0.3
   AlignmentWeight: 0.35

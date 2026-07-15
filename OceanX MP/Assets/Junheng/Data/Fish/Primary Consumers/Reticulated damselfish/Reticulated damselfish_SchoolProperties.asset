@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Reticulated damselfish_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 8
-  ObstacleAvoidanceRange: 3
+  ObstacleAvoidanceRange: 2
   SeparationRange: 0.35
   CohesionWeight: 1
   AlignmentWeight: 0.7

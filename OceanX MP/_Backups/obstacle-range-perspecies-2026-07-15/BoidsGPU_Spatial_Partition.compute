@@ -13,10 +13,11 @@
 // STEERING weight only — it never speeds the fish up (that is reserved for Predator). Lower for a
 // lazier curve, higher for a tighter one.
 #define OBSTACLE_AVOID_STRENGTH 5.0
-// NOTE: the distance at which a boid starts steering away from an obstacle is NOT a constant — it is
-// per-species, read from boidSchoolInfo.obstacleAvoidanceRangeSquared (authored as
-// FishSchoolProperties.ObstacleAvoidanceRange). See the avoidance block in the kernel. Tunnelling at
-// speed is still backstopped by the hard ResolveObstaclePenetration pass.
+// Distance (metres) from an obstacle's surface at which a boid starts steering away. Because avoidance
+// now eases in with proximity (no snap-turn), this can afford a little more lead than before, so the
+// fish begins its gentle bank early and curves clear without a last-moment swerve. Tunnelling at speed
+// is still backstopped by the hard ResolveObstaclePenetration pass.
+#define OBSTACLE_AVOID_MARGIN 2.0
 
 // When reacting to an affecter (predator flee OR obstacle avoidance) the boid SKIPS the slow
 // angular-velocity ramp and turns at this multiple of its max angular velocity, so it snaps toward
@@ -612,23 +613,13 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     bool hasObstacle = closestObstacle.affecterType == OBSTACLE_AFFECTER_TYPE;
     if(!reachedExit && hasObstacle)
     {
-        // How close this SPECIES lets an obstacle get before it starts bending away, from its authored
-        // FishSchoolProperties.ObstacleAvoidanceRange. This used to be a hardcoded OBSTACLE_AVOID_MARGIN
-        // of 2m for every fish, while the per-species value was squared, uploaded to the GPU and then
-        // never read. A shared 2m margin is disastrous for a bottom-dweller: most of the reef's obstacle
-        // volumes are centred below it, so a ray gliding along the sand was inside some obstacle's margin
-        // almost continuously and got shoved upward off the seabed. A small range (well under a metre)
-        // lets it hug the substrate; a big one keeps a shark clear.
-        // Guarded to a sane minimum so a species authored at 0 does not divide by zero below.
-        float obstacleAvoidMargin = max(sqrt(boidSchoolInfo.obstacleAvoidanceRangeSquared), 0.01);
-
         float obstacleSurfaceDistance = AffecterSurfaceDistance(closestObstacle, boidInfo.position);
-        if(obstacleSurfaceDistance <= obstacleAvoidMargin)
+        if(obstacleSurfaceDistance <= OBSTACLE_AVOID_MARGIN)
         {
             // Ease the avoidance in with proximity: ~0 at the margin edge, full at the surface, so the
             // heading bends gradually as the fish nears the obstacle instead of stepping on the instant
             // it crosses the margin. Squared for an even softer onset near the edge.
-            float obstacleProximity = saturate(1.0 - obstacleSurfaceDistance / obstacleAvoidMargin);
+            float obstacleProximity = saturate(1.0 - obstacleSurfaceDistance / OBSTACLE_AVOID_MARGIN);
             obstacleProximity *= obstacleProximity;
 
             float3 awayDirection = AffecterAwayDirection(closestObstacle, boidInfo.position);

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Yellowstripe scad_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 14
-  ObstacleAvoidanceRange: 3
+  ObstacleAvoidanceRange: 2
   SeparationRange: 0.3
   CohesionWeight: 1.3
   AlignmentWeight: 1.5

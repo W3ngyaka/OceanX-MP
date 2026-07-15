@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fringelip mullet_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 12
-  ObstacleAvoidanceRange: 3
+  ObstacleAvoidanceRange: 2
   SeparationRange: 0.5
   CohesionWeight: 0.9
   AlignmentWeight: 1

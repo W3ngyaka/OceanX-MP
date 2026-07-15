@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Russell\u2019s snapper_SchoolProperties"
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 12
-  ObstacleAvoidanceRange: 3
+  ObstacleAvoidanceRange: 2
   SeparationRange: 1
   CohesionWeight: 0.4
   AlignmentWeight: 0.3

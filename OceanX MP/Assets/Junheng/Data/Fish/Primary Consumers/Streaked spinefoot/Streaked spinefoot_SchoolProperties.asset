@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Streaked spinefoot_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 10
-  ObstacleAvoidanceRange: 3
+  ObstacleAvoidanceRange: 2
   SeparationRange: 0.5
   CohesionWeight: 0.75
   AlignmentWeight: 0.8

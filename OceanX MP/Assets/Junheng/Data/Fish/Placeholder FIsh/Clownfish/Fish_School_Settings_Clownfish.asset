@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Fish_School_Settings_Clownfish
   m_EditorClassIdentifier: 
   VisionRange: 15
-  ObstacleAvoidanceRange: 3
+  ObstacleAvoidanceRange: 2
   SeparationRange: 0.35
   CohesionWeight: 0.4
   AlignmentWeight: 0.35
   SeparationWeight: 1
   TargetWeight: 0.85
   MovementProperties: {fileID: 11400000, guid: 23ed38104da47d44782c651762d48a78, type: 2}
-  MotionRenderProperties: {fileID: 11400000, guid: a37d6d388b1a919408e9a2f107d0f158,
-    type: 2}
+  MotionRenderProperties: {fileID: 11400000, guid: a37d6d388b1a919408e9a2f107d0f158, type: 2}

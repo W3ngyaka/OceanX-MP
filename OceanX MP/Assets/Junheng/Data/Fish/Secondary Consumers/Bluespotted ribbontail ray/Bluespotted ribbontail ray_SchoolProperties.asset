@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bluespotted ribbontail ray_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 8
-  ObstacleAvoidanceRange: 3
+  ObstacleAvoidanceRange: 0.75
   SeparationRange: 2.5
   CohesionWeight: 0.1
   AlignmentWeight: 0.1

@@ -335,7 +335,9 @@ namespace OceanX.BoidsGPU.Ecosystem
         /// species with nothing established yet):
         ///   <b>Starving</b>     — it eats other species, its food WAS present but is now gone/scarce (a real collapse).
         ///   <b>OverPredated</b> — its predators are present and outnumber it past the band (being over-hunted).
-        ///   <b>Overpopulated</b>— it normally has predators, they are ABSENT, and it has grown near its cap.
+        ///   <b>Overpopulated</b>— it normally has predators, and they can no longer keep it in check: it either
+        ///                         outnumbers the survivors past the overpopulation ratio, or they are ABSENT
+        ///                         and it has grown past the free-count. Sitting at its cap alone is NOT enough.
         ///   <b>Balanced</b>     — none of the above (includes a just-added species, or a lone predator whose
         ///                         prey has never been introduced — which must NOT read as "starving").
         /// </summary>
@@ -381,17 +383,19 @@ namespace OceanX.BoidsGPU.Ecosystem
             if (predN > 0 && (float)n / predN < _ratioBandLow)
                 return SpeciesStatus.OverPredated;
 
-            // Overpopulated: it SHOULD be kept in check by predators, they are absent, and it has grown near cap.
+            // Overpopulated: it SHOULD be kept in check by predators, and they can no longer do so.
             if (IsOverpopulated(species, counts)) return SpeciesStatus.Overpopulated;
 
             return SpeciesStatus.Balanced;
         }
 
         /// <summary>
-        /// Genuine runaway overpopulation: a species that SHOULD be regulated by predators, but all of
-        /// them are gone, and it has grown to near its cap. An apex with no natural predators is never
-        /// "overpopulated" (its growth toward its cap is normal). Shared by the status classifier and
-        /// eco-health so both agree on what counts as "too many".
+        /// Genuine runaway overpopulation: a species that SHOULD be regulated by predators, but either
+        /// outnumbers the remaining ones past <see cref="_overpopulatedRatio"/>, or has outlived them
+        /// entirely and passed <see cref="_overpopulatedFreeCount"/>. An apex with no natural predators
+        /// is never "overpopulated", and neither is a species merely sitting at its cap in a balanced
+        /// ocean. Shared by the status classifier, eco-health, and the tablet badges (via
+        /// EcosystemNetworkManagerGPU.IsOverpopulated) so they all agree on what counts as "too many".
         /// </summary>
         private bool IsOverpopulated(SpeciesDataGPU species, Dictionary<SpeciesDataGPU, int> counts)
         {

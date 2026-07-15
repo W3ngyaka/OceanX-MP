@@ -10,8 +10,9 @@ public class OrganismCardData : MonoBehaviour
     public TMP_Text nameText; // optional, leave unassigned if not used
 
     [Header("Overpopulation badge")]
-    [Tooltip("Shown when this species is at/over its carrying capacity (pop >= MaxSchools). " +
-             "Auto-found (child named 'OverpopBadge') if left empty. Matches the food-web bubble's overpop logic.")]
+    [Tooltip("Shown when the simulation reports this species as overpopulated (too few predators left " +
+             "to keep it in check). Auto-found (child named 'OverpopBadge') if left empty. Matches the " +
+             "food-web bubble's overpop logic.")]
     public GameObject overpopBadge;
 
     [Header("Live update")]
@@ -69,19 +70,15 @@ public class OrganismCardData : MonoBehaviour
         if (countText != null) countText.text = count.ToString();
     }
 
-    // Toggle the overpopulation badge using the SAME check the food-web bubbles use:
-    // pop >= MaxSchools (both values arrive already-synced from the host). Only AT/over cap.
+    // Toggle the overpopulation badge using the SAME check the food-web bubbles use: the
+    // simulation's own status, synced from the host. Being at MaxSchools is NOT enough.
     void UpdateOverpop()
     {
         if (overpopBadge == null) return;
         bool over = false;
         var net = EcosystemNetworkManagerGPU.Instance;
         if (speciesIndex >= 0 && net != null)
-        {
-            int pop = net.GetPopulation(speciesIndex);
-            int max = net.GetMaxSchools(speciesIndex);
-            over = max > 0 && pop >= max;
-        }
+            over = net.IsOverpopulated(speciesIndex);
         if (over != overpopShown)
         {
             overpopShown = over;

@@ -22,10 +22,11 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public Color lockedTint = new Color(0.45f, 0.45f, 0.45f, 1f);
 
     [Header("Overpopulation")]
-    [Tooltip("Status overlay shown when this species has grown to its carrying capacity " +
-             "(overpopulated). Auto-found (child named 'Overpopulated') if left empty.")]
+    [Tooltip("Status overlay shown when the simulation reports this species as overpopulated " +
+             "(too few predators left to keep it in check). Auto-found (child named " +
+             "'Overpopulated') if left empty.")]
     public GameObject overpopulatedOverlay;
-    [Tooltip("How often (seconds) to re-check the live population against the cap.")]
+    [Tooltip("How often (seconds) to re-check the species' live status from the host.")]
     public float overpopCheckInterval = 0.4f;
 
     [Header("Food Web")]
@@ -114,7 +115,7 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     void Update()
     {
-        // Poll the live population vs. cap on a throttled cadence and toggle the badge.
+        // Poll the species' synced status on a throttled cadence and toggle the badge.
         _overpopCheckTimer += Time.unscaledDeltaTime;
         if (_overpopCheckTimer >= overpopCheckInterval)
         {
@@ -136,10 +137,12 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             : -1;
     }
 
-    // Show the 'Overpopulated' badge when the species has grown to its carrying capacity
-    // (schools >= MaxSchools) — which only happens when it is under-predated (e.g. its
-    // predator was removed). Both values come already-synced from the host via the netcode
-    // layer, so no server round-trip is needed. Locked/extinct species never qualify.
+    // Show the 'Overpopulated' badge when the SIMULATION classifies this species as
+    // overpopulated (it outnumbers its predators past the ratio, or its predators are gone
+    // entirely and it has grown past the free-count). Deliberately NOT "pop >= MaxSchools":
+    // a species sitting at its cap in a healthy ocean is at capacity, not overpopulated.
+    // The status arrives already-synced from the host, so no server round-trip is needed.
+    // Locked/extinct species never qualify.
     void UpdateOverpopulation()
     {
         if (overpopulatedOverlay == null) return;
@@ -150,11 +153,7 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             ResolveSpeciesIndex();
             var net = EcosystemNetworkManagerGPU.Instance;
             if (_speciesIndex >= 0 && net != null)
-            {
-                int pop = net.GetPopulation(_speciesIndex);
-                int max = net.GetMaxSchools(_speciesIndex);
-                over = max > 0 && pop >= max;
-            }
+                over = net.IsOverpopulated(_speciesIndex);
         }
 
         if (over != _overpopShown)

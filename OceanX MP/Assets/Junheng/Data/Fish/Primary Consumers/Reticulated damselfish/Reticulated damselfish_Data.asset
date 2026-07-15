@@ -20,7 +20,7 @@ MonoBehaviour:
   MotionRenderProperties: {fileID: 11400000, guid: 432bdb2122140304ba8a996b1b239639, type: 2}
   BehaviorProperties: {fileID: 11400000, guid: 1259120d866495344b01c7682ad5c908, type: 2}
   FishPerSchool: 25
-  MaxSchools: 6
+  MaxSchools: 10
   PathStyle: 0
   PreferredDepthBand: {x: 0.1, y: 0.32}
   PreySpecies: []

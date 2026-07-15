@@ -178,7 +178,7 @@ public class SpeciesAddedReveal : MonoBehaviour
 
         string name  = (e != null && !string.IsNullOrWhiteSpace(e.speciesName)) ? e.speciesName : species.speciesName;
         string role  = (e != null && !string.IsNullOrWhiteSpace(e.role))        ? e.role        : species.tier;
-        string blurb = (e != null && !string.IsNullOrWhiteSpace(e.blurb))       ? e.blurb       : species.addedMessage;
+        string blurb = (e != null && !string.IsNullOrWhiteSpace(e.firstAddedMessage)) ? e.firstAddedMessage : species.addedMessage;
 
         if (nameText != null) nameText.text = name;
         if (tierText != null) tierText.text = role;

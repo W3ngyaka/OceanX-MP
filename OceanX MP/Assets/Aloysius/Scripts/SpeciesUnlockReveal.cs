@@ -88,11 +88,35 @@ public class SpeciesUnlockReveal : MonoBehaviour
 
     void FillCard(SpeciesData species)
     {
-        if (nameText != null) nameText.text = species.speciesName;
-        if (sciText != null) sciText.text = species.sciName;
-        if (tierText != null) tierText.text = species.tier;
-        if (msgText != null) msgText.text = species.addedMessage;
-        if (revealImage != null) revealImage.enabled = (revealImage.sprite != null);
+        // Read the unlock card from RevealContent.csv (the SAME sheet as the arrival card), matched by the
+        // species' stable contentId (falling back to its display name). Uses the 'unlockMessage' column so the
+        // unlock line can differ from the arrival 'blurb'. Every field falls back to the SpeciesData asset if
+        // the CSV row/value is missing, so the card never goes blank offline.
+        string key = !string.IsNullOrEmpty(species.contentId) ? species.contentId : species.speciesName;
+        RevealContentDB.Entry e = RevealContentDB.Get(key);
+
+        string name = (e != null && !string.IsNullOrWhiteSpace(e.speciesName))   ? e.speciesName   : species.speciesName;
+        string sci  = (e != null && !string.IsNullOrWhiteSpace(e.sciName))       ? e.sciName       : species.sciName;
+        string role = (e != null && !string.IsNullOrWhiteSpace(e.role))          ? e.role          : species.tier;
+        string msg  = (e != null && !string.IsNullOrWhiteSpace(e.unlockMessage)) ? e.unlockMessage : species.addedMessage;
+
+        if (nameText != null) nameText.text = name;
+        if (sciText  != null) sciText.text  = sci;
+        if (tierText != null) tierText.text = role;
+        if (msgText  != null) msgText.text  = msg;
+
+        if (revealImage != null)
+        {
+            // The unlock card has its OWN photo column (unlockImageFile), loaded from the SAME folder as the
+            // arrival card (StreamingAssets/RevealImages), just a different filename. If unlockImageFile is blank
+            // it falls back to the arrival photo (imageFile), so the card is never image-less while the friend
+            // hasn't dropped the unlock-specific pics yet. Then to any sprite pre-assigned in the scene.
+            string imgFile = (e != null && !string.IsNullOrWhiteSpace(e.unlockImageFile)) ? e.unlockImageFile
+                            : (e != null ? e.imageFile : null);
+            Sprite img = RevealContentDB.GetImage(imgFile);
+            if (img != null) revealImage.sprite = img;
+            revealImage.enabled = (revealImage.sprite != null);
+        }
     }
 
     public void HintNextLocked()

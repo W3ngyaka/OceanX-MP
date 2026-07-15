@@ -1,5 +1,5 @@
 # OceanX MP — UI/UX Handoff (Aloysius)
-_Last updated: 2026-07-12 (rev 5)_
+_Last updated: 2026-07-14 (rev 6)_
 
 > Companion to JunHeng's main handoff. Covers UI/UX work across recent sessions.
 > Scope: food-web layout, species info card, atmospheric FX, bug fixes, the
@@ -8,7 +8,11 @@ _Last updated: 2026-07-12 (rev 5)_
 > dashboard gauge + status word, and a right-side species info panel**, plus
 > **producer unlock-registration, a new Macroalgae species, and a host
 > health-bar binding**.
-> **This session (2026-07-12):** food-web line/arrow routing + energy-flow
+> **Latest (2026-07-14):** NEW ARRIVAL card images wired, card text -> TMP,
+> host health-bar colour-by-state + an Inspector debug slider, and a
+> **sprite-tinting trap** documented (see READ FIRST #6).
+>
+> **Previous (2026-07-12):** food-web line/arrow routing + energy-flow
 > animation, hold-to-reveal progress ring, health-gauge red-when-low, a shared
 > popup **RevealQueue** (fixes clashing add/unlock cards), tap SFX, Alucia intro
 > gated on the tablet start-tap, **locked species can no longer be added**, the
@@ -55,6 +59,15 @@ _Last updated: 2026-07-12 (rev 5)_
    why Seagrass "couldn't be tapped." **Fixed:** both producers added to
    `_allSpecies` (now 14 entries). Same trap applies to any future species.
 
+6. **Tinting only works on a NEUTRAL sprite — a pre-coloured one can't be recoloured.**
+   The host health bar's fill sprite (`hhealthtth.png`) had bright green baked into its
+   pixels (`#3DF1AB`). Unity tints by **multiplying**, so green sprite x green tint came
+   out dark/muddy, and at low health red tint x green sprite would have gone brown — the
+   colour-by-state ramp could never look right. **Fixed:** generated a white version
+   (`hhealthtth_white.png`, same shape/alpha) and pointed the fill at it with a white base
+   colour, so the script's gradient fully drives the colour. `EcoHealthDashboard` already
+   warns about this in its own tooltip. **Any future tintable UI art must be white/greyscale.**
+
 5. **Producers have `simIndex = -1`.** `TabletEcosystemUIGPU` can't map the
    producers' `gpuSpecies` to a live sim slot, so the info panel's Add/Remove
    buttons + population count do nothing for Seagrass / Macroalgae (panel still
@@ -63,7 +76,53 @@ _Last updated: 2026-07-12 (rev 5)_
 
 ---
 
-## This session (2026-07-12) — food-web polish, popups, audio, lock enforcement
+## This session (2026-07-14) — reveal-card images, TMP, health-bar colour
+
+Host scene this session: `Assets/Aloysius/Scenes/SCENE_MainScene.unity`.
+
+### NEW ARRIVAL card images (`SpeciesAddedReveal.cs`)
+- **Root cause of "no image on the card":** `SpeciesAddedReveal.cardImages` was **empty
+  (0 entries)**. `SpeciesData` has **no image field**, so the card gets its picture from a
+  separate `List<Sprite> cardImages` that is **index-aligned with `allSpecies`**. Empty
+  list -> `_dataToSprite` resolves nothing -> `revealImage.enabled = false` -> text-only card.
+- **Fixed:** populated all **12** slots. Chose `Assets/Aloysius/Orgnanisms/` (matches the
+  food-web bubble art); the four species missing from that folder (Shark, Grouper, Moray,
+  Trevally) fall back to `Assets/Aloysius/Fishes/`. Verified at runtime — all 12 resolve.
+- **To change an image:** the component lives on **`Canvas (1)`**; edit the **Card Images**
+  list (order matches **All Species**).
+- The unlock card (`SpeciesUnlockReveal` -> `SpeciesRevealCard`) has its **own** image
+  handling and is wired separately — populating one does not populate the other.
+
+### Card text -> TextMeshPro
+- `AddedRevealCard/MsgText` converted from legacy `Text` to **`TMP_Text`**: script field
+  type changed, `using TMPro` added, component swapped, reference re-wired. Preserved
+  size 24, colour `#003A79`, top-left align, word-wrap.
+- `AddedRevealCard` is now **fully TMP** (Header, NameText, TierText, MsgText).
+- **`SpeciesRevealCard` is still ALL LEGACY** (Header, NameText, SciText, TierText, MsgText),
+  and `SpeciesUnlockReveal` still declares `public Text ...`. Converting it is the same
+  three-step process (field type -> component swap -> re-wire). **Open item.**
+
+### Host health bar — colour by state (`HealthBarBinder.cs`)
+- Added the same green -> amber -> red gradient `EcoHealthDashboard` uses, so host and
+  tablet read consistently. New toggles: **`colorFill`** (on) and **`colorPercentText`** (off).
+- Ramp: `0% #F24C4C` (red) -> `50% #FFBF33` (amber) -> `100% #59E680` (green), smoothly
+  interpolated (not banded).
+- Required the sprite fix in READ FIRST #6 to actually show correctly.
+
+### Inspector debug slider (`HealthBarBinder.cs`)
+- Added **`debugOverride`** (bool) + **`debugHealth01`** (0-1 slider) so health can be
+  faked from the Inspector to test fill/colour without a live sim — mirrors
+  `EcoHealthDashboard.manualHealth01`.
+- Marked the class **`[ExecuteAlways]`** and gated smoothing to `Application.isPlaying`,
+  so the slider tracks **instantly in edit mode**.
+- **Remember to untick `Debug Override`** or the bar stays frozen at the slider value
+  instead of reading real eco-health.
+- Note: a bar that looks "empty/white" usually just means **eco-health is genuinely 0**
+  (empty reef) — the tint is correct (red), there's simply no fill to see.
+
+---
+
+## Previous session (2026-07-12) — food-web polish, popups, audio, lock enforcement
 
 ### Scene roles (important — they are SEPARATE, not duplicates)
 - **`Assets/Aloysius/new netcode 1.unity` = the TABLET (client).** Bubbles, food web,
@@ -347,6 +406,26 @@ working via forced-event test.
   Seagrass/Macroalgae GPU species in `TabletEcosystemUIGPU`; currently `simIndex = -1`).
 - Confirm Eyestripe Surgeonfish description applied.
 
+**This session (2026-07-14) — open items:**
+- **Convert `SpeciesRevealCard` to TMP** (still all legacy Text; `SpeciesUnlockReveal`
+  still declares `public Text`). Same process as `AddedRevealCard`.
+- **Populate the unlock card's image** — `SpeciesRevealCard/RevealImage` is separate from
+  the added-card's `cardImages` and is still unset.
+- **`RevealImage` sizing** — currently 180x120 with **`preserveAspect = OFF`**, so the fish
+  is squashed. Turn preserveAspect on and resize/reposition to fill the card's empty area.
+- **CSV-driven reveal cards (in progress)** — a full CSV content system already exists
+  (`SpeciesContentDB.cs` + `StreamingAssets/SpeciesContent.csv` + `SpeciesImages/`), and
+  `ModalController` / `SpeciesInfoPanel` already use it. Goal: have the reveal cards pull
+  name/role/description/image from the CSV via `SpeciesContentDB.Get(idOrName)` and
+  `SpeciesContentDB.GetImage(imageFile)` instead of the hand-wired `cardImages` list.
+  **Not implemented yet.**
+- **Behavioural copy pass** — the "NEW ARRIVAL" line should read as an *event*
+  ("Yellowstripe scad are forming schooling groups in open water"), but the five consumers
+  still use *factual* descriptions ("Medium schooling Indo-Pacific rabbitfish that..."),
+  while Seagrass/Macroalgae/Scad already use the behavioural voice. Decide whether the CSV
+  needs **two columns** (factual `description` for the modal, behavioural `addedMessage`
+  for the arrival card) and rewrite the inconsistent ones.
+
 **Asset note (shark model):**
 - Explored AI 3D generation (Tripo / Meshy) for a stylized blacktip shark. AI topology
   is poor by default; Meshy's **Remesh** produced clean quad topology. Tripo gates export
@@ -369,6 +448,12 @@ working via forced-event test.
 - **Singletons (`...Instance`) are null in edit mode** — diagnostics that read them must
   run in Play.
 - **Isolated host = empty sim** — population only arrives with the tablet connected.
+- **Tint needs white art** — a pre-coloured sprite multiplied by a tint gives muddy/wrong
+  colours (see READ FIRST #6). Author tintable UI art in white/greyscale.
+- **Sprite edge artefacts** (white lines / fringing that don't appear in Photoshop) are an
+  *import* issue, not the PNG: set **Mesh Type = Full Rect**, **Generate Mip Maps = OFF**,
+  **Wrap Mode = Clamp**, **Alpha Is Transparency = ON** for UI sprites.
+- **An empty-looking health bar usually means health is genuinely 0**, not a broken binder.
 - `Boids_Demo` shark+water shader crash warning still applies (JunHeng's note).
 
 ---
@@ -395,6 +480,21 @@ working via forced-event test.
 - `TabletAddRemoveUIGPU.cs` (JunHeng's) + `EcosystemUnlockManagerGPU.cs` (JunHeng's) —
   Add gated on unlock state; new `IsUnlocked(SpeciesDataGPU)` overload
 - `HealthBarBinder.cs` — deprecation fix; removed unused `percentFormat`
+
+**Edited (2026-07-14):**
+- `SpeciesAddedReveal.cs` — `msgText` field `Text` -> `TMP_Text`; `using TMPro`
+- `HealthBarBinder.cs` — `HealthColor` green->amber->red gradient (`colorFill`,
+  `colorPercentText`); `debugOverride` + `debugHealth01` Inspector slider;
+  `[ExecuteAlways]`; smoothing gated to play mode
+
+**New assets (2026-07-14):**
+- `Assets/Aloysius/New/hhealthtth_white.png` — white/neutral copy of the health-bar fill
+  sprite so the colour ramp can tint it (original had green baked in)
+
+**Scene changes (2026-07-14, `SCENE_MainScene`):**
+- `Canvas (1)` -> `SpeciesAddedReveal.cardImages` populated (12 sprites)
+- `AddedRevealCard/MsgText` legacy `Text` -> `TextMeshProUGUI`, reference re-wired
+- `Canvas (1)/Health/healthbar` fill Image -> `hhealthtth_white`, base colour white
 
 **Edited (earlier):**
 - `SpeciesBubble.cs` (shared) — TapPunch fix + OnTap routes to the info panel

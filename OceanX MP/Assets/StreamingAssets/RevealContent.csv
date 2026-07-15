@@ -1,15 +1,15 @@
-﻿id,speciesName,role,blurb,imageFile
-blacktip_reef_shark,Blacktip Reef Shark,Keystone Species,The blacktip reef shark has returned as the top predator!,blacktip.png
-giant_moray,Giant Moray,Tertiary Consumer,Large Indo-Pacific ambush predators with prey-grabbing pharyngeal jaws.,Moray.png
-brown_marbled_grouper,Brown-Marbled Grouper,Tertiary Consumer,Brown-marbled grouper have taken up ambush positions in the reef.,Grouper.png
-bluefin_trevally,Bluefin Trevally,Secondary Consumer,Bluefin trevally are hunting schooling fish across the reef.,Trevally.png
-russells_snapper,Russell's Snapper,Secondary Consumer,Russell's snapper have taken up positions across the reef.,RusselsSnapper.png
-bluespotted_ribbontail_ray,Bluespotted Ribbontail Ray,Secondary Consumer,Bluespotted ribbontail rays are gliding across the reef floor.,blueray.png
-yellowstripe_scad,Yellowstripe Scad,Secondary Consumer,Yellowstripe scad are forming schooling groups in open water.,scad.png
-streaked_spinefoot,Streaked Spinefoot,Primary Consumer,"Medium schooling Indo-Pacific rabbitfish that graze algae, armed with venomous spines.",Streakedspinefoot.png
-bullethead_parrotfish,Bullethead Parrotfish,Primary Consumer,"Medium Indo-Pacific reef herbivore, that scrapes coral algae, and changes sex.",Parrotfish.png
-eyestripe_surgeonfish,Eyestripe Surgeonfish,Primary Consumer,"Solitary herbivores that scrape algal films, wields scalpel-like spines for defence.",Eyestripe.png
-fringelip_mullet,Fringelip Mullet,Primary Consumer,Schooling herbivore that grazes algae and detritus off sandy reef floors.,Mullet.png
-reticulated_damselfish,Reticulated Damselfish,Primary Consumer,"Small territorial Indo-Pacific reef omnivores, aggressive daytime feeders sheltering nightly.",reticulated.png
-seagrass,Seagrass,Primary Producer,"Seagrass meadows are taking root, giving the reef food, shelter and oxygen.",
-macroalgae,Macroalgae,Primary Producer,"Macroalgae are spreading across the reef, feeding the grazers that live here.",
+﻿id,speciesName,role,sciName,FirstAddedMessage,unlockMessage,imageFile,unlockImageFile
+blacktip_reef_shark,Blacktip Reef Shark,Keystone Species,Carcharhinus melanopterus,The blacktip reef shark has returned as the top predator!,"Timid solitary reef shark that hunts fish, mollusks, crustaceans, and occasionally small rays.",blacktip.png,SharkUnlock.png,
+giant_moray,Giant Moray,Tertiary Consumer,Gymnothorax javanicus,Large Indo-Pacific ambush predators with prey-grabbing pharyngeal jaws.,Large Indo-Pacific ambush predators with prey-grabbing pharyngeal jaws.,Moray.png,MorayUnlock.png,
+brown_marbled_grouper,Brown-Marbled Grouper,Tertiary Consumer,Epinephelus fuscoguttatus,Brown-marbled grouper have taken up ambush positions in the reef.,Solitary camouflaged reef ambush predator. Hunts fish and crustaceans.,Grouper.png,GrouperUnlock.png,
+bluefin_trevally,Bluefin Trevally,Secondary Consumer,Caranx melampygus,Bluefin trevally are hunting schooling fish across the reef.,Fast blue-finned reef predator that hunts fish using ambush and cooperative tactics.,Trevally.png,TrevallyUnlock.png,
+russells_snapper,Russell's Snapper,Secondary Consumer,Lutjanus russellii,Russell's snapper have taken up positions across the reef.,"Silver-yellow Indo-Pacific reef snappers that hunt fish, crustaceans, and cephalopods near seafloor.",RusselsSnapper.png,RusselUnlock.png,
+bluespotted_ribbontail_ray,Bluespotted Ribbontail Ray,Secondary Consumer,Taeniura lymma,Bluespotted ribbontail rays are gliding across the reef floor.,"Docile reef stingray with venomous spines, foraging invertebrates on tidal flats.",blueray.png,BluerayUnlock.png,
+yellowstripe_scad,Yellowstripe Scad,Secondary Consumer,Selaroides leptolepis,Yellowstripe scad are forming schooling groups in open water.,Small schooling Indo-Pacific fish that eat zooplankton and are vital prey for reef predators.,scad.png,ScadUnlock.png,
+streaked_spinefoot,Streaked Spinefoot,Primary Consumer,Siganus javus,"Medium schooling Indo-Pacific rabbitfish that graze algae, armed with venomous spines.","Medium schooling Indo-Pacific rabbitfish that graze algae, armed with venomous spines.",Streakedspinefoot.png,StreakedUnlock.png,
+bullethead_parrotfish,Bullethead Parrotfish,Primary Consumer,Chlorurus sordidus,"Medium Indo-Pacific reef herbivore, that scrapes coral algae, and changes sex.","Medium Indo-Pacific reef herbivore, that scrapes coral algae, and changes sex.",Parrotfish.png,ParrotfishUnlock.png,
+eyestripe_surgeonfish,Eyestripe Surgeonfish,Primary Consumer,Acanthurus dussumieri,"Solitary herbivores that scrape algal films, wields scalpel-like spines for defence.","Solitary herbivores that scrape algal films, wields scalpel-like spines for defence.",Eyestripe.png,EyestripeUnlock.png,
+fringelip_mullet,Fringelip Mullet,Primary Consumer,Crenemugil crenilabis,Schooling herbivore that grazes algae and detritus off sandy reef floors.,Schooling herbivore that grazes algae and detritus off sandy reef floors.,Mullet.png,MulletUnlock.png,
+reticulated_damselfish,Reticulated Damselfish,Primary Consumer,Dascyllus reticulatus,"Small territorial Indo-Pacific reef omnivores, aggressive daytime feeders sheltering nightly.","Small territorial Indo-Pacific reef omnivores, aggressive daytime feeders that shelter nightly.",reticulated.png,ReticulatedUnlock.png,
+seagrass,Seagrass,Primary Producer,Halophila,"Seagrass meadows are taking root, giving the reef food, shelter and oxygen.","Seagrass meadows are taking root, giving the reef food, shelter and oxygen.",,,
+macroalgae,Macroalgae,Primary Producer,,"Macroalgae are spreading across the reef, feeding the grazers that live here.","Large marine algae anchored to reefs, producing oxygen and feeding grazers.",,,

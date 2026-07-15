@@ -10,7 +10,9 @@ using UnityEngine;
 /// while the tablet shows the long, detailed description. Two sheets, two audiences, edited independently
 /// by the fact-checkers.
 ///
-/// Columns: <c>id, speciesName, role, blurb, imageFile</c>. The parser is header-driven — reorder or add
+/// Columns: <c>id, speciesName, role, sciName, FirstAddedMessage, unlockMessage, imageFile</c> — drives BOTH
+/// big-screen cards: <c>FirstAddedMessage</c> for the ADDED/arrival card (SpeciesAddedReveal) and
+/// <c>unlockMessage</c> for the UNLOCK card (SpeciesUnlockReveal). The parser is header-driven — reorder or add
 /// columns freely; unknown columns are ignored, missing ones read as empty. Rows are indexed by BOTH their
 /// stable <c>id</c> and their <c>speciesName</c>. The big-screen photos live in their OWN folder
 /// (<c>StreamingAssets/RevealImages</c>) so they never collide with the TABLET's images (which the tablet
@@ -20,7 +22,10 @@ public static class RevealContentDB
 {
     public class Entry
     {
-        public string id, speciesName, role, blurb, imageFile;
+        // firstAddedMessage = the ADDED/arrival card line; unlockMessage = the UNLOCK card line (may differ).
+        // imageFile = the ADDED/arrival card photo; unlockImageFile = the UNLOCK card photo (both from
+        // StreamingAssets/RevealImages). Leave unlockImageFile blank to reuse the arrival photo.
+        public string id, speciesName, role, sciName, firstAddedMessage, unlockMessage, imageFile, unlockImageFile;
     }
 
     const string CsvFile = "RevealContent.csv";
@@ -80,11 +85,14 @@ public static class RevealContentDB
 
             var entry = new Entry
             {
-                id          = id,
-                speciesName = name,
-                role        = Field(row, col, "role"),
-                blurb       = Field(row, col, "blurb"),
-                imageFile   = Field(row, col, "imagefile"),
+                id            = id,
+                speciesName   = name,
+                role          = Field(row, col, "role"),
+                sciName           = Field(row, col, "sciname"),
+                firstAddedMessage = Field(row, col, "firstaddedmessage"),
+                unlockMessage     = Field(row, col, "unlockmessage"),
+                imageFile         = Field(row, col, "imagefile"),
+                unlockImageFile   = Field(row, col, "unlockimagefile"),
             };
 
             // Index under both the stable id and the display name so either resolves the same entry.

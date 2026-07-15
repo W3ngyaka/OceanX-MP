@@ -20,7 +20,9 @@ public static class SpeciesContentDB
     }
 
     const string CsvFile = "SpeciesContent.csv";
-    const string ImageFolder = "SpeciesImages";
+
+    /// <summary>StreamingAssets subfolder holding this sheet's images. ContentService warms it on Android.</summary>
+    public const string ImageFolderName = "SpeciesImages";
 
     static Dictionary<string, Entry> _entries;
     static readonly Dictionary<string, Sprite> _spriteCache = new Dictionary<string, Sprite>();
@@ -98,26 +100,31 @@ public static class SpeciesContentDB
     static string Field(List<string> row, Dictionary<string, int> col, string key)
         => col.TryGetValue(key, out int i) && i < row.Count ? row[i] : "";
 
-    /// <summary>Load a sprite for an entry's image from StreamingAssets/SpeciesImages. Cached; null if missing.</summary>
+    /// <summary>Every image name this sheet references, de-duplicated. ContentService warms these out of
+    /// the APK on Android so <see cref="GetImage"/> can read them.</summary>
+    public static IEnumerable<string> AllImageRefs()
+    {
+        EnsureLoaded();
+        var seen = new HashSet<string>();
+        foreach (var e in _entries.Values)   // rows are indexed twice (id + name), so de-dup
+        {
+            if (!string.IsNullOrWhiteSpace(e.imageFile) && seen.Add(e.imageFile)) yield return e.imageFile;
+            if (!string.IsNullOrWhiteSpace(e.iucnImage) && seen.Add(e.iucnImage)) yield return e.iucnImage;
+        }
+    }
+
+    /// <summary>Load a sprite for an entry's image (warmed cache → baked StreamingAssets). Null if missing.</summary>
     public static Sprite GetImage(string imageFile)
     {
         if (string.IsNullOrWhiteSpace(imageFile)) return null;
-        if (_spriteCache.TryGetValue(imageFile, out var cached)) return cached;
+        string key = imageFile.Trim();
+        if (_spriteCache.TryGetValue(key, out var cached)) return cached;
 
-        string path = Path.Combine(Application.streamingAssetsPath, ImageFolder, imageFile);
-        Sprite sprite = null;
-        if (File.Exists(path))
-        {
-            try
-            {
-                var bytes = File.ReadAllBytes(path);
-                var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-                if (tex.LoadImage(bytes))
-                    sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100f);
-            }
-            catch (System.Exception ex) { Debug.LogWarning($"[SpeciesContentDB] image load failed '{imageFile}': {ex.Message}"); }
-        }
-        _spriteCache[imageFile] = sprite; // cache even null so we don't re-hit disk each open
+        Sprite sprite = ContentService.LoadSprite(ImageFolderName, key);
+
+        // Only cache a HIT. Caching a miss would freeze a card blank for the session if it was opened
+        // before ContentService finished warming the image cache on Android.
+        if (sprite != null) _spriteCache[key] = sprite;
         return sprite;
     }
 }

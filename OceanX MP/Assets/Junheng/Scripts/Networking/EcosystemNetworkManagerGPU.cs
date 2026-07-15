@@ -22,7 +22,8 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     // tablet's Overpopulated badge uses the simulation's own rule instead of re-deriving one.
     private NetworkList<int> _speciesStatus;
     // Live ecosystem health in 0..1, written by the server each sync, read by the tablet health bar.
-    private readonly NetworkVariable<float> _ecoHealth = new NetworkVariable<float>(0f);
+    private readonly NetworkVariable<float> _ecoHealth = new NetworkVariable<float>(
+        0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     private float _syncTimer;
 
     // Server-authoritative "the experience has begun" flag for the cross-device attract flow:

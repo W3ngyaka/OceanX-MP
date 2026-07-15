@@ -3230,7 +3230,7 @@ RectTransform:
   m_GameObject: {fileID: 421644165}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.128521, y: 1.04483, z: 1.04483}
+  m_LocalScale: {x: 1.21979, y: 1.12933, z: 1.12933}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2120253109}
@@ -3238,7 +3238,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -23, y: 2}
+  m_AnchoredPosition: {x: -44, y: -36}
   m_SizeDelta: {x: -80, y: -160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &421644167
@@ -4065,7 +4065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: cafaf2c4b30e8fb44837dc6c5675d763, type: 2}
-  cardImage: {fileID: 21300000, guid: 867d6917ecda23b48a30abb7d7e90669, type: 3}
+  cardImage: {fileID: 21300000, guid: a1a7e5b0835052c448920ce97b6bf730, type: 3}
   lockOverlay: {fileID: 1085469882}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 743127246}
@@ -5435,7 +5435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 0b6ffecf8c4d9c645ac91b3295e44834, type: 2}
-  cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
+  cardImage: {fileID: 21300000, guid: 11bf58671a59fc649aede6c1268eec06, type: 3}
   lockOverlay: {fileID: 931584196}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 337056082}
@@ -7957,7 +7957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 4fed5ebcf5d8c474bba2986df708624d, type: 2}
-  cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
+  cardImage: {fileID: 21300000, guid: 87deee31aa3eedf469af8f186a5957a3, type: 3}
   lockOverlay: {fileID: 473747244}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1061951277}
@@ -8160,7 +8160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 6dcf9665d96952c47a27495e56cdbe28, type: 2}
-  cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
+  cardImage: {fileID: 21300000, guid: 16725ed5bd39a5843991eaf725e4d5fc, type: 3}
   lockOverlay: {fileID: 1044990424}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 505508136}
@@ -8473,7 +8473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: e92ec5b9c4d74d34c944ce3e9436e9df, type: 2}
-  cardImage: {fileID: 21300000, guid: a96f9b39e3918944d908e76f8a07043f, type: 3}
+  cardImage: {fileID: 21300000, guid: cd270857e4dc98049a2c159a053b31c8, type: 3}
   lockOverlay: {fileID: 1409539485}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 2024261757}
@@ -9717,7 +9717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: b6fb41d81fc1c5f4aa9fc125c2dd1f05, type: 2}
-  cardImage: {fileID: 21300000, guid: fae0ad97b2d41c543b6fadc31733c2e8, type: 3}
+  cardImage: {fileID: 21300000, guid: 9560e1283f084614980c8da1472f055f, type: 3}
   lockOverlay: {fileID: 786875126}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 554904588}
@@ -10001,7 +10001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 8da02fb278092b44e9ea8359885bbb19, type: 2}
-  cardImage: {fileID: 21300000, guid: d19359bc442833144a44cf0e9b490b7c, type: 3}
+  cardImage: {fileID: 21300000, guid: 6b195d178d5bae64494b80f91df8ef83, type: 3}
   lockOverlay: {fileID: 1880508276}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1397172175}
@@ -11228,7 +11228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: d35c87e6d560cb645bfd49d6025d499b, type: 2}
-  cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
+  cardImage: {fileID: 21300000, guid: 262848b5af08af140bb6667404cf2132, type: 3}
   lockOverlay: {fileID: 960665206}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1392149313}
@@ -14395,7 +14395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: efb62a89b9b8fbb4ba41c83625e8b84d, type: 2}
-  cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
+  cardImage: {fileID: 21300000, guid: 4a22e7398b1f4904494073c1e8dd0df2, type: 3}
   lockOverlay: {fileID: 276752664}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1431128372}
@@ -14695,7 +14695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: b39a0af90408e7b4099758d98c5d3356, type: 2}
-  cardImage: {fileID: 21300000, guid: af8e9a35f10efd643867521111017832, type: 3}
+  cardImage: {fileID: 21300000, guid: 1f1de030d9a3d6b40a3435e1887a960c, type: 3}
   lockOverlay: {fileID: 452223003}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 2083927938}
@@ -15987,7 +15987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: f283ade99c2bdb54f89c72a7f577559b, type: 2}
-  cardImage: {fileID: 21300000, guid: 88f3726149cea5d4b9cf35456904c1b5, type: 3}
+  cardImage: {fileID: 21300000, guid: 989baedd01d550a44834cf6692453ff2, type: 3}
   lockOverlay: {fileID: 116770308}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 327334449}
@@ -18288,7 +18288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeciesBubble
   data: {fileID: 11400000, guid: 6dfb9df93974eb6469c12d2cd7f8ce73, type: 2}
-  cardImage: {fileID: 21300000, guid: 23222668c21cc324b954f5d97b1a30bc, type: 3}
+  cardImage: {fileID: 21300000, guid: 4e88177f56ef14b449ca0181f4180fdb, type: 3}
   lockOverlay: {fileID: 1204667255}
   glowRing: {fileID: 0}
   nameLabel: {fileID: 1261258033}
@@ -19513,7 +19513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2704471089967960307, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: m_FillAmount
-      value: 0.599
+      value: 0.64
       objectReference: {fileID: 0}
     - target: {fileID: 2704471090199120230, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: m_Name

@@ -36,22 +36,10 @@ public class CurrentOrganismsGrid : MonoBehaviour
 
             if (pop <= 0) continue; // only show species actually added
 
-            // The bubble's own Image is just the bubble shape/background.
-            // The actual fish photo lives on a nested child Image (e.g. "Sharkimage").
-            // Find the first child Image (excluding the bubble's own) that isn't a
-            // lock/overpop/glow overlay.
-            Sprite icon = bubble.cardImage; // fallback
-            var ownImage = bubble.GetComponent<UnityEngine.UI.Image>();
-            var childImages = bubble.GetComponentsInChildren<UnityEngine.UI.Image>(true);
-            foreach (var childImg in childImages)
-            {
-                if (childImg == ownImage) continue;
-                if (childImg.sprite == null) continue;
-                string n = childImg.gameObject.name.ToLower();
-                if (n.Contains("lock") || n.Contains("overpop") || n.Contains("glow") || n.Contains("ring")) continue;
-                icon = childImg.sprite;
-                break;
-            }
+            // Card icon comes straight from the bubble's dedicated cardImage sprite —
+            // the single source of truth, set per-species in the inspector. (Previously
+            // this scavenged the first child Image, which was fragile and name-dependent.)
+            Sprite icon = bubble.cardImage;
 
             var cardGO = Instantiate(organismCardPrefab, gridContent);
             var cardData = cardGO.GetComponent<OrganismCardData>();

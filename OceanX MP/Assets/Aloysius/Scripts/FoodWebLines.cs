@@ -70,6 +70,7 @@ public class FoodWebLines : MonoBehaviour
     // Deactivating this layer kills its coroutines permanently; Unity does not resume
     // them on re-enable and Start() only runs once. OnEnable re-arms it every time.
     private bool _pulseRunning;
+    private int _pulseIdx;   // persists across tab switches so the web resumes, not restarts
 
     void OnEnable()
     {
@@ -197,13 +198,12 @@ public class FoodWebLines : MonoBehaviour
         }
         if (links.Count == 0) { _pulseRunning = false; yield break; }
 
-        int idx = 0;
         while (true)
         {
             while (_revealActive) yield return null;   // paused during a hold reveal
 
-            var link = links[idx % links.Count];
-            idx++;
+            var link = links[_pulseIdx % links.Count];
+            _pulseIdx++;
             Transform from = link.Key, to = link.Value;
             if (from == null || to == null) { yield return null; continue; }
 

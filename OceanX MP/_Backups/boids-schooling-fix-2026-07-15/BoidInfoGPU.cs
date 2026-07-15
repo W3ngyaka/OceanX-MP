@@ -80,16 +80,11 @@ namespace OceanX.BoidsGPU
         public float OriginalIndex;
 
         /// <summary>
-        /// Entry-sprint state, armed once by <see cref="BoidSpawnerGPU.SpawnBoids"/> and then owned by
-        /// the compute shader:
-        /// <list type="bullet">
-        /// <item>-1 — spawned at an off-screen entry point and has not crossed into the simulation
-        /// bounds yet; the fish sprints until it enters.</item>
-        /// <item>&gt; 0 — seconds of post-entry sprint still owed, counting down to 0.</item>
-        /// <item>0 — entry finished, or the fish spawned inside the bounds; it never sprints again.</item>
-        /// </list>
-        /// The shader only reacts to a boid being outside the bounds while this is -1, so a settled fish
-        /// that drifts out is not mistaken for a new arrival and re-launched at MaxSpeed.
+        /// Seconds of "entry sprint" still owed to this boid. The compute shader refills it to
+        /// _EntryBoostDuration while the boid is strictly outside the simulation bounds (freshly
+        /// spawned off-screen), then counts it down once inside so the fish keeps swimming fast for
+        /// a moment after entering before settling. 0 for normal fish. Left at its default (0) on
+        /// spawn — the shader manages it entirely.
         /// </summary>
         public float EntryBoostTimeRemaining;
     }

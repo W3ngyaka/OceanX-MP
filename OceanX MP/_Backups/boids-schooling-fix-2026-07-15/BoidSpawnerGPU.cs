@@ -50,23 +50,6 @@ namespace OceanX.BoidsGPU
         {
             InitializeBoidsSpawnData(simulationAreaBounds);
 
-            // Arm the entry sprint, once, for the fish that were placed OUTSIDE the simulation bounds —
-            // i.e. a school relocated to an off-screen entry point (see BoidSpawnerGPUMultiTargets.
-            // RelocateGroupToEntryPoint). -1 is the "spawned outside, hasn't crossed in yet" sentinel the
-            // compute shader looks for; it sprints until it enters, then counts down _EntryBoostDuration
-            // and settles. Fish spawned inside the box start at 0 and never sprint.
-            //
-            // Arming it here rather than in the shader is what lets the shader stop treating "currently
-            // outside the bounds" as "newly arrived" — a settled fish that later strays over the boundary
-            // is now left alone instead of being re-launched at MaxSpeed. Runs BEFORE the preservation
-            // pass below on purpose, so existing fish keep their own live entry state.
-            for (int i = 0; i < _boids.Length; i++)
-            {
-                BoidInfoGPU boid = _boids[i];
-                boid.EntryBoostTimeRemaining = simulationAreaBounds.Contains(boid.Position) ? 0f : -1f;
-                _boids[i] = boid;
-            }
-
             // Restore the LIVE state of fish that existed before this rebuild so they carry on seamlessly
             // instead of snapping back to a spawn pose. As well as position + direction, this preserves the
             // motion (speed / acceleration / angular velocity) AND the swim-animation state

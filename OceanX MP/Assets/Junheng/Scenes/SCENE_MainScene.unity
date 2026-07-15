@@ -8085,6 +8085,7 @@ MonoBehaviour:
   _pathSizeMultiplierRange: {x: 0.35, y: 0.9}
   _entrySpawnJitterRadius: 4
   _entrySpawnMinSeparation: 3
+  _entryMarkerDepthTolerance: 3
   _ratioBandLow: 1
   _ratioBandHigh: 3
   _growRate: 0.3
@@ -162503,7 +162504,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 48be8a9c1b5b01940a41990a6780dcda, type: 3}
   - {fileID: 21300000, guid: 27b1b7e9d29a17a43bddaf284e7a4271, type: 3}
   - {fileID: 21300000, guid: a78e437d9de6c8b49b41146b9f2e989d, type: 3}
-  holdSeconds: 4
+  holdSeconds: 2
   fadeDuration: 0.4
   pollInterval: 0.25
   hintSource: {fileID: 1441107216}
@@ -162542,7 +162543,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d35c87e6d560cb645bfd49d6025d499b, type: 2}
   - {fileID: 11400000, guid: 8da02fb278092b44e9ea8359885bbb19, type: 2}
   - {fileID: 11400000, guid: 4fed5ebcf5d8c474bba2986df708624d, type: 2}
-  revealHoldSeconds: 5.5
+  revealHoldSeconds: 2
   fadeDuration: 0.4
   hintDelayAfterReveal: 0.4
 --- !u!114 &1441107217

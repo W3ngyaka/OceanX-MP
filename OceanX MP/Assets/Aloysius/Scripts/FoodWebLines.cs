@@ -66,9 +66,27 @@ public class FoodWebLines : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
+    // NOTE: pulse startup moved to OnEnable so the ambient web survives tab switches.
+    // Deactivating this layer kills its coroutines permanently; Unity does not resume
+    // them on re-enable and Start() only runs once. OnEnable re-arms it every time.
+    private bool _pulseRunning;
+
+    void OnEnable()
     {
-        if (showAmbientWeb) StartCoroutine(PulseLoop());
+        if (showAmbientWeb && !_pulseRunning)
+        {
+            _pulseRunning = true;
+            StartCoroutine(PulseLoop());
+        }
+    }
+
+    void OnDisable()
+    {
+        // Coroutines are already dead here; just reset so OnEnable restarts cleanly
+        // and no stale reveal/pulse state carries across the tab switch.
+        _pulseRunning = false;
+        _revealActive = false;
+        ClearPulse();
     }
 
     void Update()
@@ -177,7 +195,7 @@ public class FoodWebLines : MonoBehaviour
                 if (pred != null && seen.Add(Key(b, pred)))
                     links.Add(new KeyValuePair<Transform, Transform>(b.transform, pred.transform));
         }
-        if (links.Count == 0) yield break;
+        if (links.Count == 0) { _pulseRunning = false; yield break; }
 
         int idx = 0;
         while (true)

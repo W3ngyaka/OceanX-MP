@@ -707,15 +707,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.742865
+      value: 0.6932838
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -16.436956
+      value: -14.930886
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.632109
+      value: 3.2401876
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalRotation.w
@@ -17967,6 +17967,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: 4023981112819473776, guid: 09b07def93206674c838a112bb9c6e43, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 5cb625ec19658aa4db5014d6bad643d3, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: 008654d59d1d8e54e8790141b6867f96, type: 2}
     Targets:
     - {fileID: 0}
@@ -27435,6 +27436,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: -5495902117074765545, guid: b53e6c192d0900b4abb7e943db8f3b2a, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 720913eae016c1e4c8fd841e50f865a1, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: 8fffb4203f662d043ac15c88ecccaf1e, type: 2}
     Targets:
     - {fileID: 0}
@@ -36872,7 +36874,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.742865
+      value: 0.6932838
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -36880,7 +36882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.632109
+      value: 3.2401876
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -65356,6 +65358,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: -5495902117074765545, guid: a0fcc6396a06d7b4f95663b47c11c381, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 0354574ddc1859f46b1ea79a5ff0eff3, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: 46d3e8b5923c3d1479f33b342f9e9bb8, type: 2}
     Targets:
     - {fileID: 0}
@@ -69257,6 +69260,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: -5495902117074765545, guid: 963e266e13d3950429e55c006f2e7798, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 4a7ee81ec711fab40b5fc06591a267d7, type: 2}
+    BoidEyeMaterial: {fileID: 2100000, guid: 0e7714754d5da44459ab997b7ef8b3fc, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: 1a9e8698e0ddb734689594b712273353, type: 2}
     Targets:
     - {fileID: 0}
@@ -77254,6 +77258,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: -5495902117074765545, guid: 0271419c58dc76d489561722e1884d66, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 5ac6afe6bbe84524a88132996c312013, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: e739b98a03c861d44860eafbb568b102, type: 2}
     Targets:
     - {fileID: 0}
@@ -80213,6 +80218,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: -5495902117074765545, guid: abc72da2598c7164fb77221e0f1d6a83, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 394b6283024b80b42b2a23cb796902ed, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: 57f556af62b09bd43a6685bf176c7f70, type: 2}
     Targets:
     - {fileID: 0}
@@ -131890,6 +131896,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: -5495902117074765545, guid: 7ed5f236dbdc5ba40b210b29e0833153, type: 3}
     BoidMaterial: {fileID: 2100000, guid: da22b047ad4dd104ea2d32ba62827423, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: e5057589a9bfe4340bf4b696e3866375, type: 2}
     Targets:
     - {fileID: 0}
@@ -141131,6 +141138,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: -5495902117074765545, guid: 5ca9e3f1b218aa245a2fe7bd85bb78c7, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 69c391ed679478c498b5ad38a4f1e1a0, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: a02bbd14df4f6c44e9e79331a78c8ccf, type: 2}
     Targets:
     - {fileID: 0}
@@ -148325,6 +148333,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: 2821799040723017115, guid: dfa24d62b9fa9a148a8abbe1506fe3f2, type: 3}
     BoidMaterial: {fileID: 2100000, guid: a2891ae8528222e4390d8275984f628f, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: f297a2d4ba71f584ebb088dc5618eaea, type: 2}
     Targets:
     - {fileID: 0}
@@ -179204,15 +179213,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.742865
+      value: 0.6932838
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -16.436956
+      value: -14.930886
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.632109
+      value: 3.2401876
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -180398,6 +180407,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: -5495902117074765545, guid: 5fef044e254662b4fb8ed64af7d0d23c, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 2c9098a237f98404b8a1f54d575253c4, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: c9c45c868cfbed8458ee38a94a4ce706, type: 2}
     Targets:
     - {fileID: 0}
@@ -187196,6 +187206,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: -5495902117074765545, guid: 47b3ddb44b3e5b24aa0b7f58b966a117, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 8bce15053aa6f4042ad1a6fd11bb4fa5, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: 1ad5c3d90a7d9a147ad18ee8018a1008, type: 2}
     Targets:
     - {fileID: 0}
@@ -238422,6 +238433,7 @@ MonoBehaviour:
     MinSpawnDistanceBetweenBoids: 0.5
     BoidMesh: {fileID: 4023981112819473776, guid: 09b07def93206674c838a112bb9c6e43, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 5cb625ec19658aa4db5014d6bad643d3, type: 2}
+    BoidEyeMaterial: {fileID: 0}
     FishSchoolProperties: {fileID: 11400000, guid: c9d02622afc8d50409cc9651e7903922, type: 2}
     Targets:
     - {fileID: 0}

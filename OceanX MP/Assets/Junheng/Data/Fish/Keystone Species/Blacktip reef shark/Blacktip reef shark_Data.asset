@@ -22,7 +22,7 @@ MonoBehaviour:
   FishPerSchool: 1
   MaxSchools: 6
   PathStyle: 0
-  PreferredDepthBand: {x: 0.45, y: 0.85}
+  PreferredDepthBand: {x: 0.25, y: 0.65}
   AllowSchoolMerging: 0
   MergeChancePerTick: 0.25
   SplitChancePerTick: 0.08

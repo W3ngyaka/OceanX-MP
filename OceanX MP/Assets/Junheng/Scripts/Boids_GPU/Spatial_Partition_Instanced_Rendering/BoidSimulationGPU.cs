@@ -25,6 +25,12 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         [SerializeField] private SpatialPartitionGPU _spatialPartitionGPU = null;
         [SerializeField] private BoidSpawnerGPU[] _gpuBoidSpawners = null;
 
+        [Tooltip("Baked distance field of the real reef geometry (OceanX > Bake Reef SDF). When present, " +
+                 "fish steer off the actual rock and coral surface instead of the box obstacle affecters, " +
+                 "which is both more accurate and cheaper. Leave empty — or leave it unbaked — to fall " +
+                 "back to the affecters.")]
+        [SerializeField] private ReefSDFVolume _reefSDF = null;
+
         [Header("Options: ")]
         [Tooltip("Should the fish school settings be updated every frame or not. This is " +
             "useful when tweaking the behavior settings of the fish species.")]
@@ -167,6 +173,53 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         public override BoidSpawnerBase[] GetBoidSpawners()
         {
             return _gpuBoidSpawners;
+        }
+
+        // Hands the baked reef distance field to the kernel. _ReefSDFEnabled is the switch the shader
+        // reads: 0 means "no field", and it falls back to steering off the box obstacle affecters, so a
+        // scene that was never baked still behaves exactly as it did before.
+        //
+        // A Texture3D must always be bound even when disabled — an unbound texture in a compute shader is
+        // a hard error on some platforms, whether or not the sampling code actually runs.
+        private void BindReefSDF()
+        {
+            bool usable = _reefSDF != null && _reefSDF.IsBaked;
+            _boidsComputeShader.SetInt("_ReefSDFEnabled", usable ? 1 : 0);
+
+            if (usable)
+            {
+                _boidsComputeShader.SetTexture(_boidsKernelId, "_ReefSDF", _reefSDF.Field);
+                _boidsComputeShader.SetVector("_ReefSDFMin", _reefSDF.BakedMin);
+                _boidsComputeShader.SetVector("_ReefSDFSize", _reefSDF.BakedSize);
+                _boidsComputeShader.SetFloat("_ReefSDFVoxelSize", _reefSDF.BakedVoxelSize);
+            }
+            else
+            {
+                _boidsComputeShader.SetTexture(_boidsKernelId, "_ReefSDF", GetPlaceholderSDF());
+                _boidsComputeShader.SetVector("_ReefSDFMin", Vector3.zero);
+                _boidsComputeShader.SetVector("_ReefSDFSize", Vector3.one);
+                _boidsComputeShader.SetFloat("_ReefSDFVoxelSize", 1f);
+            }
+        }
+
+        // A 1x1x1 stand-in bound when there is no baked field. There is no built-in Texture3D equivalent of
+        // Texture2D.whiteTexture, and leaving the binding empty is a hard error on some platforms even
+        // though the sampling path is switched off. Reports a huge distance, so if it ever WERE sampled it
+        // would read as "no reef anywhere near" rather than steering fish into something.
+        private Texture3D _placeholderSDF = null;
+        private Texture3D GetPlaceholderSDF()
+        {
+            if (_placeholderSDF != null) return _placeholderSDF;
+            _placeholderSDF = new Texture3D(1, 1, 1, TextureFormat.RHalf, false)
+            {
+                name = "ReefSDF_Placeholder",
+                hideFlags = HideFlags.HideAndDontSave,
+                filterMode = FilterMode.Bilinear,
+                wrapMode = TextureWrapMode.Clamp
+            };
+            _placeholderSDF.SetPixels(new[] { new Color(1e6f, 0f, 0f, 0f) });
+            _placeholderSDF.Apply(false, false);
+            return _placeholderSDF;
         }
 
         // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
@@ -319,6 +372,7 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             // Push the exit-stop distance too (where a leaving fish halts at its exit point).
             _boidsComputeShader.SetFloat("_ExitStopDistance", _exitStopDistance);
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_Affecters", _affectersComputeBuffer);
+            BindReefSDF();
 
             // Update the affecters data on the GPU to reflect their newly updated position.
             UpdateSimulationAffecters();

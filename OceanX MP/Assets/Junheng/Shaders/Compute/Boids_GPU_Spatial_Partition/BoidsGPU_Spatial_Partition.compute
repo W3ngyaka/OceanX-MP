@@ -44,6 +44,45 @@ float _EntryBoostDuration;
 // EcosystemSimulationGPU culls the school. Driven from BoidSimulationGPU each frame.
 float _ExitStopDistance;
 
+// ---- Reef distance field -----------------------------------------------------------------------
+// Baked by OceanX > Bake Reef SDF from the real Rockwork + Corals geometry. Stores UNSIGNED distance to
+// the nearest reef surface, in metres. This replaces steering off ~381 obstacle boxes, which were each
+// fitted to one mesh but still enclosed mostly open water (a fitted box around SM_Rock_10 is 15,238 m3),
+// and which forced the kernel to pick a single "closest" obstacle whose escape direction jumped whenever
+// the winner changed. The field is continuous everywhere and costs a handful of texture samples instead
+// of hundreds of box tests.
+Texture3D<float> _ReefSDF;
+SamplerState sampler_linear_clamp;
+float3 _ReefSDFMin;          // world-space minimum corner of the baked volume
+float3 _ReefSDFSize;         // world-space size of the baked volume
+float _ReefSDFVoxelSize;     // metres per voxel; also the finest detail the field can express
+int _ReefSDFEnabled;         // 0 => no field baked/assigned; fall back to the affecter obstacles
+
+// Distance to the nearest reef surface. Returns a large value outside the baked volume, so a boid that
+// strays beyond it simply has no reef to avoid rather than being steered by garbage.
+float SampleReefDistance(float3 worldPosition)
+{
+    float3 uvw = (worldPosition - _ReefSDFMin) / _ReefSDFSize;
+    if(any(uvw < 0.0) || any(uvw > 1.0))
+    {
+        return 1e6;
+    }
+    return _ReefSDF.SampleLevel(sampler_linear_clamp, uvw, 0);
+}
+
+// Raw (unnormalised) gradient of the distance field, by central differences. Points AWAY from the nearest
+// surface, which is exactly the escape direction. Returned unnormalised on purpose: its LENGTH says how
+// trustworthy the direction is. The field is unsigned, so at a surface voxel the distance is 0 and is a
+// local minimum — the gradient there collapses to ~0 and carries no usable direction. Callers must check.
+float3 ReefSDFGradientRaw(float3 worldPosition)
+{
+    float h = max(_ReefSDFVoxelSize, 1e-3);
+    float dx = SampleReefDistance(worldPosition + float3(h, 0.0, 0.0)) - SampleReefDistance(worldPosition - float3(h, 0.0, 0.0));
+    float dy = SampleReefDistance(worldPosition + float3(0.0, h, 0.0)) - SampleReefDistance(worldPosition - float3(0.0, h, 0.0));
+    float dz = SampleReefDistance(worldPosition + float3(0.0, 0.0, h)) - SampleReefDistance(worldPosition - float3(0.0, 0.0, h));
+    return float3(dx, dy, dz);
+}
+
 // Buffer containing all boids in the simulation.
 StructuredBuffer<BoidInfo> _Boids;
 RWStructuredBuffer<BoidInfo> _BoidsOutput;
@@ -211,6 +250,51 @@ void ResolveObstaclePenetration(Affecter obstacle, inout BoidInfo boidInfo)
     {
         boidInfo.direction = normalize(boidInfo.direction - worldNormal * inwardAmount);
     }
+}
+
+// Distance-field version of the hard penetration backstop. Keeps a boid at least one voxel clear of the
+// reef surface, and slides its heading along that surface rather than letting it drive further in.
+//
+// The field is UNSIGNED, which shapes how this has to work. Just outside the surface the gradient is
+// strong and points cleanly outward, so we push along it. But AT the surface the distance bottoms out at
+// 0 and the gradient collapses to nothing — there is no "which way is out" to read. In that case the one
+// direction we know leads to open water is where the boid came from, so it reverses out along its own
+// heading. That only ever fires for a boid that has already tunnelled, which the steering makes rare.
+void ResolveReefPenetration(inout BoidInfo boidInfo)
+{
+    // One voxel is the finest the field can resolve, so it is also the closest we can meaningfully
+    // hold a boid to the surface.
+    float clearance = max(_ReefSDFVoxelSize, 1e-3);
+    float distance = SampleReefDistance(boidInfo.position);
+    if(distance >= clearance)
+    {
+        return;
+    }
+
+    float3 gradient = ReefSDFGradientRaw(boidInfo.position);
+    float gradientLength = length(gradient);
+
+    if(gradientLength > 1e-4)
+    {
+        float3 surfaceNormal = gradient / gradientLength;
+        boidInfo.position += surfaceNormal * (clearance - distance);
+
+        float inwardAmount = dot(boidInfo.direction, surfaceNormal);
+        if(inwardAmount < 0.0)
+        {
+            boidInfo.direction = normalize(boidInfo.direction - surfaceNormal * inwardAmount);
+        }
+    }
+    else
+    {
+        // Buried: no usable gradient. Back out the way we came in.
+        boidInfo.position -= boidInfo.direction * clearance;
+    }
+
+    // Nothing may end up under the seabed. The reef sits ON the floor, so pushing "out" of it can point
+    // downward through the sand.
+    float worldFloorY = _SimulationAreaCenter.y - _SimulationAreaSize.y * 0.5;
+    boidInfo.position.y = max(boidInfo.position.y, worldFloorY);
 }
 
 // Function returns the closest affecter of the specified affecter type to the current boid.
@@ -745,23 +829,47 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     // obstacle produces a discontinuous escape direction.
     Affecter closestObstacle = GetClosestAffecter(boidInfo, OBSTACLE_AFFECTER_TYPE);
     bool hasObstacle = closestObstacle.affecterType == OBSTACLE_AFFECTER_TYPE;
-    if(!reachedExit && hasObstacle)
+    if(!reachedExit && (_ReefSDFEnabled != 0 || hasObstacle))
     {
-        // How close this SPECIES lets an obstacle get before it starts bending away, from its authored
-        // FishSchoolProperties.ObstacleAvoidanceRange. This used to be a hardcoded OBSTACLE_AVOID_MARGIN
-        // of 2m for every fish, while the per-species value was squared, uploaded to the GPU and then
-        // never read. A shared 2m margin is disastrous for a bottom-dweller: most of the reef's obstacle
-        // volumes are centred below it, so a ray gliding along the sand was inside some obstacle's margin
-        // almost continuously and got shoved upward off the seabed. A small range (well under a metre)
-        // lets it hug the substrate; a big one keeps a shark clear.
-        // Guarded to a sane minimum so a species authored at 0 does not divide by zero below.
+        // How close this SPECIES lets the reef get before it starts bending away, from its authored
+        // FishSchoolProperties.ObstacleAvoidanceRange. Per-species because it must stay above the boid's
+        // own turning circle (speed / max angular velocity) or it physically cannot turn clear in time —
+        // and because a bottom-dweller needs a small one to hug the substrate while a shark needs a wide
+        // berth. Guarded to a sane minimum so a species authored at 0 does not divide by zero below.
         float obstacleAvoidMargin = max(sqrt(boidSchoolInfo.obstacleAvoidanceRangeSquared), 0.01);
 
-        // Blend the escape direction over every obstacle in range, weighted by proximity, so it moves
-        // continuously as the fish threads through the reef. obstacleProximity comes back as the closest
-        // single obstacle's proximity, which is what should drive how committed the turn is.
+        // Escape direction and how close the reef is. Prefer the baked distance field: it describes the
+        // REAL rock surface, and both the distance and the direction are continuous, so there is no
+        // "closest obstacle" that can change between frames and teleport the escape heading. Fall back to
+        // the old proximity-weighted blend over box affecters when no field is baked.
         float obstacleProximity;
-        float3 accumulatedAway = AccumulateObstacleAvoidance(boidInfo, obstacleAvoidMargin, obstacleProximity);
+        float3 accumulatedAway;
+        if(_ReefSDFEnabled != 0)
+        {
+            float reefDistance = SampleReefDistance(boidInfo.position);
+            if(reefDistance > obstacleAvoidMargin)
+            {
+                accumulatedAway = float3(0.0, 0.0, 0.0);
+                obstacleProximity = 0.0;
+            }
+            else
+            {
+                obstacleProximity = saturate(1.0 - reefDistance / obstacleAvoidMargin);
+                obstacleProximity *= obstacleProximity;
+                // The gradient points away from the nearest surface. Its LENGTH is the confidence: the
+                // field is unsigned, so right at a surface voxel the distance bottoms out at 0 and the
+                // gradient collapses, carrying no direction. Treat that as "no steer" and let the
+                // penetration backstop below deal with it.
+                float3 gradient = ReefSDFGradientRaw(boidInfo.position);
+                accumulatedAway = dot(gradient, gradient) > 1e-8 ? normalize(gradient) * obstacleProximity
+                                                                : float3(0.0, 0.0, 0.0);
+            }
+        }
+        else
+        {
+            accumulatedAway = AccumulateObstacleAvoidance(boidInfo, obstacleAvoidMargin, obstacleProximity);
+        }
+
         if(dot(accumulatedAway, accumulatedAway) > 1e-6)
         {
             float3 awayDirection = normalize(accumulatedAway);
@@ -879,9 +987,13 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     // After the movement properties have been updated, update the current position of the boid.
     UpdatePosition(boidInfo);
 
-    // Hard guarantee: if the frame's movement still landed this boid inside the nearest obstacle
-    // (steering can be outrun by sprinting entry/exit fish), snap it back out to the surface.
-    if(hasObstacle)
+    // Hard guarantee: if the frame's movement still landed this boid in the reef (steering can be outrun
+    // by a sprinting entry/exit fish, or a school push can shove one in), get it back out.
+    if(_ReefSDFEnabled != 0)
+    {
+        ResolveReefPenetration(boidInfo);
+    }
+    else if(hasObstacle)
     {
         ResolveObstaclePenetration(closestObstacle, boidInfo);
     }

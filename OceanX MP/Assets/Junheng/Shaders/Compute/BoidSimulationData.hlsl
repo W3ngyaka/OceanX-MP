@@ -111,8 +111,12 @@ struct BoidSchoolInfo {
     float angularJerk;
     // How much of angular acceleration is transferred to movement acceleration.
     float rotationEffectOnSpeed;
-    // Currently not used, but added to fill to the 16-byte memory slot.
-    float emptyFiller;
+    // 0 = avoid obstacles in full 3D (shortest way clear, usually over the top).
+    // 1 = avoid strictly horizontally, so a bottom-dweller banks AROUND reef structure rather than
+    // climbing it. Near the substrate every escape vector has an upward component, and going "over"
+    // each rock accumulates until the fish is at the surface — which is what this exists to stop.
+    // (Was emptyFiller; reusing it keeps the struct size unchanged.)
+    float horizontalAvoidBias;
 };
 
 // Structure defining information about the simulation affecter that affects the 

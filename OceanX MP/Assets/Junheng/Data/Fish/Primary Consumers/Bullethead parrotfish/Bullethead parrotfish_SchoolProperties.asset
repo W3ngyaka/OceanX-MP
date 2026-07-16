@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bullethead parrotfish_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 12
-  ObstacleAvoidanceRange: 2
+  ObstacleAvoidanceRange: 2.1
   SeparationRange: 3
   CohesionWeight: 0.1
   AlignmentWeight: 0.1

@@ -161,20 +161,37 @@ void ResolveObstaclePenetration(Affecter obstacle, inout BoidInfo boidInfo)
     float3 localPosition = AffecterLocalPosition(obstacle, boidInfo.position);
     if(any(abs(localPosition) >= obstacle.halfExtents)) return;
 
-    // Inside the box: push out through the face with the smallest penetration.
+    // Inside the box: push out through the face with the smallest penetration — EXCEPT when that would
+    // eject the boid below the world floor.
+    //
+    // Obstacle volumes wrap coral and rock that SIT ON the seabed, so 244 of this reef's 381 boxes reach
+    // below the simulation floor (the lowest by ~21m). A bottom-dwelling fish that clips the LOWER half
+    // of one has its smallest penetration through the BOTTOM face, so "cheapest way out" was straight
+    // down — which is how rays ended up swimming underneath the sand. There is never anything worth
+    // ejecting to down there, so if the cheapest exit goes under the floor, take the cheapest horizontal
+    // one instead and let the boid leave sideways.
     float3 penetration = obstacle.halfExtents - abs(localPosition);
+    float worldFloorY = _SimulationAreaCenter.y - _SimulationAreaSize.y * 0.5;
+
+    // Where would a Y-face ejection actually land? The box may be rotated, so test the world result
+    // rather than assuming local -Y points down.
+    float ySide = localPosition.y >= 0.0 ? 1.0 : -1.0;
+    float3 yLocal = localPosition;
+    yLocal.y = ySide * (obstacle.halfExtents.y + 0.05);
+    float3 yWorld = Multiply(InitializeQuaternion(obstacle.rotation), yLocal) + obstacle.position;
+    bool yExitIsUnderFloor = yWorld.y < worldFloorY;
+
     float3 localNormal;
-    if(penetration.x <= penetration.y && penetration.x <= penetration.z)
+    if(!yExitIsUnderFloor && penetration.y <= penetration.x && penetration.y <= penetration.z)
+    {
+        localNormal = float3(0.0, ySide, 0.0);
+        localPosition.y = yLocal.y;
+    }
+    else if(penetration.x <= penetration.z)
     {
         float side = localPosition.x >= 0.0 ? 1.0 : -1.0;
         localNormal = float3(side, 0.0, 0.0);
         localPosition.x = side * (obstacle.halfExtents.x + 0.05);
-    }
-    else if(penetration.y <= penetration.z)
-    {
-        float side = localPosition.y >= 0.0 ? 1.0 : -1.0;
-        localNormal = float3(0.0, side, 0.0);
-        localPosition.y = side * (obstacle.halfExtents.y + 0.05);
     }
     else
     {
@@ -185,6 +202,9 @@ void ResolveObstaclePenetration(Affecter obstacle, inout BoidInfo boidInfo)
 
     // Back to world space (rotate with the box's own rotation, the inverse of AffecterLocalPosition).
     boidInfo.position = Multiply(InitializeQuaternion(obstacle.rotation), localPosition) + obstacle.position;
+    // Last resort: a rotated box can send even a horizontal ejection below the floor. Nothing should ever
+    // end up under the seabed, so hard-clamp it.
+    boidInfo.position.y = max(boidInfo.position.y, worldFloorY);
     float3 worldNormal = Multiply(InitializeQuaternion(obstacle.rotation), localNormal);
     float inwardAmount = dot(boidInfo.direction, worldNormal);
     if(inwardAmount < 0.0)
@@ -745,6 +765,27 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
         if(dot(accumulatedAway, accumulatedAway) > 1e-6)
         {
             float3 awayDirection = normalize(accumulatedAway);
+
+            // Bottom-dwellers steer AROUND reef structure instead of over it. The deflection below turns
+            // the heading until it is tangential to the escape vector, and in free 3D the closest tangent
+            // to a level heading tilts UPWARD — geometrically the shortest way clear ("go over it"), and
+            // right for most fish. But near the substrate every escape vector carries an upward component,
+            // so a ray went over each rock it met and climbed a little each time, until it was at the
+            // surface. Flattening the escape vector keeps the tangent in the horizontal plane, so it banks
+            // around instead. See FishSchoolProperties.HorizontalAvoidBias.
+            float horizontalBias = saturate(boidSchoolInfo.horizontalAvoidBias);
+            if(horizontalBias > 0.0)
+            {
+                float3 flattened = float3(awayDirection.x,
+                                          awayDirection.y * (1.0 - horizontalBias),
+                                          awayDirection.z);
+                // Guard: an obstacle directly above or below leaves nothing horizontal to steer around.
+                // Keep the true 3D vector there, so a head-on dive into the seabed is still avoided.
+                if(dot(flattened, flattened) > 1e-4)
+                {
+                    awayDirection = normalize(flattened);
+                }
+            }
 
             // Steer AROUND the obstacle rather than away from it.
             //

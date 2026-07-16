@@ -329,7 +329,7 @@ namespace OceanX.BoidsGPU
                 AngularDeceleration = fishSchoolProperties.MovementProperties.AngularDeceleration,
                 AngularJerk = fishSchoolProperties.MovementProperties.AngularJerk,
                 RotationEffectOnSpeed = fishSchoolProperties.MovementProperties.RotationEffectOnSpeed,
-                EmptyFiller = 0f
+                HorizontalAvoidBias = fishSchoolProperties.HorizontalAvoidBias
             };
         }
 

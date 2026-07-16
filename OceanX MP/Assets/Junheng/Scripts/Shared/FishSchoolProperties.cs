@@ -41,6 +41,17 @@ namespace OceanX
         /// </summary>
         [Range(0f, 10f)] public float TargetWeight = 1.75f;
 
+        [Tooltip("How strongly this species prefers to steer AROUND obstacles rather than OVER them.\n\n" +
+                 "0 = free 3D avoidance. Faced with a rock, the fish takes the shortest way clear, which is " +
+                 "usually up and over — correct for most fish.\n\n" +
+                 "1 = strictly horizontal avoidance. The fish banks around a rock and never climbs it. Use " +
+                 "for bottom-dwellers: a ray or moray that goes 'over' the reef ends up drifting off the " +
+                 "seabed and, over time, up to the surface, because every escape vector near the substrate " +
+                 "has an upward component and they accumulate.\n\n" +
+                 "Ignored when an obstacle is directly above or below with nothing to steer around — a " +
+                 "head-on dive into the seabed is still avoided vertically, whatever this is set to.")]
+        [Range(0f, 1f)] public float HorizontalAvoidBias = 0f;
+
         // Hidden from Inspector — injected at runtime by BoidSpawnerGPUMultiTargets from SpeciesDataGPU.
         // Set these directly on SpeciesDataGPU; do NOT assign them here in the Inspector.
         [HideInInspector] public FishMovementProperties    MovementProperties    = null;

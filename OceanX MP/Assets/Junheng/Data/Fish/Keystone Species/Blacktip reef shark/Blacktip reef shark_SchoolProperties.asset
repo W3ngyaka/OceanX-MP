@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Blacktip reef shark_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 22
-  ObstacleAvoidanceRange: 2
+  ObstacleAvoidanceRange: 10.5
   SeparationRange: 3
   CohesionWeight: 0.15
   AlignmentWeight: 0.15

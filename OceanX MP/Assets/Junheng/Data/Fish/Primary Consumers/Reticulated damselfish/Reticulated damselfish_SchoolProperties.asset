@@ -16,8 +16,8 @@ MonoBehaviour:
   ObstacleAvoidanceRange: 2
   SeparationRange: 0.35
   CohesionWeight: 1
-  AlignmentWeight: 0.7
-  SeparationWeight: 1
+  AlignmentWeight: 0.35
+  SeparationWeight: 1.4
   TargetWeight: 1.2
   MovementProperties: {fileID: 0}
   MotionRenderProperties: {fileID: 0}

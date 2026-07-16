@@ -19,5 +19,6 @@ MonoBehaviour:
   AlignmentWeight: 1
   SeparationWeight: 1
   TargetWeight: 0.8
+  HorizontalAvoidBias: 0.6
   MovementProperties: {fileID: 0}
   MotionRenderProperties: {fileID: 0}

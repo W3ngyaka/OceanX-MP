@@ -58,15 +58,17 @@ float3 _ReefSDFSize;         // world-space size of the baked volume
 float _ReefSDFVoxelSize;     // metres per voxel; also the finest detail the field can express
 int _ReefSDFEnabled;         // 0 => no field baked/assigned; fall back to the affecter obstacles
 
-// Distance to the nearest reef surface. Returns a large value outside the baked volume, so a boid that
-// strays beyond it simply has no reef to avoid rather than being steered by garbage.
+// Distance to the nearest reef surface.
+//
+// Outside the baked volume this CLAMPS to the nearest edge voxel rather than reporting "no reef". An
+// early version returned a huge constant out there, which put a cliff at the boundary: the gradient below
+// is a central difference sampling one voxel either side, so any boid within a voxel of the edge
+// differenced against that cliff and got a meaningless escape direction. Clamping keeps the field
+// continuous across the boundary. The volume is padded past where fish can swim (see
+// ReefSDFVolume.Padding), so the clamped region is somewhere they never reach anyway.
 float SampleReefDistance(float3 worldPosition)
 {
-    float3 uvw = (worldPosition - _ReefSDFMin) / _ReefSDFSize;
-    if(any(uvw < 0.0) || any(uvw > 1.0))
-    {
-        return 1e6;
-    }
+    float3 uvw = saturate((worldPosition - _ReefSDFMin) / _ReefSDFSize);
     return _ReefSDF.SampleLevel(sampler_linear_clamp, uvw, 0);
 }
 

@@ -65,6 +65,12 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: e5bfa2059d3d74949a8630a24d0c84b5
     name: BedVol
+  - guid: 4722646390e8f40408dddcd6637adba3
+    name: FlourishVol
+  - guid: 04ae2d2e0a1de1c44a2a930d2d8018c9
+    name: HopeVol
+  - guid: 891f67961b21c59468c38e7d1f30122d
+    name: SorrowVol
   m_AudioMixerGroupViews:
   - guids:
     - 8c037b75cba0ad044b8c8d6407796883

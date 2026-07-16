@@ -104127,6 +104127,7 @@ MonoBehaviour:
   layers:
   - name: Bed
     clip: {fileID: 8300000, guid: 8776c21349b1afc4f859072293b90a2a, type: 3}
+    volume: 1
     healthToVolume:
       serializedVersion: 2
       m_Curve:
@@ -104173,6 +104174,7 @@ MonoBehaviour:
     exposedParam: BedVol
   - name: Sorrow
     clip: {fileID: 8300000, guid: d6bf8b8be9a9e6b4f9166cafc4f8f5f3, type: 3}
+    volume: 0.8
     healthToVolume:
       serializedVersion: 2
       m_Curve:
@@ -104233,10 +104235,11 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    group: {fileID: 5925979713666600836, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
+    group: {fileID: -3877378371721538969, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: SorrowVol
   - name: Hope
     clip: {fileID: 8300000, guid: 6c5bd31c1fbf259418b295cc86b5feb9, type: 3}
+    volume: 1
     healthToVolume:
       serializedVersion: 2
       m_Curve:
@@ -104297,10 +104300,11 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    group: {fileID: -2838785708448881671, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
+    group: {fileID: 409877625108413181, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: HopeVol
   - name: Flourish
     clip: {fileID: 8300000, guid: 5fac931cb9ab0d34992cc3bcb3b08496, type: 3}
+    volume: 1
     healthToVolume:
       serializedVersion: 2
       m_Curve:
@@ -104343,12 +104347,12 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    group: {fileID: 5378755733210970796, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
+    group: {fileID: 4188924859348678293, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: FlourishVol
   mixer: {fileID: 24100000, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
   masterVolume: 0.6
   masterExposedParam: 
-  responseSeconds: 2
+  transitionSeconds: 10
   silenceDb: -80
   swell: {fileID: 0}
   swellVolume: 0.8

@@ -113,7 +113,18 @@ public class ContentService : MonoBehaviour
         {
             byte[] bytes = File.ReadAllBytes(path);
             var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-            if (!tex.LoadImage(bytes)) return null;
+            if (!tex.LoadImage(bytes))
+            {
+                // Destroy the placeholder: Texture2D is a native Unity object, so dropping the reference
+                // does NOT free it. Callers deliberately don't cache a miss (so a card can recover once
+                // the image cache warms), which means a corrupt PNG would re-leak on every card open.
+                // Destroy() throws in edit mode, and the catch below would disguise that as a load
+                // failure — no caller is [ExecuteAlways] today, but several components here are.
+                if (Application.isPlaying) Destroy(tex); else DestroyImmediate(tex);
+                Debug.LogWarning($"[ContentService] '{folder}/{fileName}' could not be decoded as an image — " +
+                                 $"the file may be truncated or not a real PNG/JPEG.");
+                return null;
+            }
             return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100f);
         }
         catch (System.Exception ex)

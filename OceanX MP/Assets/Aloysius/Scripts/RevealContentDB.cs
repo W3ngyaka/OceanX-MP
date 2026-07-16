@@ -73,7 +73,13 @@ public static class RevealContentDB
         catch (System.Exception ex) { Debug.LogError($"[RevealContentDB] read failed: {ex.Message}"); return; }
 
         var rows = CsvUtil.Parse(text);
-        if (rows.Count < 2) return;
+        if (rows.Count < 2)
+        {
+            // Was silent. A sheet that parses to nothing means every reveal card renders blank, so say why.
+            Debug.LogWarning($"[RevealContentDB] '{CsvFile}' parsed to {rows.Count} row(s) — no entries loaded, " +
+                             $"the big-screen cards will fall back to their asset values. Path: {path}");
+            return;
+        }
 
         var header = rows[0];
         var col = new Dictionary<string, int>();

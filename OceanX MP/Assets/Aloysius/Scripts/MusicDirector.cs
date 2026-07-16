@@ -96,10 +96,25 @@ public class MusicDirector : MonoBehaviour
     {
         _health = overrideHealth ? debugHealth : ReadHealth();
 
+        // Pick ONE winning stem for the current health: the most specific (narrowest)
+        // band that contains it. The always-on ambient bed (band 0-1) is the widest, so
+        // it only wins when no tighter mood stem covers this health.
+        Layer winner = null;
+        float bestWidth = float.MaxValue;
         foreach (var l in layers)
         {
             if (l?.source == null) continue;
-            float target = l.maxVolume * Weight(l, _health) * masterVolume;
+            if (_health < l.healthMin || _health > l.healthMax) continue; // band must contain health
+            float width = l.healthMax - l.healthMin;
+            if (width < bestWidth) { bestWidth = width; winner = l; }
+        }
+
+        // Fade the winner up to its volume, everything else down to silence.
+        // Sources start at volume 0, so the first winner fades in from silence at start.
+        foreach (var l in layers)
+        {
+            if (l?.source == null) continue;
+            float target = (l == winner) ? l.maxVolume * masterVolume : 0f;
             l.source.volume = Mathf.MoveTowards(l.source.volume, target, fadeSpeed * Time.unscaledDeltaTime);
         }
     }

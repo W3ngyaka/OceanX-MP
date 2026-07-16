@@ -2615,7 +2615,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &391931565
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6105,7 +6105,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: UNSTABLE
+  m_text: HEALTHY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6114,8 +6114,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281581567
-  m_fontColor: {r: 1, g: 0.75, b: 0.2, a: 1}
+    rgba: 4286637657
+  m_fontColor: {r: 0.35, g: 0.9, b: 0.5, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9198,6 +9198,7 @@ GameObject:
   - component: {fileID: 1090360381}
   - component: {fileID: 1090360380}
   - component: {fileID: 1090360379}
+  - component: {fileID: 1090360383}
   m_Layer: 0
   m_Name: Add
   m_TagString: Untagged
@@ -9320,6 +9321,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1090360377}
   m_CullTransparentMesh: 1
+--- !u!114 &1090360383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090360377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a286aa4d677cbaa4d9465dd97977d2bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TapPunch
+  punchScale: 1.2
+  upTime: 0.1
+  downTime: 0.15
 --- !u!1 &1098807345
 GameObject:
   m_ObjectHideFlags: 0
@@ -14060,6 +14076,7 @@ GameObject:
   - component: {fileID: 1681137654}
   - component: {fileID: 1681137653}
   - component: {fileID: 1681137652}
+  - component: {fileID: 1681137655}
   m_Layer: 0
   m_Name: ViewDetailsButton
   m_TagString: Untagged
@@ -14169,6 +14186,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681137650}
   m_CullTransparentMesh: 1
+--- !u!114 &1681137655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681137650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a286aa4d677cbaa4d9465dd97977d2bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TapPunch
+  punchScale: 1.2
+  upTime: 0.1
+  downTime: 0.15
 --- !u!1 &1682004464
 GameObject:
   m_ObjectHideFlags: 0
@@ -19613,15 +19645,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2704471090946486986, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: m_text
-      value: 60%
+      value: 73%
       objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: statusText
       value: 
       objectReference: {fileID: 748468811}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: smoothSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: manualHealth01
-      value: 0.599
+      value: 0.73
       objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: speciesCountText

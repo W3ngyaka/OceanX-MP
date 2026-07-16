@@ -1348,6 +1348,149 @@ or update a language; schema is already localization-ready (stable ids). Full no
 
 ---
 
+### 9. Findings from the full codebase review (2026-07-16) — the CRITICAL/HIGH backlog
+
+> Source: a five-pass expert review (netcode/security, GPU/compute, ecosystem, UI/content, project hygiene).
+> **Good news first:** the RPC/security boundary is *correctly built* — index validation uses an unsigned
+> cast that rejects negatives and `int.MinValue` in one comparison, caps/floors are enforced **server-side**
+> (not just greyed in the UI), and NetworkList/NetworkVariable are server-write-only. A rogue LAN client
+> can only do what the tablet can do. There are **no secrets** anywhere; the Google `2PACX-` URLs are
+> publish-to-web endpoints — public read-only by design, *not* keys.
+>
+> Everything below is ordered by what will actually hurt, not by how clever it is.
+
+#### ✅ 9.1 — Per-frame GPU stall (was CRITICAL) — **FIXED 2026-07-16**
+`SpatialPartitionGPU.UpdateGridOccupancy` called `_cellOccupancyBuffer.GetData()` **every frame** — a
+synchronous readback that flushes the command buffer and blocks the main thread until the GPU drains
+everything queued, destroying CPU/GPU overlap. **~1–8 ms/frame, in the shipping build**, for data consumed
+only by `OnDrawGizmosSelected` — and Gizmo callbacks never fire in a player, so it was thrown away.
+**Fix applied:** the readback is now wrapped in `#if UNITY_EDITOR`, so it is compiled out of builds
+*regardless* of the serialised checkbox; field default flipped to `false`.
+⚠ **Still ON in 4 scenes** (`Junheng/SCENE_MainScene`, `Akil/SCENE_MainScene`, `Aloysius/SCENE_MainScene`,
+`Boids_Demo`). Harmless to the build, but the **Editor** keeps paying it until you untick
+**Visualize Occupancy** on the `Spatial_Partition_GPU` object. Do that or your in-editor perf lies to you.
+
+#### ✅ 9.2 — One stray quote wipes out the rest of a sheet (was HIGH) — **FIXED 2026-07-16**
+`CsvUtil.Parse` treated `"` as a field-opener **anywhere**, not just at field start (RFC-4180). A checker
+writing `Grows to 3" long` put the parser in quoted mode for the rest of the file — every following row
+collapsed into one field, those species silently vanished, **no error**. Google Sheets escapes on export,
+so the live trigger was the documented *hand-edit StreamingAssets on the host* workflow.
+**Fix applied:** `"` only opens when the field is empty; loud warning if the file ends mid-quote; the
+previously-silent zero-row parse in `SpeciesContentDB`/`RevealContentDB` now logs. Regression-tested:
+all three sheets parse **byte-identically** to before.
+
+#### 🔴 9.3 — Tablet can lock on "Connecting…" forever (HIGH — most likely to bite live)
+`ConnectionScreenUI.Connect` discards `StartClient()`'s bool and waits for a connect/disconnect callback.
+If the transport **fails to start**, *neither* fires — and by then `_connecting = true`, discovery is
+stopped and the button is disabled. No timeout. **Only an app force-quit recovers.**
+Trivially reachable: `:60` pre-fills the IP field with the **malformed** `"192.168.1."`, and `OnConnect`
+only rejects empty, not malformed. Attendant waits out discovery → taps Connect on the default → bricked.
+**Fix:** return `StartClient()`'s bool; on false reset `_connecting`, re-enable the button, restart
+discovery; validate with `IPAddress.TryParse`; add a ~10 s watchdog; stop pre-filling a broken IP.
+
+#### 🔴 9.4 — A stalled swim-out freezes a species permanently (HIGH)
+`EcosystemSimulationGPU.BatchExitRoutine`'s `while(true)` has **no timeout**. One fish held off its exit
+point → `_exitingCount` never clears → `IsExiting` stays true → that species ignores **Add and Remove**
+for the rest of the session. The tooltip at `:45-48` already admits *"a stray fish can stop the school
+being removed."* Also reachable by disabling the component mid-exit (`_exitingCount` is never cleared).
+**Fix:** deadline in the routine → force `CommitRemoveSchools` + clear `_exitingCount`; add `OnDisable`
+cleanup. Expose the timeout as a serialised field.
+
+#### 🔴 9.5 — Two schools added in one frame: only the last swims in (HIGH)
+`ReinitializeBuffers` coalesces to one rebuild/frame, but `SetPendingSpawnOrigin` is a **single slot** and
+`RelocateGroupToEntryPoint` only relocates the **last** sub-group. Double-tap Add (or batched RPCs, or a
+queue drained after an exit) and the earlier schools **pop into existence mid-tank, on camera** — killing
+the swim-in presentation.
+**Fix:** make the pending origin a list keyed by sub-group; relocate *every* newly added group.
+⚠ Touches spawn positioning + position-preservation — the most delicate code in the project. **Do this one
+alone**, nothing else in flight.
+
+#### 🔴 9.6 — Texture leak on content reload (HIGH — latent, one field from live)
+`SpeciesContentDB.Reload` / `RevealContentDB.Reload` clear `_spriteCache` **without destroying** the
+Sprites or their Texture2Ds. These are native objects; GC does not free them, and a single-scene exhibit
+never triggers `UnloadUnusedAssets`. Measured on **decompressed RGBA32** (file sizes badly understate it):
+`SpeciesImages` **39.6 MB** (the 3 IUCN badges are 1283×1283 = **6.28 MB each**), `RevealImages` 12.4 MB —
+**~52 MB orphaned per reload cycle**.
+**Not firing today** only because `refreshIntervalSeconds` defaults to `0`. Set it to 5 min for live sheet
+updates and you leak ~52 MB every 5 min → Android OOM-kills the tablet mid-exhibit.
+**Fix:** destroy texture + sprite before `Clear()`; only fire `NotifyReload` when the file actually changed
+(it currently fires twice per sheet at startup for nothing). ⚠ Trap: destroying a sprite while a modal is
+displaying it blanks that image — handle properly, don't rely on "reload only happens at startup".
+> ✅ A *different*, smaller leak was fixed 2026-07-16: `ContentService.LoadSprite` now destroys the
+> throwaway Texture2D when a PNG fails to decode (it re-leaked on every card open, since misses aren't cached).
+
+#### 🔴 9.7 — Reef stutters every 5 s (HIGH)
+`RunShoalingTick` calls `TryGetBoidsCentroid` → `GetData()` (a full pipeline stall + array alloc) **once per
+school in the outer loop and again per candidate in the inner loop** — nested over species × schools. Worst
+case **~900 blocking readbacks + 900 allocations in one frame, every 5 s**.
+**Fix:** read the whole boid buffer back **once** per tick and compute all centroids from that snapshot.
+**Worth asking first: do you actually want school-merging?** If it isn't load-bearing for the exhibit,
+turning it off is a one-line fix that deletes the whole problem.
+
+#### 🔴 9.8 — One unwired species caps eco-health below 100% forever (HIGH)
+`SetupAllSpecies` warns and `continue`s when a species has no spawner — it never enters `_schoolCount`. But
+`ComputeEcoHealth01` still counts it in `totalSpecies`, so **both** `diversity` and `balance` are divided by
+an unreachable total. One orphan out of 12 caps health at **~92%**. Any `SpeciesData.minHealth` gate above
+that becomes **unreachable → the exhibit softlocks**, explained only by one startup `LogWarning`.
+**Fix:** build a list of species that actually have a working spawner in `SetupAllSpecies` and use *that* as
+the eco-health denominator; raise the missing-spawner warning to `LogError`.
+
+#### 🔴 9.9 — `VisionRange` above 8 is silently meaningless (HIGH — blocks Week 11–12 balancing)
+The neighbour search scans a **3×3×3 cell block** — one cell each way. With `_cellSize: 8`, the guaranteed
+sensing radius is **8 m**, and it's asymmetric (a boid at a cell edge sees 8 m one way, 16 m the other).
+**13 of the 18 authored vision values exceed 8** (12/14/15/18/22). The shark's 22 gets ~a third of its
+authored radius. `visionRangeSquared` is checked and dutifully passes fish the grid never handed it.
+**This is a correctness bug that presents as a tuning problem** — you cannot tune `VisionRange` above 8 and
+have it mean anything. **Decide before balancing:**
+- **(a) widen the search to `ceil(vision / cellSize)` cells** — keeps authored numbers honest, costs GPU.
+  With only ~889 boids in 183,000 m³ there is headroom. *Recommended.*
+- (b) raise `_cellSize` to 22 — collapses the grid to ~432 cells, partition becomes near-pointless.
+- (c) accept 8 m as the real cap and re-author the assets — cheapest, but the shark can no longer see
+  further than a damselfish.
+
+#### 🟠 9.10 — Repo + scene hygiene (HIGH, boring, ~20 min for most of it)
+- **`Assets/_Recovery/` — 9.9 MB of Unity crash-recovery dumps tracked in git** (`0 (3).unity` alone is
+  8.4 MB). Not in Build Settings so nothing ships, but Unity imports/parses them every project open and
+  their live script GUIDs **pollute every reference grep**. → `git rm -r --cached "Assets/_Recovery"`,
+  delete, add to `.gitignore`.
+- **THREE live copies of `SCENE_MainScene`** — `Akil/` 10.7 MB, `Junheng/` 10.0 MB (**the build scene**),
+  `Aloysius/` 9.4 MB — plus two of `new netcode 1.unity`. ~40 MB of near-duplicate YAML and the single
+  biggest merge-conflict generator left. Converge on `Junheng/Scenes/SCENE_MainScene.unity`.
+  ⚠ This is a **team decision** about whose environment work survives — not a solo cleanup.
+- **Confirmed dead, verified by C# *and* script-GUID grep across every scene/prefab/asset** — safe to
+  delete: `EcosystemUIAdapterGPU.cs`, `Networking/HostSpawner.cs` (zero refs — HANDOFF undersold it as
+  "likely redundant"; it isn't attached to *anything*), `Aloysius/Scripts/UnlockTester.cs`,
+  `Aloysius/Scripts/Health.cs` (superseded by `HealthBarBinder`).
+- ❌ **Do NOT delete `Automatic_Fish_Swimming_CPU/*.cs`** — no C# refs, but the GUIDs are **live in 4
+  scenes including the enabled build scene**. Deleting them = missing-script errors. HANDOFF's existing
+  warning is correct and load-bearing.
+- `SpeciesBehaviorPropertiesGPU` is confirmed never read at runtime, but **is not deletable as-is** — 11
+  `_Behavior.asset` + 10 `_Data.asset` files reference it. Delete the assets and the field together, or
+  leave it as documented-inert.
+- Build Settings: 2 entries point at scenes **missing from disk** (`Aloysius/SceneTemp.unity`,
+  `Aloysius/SCENE_MainScene 1.unity`); both `enabled: 0` so harmless — prune them.
+
+> #### 📌 Corrections to this document, from the same review
+> - **"Re-point Build Settings" (CLAUDE.md line 81) is STALE — already done.** The enabled set is correct:
+>   `Aloysius/Start scene.unity` → `Junheng/Scenes/SCENE_MainScene.unity`, both exist. Close that item.
+> - **"Strip debug logging" (CLAUDE.md line 82) overstates it.** 70 log calls total across Junheng+Aloysius,
+>   and **no unconditional per-frame or per-tick logging exists**. `AluciaEcologyEvents.debugLog` and
+>   `EnvironmentHealthReveal.logDebug` are already **default-off Inspector toggles**. The rest are one-shot
+>   init/error paths in `NetworkBootstrap`/`ContentService`/`LanDiscovery` — genuinely useful on exhibit day.
+>   **Recommendation: don't strip them.** Confirm the toggles are off and ship.
+> - **The target/animator leak worry is unfounded** — every `CreateTarget` is matched by a `DestroyLastTarget`
+>   that destroys *both* the Target and its paired Animator. Rapid remove is safe. No count desync on the
+>   normal paths.
+> - **Eco-health does NOT allocate and its per-frame cost is fine** — `_committedScratch` is reused and every
+>   enumerator is a struct. Five live readers per frame is negligible. (The real defect there is that
+>   `BuildCommittedCounts` hands callers a *shared mutable* dictionary — latent aliasing hazard.)
+> - **The unlock events are instance events, not static** — no cross-scene-reload subscriber leak. The
+>   singleton guard is correct.
+> - **Two compute-shader bugs previously flagged are already fixed** — the cell Z-stride now correctly reads
+>   `_CellCountX * _CellCountY`, and cohesion averaging divides by `neighborsCount + 1`.
+
+---
+
 ## Population Dynamics Values
 
 > ⚠ **The per-species rate fields are gone.** `ReproRate` / `NaturalDeath` were deleted in Week 8; `StarvationDeathRate` / `StarvationThreshold` were deleted in Week 9 when the model became a **global, ratio-driven** system. Population behaviour is now tuned by **global constants** on `EcosystemSimulationGPU` plus **per-species** `FishPerSchool` / `MaxSchools` / prey-predator lists.

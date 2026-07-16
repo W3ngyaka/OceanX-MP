@@ -30,8 +30,19 @@ namespace OceanX.BoidsGPU
                  "normally the simulation bounds. Geometry outside this is invisible to the fish.")]
         [SerializeField] private Vector3 _center = new Vector3(16.3f, 13.98f, 18.5f);
 
-        [Tooltip("Size of the region to bake, in world space.")]
+        [Tooltip("Size of the region to bake, in world space. Normally the simulation bounds — Padding is " +
+                 "added on top.")]
         [SerializeField] private Vector3 _size = new Vector3(77f, 27.16f, 87.6f);
+
+        [Tooltip("Extra metres baked beyond the region on every side. This is NOT optional slack.\n\n" +
+                 "The escape direction comes from the field's gradient, which is a central difference " +
+                 "sampling one voxel either side. Outside the baked volume there is no data, so a fish " +
+                 "within a voxel of the edge would difference against a cliff and get a garbage direction. " +
+                 "Padding pushes that edge beyond anywhere fish can actually swim. It also catches reef " +
+                 "that straddles the boundary — rock just outside still shapes the field just inside.\n\n" +
+                 "A few metres is plenty; it only needs to exceed a voxel or two.")]
+        [Min(0f)]
+        [SerializeField] private float _padding = 4f;
 
         [Tooltip("Metres per voxel. 0.5 resolves the gaps a ray threads between corals and costs ~2.8 MB " +
                  "over these bounds; 0.25 gives branch-level detail at ~22 MB. Memory scales with the CUBE " +
@@ -48,8 +59,8 @@ namespace OceanX.BoidsGPU
         /// <summary>Hierarchies whose meshes are solid to fish.</summary>
         public Transform[] ReefRoots => _reefRoots;
 
-        /// <summary>Region the bake should cover.</summary>
-        public Bounds Bounds => new Bounds(_center, _size);
+        /// <summary>Region the bake should cover, including the padding needed for a valid gradient.</summary>
+        public Bounds Bounds => new Bounds(_center, _size + Vector3.one * (_padding * 2f));
 
         /// <summary>Metres per voxel requested for the next bake.</summary>
         public float VoxelSize => _voxelSize;

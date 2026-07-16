@@ -106,7 +106,16 @@ namespace OceanX.BoidsGPU.EditorTools
 
                 Texture3D tex = WriteTexture(distance, nx, ny, nz);
                 SaveAsset(tex);
-                volume.SetBakedField(tex, bounds, voxel);
+
+                // Record the grid's ACTUAL extent, not the requested one. nx = ceil(size/voxel), so the
+                // grid usually covers slightly MORE than was asked for (27.50m for a 27.16m request). The
+                // shader maps world -> uvw by dividing by this size, so handing it the requested size
+                // stretches the field over the real grid and misaligns it against the rock by up to a
+                // voxel — the reef would be subtly in the wrong place.
+                Bounds bakedBounds = new Bounds(
+                    bounds.min + new Vector3(nx * voxel, ny * voxel, nz * voxel) * 0.5f,
+                    new Vector3(nx * voxel, ny * voxel, nz * voxel));
+                volume.SetBakedField(tex, bakedBounds, voxel);
                 EditorUtility.SetDirty(volume);
 
                 int solidCount = 0;
@@ -344,7 +353,7 @@ namespace OceanX.BoidsGPU.EditorTools
             float inv = 1f / voxel;
             System.Random rnd = new System.Random(12345); // fixed seed: two bakes of the same reef compare directly
 
-            int tested = 0, solidHit = 0, withinVoxel = 0, holes = 0;
+            int tested = 0, solidHit = 0, withinVoxel = 0, holes = 0, outsideRegion = 0;
             float worst = 0f; string worstMesh = "";
 
             for (int f = 0; f < _pendingFilters.Count; f++)
@@ -373,7 +382,9 @@ namespace OceanX.BoidsGPU.EditorTools
                     int vxi = (int)((p.x - min.x) * inv);
                     int vyi = (int)((p.y - min.y) * inv);
                     int vzi = (int)((p.z - min.z) * inv);
-                    if (vxi < 0 || vyi < 0 || vzi < 0 || vxi >= nx || vyi >= ny || vzi >= nz) continue; // outside the bake region
+                    // Geometry outside the bake region is not in the field at all. Silently skipping it
+                    // would let a bake that missed whole rocks report a clean bill of health, so count it.
+                    if (vxi < 0 || vyi < 0 || vzi < 0 || vxi >= nx || vyi >= ny || vzi >= nz) { outsideRegion++; continue; }
 
                     float d = distance[vxi + nx * (vyi + ny * vzi)];
                     tested++;
@@ -387,17 +398,27 @@ namespace OceanX.BoidsGPU.EditorTools
                 }
             }
 
-            if (tested == 0) return "  coverage: no surface points inside the bake region — check the volume's bounds.";
+            if (tested == 0) return "  coverage: no surface points inside the bake region — check the volume's Centre/Size.";
 
             float holePct = 100f * holes / tested;
-            string verdict = holes == 0
-                ? "  coverage: PASS — every sampled surface point reads as solid."
-                : $"  coverage: {holePct:F2}% of sampled surface points are HOLES (worst {worst:F2}m away, on '{worstMesh}').\n" +
-                  (holePct > 1f
-                      ? "    That is high — fish will visibly swim through geometry. Reduce Voxel Size, or check for huge triangles."
-                      : "    Low; likely geometry poking outside the bake region rather than true holes.");
+            float outsidePct = 100f * outsideRegion / (tested + outsideRegion);
 
-            return $"  coverage: sampled {tested:N0} points ON the real surfaces — solid {solidHit:N0}, within a voxel {withinVoxel:N0}, holes {holes:N0}\n" + verdict;
+            string verdict = holes == 0
+                ? "  coverage: PASS — every sampled surface point INSIDE the region reads as solid."
+                : $"  coverage: FAIL — {holePct:F2}% of sampled surface points are HOLES (worst {worst:F2}m away, on '{worstMesh}').\n" +
+                  "    Fish will swim through geometry there. Reduce Voxel Size, or look for oversized triangles.";
+
+            // Reported separately from holes: this is not a hole in the field, it is geometry the field
+            // was never asked about. Fish cannot reach outside the simulation bounds, so some is expected
+            // and harmless — but if it is high, the region is probably not covering the reef.
+            string outside = outsideRegion == 0
+                ? "  region: all sampled geometry lies inside the baked region."
+                : $"  region: {outsideRegion:N0} sampled surface points ({outsidePct:F1}%) lie OUTSIDE the baked region and are\n" +
+                  "    therefore not solid at all. Expected for reef below the seabed or beyond the play area;\n" +
+                  "    if fish can reach it, grow Size/Padding.";
+
+            return $"  coverage: sampled {tested:N0} points ON the real surfaces — solid {solidHit:N0}, within a voxel {withinVoxel:N0}, holes {holes:N0}\n"
+                   + verdict + "\n" + outside;
         }
 
         private static Texture3D WriteTexture(float[] distance, int nx, int ny, int nz)

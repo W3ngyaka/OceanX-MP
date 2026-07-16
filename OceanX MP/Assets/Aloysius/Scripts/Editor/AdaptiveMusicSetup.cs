@@ -3,28 +3,29 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-// One-click configuration for AdaptiveMusicSystem.
+// One-click configuration for AdaptiveMusicSystem (the WHOLE-SONG mood switcher).
 //
 // Two menus under  OceanX :
-//   • "Setup Adaptive Music (full)"        — first-time setup. Adds the component, assigns the
-//                                            PLACEHOLDER clips (Ambient/Somber/Warm/Thrive), and sets
-//                                            the band curves. ⚠ OVERWRITES clip assignments.
-//   • "Set Music Band Curves (keep clips)" — only rewrites the health->volume curves on the existing
-//                                            layers, IN ORDER. Leaves your clips, groups, params, names
-//                                            untouched. Use this after you've assigned your own audio.
+//   • "Setup Adaptive Music (full)"   — first-time setup. Adds the component and makes sure there are
+//                                       4 named mood layers (LOW health first), sets the band edges, the
+//                                       exposed mixer params, and the transition-feel defaults.
+//                                       ⚠ Does NOT touch clips or mixer groups you've already assigned —
+//                                       assign each mood's SONG (and its mixer group) yourself.
+//   • "Set Music Bands (keep clips)"  — only rewrites the band edges + names + transition defaults on the
+//                                       existing layers. Leaves clips, groups, params untouched.
 //
-// BANDS (exclusive, with a crossfade at each edge so transitions are smooth, not hard cuts):
-//   layer 0  Bed       0%  – 30%
-//   layer 1  Sorrow    30% – 60%
-//   layer 2  Hope      60% – 90%
-//   layer 3  Flourish  90% – 100%
-// At each boundary the two neighbours cross at ~0.5 over a 10%-wide window, so exactly one track plays
-// in the middle of a band and two briefly blend while crossing. Nothing else plays on top.
+// BANDS (whole-song, one plays at a time; a crossfade at each edge hands over smoothly):
+//   layer 0  Somber    below 30%   (reef collapsing)
+//   layer 1  Unstable  30% – 60%
+//   layer 2  Hopeful   60% – 90%
+//   layer 3  Thriving  above 90%
 //
 // After running either: SAVE THE SCENE (Ctrl+S).
 public static class AdaptiveMusicSetup
 {
-    const string SoundsDir = "Assets/Sounds/";
+    static readonly string[] MoodNames    = { "Somber", "Unstable", "Hopeful", "Thriving" };
+    static readonly string[] ExposedParams = { "BedVol", "SorrowVol", "HopeVol", "FlourishVol" };
+    static readonly float[]  DefaultEdges  = { 0.30f, 0.60f, 0.90f };
 
     [MenuItem("OceanX/Setup Adaptive Music (full)")]
     static void SetupFull()
@@ -36,39 +37,34 @@ public static class AdaptiveMusicSetup
         var amp = go.GetComponent<AdaptiveMusicSystem>() ?? Undo.AddComponent<AdaptiveMusicSystem>(go);
         Undo.RecordObject(amp, "Setup Adaptive Music");
 
-        var missing = new List<string>();
-        AudioClip bed      = LoadClip("Ambient.mp3", missing);
-        AudioClip sorrow   = LoadClip("Somber.mp3",  missing);
-        AudioClip hope     = LoadClip("Warm.mp3",    missing);
-        AudioClip flourish = LoadClip("Thrive.mp3",  missing);
+        if (amp.layers == null) amp.layers = new List<AdaptiveMusicSystem.Layer>();
+        while (amp.layers.Count < 4) amp.layers.Add(new AdaptiveMusicSystem.Layer());
 
-        var c = BandCurves();
-        amp.layers = new List<AdaptiveMusicSystem.Layer>
+        var missingClips = new List<string>();
+        for (int i = 0; i < 4; i++)
         {
-            new AdaptiveMusicSystem.Layer { name = "Bed",      clip = bed,      exposedParam = "BedVol",      healthToVolume = c[0] },
-            new AdaptiveMusicSystem.Layer { name = "Sorrow",   clip = sorrow,   exposedParam = "SorrowVol",   healthToVolume = c[1] },
-            new AdaptiveMusicSystem.Layer { name = "Hope",     clip = hope,     exposedParam = "HopeVol",     healthToVolume = c[2] },
-            new AdaptiveMusicSystem.Layer { name = "Flourish", clip = flourish, exposedParam = "FlourishVol", healthToVolume = c[3] },
-        };
-        amp.masterVolume     = 0.6f;
-        amp.transitionSeconds = 2f;
-        amp.silenceDb        = -80f;
-        amp.swellVolume      = 0.8f;
-        amp.showDebugReadout = true;
+            var l = amp.layers[i] ?? (amp.layers[i] = new AdaptiveMusicSystem.Layer());
+            l.name = MoodNames[i];
+            if (string.IsNullOrEmpty(l.exposedParam)) l.exposedParam = ExposedParams[i];   // don't stomp custom wiring
+            if (l.clip == null) missingClips.Add(MoodNames[i]);
+        }
+
+        ApplyBandsAndFeel(amp);
 
         EditorUtility.SetDirty(amp);
         EditorSceneManager.MarkSceneDirty(go.scene);
 
         string msg = $"Full setup done on '{go.name}'. Removed {removed} missing script(s).\n" +
-                     "4 layers wired with PLACEHOLDER clips + exclusive band curves (0-30 / 30-60 / 60-90 / 90-100).\n";
-        if (missing.Count > 0) msg += "⚠ Missing clips: " + string.Join(", ", missing) + "\n";
-        msg += "\nUsing your own audio? Assign clips to the layers, then run 'Set Music Band Curves (keep clips)'.\n" +
-               "Then Ctrl+S. Play + tick Override Health + drag Debug Health 0→1 to test.";
+                     "4 mood layers ready (Somber / Unstable / Hopeful / Thriving) with band edges " +
+                     "0.30 / 0.60 / 0.90.\n\nAssign each mood's SONG (and its mixer group) in the Inspector — " +
+                     "existing clips were left untouched.";
+        if (missingClips.Count > 0) msg += "\n⚠ Still need a clip: " + string.Join(", ", missingClips);
+        msg += "\n\nThen Ctrl+S. Play + tick Override Health + drag Debug Health 0→1 to hear the switches.";
         Log(msg);
     }
 
-    [MenuItem("OceanX/Set Music Band Curves (keep clips)")]
-    static void SetCurvesOnly()
+    [MenuItem("OceanX/Set Music Bands (keep clips)")]
+    static void SetBandsOnly()
     {
         var go = FindTarget();
         if (go == null) return;
@@ -82,39 +78,44 @@ public static class AdaptiveMusicSetup
             return;
         }
 
-        Undo.RecordObject(amp, "Set Music Band Curves");
-        var c = BandCurves();
-        int n = Mathf.Min(4, amp.layers.Count);
+        Undo.RecordObject(amp, "Set Music Bands");
+        int n = Mathf.Min(MoodNames.Length, amp.layers.Count);
         for (int i = 0; i < n; i++)
-            if (amp.layers[i] != null) amp.layers[i].healthToVolume = c[i];
+            if (amp.layers[i] != null) amp.layers[i].name = MoodNames[i];
+        ApplyBandsAndFeel(amp);
 
         EditorUtility.SetDirty(amp);
         EditorSceneManager.MarkSceneDirty(go.scene);
 
-        string extra = amp.layers.Count > 4
-            ? $"\n(You have {amp.layers.Count} layers; only the first 4 got band curves.)" : "";
-        Log($"Band curves applied to the first {n} layer(s) on '{go.name}', clips untouched.\n" +
-            "Order used: 0=Bed(0-30), 1=Sorrow(30-60), 2=Hope(60-90), 3=Flourish(90-100)." + extra +
+        string extra = amp.layers.Count != 4
+            ? $"\n(You have {amp.layers.Count} layers; edges were set for that count.)" : "";
+        Log($"Bands + transition defaults applied on '{go.name}', clips untouched." + extra +
             "\n\nCtrl+S to save. Play + Override Health + drag Debug Health 0→1 to test.");
     }
 
     // ---- shared -------------------------------------------------------------------------------
 
-    // Four exclusive-band curves with a 10%-wide crossfade centred on each boundary (0.30/0.60/0.90).
-    // Health is on X (0-1), volume on Y (0-1). Curves clamp outside their key range.
-    static AnimationCurve[] BandCurves()
+    static void ApplyBandsAndFeel(AdaptiveMusicSystem amp)
     {
-        return new[]
+        // Band edges need (layers - 1) entries. Use the 30/60/90 defaults for the 4-mood setup, otherwise
+        // fall through to an even split (the component itself also normalises on Start).
+        int need = Mathf.Max(0, amp.layers.Count - 1);
+        if (need == DefaultEdges.Length)
+            amp.bandEdges = (float[])DefaultEdges.Clone();
+        else
         {
-            // Bed: full to 0.25, cross down to 0 by 0.35
-            Curve((0f,1f),(0.25f,1f),(0.35f,0f),(1f,0f)),
-            // Sorrow: up 0.25→0.35, hold, down 0.55→0.65
-            Curve((0f,0f),(0.25f,0f),(0.35f,1f),(0.55f,1f),(0.65f,0f),(1f,0f)),
-            // Hope: up 0.55→0.65, hold, down 0.85→0.95
-            Curve((0f,0f),(0.55f,0f),(0.65f,1f),(0.85f,1f),(0.95f,0f),(1f,0f)),
-            // Flourish: up 0.85→0.95, hold to 1
-            Curve((0f,0f),(0.85f,0f),(0.95f,1f),(1f,1f)),
-        };
+            amp.bandEdges = new float[need];
+            for (int i = 0; i < need; i++) amp.bandEdges[i] = (i + 1f) / (need + 1f);
+        }
+
+        amp.masterVolume     = 0.6f;
+        amp.crossfadeSeconds = 3f;
+        amp.healthSmoothing  = 2f;
+        amp.hysteresis       = 0.05f;
+        amp.minMoodSeconds   = 8f;
+        amp.silenceDb        = -80f;
+        amp.swellVolume      = 0.8f;
+        amp.showDebugReadout = true;
     }
 
     static GameObject FindTarget()
@@ -132,20 +133,6 @@ public static class AdaptiveMusicSetup
                 "EcosystemSimulationGPU), select the AudioManager (or ensure one named exactly " +
                 "\"AudioManager\" exists), and run this again.", "OK");
         return go;
-    }
-
-    static AudioClip LoadClip(string file, List<string> missing)
-    {
-        var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(SoundsDir + file);
-        if (clip == null) missing.Add(file);
-        return clip;
-    }
-
-    static AnimationCurve Curve(params (float t, float v)[] keys)
-    {
-        var frames = new Keyframe[keys.Length];
-        for (int i = 0; i < keys.Length; i++) frames[i] = new Keyframe(keys[i].t, keys[i].v);
-        return new AnimationCurve(frames);
     }
 
     static void Log(string msg)

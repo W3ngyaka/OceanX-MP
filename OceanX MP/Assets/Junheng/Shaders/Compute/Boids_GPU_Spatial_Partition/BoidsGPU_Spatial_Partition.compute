@@ -258,10 +258,9 @@ void ResolveObstaclePenetration(Affecter obstacle, inout BoidInfo boidInfo)
 // reef surface, and slides its heading along that surface rather than letting it drive further in.
 //
 // The field is UNSIGNED, which shapes how this has to work. Just outside the surface the gradient is
-// strong and points cleanly outward, so we push along it. But AT the surface the distance bottoms out at
-// 0 and the gradient collapses to nothing — there is no "which way is out" to read. In that case the one
-// direction we know leads to open water is where the boid came from, so it reverses out along its own
-// heading. That only ever fires for a boid that has already tunnelled, which the steering makes rare.
+// strong and points cleanly outward, so we push along it. But DEEP inside a thick, flat mass — a rock
+// slab lying on the seabed — every neighbouring voxel is equally solid, so the local gradient collapses
+// to nothing and there is no "which way is out" to read.
 void ResolveReefPenetration(inout BoidInfo boidInfo)
 {
     // One voxel is the finest the field can resolve, so it is also the closest we can meaningfully
@@ -289,8 +288,19 @@ void ResolveReefPenetration(inout BoidInfo boidInfo)
     }
     else
     {
-        // Buried: no usable gradient. Back out the way we came in.
-        boidInfo.position -= boidInfo.direction * clearance;
+        // Buried in a mass too thick for the local gradient to escape (a floor-level slab). Climb toward
+        // OPEN WATER, which in a reef sitting on the seabed is reliably straight up: the field always
+        // gains distance with height until it clears the surface. Pushing up one voxel per frame walks
+        // the boid out over a frame or two.
+        //
+        // The previous version instead backed out along the boid's own heading, which created the exact
+        // "swims forward forever but never moves" trap: near the seabed the heading is horizontal, so it
+        // shoved the boid sideways within the flat slab, then the floor clamp below pinned it back at the
+        // floor, and it re-entered the same voxel the next frame. Climbing up escapes; backing out did not.
+        boidInfo.position.y += clearance;
+        // Bias the heading upward too, so the boid actively swims out of the slab instead of being nudged
+        // out one voxel at a time while steering keeps driving it back down.
+        boidInfo.direction = normalize(boidInfo.direction + float3(0.0, 1.0, 0.0));
     }
 
     // Nothing may end up under the seabed. The reef sits ON the floor, so pushing "out" of it can point

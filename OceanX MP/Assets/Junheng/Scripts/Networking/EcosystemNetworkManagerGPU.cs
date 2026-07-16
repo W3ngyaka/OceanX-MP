@@ -11,7 +11,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
 {
     public static EcosystemNetworkManagerGPU Instance { get; private set; }
 
-    [SerializeField] private float _populationSyncInterval = 1f;
+    [SerializeField] private float _populationSyncInterval = 0.15f;
 
     private EcosystemSimulationGPU _simulation;
     private NetworkList<int> _populationCounts;

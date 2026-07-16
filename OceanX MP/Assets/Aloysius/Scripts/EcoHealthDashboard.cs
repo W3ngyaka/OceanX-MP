@@ -28,7 +28,7 @@ public class EcoHealthDashboard : MonoBehaviour
 
     [Header("Behaviour")]
     public bool smooth = true;
-    public float smoothSpeed = 2f;
+    public float smoothSpeed = 8f;
 
     [Header("Fallback (no network manager)")]
     [Range(0f, 1f)] public float manualHealth01 = 0.5f;

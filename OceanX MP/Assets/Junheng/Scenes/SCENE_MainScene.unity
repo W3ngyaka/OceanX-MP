@@ -104126,237 +104126,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AdaptiveMusicSystem
   layers:
   - name: Bed
-    clip: {fileID: 8300000, guid: 8776c21349b1afc4f859072293b90a2a, type: 3}
+    clip: {fileID: 8300000, guid: c4e90b7aa56dcc946b32276c2b0b499d, type: 3}
     volume: 1
-    healthToVolume:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.25
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.35
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
     group: {fileID: 8780339679088658335, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: BedVol
   - name: Sorrow
-    clip: {fileID: 8300000, guid: d6bf8b8be9a9e6b4f9166cafc4f8f5f3, type: 3}
+    clip: {fileID: 8300000, guid: 3d6ad59e93087244db266c10d10d1f20, type: 3}
     volume: 0.8
-    healthToVolume:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.25
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.35
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.55
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.65
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
     group: {fileID: -3877378371721538969, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: SorrowVol
   - name: Hope
-    clip: {fileID: 8300000, guid: 6c5bd31c1fbf259418b295cc86b5feb9, type: 3}
+    clip: {fileID: 8300000, guid: 80d1316e7d9db1e42bd403a1aaa53f11, type: 3}
     volume: 1
-    healthToVolume:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.55
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.65
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.85
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.95
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
     group: {fileID: 409877625108413181, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: HopeVol
   - name: Flourish
-    clip: {fileID: 8300000, guid: 5fac931cb9ab0d34992cc3bcb3b08496, type: 3}
+    clip: {fileID: 8300000, guid: 53ea69f17a34a4340a90a878462725ad, type: 3}
     volume: 1
-    healthToVolume:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.85
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.95
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
     group: {fileID: 4188924859348678293, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: FlourishVol
+  bandEdges:
+  - 0.3
+  - 0.6
+  - 0.9
   mixer: {fileID: 24100000, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
   masterVolume: 0.6
   masterExposedParam: 
-  transitionSeconds: 8
+  crossfadeSeconds: 8
+  healthSmoothing: 2
+  hysteresis: 0.05
+  minMoodSeconds: 8
   silenceDb: -80
   swell: {fileID: 0}
   swellVolume: 0.8
-  overrideHealth: 1
+  overrideHealth: 0
   debugHealth: 0
   showDebugReadout: 1
 --- !u!1001 &944407268

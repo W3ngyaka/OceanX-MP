@@ -37,7 +37,11 @@ namespace OceanX.BoidsGPU
         [SerializeField] private float _cellSize = 2f;
 
         [Header("Visualization: ")]
-        [SerializeField] private bool _visualizeOccupancy = true;
+        [Tooltip("EDITOR-ONLY debug view of how many boids are in each grid cell. Costs a BLOCKING " +
+                 "GPU->CPU readback every frame while on, so it is compiled out of player builds " +
+                 "entirely (see UpdateGridOccupancy). Leave OFF unless you are actively debugging the " +
+                 "grid — it stalls the editor's frame the same way it used to stall the build.")]
+        [SerializeField] private bool _visualizeOccupancy = false;
         [SerializeField] private Color _occupancyVisualizationColor = Color.red;
 
         // Data that shouldn't be set from the inspector. It's just serialized for visualization of values.
@@ -288,6 +292,17 @@ namespace OceanX.BoidsGPU
             _spatialPartitionComputeShader.DispatchThreads(_updateOccupancyKernelID, _totalBoidsCount);
 
             // DEBUG VISUALIZATION: For each cell, output the number of boids inside it.
+            //
+            // EDITOR ONLY — and deliberately so. GetData() is a SYNCHRONOUS readback: it flushes the
+            // command buffer and blocks the main thread until the GPU has drained everything queued
+            // (including the previous frame's rendering), which destroys CPU/GPU overlap and serialises
+            // the two. Issued here, mid-UpdateGridOccupancy, it cost roughly 1-8 ms EVERY FRAME.
+            //
+            // The payload is consumed only by OnDrawGizmosSelected, and Gizmo callbacks never fire in a
+            // player — so in a build this was a per-frame stall for data that was thrown away. The #if
+            // makes that impossible regardless of what the flag is serialised to in a scene (SCENE_MainScene
+            // and Boids_Demo both still have it saved as ON; this compiles the cost out anyway).
+#if UNITY_EDITOR
             if(_visualizeOccupancy)
             {
                 if (_cellsOccupancyVisualization == null)
@@ -296,6 +311,7 @@ namespace OceanX.BoidsGPU
                 }
                 _cellOccupancyBuffer.GetData(_cellsOccupancyVisualization);
             }
+#endif
 
             // Now, for each boid, we know the cell they belong to, and their order in that cell.
             // Also, we know the number of boids in each cell. With that, we begin the boids sorting 

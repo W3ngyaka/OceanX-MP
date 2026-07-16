@@ -8132,6 +8132,7 @@ MonoBehaviour:
   - {fileID: 107513645}
   - {fileID: 1167675520}
   - {fileID: 622278853}
+  _reefSDF: {fileID: 0}
   _updateSchoolSettingsEveryFrame: 0
   _entryBoostDuration: 0.5
   _exitStopDistance: 1.5
@@ -104088,7 +104089,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 941993330}
-  - component: {fileID: 941993328}
+  - component: {fileID: 941993331}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -104096,54 +104097,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &941993328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941993327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89935dd8a82821049ac631e3fecf62d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MusicDirector
-  layers:
-  - name: Ambient bed
-    clip: {fileID: 0}
-    healthMin: 0
-    healthMax: 0
-    maxVolume: 1
-    source: {fileID: 0}
-  - name: Somber
-    clip: {fileID: 8300000, guid: 8776c21349b1afc4f859072293b90a2a, type: 3}
-    healthMin: 0
-    healthMax: 0.3
-    maxVolume: 0.9
-    source: {fileID: 0}
-  - name: Warmth
-    clip: {fileID: 8300000, guid: e3d814fe93dc3ed43974596f7c7ef91c, type: 3}
-    healthMin: 0.3
-    healthMax: 0.6
-    maxVolume: 0.9
-    source: {fileID: 0}
-  - name: Thriving
-    clip: {fileID: 8300000, guid: 67dcfca4eed3fa5458110da9a65dc45f, type: 3}
-    healthMin: 0.6
-    healthMax: 1
-    maxVolume: 0.85
-    source: {fileID: 0}
-  masterVolume: 0.7
-  takeoverMode: 0
-  fadeCurve: 1
-  fadeInSeconds: 10
-  fadeOutSeconds: 10
-  fadeOutDelaySeconds: 3
-  switchHysteresis: 0.03
-  swell: {fileID: 0}
-  swellVolume: 0.8
-  overrideHealth: 0
-  debugHealth: 0
 --- !u!4 &941993330
 Transform:
   m_ObjectHideFlags: 0
@@ -104159,6 +104112,249 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &941993331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941993327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3184afd2cce16e04592103bc5371d19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AdaptiveMusicSystem
+  layers:
+  - name: Bed
+    clip: {fileID: 8300000, guid: 8776c21349b1afc4f859072293b90a2a, type: 3}
+    healthToVolume:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.35
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    group: {fileID: 8780339679088658335, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
+    exposedParam: BedVol
+  - name: Sorrow
+    clip: {fileID: 8300000, guid: d6bf8b8be9a9e6b4f9166cafc4f8f5f3, type: 3}
+    healthToVolume:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.25
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.35
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.55
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.65
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    group: {fileID: 5925979713666600836, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
+    exposedParam: SorrowVol
+  - name: Hope
+    clip: {fileID: 8300000, guid: 6c5bd31c1fbf259418b295cc86b5feb9, type: 3}
+    healthToVolume:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.55
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.65
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.85
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.95
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    group: {fileID: -2838785708448881671, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
+    exposedParam: HopeVol
+  - name: Flourish
+    clip: {fileID: 8300000, guid: 5fac931cb9ab0d34992cc3bcb3b08496, type: 3}
+    healthToVolume:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.85
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.95
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    group: {fileID: 5378755733210970796, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
+    exposedParam: FlourishVol
+  mixer: {fileID: 24100000, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
+  masterVolume: 0.6
+  masterExposedParam: 
+  responseSeconds: 2
+  silenceDb: -80
+  swell: {fileID: 0}
+  swellVolume: 0.8
+  overrideHealth: 1
+  debugHealth: 0
+  showDebugReadout: 1
 --- !u!1001 &944407268
 PrefabInstance:
   m_ObjectHideFlags: 0

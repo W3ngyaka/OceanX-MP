@@ -162,7 +162,7 @@ public class SpeciesAddedReveal : MonoBehaviour
             {
                 FillCard(species);
                 // Positive beat — lift the music the moment the card appears.
-                if (MusicDirector.Instance != null) MusicDirector.Instance.PlaySwell();
+                if (AdaptiveMusicSystem.Instance != null) AdaptiveMusicSystem.Instance.PlaySwell();
             },
             holdSeconds,
             fadeDuration,

@@ -118,10 +118,10 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _TailMaskFalloff: 3.13
-    - _TailRollAmplitude: 0.0394
-    - _TailRollOffset: 0.031
-    - _TailWaveLength: 2
+    - _TailMaskFalloff: 2.72
+    - _TailRollAmplitude: 0.0502
+    - _TailRollOffset: 0
+    - _TailWaveLength: 0.43
     - _TailYawAmplitude: 0.0592
     - _UVSec: 0
     - _VisualizeMask: 0

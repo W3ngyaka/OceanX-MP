@@ -18,7 +18,7 @@ MonoBehaviour:
   MaxSideToSideAmplitude: 0
   MinYawRotationAmplitude: 0.0099
   MaxYawRotationAmplitude: 0.0099
-  MinRollRotationAmplitude: 0.0394
-  MaxRollRotationAmplitude: 0.0394
+  MinRollRotationAmplitude: 0.0502
+  MaxRollRotationAmplitude: 0.0502
   MinPanningYawAmplitude: 0.0592
   MaxPanningYawAmplitude: 0.0592

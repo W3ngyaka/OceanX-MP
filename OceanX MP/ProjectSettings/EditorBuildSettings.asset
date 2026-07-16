@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Aloysius/Start scene.unity
     guid: 064e0f2b3b9099b46af3be59870f4b93
   - enabled: 0
@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Junheng/Scenes/Boids_Demo.unity
     guid: a82cd417066164345af16d799514f518
-  - enabled: 1
+  - enabled: 0
     path: Assets/Aloysius/new netcode 1.unity
     guid: 8a3b650040a16b543b625d396b047629
   - enabled: 0
@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Junheng/Scenes/new netcode 1.unity
     guid: ec49c3ecb7fdc294a923fa203d74a987
+  - enabled: 0
+    path: Assets/Akil/Scenes/SCENE_MainScene.unity
+    guid: 77515a1e42c0eb449b34b17df54f9d08
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

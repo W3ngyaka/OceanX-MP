@@ -158,7 +158,12 @@ public class SpeciesAddedReveal : MonoBehaviour
         if (species == null) return;
         RevealQueue.Get().Enqueue(
             revealGroup,
-            () => FillCard(species),
+            () =>
+            {
+                FillCard(species);
+                // Positive beat — lift the music the moment the card appears.
+                if (MusicDirector.Instance != null) MusicDirector.Instance.PlaySwell();
+            },
             holdSeconds,
             fadeDuration,
             () => OnCardShown());

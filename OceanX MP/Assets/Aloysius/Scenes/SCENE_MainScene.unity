@@ -96200,7 +96200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicDirector
   layers:
   - name: Ambient bed
-    clip: {fileID: 8300000, guid: 65fd3cfe9285d3944bcc5175f536f3b2, type: 3}
+    clip: {fileID: 0}
     healthMin: 0
     healthMax: 1
     maxVolume: 1
@@ -96214,14 +96214,14 @@ MonoBehaviour:
     blend: 0.12
     source: {fileID: 0}
   - name: Warmth
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: e3d814fe93dc3ed43974596f7c7ef91c, type: 3}
     healthMin: 0.45
     healthMax: 1
     maxVolume: 0.9
     blend: 0.12
     source: {fileID: 0}
   - name: Thriving
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 67dcfca4eed3fa5458110da9a65dc45f, type: 3}
     healthMin: 0.75
     healthMax: 1
     maxVolume: 0.85
@@ -133514,7 +133514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1184151410
 MonoBehaviour:
   m_ObjectHideFlags: 0

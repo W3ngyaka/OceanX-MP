@@ -96,8 +96,11 @@ namespace OceanX.BoidsGPU
         /// </summary>
         public float RotationEffectOnSpeed;
         /// <summary>
-        /// Currently not used, but added to fill to the 16-byte memory slot.
+        /// 0 = avoid obstacles in full 3D (shortest way clear, usually over the top).
+        /// 1 = avoid strictly horizontally, so a bottom-dweller banks around reef structure instead of
+        /// climbing it and drifting off the seabed. See <see cref="FishSchoolProperties.HorizontalAvoidBias"/>.
+        /// (This slot used to be EmptyFiller, so the struct size is unchanged.)
         /// </summary>
-        public float EmptyFiller;
+        public float HorizontalAvoidBias;
     }
 }

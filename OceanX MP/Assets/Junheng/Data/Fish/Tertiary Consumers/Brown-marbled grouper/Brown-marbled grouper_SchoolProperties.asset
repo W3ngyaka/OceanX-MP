@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Brown-marbled grouper_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 8
-  ObstacleAvoidanceRange: 2
+  ObstacleAvoidanceRange: 2.1
   SeparationRange: 3
   CohesionWeight: 0.05
   AlignmentWeight: 0.05
   SeparationWeight: 1
   TargetWeight: 1.4
+  HorizontalAvoidBias: 0.7
   MovementProperties: {fileID: 0}
   MotionRenderProperties: {fileID: 0}

@@ -63,7 +63,13 @@ public static class SpeciesContentDB
         catch (System.Exception ex) { Debug.LogError($"[SpeciesContentDB] read failed: {ex.Message}"); return; }
 
         var rows = CsvUtil.Parse(text);
-        if (rows.Count < 2) return;
+        if (rows.Count < 2)
+        {
+            // Was silent. A sheet that parses to nothing means every card renders blank, so say why.
+            Debug.LogWarning($"[SpeciesContentDB] '{CsvFile}' parsed to {rows.Count} row(s) — no species loaded, " +
+                             $"every info card will be blank. Path: {path}");
+            return;
+        }
 
         var header = rows[0];
         var col = new Dictionary<string, int>();

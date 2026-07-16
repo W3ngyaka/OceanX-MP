@@ -20,9 +20,17 @@ MonoBehaviour:
   MotionRenderProperties: {fileID: 11400000, guid: 4c3373b4ffc5ff544b9c33bff87de07e, type: 2}
   BehaviorProperties: {fileID: 11400000, guid: b0c7d685209d14f40a79f37d62b30fe4, type: 2}
   FishPerSchool: 3
-  MaxSchools: 3
+  MaxSchools: 8
   PathStyle: 0
   PreferredDepthBand: {x: 0.43, y: 0.87}
+  AllowSchoolMerging: 0
+  MergeChancePerTick: 0.25
+  SplitChancePerTick: 0.08
+  MergeDistance: 8
+  AllowMixedSpeciesSchooling: 0
+  MixedMergeChancePerTick: 0.05
+  MixedSplitChancePerTick: 0.15
+  ShoalsWith: []
   PreySpecies:
   - {fileID: 11400000, guid: 030fe1af58270a04c843fdda6fe90410, type: 2}
   - {fileID: 11400000, guid: 1cf137833ce32454a999ba54ac57956a, type: 2}

@@ -6105,7 +6105,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HEALTHY
+  m_text: CRITICAL
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6114,8 +6114,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4286637657
-  m_fontColor: {r: 0.35, g: 0.9, b: 0.5, a: 1}
+    rgba: 4283190514
+  m_fontColor: {r: 0.95, g: 0.3, b: 0.3, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -19547,6 +19547,22 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 0.64
       objectReference: {fileID: 0}
+    - target: {fileID: 2704471089967960317, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1873101
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704471089967960317, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1648289
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704471089967960317, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1648289
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704471089967960317, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -8.6
+      objectReference: {fileID: 0}
     - target: {fileID: 2704471090199120230, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: m_Name
       value: Dashboard001
@@ -19645,7 +19661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2704471090946486986, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: m_text
-      value: 73%
+      value: 34%
       objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: statusText
@@ -19653,11 +19669,11 @@ PrefabInstance:
       objectReference: {fileID: 748468811}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: smoothSpeed
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: manualHealth01
-      value: 0.73
+      value: 0.34
       objectReference: {fileID: 0}
     - target: {fileID: 5200429925027651151, guid: 6a3b994070384644ba6437d55e1569e2, type: 3}
       propertyPath: speciesCountText

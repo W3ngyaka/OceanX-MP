@@ -41,7 +41,13 @@ public class EcoHealthDashboard : MonoBehaviour
         float target = GetHealth01();
         if (_displayed01 < 0f) _displayed01 = target;
         else if (smooth && Application.isPlaying)
-            _displayed01 = Mathf.MoveTowards(_displayed01, target, smoothSpeed * Time.deltaTime);
+            {
+                // Exponential (frame-rate-independent) easing — matches the large-screen
+                // HealthBarBinder so the tablet gauge feels identical: glides in and
+                // decelerates toward the target instead of the abrupt linear MoveTowards.
+                float k = 1f - Mathf.Exp(-smoothSpeed * Time.deltaTime);
+                _displayed01 = Mathf.Lerp(_displayed01, target, k);
+            }
         else
             _displayed01 = target;
         if (fillImage != null)
@@ -49,11 +55,11 @@ public class EcoHealthDashboard : MonoBehaviour
             fillImage.fillAmount = _displayed01;
             if (colorFill) fillImage.color = HealthColor(_displayed01);
         }
-        if (percentText != null) percentText.text = Mathf.RoundToInt(_displayed01 * 100f) + "%";
+        if (percentText != null) percentText.text = Mathf.RoundToInt(target * 100f) + "%";  // instant, unsmoothed
         if (statusText != null)
         {
-            statusText.text = StatusWord(_displayed01);
-            if (colorStatus) statusText.color = StatusColor(_displayed01);
+            statusText.text = StatusWord(target);          // instant, matches the number
+            if (colorStatus) statusText.color = StatusColor(target);
         }
         if (speciesCountText != null)
             speciesCountText.text = CountPresent() + " / " + totalSpecies + " species present";

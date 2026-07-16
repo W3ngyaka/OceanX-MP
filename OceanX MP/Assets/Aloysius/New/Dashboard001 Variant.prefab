@@ -110,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 393325909803398631, guid: 3a00f8c3b036f5746a43c4b9babb5151, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -8.9
+      value: -9.2
       objectReference: {fileID: 0}
     - target: {fileID: 393325909803398631, guid: 3a00f8c3b036f5746a43c4b9babb5151, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -124,6 +124,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 856dd1984ca28044daf785682733aaa5, type: 3}
+    - target: {fileID: 393325909803398633, guid: 3a00f8c3b036f5746a43c4b9babb5151, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 393325909803398633, guid: 3a00f8c3b036f5746a43c4b9babb5151, type: 3}
+      propertyPath: m_Color.g
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 393325909803398633, guid: 3a00f8c3b036f5746a43c4b9babb5151, type: 3}
       propertyPath: m_FillAmount
       value: 0.5
@@ -218,6 +226,7 @@ MonoBehaviour:
   percentText: {fileID: 2704471090946486986}
   statusText: {fileID: 0}
   colorStatus: 1
+  colorFill: 1
   speciesCountText: {fileID: 0}
   totalSpecies: 12
   smooth: 1

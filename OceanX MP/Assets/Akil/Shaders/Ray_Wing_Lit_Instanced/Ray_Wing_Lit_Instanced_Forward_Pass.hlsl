@@ -167,6 +167,9 @@ Varyings LitPassVertex(Attributes input, uint svInstanceID: SV_InstanceID)
     // the material properties (and _Time), so it does not need any per-boid swim parameters.
     float3 vertexPosition = ApplyRayWingMotion(input.positionOS.xyz, input.tailMaskUV);
 
+    // Sweep the tail toward the direction the ray is turning (signedTurnRate from the sim).
+    vertexPosition = ApplyRayTurnTailBend(vertexPosition, boidInfo.signedTurnRate);
+
     // Rotate the boid in the correct direction.
     float4 boidRotation = LookRotation(boidInfo.direction);
     float4x4 vertexRotationMatrix = CreateRotationMatrix(boidRotation);

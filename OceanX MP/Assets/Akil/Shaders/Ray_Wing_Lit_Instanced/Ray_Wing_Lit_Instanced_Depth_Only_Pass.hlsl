@@ -43,6 +43,9 @@ Varyings DepthOnlyVertex(Attributes input, uint svInstanceID: SV_InstanceID)
     // Apply wing-flap motion to the original vertex position.
     float3 vertexPosition = ApplyRayWingMotion(input.position.xyz, input.tailMaskUV);
 
+    // Sweep the tail toward the direction the ray is turning (signedTurnRate from the sim).
+    vertexPosition = ApplyRayTurnTailBend(vertexPosition, boidInfo.signedTurnRate);
+
     // Rotate the boid in the correct direction.
     float4 boidRotation = LookRotation(boidInfo.direction);
     float3 rotatedVertexPosition = mul(CreateRotationMatrix(boidRotation), float4(vertexPosition, 1.0)).xyz;

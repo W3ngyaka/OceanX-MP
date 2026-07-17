@@ -17,8 +17,13 @@ using OceanX.BoidsGPU.Ecosystem;
 ///  • AllAtOnce   — the whole group appears the moment health crosses `threshold`.
 ///  • Staggered   — like AllAtOnce but members pop in one-by-one, `staggerInterval` apart, after the threshold.
 ///
-/// FADE MODE = SCALE POP-IN (placeholder). Corals grow from zero to their authored scale with an optional
-/// overshoot pop. All visual writes go through <see cref="ApplyReveal"/> / <see cref="ForceVisible"/>.
+/// TWO reveal STYLES per group (orthogonal to AppearMode):
+///  • ScalePopIn   — corals grow from zero to their authored scale with an optional overshoot pop.
+///  • ColorRecover — corals stay full-size and regain colour from a bleached/dead look as health rises
+///    (corals only; needs the OceanX/CoralHealth material — drives its _Health 0→1 via a MaterialPropertyBlock).
+///    Use this for "all corals present but washed-out" and for the "dead corals" half of the hybrid scene;
+///    keep seagrass/seaweed and any "new" corals on ScalePopIn so they still pop in from nothing.
+/// All visual writes go through <see cref="ApplyReveal"/> / <see cref="ForceVisible"/>.
 ///
 /// PREVIEW: scale is serialized, so by default this only drives scale in PLAY mode. Turn on
 /// <c>previewInEditor</c> to also drive it in edit mode (drag Debug Health to watch it) — ⚠ turn it OFF
@@ -34,6 +39,12 @@ public class EnvironmentHealthReveal : MonoBehaviour
         Staggered     // members pop in one-by-one, staggerInterval apart, after `threshold` is crossed
     }
 
+    public enum RevealStyle
+    {
+        ScalePopIn,   // grow from zero scale to the authored scale (the original technique)
+        ColorRecover  // stay full-size; drive the coral's _Health 0→1 to un-bleach it from a dead look
+    }
+
     [System.Serializable]
     public class RevealGroup
     {
@@ -45,7 +56,13 @@ public class EnvironmentHealthReveal : MonoBehaviour
 
         public AppearMode appearMode = AppearMode.Proportional;
 
-        [Header("Proportional mode")]
+        [Tooltip("How a member reveals:\n" +
+                 "• ScalePopIn = grow from zero scale (original — use for seagrass/seaweed & 'new' corals).\n" +
+                 "• ColorRecover = stays full-size and regains colour from a bleached/dead look as health rises " +
+                 "(corals only; needs the OceanX/CoralHealth material). AppearMode is ignored in this style.")]
+        public RevealStyle revealStyle = RevealStyle.ScalePopIn;
+
+        [Header("Proportional mode / ColorRecover band")]
         [Tooltip("Health at which the FIRST coral appears (0..1).")]
         [Range(0f, 1f)] public float startHealth = 0f;
         [Tooltip("Health at which the LAST coral appears (all present at/above this).")]
@@ -58,6 +75,11 @@ public class EnvironmentHealthReveal : MonoBehaviour
         [Range(0f, 0.5f)] public float hysteresisMargin = 0.05f;
         [Tooltip("Staggered mode: seconds between each member starting its pop-in.")]
         [Min(0f)] public float staggerInterval = 0.15f;
+
+        [Header("ColorRecover mode")]
+        [Tooltip("0 = every coral regains colour together; higher spreads recovery across the group so corals " +
+                 "heal at staggered health points (turn on Random Order for a scattered, patchy look).")]
+        [Range(0f, 1f)] public float recoverStagger = 0f;
 
         [Header("Common")]
         [Tooltip("Reveal corals in a random order instead of hierarchy order (Proportional + Staggered).")]
@@ -80,8 +102,10 @@ public class EnvironmentHealthReveal : MonoBehaviour
     public class Item
     {
         public Transform target;      // the coral object's transform
+        public Renderer renderer;     // ColorRecover: drives _Health via a MaterialPropertyBlock
+        public MaterialPropertyBlock mpb; // cached per-item so we don't clobber other per-renderer overrides
         public Vector3 originalScale; // authored scale, restored on ForceVisible
-        public float reveal;          // current 0..1 progress
+        public float reveal;          // current 0..1 progress (scale amount, or health/colour amount)
         public int revealOrder;       // rank in the reveal sequence (hierarchy order, or shuffled)
     }
 
@@ -112,6 +136,9 @@ public class EnvironmentHealthReveal : MonoBehaviour
 
     private float _health;     // smoothed 0..1
     private bool _wasDisabled; // tracks effectEnabled edge so we restore visuals once on turn-off
+
+    // Shader float driven for ColorRecover groups (see OceanX/CoralHealth: 0 = bleached, 1 = full colour).
+    private static readonly int HealthId = Shader.PropertyToID("_Health");
 
     private void OnEnable()
     {
@@ -159,7 +186,8 @@ public class EnvironmentHealthReveal : MonoBehaviour
         foreach (RevealGroup g in groups)
         {
             if (g == null || g.items == null) continue;
-            if (g.appearMode == AppearMode.Proportional) UpdateProportional(g, dt);
+            if (g.revealStyle == RevealStyle.ColorRecover) UpdateColorRecover(g, dt);
+            else if (g.appearMode == AppearMode.Proportional) UpdateProportional(g, dt);
             else UpdateThresholded(g, dt);
         }
     }
@@ -188,6 +216,42 @@ public class EnvironmentHealthReveal : MonoBehaviour
             if (it == null || it.target == null) continue;
             float itemTarget = it.revealOrder < visible ? 1f : 0f;
             StepReveal(it, itemTarget, g, dt);
+        }
+    }
+
+    // ColorRecover: corals stay active and at authored scale; a continuous 0..1 value driven by health
+    // lerps each coral's _Health from bleached/dead (0) to full colour (1). startHealth/endHealth define
+    // the band. recoverStagger (+ Random Order) spreads the recovery so corals heal patchily rather than
+    // all at once. AppearMode is ignored here — nothing pops in or out, only the colour returns.
+    private void UpdateColorRecover(RevealGroup g, float dt)
+    {
+        int count = g.items.Count;
+        float band = Mathf.Max(0.0001f, g.endHealth - g.startHealth);
+        float stagger = Mathf.Clamp01(g.recoverStagger);
+
+        if (logDebug)
+        {
+            int recovered = 0;
+            for (int i = 0; i < count; i++)
+                if (g.items[i] != null && g.items[i].reveal > 0.999f) recovered++;
+            if (recovered != g.lastVisible)
+            {
+                Debug.Log($"[EnvReveal] '{g.name}' (colour): health={_health:0.00} → {recovered}/{count} fully recovered", this);
+                g.lastVisible = recovered;
+            }
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            Item it = g.items[i];
+            if (it == null || it.renderer == null) continue;
+            // per-item start offset so corals cross into recovery at slightly staggered health points
+            float offset = (count > 1 && stagger > 0f)
+                ? (it.revealOrder / (float)(count - 1)) * stagger * band
+                : 0f;
+            float target = Mathf.Clamp01((_health - g.startHealth - offset) / band);
+            if (revealOnly) target = Mathf.Max(target, it.reveal); // once recovered, never re-bleach
+            StepReveal(it, target, g, dt);
         }
     }
 
@@ -270,6 +334,7 @@ public class EnvironmentHealthReveal : MonoBehaviour
                 g.items.Add(new Item
                 {
                     target = t,
+                    renderer = r,
                     originalScale = t.localScale, // authored scale captured while at full size
                     reveal = 0f,
                     revealOrder = g.items.Count,
@@ -308,12 +373,31 @@ public class EnvironmentHealthReveal : MonoBehaviour
     // Visuals — the ONLY places that touch the corals. Swap these to change the reveal technique.
     // ---------------------------------------------------------------------------------------------
 
-    /// <summary>Placeholder = scale pop-in: grow from 0 to authored scale, with an optional overshoot pop.</summary>
+    /// <summary>
+    /// Applies one member's 0..1 reveal amount using the group's style:
+    /// ScalePopIn grows the transform; ColorRecover drives the coral's _Health (colour) instead.
+    /// </summary>
     private void ApplyReveal(Item it, float amount, RevealGroup g)
     {
+        if (g.revealStyle == RevealStyle.ColorRecover)
+        {
+            ApplyColor(it, amount);
+            return;
+        }
         float eased = g.overshoot ? EaseOutBack(amount, g.overshootStrength)
                                   : Mathf.SmoothStep(0f, 1f, amount);
         it.target.localScale = it.originalScale * eased;
+    }
+
+    /// <summary>Drive the coral's _Health (0 = bleached/dead, 1 = full colour) via a MaterialPropertyBlock.
+    /// MPB writes aren't serialized, so this is scene-safe even in edit-mode preview.</summary>
+    private void ApplyColor(Item it, float amount)
+    {
+        if (it.renderer == null) return;
+        it.mpb ??= new MaterialPropertyBlock();
+        it.renderer.GetPropertyBlock(it.mpb);
+        it.mpb.SetFloat(HealthId, Mathf.Clamp01(amount));
+        it.renderer.SetPropertyBlock(it.mpb);
     }
 
     /// <summary>Restore every coral to its authored scale (only writes when it actually differs).</summary>
@@ -322,11 +406,13 @@ public class EnvironmentHealthReveal : MonoBehaviour
         foreach (RevealGroup g in groups)
         {
             if (g == null || g.items == null) continue;
+            bool color = g.revealStyle == RevealStyle.ColorRecover;
             foreach (Item it in g.items)
             {
                 if (it == null || it.target == null) continue;
                 it.reveal = 1f;
-                if (it.target.localScale != it.originalScale)
+                if (color) ApplyColor(it, 1f);                 // full colour; authored scale left untouched
+                else if (it.target.localScale != it.originalScale)
                     it.target.localScale = it.originalScale;
             }
         }

@@ -37,6 +37,11 @@ float _WingFlapSpeed;
 float _WingFlapAmplitude;
 float _WingSpanWaves;
 float _WingAmpFalloff;
+// Turn-driven tail sweep (used by the instanced/boid ray shader only).
+float _TailTurnAmplitude;
+float _TailTurnPivotZ;
+float _TailTurnLength;
+float _TailTurnExponent;
 CBUFFER_END
 
 // NOTE: Do not ifdef the properties for dots instancing, but ifdef the actual usage.

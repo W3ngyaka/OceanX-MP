@@ -17,9 +17,9 @@ namespace OceanX.BoidsGPU
 
         /// <summary>
         /// Total size of the struct, in bytes. Manually pre-calculated.
-        /// 17 floats: the 16 original fields + <see cref="EntryBoostTimeRemaining"/>.
+        /// 18 floats: the 16 original fields + <see cref="EntryBoostTimeRemaining"/> + <see cref="SignedTurnRate"/>.
         /// </summary>
-        public const int Size = sizeof(float) * 17;
+        public const int Size = sizeof(float) * 18;
 
         /// <summary>
         /// World position of the boid.
@@ -92,5 +92,18 @@ namespace OceanX.BoidsGPU
         /// that drifts out is not mistaken for a new arrival and re-launched at MaxSpeed.
         /// </summary>
         public float EntryBoostTimeRemaining;
+
+        /// <summary>
+        /// Signed turn rate for render-time deformation, written by the compute shader each frame.
+        /// Range roughly [-1, 1]: the sign is the direction the boid is banking (which way it is
+        /// yawing around the world-up axis) and the magnitude is how hard it is turning (its angular
+        /// velocity as a fraction of the species' maximum). 0 when swimming straight.
+        ///
+        /// Consumed only by the ray wing shader (OceanX/Ray_Wing_Lit_Instanced) to sweep the tail
+        /// toward the turn. The fish shader ignores it, so this field is behaviourally inert for
+        /// every other boid — it exists purely to carry the sign the simulation would otherwise
+        /// discard (AngularVelocity is stored unsigned).
+        /// </summary>
+        public float SignedTurnRate;
     }
 }

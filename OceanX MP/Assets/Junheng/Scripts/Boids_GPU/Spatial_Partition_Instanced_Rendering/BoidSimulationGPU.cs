@@ -49,6 +49,12 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         [Min(0.1f)]
         [SerializeField] private float _exitStopDistance = 1.5f;
 
+        [Tooltip("How quickly the ray wing shader's tail sway eases toward the boid's current turn each " +
+            "second (frame-rate independent). Lower = a slower, floatier tail that trails further behind " +
+            "the turn; higher = a snappier, more immediate tail. Only affects OceanX/Ray_Wing_Lit_Instanced.")]
+        [Min(0.01f)]
+        [SerializeField] private float _tailSwayResponsiveness = 4f;
+
         private ComputeBuffer _sortedBoidsComputeBuffer = null;
         private ComputeBuffer _boidSchoolsRenderInfoBuffer = null;
 
@@ -371,6 +377,8 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             _boidsComputeShader.SetFloat("_EntryBoostDuration", _entryBoostDuration);
             // Push the exit-stop distance too (where a leaving fish halts at its exit point).
             _boidsComputeShader.SetFloat("_ExitStopDistance", _exitStopDistance);
+            // Push the ray tail-sway responsiveness so it can be tuned live in the Inspector.
+            _boidsComputeShader.SetFloat("_TailSwayResponsiveness", _tailSwayResponsiveness);
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_Affecters", _affectersComputeBuffer);
             BindReefSDF();
 

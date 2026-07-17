@@ -78,6 +78,12 @@ Shader "OceanX/Ray_Wing_Lit_Instanced"
         _WingFlapAmplitude ("Wing Flap Amplitude", Float) = 8.0
         _WingSpanWaves ("Wing Span Waves", Float) = 0.75
         _WingAmpFalloff ("Wing Amp Falloff (stiller middle)", Float) = 2.0
+
+        // Turn-driven tail sweep (driven by BoidInfo.signedTurnRate from the sim).
+        _TailTurnAmplitude ("Tail Turn Amplitude (lateral units, +/- flips side)", Float) = 0.5
+        _TailTurnPivotZ ("Tail Turn Pivot Z (local Z where sweep begins)", Float) = 0.0
+        _TailTurnLength ("Tail Turn Length (pivot -> tip)", Float) = 3.6
+        _TailTurnExponent ("Tail Turn Whip Exponent", Float) = 1.5
     }
 
     SubShader

@@ -11,6 +11,9 @@
 int _TotalBoidCount;
 int _TotalAffectersCount;
 float _TimeDelta;
+// How quickly the ray tail sway eases toward its target each second (frame-rate independent).
+// Lower = slower, floatier trailing tail; higher = snappier. Falls back to a default if unset.
+float _TailSwayResponsiveness;
 float3 _SimulationAreaCenter;
 float3 _SimulationAreaSize;
 
@@ -156,11 +159,27 @@ void UpdateMovementDirection(float3 targetDirection, BoidSchoolInfo boidSchoolIn
     // Calculate the current movement direction based on the current rotation.
     float3 currentMovementDirection = Multiply(newRotation, float3(0, 0, 1));
 
+    // Signed turn rate for render-time tail deformation (ray wing shader). The cross product of the old
+    // and new heading has the yaw handedness in its Y component; the magnitude comes from the (unsigned)
+    // angular velocity as a fraction of the species max, so it stays smooth and framerate independent.
+    // 0 when swimming straight. Computed here while boidInfo.direction still holds the previous heading.
+    float3 turnCross = cross(boidInfo.direction, currentMovementDirection);
+    float turnStrength = boidSchoolInfo.maxAngularVelocity > 1e-5 ? saturate(currentAngularVelocity / boidSchoolInfo.maxAngularVelocity) : 0.0;
+    float signedTurnTarget = (turnCross.y >= 0.0 ? 1.0 : -1.0) * turnStrength;
+
+    // Ease the stored sway toward the target so the tail TRAILS the body like a real stingray's does,
+    // instead of snapping to the full pose the instant the ray starts turning. Frame-rate independent
+    // exponential smoothing; responsiveness falls back to a sensible default when unset.
+    float tailResponsiveness = _TailSwayResponsiveness > 0.0 ? _TailSwayResponsiveness : 4.0;
+    float tailSmoothing = 1.0 - exp(-_TimeDelta * tailResponsiveness);
+    float signedTurnRate = lerp(boidInfo.signedTurnRate, signedTurnTarget, tailSmoothing);
+
     // Update boid movement properties that were changed during these direction updates.
     boidInfo.acceleration = currentAcceleration;
     boidInfo.direction = currentMovementDirection;
     boidInfo.angularVelocity = currentAngularVelocity;
     boidInfo.angularAcceleration = currentAngularAcceleration;
+    boidInfo.signedTurnRate = signedTurnRate;
 }
 
 // Function calculates the separation vector of the boid that will steer it away from the neighboring boid.

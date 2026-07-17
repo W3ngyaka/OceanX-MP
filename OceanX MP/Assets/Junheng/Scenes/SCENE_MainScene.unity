@@ -827,15 +827,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.594522
+      value: -12.248895
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -18.07944
+      value: -16.027884
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.52722526
+      value: 3.687971
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalRotation.w
@@ -35482,7 +35482,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.594522
+      value: -12.248895
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -35490,7 +35490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.52722526
+      value: 3.687971
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -104126,22 +104126,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AdaptiveMusicSystem
   layers:
   - name: Bed
-    clip: {fileID: 8300000, guid: c4e90b7aa56dcc946b32276c2b0b499d, type: 3}
+    clip: {fileID: 8300000, guid: 8776c21349b1afc4f859072293b90a2a, type: 3}
     volume: 1
     group: {fileID: 8780339679088658335, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: BedVol
   - name: Sorrow
-    clip: {fileID: 8300000, guid: 3d6ad59e93087244db266c10d10d1f20, type: 3}
+    clip: {fileID: 8300000, guid: e3d814fe93dc3ed43974596f7c7ef91c, type: 3}
     volume: 0.8
     group: {fileID: -3877378371721538969, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: SorrowVol
   - name: Hope
-    clip: {fileID: 8300000, guid: 80d1316e7d9db1e42bd403a1aaa53f11, type: 3}
+    clip: {fileID: 0}
     volume: 1
     group: {fileID: 409877625108413181, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: HopeVol
   - name: Flourish
-    clip: {fileID: 8300000, guid: 53ea69f17a34a4340a90a878462725ad, type: 3}
+    clip: {fileID: 0}
     volume: 1
     group: {fileID: 4188924859348678293, guid: b053b511ea83d8144ac60a47ed960c53, type: 2}
     exposedParam: FlourishVol
@@ -174436,15 +174436,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.594522
+      value: -12.248895
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -18.07944
+      value: -16.027884
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.52722526
+      value: 3.687971
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalRotation.w

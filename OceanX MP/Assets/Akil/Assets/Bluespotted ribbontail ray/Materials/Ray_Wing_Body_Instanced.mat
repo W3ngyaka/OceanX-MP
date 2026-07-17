@@ -109,6 +109,10 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _TailTurnAmplitude: 1
+    - _TailTurnExponent: 3.79
+    - _TailTurnLength: 3.6
+    - _TailTurnPivotZ: 0
     - _VisualizeMask: 0
     - _WingAmpFalloff: 2.76
     - _WingFlapAmplitude: 8.02

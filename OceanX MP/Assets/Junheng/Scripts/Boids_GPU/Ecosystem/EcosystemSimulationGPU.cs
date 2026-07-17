@@ -16,6 +16,15 @@ namespace OceanX.BoidsGPU.Ecosystem
         public EcosystemDefinitionGPU Ecosystem => _ecosystem;
 
         /// <summary>
+        /// Fired when a species is introduced for the FIRST time — i.e. its school count goes 0 -> 1.
+        /// Not fired for subsequent adds (1 -> 2, etc.) or for automatic population-tick growth of an
+        /// already-active species. Host-side only. Used by IntroductionCameraDirectorGPU to trigger the
+        /// cinematic "zoom into the new school as it swims in" shot. The argument is the species just added;
+        /// its (only) school is index 0, whose live position can be read via <see cref="TryGetSchoolCentroid"/>.
+        /// </summary>
+        public event System.Action<SpeciesDataGPU> OnSpeciesFirstIntroduced;
+
+        /// <summary>
         /// The simulation volume, taken straight from the BoidSimulationGPU so the ecosystem (where the
         /// roaming targets live) is always the SAME box as the actual boid simulation area — no need to
         /// keep EcosystemDefinitionGPU's center/size in sync by hand. Falls back to the asset's bounds
@@ -627,6 +636,8 @@ namespace OceanX.BoidsGPU.Ecosystem
             int n = _schoolCount.TryGetValue(species, out int current) ? current : 0;
             if (n >= MaxSchoolsOf(species)) return false; // at cap — no-op
 
+            bool wasFirstIntroduction = (n == 0); // 0 -> 1 means this species is entering the scene fresh
+
             int fishPerSchool = FishPerSchool(species);
 
             // Create the target for the new school FIRST so the spawner has >= N targets before the
@@ -646,6 +657,10 @@ namespace OceanX.BoidsGPU.Ecosystem
             // (instead of popping in). No-op fallback to the normal in-bounds spawn if no entry points
             // are placed in the scene. Applies to both manual add and the automatic population tick.
             ApplyEntrySpawnOrigin(species, spawner);
+
+            // First school of this species just spawned in at its entry gate — let the camera director
+            // catch it and follow it in. Fired last, after the fish exist at the entry point.
+            if (wasFirstIntroduction) OnSpeciesFirstIntroduced?.Invoke(species);
             return true;
         }
 
@@ -846,6 +861,16 @@ namespace OceanX.BoidsGPU.Ecosystem
             }
             return true;
         }
+
+        /// <summary>
+        /// Public read of one school's live centre-of-mass (average fish position), read back from the GPU.
+        /// Returns false when the buffers are not ready or the range is invalid — the caller should keep its
+        /// previous value on a false. For a freshly introduced species this starts at the entry gate and
+        /// tracks the fish inward, so a camera can follow the school as it swims in. NOTE: this forces a
+        /// synchronous GPU readback of the school's slice — throttle callers (do not poll every frame).
+        /// </summary>
+        public bool TryGetSchoolCentroid(SpeciesDataGPU species, int schoolIndex, out Vector3 centroid)
+            => TrySchoolCentroid(species, schoolIndex, out centroid);
 
         // Centre of one school, read back from the GPU. Null when the buffers are not ready.
         private bool TrySchoolCentroid(SpeciesDataGPU species, int schoolIndex, out Vector3 centroid)

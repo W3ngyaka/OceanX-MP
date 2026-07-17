@@ -8177,14 +8177,9 @@ MonoBehaviour:
   _simulation: {fileID: 69854442}
   _introCamera: {fileID: 1113121249}
   _followProxy: {fileID: 620471088}
-  _framingMode: 1
-  _followBehindOffset: {x: -8, y: 2.5, z: -4}
-  _sideViewOffset: {x: 0, y: 2, z: -9}
-  _threeQuarterOffset: {x: -5, y: 2.5, z: -7}
   _activePriority: 20
   _idlePriority: 0
   _followDuration: 3.5
-  _positionSmoothTime: 0.25
   _readbackEveryNFrames: 3
   _maxSeedWaitFrames: 10
 --- !u!1001 &70184310
@@ -124893,7 +124888,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 2, z: -9}
+  FollowOffset: {x: 0, y: 2, z: -8}
 --- !u!114 &1113121249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124918,7 +124913,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 55
+    FieldOfView: 30
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -124945,13 +124940,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113121247}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10911677, y: -0.00000004589667, z: 0.0000000040895136, w: 0.994029}
-  m_LocalPosition: {x: -26.58132, y: 6.14994, z: 2.1153202}
+  m_LocalRotation: {x: 0.12218328, y: -0.000000035452157, z: 0.000000008690658, w: 0.9925076}
+  m_LocalPosition: {x: -26.58132, y: 6.14994, z: 3.1153202}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 14.47, y: 59.036, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113121251
 MonoBehaviour:
   m_ObjectHideFlags: 0

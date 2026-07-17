@@ -50,6 +50,13 @@ struct BoidInfo {
     // is no longer a clean multiple of 16 bytes, which is fine for a StructuredBuffer stride — the
     // 16-byte-slot note above is a footprint nicety, not a correctness requirement.)
     float entryBoostTimeRemaining;
+
+    // Signed turn rate for render-time deformation. Range roughly [-1, 1]: sign = which way the boid
+    // is banking (yaw handedness around world-up), magnitude = how hard it is turning (angular velocity
+    // as a fraction of the species max). 0 when swimming straight. Written by the movement update in the
+    // compute shader; read only by the ray wing shader to sweep the tail toward the turn. AngularVelocity
+    // itself is stored unsigned, so this is the only place the turn's handedness survives.
+    float signedTurnRate;
 };
 
 // Structure defining properties that affect the look of the swimming motion of a boid.

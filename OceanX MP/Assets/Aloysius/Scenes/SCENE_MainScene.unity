@@ -8132,9 +8132,11 @@ MonoBehaviour:
   - {fileID: 107513645}
   - {fileID: 1167675520}
   - {fileID: 622278853}
+  _reefSDF: {fileID: 0}
   _updateSchoolSettingsEveryFrame: 0
   _entryBoostDuration: 0.5
   _exitStopDistance: 1.5
+  _tailSwayResponsiveness: 4
 --- !u!4 &69854444
 Transform:
   m_ObjectHideFlags: 0
@@ -67522,11 +67524,13 @@ MonoBehaviour:
   - name: Corals
     parent: {fileID: 1157040162}
     appearMode: 0
+    revealStyle: 0
     startHealth: 0
     endHealth: 1
     threshold: 0
     hysteresisMargin: 0
     staggerInterval: 0.1
+    recoverStagger: 0
     randomOrder: 0
     growDuration: 0.6
     overshoot: 1
@@ -67534,11 +67538,13 @@ MonoBehaviour:
   - name: Seaweed
     parent: {fileID: 687692929}
     appearMode: 0
+    revealStyle: 0
     startHealth: 0
     endHealth: 1
     threshold: 0
     hysteresisMargin: 0
     staggerInterval: 0.1
+    recoverStagger: 0
     randomOrder: 0
     growDuration: 0.6
     overshoot: 0
@@ -67546,11 +67552,13 @@ MonoBehaviour:
   - name: Seagrass
     parent: {fileID: 1590453014}
     appearMode: 0
+    revealStyle: 0
     startHealth: 0
     endHealth: 1
     threshold: 0
     hysteresisMargin: 0
     staggerInterval: 0.1
+    recoverStagger: 0
     randomOrder: 0
     growDuration: 0.6
     overshoot: 0
@@ -118154,7 +118162,7 @@ RectTransform:
   m_GameObject: {fileID: 1057990713}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6323, y: 0.6323, z: 0.6323}
+  m_LocalScale: {x: 0.5317011, y: 0.5317011, z: 0.5317011}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1796044839}
@@ -158866,7 +158874,7 @@ RectTransform:
   m_GameObject: {fileID: 1406624559}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5140255, y: 0.5140255, z: 0.5140255}
+  m_LocalScale: {x: 0.409519, y: 0.409519, z: 0.409519}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1954996882}

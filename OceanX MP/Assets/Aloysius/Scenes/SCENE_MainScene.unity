@@ -118177,9 +118177,9 @@ RectTransform:
   - {fileID: 1071257022}
   m_Father: {fileID: 1441107221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 621, y: -31}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -339, y: -31}
   m_SizeDelta: {x: 620, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1057990715
@@ -158888,9 +158888,9 @@ RectTransform:
   - {fileID: 735706905}
   m_Father: {fileID: 1441107221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 596, y: -46}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -364, y: -46}
   m_SizeDelta: {x: 700, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1406624561
@@ -162562,7 +162562,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a78e437d9de6c8b49b41146b9f2e989d, type: 3}
   holdSeconds: 2
   fadeDuration: 0.4
-  pollInterval: 0.25
   hintSource: {fileID: 1441107216}
   hintDelayAfterAdd: 0.4
   onlyFirstTime: 1

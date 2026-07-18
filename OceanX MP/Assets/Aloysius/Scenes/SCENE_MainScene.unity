@@ -96206,41 +96206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89935dd8a82821049ac631e3fecf62d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MusicDirector
-  layers:
-  - name: Ambient bed
-    clip: {fileID: 0}
-    healthMin: 0
-    healthMax: 1
-    maxVolume: 1
-    blend: 0
-    source: {fileID: 0}
-  - name: Somber
-    clip: {fileID: 8300000, guid: 8776c21349b1afc4f859072293b90a2a, type: 3}
-    healthMin: 0
-    healthMax: 0.45
-    maxVolume: 0.9
-    blend: 0.12
-    source: {fileID: 0}
-  - name: Warmth
-    clip: {fileID: 8300000, guid: e3d814fe93dc3ed43974596f7c7ef91c, type: 3}
-    healthMin: 0.45
-    healthMax: 1
-    maxVolume: 0.9
-    blend: 0.12
-    source: {fileID: 0}
-  - name: Thriving
-    clip: {fileID: 8300000, guid: 67dcfca4eed3fa5458110da9a65dc45f, type: 3}
-    healthMin: 0.75
-    healthMax: 1
-    maxVolume: 0.85
-    blend: 0.12
-    source: {fileID: 0}
-  masterVolume: 0.7
-  fadeSpeed: 0.4
-  swell: {fileID: 0}
-  swellVolume: 0.8
-  overrideHealth: 0
-  debugHealth: 0.5
 --- !u!1001 &861795934
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -217058,9 +217023,9 @@ RectTransform:
   - {fileID: 1304929246}
   m_Father: {fileID: 1441107221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 912, y: -168}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1872, y: -708}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1938809307

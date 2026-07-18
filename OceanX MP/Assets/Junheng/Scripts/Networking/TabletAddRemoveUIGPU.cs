@@ -26,6 +26,12 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
 {
     public static TabletAddRemoveUIGPU Instance { get; private set; }
 
+    [Header("Spam guard")]
+    [Tooltip("Minimum seconds between Add presses. Blocks accidental double-taps and " +
+             "mashing without hurting deliberate tapping. 0 = off.")]
+    public float addCooldown = 0.3f;
+    private float _lastAddTime = -999f;
+
     [Header("Buttons (on the Info screen)")]
     public Button addButton;
     public Button removeButton;
@@ -69,6 +75,8 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
         var net = EcosystemNetworkManagerGPU.Instance;
         if (_index < 0 || net == null) return;
         if (!SelectedUnlocked()) return; // locked species can't be added until discovered
+        if (Time.unscaledTime - _lastAddTime < addCooldown) return; // spam cooldown
+        _lastAddTime = Time.unscaledTime;
         int max = net.GetMaxSchools(_index);
         if (max > 0 && OptimisticPopulationStore.Display(_index) >= max) return; // already at cap optimistically
 

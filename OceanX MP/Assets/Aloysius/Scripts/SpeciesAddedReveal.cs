@@ -35,7 +35,6 @@ public class SpeciesAddedReveal : MonoBehaviour
     [Header("Timing")]
     public float holdSeconds = 4f;
     public float fadeDuration = 0.4f;
-    public float pollInterval = 0.25f;
 
     [Header("Hint after add")]
     [Tooltip("Source of the 'next fish' hint logic (the SpeciesUnlockReveal on AluciaCanvas). Auto-found if null.")]
@@ -57,10 +56,8 @@ public class SpeciesAddedReveal : MonoBehaviour
     private EcosystemNetworkManagerGPU _net;
     private EcosystemSimulationGPU _sim;
     private readonly Dictionary<int, SpeciesData> _indexToData = new Dictionary<int, SpeciesData>();
+    private readonly Dictionary<SpeciesDataGPU, SpeciesData> _gpuToData = new Dictionary<SpeciesDataGPU, SpeciesData>();
     private readonly Dictionary<SpeciesData, Sprite> _dataToSprite = new Dictionary<SpeciesData, Sprite>();
-    private readonly Dictionary<int, int> _lastPop = new Dictionary<int, int>();
-    private readonly HashSet<int> _seen = new HashSet<int>();
-    private float _pollTimer;
 
     void Awake()
     {
@@ -83,19 +80,21 @@ public class SpeciesAddedReveal : MonoBehaviour
         if (hintSource == null) hintSource = Object.FindFirstObjectByType<SpeciesUnlockReveal>();
         BuildIndexMap();
 
-        // Seed baseline so species already present at startup don't all pop cards.
-        foreach (var kv in _indexToData)
+        // Drive the card off the SAME event the intro camera uses, so the card and the
+        // zoom can never desync during rapid adds (both fire on first introduction only).
+        if (_sim != null)
         {
-            int pop = SafePop(kv.Key);
-            _lastPop[kv.Key] = pop;
-            if (pop > 0) _seen.Add(kv.Key); // treat pre-existing as already seen
+            _sim.OnSpeciesFirstIntroduced -= HandleFirstIntroduced; // avoid double
+            _sim.OnSpeciesFirstIntroduced += HandleFirstIntroduced;
         }
+
     }
 
     void BuildIndexMap()
     {
         _indexToData.Clear();
         _dataToSprite.Clear();
+        _gpuToData.Clear();
 
         // Sprite lookup (index-aligned with allSpecies).
         for (int i = 0; i < allSpecies.Count; i++)
@@ -115,40 +114,24 @@ public class SpeciesAddedReveal : MonoBehaviour
             if (gpu == null) continue;
             foreach (var sd in allSpecies)
             {
-                if (sd != null && sd.gpuSpecies == gpu) { _indexToData[idx] = sd; break; }
+                if (sd != null && sd.gpuSpecies == gpu) { _indexToData[idx] = sd; _gpuToData[gpu] = sd; break; }
             }
         }
     }
 
-    int SafePop(int index)
+    void OnDisable()
     {
-        if (_net == null) return 0;
-        return _net.GetPopulation(index);
+        if (_sim != null) _sim.OnSpeciesFirstIntroduced -= HandleFirstIntroduced;
     }
 
-    void Update()
+    // Fired by the sim the instant a species is first introduced — the very same signal
+    // the intro camera zooms on. Map the GPU species back to our UI SpeciesData and show
+    // its card. No polling, so no ordering drift under spam.
+    void HandleFirstIntroduced(SpeciesDataGPU gpu)
     {
-        if (_net == null || _indexToData.Count == 0) return;
-
-        _pollTimer -= Time.unscaledDeltaTime;
-        if (_pollTimer > 0f) return;
-        _pollTimer = pollInterval;
-
-        foreach (var kv in _indexToData)
-        {
-            int idx = kv.Key;
-            int pop = SafePop(idx);
-            int prev = _lastPop.TryGetValue(idx, out var p) ? p : 0;
-            _lastPop[idx] = pop;
-
-            // rising edge 0 -> >0
-            if (prev <= 0 && pop > 0)
-            {
-                if (onlyFirstTime && _seen.Contains(idx)) continue;
-                _seen.Add(idx);
-                SubmitReveal(kv.Value);
-            }
-        }
+        if (gpu == null) return;
+        if (_gpuToData.TryGetValue(gpu, out var sd) && sd != null)
+            SubmitReveal(sd);
     }
 
     // Hand the card to the shared queue so it can never overlap an unlock reveal.
@@ -166,7 +149,8 @@ public class SpeciesAddedReveal : MonoBehaviour
             },
             holdSeconds,
             fadeDuration,
-            () => OnCardShown());
+            () => OnCardShown(),
+            key: species.speciesName);
     }
 
     void FillCard(SpeciesData species)

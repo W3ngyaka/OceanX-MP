@@ -13,8 +13,11 @@ _Last updated: 2026-07-18 (rev 7)_
 > "Currentorgnism fish" art set wired), **ambient food-web arrows now survive
 > tab switches**, **modal first-tap bug fixed**, health gauge made responsive
 > (faster sync + instant number + easing matched to the large screen), a reusable
-> **TapPunch** button animation, a **bottom-right unlock toast** on the tablet, and
-> a **right-side scrollbar** on the organism list. Reveal card converted to TMP.
+> **TapPunch** button animation, a **bottom-right unlock toast** on the tablet
+> (animated slide+fade, name-only), a **right-side scrollbar** on the organism list,
+> **Add-spam handling** (button cooldown + RevealQueue cap/dedupe), and the
+> **reveal-card/intro-camera desync fixed** (card now event-driven, not polled).
+> Reveal card converted to TMP.
 >
 > **Previous (2026-07-14):** NEW ARRIVAL card images wired, card text -> TMP,
 > host health-bar colour-by-state + an Inspector debug slider, and a
@@ -171,18 +174,66 @@ work touched the host scene (`SCENE_MainScene`) via shared scripts.
   onto Bob's current scale.
 
 ### Bottom-right unlock toast on the tablet (`NotificationManager.cs` reworked + `UnlockToast` object)
-- Goal: pop "You've unlocked the [name]!" bottom-right on the tablet when a species unlocks,
+- Goal: pop the unlocked organism's name bottom-right on the tablet when a species unlocks,
   using the **same CSV-sourced data** the large screen uses.
 - **How it's linked:** `EcosystemUnlockManagerGPU` (present in the tablet scene) fires
   `OnSpeciesUnlocked(SpeciesData)`; the name is `SpeciesData.speciesName` (populated from the
-  CSV via `CsvUtil`). Message uses the same line key `AluciaLines.Get("notify.unlocked", ...)`.
+  CSV via `CsvUtil`).
 - **Reworked `NotificationManager`:** now **self-subscribes** to `OnSpeciesUnlocked`
   (`autoSubscribeUnlock` flag, on) so it fires without the large screen calling it, and split
   into a **host object (stays active, listens)** + a **child `panel` (shows/hides)** — the old
   `Awake(){ SetActive(false); }` was the same deferred-Awake trap that would stop it receiving
   the event. Large-screen usage still works (falls back to old behavior if `panel` is unset).
-- Built `UnlockToast` on `TabletCanvas (1)`, bottom-right, text-only dark-blue pill, green
-  text, auto-hides after `showSeconds` (4s).
+- **Animation (not a hard pop):** drives a `CanvasGroup` (fade) + `anchoredPosition` (slide).
+  Slide-up + fade-in (ease-out, `inDuration` 0.35s), hold (`showSeconds` 4s), fade-out +
+  slide-down (ease-in, `outDuration` 0.3s). Captures the panel's authored rest position so it
+  always returns exactly where placed. Unscaled time. Added a `CanvasGroup` to `Panel`.
+- **Text is name-only** — shows `s.speciesName` (e.g. "Yellowstripe Scad"), not the full
+  "You've unlocked the ..." sentence. The "Species Unlocked" header is a separate child.
+- Built `UnlockToast` on `TabletCanvas (1)`, bottom-right, dark-blue pill.
+
+### Add-spam handling (`TabletAddRemoveUIGPU.cs`, `RevealQueue.cs`, reveal callers)
+- **Problem:** mashing Add fired one RPC per tap (10 taps = 10 fish + 10 messages) and queued
+  a card per add/unlock, so the center-stage reveal drained slowly one-at-a-time long after the
+  user stopped — plus fish count jumping. Two independent causes, fixed at both layers:
+- **Button cooldown (`TabletAddRemoveUIGPU.OnAdd`, JunHeng's script):** new `addCooldown`
+  (0.3s default) — `Time.unscaledTime` gate blocks mashing/double-taps without hurting
+  deliberate tapping. Client-side UI guard (a host-side rate limit on `RequestAddSpeciesRpc`
+  would be stronger hardening).
+- **RevealQueue hard cap + dedupe (`RevealQueue.cs`):**
+  - `maxBacklog` (default 3) — beyond this many WAITING cards, the oldest waiting card is
+    dropped (its `onComplete` still fires), so a burst can't create a long tail.
+  - **Dedupe** via a new optional `key` arg to `Enqueue` — if the last waiting card has the
+    same key, the duplicate is skipped. Both callers now pass `key: species.speciesName`
+    (`SpeciesAddedReveal`, `SpeciesUnlockReveal`), so spamming the same species won't stack
+    identical cards. The queue already shortened holds during backlog; this stops the backlog
+    forming in the first place.
+
+### Reveal-card / intro-camera desync fixed (`SpeciesAddedReveal.cs`)
+- **Symptom (host/large screen):** spamming Add showed a reveal card for the WRONG species
+  relative to what the intro camera zoomed to — e.g. card said "Blacktip Reef Shark" while
+  only Surgeonfish were in the tank.
+- **Cause:** two different triggers. The **intro camera** (`IntroductionCameraDirectorGPU`)
+  fires on the host sim event `EcosystemSimulationGPU.OnSpeciesFirstIntroduced` (guarded to one
+  shot). The **card** (`SpeciesAddedReveal`) **polled** net population every 0.25s and submitted
+  a card whenever it *noticed* a 0->1 transition. Under spam the poll-detection order drifted
+  from the camera's single event, so card and zoom showed different species.
+- **Fixed:** `SpeciesAddedReveal` now subscribes to the **same `OnSpeciesFirstIntroduced`
+  event** the camera uses, maps the event's `SpeciesDataGPU` back to the UI `SpeciesData` via a
+  `gpuSpecies` reverse map (`_gpuToData`), and submits that card. One signal, one species, one
+  instant — cannot desync. Removed the polling `Update()`, the startup seed loop, and the dead
+  members (`_lastPop`, `_seen`, `SafePop`, `_pollTimer`, `pollInterval`). Also removed the now-
+  unused `_opened` field left over from the modal fix.
+- **Behaviour change:** the card is now genuinely **first-introduction only** (matching the
+  camera). Re-adding a species that was removed no longer re-pops a card (the camera didn't
+  re-zoom for those either).
+- **Testing note:** this is host-side and fires off a real add reaching the host — test via
+  **tablet -> host** (the tablet Add RPC is what triggers the sim's introduction event), with
+  **both builds rebuilt** (host has the new code; tablet must match the network layout). Adding
+  via a host debug path may not exercise the same trigger.
+- Lives in `Junheng/SCENE_MainScene` (the host scene) — verified there: single sim instance,
+  camera + card both resolve to it, all 12 `allSpecies` have `gpuSpecies` set so the map
+  resolves. No scene edit needed (fix is in the shared script that scene already uses).
 
 ### Right-side scrollbar on the organism list (`CurrentOrganismsView`)
 - The list's `ScrollRect` (vertical) had no scrollbar. Added a vertical `Scrollbar Vertical`
@@ -544,6 +595,13 @@ working via forced-event test.
     synced** + an `OverflowException: Reading past the end of the buffer` in the console = a
     **build/scene mismatch** between host and client (we traced ours to building with the
     wrong scene set). Always rebuild all clients after any NetworkVariable/List change.
+- **(2026-07-18) Also edited `TabletAddRemoveUIGPU.cs`** — added an `addCooldown` (0.3s) spam
+  gate in `OnAdd` (client-side). A host-side rate limit / authority check on
+  `RequestAddSpeciesRpc` would be stronger if you want to harden it server-side.
+- **(2026-07-18) `SpeciesAddedReveal` now subscribes to your
+  `EcosystemSimulationGPU.OnSpeciesFirstIntroduced`** event (read-only, same event the intro
+  camera uses) to fix the card/camera desync on spam. No change to your sim or camera scripts —
+  just a new consumer of the existing event. FYI in case you refactor that event's signature.
   Consider a host-side authority check on `RequestAddSpeciesRpc` too (mine is client-side).
 
 **This session (2026-07-12) — open items:**
@@ -690,7 +748,19 @@ working via forced-event test.
   `Everyone`/`Server` read/write permissions (late-join replication). **NOTE: told JunHeng —
   networked, needs matching rebuilds + instance value set.**
 - `NotificationManager.cs` — self-subscribes to `OnSpeciesUnlocked` (`autoSubscribeUnlock`);
-  host/panel split so the listener object stays active; `showSeconds` tunable
+  host/panel split so the listener object stays active; animated slide+fade show/hide
+  (`inDuration`/`outDuration`/`slideDistance`); body text is name-only (`s.speciesName`)
+- `RevealQueue.cs` — `maxBacklog` hard cap (drop oldest waiting card) + `key`-based dedupe on
+  `Enqueue` (skip identical consecutive cards)
+- `SpeciesAddedReveal.cs` — pass `key: species.speciesName` to `RevealQueue.Enqueue`; **also
+  rewired to subscribe to `EcosystemSimulationGPU.OnSpeciesFirstIntroduced`** (the intro
+  camera's event) instead of polling population — fixes the card/camera desync. Added
+  `_gpuToData` reverse map + `HandleFirstIntroduced`; removed polling `Update()`, seed loop, and
+  dead members
+- `SpeciesUnlockReveal.cs` — pass `key: species.speciesName` to `RevealQueue.Enqueue`
+- `TabletAddRemoveUIGPU.cs` (JunHeng's) — `addCooldown` (0.3s) spam gate in `OnAdd`
+- `ModalController.cs` — removed the now-unused `_opened` guard field (cleanup from the
+  first-tap fix)
 - `SpeciesUnlockReveal.cs` — reveal-card fields `Text -> TMP_Text`; `using TMPro`
 
 **Scene changes (2026-07-18, `new netcode 1` tablet scene):**

@@ -27,6 +27,10 @@ public class RevealQueue : MonoBehaviour
     [Tooltip("Shortened hold (seconds) used while the backlog is above the threshold.")]
     public float shortHoldSeconds = 1.5f;
 
+    [Tooltip("Hard cap on waiting cards. Extra submissions beyond this drop the OLDEST " +
+             "waiting card so a spam burst can't create a long tail. 0 = unlimited.")]
+    public int maxBacklog = 3;
+
     private class Request
     {
         public CanvasGroup group;
@@ -34,6 +38,7 @@ public class RevealQueue : MonoBehaviour
         public float hold;
         public float fade;
         public Action onComplete;  // run after the card fully fades out
+        public string key;         // optional dedupe key (e.g. species name)
     }
 
     private readonly Queue<Request> _queue = new Queue<Request>();
@@ -60,9 +65,18 @@ public class RevealQueue : MonoBehaviour
     /// Submit a card to the center-stage queue. Fill nothing yet — pass an <paramref name="onShow"/>
     /// that sets the card's texts/image; it runs the moment before the card fades in.
     /// </summary>
-    public void Enqueue(CanvasGroup group, Action onShow, float holdSeconds, float fadeDuration, Action onComplete = null)
+    public void Enqueue(CanvasGroup group, Action onShow, float holdSeconds, float fadeDuration, Action onComplete = null, string key = null)
     {
         if (group == null) { onComplete?.Invoke(); return; }
+
+        // Dedupe: if the last WAITING card has the same key (e.g. spamming Add on the
+        // same species), don't stack another identical card.
+        if (!string.IsNullOrEmpty(key) && _queue.Count > 0)
+        {
+            var arr = _queue.ToArray();
+            if (arr[arr.Length - 1].key == key) { onComplete?.Invoke(); return; }
+        }
+
         group.alpha = 0f;
         _queue.Enqueue(new Request
         {
@@ -70,8 +84,21 @@ public class RevealQueue : MonoBehaviour
             onShow = onShow,
             hold = holdSeconds,
             fade = fadeDuration,
-            onComplete = onComplete
+            onComplete = onComplete,
+            key = key
         });
+
+        // Hard cap: while more than maxBacklog cards WAIT (excludes the one playing),
+        // drop the oldest waiting one so a burst can't create a long tail.
+        if (maxBacklog > 0)
+        {
+            while (_queue.Count > maxBacklog)
+            {
+                var dropped = _queue.Dequeue();
+                dropped.onComplete?.Invoke(); // let the caller reset its card
+            }
+        }
+
         if (!_playing) StartCoroutine(Run());
     }
 

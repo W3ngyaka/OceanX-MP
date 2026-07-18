@@ -82,7 +82,7 @@ public class SpeciesUnlockReveal : MonoBehaviour
 
         // Route through the shared queue so an unlock card waits its turn instead of
         // slamming on top of an added card (they share the same center-stage slot).
-        RevealQueue.Get().Enqueue(revealGroup, () => FillCard(species), revealHoldSeconds, fadeDuration);
+        RevealQueue.Get().Enqueue(revealGroup, () => FillCard(species), revealHoldSeconds, fadeDuration, key: species.speciesName);
         // Hint moved to SpeciesAddedReveal (fires on fish ADDED, not on unlock).
     }
 

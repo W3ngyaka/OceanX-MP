@@ -51,7 +51,6 @@ public class ModalController : MonoBehaviour
     // Panel is authored inactive in the scene, so Start() is deferred to the first Open().
     // Previously Start() called SetActive(false), which slammed the panel shut right after
     // that first Open (the 'first tap does nothing' bug). Removed; Hide() closes it instead.
-    private bool _opened;
 
     void Start()
     {
@@ -139,7 +138,6 @@ public class ModalController : MonoBehaviour
 
     void Show()
     {
-        _opened = true;
         gameObject.SetActive(true);
 
         if (DimOverlay != null && dimFader != null)

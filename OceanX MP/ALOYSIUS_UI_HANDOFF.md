@@ -1,5 +1,5 @@
 # OceanX MP — UI/UX Handoff (Aloysius)
-_Last updated: 2026-07-14 (rev 6)_
+_Last updated: 2026-07-18 (rev 7)_
 
 > Companion to JunHeng's main handoff. Covers UI/UX work across recent sessions.
 > Scope: food-web layout, species info card, atmospheric FX, bug fixes, the
@@ -8,7 +8,15 @@ _Last updated: 2026-07-14 (rev 6)_
 > dashboard gauge + status word, and a right-side species info panel**, plus
 > **producer unlock-registration, a new Macroalgae species, and a host
 > health-bar binding**.
-> **Latest (2026-07-14):** NEW ARRIVAL card images wired, card text -> TMP,
+> **Latest (2026-07-18):** tablet overpopulation badge on organism cards,
+> organism-card icon source rewritten to `SpeciesBubble.cardImage` (+ new
+> "Currentorgnism fish" art set wired), **ambient food-web arrows now survive
+> tab switches**, **modal first-tap bug fixed**, health gauge made responsive
+> (faster sync + instant number + easing matched to the large screen), a reusable
+> **TapPunch** button animation, a **bottom-right unlock toast** on the tablet, and
+> a **right-side scrollbar** on the organism list. Reveal card converted to TMP.
+>
+> **Previous (2026-07-14):** NEW ARRIVAL card images wired, card text -> TMP,
 > host health-bar colour-by-state + an Inspector debug slider, and a
 > **sprite-tinting trap** documented (see READ FIRST #6).
 >
@@ -73,6 +81,128 @@ _Last updated: 2026-07-14 (rev 6)_
    buttons + population count do nothing for Seagrass / Macroalgae (panel still
    opens). To make them sim-interactive, JunHeng must register their GPU species
    in `TabletEcosystemUIGPU`.
+
+---
+
+## This session (2026-07-18) — organism cards, tablet fixes, health responsiveness
+
+Tablet scene this session: `Assets/Aloysius/new netcode 1.unity`. Reveal-card TMP
+work touched the host scene (`SCENE_MainScene`) via shared scripts.
+
+### Overpopulation badge on organism cards (`OrganismCardData.cs`, `OrganismCard.prefab`)
+- Overpopulation *detection* already existed on the food-web bubbles
+  (`SpeciesBubble.UpdateOverpopulation`: `pop >= GetMaxSchools(index)`), but the
+  Current Organisms **list cards** never surfaced it.
+- **Added** an `overpopBadge` field + `UpdateOverpop()` to `OrganismCardData` using the
+  **identical** check (`pop >= net.GetMaxSchools(index)`, both values host-synced), polled
+  on the same cadence as the count and baselined off in `Setup()` so a recycled card can't
+  show stale state. Flags **only AT/over cap** (no near-cap warning).
+- **Prefab:** new `OverpopBadge` child (amber rounded pill, bold "! OVER",
+  `raycastTarget` off), hidden by default, wired to the field. Anchored left of the name.
+- New look (not the food-web bubble's `Overpopulated` sprite) — uses Unity's built-in
+  `UISprite`. Swap for custom art later if desired.
+
+### Organism-card icon source rewritten (`CurrentOrganismsGrid.cs`) + new art set
+- **Root cause of wrong/misplaced card icons:** the grid **scavenged** each bubble's child
+  hierarchy for "the first child Image with a sprite that isn't a lock/overpop/glow/ring
+  overlay." Fragile and name-dependent (child objects had mismatched names like a "Grouper"
+  object holding a mullet sprite).
+- **Fixed:** grid now reads the icon **straight from `SpeciesBubble.cardImage`** — one
+  field, per species, set in the inspector. Deleted the scavenging loop. This is the single
+  source of truth going forward.
+- **New art wired:** all 12 bubbles' `cardImage` pointed at the matching sprite in
+  `Assets/Aloysius/Currentorgnism fish'/` (blacktip, Grouper, Moray, Trevally,
+  RusselsSnapper, blueray, scad, Mullet, reticulated, Parrotfish, Streakedspinefoot,
+  Eyestripe). `HEL AA.png` and `ORange.png` in that folder are unmatched placeholders,
+  skipped. (Previously 6 species shared a `saybah` placeholder; that's replaced.)
+- **FishIcon layout still not tuned** — 80x80, `preserveAspect` on, left pivot, so the fish
+  renders small and left-hugging in the card slot. Open item if it needs centering/resizing.
+
+### Ambient food-web arrows survive tab switches (`FoodWebLines.cs`)
+- **Bug:** the ambient "web pulse" started in `Start()` (one-shot). Switching tabs
+  deactivates `FoodWebLayer`, which **permanently kills the coroutine** — Unity does not
+  resume coroutines on re-enable and `Start()` never re-runs. So the pulse died after the
+  first tab switch.
+- **Fixed:** moved pulse startup to **`OnEnable()`** (guarded by `_pulseRunning` so it never
+  double-starts) + added `OnDisable()` to reset `_pulseRunning`/`_revealActive` and clear any
+  dangling pulse. Also hoisted the loop's `idx` to a persistent field `_pulseIdx` so the web
+  **resumes** from the next link instead of restarting from link #0 each time.
+
+### Modal first-tap bug fixed (`ModalController.cs`)
+- **Bug:** "View Details" did nothing on the FIRST tap after build start, worked on the
+  second. Cause: the ModalPanel is authored **inactive**, so its `Start()` was deferred to
+  the first activation — which was the first `Open()`. `Start()` then called
+  `SetActive(false)` on itself, slamming the panel shut right after opening. Second tap
+  worked because `Start()` had already run.
+- **Fixed:** removed the self-`SetActive(false)` from `Start()` (panel already starts
+  inactive in the scene; `Hide()`/`Close()` handle closing). `Start()` now only resets the
+  dim overlay. Added an `_opened` guard. Same deferred-`Awake`/`Start` family as the
+  `NotificationManager` trap below.
+
+### Health gauge responsiveness (`EcoHealthDashboard.cs`, `EcosystemNetworkManagerGPU.cs`)
+- **Perceived lag had two stacked causes:** (1) the host only pushes eco-health to clients
+  every **`_populationSyncInterval = 1s`** (health + population share `SyncPopulations()`);
+  (2) the tablet gauge used linear `MoveTowards` smoothing at `smoothSpeed = 2`.
+- **Changes:**
+  - `_populationSyncInterval` **source default 1 -> 0.15** (health reaches the tablet ~6-7x
+    more often; data is a few ints + one float). **NOTE: this is a serialized field — the
+    manager instance in the netcode scene still has 1 saved; must be set on the instance +
+    rebuilt. See open items.** Also networked: **host and client builds must match.**
+  - Dashboard smoothing swapped from `MoveTowards` to the **same exponential easing the
+    large screen uses** (`k = 1 - Exp(-smoothSpeed*dt)`, then `Lerp`) so tablet + large
+    screen feel identical. `smoothSpeed` default 2 -> 8 (note: with the shared exp easing,
+    the large screen's `HealthBarBinder` uses ~4; set the tablet to 4 to match exactly).
+  - **Number + status word now update INSTANTLY** (read raw `target`, not the smoothed
+    `_displayed01`); only the **arc fill** eases. Keeps the readout responsive while the
+    ring glides.
+- **Why the large screen was always smoother:** it reads `sim.EcoHealth01` **directly**
+  (zero network lag) with exponential easing; the tablet reads the *networked* value (stepped
+  at the sync interval) with harsher linear easing. Both fixes above close the gap.
+
+### Reusable button tap animation (`TapPunch.cs`, NEW)
+- Small `IPointerDownHandler` component that replicates `SpeciesBubble`'s tap feel: scale to
+  **1.2x over 0.1s**, settle back over **0.15s**. Drop on any UI element. Tunables:
+  `punchScale`, `upTime`, `downTime`.
+- Added to the tablet **Add** button (`Ecosystem Panel/Info/Add`) and **View Details**
+  button (`Info/DetailRoot/ViewDetailsButton`).
+- **Watch:** the Add button also has a `Bob` component. If `Bob` writes `localScale` it can
+  fight TapPunch (which snapshots `baseScale` once in `Awake`). Not observed broken, but if
+  the punch jitters, that's the cause — have `Bob` drive position, or make TapPunch multiply
+  onto Bob's current scale.
+
+### Bottom-right unlock toast on the tablet (`NotificationManager.cs` reworked + `UnlockToast` object)
+- Goal: pop "You've unlocked the [name]!" bottom-right on the tablet when a species unlocks,
+  using the **same CSV-sourced data** the large screen uses.
+- **How it's linked:** `EcosystemUnlockManagerGPU` (present in the tablet scene) fires
+  `OnSpeciesUnlocked(SpeciesData)`; the name is `SpeciesData.speciesName` (populated from the
+  CSV via `CsvUtil`). Message uses the same line key `AluciaLines.Get("notify.unlocked", ...)`.
+- **Reworked `NotificationManager`:** now **self-subscribes** to `OnSpeciesUnlocked`
+  (`autoSubscribeUnlock` flag, on) so it fires without the large screen calling it, and split
+  into a **host object (stays active, listens)** + a **child `panel` (shows/hides)** — the old
+  `Awake(){ SetActive(false); }` was the same deferred-Awake trap that would stop it receiving
+  the event. Large-screen usage still works (falls back to old behavior if `panel` is unset).
+- Built `UnlockToast` on `TabletCanvas (1)`, bottom-right, text-only dark-blue pill, green
+  text, auto-hides after `showSeconds` (4s).
+
+### Right-side scrollbar on the organism list (`CurrentOrganismsView`)
+- The list's `ScrollRect` (vertical) had no scrollbar. Added a vertical `Scrollbar Vertical`
+  on the right edge (faint track + light-blue handle) as a "you can scroll" affordance.
+- **IMPORTANT:** set to **`Permanent` visibility (overlay)**, NOT
+  `AutoHideAndExpandViewport`. The auto-hide/expand mode **resizes the viewport** and shifted
+  the card layout — that was the "you broke something" regression; reverted and rebuilt as a
+  pure overlay that doesn't touch the content.
+- Handle length is driven by the ScrollRect at runtime (`size` = viewport/content); set to
+  0.25 in edit mode for preview but it self-recalculates in play. No built-in "max handle
+  size" — needs a clamp script only if the handle looks too long with a real (overflowing)
+  list in play.
+
+### Reveal card -> TMP (resolves prior open item)
+- `SpeciesRevealCard` (Header, NameText, SciText, TierText, MsgText) converted from legacy
+  `Text` to **`TMP_Text`**; `SpeciesUnlockReveal` fields changed `Text -> TMP_Text`, `using
+  TMPro` added, components swapped and references re-wired. **Font note:** TMP can't use the
+  legacy fonts directly — NameText/SciText were on **Rajdhani-Medium**, which reset to TMP's
+  default (LiberationSans). Generate a Rajdhani TMP Font Asset (Font Asset Creator) and assign
+  to restore. (This closes the "convert SpeciesRevealCard to TMP" item from 2026-07-14.)
 
 ---
 
@@ -372,9 +502,24 @@ working via forced-event test.
 **Tablet UI:**
 - Decide: side-panel summary + View Details vs. Add/Remove directly in the side panel.
 - Tab art (Photoshop) — resting image + selected state (tint, or two-sprite swap for glow).
-- Assign a `cardImage` to **Bullethead Parrotfish** (only fish missing one).
+- ~~Assign a `cardImage` to **Bullethead Parrotfish**~~ — RESOLVED 2026-07-18 (all 12
+  `cardImage` slots now wired to the "Currentorgnism fish" art set).
 - Badge is plain text in caps — could become a coloured pill by tier.
 - Info-panel description uses `addedMessage`; confirm that's the right field per fish.
+
+**Tablet UI (2026-07-18 — open items):**
+- **Apply `_populationSyncInterval = 0.15` on the manager INSTANCE** in the netcode scene
+  (source default is changed, but the serialized instance still reads 1) — and **rebuild the
+  tablet + host** (networked value; builds must match).
+- **Set dashboard `smoothSpeed` to 4** if you want the tablet gauge to match the large
+  screen exactly (currently 8, snappier).
+- **FishIcon layout on `OrganismCard.prefab`** — 80x80 + preserveAspect + left pivot makes
+  the fish small/left-hugging. Center + resize to fill the slot with the new art.
+- **OverpopBadge art** — currently built-in `UISprite` pill; swap for custom art if desired.
+- **Scrollbar handle length** — only add a min-content clamp if it looks too long with a
+  real overflowing list in play (built-in Scrollbar has no max-handle-size).
+- **Generate a Rajdhani TMP Font Asset** and assign to the reveal card's NameText/SciText
+  (they reset to LiberationSans when converted to TMP).
 
 **Alucia / reveal:**
 - Real art (placeholder block); reveal card image slot empty.
@@ -388,6 +533,17 @@ working via forced-event test.
 - Balance pass on requirements.
 - Note: I edited two of your scripts this session — `TabletAddRemoveUIGPU.cs` (Add now
   gated on unlock) and `EcosystemUnlockManagerGPU.cs` (new `IsUnlocked(SpeciesDataGPU)`).
+- **(2026-07-18) I edited `EcosystemNetworkManagerGPU.cs` again** — two networked changes
+  needing your attention:
+  1. `_populationSyncInterval` default 1 -> 0.15 (health/pop reach the tablet ~6-7x more
+     often). The **serialized instance in the netcode scene still reads 1** — set it on the
+     instance, and **rebuild host + tablet together** (must match).
+  2. `_ecoHealth` NetworkVariable given explicit `Everyone` read / `Server` write permissions
+     so late-joining tablets get the current value.
+  - Reminder from this session's debugging: a client stuck at **0% health while population
+    synced** + an `OverflowException: Reading past the end of the buffer` in the console = a
+    **build/scene mismatch** between host and client (we traced ours to building with the
+    wrong scene set). Always rebuild all clients after any NetworkVariable/List change.
   Consider a host-side authority check on `RequestAddSpeciesRpc` too (mine is client-side).
 
 **This session (2026-07-12) — open items:**
@@ -454,6 +610,24 @@ working via forced-event test.
   *import* issue, not the PNG: set **Mesh Type = Full Rect**, **Generate Mip Maps = OFF**,
   **Wrap Mode = Clamp**, **Alpha Is Transparency = ON** for UI sprites.
 - **An empty-looking health bar usually means health is genuinely 0**, not a broken binder.
+- **Deferred `Awake`/`Start` on inactive objects** — a component on a GameObject that starts
+  **inactive** does not run `Awake`/`Start` until first activated. If that `Start()` then
+  deactivates itself (or a singleton sets `Instance` there), you get "first tap does nothing,
+  second works" or a null `Instance`. Bit us on `ModalController` and `NotificationManager`
+  this session (both fixed). Prefer authoring "start hidden" in the scene over
+  `SetActive(false)` in `Start()`, and set singleton `Instance` in `Awake` on an
+  always-active host object.
+- **Coroutines die permanently when their GameObject is deactivated** — Unity does NOT resume
+  them on re-enable. Anything started in `Start()` on a layer that gets toggled by tab
+  switches (e.g. `FoodWebLayer`) must (re)start in `OnEnable()`. Bit the ambient food-web
+  pulse this session (fixed).
+- **Networked value changed => rebuild ALL clients** — host/client must be compiled from the
+  same NetworkBehaviour layout AND the same build scene set. Mismatch = buffer-overflow
+  deserialize errors and networked values stuck at defaults (e.g. tablet health stuck at 0
+  while population synced).
+- **ScrollRect scrollbar visibility** — `AutoHideAndExpandViewport` **resizes the viewport**
+  and can shift your content layout. Use `Permanent` (overlay) if you just want a visible
+  scrollbar without touching the list.
 - `Boids_Demo` shark+water shader crash warning still applies (JunHeng's note).
 
 ---
@@ -495,6 +669,41 @@ working via forced-event test.
 - `Canvas (1)` -> `SpeciesAddedReveal.cardImages` populated (12 sprites)
 - `AddedRevealCard/MsgText` legacy `Text` -> `TextMeshProUGUI`, reference re-wired
 - `Canvas (1)/Health/healthbar` fill Image -> `hhealthtth_white`, base colour white
+
+**New (2026-07-18):**
+- `TapPunch.cs` — reusable tap "punch" scale animation (1.2x/0.1s up, 0.15s back)
+
+**Edited (2026-07-18):**
+- `OrganismCardData.cs` — `overpopBadge` field + `UpdateOverpop()` (matches food-web
+  `pop >= GetMaxSchools`); baselined off in `Setup()`
+- `CurrentOrganismsGrid.cs` — icon source rewritten to `SpeciesBubble.cardImage`; removed the
+  child-Image scavenging loop
+- `FoodWebLines.cs` — ambient pulse moved `Start()` -> `OnEnable()` (+ `OnDisable()` reset);
+  persistent `_pulseIdx` so the web resumes across tab switches instead of restarting
+- `ModalController.cs` — removed self-`SetActive(false)` from `Start()` (first-tap bug);
+  `_opened` guard
+- `EcoHealthDashboard.cs` — smoothing swapped to exponential easing (matches large screen);
+  `smoothSpeed` default 2 -> 8; number + status word now read raw `target` (instant), only
+  the fill eases
+- `EcosystemNetworkManagerGPU.cs` (JunHeng's) — `_populationSyncInterval` source default
+  1 -> 0.15 (faster health/pop sync); `_ecoHealth` NetworkVariable given explicit
+  `Everyone`/`Server` read/write permissions (late-join replication). **NOTE: told JunHeng —
+  networked, needs matching rebuilds + instance value set.**
+- `NotificationManager.cs` — self-subscribes to `OnSpeciesUnlocked` (`autoSubscribeUnlock`);
+  host/panel split so the listener object stays active; `showSeconds` tunable
+- `SpeciesUnlockReveal.cs` — reveal-card fields `Text -> TMP_Text`; `using TMPro`
+
+**Scene changes (2026-07-18, `new netcode 1` tablet scene):**
+- All 12 `SpeciesBubble.cardImage` -> matching sprite in `Assets/Aloysius/Currentorgnism fish'/`
+- `TabletCanvas (1)/Ecosystem Panel/Info/Add` + `Info/DetailRoot/ViewDetailsButton` -> `TapPunch`
+- `TabletCanvas (1)` -> new `UnlockToast` object (`NotificationManager`, bottom-right, wired)
+- `CurrentOrganismsView` -> new `Scrollbar Vertical` (right edge, `Permanent`/overlay), wired
+  to the ScrollRect's `verticalScrollbar`
+
+**Prefab changes (2026-07-18):**
+- `Assets/Aloysius/Prefabs/OrganismCard.prefab` -> `OverpopBadge` child added + wired;
+  background Image alpha 0.4 -> white/opaque (was near-invisible), preview width widened
+  (runtime width still driven by the list's `VerticalLayoutGroup`)
 
 **Edited (earlier):**
 - `SpeciesBubble.cs` (shared) — TapPunch fix + OnTap routes to the info panel

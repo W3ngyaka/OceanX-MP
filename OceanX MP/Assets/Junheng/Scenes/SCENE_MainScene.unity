@@ -67570,11 +67570,13 @@ MonoBehaviour:
   - name: Corals
     parent: {fileID: 1157040162}
     appearMode: 0
+    revealStyle: 0
     startHealth: 0
     endHealth: 1
     threshold: 0
     hysteresisMargin: 0
     staggerInterval: 0.1
+    recoverStagger: 0
     randomOrder: 0
     growDuration: 0.6
     overshoot: 1
@@ -67582,11 +67584,13 @@ MonoBehaviour:
   - name: Seaweed
     parent: {fileID: 687692929}
     appearMode: 0
+    revealStyle: 0
     startHealth: 0
     endHealth: 1
     threshold: 0
     hysteresisMargin: 0
     staggerInterval: 0.1
+    recoverStagger: 0
     randomOrder: 0
     growDuration: 0.6
     overshoot: 0
@@ -67594,11 +67598,13 @@ MonoBehaviour:
   - name: Seagrass
     parent: {fileID: 1590453014}
     appearMode: 0
+    revealStyle: 0
     startHealth: 0
     endHealth: 1
     threshold: 0
     hysteresisMargin: 0
     staggerInterval: 0.1
+    recoverStagger: 0
     randomOrder: 0
     growDuration: 0.6
     overshoot: 0

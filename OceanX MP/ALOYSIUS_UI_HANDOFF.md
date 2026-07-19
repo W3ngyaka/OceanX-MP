@@ -1,5 +1,5 @@
 # OceanX MP — UI/UX Handoff (Aloysius)
-_Last updated: 2026-07-18 (rev 7)_
+_Last updated: 2026-07-18 (rev 8)_
 
 > Companion to JunHeng's main handoff. Covers UI/UX work across recent sessions.
 > Scope: food-web layout, species info card, atmospheric FX, bug fixes, the
@@ -8,7 +8,12 @@ _Last updated: 2026-07-18 (rev 7)_
 > dashboard gauge + status word, and a right-side species info panel**, plus
 > **producer unlock-registration, a new Macroalgae species, and a host
 > health-bar binding**.
-> **Latest (2026-07-18):** tablet overpopulation badge on organism cards,
+> **Newest (2026-07-18b):** **win screen** (WinCondition + WinScreen, Alucia
+> thank-you, health hits 100%), **back button replacing swipe-to-close** on the
+> modal, and a **hide-until-started gate** (Ecosystem Panel UI hidden until the
+> tablet tap-to-start). Confirmed the **action->health narration was already fully
+> built** (AluciaEcologyEvents) — no new work needed there.
+> **Earlier (2026-07-18a):** tablet overpopulation badge on organism cards,
 > organism-card icon source rewritten to `SpeciesBubble.cardImage` (+ new
 > "Currentorgnism fish" art set wired), **ambient food-web arrows now survive
 > tab switches**, **modal first-tap bug fixed**, health gauge made responsive
@@ -87,7 +92,80 @@ _Last updated: 2026-07-18 (rev 7)_
 
 ---
 
-## This session (2026-07-18) — organism cards, tablet fixes, health responsiveness
+## This session (2026-07-18b) — win screen, back button, hide-until-started
+
+Tablet scene: `Assets/Aloysius/new netcode 1.unity`. Win screen also placed in the
+host scene copy being used (`Assets/Aloysius/Scenes/SCENE_MainScene 1.unity` — a
+duplicate of JH's host scene). NOTE: there are now MULTIPLE `SCENE_MainScene` copies
+(Akil / Aloysius / Junheng / a `SCENE_MainScene 1`) — confirm which is the real build.
+
+### Win screen (`WinCondition.cs` NEW, `WinScreen.cs` NEW)
+- **Win = eco-health holds >= 99% for 2s** (not a one-frame touch of 100%). Tunable.
+- `WinCondition` (plain MonoBehaviour, one per scene) reads `GetEcoHealth()` and latches
+  `Won`. Deliberately NOT a NetworkBehaviour — the runtime manager spawns from a prefab and
+  isn't in the scene at edit time, so a scene-placed NetworkBehaviour couldn't attach to it.
+  Both screens run their own copy off the same networked health value, so they trigger together.
+- `WinScreen` (per scene) watches `WinCondition.Won`, fades in a full-screen overlay: Alucia
+  portrait (thanking the player) + title ("ECOSYSTEM RESTORED") + thank-you message +
+  **PLAY AGAIN** reset button. Hidden by default, unscaled-time fade.
+- Built into the host scene on `Canvas (1)` (dim, Alucia, title, message, reset button, all
+  wired). Uses Alucia's `calmSprite` as portrait — **no dedicated happy Alucia sprite yet**;
+  assign `aluciaWinSprite` when available.
+- **OPEN:** (1) only built in the host scene so far — **needs a copy in the tablet scene** if
+  you want it on both. (2) **Reset is local + hide-only** — "Play Again" clears the local
+  `Won` but does NOT reset the ecosystem; if health is still >=99% it re-triggers. Wire it to
+  an actual sim reset later. (3) The exact per-species counts for 100% are a *balance* condition
+  (each species alive, apex alive, and every predator/prey ratio inside 1x..7x), not fixed
+  numbers — see the health-formula notes below.
+
+### Back button replaces swipe-to-close (`ModalController` modal, `SwipeToClose.cs`)
+- Users were confused they had to swipe up to close the species modal. **Removed the
+  `SwipeToClose` component** from `ModalPanel`; added a **X back button** (top-right of the
+  panel) wired to `ModalController.Close()`, with `TapPunch` for feel.
+- `SwipeToClose.cs` script still exists in the project (unused) — left in case the gesture is
+  wanted elsewhere; safe to delete.
+
+### Hide Ecosystem Panel until tablet tap-to-start (`HideUntilStarted.cs` NEW, `TabController.cs` gated)
+- Goal: the whole tablet Ecosystem Panel UI stays hidden on the title/start screen and appears
+  only when the tablet's "tap to start" flips the shared networked `HasStarted` flag.
+- **Key gotcha:** the panel ROOT carries logic (`TabController`, `EcosystemUnlockManagerGPU`,
+  `TabletEcosystemUIGPU`, `TabletAddRemoveUIGPU`) that must keep running — so you CANNOT hide
+  the root. Solution hides only the **visual children** and keeps the root active.
+- `HideUntilStarted` (on a new always-active sibling `PanelStartGate`) hides a LIST of visual
+  children on Awake (`prompt`, `panel`, `FoodWebLayer`, `TabBar`, `Health`, `Info`) and re-shows
+  them on `OnStarted` (handles late-join via `HasStarted`). The gate object stays active so its
+  Update can listen — a self-hiding object can't un-hide itself (that was the first failed
+  attempt).
+- **`TabController.Start()` was ALSO gated** — it used to force-show the default (Food Web) tab
+  + prompt on Start, overriding the hide. Split its body into `InitializeTabs()` that runs only
+  after `HasStarted` (waits on `OnStarted`, or a coroutine if the manager hasn't spawned yet).
+  This is JunHeng's script — flagged below.
+- Confirmed working end to end (hides pre-start, reveals on tap).
+
+### Action -> health narration — ALREADY BUILT (no new work)
+- The rubric item "narrate how actions affect ecosystem health" is already fully implemented:
+  - `AluciaController.EvaluateHealth()` narrates overall health across bands
+    (critical/unstable-up/unstable-down/healthy/thriving), direction-aware.
+  - `AluciaEcologyEvents.cs` (JunHeng's) polls `GetSpeciesStatus()` every 2s and speaks
+    per-species cause lines (Starving / OverPredated / Overpopulated / extinct / added), with
+    per-species cooldown + a grace delay so fresh adds aren't instantly flagged. Rich CSV
+    content (generic + per-species) names the exact corrective action.
+- **Only thing to verify:** `AluciaEcologyEvents` is actually ON an active object in the build
+  scene (it's a script that must be placed). If it's missing from the scene you build, the
+  per-species narration is silent.
+
+### Eco-health formula (reference — for tuning the win / balance)
+- `health = (0.4*diversity + 0.4*balance + 0.2*apex)`; 100% needs ALL three = 1:
+  diversity=1 (all species alive), apex=1 (Blacktip shark alive), balance=1 (every species
+  alive, food-web-connected, not declining, not overpopulated).
+- Per species with predators: `predatorSchools <= ownSchools <= 7 * predatorSchools`
+  (`_ratioBandLow = 1`, `_overpopulatedRatio = 7`), and each predator needs prey >= its own.
+  So 100% is a whole-chain balance, not fixed counts — and the sim actively grows/shrinks
+  populations (`_growRate = 0.3`), so hand-set counts drift.
+
+---
+
+## This session (2026-07-18a) — organism cards, tablet fixes, health responsiveness
 
 Tablet scene this session: `Assets/Aloysius/new netcode 1.unity`. Reveal-card TMP
 work touched the host scene (`SCENE_MainScene`) via shared scripts.
@@ -572,6 +650,19 @@ working via forced-event test.
 - **Generate a Rajdhani TMP Font Asset** and assign to the reveal card's NameText/SciText
   (they reset to LiberationSans when converted to TMP).
 
+**Tablet UI (2026-07-18b — open items):**
+- **Win screen only in the host scene** — build a copy in the tablet scene (`new netcode 1`)
+  if you want it on both. Detection is non-networked so each screen triggers off shared health.
+- **Win "Play Again" is hide-only** — wire it to an actual ecosystem reset (lower/reset the
+  sim host-side); currently it clears the local `Won` and re-triggers if health is still >=99%.
+- **Assign a happy Alucia sprite** to the WinScreen's `aluciaWinSprite` (using calm sprite now).
+- **Verify `AluciaEcologyEvents` is on an active object** in the build scene — the per-species
+  narration is written but silent if the component isn't placed.
+- **Multiple `SCENE_MainScene` copies** (Akil / Aloysius / Junheng / `SCENE_MainScene 1`) —
+  consolidate / confirm which is the real host build before shipping. Easy to edit the wrong one.
+- **`SwipeToClose.cs`** now unused (back button replaced it) — delete if the gesture isn't
+  wanted elsewhere.
+
 **Alucia / reveal:**
 - Real art (placeholder block); reveal card image slot empty.
 - **Lower the "Thriving" win trigger from 100% to \~90%** (health likely tops out <100). Not yet applied.
@@ -603,6 +694,10 @@ working via forced-event test.
   camera uses) to fix the card/camera desync on spam. No change to your sim or camera scripts —
   just a new consumer of the existing event. FYI in case you refactor that event's signature.
   Consider a host-side authority check on `RequestAddSpeciesRpc` too (mine is client-side).
+- **(2026-07-18b) I edited `TabController.cs`** — split `Start()` into a gated `InitializeTabs()`
+  that runs only after `HasStarted` (for the hide-Ecosystem-Panel-until-start feature). Behaviour
+  is identical once started; it just defers the initial tab/prompt show. Waits on `OnStarted`, or
+  a coroutine until the manager spawns. FYI in case you touch that script.
 
 **This session (2026-07-12) — open items:**
 - **Text-hint half of the hold prompt** — the "Tap on any species!" banner (`aa.png`,
@@ -774,6 +869,23 @@ working via forced-event test.
 - `Assets/Aloysius/Prefabs/OrganismCard.prefab` -> `OverpopBadge` child added + wired;
   background Image alpha 0.4 -> white/opaque (was near-invisible), preview width widened
   (runtime width still driven by the list's `VerticalLayoutGroup`)
+
+**New (2026-07-18b):**
+- `WinCondition.cs` — detects win (eco-health >= 99% held 2s); plain MonoBehaviour
+- `WinScreen.cs` — full-screen win overlay (Alucia thank-you + title + Play Again)
+- `HideUntilStarted.cs` — hides a list of visual objects until `HasStarted` (tap-to-start)
+
+**Edited (2026-07-18b):**
+- `ModalController` modal — `SwipeToClose` component REMOVED; X back button added -> `Close()`
+- `TabController.cs` (JunHeng's) — `Start()` split into gated `InitializeTabs()` that runs only
+  after `HasStarted` (so the tab UI/prompt don't show pre-start)
+
+**Scene changes (2026-07-18b):**
+- Host scene (`SCENE_MainScene 1`) `Canvas (1)` -> new `WinScreen` overlay (WinCondition +
+  WinScreen, dim/Alucia/title/message/PLAY AGAIN, wired, hidden by default)
+- Tablet scene (`new netcode 1`): `Ecosystem Panel/ModalPanel` -> `SwipeToClose` removed,
+  `BackButton` (X) added; new always-active `PanelStartGate` object with `HideUntilStarted`
+  (hides prompt/panel/FoodWebLayer/TabBar/Health/Info until start)
 
 **Edited (earlier):**
 - `SpeciesBubble.cs` (shared) — TapPunch fix + OnTap routes to the info panel

@@ -78,7 +78,7 @@ public class ExperienceStartGate : MonoBehaviour
         _started = true;
         if (titleOverlay != null) titleOverlay.SetActive(false);   // large screen: reveal the reef
         if (tapToStart != null) tapToStart.SetActive(false);
-        if (tabletUIRoot != null) tabletUIRoot.SetActive(true);    // tablet: reveal the UI
+        if (tabletUIRoot != null) tabletUIRoot.SetActive(true);
     }
 
     void OnDestroy()

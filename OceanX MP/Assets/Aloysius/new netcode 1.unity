@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 43056380}
   - component: {fileID: 43056382}
   - component: {fileID: 43056381}
+  - component: {fileID: 43056383}
   m_Layer: 5
   m_Name: panel
   m_TagString: Untagged
@@ -345,6 +346,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 43056379}
   m_CullTransparentMesh: 1
+--- !u!225 &43056383
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43056379}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &45318525
 GameObject:
   m_ObjectHideFlags: 0
@@ -8169,6 +8182,7 @@ GameObject:
   - component: {fileID: 924900499}
   - component: {fileID: 924900502}
   - component: {fileID: 924900501}
+  - component: {fileID: 924900503}
   m_Layer: 0
   m_Name: FoodWebLayer
   m_TagString: Untagged
@@ -8239,6 +8253,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924900498}
   m_CullTransparentMesh: 1
+--- !u!225 &924900503
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924900498}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &931584196
 GameObject:
   m_ObjectHideFlags: 0
@@ -8461,6 +8487,7 @@ GameObject:
   - component: {fileID: 983577948}
   - component: {fileID: 983577949}
   - component: {fileID: 983577950}
+  - component: {fileID: 983577951}
   m_Layer: 5
   m_Name: Info
   m_TagString: Untagged
@@ -8528,6 +8555,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bob
   speed: 1.2
   height: 6
+--- !u!225 &983577951
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983577947}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &991931637
 GameObject:
   m_ObjectHideFlags: 0
@@ -9208,6 +9247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1045821173}
   - component: {fileID: 1045821174}
+  - component: {fileID: 1045821175}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -9252,6 +9292,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bob
   speed: 1.2
   height: 6
+--- !u!225 &1045821175
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045821172}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1051391723
 GameObject:
   m_ObjectHideFlags: 0
@@ -10184,6 +10236,7 @@ GameObject:
   - component: {fileID: 1098807347}
   - component: {fileID: 1098807349}
   - component: {fileID: 1098807348}
+  - component: {fileID: 1098807350}
   m_Layer: 0
   m_Name: TabBar
   m_TagString: Untagged
@@ -10277,6 +10330,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098807345}
   m_CullTransparentMesh: 1
+--- !u!225 &1098807350
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098807345}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1102473153
 GameObject:
   m_ObjectHideFlags: 0
@@ -10289,6 +10354,7 @@ GameObject:
   - component: {fileID: 1102473156}
   - component: {fileID: 1102473155}
   - component: {fileID: 1102473154}
+  - component: {fileID: 1102473158}
   m_Layer: 0
   m_Name: TapOverlay
   m_TagString: Untagged
@@ -10400,6 +10466,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1102473158
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102473153}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1110297079
 GameObject:
   m_ObjectHideFlags: 0
@@ -13787,6 +13865,7 @@ MonoBehaviour:
   - {fileID: 1098807345}
   - {fileID: 1045821172}
   - {fileID: 983577947}
+  deferRevealToTransition: 0
 --- !u!1 &1453633631
 GameObject:
   m_ObjectHideFlags: 0
@@ -20724,6 +20803,7 @@ GameObject:
   - component: {fileID: 2099056678}
   - component: {fileID: 2099056677}
   - component: {fileID: 2099056679}
+  - component: {fileID: 2099056680}
   m_Layer: 5
   m_Name: prompt
   m_TagString: Untagged
@@ -20802,6 +20882,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bob
   speed: 1.2
   height: 6
+--- !u!225 &2099056680
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099056675}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2111967374 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1771101361051355309, guid: d9d8cc7978951f74b84d30ad2b6f4a84, type: 3}

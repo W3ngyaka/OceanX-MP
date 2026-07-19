@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-14_
+_Last updated: 2026-07-18_
 
 ---
 
@@ -116,6 +116,7 @@ Assets/Junheng/
 │   │   │   ├── EcosystemUnlockManagerGPU.cs Eco-health/prey-gated species unlock system (singleton); prod replacement for Aloysius's GameState
 │   │   │   ├── EcosystemDebugHarnessGPU.cs  In-editor OnGUI add/remove panel (no netcode) — dev-only test harness
 │   │   │   ├── FishEntryPointGPU.cs         Marker for off-screen entry/exit points; schools swim in / out via these (auto-registers)
+│   │   │   ├── IntroductionCameraDirectorGPU.cs  Cinemachine — catches a species' first school at its gate & follows it in (0→1 only); host-only (added 2026-07-17)
 │   │   │   ├── EcosystemUIAdapterGPU.cs    UI→GPU bridge — ⚠ DEAD (zero external refs, confirmed 2026-07-08); safe to delete
 │   │   │   ├── SpeciesBehaviorPropertiesGPU.cs  Flee/hunt/hunger SO (⚠ currently UNREAD by runtime — see flee-gap note)
 │   │   │   └── SpeciesDataGPU.cs           Per-species SoT: Role, ScientificName, School/Movement/MotionRender/Behavior props, PathStyle, prey/predator lists, FishPerSchool, MaxSchools
@@ -914,6 +915,55 @@ already localization-ready (stable ids, all text in one column):
 - Implementation: extend `ContentService` from one URL per file to a **`{language → URL}` map** + a "current
   language" setting (~20 lines). Nothing already built needs redoing; today's single URL becomes the "English" entry.
 - Translating is then just retyping the display text in each tab — no structural changes.
+
+---
+
+## What Was Done — 2026-07-16 → 07-18 — Intro camera, ray tail-sway, adaptive music, reef-SDF padding, UI polish
+
+> Everything here post-dates the last handoff commit (`e75b54c`, 07-16 — the section-9 review). Presentation/polish pass across all three contributors: a cinematic species-intro camera, a health-driven music system, a signed turn-rate for ray tail deformation, reef-SDF gradient padding, and a round of tablet + large-screen UI work. Aloysius's UI details live in the separate **`ALOYSIUS_UI_HANDOFF.md`** (which he now maintains in parallel).
+
+### JunHeng (simulation / backend + presentation)
+
+**🎬 Introduction camera director — new `IntroductionCameraDirectorGPU.cs` (`122387f` "cam")**
+(`Assets/Junheng/Scripts/Boids_GPU/Ecosystem/IntroductionCameraDirectorGPU.cs`, Cinemachine)
+- Cinematic shot that catches a species' **first** school at its off-screen entry gate and follows the real fish as they swim in, then releases so the `CinemachineBrain` blends back to the overview camera. **Host-side only.**
+- Driven by two new hooks on `EcosystemSimulationGPU`:
+  - **`OnSpeciesFirstIntroduced`** (`event Action<SpeciesDataGPU>`) — fires inside `AddSchool` **only on the 0→1 transition** (fresh species entering), after the fish exist at the gate. Not fired for subsequent adds or automatic population-tick growth.
+  - **`TryGetSchoolCentroid(species, schoolIndex, out Vector3)`** — public wrapper over the private `TrySchoolCentroid`; synchronous GPU readback of one school's live centre-of-mass. ⚠ Throttle callers — do **not** poll every frame.
+- **Smooth follow:** readback is throttled + the centroid jitters, so the director `SmoothDamp`s a proxy transform toward the latest read every frame; the intro camera Follows/LookAts the proxy (continuous motion regardless of readback rate).
+- **`FramingMode`** enum — `FollowBehind` / `SideView` / `ThreeQuarter`, each with its own follow-offset, written onto the camera's `CinemachineFollow` at startup / on change. Full scene-wiring checklist is in the comment block at the bottom of the file.
+
+**🐟 Signed turn-rate for ray tail-sway (`BoidInfoGPU` + `BoidSimulationGPU`; shader-side by akeel-h)**
+- `BoidInfoGPU` struct grew to **18 floats** (`Size = sizeof(float) * 18`) — new **`SignedTurnRate`** field (~[-1,1]: sign = bank/yaw direction, magnitude = turn hardness), written by the compute shader each frame. Carries the sign the sim otherwise discards (`AngularVelocity` is stored unsigned).
+- **Consumed only by the new ray-wing shader `OceanX/Ray_Wing_Lit_Instanced`** to sweep the tail toward the turn — **behaviourally inert for every other boid** (the fish shader ignores it).
+- `BoidSimulationGPU` added serialized **`_tailSwayResponsiveness`** (default 4, frame-rate-independent ease), pushed to the compute shader as `_TailSwayResponsiveness` — tune the ray tail's floatiness live in the Inspector. (akeel-h's "Added dynamic ray tail turning" is the shader/mesh side.)
+
+**🪸 Reef-SDF gradient padding (`ReefSDFVolume` + `ReefSDFBaker`; last touched akeel-h "Rebaked reef obstacles")**
+- New **`_padding`** field (default **4 m**) on `ReefSDFVolume`; `Bounds` now = `_size + 2·padding`. **Not optional slack:** the escape direction is a central-difference gradient sampling one voxel either side, so a fish within a voxel of the un-padded edge would difference against a data cliff and get a garbage direction. Padding pushes the edge beyond where fish can swim and catches reef straddling the boundary. `ReefSDFBaker` updated to bake the padded volume. Reef obstacles were rebaked against the environment mesh (`f1e7a1c`, `ba795b0`).
+
+**🔊 Audio experiments (`c7c676e`, `7e9f2bd`, `c9b4316`, `a52f6a3`, `0aab757`)**
+- JunHeng's "trying to make audio / piano audios / more music / more sound" commits — spike work that fed into Aloysius's `AdaptiveMusicSystem` (below). Scene updated to host the audio setup.
+
+**🚫 Tablet Add spam-guard (`TabletAddRemoveUIGPU`)**
+- New **`addCooldown`** (default **0.3 s**, `unscaledTime`-based) blocks accidental double-taps / mashing on Add without hurting deliberate tapping. 0 = off.
+
+### Aloysius (UI / UX + audio)
+
+**🎵 Adaptive music system — new `AdaptiveMusicSystem.cs` (replaces deleted `MusicDirector.cs`) + `Editor/AdaptiveMusicSetup.cs`**
+- **Health-driven whole-song switcher** (horizontal re-sequencing): one mood track plays at a time, each owning a band of live eco-health (0–1); crossing a band **crossfades** to that band's song. Songs are standalone tracks of different lengths/tempo/key — switching whole songs avoids the phase-drift of permanent vertical layering.
+- **Won't flicker** on the (deliberately oscillating) sim: health input is smoothed (`healthSmoothing`), band selection has **hysteresis**, and a **minimum dwell** (`minMoodSeconds`) blocks rapid re-switching.
+- **Equal-power fades in dB** (sin/cos) driving each song's mixer-group volume — no mid-crossfade "hole." Individual soundtracks now play one-at-a-time instead of all at once (`1f22c0a`); add/remove audio feedback (`4e41992`). Also "Changed health smoothing" (`ee39c1e`).
+
+**📱 Tablet + large-screen UI polish**
+- **Unlock notification on the tablet** when a fish is discovered (`b2cd8b3`) — `NotificationManager` +114 lines.
+- **Current-organisms panel** — scrollbar added (`26480a8`) + design pass on it and the **hint UI** (`dfc7ff1`, `f09f338`, `26298a5`); reveal-card opacity/queue tweaks (`SpeciesAddedReveal`, `RevealQueue`).
+- **Unlock popup redesign on tablet** (`d521c5f`).
+- **Large-screen (host) UI:** health bar **made modular** (`d52728d`) and resized (`c3ac406`, `240f8e4` `SCENE_MainScene.unity`). See `ALOYSIUS_UI_HANDOFF.md`.
+
+### Akil (akeel-h) — scene environment / art / shaders
+
+- **`EnvironmentHealthReveal` — new `ColorRecover` reveal style** alongside `ScalePopIn`: corals stay full-size and regain colour from a **bleached/dead** look as health rises, driving the **`OceanX/CoralHealth`** material's `_Health` 0→1 via a per-item `MaterialPropertyBlock` (cached so it doesn't clobber other overrides). `recoverStagger` spreads recovery across a group. Use for "all corals present but washed-out" + the dead-coral half of a hybrid scene; keep seagrass / "new" corals on `ScalePopIn`. (`080fd1d`, `64c42f1` "underwater cascading effect").
+- **Dynamic ray tail turning** shader/mesh side (pairs with JunHeng's `SignedTurnRate`), **adjusted swimming animations** (`04509da`) and **boiding behaviour** (`64c42f1`), **rebaked reef obstacles** to the environment mesh (`f1e7a1c`, `ba795b0`).
 
 ---
 

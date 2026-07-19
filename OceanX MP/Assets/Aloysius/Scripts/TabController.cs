@@ -47,8 +47,34 @@ public class TabController : MonoBehaviour
     private bool _animating;
     private readonly Dictionary<GameObject, Vector2> _homePos = new Dictionary<GameObject, Vector2>();
 
+    private bool _initialized;
+
     void Start()
     {
+        // Stay dormant until the experience begins (tablet 'tap to start' flips HasStarted),
+        // so the tab UI + Food Web prompt aren't shown on the title screen.
+        var net = EcosystemNetworkManagerGPU.Instance;
+        if (net == null || !net.HasStarted)
+        {
+            if (net != null) net.OnStarted += InitializeTabs;
+            else StartCoroutine(WaitForNet());
+            return;
+        }
+        InitializeTabs();
+    }
+
+    System.Collections.IEnumerator WaitForNet()
+    {
+        while (EcosystemNetworkManagerGPU.Instance == null) yield return null;
+        var net = EcosystemNetworkManagerGPU.Instance;
+        if (net.HasStarted) InitializeTabs();
+        else net.OnStarted += InitializeTabs;
+    }
+
+    void InitializeTabs()
+    {
+        if (_initialized) return;
+        _initialized = true;
         foreach (var t in tabs)
         {
             if (t.panel == null) continue;

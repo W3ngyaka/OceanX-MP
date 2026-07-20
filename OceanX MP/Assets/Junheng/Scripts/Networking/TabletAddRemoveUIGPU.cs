@@ -27,7 +27,7 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
     public static TabletAddRemoveUIGPU Instance { get; private set; }
 
     [Header("Spam guard")]
-    [Tooltip("Minimum seconds between Add presses. Blocks accidental double-taps and " +
+    [Tooltip("Minimum seconds between Add/Remove presses. Blocks accidental double-taps and " +
              "mashing without hurting deliberate tapping. 0 = off.")]
     public float addCooldown = 0.3f;
     private float _lastAddTime = -999f;
@@ -90,6 +90,8 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
         var net = EcosystemNetworkManagerGPU.Instance;
         if (_index < 0 || net == null) return;
         if (OptimisticPopulationStore.Display(_index) <= 0) return; // already at zero optimistically
+        if (Time.unscaledTime - _lastAddTime < addCooldown) return; // spam cooldown (shared with Add)
+        _lastAddTime = Time.unscaledTime;
 
         OptimisticPopulationStore.RegisterDelta(_index, -1);
         net.RequestRemoveSpeciesRpc(_index);

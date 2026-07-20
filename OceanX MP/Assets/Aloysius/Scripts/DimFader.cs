@@ -15,6 +15,16 @@ public class DimFader : MonoBehaviour
 
     public void FadeTo(float target, float duration, System.Action onComplete = null)
     {
+        // A coroutine can't run on an inactive GameObject (Unity logs "Coroutine couldn't be
+        // started..."). If the overlay is already inactive/disabled, just snap to the target and
+        // fire the callback synchronously so callers (e.g. ModalController.Close) still finish.
+        if (!isActiveAndEnabled)
+        {
+            if (cg != null) cg.alpha = target;
+            onComplete?.Invoke();
+            return;
+        }
+
         if (current != null) StopCoroutine(current);
         current = StartCoroutine(Fade(target, duration, onComplete));
     }

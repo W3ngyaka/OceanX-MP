@@ -45,17 +45,14 @@ public class ModalController : MonoBehaviour
         {
             dimFader = DimOverlay.GetComponent<DimFader>();
             if (dimFader == null) dimFader = DimOverlay.gameObject.AddComponent<DimFader>();
-        }
-    }
 
-    // Panel is authored inactive in the scene, so Start() is deferred to the first Open().
-    // Previously Start() called SetActive(false), which slammed the panel shut right after
-    // that first Open (the 'first tap does nothing' bug). Removed; Hide() closes it instead.
-
-    void Start()
-    {
-        if (DimOverlay != null)
-        {
+            // Initialise the overlay to hidden HERE, not in Start(). The panel is authored
+            // inactive, so its Start() is deferred until the first Show() has ALREADY activated
+            // the overlay — running the reset there deactivated the dim a frame after it appeared,
+            // and made the first swipe-close call FadeTo on an inactive overlay ("Coroutine
+            // couldn't be started because the game object 'DimOverlay' is inactive!"). Awake runs
+            // synchronously inside Show()'s SetActive(true), BEFORE the overlay is re-activated, so
+            // it can't clobber the open.
             DimOverlay.alpha = 0f;
             DimOverlay.blocksRaycasts = false;
             DimOverlay.gameObject.SetActive(false);

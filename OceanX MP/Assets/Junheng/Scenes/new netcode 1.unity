@@ -6573,6 +6573,8 @@ MonoBehaviour:
   sources:
   - fileName: SpeciesContent.csv
     publishedCsvUrl: https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=196784187&single=true&output=csv
+  - fileName: alucia_lines.csv
+    publishedCsvUrl: https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=1093782534&single=true&output=csv
 --- !u!4 &862528878
 Transform:
   m_ObjectHideFlags: 0
@@ -12188,7 +12190,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1415037589
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12608,6 +12610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afcae2689686b5445affaa9d54b89a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabletAddRemoveUIGPU
+  addCooldown: 0.3
   addButton: {fileID: 1090360380}
   removeButton: {fileID: 0}
   populationLabel: {fileID: 0}

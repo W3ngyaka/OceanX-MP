@@ -11712,14 +11712,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1198857640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d3dd92195b3fd545aef70db60df235f, type: 3}
+  m_Script: {fileID: 11500000, guid: d78386af20d2d834f9c23678942f4b7d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Sway
-  angle: 8
-  speed: 0.7
+  m_EditorClassIdentifier: Assembly-CSharp::FishSwim
+  glideX: 150
+  glideY: 30
+  glideSpeed: 0.14
+  flipToFace: 1
+  artFacesLeft: 0
+  wagAmount: 0.06
+  wagSpeed: 2.6
   randomPhase: 1
-  pivotFromBase: 0
-  bobHeight: 10
 --- !u!1 &1200253570
 GameObject:
   m_ObjectHideFlags: 0
@@ -14488,7 +14491,7 @@ RectTransform:
   m_GameObject: {fileID: 1429282708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9944038, y: 1.32061, z: 0.9370759}
+  m_LocalScale: {x: 0.47157145, y: 0.62626666, z: 0.4443851}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2099056676}
@@ -16335,14 +16338,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1668220417}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d3dd92195b3fd545aef70db60df235f, type: 3}
+  m_Script: {fileID: 11500000, guid: d78386af20d2d834f9c23678942f4b7d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Sway
-  angle: 8
-  speed: 0.7
+  m_EditorClassIdentifier: Assembly-CSharp::FishSwim
+  glideX: 170
+  glideY: 35
+  glideSpeed: 0.17
+  flipToFace: 1
+  artFacesLeft: 0
+  wagAmount: 0.07
+  wagSpeed: 3
   randomPhase: 1
-  pivotFromBase: 0
-  bobHeight: 10
 --- !u!1 &1670450436
 GameObject:
   m_ObjectHideFlags: 0
@@ -22771,14 +22777,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2143141153}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d3dd92195b3fd545aef70db60df235f, type: 3}
+  m_Script: {fileID: 11500000, guid: d78386af20d2d834f9c23678942f4b7d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Sway
-  angle: 8
-  speed: 0.7
+  m_EditorClassIdentifier: Assembly-CSharp::FishSwim
+  glideX: 120
+  glideY: 22
+  glideSpeed: 0.11
+  flipToFace: 1
+  artFacesLeft: 0
+  wagAmount: 0.05
+  wagSpeed: 2.2
   randomPhase: 1
-  pivotFromBase: 0
-  bobHeight: 10
 --- !u!224 &221827789657863186 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 221827790249897155, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}

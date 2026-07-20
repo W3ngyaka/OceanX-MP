@@ -90,14 +90,14 @@ public class HintsPanel : MonoBehaviour
             hintText.text = hint;
     }
 
-    // Same rules as the host hint: prefer the species' own hint1, else build
-    // from unmet requirements.
+    // The Hints tab actively tells the player how to unlock the NEXT species, computed
+    // LIVE from the current populations so it's always accurate (unlike a static sheet
+    // line). Only when nothing concrete is still outstanding — a transient pre-unlock
+    // state — do we fall back to a flavour line: alucia_lines.csv 'hint.flavour' first
+    // (editable in the sheet, no rebuild), then the SpeciesData asset's hint1.
     string BuildHint(SpeciesData sp, bool healthMet, int minHealth,
                      List<EcosystemUnlockManagerGPU.RequirementStatus> reqs)
     {
-        if (!string.IsNullOrEmpty(sp.hint1))
-            return sp.hint1;
-
         var parts = new List<string>();
         if (!healthMet && minHealth > 0)
             parts.Add("get eco-health to " + minHealth + "%");
@@ -109,8 +109,14 @@ public class HintsPanel : MonoBehaviour
                     parts.Add("add " + need + " more " + r.Species.speciesName);
                 }
 
-        if (parts.Count == 0)
-            return "Something new is almost ready to appear...";
-        return "To unlock " + sp.speciesName + ", " + string.Join(", and ", parts) + ".";
+        if (parts.Count > 0)
+            return "To unlock " + sp.speciesName + ", " + string.Join(", and ", parts) + ".";
+
+        var flavour = AluciaLines.GetVariants("hint.flavour", sp.speciesName);
+        if (flavour.Count > 0)
+            return flavour[0];
+        if (!string.IsNullOrEmpty(sp.hint1))
+            return sp.hint1;
+        return "Something new is almost ready to appear...";
     }
 }

@@ -269,7 +269,14 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             taps = 0;
         }
 
-        string[] hints = { data.hint1, data.hint2, data.hint3 };
+        // Progressive hints come from alucia_lines.csv ('hint.flavour', scoped to this
+        // species) so they're fact-checkable in the sheet with no rebuild — one source of
+        // truth with the host and the Hints tab. Variants are ordered vague -> specific ->
+        // almost there, matching the old asset hint1/2/3, which is the fallback if the
+        // sheet has no rows for this fish.
+        var flavour = AluciaLines.GetVariants("hint.flavour", data.speciesName);
+        string[] hints = flavour.Count > 0 ? flavour.ToArray()
+                                           : new[] { data.hint1, data.hint2, data.hint3 };
         int level = Mathf.Min(taps, hints.Length - 1);
 
         string[] labels = { "Hint", "Clearer hint", "Almost there" };

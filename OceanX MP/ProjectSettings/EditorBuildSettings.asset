@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Junheng/Scenes/Boids_Demo.unity
     guid: a82cd417066164345af16d799514f518
-  - enabled: 1
+  - enabled: 0
     path: Assets/Aloysius/new netcode 1.unity
     guid: 8a3b650040a16b543b625d396b047629
   - enabled: 0
@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Akil/Scenes/SCENE_MainScene.unity
     guid: 77515a1e42c0eb449b34b17df54f9d08
-  - enabled: 0
+  - enabled: 1
     path: Assets/Aloysius/Scenes/SCENE_MainScene 1.unity
     guid: 2732bd130d45d654dbc02b33a14971e0
   m_configObjects:

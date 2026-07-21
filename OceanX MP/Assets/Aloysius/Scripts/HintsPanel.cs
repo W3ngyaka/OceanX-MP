@@ -98,25 +98,54 @@ public class HintsPanel : MonoBehaviour
     string BuildHint(SpeciesData sp, bool healthMet, int minHealth,
                      List<EcosystemUnlockManagerGPU.RequirementStatus> reqs)
     {
-        var parts = new List<string>();
+        // Health gate first (rare) — keep it explicit.
         if (!healthMet && minHealth > 0)
-            parts.Add("get eco-health to " + minHealth + "%");
+            return "Raise the ecosystem's health to " + minHealth + "% to unlock the " + sp.speciesName + ".";
+
+        // Find the species requirement they're furthest from (the main thing to work on).
+        EcosystemUnlockManagerGPU.RequirementStatus? focus = null;
+        int worstGap = -1;
         if (reqs != null)
             foreach (var r in reqs)
                 if (!r.Met && r.Species != null)
                 {
-                    int need = Mathf.Max(0, r.Required - r.Current);
-                    parts.Add("add " + need + " more " + r.Species.speciesName);
+                    int gap = Mathf.Max(0, r.Required - r.Current);
+                    if (gap > worstGap) { worstGap = gap; focus = r; }
                 }
 
-        if (parts.Count > 0)
-            return "To unlock " + sp.speciesName + ", " + string.Join(", and ", parts) + ".";
+        if (focus == null)
+        {
+            // No unmet species requirement — fall back to a flavour line.
+            var fl = AluciaLines.GetVariants("hint.flavour", sp.speciesName);
+            if (fl.Count > 0) return fl[0];
+            if (!string.IsNullOrEmpty(sp.hint1)) return sp.hint1;
+            return "Something new is almost ready to appear...";
+        }
 
-        var flavour = AluciaLines.GetVariants("hint.flavour", sp.speciesName);
-        if (flavour.Count > 0)
-            return flavour[0];
-        if (!string.IsNullOrEmpty(sp.hint1))
-            return sp.hint1;
-        return "Something new is almost ready to appear...";
+        var r2 = focus.Value;
+        int need = Mathf.Max(0, r2.Required - r2.Current);
+        string prey = r2.Species.speciesName;
+        string name = sp.speciesName;
+
+        // ESCALATING HINT:
+        // - Far away (need > 2 or nothing added yet): ecological nudge, teaches the 'why'.
+        // - Close (2 away): 'a few more', no exact number.
+        // - 1 away: exact count.
+        if (need >= 3 || r2.Current == 0)
+        {
+            // Ecological nudge — CSV-editable via 'hint.needs' (tokens {species},{prey}); code default otherwise.
+            return AluciaLines.Get("hint.needs", "{species} prey on {prey}.")
+                     .Replace("{species}", name).Replace("{prey}", prey);
+        }
+        else if (need == 2)
+        {
+            return AluciaLines.Get("hint.close", "Almost there \u2014 add a few more {prey}!")
+                     .Replace("{species}", name).Replace("{prey}", prey);
+        }
+        else // need == 1
+        {
+            return AluciaLines.Get("hint.one", "Just 1 more {prey} and the {species} will appear!")
+                     .Replace("{species}", name).Replace("{prey}", prey);
+        }
     }
 }

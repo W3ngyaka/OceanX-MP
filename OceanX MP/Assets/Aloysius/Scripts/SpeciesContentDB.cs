@@ -16,7 +16,7 @@ public static class SpeciesContentDB
 {
     public class Entry
     {
-        public string id, speciesName, sciName, role, iucnStatus, description, diet, habitat, funFact, imageFile, iucnImage, unlockImageFile;
+        public string id, speciesName, sciName, role, iucnStatus, description, diet, habitat, funFact, imageFile, iucnImage;
     }
 
     const string CsvFile = "SpeciesContent.csv";
@@ -95,7 +95,6 @@ public static class SpeciesContentDB
                 funFact     = Field(row, col, "funfact"),
                 imageFile   = Field(row, col, "imagefile"),
                 iucnImage   = Field(row, col, "iucnimage"),
-                unlockImageFile = Field(row, col, "unlockimagefile"),
             };
 
             // Index under both the stable id and the display name so either resolves the same entry.
@@ -117,7 +116,6 @@ public static class SpeciesContentDB
         {
             if (!string.IsNullOrWhiteSpace(e.imageFile) && seen.Add(e.imageFile)) yield return e.imageFile;
             if (!string.IsNullOrWhiteSpace(e.iucnImage) && seen.Add(e.iucnImage)) yield return e.iucnImage;
-            if (!string.IsNullOrWhiteSpace(e.unlockImageFile) && seen.Add(e.unlockImageFile)) yield return e.unlockImageFile;
         }
     }
 

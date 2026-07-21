@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-18_
+_Last updated: 2026-07-21_
 
 ---
 
@@ -918,6 +918,56 @@ already localization-ready (stable ids, all text in one column):
 
 ---
 
+## What Was Done — 2026-07-21 (JunHeng) — Tablet organism cards use portraits; unlock-image duplication cleaned up
+
+Reverses the 07-20 tablet card-icon source per teammate request, and removes the now-dead tablet-side unlock images.
+
+### 🖼️ Tablet Current Organisms cards now use the PORTRAIT, not the unlock image
+- **`CurrentOrganismsGrid`** now reads **`SpeciesContent.csv` `imageFile`** (the 12 portraits — the *same* image the species modal shows) instead of `unlockImageFile`. Teammate didn't want the unlock art on the organism cards.
+- **No Google Sheet change needed** — verified against the **live** published tablet tab (gid `196784187`): its `imageFile` column already holds the portraits (`blacktip.png`, `Grouper.png`, …). The code was just pointing at the wrong column.
+
+### 🧹 Removed the dead tablet-side unlock images + column
+- **Deleted the 12 `StreamingAssets/SpeciesImages/*Unlock.png` (+ `.meta`)** — nothing on the tablet references them anymore (~3 MB). ⚠ **The big-screen `StreamingAssets/RevealImages/*Unlock.png` are UNTOUCHED** — the unlock reveal card still uses those (separate folder + separate `RevealContentDB`).
+- **`SpeciesContentDB`** — removed the `unlockImageFile` field (Entry + parse + `AllImageRefs`), so the Android image warm-up no longer tries to cache them.
+- ⚠ The tablet **`SpeciesContent` sheet still has an `unlockImageFile` column** — now unused/ignored by the game (harmless; delete it in the sheet if you want it gone). The big-screen **`RevealContent`** sheet's `unlockImageFile` is unrelated and still live.
+
+### 🔁 Duplication note (context for the cleanup)
+The 12 `*Unlock.png` had been **byte-identical duplicates** across `SpeciesImages/` and `RevealImages/` (each `*DB` only reads its own folder, so a shared image must exist in both). The 12 portraits are *not* byte-identical across folders — same subjects, different exports (the tablet `SpeciesImages/` copies are notably larger than the big-screen `RevealImages/` ones — worth a look in the final asset pass).
+
+> ⚠ Touched Aloysius's `CurrentOrganismsGrid.cs` + `SpeciesContentDB.cs` (one-column removal + icon-source swap, both backward-compatible) — coordinate on merge.
+
+---
+
+## What Was Done — 2026-07-19 → 07-20 — Build scene re-pointed, CSV-driven hints, unlock-image column, modal coroutine fix
+
+> Post-dates the 07-19 handoff commit (`b90b4f1`). JunHeng: build-settings re-point, progressive hints moved onto the CSV, a tablet `unlockImageFile` column, and a real modal/dim-overlay bug fix. Aloysius: start gate, win screen, tablet title screen.
+
+### JunHeng (integration / content pipeline)
+
+**🎬 Build Settings re-pointed (`74deb98` "netcode") — ⚠ the shipping game scene CHANGED**
+- Enabled build scenes are now **`Assets/Aloysius/Start scene.unity`** (index 0) → **`Assets/Aloysius/Scenes/SCENE_MainScene 1.unity`** (index 1). `Assets/Aloysius/new netcode 1.unity` was **disabled**. Matches `SplashSequence`'s `buildIndex + 1` model.
+- ⚠ **This supersedes the 07-19 review note** that recorded the pair as `Aloysius/Start scene.unity` → `Junheng/Scenes/SCENE_MainScene.unity`. The game scene is now **Aloysius's copy under `Scenes/`**, not JunHeng's. Worth confirming this is intended — it decides which host scene actually ships.
+- ⚠ Stale disabled entry `Assets/Aloysius/SCENE_MainScene 1.unity` (the pre-move root path, missing from disk) is still listed — prune it.
+
+**🗣️ Progressive hints are now CSV-driven on the tablet too (`74deb98`)**
+- **`SpeciesBubble.ShowLockedHint`** now pulls `AluciaLines.GetVariants("hint.flavour", speciesName)` (ordered vague → clearer → almost there, matching the old `hint1/2/3`), falling back to the `SpeciesData` asset when the sheet has no rows for that fish. One source of truth with the host + Hints tab — fact-checkers edit them in the sheet, no rebuild.
+- **`HintsPanel.BuildHint` priority inverted** — it now computes the **live** unmet requirements first ("get eco-health to X%", "add N more Y") so the Hints tab is always accurate against current populations, and only falls back to `hint.flavour` → `SpeciesData.hint1` → a generic line when nothing concrete is outstanding. Previously a non-empty `hint1` short-circuited everything and hid the real requirements.
+
+**🖼️ `unlockImageFile` column added to the TABLET sheet (`b728f83`)**
+- `SpeciesContent.csv` + `SpeciesContentDB.Entry` gained **`unlockImageFile`** (header-driven parse, and added to `AllImageFiles` so the Android warm-up caches it).
+- **`CurrentOrganismsGrid` card icons now come from `unlockImageFile`** — deliberately a *different* column from the modal (which uses `imageFile`) — falling back to the bubble's inspector `cardImage` so a card never goes blank. 12 `*Unlock.png` added to `StreamingAssets/SpeciesImages/`.
+- ⚠ **There are now TWO `unlockImageFile` columns in play:** `RevealContent.csv` → big-screen unlock card (`StreamingAssets/RevealImages/`), and `SpeciesContent.csv` → tablet organism cards (`StreamingAssets/SpeciesImages/`). Same column name, different sheets + different folders — don't cross-wire them.
+
+**🐛 Fixed "Coroutine couldn't be started because the game object 'DimOverlay' is inactive" (`b728f83`)**
+- **`ModalController`** — the dim-overlay reset moved out of `Start()` into `Awake()`. The panel is authored inactive, so `Start()` ran a frame **after** the first `Show()` had already activated the overlay, deactivating the dim right after it appeared (and breaking swipe-close). `Awake` runs synchronously inside `Show()`'s `SetActive(true)`, *before* the overlay is re-activated, so it can't clobber the open.
+- **`DimFader.FadeTo`** — now snaps to the target and fires `onComplete` **synchronously** when `!isActiveAndEnabled`, instead of starting a coroutine on an inactive object, so callers like `ModalController.Close` still finish.
+
+### Aloysius (UI / UX)
+- **Start gate + win condition (`1fcb911`, `46b79d3`)** — new `HideUntilStarted.cs`, `WinCondition.cs`, `WinScreen.cs`, plus `TabController` additions and an `ExperienceStartGate` tweak. **His scene moved to `Assets/Aloysius/Scenes/SCENE_MainScene 1.unity`** — now the enabled build scene (above).
+- **Tablet title screen (`9b080be`, `d4e3104`)** — title art (`bluefo`, `fish`, `seaweed`, `taptosat`, `coral` PNGs) + new **`FishSwim.cs`** driving the "fishy" title-screen animation, in `new netcode 1.unity`. Detail in `ALOYSIUS_UI_HANDOFF.md`.
+
+---
+
 ## What Was Done — 2026-07-16 → 07-18 — Intro camera, ray tail-sway, adaptive music, reef-SDF padding, UI polish
 
 > Everything here post-dates the last handoff commit (`e75b54c`, 07-16 — the section-9 review). Presentation/polish pass across all three contributors: a cinematic species-intro camera, a health-driven music system, a signed turn-rate for ray tail deformation, reef-SDF gradient padding, and a round of tablet + large-screen UI work. Aloysius's UI details live in the separate **`ALOYSIUS_UI_HANDOFF.md`** (which he now maintains in parallel).
@@ -1523,6 +1573,9 @@ have it mean anything. **Decide before balancing:**
 > #### 📌 Corrections to this document, from the same review
 > - **"Re-point Build Settings" (CLAUDE.md line 81) is STALE — already done.** The enabled set is correct:
 >   `Aloysius/Start scene.unity` → `Junheng/Scenes/SCENE_MainScene.unity`, both exist. Close that item.
+>   > ⚠ **Superseded 2026-07-20 (`74deb98`):** the second enabled scene was changed to
+>   > **`Assets/Aloysius/Scenes/SCENE_MainScene 1.unity`** (Aloysius's copy), not JunHeng's. See the
+>   > 07-19 → 07-20 section.
 > - **"Strip debug logging" (CLAUDE.md line 82) overstates it.** 70 log calls total across Junheng+Aloysius,
 >   and **no unconditional per-frame or per-tick logging exists**. `AluciaEcologyEvents.debugLog` and
 >   `EnvironmentHealthReveal.logDebug` are already **default-off Inspector toggles**. The rest are one-shot

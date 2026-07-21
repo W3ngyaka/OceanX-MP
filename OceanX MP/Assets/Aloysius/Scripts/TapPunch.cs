@@ -23,6 +23,18 @@ public class TapPunch : MonoBehaviour, IPointerDownHandler
         baseScale = transform.localScale;
     }
 
+    void OnDisable()
+    {
+        // Coroutines die on deactivation; make sure we don't get frozen mid-punch (stuck big).
+        if (punchRoutine != null) { StopCoroutine(punchRoutine); punchRoutine = null; }
+        transform.localScale = baseScale;
+    }
+
+    void OnEnable()
+    {
+        transform.localScale = baseScale; // always start at rest when shown
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         Play();

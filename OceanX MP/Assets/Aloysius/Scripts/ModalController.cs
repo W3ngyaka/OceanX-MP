@@ -70,6 +70,8 @@ public class ModalController : MonoBehaviour
     public void Open(Sprite card) => Open(card, -1);
     public void Open(Sprite card, int speciesIndex)
     {
+        // Mirror to the large screen so bystanders see what's being read (-1 clears).
+        ViewedSpeciesReporter.Report(speciesIndex);
         if (photo != null && card != null) { photo.sprite = card; photo.enabled = true; photo.preserveAspect = true; }
         Show();
     }
@@ -147,6 +149,7 @@ public class ModalController : MonoBehaviour
 
     public void Close()
     {
+        ViewedSpeciesReporter.Clear();
         if (DimOverlay != null && dimFader != null)
         {
             DimOverlay.blocksRaycasts = false;
@@ -158,4 +161,6 @@ public class ModalController : MonoBehaviour
 
         gameObject.SetActive(false);
     }
+
+
 }

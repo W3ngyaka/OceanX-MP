@@ -28,6 +28,7 @@ public class SpeciesInfoPanel : MonoBehaviour
 
     // current selection (for the View Details button)
     private SpeciesData _data;
+    private int _index = -1;   // sim species index (for the large-screen bystander mirror)
     private Sprite _cardSprite;
     private int _speciesIndex = -1;
 
@@ -41,6 +42,7 @@ public class SpeciesInfoPanel : MonoBehaviour
 
     public void Show(SpeciesData data, Sprite cardSprite, int speciesIndex)
     {
+        _index = speciesIndex;
         if (data == null) { Clear(); return; }
 
         _data = data;
@@ -68,6 +70,7 @@ public class SpeciesInfoPanel : MonoBehaviour
     // Locked/mystery display: tapped a locked bubble. Hides real data behind '???'.
     public void ShowLocked(SpeciesData data)
     {
+        _index = -1;
         _data = null;
         _cardSprite = null;
         _speciesIndex = -1;
@@ -82,6 +85,7 @@ public class SpeciesInfoPanel : MonoBehaviour
 
     public void Clear()
     {
+        _index = -1;
         if (emptyState != null) emptyState.SetActive(true);
         if (detailRoot != null) detailRoot.SetActive(false);
         _data = null;
@@ -92,6 +96,7 @@ public class SpeciesInfoPanel : MonoBehaviour
     void OpenModal()
     {
         if (ModalController.Instance == null || _data == null) return;
+        ViewedSpeciesReporter.Report(_index);   // mirror to large screen for bystanders
         ModalController.Instance.Open(_data);   // data-driven: modal pulls text + image from the CSV
     }
 }

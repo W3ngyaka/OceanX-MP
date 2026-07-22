@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Junheng/Scenes/SCENE_MainScene.unity
     guid: 36547a6b772856f46aa623c5a4263895
+  - enabled: 0
+    path: Assets/Aloysius/Scenes/SCENE_MainScene.unity
+    guid: 6a50ba1856a42fc4fa7884d11848e546
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

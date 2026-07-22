@@ -31,6 +31,14 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     // tablet's tap calls RequestStartRpc(), the host flips this, and BOTH screens react.
     private readonly NetworkVariable<bool> _hasStarted = new NetworkVariable<bool>(false);
     public bool HasStarted => _hasStarted.Value;
+
+    // ---- Tablet 'currently viewing' mirror (UI) ----
+    // Tablet reports which species its info modal shows so the LARGE SCREEN can mirror a
+    // summarised card for bystanders. -1 = nothing being viewed.
+    private readonly NetworkVariable<int> _viewedSpecies = new NetworkVariable<int>(
+        -1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public int ViewedSpecies => _viewedSpecies.Value;
+    public event System.Action<int> OnViewedSpeciesChanged;
     public event System.Action OnStarted;   // fires on host + client when the flag turns true
 
     private void Awake()
@@ -48,6 +56,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
 
         // Both host and client watch the shared start flag so their screens leave the attract state together.
         _hasStarted.OnValueChanged += (_, now) => { if (now) OnStarted?.Invoke(); };
+        _viewedSpecies.OnValueChanged += (_, now) => OnViewedSpeciesChanged?.Invoke(now);
 
         if (!IsServer) return;
 
@@ -122,6 +131,13 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
 
     // Called from the tablet's "Tap to Start" — runs on the host and flips the shared start flag
     // that both the large screen and tablet watch (via OnStarted / HasStarted).
+    // Tablet tells the host which species its info modal is showing (-1 = closed).
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SetViewedSpeciesRpc(int speciesIndex)
+    {
+        _viewedSpecies.Value = speciesIndex;
+    }
+
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void RequestStartRpc()
     {

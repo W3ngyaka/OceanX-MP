@@ -9629,6 +9629,7 @@ GameObject:
   - component: {fileID: 69854443}
   - component: {fileID: 69854442}
   - component: {fileID: 69854445}
+  - component: {fileID: 690085445}
   m_Layer: 0
   m_Name: Boids_Simulation_GPU
   m_TagString: Untagged
@@ -38547,7 +38548,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 2, z: -9}
+  FollowOffset: {x: -5, y: 2.5, z: -7}
 --- !u!114 &290817340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38599,8 +38600,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290817337}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10911677, y: -0.00000004589667, z: 0.0000000040895136, w: 0.994029}
-  m_LocalPosition: {x: -26.58132, y: 6.14994, z: 2.1153202}
+  m_LocalRotation: {x: 0.1342197, y: 0.30213103, z: -0.043012723, w: 0.9427894}
+  m_LocalPosition: {x: -31.58132, y: 6.64994, z: 4.11532}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -89781,6 +89782,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 689919584}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &690085445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69854441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ea359e2e6edf794aac49360688f194e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.IntroductionCameraDirectorGPU
+  _simulation: {fileID: 69854442}
+  _introCamera: {fileID: 290817340}
+  _followProxy: {fileID: 2093099855}
+  _framingMode: 2
+  _followBehindOffset: {x: -8, y: 2.5, z: -4}
+  _sideViewOffset: {x: 0, y: 2, z: -9}
+  _threeQuarterOffset: {x: -5, y: 2.5, z: -7}
+  _activePriority: 20
+  _idlePriority: 0
+  _followDuration: 3.5
+  _positionSmoothTime: 0.25
+  _readbackEveryNFrames: 4
+  _maxSeedWaitFrames: 10
 --- !u!1001 &690444226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -157748,7 +157774,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1184151410
 MonoBehaviour:
   m_ObjectHideFlags: 0

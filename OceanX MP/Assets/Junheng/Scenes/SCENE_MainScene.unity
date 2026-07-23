@@ -281577,6 +281577,76 @@ Transform:
   - {fileID: 707819604}
   m_Father: {fileID: 1477284937}
   m_LocalEulerAnglesHint: {x: 0, y: -394.987, z: 0}
+--- !u!1 &2145732884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2145732886}
+  - component: {fileID: 2145732885}
+  - component: {fileID: 2145732887}
+  m_Layer: 0
+  m_Name: 'ExhibitReset '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2145732885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145732884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4153883948becb4498d63f5044e8938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExhibitReset
+  resetKey: 290
+  holdSeconds: 1.5
+--- !u!4 &2145732886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145732884}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.16587, y: 0, z: -7.37914}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2145732887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145732884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c714c6fd5517b7b42804f33cea95740e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleTransition
+  coverDuration: 1.5
+  holdDuration: 0.3
+  revealDuration: 0.7
+  waterColor: {r: 1, g: 1, b: 1, a: 0}
+  bubbleSprite: {fileID: 21300000, guid: 2721f62e1bce284408139109cd6e442e, type: 3}
+  bubbleCount: 1000
+  bubbleSizeRange: {x: 100, y: 300}
+  bubbleAlpha: 0.85
+  bubbleRiseSeconds: {x: 1.3, y: 2.6}
+  drift: 22
+  sortingOrder: 30000
 --- !u!1 &2145895648
 GameObject:
   m_ObjectHideFlags: 0
@@ -282113,3 +282183,4 @@ SceneRoots:
   - {fileID: 1687272643}
   - {fileID: 407027456}
   - {fileID: 1546369842}
+  - {fileID: 2145732886}

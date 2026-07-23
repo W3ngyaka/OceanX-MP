@@ -26,7 +26,11 @@ public static class OptimisticPopulationStore
     // Static state must be cleared on each play session — otherwise, with Domain Reload disabled,
     // pending taps from a previous run would leak into the next.
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    private static void ResetStatics()
+    private static void ResetStatics() => Clear();
+
+    /// <summary>Drop every not-yet-confirmed tap. Called on the exhibit "fresh start" so the tablet's
+    /// displayed counts don't carry a previous visitor's pending add/removes onto the emptied ocean.</summary>
+    public static void Clear()
     {
         _pending.Clear();
         _lastAuth.Clear();

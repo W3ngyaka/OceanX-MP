@@ -81,6 +81,17 @@ public class ExperienceStartGate : MonoBehaviour
         if (tabletUIRoot != null) tabletUIRoot.SetActive(true);
     }
 
+    // Fresh-start reset: reverses OnStarted so this screen returns to its pre-start
+    // (attract) state. The "Tap to Start" prompt re-appears on its own via Update once
+    // connected, so we don't force tapToStart back on here.
+    public void ReturnToAttract()
+    {
+        _started = false;
+        _requested = false;
+        if (mode == Mode.LargeScreen && titleOverlay != null) titleOverlay.SetActive(true);
+        if (mode == Mode.Tablet && tabletUIRoot != null) tabletUIRoot.SetActive(false);
+    }
+
     void OnDestroy()
     {
         var net = EcosystemNetworkManagerGPU.Instance;

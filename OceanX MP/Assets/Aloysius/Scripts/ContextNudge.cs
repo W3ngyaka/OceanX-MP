@@ -101,6 +101,18 @@ public class ContextNudge : MonoBehaviour
         foreach (var n in _all.ToArray()) if (n != null) n.Dismiss();
     }
 
+    // Fresh-start reset: cancel any active/pending nudge and clear state/timers so it
+    // behaves as freshly started and re-arms on the next OnStarted (gated nudges still
+    // wait on their prerequisite via showAfterId).
+    public void ResetForNewSession()
+    {
+        StopAllCoroutines();          // cancel a pending ShowAfterDelay / running fade
+        _fade = null;
+        _dismissed = false;
+        _started = false;
+        if (group != null) { group.alpha = 0f; group.blocksRaycasts = false; group.interactable = false; }
+    }
+
     void Fade(float target)
     {
         if (group == null) return;

@@ -918,6 +918,37 @@ already localization-ready (stable ids, all text in one column):
 
 ---
 
+## What Was Done — 2026-07-23 (JunHeng, session 3) — Exhibit "fresh start" reset + big-screen bubble wipe
+
+A full reset for the next visitor: empties the ocean, re-locks every species, zeroes eco-health, and returns BOTH screens to the "Tap to Start" attract state with the intro re-armed. The big screen plays a SpongeBob-style bubble wipe that hides the reset; the tablet just flips back to the title.
+
+### 🔁 The reset chain (host-authoritative, hidden behind the wipe)
+- Operator holds **F9** on the host (a hold, not a tap — `ExhibitReset.holdSeconds`, default 1.5s). Trigger: `RequestResetRpc()` → server fires `OnHostResetRequested` → the host plays the bubble wipe.
+- **At the wipe's covered PEAK** (screen hidden): `EcosystemNetworkManagerGPU.PerformResetCore()` empties the ocean (`EcosystemSimulationGPU.ResetToEmpty()` — instant hard-remove of every school via the tested cull path, one rebuild), drops `_hasStarted` to false, syncs 0 counts + 0 health; then `SignalResetApplied()` bumps `_resetGeneration` → `OnReset` on host **and** tablet.
+- **On `OnReset` (both devices)** `ExhibitReset.DoLocalReset()` runs: `OptimisticPopulationStore.Clear()` (drop pending taps), `EcosystemUnlockManagerGPU.ResetToStart()` (re-lock to the 5 starters + reset hints), and `FindObjectsByType` → per-component reset on `ExperienceStartGate` (`ReturnToAttract`), `AluciaController` (`ResetForNewSession` — re-arms the intro), `HideUntilStarted`, `ContextNudge`, `SpeciesAddedReveal` (`ResetShownHistory`), `RevealQueue`/`NotificationManager` (`ClearAll`), and `WinCondition.Reset`.
+- ⚠ **Two-phase timing is deliberate**: the tablet re-locks only after the host has synced health→0, so its unlock check (which never re-locks) can't immediately re-unlock. That's why the tablet resets ~coverDuration after F9, not instantly.
+
+### 🫧 `BubbleTransition` (new, big-screen only)
+- Self-contained: builds its own full-screen overlay canvas + generates a soap-bubble sprite (or uses an assigned one). A stream of mixed-size bubbles rises CONTINUOUSLY bottom→top (matches the prototype's `resetGame` flood — no stop/hold on the bubbles); each fades only when it reaches the TOP (by height, not a global timer). A water **veil** fades in→hold→out to hide/reveal the screen.
+- `Play(onCovered, onComplete)`: `onCovered` fires at full veil cover (the reset runs there). Tunables: `coverDuration`/`holdDuration`/`revealDuration` (the veil), `bubbleRiseSeconds` (how long a bubble takes to rise before it fades at the top), `bubbleCount`, `bubbleSizeRange`, `waterColor` (**lower alpha = lighter, more see-through; alpha 0 = pure bubbles, no opaque hide**), `bubbleSprite`.
+- Big-screen only because it's played inside the host's `OnHostResetRequested` path (`IsServer`); the tablet never calls `Play`.
+
+### New / changed files
+| File | Change |
+|------|--------|
+| `Networking/BubbleTransition.cs` | **New** — the procedural bubble wipe. |
+| `Networking/ExhibitReset.cs` | **New** — operator F9 trigger + host wipe sequence + `DoLocalReset` on both screens. |
+| `Networking/EcosystemNetworkManagerGPU.cs` | `RequestResetRpc` / `PerformResetCore` / `SignalResetApplied`, `OnReset` + `OnHostResetRequested` events, `_resetGeneration`. |
+| `Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs` | `ResetToEmpty()`. |
+| `Boids_GPU/Ecosystem/EcosystemUnlockManagerGPU.cs` | `ResetToStart()`. |
+| `Networking/OptimisticPopulationStore.cs` | public `Clear()`. |
+| Aloysius: `ExperienceStartGate`, `AluciaController`, `HideUntilStarted`, `ContextNudge`, `SpeciesAddedReveal`, `RevealQueue`, `NotificationManager` | one public reset method each (called by `ExhibitReset`). |
+
+### Scene wiring
+- `ExhibitReset` + `BubbleTransition` are on a GameObject in **`Junheng/Scenes/SCENE_MainScene.unity`** (currently tuned: transparent veil `waterColor a=0`, `bubbleCount 1000`, custom `bubble.png` sprite, cover 1.5s). One placement serves host + tablet (same scene; bubbles only play on the host). Add the same GameObject to any other demo scene you use.
+
+---
+
 ## What Was Done — 2026-07-23 (JunHeng, session 2) — Swim-out anti-freeze timeout; intro-camera framing rework; card hold time
 
 Backend/presentation pass after the folder rename. Three things: a safety timeout so a stuck fish can't freeze a species, a rebuild of the introduction camera so the shot is relative to the fish and doesn't lurch, and a small reveal/unlock card hold-time bump.

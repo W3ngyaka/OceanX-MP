@@ -285,6 +285,33 @@ namespace OceanX.BoidsGPU.Ecosystem
             StartRemoveExitImmediate(species, spawner);
         }
 
+        /// <summary>Hard reset to the empty ocean (exhibit "fresh start"): instantly remove EVERY school of
+        /// EVERY species — no swim-out animation — clear all runtime state, and rebuild the GPU buffers once.
+        /// Host-side; the netcode layer calls this, then re-syncs 0 counts + 0 health. Because every school of
+        /// every species is dropped, any in-flight swim-out or shoal is harmlessly wiped by the single rebuild.</summary>
+        public void ResetToEmpty()
+        {
+            bool anyChanged = false;
+            foreach (SpeciesDataGPU species in _ecosystem.Species)
+            {
+                if (species == null) continue;
+                if (!ValidateSpecies(species, out BoidSpawnerGPUMultiTargets spawner)) continue;
+
+                _exitingCount[species] = 0;                                     // cancel swim-out bookkeeping
+                if (_opQueue.TryGetValue(species, out Queue<int> q)) q.Clear(); // drop queued Adds
+
+                int n = _schoolCount.TryGetValue(species, out int current) ? current : 0;
+                if (n > 0 && CommitRemoveSchools(species, spawner, n)) anyChanged = true;
+            }
+
+            // Forget per-species memory so the next visitor's build-up behaves like a fresh session.
+            _foodWasPresent.Clear();
+            _recentEntryOrigins.Clear();
+            _lastEntryMarker = null;
+
+            if (anyChanged) _simulation.ReinitializeBuffers();  // one rebuild -> empty ocean
+        }
+
         // -------------------------------------------------------------------------
         // Operation queue — serialises add/remove per species so rapid taps and mixed
         // add/remove are all honoured, animating one at a time.

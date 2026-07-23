@@ -41,6 +41,16 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     public event System.Action<int> OnViewedSpeciesChanged;
     public event System.Action OnStarted;   // fires on host + client when the flag turns true
 
+    // Exhibit "fresh start": bumped by the server (SignalResetApplied) at the bubble transition's COVERED
+    // peak. Every device watches it and, on any change past 0, runs its local cleanup via OnReset (re-lock,
+    // clear tablet counts, return to attract, …). Bumped only after the host has emptied + synced 0 health,
+    // so the tablet re-locks with health already 0 (no re-unlock race). A monotonic counter so back-to-back
+    // resets each register, and a late-joining client that reads a non-zero value simply starts clean.
+    private readonly NetworkVariable<int> _resetGeneration = new NetworkVariable<int>(
+        0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public event System.Action OnReset;              // fires on host + client when a reset is APPLIED
+    public event System.Action OnHostResetRequested; // server-side only: the host starts its reset sequence
+
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -57,6 +67,8 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         // Both host and client watch the shared start flag so their screens leave the attract state together.
         _hasStarted.OnValueChanged += (_, now) => { if (now) OnStarted?.Invoke(); };
         _viewedSpecies.OnValueChanged += (_, now) => OnViewedSpeciesChanged?.Invoke(now);
+        // Fresh-start broadcast: fires on host + client the moment the server bumps the generation.
+        _resetGeneration.OnValueChanged += (_, now) => { if (now > 0) OnReset?.Invoke(); };
 
         if (!IsServer) return;
 
@@ -142,6 +154,32 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     public void RequestStartRpc()
     {
         if (!_hasStarted.Value) _hasStarted.Value = true;
+    }
+
+    // Exhibit "fresh start". Split so the reset is HIDDEN behind the big screen's bubble wipe:
+    //   RequestResetRpc()    — anyone -> server: "begin a reset" (host's ExhibitReset plays the bubble wipe).
+    //   PerformResetCore()   — host: empty the ocean + drop to attract + sync 0s, run at the covered PEAK.
+    //   SignalResetApplied() — host: bump the generation so BOTH screens run their local cleanup via OnReset.
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void RequestResetRpc()
+    {
+        OnHostResetRequested?.Invoke();   // host: ExhibitReset plays the bubble wipe, resets at the peak
+    }
+
+    // Host-authoritative reset, run at the transition's covered peak (screen hidden). No-op off the server.
+    public void PerformResetCore()
+    {
+        if (!IsServer) return;
+        if (_simulation != null) _simulation.ResetToEmpty();  // remove every school of every species now
+        _hasStarted.Value = false;                            // back to the title / "Tap to Start" attract
+        SyncPopulations();                                    // push 0 counts + 0 health to the tablet
+    }
+
+    // Host: tell BOTH screens to run their local cleanup. Fired right AFTER PerformResetCore so the tablet
+    // re-locks with health already 0 (no re-unlock race). No-op off the server.
+    public void SignalResetApplied()
+    {
+        if (IsServer) _resetGeneration.Value += 1;   // -> OnReset on host + client
     }
 
     // Read by the tablet UI (ModalController) every frame.

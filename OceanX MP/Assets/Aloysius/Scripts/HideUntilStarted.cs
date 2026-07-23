@@ -52,4 +52,12 @@ public class HideUntilStarted : MonoBehaviour
         _hidden = false;
         foreach (var t in hideTargets) if (t != null) t.SetActive(true);
     }
+
+    // Fresh-start reset: return the targets to the hidden pre-start state and re-arm the
+    // reveal latch, so this hides again now and reveals on the next OnStarted.
+    public void ReHideForReset()
+    {
+        foreach (var t in hideTargets) if (t != null) t.SetActive(false);
+        _hidden = true;
+    }
 }

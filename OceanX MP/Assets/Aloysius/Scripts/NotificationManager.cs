@@ -116,6 +116,14 @@ public class NotificationManager : MonoBehaviour
         HideInstant();
     }
 
+    // Fresh-start reset: cancel any in-flight or queued toast and hide the panel.
+    public void ClearAll()
+    {
+        StopAllCoroutines();
+        EnsureRefs();
+        HideInstant();
+    }
+
     void HideInstant()
     {
         if (_cg != null) _cg.alpha = 0f;

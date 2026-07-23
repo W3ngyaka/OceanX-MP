@@ -129,6 +129,30 @@ public class AluciaController : MonoBehaviour
         if (net != null) net.OnStarted -= HandleStarted;
     }
 
+    // Re-arm for a fresh visitor: cancels any in-flight intro/speech, hides the bubble,
+    // and clears the health-band state so the intro plays cleanly the NEXT time the
+    // networked OnStarted fires. HandleStarted stays hooked (it never unsubscribes on
+    // play), so we leave _subscribed alone — the next start re-triggers it.
+    public void ResetForNewSession()
+    {
+        StopAllCoroutines();                 // cancel any running intro / speech / fade
+
+        _started = false;                    // wait for the next OnStarted before replaying
+        _introPlayed = false;                // so HandleStarted plays the intro again
+
+        // Hide / clear the current speech bubble.
+        if (bubbleGroup != null) bubbleGroup.alpha = 0f;
+        if (characterGroup != null) characterGroup.alpha = 0f;
+        if (bubbleText != null) bubbleText.text = "";
+        _sticky = false;
+        _hideRoutine = null;
+        _lastMsgTime = -99f;
+
+        // Reset health-band tracking so a stale line doesn't fire on the first read.
+        _lastBand = Band.Critical;
+        _bandInit = false;
+    }
+
     // ---------- Public API ----------
 
     public void Say(string message, Mood mood = Mood.Calm, bool sticky = false)

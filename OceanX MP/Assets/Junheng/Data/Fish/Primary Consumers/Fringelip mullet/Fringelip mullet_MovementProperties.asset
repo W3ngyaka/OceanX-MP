@@ -18,7 +18,7 @@ MonoBehaviour:
   Deceleration: 15
   MaxAcceleration: 20
   MovementJerk: 1000
-  MaxAngularVelocity: 180
+  MaxAngularVelocity: 45
   AngularVelocityReduction: 200
   MaxAngularAcceleration: 85
   AngularDeceleration: 30

@@ -23,6 +23,10 @@ public class TutorialPanel : MonoBehaviour
     public float fadeDuration = 0.3f;
 
     private Coroutine _fade;
+    private bool _open;
+
+    // True while the panel is showing (used by ContextNudge so hints don't overlap it).
+    public bool IsOpen => _open;
     private bool _shownOnce;
     private bool _subscribed;
 
@@ -69,6 +73,7 @@ public class TutorialPanel : MonoBehaviour
 
     void SetVisible(bool visible, bool instant = false)
     {
+        _open = visible;
         if (group == null) return;
         group.blocksRaycasts = visible;
         group.interactable = visible;

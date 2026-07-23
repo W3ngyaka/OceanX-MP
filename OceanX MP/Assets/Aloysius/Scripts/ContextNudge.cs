@@ -15,6 +15,8 @@ public class ContextNudge : MonoBehaviour
     public string id = "tap";
     [Tooltip("Optional: only start once the nudge with THIS id has been dismissed. Blank = show immediately.")]
     public string showAfterId = "";
+    [Tooltip("Don't appear while the HOW TO PLAY panel is open (avoids overlapping it).")]
+    public bool waitForTutorialClose = true;
 
     [Header("Refs")]
     public CanvasGroup group;
@@ -66,6 +68,16 @@ public class ContextNudge : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(appearDelay);
         if (_dismissed) yield break;
+
+        // Hold off while the HOW TO PLAY panel is up so we don't draw over it.
+        if (waitForTutorialClose)
+        {
+            while (TutorialPanel.Instance != null && TutorialPanel.Instance.IsOpen)
+                yield return null;
+            if (_dismissed) yield break;
+            yield return new WaitForSecondsRealtime(0.4f);   // small beat after it closes
+            if (_dismissed) yield break;
+        }
         Fade(1f);
         if (autoHideAfter > 0f)
         {

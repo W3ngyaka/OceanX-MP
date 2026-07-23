@@ -36,17 +36,18 @@ public class CurrentOrganismsGrid : MonoBehaviour
 
             if (pop <= 0) continue; // only show species actually added
 
-            // Card icon comes from SpeciesContent.csv's 'imageFile' column — the 12 portraits,
-            // the SAME image the species modal uses (online-editable, warmed on Android).
-            // Falls back to the bubble's inspector cardImage when the sheet has no image for
-            // this species, so a card never goes blank.
+            // Card icon uses the big-screen REVEAL photo (SpeciesContent.csv's 'revealImageFile'
+            // column — a tablet-folder copy of the arrival-card art) per teammate request. Falls back
+            // to the INFO photo ('imageFile', the modal portrait), then the bubble's inspector
+            // cardImage, so a card never goes blank. All online-editable, warmed on Android.
             Sprite icon = bubble.cardImage;
             string contentKey = !string.IsNullOrEmpty(bubble.data.contentId)
                 ? bubble.data.contentId : bubble.data.speciesName;
             var content = SpeciesContentDB.Get(contentKey);
             if (content != null)
             {
-                Sprite csvIcon = SpeciesContentDB.GetImage(content.imageFile);
+                Sprite csvIcon = SpeciesContentDB.GetImage(content.revealImageFile)
+                                 ?? SpeciesContentDB.GetImage(content.imageFile);
                 if (csvIcon != null) icon = csvIcon;
             }
 

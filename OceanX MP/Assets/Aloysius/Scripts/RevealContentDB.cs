@@ -14,9 +14,10 @@ using UnityEngine;
 /// big-screen cards: <c>FirstAddedMessage</c> for the ADDED/arrival card (SpeciesAddedReveal) and
 /// <c>unlockMessage</c> for the UNLOCK card (SpeciesUnlockReveal). The parser is header-driven — reorder or add
 /// columns freely; unknown columns are ignored, missing ones read as empty. Rows are indexed by BOTH their
-/// stable <c>id</c> and their <c>speciesName</c>. The big-screen photos live in their OWN folder
-/// (<c>StreamingAssets/RevealImages</c>) so they never collide with the TABLET's images (which the tablet
-/// loads from <c>StreamingAssets/SpeciesImages</c> via <see cref="SpeciesContentDB"/>).
+/// stable <c>id</c> and their <c>speciesName</c>. The big-screen photos live in the HOST folder
+/// (<c>StreamingAssets/Trifold</c>, holding the reveal + unlock images). The tablet loads its own images
+/// from <c>StreamingAssets/Tablet</c> via <see cref="SpeciesContentDB"/>; the reveal photos are copied into
+/// BOTH folders (<c>*Reveal.png</c>), so each DB reads only its own folder and they never collide.
 /// </summary>
 public static class RevealContentDB
 {
@@ -24,15 +25,15 @@ public static class RevealContentDB
     {
         // firstAddedMessage = the ADDED/arrival card line; unlockMessage = the UNLOCK card line (may differ).
         // imageFile = the ADDED/arrival card photo; unlockImageFile = the UNLOCK card photo (both from
-        // StreamingAssets/RevealImages). Leave unlockImageFile blank to reuse the arrival photo.
+        // StreamingAssets/Trifold). Leave unlockImageFile blank to reuse the arrival photo.
         public string id, speciesName, role, sciName, firstAddedMessage, unlockMessage, imageFile, unlockImageFile;
     }
 
     const string CsvFile = "RevealContent.csv";
 
-    /// <summary>StreamingAssets subfolder holding the big-screen images. Kept SEPARATE from the tablet's
-    /// SpeciesImages so the two never collide. ContentService warms it on Android.</summary>
-    public const string ImageFolderName = "RevealImages";
+    /// <summary>StreamingAssets subfolder holding the big-screen images (reveal + unlock). Kept SEPARATE
+    /// from the tablet's Tablet folder so the two never collide. ContentService warms it on Android.</summary>
+    public const string ImageFolderName = "Trifold";
 
     static Dictionary<string, Entry> _entries;
     static readonly Dictionary<string, Sprite> _spriteCache = new Dictionary<string, Sprite>();
@@ -126,8 +127,8 @@ public static class RevealContentDB
         }
     }
 
-    /// <summary>Load a big-screen photo (warmed cache → baked StreamingAssets/RevealImages, SEPARATE from
-    /// the tablet's SpeciesImages). Null if the file is missing or blank.</summary>
+    /// <summary>Load a big-screen photo (warmed cache → baked StreamingAssets/Trifold, SEPARATE from
+    /// the tablet's Tablet folder). Null if the file is missing or blank.</summary>
     public static Sprite GetImage(string imageFile)
     {
         if (string.IsNullOrWhiteSpace(imageFile)) return null;

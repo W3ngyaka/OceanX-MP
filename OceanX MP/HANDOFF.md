@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-21_
+_Last updated: 2026-07-23_
 
 ---
 
@@ -918,6 +918,38 @@ already localization-ready (stable ids, all text in one column):
 
 ---
 
+## What Was Done — 2026-07-23 (JunHeng) — Image folders renamed Tablet/Trifold; tablet cards use reveal art; overpopulation badge fix
+
+Two things this session: (1) rebuilt the image-folder naming so the three image types are unambiguous and the tablet can show the big-screen reveal art on its organism cards; (2) the tablet Overpopulated badge now reflects the sim's own rule instead of "at capacity".
+
+### 🗂️ Image folders renamed + the 3 image types are now cleanly separated
+- **`StreamingAssets/SpeciesImages/` → `Tablet/`** and **`StreamingAssets/RevealImages/` → `Trifold/`** (folders + their `.meta`, via `git mv` so history is preserved). Names now say *which screen* uses them.
+- The three image types and where they live:
+  | Type | Shown | CSV → column | Folder |
+  |------|-------|--------------|--------|
+  | **Info** | tablet modal (fish description) | `SpeciesContent.csv` → `imageFile` | `Tablet/` |
+  | **Reveal** | big screen, first **added** + now **tablet organism cards** | `RevealContent.csv` → `imageFile` **and** `SpeciesContent.csv` → `revealImageFile` | `Trifold/` (big screen) + `Tablet/` (tablet copy) |
+  | **Unlock** | big screen, first **unlocked** | `RevealContent.csv` → `unlockImageFile` | `Trifold/` |
+- **Reveal images renamed with a `Reveal` suffix** (`blacktip.png` → `blacktipReveal.png`, ×12) so, inside the `Tablet/` folder, the reveal copy never collides with the same-named info photo. Info + unlock names unchanged. The 12 `*Reveal.png` were copied into `Tablet/` (fresh unique meta GUIDs; the tablet holds **info + reveal**).
+- **Matrix: `Trifold/` = reveal + unlock · `Tablet/` = info + reveal.**
+
+### 🖼️ Tablet Current-Organisms cards now use the REVEAL photo (reverses 07-21)
+- **`CurrentOrganismsGrid`** now reads **`SpeciesContent.csv` `revealImageFile`** (a tablet-folder copy of the big-screen arrival art), falling back to `imageFile` (info portrait), then the bubble's inspector `cardImage`, so a card never goes blank.
+- **`SpeciesContentDB`** gained a **`revealImageFile`** field (Entry + parse + `AllImageRefs`, so the Android warm-up caches it into `Tablet/`). Folder constant → `"Tablet"`. **`RevealContentDB`** folder constant → `"Trifold"`.
+
+### ✅ Google Sheet updated to match (via `gws` CLI as junheng, `OceanX Content` sheet)
+- **RevealContent tab** (gid `1248841811`): `imageFile` column → `*Reveal.png` (12 fish rows; `unlockImageFile` untouched).
+- **SpeciesContent tab** (gid `196784187`): inserted a **`revealImageFile`** column after `imageFile` (`IUCNImage` shifted one right, cleanly); filled with the 12 `*Reveal.png`, producers blank.
+- Also fixed the seagrass/macroalgae **`imageFile`** casing `seagrass.png`/`macroalgae.png` → **`Seagrass.png`/`Macroalgae.png`** to match the on-disk files (case-sensitive on Android) — carries over the merge-conflict fix so a sheet-pull won't revert it.
+- ⚠ **CSV file names + local CSV↔scene wiring were deliberately NOT renamed** — the `fileName` is serialized in ~10 scenes (all teammates'), so a rename can't be confined to one scene. The Tablet/Trifold folder rename was safe because those names live in **code constants** shared by all scenes.
+
+### 🟠 Tablet Overpopulated badge now uses the sim's rule, not "at capacity"
+- Both tablet badges (`SpeciesBubble.UpdateOverpopulation`, `OrganismCardData.UpdateOverpop`) previously fired on `pop >= MaxSchools` — a species sitting at its cap in a healthy ocean, which is *at capacity*, not overpopulated (why 6 damselfish falsely showed the badge at 100% health).
+- **`EcosystemNetworkManagerGPU`** now syncs a per-species `NetworkList<int> _speciesStatus` (the sim's `SpeciesStatus` as int, written each `SyncPopulations`), exposed as `GetSpeciesStatus(i)` / `IsOverpopulated(i)`. Both badges now call `net.IsOverpopulated(index)`, so tablet and sim agree.
+- Also raised three prey caps earlier (RD 6→10, FM 6→9, ES 7→9); 100% eco-health still reachable (MaxSchools is no longer in the health math).
+
+---
+
 ## What Was Done — 2026-07-21 (JunHeng) — Tablet organism cards use portraits; unlock-image duplication cleaned up
 
 Reverses the 07-20 tablet card-icon source per teammate request, and removes the now-dead tablet-side unlock images.
@@ -929,7 +961,7 @@ Reverses the 07-20 tablet card-icon source per teammate request, and removes the
 ### 🧹 Removed the dead tablet-side unlock images + column
 - **Deleted the 12 `StreamingAssets/SpeciesImages/*Unlock.png` (+ `.meta`)** — nothing on the tablet references them anymore (~3 MB). ⚠ **The big-screen `StreamingAssets/RevealImages/*Unlock.png` are UNTOUCHED** — the unlock reveal card still uses those (separate folder + separate `RevealContentDB`).
 - **`SpeciesContentDB`** — removed the `unlockImageFile` field (Entry + parse + `AllImageRefs`), so the Android image warm-up no longer tries to cache them.
-- ⚠ The tablet **`SpeciesContent` sheet still has an `unlockImageFile` column** — now unused/ignored by the game (harmless; delete it in the sheet if you want it gone). The big-screen **`RevealContent`** sheet's `unlockImageFile` is unrelated and still live.
+- ✅ **Deleted the `unlockImageFile` column from the tablet `SpeciesContent` Google Sheet tab** (via the `gws` CLI as junheng; column K removed, `dry-run`-validated, RevealContent tab untouched). The big-screen **`RevealContent`** sheet's `unlockImageFile` is unrelated and still live. ⚠ The **local `StreamingAssets/SpeciesContent.csv` still carries the column** (harmless — code ignores it); it'll drop out next time the sheet is pulled to CSV.
 
 ### 🔁 Duplication note (context for the cleanup)
 The 12 `*Unlock.png` had been **byte-identical duplicates** across `SpeciesImages/` and `RevealImages/` (each `*DB` only reads its own folder, so a shared image must exist in both). The 12 portraits are *not* byte-identical across folders — same subjects, different exports (the tablet `SpeciesImages/` copies are notably larger than the big-screen `RevealImages/` ones — worth a look in the final asset pass).
@@ -1037,8 +1069,9 @@ Follows session 2 (which made the **arrival** card TMP + CSV-driven). This sessi
 ### 🐟 Tablet vs big-screen images fully separated (`564c036`)
 - The tablet modal (`SpeciesContentDB` → `StreamingAssets/SpeciesImages/`) and the big-screen cards (`RevealContentDB` → `StreamingAssets/RevealImages/`) had been sharing `SpeciesImages`, so copying the friend's card art in there clobbered the tablet's photos. Restored the tablet originals from git and gave the big screen its **own** `RevealImages/` folder + `imageFile` column. The two are now independent — editing one never touches the other.
 
-### ⚠ CSV ↔ Google Sheet workflow (learned the hard way)
-- The **Google Sheet is the source of truth** once the team edits it directly. A full-column push of the local CSV once **overwrote a teammate's live sheet edits**. Rule going forward: **pull the sheet → local CSV**, and only ever push *new* columns / individual header cells, never overwrite existing data columns. (Overwritten edits are recoverable via the sheet's **File → Version history**.)
+### CSV ↔ Google Sheet workflow
+- The **Google Sheet is the source of truth** once the team edits it directly. Sensible habit: **pull the sheet → local CSV**, and prefer pushing *new* columns / individual cells over blanket overwrites of existing data columns. (Any change is recoverable via the sheet's **File → Version history**.)
+  > _Correction (2026-07-21): an earlier version of this note claimed a full-column push once overwrote a teammate's live edits — that never happened; the note was wrong. Kept only as a precaution, not a recorded incident. Programmatic sheet edits are fine (e.g. the 07-21 `unlockImageFile` column delete was done via the `gws` CLI as junheng)._
 
 ### 🎬 Scene rebuild (`863ee47`)
 - Rebuilt `Assets/Junheng/Scenes/SCENE_MainScene.unity`; trimmed the `Oswald Bold SDF` / `LiberationSans SDF - Fallback` TMP font atlases (large deletions — regenerated glyph tables).

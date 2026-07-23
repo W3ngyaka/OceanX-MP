@@ -918,6 +918,31 @@ already localization-ready (stable ids, all text in one column):
 
 ---
 
+## What Was Done — 2026-07-23 (JunHeng, session 2) — Swim-out anti-freeze timeout; intro-camera framing rework; card hold time
+
+Backend/presentation pass after the folder rename. Three things: a safety timeout so a stuck fish can't freeze a species, a rebuild of the introduction camera so the shot is relative to the fish and doesn't lurch, and a small reveal/unlock card hold-time bump.
+
+### 🧊 Swim-out can no longer freeze a species (fixes HANDOFF §9.4) — committed `f5df461`
+- `EcosystemSimulationGPU.BatchExitRoutine` had a `while(true)` with no timeout: one fish snagged on a reef obstacle (or pinned between forces) never reached its exit radius, so `_exitingCount` never cleared, `IsExiting` stayed true, and that species ignored **Add and Remove for the rest of the session**.
+- Added `_exitTimeoutSeconds` (**default 25s**, serialised, in the "Removal animation (swim-out)" group). Past the deadline the routine force-commits the exiting block and clears the count, logging a warning that names the species. The deadline **resets when the exiting block grows** (another Remove joins), so a long removal spree gets the full window.
+- Added `OnDisable` cleanup (`_exitingCount.Clear()`) — the other §9.4 trigger: disabling the component mid-exit killed the coroutine without clearing state, freezing the species on re-enable.
+- Code-only + a new serialised field, so every scene inherits the 25s default at runtime without editing any scene.
+
+### 🎥 Introduction camera — framing is now relative to the fish, and the move doesn't lurch
+(`Assets/Junheng/Scripts/Boids_GPU/Ecosystem/IntroductionCameraDirectorGPU.cs`)
+- **Was:** a fixed WORLD-space Follow offset tuned for fish swimming +X, so "side view" was only a broadside when the school happened to move along that world axis — enter from another gate and the camera framed them head-on / from behind.
+- **Now:** at each shot the director reads the school's **entry heading** (averaged over a few frames) and which **side faces the camera**, bakes that into a world offset, so the framing is fish-relative (a side view is a real broadside from any gate, on the near side so the camera moves *toward* the fish instead of crossing to the far side to look back). The camera then **holds that spot and turns to keep the fish framed** (Cinemachine aim damping, pushed from code) rather than riding locked inside the fish's frame (which read as static).
+- **Anti-lurch:** the proxy is now kept **glued to the fish during the pre-shot settle frames** (`_entrySettleFrames`, default 5) instead of frozen at the gate — so the shot cuts in already on the fish and doesn't jump to catch up ("move then change direction abruptly").
+- The three framing offsets were re-authored into the school's local frame and **renamed** (`…OffsetLocal`) so the stale world-space values in existing scenes are orphaned and every scene picks up the new defaults, while staying inspector-tunable. New tunables: `_aimDamping` (turn smoothness), `_entrySettleFrames`, `_minHeadingSpeed` (milling fallback). Binding mode (World Space) + aim damping are forced from code so all scenes match. **Test in Play mode** — the runtime-forced binding/damping don't show in the editor Solo preview.
+
+### ⏱️ Big-screen card hold time
+- `SpeciesAddedReveal.holdSeconds` (arrival/reveal card) and `SpeciesUnlockReveal.revealHoldSeconds` (unlock card) bumped **2 → 2.5s** in the demo scene (both are scene-serialised, so the code defaults of 4 / 5.5 were never the live values). Total on-screen ≈ hold + a `fadeDuration` (0.4s) fade each end.
+
+### 🎬 Demo scene
+- **`Assets/Aloysius/Scenes/SCENE_MainScene 2.unity` is now the scene used for the demo** (JunHeng copied the converged main scene here and is tuning it: intro-camera position/offsets, entry-point placement, the card hold times above). Treat this as the live target for final tuning.
+
+---
+
 ## What Was Done — 2026-07-23 (JunHeng) — Image folders renamed Tablet/Trifold; tablet cards use reveal art; overpopulation badge fix
 
 Two things this session: (1) rebuilt the image-folder naming so the three image types are unambiguous and the tablet can show the big-screen reveal art on its organism cards; (2) the tablet Overpopulated badge now reflects the sim's own rule instead of "at capacity".

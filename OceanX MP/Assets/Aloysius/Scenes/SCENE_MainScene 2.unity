@@ -9320,6 +9320,7 @@ MonoBehaviour:
   _tickInterval: 5
   _exitArrivalRadius: 3
   _exitPollInterval: 0.2
+  _exitTimeoutSeconds: 25
   _targetRadius: 3
   _targetSpeedFractionRange: {x: 0.45, y: 0.7}
   _pathBoundsSafeZone: 3
@@ -38074,7 +38075,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: -5, y: 2.5, z: -7}
+  FollowOffset: {x: 0, y: 2, z: -4}
 --- !u!114 &290817340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38126,8 +38127,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290817337}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1342197, y: 0.30213103, z: -0.043012723, w: 0.9427894}
-  m_LocalPosition: {x: -31.58132, y: 6.64994, z: 4.11532}
+  m_LocalRotation: {x: 0.22975293, y: 5.799776e-10, z: -1.3691431e-10, w: 0.9732491}
+  m_LocalPosition: {x: -26.58132, y: 6.14994, z: 7.11532}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -89111,9 +89112,9 @@ MonoBehaviour:
   _simulation: {fileID: 69854442}
   _introCamera: {fileID: 290817340}
   _followProxy: {fileID: 2093099855}
-  _framingMode: 2
+  _framingMode: 1
   _followBehindOffset: {x: -8, y: 2.5, z: -4}
-  _sideViewOffset: {x: 0, y: 2, z: -9}
+  _sideViewOffset: {x: 0, y: 2, z: -4}
   _threeQuarterOffset: {x: -5, y: 2.5, z: -7}
   _activePriority: 20
   _idlePriority: 0
@@ -177493,7 +177494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AluciaEcologyEvents
   simulation: {fileID: 69854442}
-  alucia: {fileID: 0}
+  alucia: {fileID: 1546369838}
   reactStarving: 1
   reactOverpredated: 1
   reactOverpopulated: 1
@@ -206294,7 +206295,7 @@ MonoBehaviour:
   characterImage: {fileID: 342504641}
   bubbleGroup: {fileID: 117657196}
   bubbleText: {fileID: 1754703266}
-  simulation: {fileID: 0}
+  simulation: {fileID: 69854442}
   autoHideSeconds: 3
   minGapBetweenMessages: 1.5
   introStartDelay: 0.6

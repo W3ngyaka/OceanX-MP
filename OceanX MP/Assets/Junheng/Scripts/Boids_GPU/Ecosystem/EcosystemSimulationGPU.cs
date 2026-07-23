@@ -63,6 +63,14 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Min(0.05f)]
         [SerializeField] private float _exitPollInterval = 0.2f;
 
+        [Tooltip("Safety net: if a swimming-out school hasn't fully reached its exit point within this many " +
+                 "seconds (e.g. a fish snagged on a reef obstacle or pinned between forces), remove it anyway " +
+                 "so the species can never freeze — waiting forever on one stray fish would lock Add/Remove for " +
+                 "that species for the rest of the session. The timer resets if more schools join the exit while " +
+                 "leaving. Set generously; it should only ever fire on a genuine stall.")]
+        [Min(1f)]
+        [SerializeField] private float _exitTimeoutSeconds = 25f;
+
         [Header("Swim Path Targets (demo-style Target + Target Animator per school)")]
         [Tooltip("Influence radius of each spawned target (sets the Target object's scale, like the " +
                  "demo spawner's Target Radius).")]
@@ -237,6 +245,16 @@ namespace OceanX.BoidsGPU.Ecosystem
             }
 
             SetupAllSpecies();
+        }
+
+        // Disabling the component stops its coroutines, so any in-flight BatchExitRoutine dies WITHOUT
+        // clearing _exitingCount — which would leave IsExiting() stuck true and freeze the species (no
+        // Add/Remove) if it is ever re-enabled. Clear the exiting state here so re-enable starts clean.
+        // (Deliberately no cull/rebuild: OnDisable also fires during scene unload / app quit, where touching
+        // GPU buffers is unsafe. The parked schools simply resume as ordinary schools on re-enable.)
+        private void OnDisable()
+        {
+            _exitingCount.Clear();
         }
 
         private void Start()
@@ -715,6 +733,13 @@ namespace OceanX.BoidsGPU.Ecosystem
             int fishPerSchool = FishPerSchool(species);
             WaitForSeconds wait = new WaitForSeconds(_exitPollInterval);
 
+            // Safety deadline (see 9.4): a fish snagged on an obstacle never reaches its exit radius, so
+            // the all-arrived test below would never pass and this species would ignore Add/Remove forever.
+            // Past the deadline we force the cull. The deadline resets whenever the exiting block GROWS
+            // (another Remove joined it), so a long removal spree gets the full window, not a truncated one.
+            float deadline = Time.time + _exitTimeoutSeconds;
+            int trackedExiting = ExitingCount(species);
+
             while (true)
             {
                 yield return wait;
@@ -724,6 +749,8 @@ namespace OceanX.BoidsGPU.Ecosystem
 
                 int n = CountGroups(species);
                 if (n <= 0) { _exitingCount[species] = 0; break; } // nothing left
+
+                if (e > trackedExiting) { deadline = Time.time + _exitTimeoutSeconds; trackedExiting = e; }
 
                 e = Mathf.Min(e, n);
                 int firstExiting = n - e; // exiting schools are the contiguous top block [firstExiting, n-1]
@@ -745,11 +772,19 @@ namespace OceanX.BoidsGPU.Ecosystem
                     else { readOk = false; break; } // buffers not ready this poll — try again next tick
                 }
 
-                if (readOk && reached >= e * fishPerSchool)
+                bool allArrived = readOk && reached >= e * fishPerSchool;
+                bool timedOut   = Time.time >= deadline;
+
+                if (allArrived || timedOut)
                 {
                     if (CommitRemoveSchools(species, spawner, e))
                         _simulation.ReinitializeBuffers();
                     _exitingCount[species] = 0;
+
+                    if (timedOut && !allArrived)
+                        Debug.LogWarning($"[EcosystemSimulationGPU] Swim-out for '{species?.SpeciesName}' timed out " +
+                                         $"after {_exitTimeoutSeconds:0}s with {e} school(s) still leaving — force-removed " +
+                                         $"so the species doesn't freeze (a fish was likely stuck on an obstacle).");
                     break;
                 }
             }

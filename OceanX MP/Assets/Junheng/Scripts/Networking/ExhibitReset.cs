@@ -39,6 +39,7 @@ public class ExhibitReset : MonoBehaviour
             _subscribed = true;
             net.OnReset += DoLocalReset;                  // reset APPLIED (covered peak) -> local cleanup (both)
             net.OnHostResetRequested += StartHostSequence; // server-side only -> host plays the bubble wipe
+            Debug.Log($"[ExhibitReset] subscribed to OnReset (IsServer={net.IsServer}).", this);
         }
 
         // Operator hold-to-reset. unscaledDeltaTime so it still works if the game is paused/timescaled.
@@ -70,6 +71,16 @@ public class ExhibitReset : MonoBehaviour
     // performs the host reset and signals both screens. Falls back to an instant reset if no wipe is present.
     private void StartHostSequence()
     {
+        // Stop ALL host-side visuals the moment the reset is REQUESTED (not at the covered peak), so Alucia's
+        // speech and any reveal/unlock cards vanish immediately as the bubbles rise, instead of lingering for
+        // the cover duration. The full state reset still applies at the peak via DoLocalReset (idempotent).
+        const FindObjectsInactive INC = FindObjectsInactive.Include;
+        const FindObjectsSortMode NONE = FindObjectsSortMode.None;
+        foreach (var a in FindObjectsByType<AluciaController>(INC, NONE))     a.ResetForNewSession();  // stop talking
+        foreach (var r in FindObjectsByType<RevealQueue>(INC, NONE))          r.ClearAll();            // reveal + unlock cards
+        foreach (var s in FindObjectsByType<SpeciesAddedReveal>(INC, NONE))   s.ResetShownHistory();   // pending arrival card
+        foreach (var n in FindObjectsByType<NotificationManager>(INC, NONE))  n.ClearAll();            // unlock toasts
+
         var bubbles = FindFirstObjectByType<BubbleTransition>(FindObjectsInactive.Include);
         if (bubbles != null && !bubbles.IsPlaying)
             bubbles.Play(onCovered: ApplyHostReset, onComplete: null);
@@ -82,6 +93,7 @@ public class ExhibitReset : MonoBehaviour
     {
         var net = EcosystemNetworkManagerGPU.Instance;
         if (net == null) return;
+        Debug.Log($"[ExhibitReset] ApplyHostReset (IsServer={net.IsServer}) -> PerformResetCore + SignalResetApplied.");
         net.PerformResetCore();    // host: empty + attract + sync (hidden behind the bubbles)
         net.SignalResetApplied();  // -> OnReset on host + client -> DoLocalReset everywhere
     }
@@ -91,6 +103,11 @@ public class ExhibitReset : MonoBehaviour
     // bubbles; on the tablet it flips the UI back to the title.
     private void DoLocalReset()
     {
+        var net = EcosystemNetworkManagerGPU.Instance;
+        int gates = FindObjectsByType<ExperienceStartGate>(FindObjectsInactive.Include, FindObjectsSortMode.None).Length;
+        Debug.Log($"[ExhibitReset] DoLocalReset FIRED (IsServer={(net != null && net.IsServer)}, " +
+                  $"unlockMgr={(EcosystemUnlockManagerGPU.Instance != null)}, startGates={gates}).", this);
+
         OptimisticPopulationStore.Clear();                                  // tablet: drop not-yet-confirmed taps
 
         if (EcosystemUnlockManagerGPU.Instance != null)
@@ -104,6 +121,9 @@ public class ExhibitReset : MonoBehaviour
         foreach (var g in FindObjectsByType<ExperienceStartGate>(INC, NONE)) g.ReturnToAttract();
         foreach (var a in FindObjectsByType<AluciaController>(INC, NONE))    a.ResetForNewSession();
         foreach (var h in FindObjectsByType<HideUntilStarted>(INC, NONE))    h.ReHideForReset();
+        foreach (var s in FindObjectsByType<StartCrossfade>(INC, NONE))      s.ResetForNewSession();  // re-arm the reveal crossfade
+        foreach (var t in FindObjectsByType<TutorialPanel>(INC, NONE))       t.ResetForNewSession();  // re-arm the onboarding panel
+        foreach (var tc in FindObjectsByType<TabController>(INC, NONE))      tc.ResetForNewSession();  // snap back to the default tab
         foreach (var c in FindObjectsByType<ContextNudge>(INC, NONE))        c.ResetForNewSession();
         foreach (var s in FindObjectsByType<SpeciesAddedReveal>(INC, NONE))  s.ResetShownHistory();
         foreach (var r in FindObjectsByType<RevealQueue>(INC, NONE))         r.ClearAll();

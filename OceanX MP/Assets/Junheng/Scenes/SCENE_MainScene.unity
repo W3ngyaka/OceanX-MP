@@ -24118,7 +24118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -303, y: -10}
+  m_AnchoredPosition: {x: -303, y: -358}
   m_SizeDelta: {x: 620, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &177479709
@@ -93637,7 +93637,7 @@ RectTransform:
   m_GameObject: {fileID: 724145505}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6469581, y: 0.6469581, z: 0.6469581}
+  m_LocalScale: {x: 0.5842843, y: 0.5842843, z: 0.5842843}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 593913763}
@@ -93653,7 +93653,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -364, y: -35}
+  m_AnchoredPosition: {x: -336, y: -373}
   m_SizeDelta: {x: 700, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &724145507
@@ -119452,9 +119452,9 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 15
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: 4023981112819473776, guid: 09b07def93206674c838a112bb9c6e43, type: 3}
-    BoidMaterial: {fileID: 2100000, guid: 5cb625ec19658aa4db5014d6bad643d3, type: 2}
-    BoidEyeMaterial: {fileID: 0}
+    BoidMesh: {fileID: -5495902117074765545, guid: 8c4b9a782adf20048be05b1f292b2f44, type: 3}
+    BoidMaterial: {fileID: 2100000, guid: 7f7400753ea24d34abc8f3f3b5638c16, type: 2}
+    BoidEyeMaterial: {fileID: 2100000, guid: c64b89b864aab2543b9ec7a38bb1b895, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: 008654d59d1d8e54e8790141b6867f96, type: 2}
     Targets:
     - {fileID: 0}
@@ -157844,6 +157844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExperienceStartGate
   mode: 0
   titleOverlay: {fileID: 2062190929}
+  titleFadeSeconds: 0.6
   tapToStart: {fileID: 0}
   startButton: {fileID: 0}
   tabletUIRoot: {fileID: 0}

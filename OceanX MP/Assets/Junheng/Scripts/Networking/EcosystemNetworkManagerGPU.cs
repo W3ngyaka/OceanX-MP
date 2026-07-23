@@ -68,7 +68,11 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         _hasStarted.OnValueChanged += (_, now) => { if (now) OnStarted?.Invoke(); };
         _viewedSpecies.OnValueChanged += (_, now) => OnViewedSpeciesChanged?.Invoke(now);
         // Fresh-start broadcast: fires on host + client the moment the server bumps the generation.
-        _resetGeneration.OnValueChanged += (_, now) => { if (now > 0) OnReset?.Invoke(); };
+        _resetGeneration.OnValueChanged += (_, now) =>
+        {
+            Debug.Log($"[NetMgr] _resetGeneration -> {now} (IsServer={IsServer}, OnReset subs={(OnReset?.GetInvocationList().Length ?? 0)}).");
+            if (now > 0) OnReset?.Invoke();
+        };
 
         if (!IsServer) return;
 

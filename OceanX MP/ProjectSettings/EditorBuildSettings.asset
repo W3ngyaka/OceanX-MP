@@ -9,17 +9,11 @@ EditorBuildSettings:
     path: Assets/Aloysius/Start scene.unity
     guid: 064e0f2b3b9099b46af3be59870f4b93
   - enabled: 0
-    path: Assets/Aloysius/SceneTemp.unity
-    guid: f58959697a13d614db0dca4b98c6fc88
-  - enabled: 0
     path: Assets/Junheng/Scenes/Boids_Demo.unity
     guid: a82cd417066164345af16d799514f518
   - enabled: 0
     path: Assets/Aloysius/new netcode 1.unity
     guid: 8a3b650040a16b543b625d396b047629
-  - enabled: 0
-    path: Assets/Aloysius/SCENE_MainScene 1.unity
-    guid: 3fb74f851e9049e4da6f2d8188dc7e39
   - enabled: 0
     path: Assets/Junheng/Scenes/new netcode 1.unity
     guid: ec49c3ecb7fdc294a923fa203d74a987
@@ -27,14 +21,8 @@ EditorBuildSettings:
     path: Assets/Akil/Scenes/SCENE_MainScene.unity
     guid: 77515a1e42c0eb449b34b17df54f9d08
   - enabled: 0
-    path: Assets/Aloysius/Scenes/SCENE_MainScene 1.unity
-    guid: 2732bd130d45d654dbc02b33a14971e0
-  - enabled: 0
     path: Assets/Junheng/Scenes/SCENE_MainScene.unity
     guid: 184737b04498bd64987629c5a8b07370
-  - enabled: 0
-    path: Assets/Aloysius/Scenes/SCENE_MainScene.unity
-    guid: 6a50ba1856a42fc4fa7884d11848e546
   - enabled: 0
     path: Assets/Aloysius/Scenes/SCENE_MainScene 2.unity
     guid: 2c3cc8eac82fa80439e279b3ee7fb93e

@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-23_
+_Last updated: 2026-07-24_
 
 ---
 
@@ -915,6 +915,35 @@ already localization-ready (stable ids, all text in one column):
 - Implementation: extend `ContentService` from one URL per file to a **`{language → URL}` map** + a "current
   language" setting (~20 lines). Nothing already built needs redoing; today's single URL becomes the "English" entry.
 - Translating is then just retyping the display text in each tab — no structural changes.
+
+---
+
+## What Was Done — 2026-07-24 (JunHeng) — Reset-flow fixes (tablet re-start, tutorial, tabs, Alucia) + Aloysius prompt-layout port
+
+Follow-up to the fresh-start reset: closing the gaps where a SECOND visitor (after an F9 reset) didn't get a clean start. Root cause in every case was a **one-shot latch that was never re-armed on reset** — the component fired for the first visitor and stayed dead.
+
+### 🔁 Reset gaps fixed
+- **Tablet UI didn't reveal on the 2nd start** — `StartCrossfade` (the crossfade that reveals the food-web UI on start; `HideUntilStarted.deferRevealToTransition = true` defers to it) latched `_played` and never replayed. Added `StartCrossfade.ResetForNewSession()` (re-arms `_played`, restores the tap overlay + re-hides the pieces). It stays subscribed to `OnStarted`, so the next start replays it. *(Also fixed the `ReturnToAttract` case where the tablet's TapOverlay came back with CanvasGroup alpha stuck at 0 → invisible "empty water"; alpha/interactable/blocksRaycasts are now restored.)*
+- **Tablet onboarding tutorial didn't show again** — `TutorialPanel._shownOnce` latched forever. Added `TutorialPanel.ResetForNewSession()` (hides + re-arms).
+- **Stale tab on restart** — `TabController._initialized` latched; the next visitor inherited the previous tab. Added `TabController.ResetForNewSession()` (snaps back to `defaultTab`, no re-wiring).
+- **Alucia + reveal/unlock cards lingered ~1.5s** — they were only cleared at the covered peak (`DoLocalReset`). Moved the host-side visual cleanup to the **F9 request** (`StartHostSequence`): Alucia silence + `RevealQueue.ClearAll` + `SpeciesAddedReveal.ResetShownHistory` + `NotificationManager.ClearAll` now fire the instant reset is requested (important because the veil is transparent — you'd otherwise see them through the bubbles).
+- **Alucia "can still play after reset" (UNCONFIRMED)** — added a hard **`_muted`** flag to `AluciaController`: set true in `ResetForNewSession`, cleared in `HandleStarted`; `Say()` is a no-op while muted. She physically can't speak between a reset and the next real start. ⚠ Still needs an on-device confirm — see temp diagnostics below.
+- All new resets wired into `ExhibitReset.DoLocalReset` (and the visual ones into `StartHostSequence`).
+
+### 🖥️ Ported Aloysius's `SCENE_MainScene 2` prompt layout into the host scene (`8c8159a`)
+His two scenes share the same object graph (both forked from Akil's), so a 1:1 fileID port is safe. Applied the **intentional** changes only ("Changed pos of the prompts"): two prompt `m_AnchoredPosition` moves (`y -10→-358`, `-364,-35 → -336,-373`) + a group rescale (`0.647→0.584`). **Skipped** the incidental `m_Alpha`/`m_IsActive` editor-state toggles (those are runtime-driven by `HideUntilStarted`/`StartCrossfade`/the bystander panel — baking them in fights the reset). Font change was a re-bake of the shared `Roboto-Bold SDF` atlas — propagates automatically, no scene edit.
+
+### ⚠ Temporary debug logs still in (STRIP before final build)
+`[Alucia] ResetForNewSession …` / `[Alucia] Say(…) muted=…` (AluciaController), `[ExhibitReset] …`, `[NetMgr] _resetGeneration …`. Kept in this checkpoint to diagnose the Alucia report — press F9 and check whether `[Alucia] ResetForNewSession` fires.
+
+### New / changed files
+| File | Change |
+|------|--------|
+| Aloysius: `StartCrossfade`, `TutorialPanel`, `TabController` | added `ResetForNewSession()` (re-arm one-shot latches). |
+| Aloysius: `ExperienceStartGate` | `ReturnToAttract` restores TapOverlay CanvasGroup alpha. |
+| Aloysius: `AluciaController` | `_muted` hard-mute + temp diagnostics. |
+| `Networking/ExhibitReset.cs` | F9-time host visual cleanup in `StartHostSequence`; `TutorialPanel`/`TabController` resets in `DoLocalReset`. |
+| `Junheng/Scenes/SCENE_MainScene.unity` | ported prompt positions/scale from Aloysius `8c8159a`. |
 
 ---
 

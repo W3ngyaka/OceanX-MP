@@ -71,6 +71,18 @@ public class TutorialPanel : MonoBehaviour
     public void Show() { SetVisible(true); }
     public void Hide() { SetVisible(false); }
 
+    // Fresh-start reset: hide the panel and re-arm the "show once on start" latch so the onboarding
+    // panel auto-shows again for the NEXT visitor (otherwise _shownOnce stays true forever and it never
+    // reappears). Stays subscribed to OnStarted from its first setup, so the next start re-fires TryAutoShow.
+    public void ResetForNewSession()
+    {
+        if (_fade != null) { StopCoroutine(_fade); _fade = null; }
+        StopAllCoroutines();          // cancel any pending AutoShowAfterDelay / fade
+        _fade = null;
+        _shownOnce = false;           // let it auto-show again on the next start
+        SetVisible(false, instant: true);
+    }
+
     void SetVisible(bool visible, bool instant = false)
     {
         _open = visible;

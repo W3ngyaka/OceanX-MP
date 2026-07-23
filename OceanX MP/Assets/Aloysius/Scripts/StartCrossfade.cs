@@ -95,4 +95,19 @@ public class StartCrossfade : MonoBehaviour
         if (hideGate != null) foreach (var go in hideGate.HideTargets) if (go != null) { EnsureCG(go).alpha = 0f; go.SetActive(false); }
         StartCoroutine(Play());
     }
+
+    // Fresh-start reset: re-arm the one-shot so the crossfade PLAYS AGAIN on the next start (otherwise
+    // _played stays true and the second visitor's start never reveals the UI), and return the start
+    // overlay + UI pieces to their pre-start state. Does NOT re-enable this component (it stays subscribed
+    // to OnStarted from its first setup — re-enabling would double-subscribe).
+    public void ResetForNewSession()
+    {
+        StopAllCoroutines();
+        _played = false;
+        if (tapOverlay != null) tapOverlay.alpha = 1f;
+        if (tapOverlayRoot != null) tapOverlayRoot.SetActive(true);
+        if (hideGate != null)
+            foreach (var go in hideGate.HideTargets)
+                if (go != null) { EnsureCG(go).alpha = 0f; go.SetActive(false); }
+    }
 }

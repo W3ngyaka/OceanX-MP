@@ -21,6 +21,19 @@ public class FoodWebLines : MonoBehaviour
     [Tooltip("Dot diameter in pixels.")]
     public float dotSize = 14f;
 
+    [Header("Hold-reveal glow")]
+    [Tooltip("Also halo the connected bubbles in their link colour (green = prey, orange = predator).")]
+    public bool glowConnected = true;
+    [Tooltip("Halo size as a multiple of the bubble diameter.")]
+    public float glowScale = 1.25f;
+    [Range(0f,1f)] public float glowAlpha = 0.8f;
+
+    [Header("Hold-reveal colours (prey vs predator)")]
+    [Tooltip("Links flowing INTO this species (what it eats). Green = its food.")]
+    public Color preyColor = new Color(0.35f, 1f, 0.55f, 1f);
+    [Tooltip("Links flowing OUT to predators (what eats it). Orange = its threats.")]
+    public Color predatorColor = new Color(1f, 0.55f, 0.2f, 1f);
+
     [Header("Ambient web (pulses ONE link at a time)")]
     [Tooltip("Softly cycle a single predator/prey connection at a time so the layout reads as a web without any clutter.")]
     public bool showAmbientWeb = true;
@@ -143,15 +156,23 @@ public class FoodWebLines : MonoBehaviour
         _revealActive = true;
         ClearPulse();
 
-        Color lineColor = new Color(0f, 0.85f, 1f, 1f);
-
+        // Colour-code by direction:
+        //   ORANGE  source -> predator  (what eats this fish)
+        //   GREEN   prey   -> source    (what this fish eats)
         foreach (var predator in source.predators)
             if (predator != null)
-                DrawLineInto(transform, activeLines, source.transform, predator.transform, lineColor, 4f, true, animateFlow);
+            {
+                DrawLineInto(transform, activeLines, source.transform, predator.transform, predatorColor, 4f, true, animateFlow);
+                if (glowConnected) AddGlow(predator.transform, predatorColor);
+            }
 
         foreach (var prey in source.prey)
             if (prey != null)
-                DrawLineInto(transform, activeLines, prey.transform, source.transform, lineColor, 4f, true, animateFlow);
+            {
+                DrawLineInto(transform, activeLines, prey.transform, source.transform, preyColor, 4f, true, animateFlow);
+                if (glowConnected) AddGlow(prey.transform, preyColor);
+            }
+
     }
 
     public void HideConnections()
@@ -491,5 +512,46 @@ public class FoodWebLines : MonoBehaviour
         float w = Vector3.Distance(corners[0], corners[3]);
         float h = Vector3.Distance(corners[0], corners[1]);
         return Mathf.Min(w, h) * 0.5f + 8f;
+    }
+
+    // Soft coloured halo behind a connected bubble. Registered in activeLines so
+    // HideConnections() destroys it with the rest of the reveal.
+    void AddGlow(Transform bubble, Color color)
+    {
+        var go = new GameObject("HoldGlow", typeof(RectTransform), typeof(CanvasRenderer), typeof(UnityEngine.UI.Image));
+        var rt = go.GetComponent<RectTransform>();
+        rt.SetParent(bubble, false);
+        rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.anchoredPosition = Vector2.zero;
+        rt.localScale = Vector3.one;
+        float d = BubbleRadius(bubble) * 2f * glowScale;
+        rt.sizeDelta = new Vector2(d, d);
+        rt.SetAsFirstSibling();               // sit behind the bubble art
+        var img = go.GetComponent<UnityEngine.UI.Image>();
+        img.sprite = GlowSprite();
+        img.color = new Color(color.r, color.g, color.b, glowAlpha);
+        img.raycastTarget = false;
+        activeLines.Add(go);
+    }
+
+    private static Sprite _glowSprite;
+    static Sprite GlowSprite()
+    {
+        if (_glowSprite != null) return _glowSprite;
+        const int S = 128;
+        var tex = new Texture2D(S, S, TextureFormat.RGBA32, false);
+        Vector2 c = new Vector2(S * 0.5f, S * 0.5f);
+        for (int y = 0; y < S; y++)
+            for (int x = 0; x < S; x++)
+            {
+                float dist = Vector2.Distance(new Vector2(x, y), c) / (S * 0.5f);
+                float a = Mathf.Clamp01(1f - dist);
+                a = a * a * a;                 // soft outer falloff
+                tex.SetPixel(x, y, new Color(1f, 1f, 1f, a));
+            }
+        tex.Apply();
+        _glowSprite = Sprite.Create(tex, new Rect(0, 0, S, S), new Vector2(0.5f, 0.5f));
+        return _glowSprite;
     }
 }

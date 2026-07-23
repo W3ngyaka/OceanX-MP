@@ -108,6 +108,33 @@ public class TabController : MonoBehaviour
         }
     }
 
+    // Fresh-start reset: snap back to the default tab so the next visitor doesn't inherit whichever
+    // tab the previous one left open. Listeners were wired once in InitializeTabs and persist, so we
+    // only reset the visible state (active panel, tint, title, prompt, home positions) — no re-wiring.
+    public void ResetForNewSession()
+    {
+        if (!_initialized) return;   // never started — nothing to reset
+        StopAllCoroutines();
+        _animating = false;
+        for (int i = 0; i < tabs.Count; i++)
+        {
+            bool on = (i == defaultTab);
+            if (tabs[i].panel != null)
+            {
+                if (_homePos.TryGetValue(tabs[i].panel, out var home))
+                {
+                    var rt = tabs[i].panel.GetComponent<RectTransform>();
+                    if (rt != null) rt.anchoredPosition = home;
+                }
+                tabs[i].panel.SetActive(on);
+            }
+            TintButton(i, on);
+        }
+        _current = defaultTab;
+        SetTitle(defaultTab);
+        UpdatePrompt(defaultTab);
+    }
+
     public void Select(int index)
     {
         if (_animating || index == _current || index < 0 || index >= tabs.Count) return;

@@ -43,6 +43,7 @@ public class RevealQueue : MonoBehaviour
 
     private readonly Queue<Request> _queue = new Queue<Request>();
     private bool _playing;
+    private CanvasGroup _currentGroup;   // the card currently on screen (for ClearAll)
 
     // Lazily returns the single instance, creating a host GameObject if none exists yet.
     public static RevealQueue Get()
@@ -108,6 +109,7 @@ public class RevealQueue : MonoBehaviour
         while (_queue.Count > 0)
         {
             var r = _queue.Dequeue();
+            _currentGroup = r.group;
 
             // Fill this card's content right before it appears (shared cards, back-to-back safe).
             r.onShow?.Invoke();
@@ -119,8 +121,21 @@ public class RevealQueue : MonoBehaviour
             if (hold > 0f) yield return new WaitForSecondsRealtime(hold);
             yield return Fade(r.group, 0f, r.fade);
 
+            _currentGroup = null;
             r.onComplete?.Invoke();
         }
+        _playing = false;
+    }
+
+    // Fresh-start reset: drop every waiting card and stop whatever is on screen now,
+    // returning the shared reveal slot to idle. Callbacks are NOT invoked, so clearing
+    // doesn't fire follow-on hints or music swells from cards that never finished.
+    public void ClearAll()
+    {
+        StopAllCoroutines();
+        _queue.Clear();
+        if (_currentGroup != null) _currentGroup.alpha = 0f;
+        _currentGroup = null;
         _playing = false;
     }
 

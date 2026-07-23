@@ -176,8 +176,8 @@ public class SpeciesAddedReveal : MonoBehaviour
         if (revealImage != null)
         {
             // When useCsvImage is on, the big-screen photo comes from RevealContent.csv's 'imageFile',
-            // loaded from StreamingAssets/RevealImages -- the big screen's OWN images, SEPARATE from the
-            // tablet's SpeciesImages. Falls back to the inspector cardImages list if the CSV has none.
+            // loaded from StreamingAssets/Trifold -- the big screen's OWN images, SEPARATE from the
+            // tablet's Tablet folder. Falls back to the inspector cardImages list if the CSV has none.
             Sprite img = null;
             if (useCsvImage)
             {
@@ -200,5 +200,15 @@ public class SpeciesAddedReveal : MonoBehaviour
     {
         if (hintDelayAfterAdd > 0f) yield return new WaitForSeconds(hintDelayAfterAdd);
         if (hintSource != null) hintSource.HintNextLocked();
+    }
+
+    // Fresh-start reset for a new visitor. The "first added" gating is NOT stored in this
+    // component: the sim fires OnSpeciesFirstIntroduced on a species' 0 -> 1 edge, so the
+    // coordinator emptying the ecosystem (EcosystemSimulationGPU.ResetToEmpty) re-arms
+    // every card automatically. Here we clear this component's own pending reveal state:
+    // hide its card slot back to idle.
+    public void ResetShownHistory()
+    {
+        if (revealGroup != null) revealGroup.alpha = 0f;
     }
 }

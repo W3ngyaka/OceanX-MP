@@ -76,6 +76,10 @@ public class AluciaController : MonoBehaviour
     private bool _started;
     private bool _introPlayed;
     private bool _subscribed;
+    // Hard mute: true from a reset until the next start. While muted, Say() is a no-op, so NOTHING can
+    // make Alucia speak between a fresh-start reset and the next visitor tapping start — belt-and-braces
+    // on top of _started, in case any code path tries to talk during the reset/attract window.
+    private bool _muted;
 
     void Awake()
     {
@@ -115,6 +119,7 @@ public class AluciaController : MonoBehaviour
     void HandleStarted()
     {
         if (_started) return;
+        _muted = false;          // a real start un-mutes her so the intro can play
         _started = true;
         if (!_introPlayed)
         {
@@ -129,10 +134,38 @@ public class AluciaController : MonoBehaviour
         if (net != null) net.OnStarted -= HandleStarted;
     }
 
+    // Re-arm for a fresh visitor: cancels any in-flight intro/speech, hides the bubble,
+    // and clears the health-band state so the intro plays cleanly the NEXT time the
+    // networked OnStarted fires. HandleStarted stays hooked (it never unsubscribes on
+    // play), so we leave _subscribed alone — the next start re-triggers it.
+    public void ResetForNewSession()
+    {
+        Debug.Log($"[Alucia] ResetForNewSession — hiding + re-arming (was started={_started}, introPlayed={_introPlayed}).", this);
+        StopAllCoroutines();                 // cancel any running intro / speech / fade
+
+        _muted = true;                       // silence Say() until the next real start
+        _started = false;                    // wait for the next OnStarted before replaying
+        _introPlayed = false;                // so HandleStarted plays the intro again
+
+        // Hide / clear the current speech bubble.
+        if (bubbleGroup != null) bubbleGroup.alpha = 0f;
+        if (characterGroup != null) characterGroup.alpha = 0f;
+        if (bubbleText != null) bubbleText.text = "";
+        _sticky = false;
+        _hideRoutine = null;
+        _lastMsgTime = -99f;
+
+        // Reset health-band tracking so a stale line doesn't fire on the first read.
+        _lastBand = Band.Critical;
+        _bandInit = false;
+    }
+
     // ---------- Public API ----------
 
     public void Say(string message, Mood mood = Mood.Calm, bool sticky = false)
     {
+        Debug.Log($"[Alucia] Say(\"{message}\") started={_started} muted={_muted} sticky={sticky}.", this);
+        if (_muted) return;   // reset in effect — stay silent until the next start
         if (Time.unscaledTime - _lastMsgTime < minGapBetweenMessages && !sticky) return;
         _lastMsgTime = Time.unscaledTime;
         _sticky = sticky;

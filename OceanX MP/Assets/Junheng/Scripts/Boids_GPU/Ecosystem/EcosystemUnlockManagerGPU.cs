@@ -96,6 +96,15 @@ public class EcosystemUnlockManagerGPU : MonoBehaviour
         RefreshAllBubbles();
     }
 
+    /// <summary>Re-lock every species back to its <c>startUnlocked</c> default and reset hint progression —
+    /// the exhibit "fresh start" for a new visitor. Runs independently on host AND tablet (each keeps its own
+    /// unlock map, both fed from the same networked data), so the reset coordinator calls this on both.</summary>
+    public void ResetToStart()
+    {
+        _tapCounts.Clear();
+        Init();          // re-locks to startUnlocked, fires OnUnlockStateChanged, refreshes bubbles
+    }
+
     private void Update()
     {
         if (!_initialised) Init();

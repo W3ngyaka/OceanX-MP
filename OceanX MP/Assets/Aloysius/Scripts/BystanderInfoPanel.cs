@@ -14,6 +14,7 @@ public class BystanderInfoPanel : MonoBehaviour
     public Image speciesImage;
     public TMP_Text nameText;
     public TMP_Text roleText;
+    public TMP_Text sciNameText;
     public TMP_Text blurbText;
 
     [Header("Data")]
@@ -61,28 +62,48 @@ public class BystanderInfoPanel : MonoBehaviour
 
     void Fill(SpeciesData sp, int index)
     {
-        // CSV entry is the same source the reveal card uses (RevealContent.csv).
-        var e = RevealContentDB.Get(string.IsNullOrEmpty(sp.contentId) ? sp.speciesName : sp.contentId);
+        // IMAGE + name/role come from the big screen's own reveal sheet (same art as the NEW
+        // ARRIVAL card). INFO is summarised from the tablet's SpeciesContent.csv so bystanders
+        // see the same facts the tablet user is reading, just condensed.
+        string key = !string.IsNullOrEmpty(sp.contentId) ? sp.contentId : sp.speciesName;
+        var reveal  = RevealContentDB.Get(key);    // big-screen art + short blurb
+        var content = SpeciesContentDB.Get(key);   // tablet's richer info
 
         if (nameText != null)
-            nameText.text = (e != null && !string.IsNullOrWhiteSpace(e.speciesName)) ? e.speciesName : sp.speciesName;
+            nameText.text = (reveal != null && !string.IsNullOrWhiteSpace(reveal.speciesName)) ? reveal.speciesName : sp.speciesName;
+
+        // Role and scientific name are separate text objects now.
+        string sci = (content != null && !string.IsNullOrWhiteSpace(content.sciName)) ? content.sciName : sp.sciName;
 
         if (roleText != null)
-            roleText.text = (e != null && !string.IsNullOrWhiteSpace(e.role)) ? e.role : sp.tier;
+        {
+            roleText.text = (content != null && !string.IsNullOrWhiteSpace(content.role)) ? content.role
+                          : (reveal != null && !string.IsNullOrWhiteSpace(reveal.role)) ? reveal.role : sp.tier;
+        }
+
+        if (sciNameText != null)
+        {
+            sciNameText.text = sci;
+            sciNameText.gameObject.SetActive(!string.IsNullOrWhiteSpace(sci));
+        }
 
         if (blurbText != null)
         {
-            string blurb = (e != null && !string.IsNullOrWhiteSpace(e.firstAddedMessage)) ? e.firstAddedMessage : sp.addedMessage;
-            blurbText.text = FirstSentence(blurb);
+            // Description only — summarised to the first sentence for glanceability.
+            string desc = content != null ? content.description : null;
+            if (string.IsNullOrWhiteSpace(desc))
+                desc = (reveal != null && !string.IsNullOrWhiteSpace(reveal.firstAddedMessage)) ? reveal.firstAddedMessage : sp.addedMessage;
+            blurbText.text = FirstSentence(desc);
         }
 
         if (speciesImage != null)
         {
-            Sprite s2 = (index >= 0 && index < cardImages.Count) ? cardImages[index] : null;
-            if (s2 == null && e != null && !string.IsNullOrWhiteSpace(e.imageFile))
-                s2 = RevealContentDB.GetImage(e.imageFile);
-            if (s2 != null) { speciesImage.sprite = s2; speciesImage.enabled = true; }
-            else speciesImage.enabled = false;
+            // Same photo the NEW ARRIVAL card shows.
+            Sprite pic = (reveal != null) ? RevealContentDB.GetImage(reveal.imageFile) : null;
+            if (pic == null && index >= 0 && index < cardImages.Count) pic = cardImages[index];
+            speciesImage.sprite = pic;
+            speciesImage.enabled = pic != null;
+            speciesImage.preserveAspect = true;
         }
     }
 

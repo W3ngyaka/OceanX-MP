@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,8 +18,11 @@ public class ExperienceStartGate : MonoBehaviour
     public Mode mode = Mode.LargeScreen;
 
     [Header("Large screen")]
-    [Tooltip("Title / attract overlay shown until the experience starts, then hidden.")]
+    [Tooltip("Title / attract overlay ('Tap tablet to begin') shown until the experience starts, then hidden.")]
     public GameObject titleOverlay;
+    [Tooltip("Seconds for the large-screen title to FADE IN when shown (initial attract + after a reset). 0 = instant.")]
+    [Min(0f)]
+    public float titleFadeSeconds = 0.6f;
 
     [Header("Tablet")]
     [Tooltip("'Tap to Start' prompt (contains the full-screen button). Shown once connected, hidden after the tap.")]
@@ -31,10 +35,11 @@ public class ExperienceStartGate : MonoBehaviour
     private bool _started;
     private bool _subscribed;
     private bool _requested;
+    private Coroutine _titleFade;
 
     void Start()
     {
-        if (mode == Mode.LargeScreen && titleOverlay != null) titleOverlay.SetActive(true);
+        if (mode == Mode.LargeScreen) ShowTitle();
         if (mode == Mode.Tablet)
         {
             if (tapToStart != null) tapToStart.SetActive(false);     // shown once connected (Update)
@@ -76,9 +81,59 @@ public class ExperienceStartGate : MonoBehaviour
     {
         if (_started) return;
         _started = true;
+        if (_titleFade != null) { StopCoroutine(_titleFade); _titleFade = null; }
         if (titleOverlay != null) titleOverlay.SetActive(false);   // large screen: reveal the reef
         if (tapToStart != null) tapToStart.SetActive(false);
         if (tabletUIRoot != null) tabletUIRoot.SetActive(true);
+    }
+
+    // LargeScreen: show the title / "Tap tablet to begin" overlay and fade it in via a CanvasGroup (added if
+    // absent). Fading the overlay's own group composes with any child show/hide alphas underneath it.
+    void ShowTitle()
+    {
+        if (titleOverlay == null) return;
+        titleOverlay.SetActive(true);
+
+        var cg = titleOverlay.GetComponent<CanvasGroup>();
+        if (cg == null) cg = titleOverlay.AddComponent<CanvasGroup>();
+
+        if (_titleFade != null) StopCoroutine(_titleFade);
+        if (titleFadeSeconds <= 0f) { cg.alpha = 1f; return; }
+        _titleFade = StartCoroutine(FadeTitleIn(cg));
+    }
+
+    IEnumerator FadeTitleIn(CanvasGroup cg)
+    {
+        cg.alpha = 0f;
+        float t = 0f;
+        while (t < titleFadeSeconds)
+        {
+            t += Time.unscaledDeltaTime;
+            cg.alpha = Mathf.Clamp01(t / titleFadeSeconds);
+            yield return null;
+        }
+        cg.alpha = 1f;
+        _titleFade = null;
+    }
+
+    // Fresh-start reset: reverses OnStarted so this screen returns to its pre-start
+    // (attract) state. The "Tap to Start" prompt re-appears on its own via Update once
+    // connected, so we don't force tapToStart back on here.
+    public void ReturnToAttract()
+    {
+        _started = false;
+        _requested = false;
+        if (mode == Mode.LargeScreen) ShowTitle();   // fade the title back in
+        if (mode == Mode.Tablet && tapToStart != null)
+        {
+            if (tabletUIRoot != null) tabletUIRoot.SetActive(false);
+            // Re-show the "Tap to Start" prompt. It was both deactivated AND faded out (CanvasGroup alpha 0)
+            // when the experience started, so restore its active state AND its CanvasGroup — otherwise it
+            // comes back fully transparent (invisible "empty water").
+            tapToStart.SetActive(true);
+            var cg = tapToStart.GetComponent<CanvasGroup>();
+            if (cg != null) { cg.alpha = 1f; cg.interactable = true; cg.blocksRaycasts = true; }
+        }
     }
 
     void OnDestroy()

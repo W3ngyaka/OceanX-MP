@@ -180,12 +180,14 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         // EndHold returns true when this press was a completed hold (connections were
         // revealed); in that case it is not a tap.
         bool wasHold = _holdRing != null && _holdRing.EndHold();
+        if (wasHold) ContextNudge.DismissId("hold");   // learned the hold gesture
         if (!wasHold)
             OnTap();
     }
 
     void OnTap()
     {
+        ContextNudge.DismissId("tap");   // learned to tap — this unlocks the 'hold' nudge
         if (locked)
         {
             ShowLockedHint();

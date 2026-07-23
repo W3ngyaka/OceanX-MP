@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-21_
+_Last updated: 2026-07-24_
 
 ---
 
@@ -918,6 +918,123 @@ already localization-ready (stable ids, all text in one column):
 
 ---
 
+## What Was Done — 2026-07-24 (JunHeng) — Reset-flow fixes (tablet re-start, tutorial, tabs, Alucia) + Aloysius prompt-layout port
+
+Follow-up to the fresh-start reset: closing the gaps where a SECOND visitor (after an F9 reset) didn't get a clean start. Root cause in every case was a **one-shot latch that was never re-armed on reset** — the component fired for the first visitor and stayed dead.
+
+### 🔁 Reset gaps fixed
+- **Tablet UI didn't reveal on the 2nd start** — `StartCrossfade` (the crossfade that reveals the food-web UI on start; `HideUntilStarted.deferRevealToTransition = true` defers to it) latched `_played` and never replayed. Added `StartCrossfade.ResetForNewSession()` (re-arms `_played`, restores the tap overlay + re-hides the pieces). It stays subscribed to `OnStarted`, so the next start replays it. *(Also fixed the `ReturnToAttract` case where the tablet's TapOverlay came back with CanvasGroup alpha stuck at 0 → invisible "empty water"; alpha/interactable/blocksRaycasts are now restored.)*
+- **Tablet onboarding tutorial didn't show again** — `TutorialPanel._shownOnce` latched forever. Added `TutorialPanel.ResetForNewSession()` (hides + re-arms).
+- **Stale tab on restart** — `TabController._initialized` latched; the next visitor inherited the previous tab. Added `TabController.ResetForNewSession()` (snaps back to `defaultTab`, no re-wiring).
+- **Alucia + reveal/unlock cards lingered ~1.5s** — they were only cleared at the covered peak (`DoLocalReset`). Moved the host-side visual cleanup to the **F9 request** (`StartHostSequence`): Alucia silence + `RevealQueue.ClearAll` + `SpeciesAddedReveal.ResetShownHistory` + `NotificationManager.ClearAll` now fire the instant reset is requested (important because the veil is transparent — you'd otherwise see them through the bubbles).
+- **Alucia "can still play after reset" (UNCONFIRMED)** — added a hard **`_muted`** flag to `AluciaController`: set true in `ResetForNewSession`, cleared in `HandleStarted`; `Say()` is a no-op while muted. She physically can't speak between a reset and the next real start. ⚠ Still needs an on-device confirm — see temp diagnostics below.
+- All new resets wired into `ExhibitReset.DoLocalReset` (and the visual ones into `StartHostSequence`).
+
+### 🖥️ Ported Aloysius's `SCENE_MainScene 2` prompt layout into the host scene (`8c8159a`)
+His two scenes share the same object graph (both forked from Akil's), so a 1:1 fileID port is safe. Applied the **intentional** changes only ("Changed pos of the prompts"): two prompt `m_AnchoredPosition` moves (`y -10→-358`, `-364,-35 → -336,-373`) + a group rescale (`0.647→0.584`). **Skipped** the incidental `m_Alpha`/`m_IsActive` editor-state toggles (those are runtime-driven by `HideUntilStarted`/`StartCrossfade`/the bystander panel — baking them in fights the reset). Font change was a re-bake of the shared `Roboto-Bold SDF` atlas — propagates automatically, no scene edit.
+
+### ⚠ Temporary debug logs still in (STRIP before final build)
+`[Alucia] ResetForNewSession …` / `[Alucia] Say(…) muted=…` (AluciaController), `[ExhibitReset] …`, `[NetMgr] _resetGeneration …`. Kept in this checkpoint to diagnose the Alucia report — press F9 and check whether `[Alucia] ResetForNewSession` fires.
+
+### New / changed files
+| File | Change |
+|------|--------|
+| Aloysius: `StartCrossfade`, `TutorialPanel`, `TabController` | added `ResetForNewSession()` (re-arm one-shot latches). |
+| Aloysius: `ExperienceStartGate` | `ReturnToAttract` restores TapOverlay CanvasGroup alpha. |
+| Aloysius: `AluciaController` | `_muted` hard-mute + temp diagnostics. |
+| `Networking/ExhibitReset.cs` | F9-time host visual cleanup in `StartHostSequence`; `TutorialPanel`/`TabController` resets in `DoLocalReset`. |
+| `Junheng/Scenes/SCENE_MainScene.unity` | ported prompt positions/scale from Aloysius `8c8159a`. |
+
+---
+
+## What Was Done — 2026-07-23 (JunHeng, session 3) — Exhibit "fresh start" reset + big-screen bubble wipe
+
+A full reset for the next visitor: empties the ocean, re-locks every species, zeroes eco-health, and returns BOTH screens to the "Tap to Start" attract state with the intro re-armed. The big screen plays a SpongeBob-style bubble wipe that hides the reset; the tablet just flips back to the title.
+
+### 🔁 The reset chain (host-authoritative, hidden behind the wipe)
+- Operator holds **F9** on the host (a hold, not a tap — `ExhibitReset.holdSeconds`, default 1.5s). Trigger: `RequestResetRpc()` → server fires `OnHostResetRequested` → the host plays the bubble wipe.
+- **At the wipe's covered PEAK** (screen hidden): `EcosystemNetworkManagerGPU.PerformResetCore()` empties the ocean (`EcosystemSimulationGPU.ResetToEmpty()` — instant hard-remove of every school via the tested cull path, one rebuild), drops `_hasStarted` to false, syncs 0 counts + 0 health; then `SignalResetApplied()` bumps `_resetGeneration` → `OnReset` on host **and** tablet.
+- **On `OnReset` (both devices)** `ExhibitReset.DoLocalReset()` runs: `OptimisticPopulationStore.Clear()` (drop pending taps), `EcosystemUnlockManagerGPU.ResetToStart()` (re-lock to the 5 starters + reset hints), and `FindObjectsByType` → per-component reset on `ExperienceStartGate` (`ReturnToAttract`), `AluciaController` (`ResetForNewSession` — re-arms the intro), `HideUntilStarted`, `ContextNudge`, `SpeciesAddedReveal` (`ResetShownHistory`), `RevealQueue`/`NotificationManager` (`ClearAll`), and `WinCondition.Reset`.
+- ⚠ **Two-phase timing is deliberate**: the tablet re-locks only after the host has synced health→0, so its unlock check (which never re-locks) can't immediately re-unlock. That's why the tablet resets ~coverDuration after F9, not instantly.
+
+### 🫧 `BubbleTransition` (new, big-screen only)
+- Self-contained: builds its own full-screen overlay canvas + generates a soap-bubble sprite (or uses an assigned one). A stream of mixed-size bubbles rises CONTINUOUSLY bottom→top (matches the prototype's `resetGame` flood — no stop/hold on the bubbles); each fades only when it reaches the TOP (by height, not a global timer). A water **veil** fades in→hold→out to hide/reveal the screen.
+- `Play(onCovered, onComplete)`: `onCovered` fires at full veil cover (the reset runs there). Tunables: `coverDuration`/`holdDuration`/`revealDuration` (the veil), `bubbleRiseSeconds` (how long a bubble takes to rise before it fades at the top), `bubbleCount`, `bubbleSizeRange`, `waterColor` (**lower alpha = lighter, more see-through; alpha 0 = pure bubbles, no opaque hide**), `bubbleSprite`.
+- Big-screen only because it's played inside the host's `OnHostResetRequested` path (`IsServer`); the tablet never calls `Play`.
+
+### New / changed files
+| File | Change |
+|------|--------|
+| `Networking/BubbleTransition.cs` | **New** — the procedural bubble wipe. |
+| `Networking/ExhibitReset.cs` | **New** — operator F9 trigger + host wipe sequence + `DoLocalReset` on both screens. |
+| `Networking/EcosystemNetworkManagerGPU.cs` | `RequestResetRpc` / `PerformResetCore` / `SignalResetApplied`, `OnReset` + `OnHostResetRequested` events, `_resetGeneration`. |
+| `Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs` | `ResetToEmpty()`. |
+| `Boids_GPU/Ecosystem/EcosystemUnlockManagerGPU.cs` | `ResetToStart()`. |
+| `Networking/OptimisticPopulationStore.cs` | public `Clear()`. |
+| Aloysius: `ExperienceStartGate`, `AluciaController`, `HideUntilStarted`, `ContextNudge`, `SpeciesAddedReveal`, `RevealQueue`, `NotificationManager` | one public reset method each (called by `ExhibitReset`). |
+
+### Scene wiring
+- `ExhibitReset` + `BubbleTransition` are on a GameObject in **`Junheng/Scenes/SCENE_MainScene.unity`** (currently tuned: transparent veil `waterColor a=0`, `bubbleCount 1000`, custom `bubble.png` sprite, cover 1.5s). One placement serves host + tablet (same scene; bubbles only play on the host). Add the same GameObject to any other demo scene you use.
+
+---
+
+## What Was Done — 2026-07-23 (JunHeng, session 2) — Swim-out anti-freeze timeout; intro-camera framing rework; card hold time
+
+Backend/presentation pass after the folder rename. Three things: a safety timeout so a stuck fish can't freeze a species, a rebuild of the introduction camera so the shot is relative to the fish and doesn't lurch, and a small reveal/unlock card hold-time bump.
+
+### 🧊 Swim-out can no longer freeze a species (fixes HANDOFF §9.4) — committed `f5df461`
+- `EcosystemSimulationGPU.BatchExitRoutine` had a `while(true)` with no timeout: one fish snagged on a reef obstacle (or pinned between forces) never reached its exit radius, so `_exitingCount` never cleared, `IsExiting` stayed true, and that species ignored **Add and Remove for the rest of the session**.
+- Added `_exitTimeoutSeconds` (**default 25s**, serialised, in the "Removal animation (swim-out)" group). Past the deadline the routine force-commits the exiting block and clears the count, logging a warning that names the species. The deadline **resets when the exiting block grows** (another Remove joins), so a long removal spree gets the full window.
+- Added `OnDisable` cleanup (`_exitingCount.Clear()`) — the other §9.4 trigger: disabling the component mid-exit killed the coroutine without clearing state, freezing the species on re-enable.
+- Code-only + a new serialised field, so every scene inherits the 25s default at runtime without editing any scene.
+
+### 🎥 Introduction camera — framing is now relative to the fish, and the move doesn't lurch
+(`Assets/Junheng/Scripts/Boids_GPU/Ecosystem/IntroductionCameraDirectorGPU.cs`)
+- **Was:** a fixed WORLD-space Follow offset tuned for fish swimming +X, so "side view" was only a broadside when the school happened to move along that world axis — enter from another gate and the camera framed them head-on / from behind.
+- **Now:** at each shot the director reads the school's **entry heading** (averaged over a few frames) and which **side faces the camera**, bakes that into a world offset, so the framing is fish-relative (a side view is a real broadside from any gate, on the near side so the camera moves *toward* the fish instead of crossing to the far side to look back). The camera then **holds that spot and turns to keep the fish framed** (Cinemachine aim damping, pushed from code) rather than riding locked inside the fish's frame (which read as static).
+- **Anti-lurch:** the proxy is now kept **glued to the fish during the pre-shot settle frames** (`_entrySettleFrames`, default 5) instead of frozen at the gate — so the shot cuts in already on the fish and doesn't jump to catch up ("move then change direction abruptly").
+- The three framing offsets were re-authored into the school's local frame and **renamed** (`…OffsetLocal`) so the stale world-space values in existing scenes are orphaned and every scene picks up the new defaults, while staying inspector-tunable. New tunables: `_aimDamping` (turn smoothness), `_entrySettleFrames`, `_minHeadingSpeed` (milling fallback). Binding mode (World Space) + aim damping are forced from code so all scenes match. **Test in Play mode** — the runtime-forced binding/damping don't show in the editor Solo preview.
+
+### ⏱️ Big-screen card hold time
+- `SpeciesAddedReveal.holdSeconds` (arrival/reveal card) and `SpeciesUnlockReveal.revealHoldSeconds` (unlock card) bumped **2 → 2.5s** in the demo scene (both are scene-serialised, so the code defaults of 4 / 5.5 were never the live values). Total on-screen ≈ hold + a `fadeDuration` (0.4s) fade each end.
+
+### 🎬 Demo scene
+- **`Assets/Aloysius/Scenes/SCENE_MainScene 2.unity` is now the scene used for the demo** (JunHeng copied the converged main scene here and is tuning it: intro-camera position/offsets, entry-point placement, the card hold times above). Treat this as the live target for final tuning.
+
+---
+
+## What Was Done — 2026-07-23 (JunHeng) — Image folders renamed Tablet/Trifold; tablet cards use reveal art; overpopulation badge fix
+
+Two things this session: (1) rebuilt the image-folder naming so the three image types are unambiguous and the tablet can show the big-screen reveal art on its organism cards; (2) the tablet Overpopulated badge now reflects the sim's own rule instead of "at capacity".
+
+### 🗂️ Image folders renamed + the 3 image types are now cleanly separated
+- **`StreamingAssets/SpeciesImages/` → `Tablet/`** and **`StreamingAssets/RevealImages/` → `Trifold/`** (folders + their `.meta`, via `git mv` so history is preserved). Names now say *which screen* uses them.
+- The three image types and where they live:
+  | Type | Shown | CSV → column | Folder |
+  |------|-------|--------------|--------|
+  | **Info** | tablet modal (fish description) | `SpeciesContent.csv` → `imageFile` | `Tablet/` |
+  | **Reveal** | big screen, first **added** + now **tablet organism cards** | `RevealContent.csv` → `imageFile` **and** `SpeciesContent.csv` → `revealImageFile` | `Trifold/` (big screen) + `Tablet/` (tablet copy) |
+  | **Unlock** | big screen, first **unlocked** | `RevealContent.csv` → `unlockImageFile` | `Trifold/` |
+- **Reveal images renamed with a `Reveal` suffix** (`blacktip.png` → `blacktipReveal.png`, ×12) so, inside the `Tablet/` folder, the reveal copy never collides with the same-named info photo. Info + unlock names unchanged. The 12 `*Reveal.png` were copied into `Tablet/` (fresh unique meta GUIDs; the tablet holds **info + reveal**).
+- **Matrix: `Trifold/` = reveal + unlock · `Tablet/` = info + reveal.**
+
+### 🖼️ Tablet Current-Organisms cards now use the REVEAL photo (reverses 07-21)
+- **`CurrentOrganismsGrid`** now reads **`SpeciesContent.csv` `revealImageFile`** (a tablet-folder copy of the big-screen arrival art), falling back to `imageFile` (info portrait), then the bubble's inspector `cardImage`, so a card never goes blank.
+- **`SpeciesContentDB`** gained a **`revealImageFile`** field (Entry + parse + `AllImageRefs`, so the Android warm-up caches it into `Tablet/`). Folder constant → `"Tablet"`. **`RevealContentDB`** folder constant → `"Trifold"`.
+
+### ✅ Google Sheet updated to match (via `gws` CLI as junheng, `OceanX Content` sheet)
+- **RevealContent tab** (gid `1248841811`): `imageFile` column → `*Reveal.png` (12 fish rows; `unlockImageFile` untouched).
+- **SpeciesContent tab** (gid `196784187`): inserted a **`revealImageFile`** column after `imageFile` (`IUCNImage` shifted one right, cleanly); filled with the 12 `*Reveal.png`, producers blank.
+- Also fixed the seagrass/macroalgae **`imageFile`** casing `seagrass.png`/`macroalgae.png` → **`Seagrass.png`/`Macroalgae.png`** to match the on-disk files (case-sensitive on Android) — carries over the merge-conflict fix so a sheet-pull won't revert it.
+- ⚠ **CSV file names + local CSV↔scene wiring were deliberately NOT renamed** — the `fileName` is serialized in ~10 scenes (all teammates'), so a rename can't be confined to one scene. The Tablet/Trifold folder rename was safe because those names live in **code constants** shared by all scenes.
+
+### 🟠 Tablet Overpopulated badge now uses the sim's rule, not "at capacity"
+- Both tablet badges (`SpeciesBubble.UpdateOverpopulation`, `OrganismCardData.UpdateOverpop`) previously fired on `pop >= MaxSchools` — a species sitting at its cap in a healthy ocean, which is *at capacity*, not overpopulated (why 6 damselfish falsely showed the badge at 100% health).
+- **`EcosystemNetworkManagerGPU`** now syncs a per-species `NetworkList<int> _speciesStatus` (the sim's `SpeciesStatus` as int, written each `SyncPopulations`), exposed as `GetSpeciesStatus(i)` / `IsOverpopulated(i)`. Both badges now call `net.IsOverpopulated(index)`, so tablet and sim agree.
+- Also raised three prey caps earlier (RD 6→10, FM 6→9, ES 7→9); 100% eco-health still reachable (MaxSchools is no longer in the health math).
+
+---
+
 ## What Was Done — 2026-07-21 (JunHeng) — Tablet organism cards use portraits; unlock-image duplication cleaned up
 
 Reverses the 07-20 tablet card-icon source per teammate request, and removes the now-dead tablet-side unlock images.
@@ -929,7 +1046,7 @@ Reverses the 07-20 tablet card-icon source per teammate request, and removes the
 ### 🧹 Removed the dead tablet-side unlock images + column
 - **Deleted the 12 `StreamingAssets/SpeciesImages/*Unlock.png` (+ `.meta`)** — nothing on the tablet references them anymore (~3 MB). ⚠ **The big-screen `StreamingAssets/RevealImages/*Unlock.png` are UNTOUCHED** — the unlock reveal card still uses those (separate folder + separate `RevealContentDB`).
 - **`SpeciesContentDB`** — removed the `unlockImageFile` field (Entry + parse + `AllImageRefs`), so the Android image warm-up no longer tries to cache them.
-- ⚠ The tablet **`SpeciesContent` sheet still has an `unlockImageFile` column** — now unused/ignored by the game (harmless; delete it in the sheet if you want it gone). The big-screen **`RevealContent`** sheet's `unlockImageFile` is unrelated and still live.
+- ✅ **Deleted the `unlockImageFile` column from the tablet `SpeciesContent` Google Sheet tab** (via the `gws` CLI as junheng; column K removed, `dry-run`-validated, RevealContent tab untouched). The big-screen **`RevealContent`** sheet's `unlockImageFile` is unrelated and still live. ⚠ The **local `StreamingAssets/SpeciesContent.csv` still carries the column** (harmless — code ignores it); it'll drop out next time the sheet is pulled to CSV.
 
 ### 🔁 Duplication note (context for the cleanup)
 The 12 `*Unlock.png` had been **byte-identical duplicates** across `SpeciesImages/` and `RevealImages/` (each `*DB` only reads its own folder, so a shared image must exist in both). The 12 portraits are *not* byte-identical across folders — same subjects, different exports (the tablet `SpeciesImages/` copies are notably larger than the big-screen `RevealImages/` ones — worth a look in the final asset pass).
@@ -1037,8 +1154,9 @@ Follows session 2 (which made the **arrival** card TMP + CSV-driven). This sessi
 ### 🐟 Tablet vs big-screen images fully separated (`564c036`)
 - The tablet modal (`SpeciesContentDB` → `StreamingAssets/SpeciesImages/`) and the big-screen cards (`RevealContentDB` → `StreamingAssets/RevealImages/`) had been sharing `SpeciesImages`, so copying the friend's card art in there clobbered the tablet's photos. Restored the tablet originals from git and gave the big screen its **own** `RevealImages/` folder + `imageFile` column. The two are now independent — editing one never touches the other.
 
-### ⚠ CSV ↔ Google Sheet workflow (learned the hard way)
-- The **Google Sheet is the source of truth** once the team edits it directly. A full-column push of the local CSV once **overwrote a teammate's live sheet edits**. Rule going forward: **pull the sheet → local CSV**, and only ever push *new* columns / individual header cells, never overwrite existing data columns. (Overwritten edits are recoverable via the sheet's **File → Version history**.)
+### CSV ↔ Google Sheet workflow
+- The **Google Sheet is the source of truth** once the team edits it directly. Sensible habit: **pull the sheet → local CSV**, and prefer pushing *new* columns / individual cells over blanket overwrites of existing data columns. (Any change is recoverable via the sheet's **File → Version history**.)
+  > _Correction (2026-07-21): an earlier version of this note claimed a full-column push once overwrote a teammate's live edits — that never happened; the note was wrong. Kept only as a precaution, not a recorded incident. Programmatic sheet edits are fine (e.g. the 07-21 `unlockImageFile` column delete was done via the `gws` CLI as junheng)._
 
 ### 🎬 Scene rebuild (`863ee47`)
 - Rebuilt `Assets/Junheng/Scenes/SCENE_MainScene.unity`; trimmed the `Oswald Bold SDF` / `LiberationSans SDF - Fallback` TMP font atlases (large deletions — regenerated glyph tables).

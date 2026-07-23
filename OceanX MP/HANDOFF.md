@@ -1,5 +1,5 @@
 # OceanX MP — Handoff Document
-_Last updated: 2026-07-21_
+_Last updated: 2026-07-23_
 
 ---
 
@@ -915,6 +915,38 @@ already localization-ready (stable ids, all text in one column):
 - Implementation: extend `ContentService` from one URL per file to a **`{language → URL}` map** + a "current
   language" setting (~20 lines). Nothing already built needs redoing; today's single URL becomes the "English" entry.
 - Translating is then just retyping the display text in each tab — no structural changes.
+
+---
+
+## What Was Done — 2026-07-23 (JunHeng) — Image folders renamed Tablet/Trifold; tablet cards use reveal art; overpopulation badge fix
+
+Two things this session: (1) rebuilt the image-folder naming so the three image types are unambiguous and the tablet can show the big-screen reveal art on its organism cards; (2) the tablet Overpopulated badge now reflects the sim's own rule instead of "at capacity".
+
+### 🗂️ Image folders renamed + the 3 image types are now cleanly separated
+- **`StreamingAssets/SpeciesImages/` → `Tablet/`** and **`StreamingAssets/RevealImages/` → `Trifold/`** (folders + their `.meta`, via `git mv` so history is preserved). Names now say *which screen* uses them.
+- The three image types and where they live:
+  | Type | Shown | CSV → column | Folder |
+  |------|-------|--------------|--------|
+  | **Info** | tablet modal (fish description) | `SpeciesContent.csv` → `imageFile` | `Tablet/` |
+  | **Reveal** | big screen, first **added** + now **tablet organism cards** | `RevealContent.csv` → `imageFile` **and** `SpeciesContent.csv` → `revealImageFile` | `Trifold/` (big screen) + `Tablet/` (tablet copy) |
+  | **Unlock** | big screen, first **unlocked** | `RevealContent.csv` → `unlockImageFile` | `Trifold/` |
+- **Reveal images renamed with a `Reveal` suffix** (`blacktip.png` → `blacktipReveal.png`, ×12) so, inside the `Tablet/` folder, the reveal copy never collides with the same-named info photo. Info + unlock names unchanged. The 12 `*Reveal.png` were copied into `Tablet/` (fresh unique meta GUIDs; the tablet holds **info + reveal**).
+- **Matrix: `Trifold/` = reveal + unlock · `Tablet/` = info + reveal.**
+
+### 🖼️ Tablet Current-Organisms cards now use the REVEAL photo (reverses 07-21)
+- **`CurrentOrganismsGrid`** now reads **`SpeciesContent.csv` `revealImageFile`** (a tablet-folder copy of the big-screen arrival art), falling back to `imageFile` (info portrait), then the bubble's inspector `cardImage`, so a card never goes blank.
+- **`SpeciesContentDB`** gained a **`revealImageFile`** field (Entry + parse + `AllImageRefs`, so the Android warm-up caches it into `Tablet/`). Folder constant → `"Tablet"`. **`RevealContentDB`** folder constant → `"Trifold"`.
+
+### ✅ Google Sheet updated to match (via `gws` CLI as junheng, `OceanX Content` sheet)
+- **RevealContent tab** (gid `1248841811`): `imageFile` column → `*Reveal.png` (12 fish rows; `unlockImageFile` untouched).
+- **SpeciesContent tab** (gid `196784187`): inserted a **`revealImageFile`** column after `imageFile` (`IUCNImage` shifted one right, cleanly); filled with the 12 `*Reveal.png`, producers blank.
+- Also fixed the seagrass/macroalgae **`imageFile`** casing `seagrass.png`/`macroalgae.png` → **`Seagrass.png`/`Macroalgae.png`** to match the on-disk files (case-sensitive on Android) — carries over the merge-conflict fix so a sheet-pull won't revert it.
+- ⚠ **CSV file names + local CSV↔scene wiring were deliberately NOT renamed** — the `fileName` is serialized in ~10 scenes (all teammates'), so a rename can't be confined to one scene. The Tablet/Trifold folder rename was safe because those names live in **code constants** shared by all scenes.
+
+### 🟠 Tablet Overpopulated badge now uses the sim's rule, not "at capacity"
+- Both tablet badges (`SpeciesBubble.UpdateOverpopulation`, `OrganismCardData.UpdateOverpop`) previously fired on `pop >= MaxSchools` — a species sitting at its cap in a healthy ocean, which is *at capacity*, not overpopulated (why 6 damselfish falsely showed the badge at 100% health).
+- **`EcosystemNetworkManagerGPU`** now syncs a per-species `NetworkList<int> _speciesStatus` (the sim's `SpeciesStatus` as int, written each `SyncPopulations`), exposed as `GetSpeciesStatus(i)` / `IsOverpopulated(i)`. Both badges now call `net.IsOverpopulated(index)`, so tablet and sim agree.
+- Also raised three prey caps earlier (RD 6→10, FM 6→9, ES 7→9); 100% eco-health still reachable (MaxSchools is no longer in the health math).
 
 ---
 

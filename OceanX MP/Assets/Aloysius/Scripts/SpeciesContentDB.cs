@@ -5,9 +5,11 @@ using UnityEngine;
 /// <summary>
 /// Loads species info cards from <c>SpeciesContent.csv</c> so the text can be fact-checked in a
 /// spreadsheet (online or on disk) without touching Unity. Images load from
-/// <c>StreamingAssets/SpeciesImages/&lt;file&gt;</c>.
+/// <c>StreamingAssets/Tablet/&lt;file&gt;</c> — the tablet's OWN folder, holding both the INFO photo
+/// (<c>imageFile</c>, shown in the modal) and a copy of the big-screen REVEAL photo
+/// (<c>revealImageFile</c>, shown on the Current-Organisms cards).
 ///
-/// Columns: <c>id, speciesName, sciName, iucnStatus, description, diet, habitat, funFact, imageFile, IUCNImage</c>.
+/// Columns: <c>id, speciesName, sciName, iucnStatus, description, diet, habitat, funFact, imageFile, revealImageFile, IUCNImage</c>.
 /// The parser is header-driven — reorder or add columns freely; unknown columns are ignored, missing
 /// ones read as empty. Rows are indexed by BOTH their stable <c>id</c> and their <c>speciesName</c>, so a
 /// lookup works whether you pass the id (rename/translation-safe) or the display name.
@@ -16,13 +18,16 @@ public static class SpeciesContentDB
 {
     public class Entry
     {
-        public string id, speciesName, sciName, role, iucnStatus, description, diet, habitat, funFact, imageFile, iucnImage;
+        // imageFile = INFO photo (modal). revealImageFile = a copy of the big-screen REVEAL photo,
+        // used on the Current-Organisms cards. Both live in StreamingAssets/Tablet.
+        public string id, speciesName, sciName, role, iucnStatus, description, diet, habitat, funFact, imageFile, revealImageFile, iucnImage;
     }
 
     const string CsvFile = "SpeciesContent.csv";
 
-    /// <summary>StreamingAssets subfolder holding this sheet's images. ContentService warms it on Android.</summary>
-    public const string ImageFolderName = "SpeciesImages";
+    /// <summary>StreamingAssets subfolder holding this sheet's images (info + tablet reveal copies).
+    /// ContentService warms it on Android.</summary>
+    public const string ImageFolderName = "Tablet";
 
     static Dictionary<string, Entry> _entries;
     static readonly Dictionary<string, Sprite> _spriteCache = new Dictionary<string, Sprite>();
@@ -94,6 +99,7 @@ public static class SpeciesContentDB
                 habitat     = Field(row, col, "habitat"),
                 funFact     = Field(row, col, "funfact"),
                 imageFile   = Field(row, col, "imagefile"),
+                revealImageFile = Field(row, col, "revealimagefile"),
                 iucnImage   = Field(row, col, "iucnimage"),
             };
 
@@ -115,6 +121,7 @@ public static class SpeciesContentDB
         foreach (var e in _entries.Values)   // rows are indexed twice (id + name), so de-dup
         {
             if (!string.IsNullOrWhiteSpace(e.imageFile) && seen.Add(e.imageFile)) yield return e.imageFile;
+            if (!string.IsNullOrWhiteSpace(e.revealImageFile) && seen.Add(e.revealImageFile)) yield return e.revealImageFile;
             if (!string.IsNullOrWhiteSpace(e.iucnImage) && seen.Add(e.iucnImage)) yield return e.iucnImage;
         }
     }

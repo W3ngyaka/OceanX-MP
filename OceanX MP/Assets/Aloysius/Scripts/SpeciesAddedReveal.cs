@@ -176,8 +176,8 @@ public class SpeciesAddedReveal : MonoBehaviour
         if (revealImage != null)
         {
             // When useCsvImage is on, the big-screen photo comes from RevealContent.csv's 'imageFile',
-            // loaded from StreamingAssets/RevealImages -- the big screen's OWN images, SEPARATE from the
-            // tablet's SpeciesImages. Falls back to the inspector cardImages list if the CSV has none.
+            // loaded from StreamingAssets/Trifold -- the big screen's OWN images, SEPARATE from the
+            // tablet's Tablet folder. Falls back to the inspector cardImages list if the CSV has none.
             Sprite img = null;
             if (useCsvImage)
             {

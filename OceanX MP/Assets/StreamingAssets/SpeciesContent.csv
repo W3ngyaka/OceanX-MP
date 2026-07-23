@@ -1,39 +1,39 @@
-id,speciesName,sciName,iucnStatus,description,diet,habitat,funFact,imageFile,IUCNImage
+id,speciesName,sciName,iucnStatus,description,diet,habitat,funFact,imageFile,revealImageFile,IUCNImage
 blacktip_reef_shark,Blacktip Reef Shark,Carcharhinus melanopterus,Vulnerable,"Blacktip reef sharks are medium, sedentary predators of tropical Indo-Pacific coral reefs. They hunt small fish, mollusks, crustaceans, and occasionally small rays.
 
-Generally timid and solitary, they gather only during mass hunting or for mating.","Fish, mollusks, crustaceans, rays",,,blacktip.png,VU.png
+Generally timid and solitary, they gather only during mass hunting or for mating.","Fish, mollusks, crustaceans, rays",,,blacktip.png,blacktipReveal.png,VU.png
 giant_moray,Giant Moray,Gymnothorax javanicus,Least Concern,"Giant morays are large, nocturnal ambush predators of Indo-Pacific reefs and crevices.
 
-Solitary by day, they hunt fish and crustaceans by smell at night, using mottled camouflage and specialised pharyngeal jaws that extend forward to pull prey inward.","Fish, crustaceans",,,Moray.png,LC.png
+Solitary by day, they hunt fish and crustaceans by smell at night, using mottled camouflage and specialised pharyngeal jaws that extend forward to pull prey inward.","Fish, crustaceans",,,Moray.png,MorayReveal.png,LC.png
 brown_marbled_grouper,Brown-Marbled Grouper,Epinephelus fuscoguttatus,Vulnerable,"Brown-marbled groupers are medium-sized crepuscular ambush predators of Indo-Pacific reefs.
 
-Solitary and territorial, they use camouflage and explosive strikes to hunt fish, crustaceans, and cephalopods. As protogynous hermaphrodites, they can transition from female to male.","Fish, crustaceans, cephalopods",,,Grouper.png,VU.png
+Solitary and territorial, they use camouflage and explosive strikes to hunt fish, crustaceans, and cephalopods. As protogynous hermaphrodites, they can transition from female to male.","Fish, crustaceans, cephalopods",,,Grouper.png,GrouperReveal.png,VU.png
 bluefin_trevally,Bluefin Trevally,Caranx melampygus,Least Concern,"Bluefin trevally are large, fast predators of Indo-Pacific waters, hunting fish, cephalopods, and crustaceans through midwater attacks, reef ambushes, and cooperative foraging.
 
-They are recognised by electric blue fins and blue-black spots along their sides.","Fish, crustaceans",,,Trevally.png,LC.png
+They are recognised by electric blue fins and blue-black spots along their sides.","Fish, crustaceans",,,Trevally.png,TrevallyReveal.png,LC.png
 russells_snapper,Russell's Snapper,Lutjanus russellii,Least Concern,"Russell's snappers are medium-sized opportunistic predators of Indo-West Pacific reefs, rocky bottoms, and estuaries.
 
-Hunting fish, crustaceans, and cephalopods near the seafloor, they are recognisable by silver-pink bodies, yellow fins, and dark horizontal side stripes.","Small fish, crustaceans",,,RusselsSnapper.png,LC.png
+Hunting fish, crustaceans, and cephalopods near the seafloor, they are recognisable by silver-pink bodies, yellow fins, and dark horizontal side stripes.","Small fish, crustaceans",,,RusselsSnapper.png,RusselsSnapperReveal.png,LC.png
 bluespotted_ribbontail_ray,Bluespotted Ribbontail Ray,Taeniura lymma,Near Threatened,"Bluespotted ribbontail rays are small benthic stingrays of Indo-Pacific reefs, sheltering in crevices at low tide and foraging on sandy flats for invertebrates and fish.
 
-Their venomous tail spines defend them, but small litters leave populations vulnerable.","Molluscs, small crustaceans, small fish",,,blueray.png,NT.png
+Their venomous tail spines defend them, but small litters leave populations vulnerable.","Molluscs, small crustaceans, small fish",,,blueray.png,bluerayReveal.png,NT.png
 yellowstripe_scad,Yellowstripe Scad,Selaroides leptolepis,Least Concern,"Yellowstripe scad are small schooling fish of Indo-West Pacific inshore waters, forming dense shoals for protection.
 
-Feeding on zooplankton, invertebrates, and small fish, they serve as vital forage prey for larger reef predators.","Crustaceans, small fish",,,scad.png,LC.png
+Feeding on zooplankton, invertebrates, and small fish, they serve as vital forage prey for larger reef predators.","Crustaceans, small fish",,,scad.png,scadReveal.png,LC.png
 streaked_spinefoot,Streaked Spinefoot,Siganus javus,Least Concern,"Streaked spinefoot are medium-sized schooling rabbitfish of Indo-Pacific coastal waters, lagoons, and reefs.
 
-Feeding in small groups on algae, seagrass, and sponges, they help control algal growth and defend themselves with venomous fin spines.","Benthic algae, floating phytoplankton",,,Streakedspinefoot.png,LC.png
+Feeding in small groups on algae, seagrass, and sponges, they help control algal growth and defend themselves with venomous fin spines.","Benthic algae, floating phytoplankton",,,Streakedspinefoot.png,StreakedspinefootReveal.png,LC.png
 bullethead_parrotfish,Bullethead Parrotfish,Chlorurus sordidus,Vulnerable,"Bullethead parrotfish are medium-sized Indo-Pacific herbivores that scrape algae from coral with fused beak-like teeth.
 
-They can change sex, females becoming terminal males displaying vivid blue-green bodies with pinkish scale margins and bluish snouts.","Benthic microalgae, zooplankton",,,Parrotfish.png,VU.png
+They can change sex, females becoming terminal males displaying vivid blue-green bodies with pinkish scale margins and bluish snouts.","Benthic microalgae, zooplankton",,,Parrotfish.png,ParrotfishReveal.png,VU.png
 eyestripe_surgeonfish,Eyestripe Surgeonfish,Acanthurus dussumieri,Least Concern,"A large Indo-Pacific herbivore, the eyestripe surgeonfish grazes algal films and detritus from reef surfaces and sand, helping control algal growth.
 
-Like all surgeonfish, it carries a sharp spine near its tail for defence and territorial disputes.","Algae, detritus, floating diatoms, planktonic particles",,,Eyestripe.png,LC.png
+Like all surgeonfish, it carries a sharp spine near its tail for defence and territorial disputes.","Algae, detritus, floating diatoms, planktonic particles",,,Eyestripe.png,EyestripeReveal.png,LC.png
 fringelip_mullet,Fringelip Mullet,Crenemugil crenilabis,Least Concern,"Fringelip mullets are medium-sized schooling herbivores of shallow tropical Indo-Pacific reefs and coasts.
 
-They graze on algae, detritus, and zooplankton from sandy substrates using their distinctive fringed lips.","Benthic microalgae, zooplankton",,,Mullet.png,LC.png
+They graze on algae, detritus, and zooplankton from sandy substrates using their distinctive fringed lips.","Benthic microalgae, zooplankton",,,Mullet.png,MulletReveal.png,LC.png
 reticulated_damselfish,Reticulated Damselfish,Dascyllus reticulatus,Least Concern,"Reticulated damselfish are small, 9 cm territorial omnivores found across central Indo-Pacific coral reefs.
 
-Despite their size, they aggressively harass intruders, feeding by day on algae, plankton, and invertebrates, and sheltering in coral at night.","Zooplankton, phytoplankton, benthic algae",,,reticulated.png,LC.png
-seagrass,Seagrass,Halophila,,"A marine flowering plant that forms meadows, providing food and shelter and oxygenating the water.",,,,Seagrass.png,
-macroalgae,Macroalgae,,,"Large algae that photosynthesize and form the base of the reef food web, feeding the grazers above.",,,,Macroalgae.png,
+Despite their size, they aggressively harass intruders, feeding by day on algae, plankton, and invertebrates, and sheltering in coral at night.","Zooplankton, phytoplankton, benthic algae",,,reticulated.png,reticulatedReveal.png,LC.png
+seagrass,Seagrass,Halophila,,"A marine flowering plant that forms meadows, providing food and shelter and oxygenating the water.",,,,Seagrass.png,,
+macroalgae,Macroalgae,,,"Large algae that photosynthesize and form the base of the reef food web, feeding the grazers above.",,,,Macroalgae.png,,

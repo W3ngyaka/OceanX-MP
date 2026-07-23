@@ -108,7 +108,7 @@ public class SpeciesUnlockReveal : MonoBehaviour
         if (revealImage != null)
         {
             // The unlock card has its OWN photo column (unlockImageFile), loaded from the SAME folder as the
-            // arrival card (StreamingAssets/RevealImages), just a different filename. If unlockImageFile is blank
+            // arrival card (StreamingAssets/Trifold), just a different filename. If unlockImageFile is blank
             // it falls back to the arrival photo (imageFile), so the card is never image-less while the friend
             // hasn't dropped the unlock-specific pics yet. Then to any sprite pre-assigned in the scene.
             string imgFile = (e != null && !string.IsNullOrWhiteSpace(e.unlockImageFile)) ? e.unlockImageFile

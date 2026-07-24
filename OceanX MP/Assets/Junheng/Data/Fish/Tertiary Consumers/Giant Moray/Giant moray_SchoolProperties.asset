@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Giant moray_SchoolProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishSchoolProperties
   VisionRange: 8
-  ObstacleAvoidanceRange: 0.75
+  ObstacleAvoidanceRange: 5.5
   SeparationRange: 3
   CohesionWeight: 0.05
   AlignmentWeight: 0.05

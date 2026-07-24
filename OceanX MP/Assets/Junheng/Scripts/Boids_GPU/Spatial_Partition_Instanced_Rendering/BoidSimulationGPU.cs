@@ -55,6 +55,15 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         [Min(0.01f)]
         [SerializeField] private float _tailSwayResponsiveness = 4f;
 
+        [Tooltip("How fast the reef penetration backstop may turn a fish's heading when it gets pushed " +
+            "back out of rock/coral, as a MULTIPLE of that species' max angular velocity. This is the " +
+            "emergency turn that used to be instant — the up/down 'snap' seen near flat rock tops and the " +
+            "seabed. A finite value eases it out over a few frames. Lower = smoother but a fish may scrape " +
+            "along the surface a little longer; higher = snappier. ~2-4 is the usable range. Tunable live " +
+            "in Play mode.")]
+        [Min(0.1f)]
+        [SerializeField] private float _reefBackstopTurnMultiplier = 3f;
+
         private ComputeBuffer _sortedBoidsComputeBuffer = null;
         private ComputeBuffer _boidSchoolsRenderInfoBuffer = null;
 
@@ -379,6 +388,8 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             _boidsComputeShader.SetFloat("_ExitStopDistance", _exitStopDistance);
             // Push the ray tail-sway responsiveness so it can be tuned live in the Inspector.
             _boidsComputeShader.SetFloat("_TailSwayResponsiveness", _tailSwayResponsiveness);
+            // Push the reef-penetration backstop turn rate so the snap-out speed can be tuned live.
+            _boidsComputeShader.SetFloat("_ReefBackstopTurnMultiplier", _reefBackstopTurnMultiplier);
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_Affecters", _affectersComputeBuffer);
             BindReefSDF();
 

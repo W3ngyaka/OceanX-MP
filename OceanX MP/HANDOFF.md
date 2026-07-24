@@ -947,6 +947,32 @@ His two scenes share the same object graph (both forked from Akil's), so a 1:1 f
 
 ---
 
+## What Was Done — 2026-07-24 (JunHeng, session 2) — Reef-avoidance "snap" fix + big-fish avoidance tuning
+
+Polishing Akil's reef-SDF obstacle avoidance. Two issues, both around fish near rock/coral.
+
+### 🎯 Fixed the sudden up/down "snap" near obstacles
+- **Symptom:** fish avoiding a rock would *instantly* flip their rotation — worst when dodging obstacles directly above/below (snap up or down); side-to-side too but rarer.
+- **Root cause:** the hard penetration backstop (`ResolveReefPenetration`, and the box-affecter fallback `ResolveObstaclePenetration`) rewrote `boidInfo.direction` in a **single frame**, bypassing the normal angular turn ramp. It's vertical-dominant because flat rock tops / the seabed give a vertical surface normal, and the "buried in a slab" escape hardcodes a +Y climb. The *steering* was already smooth — only the backstop snapped.
+- **Fix (`BoidsGPU_Spatial_Partition.compute`):** keep the instant **position** push (that's what prevents tunnelling), but turn the heading toward the corrected direction at a **capped rate** instead of rewriting it. New helpers `RotateDirectionTowards(from, to, maxRadians)` (capped slerp) + `ReefBackstopMaxTurn(schoolInfo)` (= species `maxAngularVelocity × multiplier × dt`). Applied to all four direction rewrites across both resolvers. Turn-rate only — **no speed change**, and the position guarantee is untouched so fish still can't tunnel through rock.
+- **New live tunable:** `_reefBackstopTurnMultiplier` on `BoidSimulationGPU` (Inspector: "Reef Backstop Turn Multiplier", default **3**), pushed every frame like `_TailSwayResponsiveness` so it's adjustable in Play mode. Lower = smoother (fish may scrape the surface a touch longer); higher = snappier. Usable range ~2–4.
+
+### 🐟 Widened big-fish obstacle avoidance (stops body clipping + on-the-spot spin)
+- **Symptom:** big fish (grouper especially) had part of their body poking into coral/rock, and sometimes appeared to rotate on the spot.
+- **Cause:** reef collision is a **point** test on the fish's pivot — it keeps the pivot one voxel (0.5m) clear, but a big fish's mesh extends past that, so the body clips; and a fish pinned against the reef (position held, forward motion cancelled) looks like it's spinning in place. The eased turn above makes fish linger near the surface a hair longer, which exposed it.
+- **Quick fix (no code):** raised `ObstacleAvoidanceRange` so big fish bank away *earlier* (soft steer), before the hard backstop ever fires — **grouper 2.1 → 6**, **giant moray 0.75 → 5.5**. Kept below the shark's 10.5 and proportional to body size. (Bluefin trevally left at 4.5 — looked fine; shark 10.5 / ray 5.7 unchanged.)
+- ⚠ **Moray value is a guess** — its model isn't in the scene yet, so untested; re-check when it lands.
+- **Proper fix deferred:** a per-species **collision radius** (used for both the backstop clearance and the avoidance margin) so big bodies are physically kept clear — that's the real solution to point-collision clipping, especially the long-bodied moray.
+
+### Files changed
+| File | Change |
+|------|--------|
+| `Shaders/Compute/Boids_GPU_Spatial_Partition/BoidsGPU_Spatial_Partition.compute` | Capped-turn helpers + rate-limited heading in both penetration resolvers; `_ReefBackstopTurnMultiplier` uniform. |
+| `Boids_GPU/…/BoidSimulationGPU.cs` | `_reefBackstopTurnMultiplier` inspector field + per-frame push. |
+| `Data/Fish/**/Brown-marbled grouper_SchoolProperties.asset`, `Giant moray_SchoolProperties.asset` | `ObstacleAvoidanceRange` bumps. |
+
+---
+
 ## What Was Done — 2026-07-23 (JunHeng, session 3) — Exhibit "fresh start" reset + big-screen bubble wipe
 
 A full reset for the next visitor: empties the ocean, re-locks every species, zeroes eco-health, and returns BOTH screens to the "Tap to Start" attract state with the intro re-armed. The big screen plays a SpongeBob-style bubble wipe that hides the reset; the tablet just flips back to the title.

@@ -35,6 +35,11 @@ float _TimeDelta;
 // How quickly the ray tail sway eases toward its target each second (frame-rate independent).
 // Lower = slower, floatier trailing tail; higher = snappier. Pushed live from the Inspector.
 float _TailSwayResponsiveness;
+// How fast the HARD penetration backstop may rotate a boid's heading when it gets pushed out of the
+// reef, as a MULTIPLE of that species' max angular velocity. Finite, so the backstop eases the heading
+// out over a few frames instead of flipping it in one (the up/down "snap" near flat rock/seabed faces).
+// 0 or unset => fallback of 3. Pushed live from BoidSimulationGPU so it is tunable in Play mode.
+float _ReefBackstopTurnMultiplier;
 float3 _SimulationAreaCenter;
 float3 _SimulationAreaSize;
 // How long (seconds) a boid keeps sprinting after it crosses INTO the simulation bounds. While a
@@ -180,12 +185,45 @@ float3 AffecterAwayDirection(Affecter affecter, float3 boidPosition)
     return normalize(Multiply(InitializeQuaternion(affecter.rotation), localNormal));
 }
 
+// Rotate 'fromDir' toward 'toDir' by AT MOST 'maxRadians' (a capped slerp). The penetration backstops
+// use this so they ease a boid's heading out of the reef over a few frames instead of snapping it in one
+// — same escape direction, no instant flip. Inputs need not be pre-normalized.
+float3 RotateDirectionTowards(float3 fromDir, float3 toDir, float maxRadians)
+{
+    fromDir = normalize(fromDir);
+    toDir   = normalize(toDir);
+    float cosA = clamp(dot(fromDir, toDir), -1.0, 1.0);
+    float ang  = acos(cosA);
+    if(ang <= maxRadians || ang < 1e-5)
+    {
+        return toDir;                 // already within the cap — take the whole (tiny) remainder
+    }
+    float t = maxRadians / ang;
+    float s = sin(ang);
+    if(s < 1e-5)
+    {
+        return toDir;                 // degenerate (near anti-parallel); slerp undefined, just accept
+    }
+    return normalize((sin((1.0 - t) * ang) * fromDir + sin(t * ang) * toDir) / s);
+}
+
+// Per-frame cap (radians) on how far a penetration backstop may swing this boid's heading, from the
+// species' max angular velocity scaled by _ReefBackstopTurnMultiplier. Emergency-fast but finite.
+float ReefBackstopMaxTurn(BoidSchoolInfo boidSchoolInfo)
+{
+    float mult = _ReefBackstopTurnMultiplier > 0.0 ? _ReefBackstopTurnMultiplier : 3.0;
+    return radians(max(boidSchoolInfo.maxAngularVelocity, 1.0) * mult) * _TimeDelta;
+}
+
 // HARD separation — the guarantee behind the steering. If a boid still ended the frame INSIDE an
 // obstacle (a sprinting entry/exit fish can outrun its own turn rate, or a school push can shove one
-// in), snap it back out to the nearest surface point and slide its heading along that surface. With
-// this in place fish can never visibly tunnel through rocks, regardless of speed or steering state.
-void ResolveObstaclePenetration(Affecter obstacle, inout BoidInfo boidInfo)
+// in), snap its POSITION back out to the nearest surface point and turn its heading along that surface
+// (rate-limited, so the heading banks out smoothly instead of flipping). With this in place fish can
+// never visibly tunnel through rocks, regardless of speed or steering state.
+void ResolveObstaclePenetration(Affecter obstacle, inout BoidInfo boidInfo, BoidSchoolInfo boidSchoolInfo)
 {
+    float backstopMaxTurn = ReefBackstopMaxTurn(boidSchoolInfo);
+
     if(obstacle.shape < SHAPE_SPHERE)
     {
         float3 fromCenter = boidInfo.position - obstacle.position;
@@ -197,7 +235,8 @@ void ResolveObstaclePenetration(Affecter obstacle, inout BoidInfo boidInfo)
         float inwardAmount = dot(boidInfo.direction, surfaceNormal);
         if(inwardAmount < 0.0)
         {
-            boidInfo.direction = normalize(boidInfo.direction - surfaceNormal * inwardAmount);
+            float3 correctedDir = normalize(boidInfo.direction - surfaceNormal * inwardAmount);
+            boidInfo.direction = RotateDirectionTowards(boidInfo.direction, correctedDir, backstopMaxTurn);
         }
         return;
     }
@@ -253,7 +292,8 @@ void ResolveObstaclePenetration(Affecter obstacle, inout BoidInfo boidInfo)
     float inwardAmount = dot(boidInfo.direction, worldNormal);
     if(inwardAmount < 0.0)
     {
-        boidInfo.direction = normalize(boidInfo.direction - worldNormal * inwardAmount);
+        float3 correctedDir = normalize(boidInfo.direction - worldNormal * inwardAmount);
+        boidInfo.direction = RotateDirectionTowards(boidInfo.direction, correctedDir, backstopMaxTurn);
     }
 }
 
@@ -264,7 +304,7 @@ void ResolveObstaclePenetration(Affecter obstacle, inout BoidInfo boidInfo)
 // strong and points cleanly outward, so we push along it. But DEEP inside a thick, flat mass — a rock
 // slab lying on the seabed — every neighbouring voxel is equally solid, so the local gradient collapses
 // to nothing and there is no "which way is out" to read.
-void ResolveReefPenetration(inout BoidInfo boidInfo)
+void ResolveReefPenetration(inout BoidInfo boidInfo, BoidSchoolInfo boidSchoolInfo)
 {
     // One voxel is the finest the field can resolve, so it is also the closest we can meaningfully
     // hold a boid to the surface.
@@ -274,6 +314,9 @@ void ResolveReefPenetration(inout BoidInfo boidInfo)
     {
         return;
     }
+
+    // Per-frame cap on the heading correction — banks the boid out smoothly instead of snapping it.
+    float backstopMaxTurn = ReefBackstopMaxTurn(boidSchoolInfo);
 
     float3 gradient = ReefSDFGradientRaw(boidInfo.position);
     float gradientLength = length(gradient);
@@ -286,7 +329,8 @@ void ResolveReefPenetration(inout BoidInfo boidInfo)
         float inwardAmount = dot(boidInfo.direction, surfaceNormal);
         if(inwardAmount < 0.0)
         {
-            boidInfo.direction = normalize(boidInfo.direction - surfaceNormal * inwardAmount);
+            float3 correctedDir = normalize(boidInfo.direction - surfaceNormal * inwardAmount);
+            boidInfo.direction = RotateDirectionTowards(boidInfo.direction, correctedDir, backstopMaxTurn);
         }
     }
     else
@@ -301,9 +345,10 @@ void ResolveReefPenetration(inout BoidInfo boidInfo)
         // shoved the boid sideways within the flat slab, then the floor clamp below pinned it back at the
         // floor, and it re-entered the same voxel the next frame. Climbing up escapes; backing out did not.
         boidInfo.position.y += clearance;
-        // Bias the heading upward too, so the boid actively swims out of the slab instead of being nudged
-        // out one voxel at a time while steering keeps driving it back down.
-        boidInfo.direction = normalize(boidInfo.direction + float3(0.0, 1.0, 0.0));
+        // Bias the heading upward too, but ease into it (rate-limited) so a fish buried in a slab climbs
+        // out smoothly instead of flicking straight up.
+        float3 correctedUp = normalize(boidInfo.direction + float3(0.0, 1.0, 0.0));
+        boidInfo.direction = RotateDirectionTowards(boidInfo.direction, correctedUp, backstopMaxTurn);
     }
 
     // Nothing may end up under the seabed. The reef sits ON the floor, so pushing "out" of it can point
@@ -1023,11 +1068,11 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     // by a sprinting entry/exit fish, or a school push can shove one in), get it back out.
     if(_ReefSDFEnabled != 0)
     {
-        ResolveReefPenetration(boidInfo);
+        ResolveReefPenetration(boidInfo, boidSchoolInfo);
     }
     else if(hasObstacle)
     {
-        ResolveObstaclePenetration(closestObstacle, boidInfo);
+        ResolveObstaclePenetration(closestObstacle, boidInfo, boidSchoolInfo);
     }
 
     // Update the swimming motion properties based on the current acceleration. These properties affect

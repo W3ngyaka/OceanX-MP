@@ -119,6 +119,13 @@ namespace OceanX.BoidsGPU.Ecosystem
         public List<SpeciesDataGPU> PreySpecies     = new List<SpeciesDataGPU>();
         public List<SpeciesDataGPU> PredatorSpecies = new List<SpeciesDataGPU>();
 
+        [Header("Rendering")]
+        [Tooltip("Render this species with the serpentine path-following body (moray eel) instead of the " +
+                 "standard rigid instanced fish shader. When ON, BoidSimulationGPU maintains a per-instance " +
+                 "head-path trail buffer for this species and its spawner's material must use " +
+                 "OceanX/Moray_Lit_Instanced. Only ONE species should enable this (buffers are sized for it).")]
+        public bool UseSpineDeformation = false;
+
         // Set at runtime by EcosystemSimulationGPU.
         [HideInInspector] public int RuntimeId = -1;
     }

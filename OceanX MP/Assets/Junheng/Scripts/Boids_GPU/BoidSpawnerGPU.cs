@@ -24,6 +24,26 @@ namespace OceanX.BoidsGPU
         // keep their current positions instead of teleporting to spawn positions.
         private BoidInfoGPU[] _preservedBoids = null;
 
+        // ---- Moray serpentine spine render data ----------------------------------------------------
+        // Set by BoidSimulationGPU for the moray spawner ONLY (the species with UseSpineDeformation).
+        // These are forwarded to the OceanX/Moray_Lit_Instanced material's property block in RenderBoids
+        // so the vertex shader can lay the eel body along its recorded head-path. Untouched (and unbound)
+        // for every other spawner, which keeps using the standard rigid fish shader.
+        private bool          _hasSpineRenderData      = false;
+        private ComputeBuffer _spineTrailBuffer        = null;
+        private ComputeBuffer _spineTrailCursorBuffer  = null;
+        private int           _spineTrailCount         = 0;
+        private float         _spineTrailSpacing        = 0.12f;
+        private float         _spineHeadLocalZ          = 0f;
+        private float         _spineBodyLength          = 1f;
+        private float         _spineUndulationAmplitude = 0f;
+        private float         _spineUndulationWaves     = 0f;
+        private float         _spineUndulationSpeed     = 0f;
+        private bool          _spineDebugStraight       = false;
+        private bool          _spineFlipNormals         = false;
+        private float         _spineSmoothingWindow     = 1f;
+        private float         _spineUndulationHeadHold   = 0.03f;
+
         /// <summary>Global offset of this spawner's slice in the shared boids compute buffer.</summary>
         public int RenderingOffset => _renderingOffset;
 
@@ -147,6 +167,33 @@ namespace OceanX.BoidsGPU
         }
 
         /// <summary>
+        /// Supplies this spawner's material with the serpentine spine render data (moray only). Called by
+        /// BoidSimulationGPU every frame for the spawner whose species has UseSpineDeformation, so the
+        /// tuning values can be adjusted live. <paramref name="trail"/> / <paramref name="cursor"/> are the
+        /// same compute buffers the simulation kernel writes; here they are read by the render shader.
+        /// </summary>
+        public void SetSpineRenderData(ComputeBuffer trail, ComputeBuffer cursor, int trailCount, float spacing,
+            float headLocalZ, float bodyLength, float undulationAmplitude, float undulationWaves,
+            float undulationSpeed, bool debugStraight, bool flipNormals, float smoothingWindow,
+            float undulationHeadHold)
+        {
+            _hasSpineRenderData       = true;
+            _spineTrailBuffer         = trail;
+            _spineTrailCursorBuffer   = cursor;
+            _spineTrailCount          = trailCount;
+            _spineTrailSpacing        = spacing;
+            _spineHeadLocalZ          = headLocalZ;
+            _spineBodyLength          = bodyLength;
+            _spineUndulationAmplitude = undulationAmplitude;
+            _spineUndulationWaves     = undulationWaves;
+            _spineUndulationSpeed     = undulationSpeed;
+            _spineDebugStraight       = debugStraight;
+            _spineFlipNormals         = flipNormals;
+            _spineSmoothingWindow     = smoothingWindow;
+            _spineUndulationHeadHold  = undulationHeadHold;
+        }
+
+        /// <summary>
         /// Function should issue a draw call on the GPU using the static mesh instancing method to
         /// render the boids from this spawn group. The data for the position, speed, and rotation 
         /// of each boid instance is contained inside the <paramref name="boidsComputeBuffer"/>.
@@ -164,6 +211,26 @@ namespace OceanX.BoidsGPU
             matProps.SetBuffer("_BoidsRenderInfos", boidSchoolsRenderInfosBuffer);
             matProps.SetInt("_BoidsBufferOffset", _renderingOffset);
             matProps.SetVector("_SimulationAreaCenter", simulationAreaBounds.center);
+
+            // Moray only: hand the head-path trail + spine tuning to the OceanX/Moray_Lit_Instanced
+            // material. matProps is rebuilt every call, so these are (re)bound each frame — which also
+            // lets the undulation/debug tunables be adjusted live in Play mode.
+            if (_hasSpineRenderData && _spineTrailBuffer != null && _spineTrailCursorBuffer != null)
+            {
+                matProps.SetBuffer("_MorayTrail", _spineTrailBuffer);
+                matProps.SetBuffer("_MorayTrailCursor", _spineTrailCursorBuffer);
+                matProps.SetInt("_MorayTrailCount", _spineTrailCount);
+                matProps.SetFloat("_MorayTrailSpacing", _spineTrailSpacing);
+                matProps.SetFloat("_MorayHeadLocalZ", _spineHeadLocalZ);
+                matProps.SetFloat("_MorayBodyLength", _spineBodyLength);
+                matProps.SetFloat("_MorayUndulationAmplitude", _spineUndulationAmplitude);
+                matProps.SetFloat("_MorayUndulationWaves", _spineUndulationWaves);
+                matProps.SetFloat("_MorayUndulationSpeed", _spineUndulationSpeed);
+                matProps.SetInt("_MorayDebugStraight", _spineDebugStraight ? 1 : 0);
+                matProps.SetInt("_MorayFlipNormals", _spineFlipNormals ? 1 : 0);
+                matProps.SetFloat("_MoraySmoothingWindow", _spineSmoothingWindow);
+                matProps.SetFloat("_MorayUndulationHeadHold", _spineUndulationHeadHold);
+            }
 
             // Increase the culling area a bit so that some fish don't randomly
             // disappear when they get close to the edges of the simulation area.

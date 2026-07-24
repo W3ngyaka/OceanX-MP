@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeffc396a2a2c474abc9ea526ba9eb47, type: 3}
   m_Name: Giant moray_MotionRenderProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMotionRenderProperties
-  MinSwimPlaybackSpeed: 0.4
-  MaxSwimPlaybackSpeed: 1.5
+  MinSwimPlaybackSpeed: 0.5
+  MaxSwimPlaybackSpeed: 0.7
   MinSideToSideAmplitude: 0
-  MaxSideToSideAmplitude: 0.5
-  MinYawRotationAmplitude: 0.004
-  MaxYawRotationAmplitude: 0.008
-  MinRollRotationAmplitude: 0.01
-  MaxRollRotationAmplitude: 0.04
-  MinPanningYawAmplitude: 0.01
-  MaxPanningYawAmplitude: 0.03
+  MaxSideToSideAmplitude: 0
+  MinYawRotationAmplitude: 0
+  MaxYawRotationAmplitude: 0
+  MinRollRotationAmplitude: 0.0074
+  MaxRollRotationAmplitude: 0.0074
+  MinPanningYawAmplitude: 0.0179
+  MaxPanningYawAmplitude: 0.0179

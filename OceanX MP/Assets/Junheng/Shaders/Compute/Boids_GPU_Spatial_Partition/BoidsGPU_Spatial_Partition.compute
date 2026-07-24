@@ -105,6 +105,21 @@ StructuredBuffer<BoidSchoolInfo> _BoidSchools;
 // can affect the behavior of the boids.
 StructuredBuffer<Affecter> _Affecters;
 
+// ---- Moray serpentine trail (path-following body) --------------------------------------------
+// A short ring buffer of recent HEAD positions per moray, appended at a fixed arclength spacing so
+// the render shader can lay the long eel body along the path the head actually travelled (instead of
+// rigidly rotating a stiff mesh about its centre). Only the moray species writes here; every other
+// boid ignores it. _MorayGroupId < 0 disables the whole feature (no moray active) and the append is
+// skipped, but the buffers are still bound (an unbound RWStructuredBuffer is a hard error on some
+// platforms). One thread owns one moray, so the ring writes never race.
+RWStructuredBuffer<float4> _MorayTrail;       // xyz = world sample position; length _MorayCount*_MorayTrailCount
+RWStructuredBuffer<int>    _MorayTrailCursor; // newest ring index per moray;    length _MorayCount
+int   _MorayGroupId;       // species group id (low byte of boidID) of the moray; -1 => no moray active
+int   _MorayBufferOffset;  // originalIndex offset of the moray slice in the global buffer
+int   _MorayCount;         // number of moray instances
+int   _MorayTrailCount;    // K ring samples per moray
+float _MorayTrailSpacing;  // metres of head travel between appended samples
+
 float InverseLerp(float minValue, float maxValue, float value)
 {
     return (value - minValue) / (maxValue - minValue);
@@ -1082,7 +1097,32 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     // Based on the swimming motion intensity, update the current time that drives the swimming movement motion.
     // Basically this is the time that is passed into sine functions to offset the vertices in the vertex shsader.
     UpdateSwimMotionTime(boidInfo);
-    
+
+    // ---- Moray trail append --------------------------------------------------------------------
+    // Record this moray's HEAD path so its render shader can trail the body along it. Fixed-distance
+    // append: push a new sample only once the head has moved _MorayTrailSpacing since the last one, so
+    // K samples always span the same arclength (K * spacing metres) whatever the swim speed — a slow
+    // moray rests in a held S-curve, a fast one stretches out, both correct. Uses the FINAL position
+    // (after UpdatePosition + the penetration backstop). ring[cursor] is always the newest sample.
+    if (_MorayGroupId >= 0 && boidGroupId == _MorayGroupId)
+    {
+        int morayLocal = (int)boidInfo.originalIndex - _MorayBufferOffset;
+        if (morayLocal >= 0 && morayLocal < _MorayCount)
+        {
+            int morayBase   = morayLocal * _MorayTrailCount;
+            int cursor      = _MorayTrailCursor[morayLocal];
+            float3 lastSample = _MorayTrail[morayBase + cursor].xyz;
+            float3 delta      = boidInfo.position - lastSample;
+            if (dot(delta, delta) >= _MorayTrailSpacing * _MorayTrailSpacing)
+            {
+                int next = cursor + 1;
+                if (next >= _MorayTrailCount) next = 0;
+                _MorayTrail[morayBase + next] = float4(boidInfo.position, 1.0);
+                _MorayTrailCursor[morayLocal] = next;
+            }
+        }
+    }
+
     // Write the updated boid info into the output boids buffer at the original position of the boid. We need to
     // write to the original position since the rendering shader uses those original positions to render correct meshes.
     _BoidsOutput[boidInfo.originalIndex] = boidInfo;

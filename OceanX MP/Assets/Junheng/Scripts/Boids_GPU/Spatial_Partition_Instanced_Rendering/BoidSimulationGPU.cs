@@ -64,8 +64,86 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         [Min(0.1f)]
         [SerializeField] private float _reefBackstopTurnMultiplier = 3f;
 
+        [Header("Moray serpentine body")]
+        [Tooltip("Number of head-path samples kept per moray (the species with UseSpineDeformation). The trail " +
+                 "auto-spaces itself to cover the whole body (see below), so more samples = a SMOOTHER body, " +
+                 "not a longer one. Changing this only takes effect after a buffer rebuild (add/remove).")]
+        [Min(2)]
+        [SerializeField] private int _moraySpineTrailSampleCount = 48;
+
+        [Tooltip("Metres of head travel between recorded trail samples. 0 = AUTO: derive it from the body " +
+                 "length so the trail always spans the whole eel (bodyLength × 1.15 ÷ (samples-1)). Only set a " +
+                 "value to override. Fixed for a buffer's lifetime (rebuild to change).")]
+        [Min(0f)]
+        [SerializeField] private float _moraySpineTrailSpacingOverride = 0f;
+
+        [Tooltip("Object-space head→tail length of the moray mesh. 0 = auto from the mesh bounds (size along " +
+                 "local Z). Set explicitly only if the auto value looks wrong.")]
+        [SerializeField] private float _moraySpineBodyLengthOverride = 0f;
+
+        [Tooltip("Object-space Z of the moray's head tip. 0 = auto from the mesh bounds (max Z; assumes the " +
+                 "model faces +Z like the other fish). Set explicitly if the head is not at +Z.")]
+        [SerializeField] private float _moraySpineHeadLocalZOverride = 0f;
+
+        [Tooltip("Lateral serpentine swim wave, in METRES of sway at the tail (0 at the head). This is the " +
+                 "moray's actual swimming undulation when going straight. For a ~12-unit eel try 1.5-3. " +
+                 "0 = pure path following (no swim wag). Live-tunable.")]
+        [Min(0f)]
+        [SerializeField] private float _moraySpineUndulationAmplitude = 2f;
+
+        [Tooltip("Number of full wavelengths along the body. A moray shows roughly ONE wave - keep this near " +
+                 "1 (2+ looks buzzy/framey). Live-tunable.")]
+        [Min(0f)]
+        [SerializeField] private float _moraySpineUndulationWaves = 1f;
+
+        [Tooltip("Beat speed (cycles/sec) of the swim undulation. Live-tunable.")]
+        [Min(0f)]
+        [SerializeField] private float _moraySpineUndulationSpeed = 1.2f;
+
+        [Tooltip("Fraction of the body (from the head) kept still, where the swim sway begins ramping in. " +
+                 "Smaller = the wave starts closer to the head; larger = a longer still 'neck'. ~0.03 starts " +
+                 "it just behind the head. Live-tunable.")]
+        [Range(0f, 0.5f)]
+        [SerializeField] private float _moraySpineUndulationHeadHold = 0.03f;
+
+        [Tooltip("Extra arclength (metres) each side used to estimate a body slice's facing direction. " +
+                 "0 = TIGHT: the body follows the local curve and genuinely bends along the path (crisp, but " +
+                 "can jitter when the head is shoved off a rock). Raise a LITTLE (try 0.3-0.8 on a ~12-unit " +
+                 "eel) to low-pass that jitter. Too high decouples orientation from the curve and the body " +
+                 "flattens to a stiff plank. Live-tunable.")]
+        [Min(0f)]
+        [SerializeField] private float _moraySpineSmoothingWindow = 0f;
+
+        // Trail coverage margin: the auto-spaced trail spans this multiple of the body length, so the tail
+        // always has recorded path to sit on even with a little slack.
+        private const float MorayTrailCoverageMargin = 1.15f;
+
+        [Tooltip("Flip the moray's normals. The giant-moray FBX looks like a mirrored / reverse-wound import " +
+                 "(it also needs the shader's Cull Off), which leaves its lit surface facing INWARD - dark, " +
+                 "'absorbing the scene'. ON corrects the lighting. Turn OFF if the eel instead looks correctly " +
+                 "lit without it. Live-tunable.")]
+        [SerializeField] private bool _moraySpineFlipNormals = true;
+
+        [Tooltip("DEBUG: render the moray as the OLD rigid straight eel (LookRotation about the centre, no " +
+                 "spine) so you can A/B compare against the path-following body. Live-tunable.")]
+        [SerializeField] private bool _moraySpineDebugStraight = false;
+
         private ComputeBuffer _sortedBoidsComputeBuffer = null;
         private ComputeBuffer _boidSchoolsRenderInfoBuffer = null;
+
+        // ---- Moray serpentine trail buffers (path-following body) ----------------------------------
+        // Persistent (NOT ping-ponged) ring of recent head positions the kernel appends to and the moray
+        // render shader reads. Created/seeded in InitializeComputeShaderData, released on rebuild/destroy.
+        private ComputeBuffer _morayTrailBuffer       = null;
+        private ComputeBuffer _morayTrailCursorBuffer = null;
+        private BoidSpawnerGPU _moraySpawner = null; // the active UseSpineDeformation spawner, or null
+        private int _morayGroupId      = -1;         // -1 => no moray active this build
+        private int _morayBufferOffset = 0;
+        private int _morayCount        = 0;
+        // Derived once per rebuild and pushed to BOTH the kernel and the material so they never disagree.
+        private float _morayTrailSpacing = 0.1f;
+        private float _morayHeadLocalZ   = 0f;
+        private float _morayBodyLength    = 1f;
 
         private bool _sortedBoidsBufferIsOutput = false;
         private BoidRenderInfoGPU[] _boidSchoolsRenderInfos = null;
@@ -76,6 +154,8 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             base.OnDestroy();
             CleanUpComputeBuffer(ref _sortedBoidsComputeBuffer);
             CleanUpComputeBuffer(ref _boidSchoolsRenderInfoBuffer);
+            CleanUpComputeBuffer(ref _morayTrailBuffer);
+            CleanUpComputeBuffer(ref _morayTrailCursorBuffer);
         }
 
         // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
@@ -166,6 +246,11 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             // Release this class's buffers.
             CleanUpComputeBuffer(ref _sortedBoidsComputeBuffer);
             CleanUpComputeBuffer(ref _boidSchoolsRenderInfoBuffer);
+            // NOTE: the moray trail buffers are deliberately NOT released here. SetupMoraySpineBuffers reuses
+            // them when the moray count is unchanged, so the eel's curled body SURVIVES a rebuild (e.g. a
+            // population tick adding/removing some OTHER species) instead of snapping straight every time.
+            _moraySpawner              = null;
+            _morayGroupId              = -1;
             _boidSchoolsRenderInfos    = null;
             _sortedBoidsBufferIsOutput = false;
 
@@ -358,6 +443,123 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             {
                 _sortedBoidsComputeBuffer.SetData(_boidsInfos);
             }
+
+            SetupMoraySpineBuffers();
+        }
+
+        /// <summary>
+        /// Locates the active serpentine species (the moray, flagged UseSpineDeformation), then creates,
+        /// seeds and binds its head-path trail ring buffers. Always binds valid buffers even when no moray
+        /// is active (_MorayGroupId = -1 disables the kernel append) because an unbound RWStructuredBuffer
+        /// is a hard error on some platforms. Called from InitializeComputeShaderData on every (re)build.
+        /// </summary>
+        private void SetupMoraySpineBuffers()
+        {
+            _moraySpawner = null;
+            _morayGroupId = -1;
+            _morayBufferOffset = 0;
+            _morayCount = 0;
+
+            foreach (BoidSpawnerGPU spawner in _activeSortedSpawners)
+            {
+                if (spawner is BoidSpawnerGPUMultiTargets mt && mt.SpeciesData != null && mt.SpeciesData.UseSpineDeformation)
+                {
+                    _moraySpawner      = spawner;
+                    _morayGroupId      = spawner.BoidGroupId;
+                    _morayBufferOffset = spawner.RenderingOffset;
+                    _morayCount        = spawner.Boids != null ? spawner.Boids.Length : 0;
+                    break;
+                }
+            }
+
+            // Body metrics + auto-spaced trail: span the whole eel across the samples so the tail always has
+            // recorded path to sit on. A body-length-derived spacing is what stops a long eel's body
+            // collapsing onto its head (a fixed small spacing only covered the front of the body).
+            ComputeMorayBodyMetrics(out _morayHeadLocalZ, out _morayBodyLength);
+            int K = Mathf.Max(2, _moraySpineTrailSampleCount);
+            _morayTrailSpacing = _moraySpineTrailSpacingOverride > 0f
+                ? _moraySpineTrailSpacingOverride
+                : Mathf.Max(1e-3f, _morayBodyLength * MorayTrailCoverageMargin / (K - 1));
+
+            int trailLen  = Mathf.Max(1, _morayCount * K);
+            int cursorLen = Mathf.Max(1, _morayCount);
+
+            // Reuse the existing buffers when they are already the right size (i.e. the moray count did not
+            // change across this rebuild). Reusing them PRESERVES the recorded path, so a rebuild triggered
+            // by some other species' population tick no longer snaps the eel's body straight. The trail is
+            // indexed by moray-local index, which is stable while the count is unchanged (position
+            // preservation keeps each eel at the same slot). Only (re)create + straight-seed when the size
+            // actually changes: first build, empty<->active, or the moray itself was added/removed.
+            bool reuse = _morayTrailBuffer != null && _morayTrailBuffer.count == trailLen
+                      && _morayTrailCursorBuffer != null && _morayTrailCursorBuffer.count == cursorLen;
+
+            if (!reuse)
+            {
+                CleanUpComputeBuffer(ref _morayTrailBuffer);
+                CleanUpComputeBuffer(ref _morayTrailCursorBuffer);
+                _morayTrailBuffer       = new ComputeBuffer(trailLen, sizeof(float) * 4);
+                _morayTrailCursorBuffer = new ComputeBuffer(cursorLen, sizeof(int));
+
+                // Seed each moray's ring as a STRAIGHT tail receding behind the head along its heading, so the
+                // body renders as a straight eel from frame one and then relaxes into trailing as the kernel
+                // appends real path samples. (Seeding every sample to the same point would collapse the whole
+                // body onto the head, since the render shader plants each slice at its sampled point.)
+                //
+                // Ring semantics (cursor = 0 at seed): the n-th oldest sample (n = 1 newest .. K oldest) lives
+                // at ring index (1 - n) mod K, and sits n * spacing behind the head. That is exactly the
+                // straight line pos - dir * (n * spacing), which the shader reconstructs as a straight body.
+                if (_morayCount > 0 && _morayGroupId >= 0 && _boidsInfos != null)
+                {
+                    Vector4[] trailSeed  = new Vector4[trailLen];
+                    int[]     cursorSeed = new int[cursorLen];
+                    for (int i = 0; i < _boidsInfos.Length; i++)
+                    {
+                        int gid = BitConverter.SingleToInt32Bits(_boidsInfos[i].BoidID) & 0xFF;
+                        if (gid != _morayGroupId) continue;
+                        int local = (int)_boidsInfos[i].OriginalIndex - _morayBufferOffset;
+                        if (local < 0 || local >= _morayCount) continue;
+
+                        Vector3 p = _boidsInfos[i].Position;
+                        Vector3 d = _boidsInfos[i].Direction;
+                        d = d.sqrMagnitude < 1e-6f ? Vector3.forward : d.normalized;
+
+                        cursorSeed[local] = 0;
+                        for (int n = 1; n <= K; n++)
+                        {
+                            int idx = (((1 - n) % K) + K) % K;
+                            Vector3 sp = p - d * (_morayTrailSpacing * n);
+                            trailSeed[local * K + idx] = new Vector4(sp.x, sp.y, sp.z, 1f);
+                        }
+                    }
+                    _morayTrailBuffer.SetData(trailSeed);
+                    _morayTrailCursorBuffer.SetData(cursorSeed);
+                }
+            }
+
+            // Bind + push the params the kernel needs. Spacing/count are fixed for the buffer's lifetime.
+            _boidsComputeShader.SetBuffer(_boidsKernelId, "_MorayTrail", _morayTrailBuffer);
+            _boidsComputeShader.SetBuffer(_boidsKernelId, "_MorayTrailCursor", _morayTrailCursorBuffer);
+            _boidsComputeShader.SetInt("_MorayGroupId", _morayGroupId);
+            _boidsComputeShader.SetInt("_MorayBufferOffset", _morayBufferOffset);
+            _boidsComputeShader.SetInt("_MorayCount", _morayCount);
+            _boidsComputeShader.SetInt("_MorayTrailCount", K);
+            _boidsComputeShader.SetFloat("_MorayTrailSpacing", _morayTrailSpacing);
+        }
+
+        /// <summary>
+        /// Computes the moray body's head-tip local Z and head→tail length, from the inspector overrides if
+        /// set (non-zero) otherwise from the mesh bounds (length = bounds size Z, head = bounds max Z, which
+        /// assumes the model faces +Z like the other fish).
+        /// </summary>
+        private void ComputeMorayBodyMetrics(out float headLocalZ, out float bodyLength)
+        {
+            Mesh mesh = _moraySpawner != null ? _moraySpawner.SpawnData.BoidMesh : null;
+            headLocalZ = _moraySpineHeadLocalZOverride != 0f
+                ? _moraySpineHeadLocalZOverride
+                : (mesh != null ? mesh.bounds.max.z : 0f);
+            bodyLength = _moraySpineBodyLengthOverride > 0f
+                ? _moraySpineBodyLengthOverride
+                : (mesh != null ? mesh.bounds.size.z : 1f);
         }
 
         /// <inheritdoc/>
@@ -406,6 +608,20 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_Boids", boidsInputDataBuffer);
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_BoidsOutput", boidsOutputDataBuffer);
             _boidsComputeShader.DispatchThreads(_boidsKernelId, _boidsCount);
+
+            // Moray only: refresh the spine render tuning on the moray spawner before it draws, so the
+            // undulation/debug sliders and the mesh-derived body length/head take effect live in Play mode.
+            if (_moraySpawner != null)
+            {
+                // Use the metrics + spacing derived at buffer-setup time (NOT recomputed here) so the material
+                // and the kernel always agree on the ring geometry. Only the undulation/debug tunables are live.
+                _moraySpawner.SetSpineRenderData(
+                    _morayTrailBuffer, _morayTrailCursorBuffer, Mathf.Max(2, _moraySpineTrailSampleCount),
+                    _morayTrailSpacing, _morayHeadLocalZ, _morayBodyLength,
+                    _moraySpineUndulationAmplitude, _moraySpineUndulationWaves, _moraySpineUndulationSpeed,
+                    _moraySpineDebugStraight, _moraySpineFlipNormals, _moraySpineSmoothingWindow,
+                    _moraySpineUndulationHeadHold);
+            }
 
             // Issue an instanced static mesh rendering call to render all boids in the scene.
             // The amount of boids for each group should be known. In order for all boids to be rendered

@@ -40,4 +40,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f86b5c0ecfe17ff46a21606c1b388029, type: 2}
   - {fileID: 11400000, guid: 726d849f72d5e0e49811ea03c3b196c3, type: 2}
   PredatorSpecies: []
+  UseSpineDeformation: 1
   RuntimeId: 7

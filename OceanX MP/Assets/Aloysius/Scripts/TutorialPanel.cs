@@ -29,6 +29,7 @@ public class TutorialPanel : MonoBehaviour
     public bool IsOpen => _open;
     private bool _shownOnce;
     private bool _subscribed;
+    private bool _rearmPending;   // set by ResetForNewSession; cleared in Update once HasStarted is false
 
     void Awake()
     {
@@ -41,12 +42,25 @@ public class TutorialPanel : MonoBehaviour
 
     void Update()
     {
-        if (_subscribed || !showOnStart) return;
+        if (!showOnStart) return;
         var net = EcosystemNetworkManagerGPU.Instance;
         if (net == null) return;
-        _subscribed = true;
-        if (net.HasStarted) TryAutoShow();
-        else net.OnStarted += TryAutoShow;
+
+        // ALWAYS subscribe (not just in the not-started branch). A tablet that joins a session that is
+        // already running receives _hasStarted inside the spawn payload, which lands BEFORE
+        // OnNetworkSpawn wires up OnValueChanged, so OnStarted never fires for it. The HasStarted poll
+        // below is what catches that case; the event covers the normal start-while-connected case.
+        if (!_subscribed) { _subscribed = true; net.OnStarted += TryAutoShow; }
+
+        // After a reset, only re-arm once HasStarted is actually back to false, otherwise the panel can
+        // re-show instantly off the stale true that may still be in flight.
+        if (_rearmPending)
+        {
+            if (!net.HasStarted) { _rearmPending = false; _shownOnce = false; }
+            return;
+        }
+
+        if (!_shownOnce && net.HasStarted) TryAutoShow();
     }
 
     void OnDestroy()
@@ -73,13 +87,14 @@ public class TutorialPanel : MonoBehaviour
 
     // Fresh-start reset: hide the panel and re-arm the "show once on start" latch so the onboarding
     // panel auto-shows again for the NEXT visitor (otherwise _shownOnce stays true forever and it never
-    // reappears). Stays subscribed to OnStarted from its first setup, so the next start re-fires TryAutoShow.
+    // reappears). The re-arm is DEFERRED to Update() until HasStarted is observed false again, so the
+    // panel can't pop straight back up off a stale true while the reset is still propagating.
     public void ResetForNewSession()
     {
         if (_fade != null) { StopCoroutine(_fade); _fade = null; }
         StopAllCoroutines();          // cancel any pending AutoShowAfterDelay / fade
         _fade = null;
-        _shownOnce = false;           // let it auto-show again on the next start
+        _rearmPending = true;         // Update() clears _shownOnce once HasStarted is false again
         SetVisible(false, instant: true);
     }
 

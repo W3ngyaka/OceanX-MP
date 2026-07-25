@@ -26,11 +26,16 @@ public class SpeciesInfoPanel : MonoBehaviour
     public string lockedBadge = "???";
     [TextArea] public string lockedDescription = "This species hasn't been discovered yet. Build the ecosystem to reveal it.";
 
+    [Header("Hint fallback")]
+    [Tooltip("If a species is selected but View Details is never opened, release the hold-for-food-web hint after this many seconds. 0 = require a real details open+close.")]
+    public float detailsHintFallbackSeconds = 8f;
+
     // current selection (for the View Details button)
     private SpeciesData _data;
     private int _index = -1;   // sim species index (for the large-screen bystander mirror)
     private Sprite _cardSprite;
     private int _speciesIndex = -1;
+    private Coroutine _hintFallback;
 
     void Awake()
     {
@@ -65,6 +70,8 @@ public class SpeciesInfoPanel : MonoBehaviour
         // Always show the button when a species is selected; the click handles missing modal/card gracefully.
         if (viewDetailsButton != null)
             viewDetailsButton.gameObject.SetActive(true);
+
+        EnsureHintFallback();   // start the grace period toward releasing the hold hint
     }
 
     // Locked/mystery display: tapped a locked bubble. Hides real data behind '???'.
@@ -96,7 +103,33 @@ public class SpeciesInfoPanel : MonoBehaviour
     void OpenModal()
     {
         if (ModalController.Instance == null || _data == null) return;
+        CancelHintFallback();                   // the real open+close path takes over from here
         ViewedSpeciesReporter.Report(_index);   // mirror to large screen for bystanders
         ModalController.Instance.Open(_data);   // data-driven: modal pulls text + image from the CSV
+    }
+
+    // Safety net for the onboarding chain. The hold-for-food-web hint is gated on a real
+    // View Details open+close (ModalController.Close -> ContextNudge.Advance("details")), so a
+    // visitor who selects a fish but never taps through would never discover the food web at
+    // all. Once a species has been selected, release the gate after a grace period instead.
+    // The clock starts on the FIRST selection and is not restarted by further bubble taps,
+    // otherwise a visitor browsing bubbles would postpone the hint indefinitely.
+    void EnsureHintFallback()
+    {
+        if (_hintFallback != null) return;
+        if (detailsHintFallbackSeconds > 0f && gameObject.activeInHierarchy)
+            _hintFallback = StartCoroutine(DetailsHintFallback());
+    }
+
+    void CancelHintFallback()
+    {
+        if (_hintFallback != null) { StopCoroutine(_hintFallback); _hintFallback = null; }
+    }
+
+    System.Collections.IEnumerator DetailsHintFallback()
+    {
+        yield return new WaitForSecondsRealtime(detailsHintFallbackSeconds);
+        _hintFallback = null;
+        ContextNudge.Advance("details");
     }
 }

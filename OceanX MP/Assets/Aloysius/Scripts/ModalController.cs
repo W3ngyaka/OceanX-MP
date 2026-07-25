@@ -150,6 +150,11 @@ public class ModalController : MonoBehaviour
     public void Close()
     {
         ViewedSpeciesReporter.Clear();
+
+        // The visitor has now read a species panel and closed it again — that is the moment the
+        // hold-to-see-the-food-web hint becomes useful, so release anything gated on 'details'.
+        ContextNudge.Advance("details");
+
         if (DimOverlay != null && dimFader != null)
         {
             DimOverlay.blocksRaycasts = false;

@@ -13,7 +13,7 @@ public class ContextNudge : MonoBehaviour
     [Header("Identity")]
     [Tooltip("Id used to dismiss this nudge (e.g. 'tap', 'hold').")]
     public string id = "tap";
-    [Tooltip("Optional: only start once the nudge with THIS id has been dismissed. Blank = show immediately.")]
+    [Tooltip("Optional gate. Blank = show as soon as the experience starts. Otherwise wait for either the nudge with THIS id to be dismissed, or a matching ContextNudge.Advance(id) milestone (e.g. 'details' = a species panel was opened and closed).")]
     public string showAfterId = "";
     [Tooltip("Don't appear while the HOW TO PLAY panel is open (avoids overlapping it).")]
     public bool waitForTutorialClose = true;
@@ -30,6 +30,7 @@ public class ContextNudge : MonoBehaviour
     private bool _dismissed;
     private bool _started;
     private bool _subscribed;
+    private bool _rearmPending;   // set by ResetForNewSession; cleared in Update once HasStarted is false
     private Coroutine _fade;
 
     void Awake()
@@ -48,12 +49,23 @@ public class ContextNudge : MonoBehaviour
 
     void Update()
     {
-        if (_subscribed) return;
         var net = EcosystemNetworkManagerGPU.Instance;
         if (net == null) return;
-        _subscribed = true;
-        if (net.HasStarted) Begin();
-        else net.OnStarted += Begin;
+
+        // ALWAYS subscribe (not just in the not-started branch). A tablet that joins a session that is
+        // already running receives _hasStarted inside the spawn payload, which lands BEFORE
+        // OnNetworkSpawn wires up OnValueChanged, so OnStarted never fires for it. The HasStarted poll
+        // below is what catches that case.
+        if (!_subscribed) { _subscribed = true; net.OnStarted += Begin; }
+
+        // After a reset, only re-arm once HasStarted is actually back to false.
+        if (_rearmPending)
+        {
+            if (!net.HasStarted) _rearmPending = false;
+            return;
+        }
+
+        if (!_started && !_dismissed && string.IsNullOrEmpty(showAfterId) && net.HasStarted) Begin();
     }
 
     void Begin()
@@ -93,8 +105,18 @@ public class ContextNudge : MonoBehaviour
         Fade(0f);
 
         // Unlock any nudge waiting on this one.
-        foreach (var n in _all)
-            if (n != null && !n._started && !n._dismissed && n.showAfterId == id)
+        Advance(id);
+    }
+
+    // Release the nudges gated on `gateId` via showAfterId. `gateId` is either another nudge's
+    // id (Dismiss calls this automatically) or a plain milestone the game reports itself, for
+    // cases where "the previous hint faded" is not the right moment. ModalController.Close calls
+    // Advance("details") so the hold hint only appears once a species panel has been read AND closed.
+    public static void Advance(string gateId)
+    {
+        if (string.IsNullOrEmpty(gateId)) return;
+        foreach (var n in _all.ToArray())
+            if (n != null && !n._started && !n._dismissed && !n._rearmPending && n.showAfterId == gateId)
             {
                 n._started = true;
                 n.StartCoroutine(n.ShowAfterDelay());
@@ -114,14 +136,16 @@ public class ContextNudge : MonoBehaviour
     }
 
     // Fresh-start reset: cancel any active/pending nudge and clear state/timers so it
-    // behaves as freshly started and re-arms on the next OnStarted (gated nudges still
-    // wait on their prerequisite via showAfterId).
+    // behaves as freshly started and re-arms on the next start (gated nudges still
+    // wait on their prerequisite via showAfterId). The re-arm is deferred in Update()
+    // until HasStarted is observed false again, so the reset can't instantly re-trigger it.
     public void ResetForNewSession()
     {
         StopAllCoroutines();          // cancel a pending ShowAfterDelay / running fade
         _fade = null;
         _dismissed = false;
         _started = false;
+        _rearmPending = true;
         if (group != null) { group.alpha = 0f; group.blocksRaycasts = false; group.interactable = false; }
     }
 

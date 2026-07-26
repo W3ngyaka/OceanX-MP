@@ -27,10 +27,16 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
     public static TabletAddRemoveUIGPU Instance { get; private set; }
 
     [Header("Spam guard")]
-    [Tooltip("Minimum seconds between Add/Remove presses. Blocks accidental double-taps and " +
-             "mashing without hurting deliberate tapping. 0 = off.")]
-    public float addCooldown = 0.3f;
+    [Tooltip("Minimum seconds between Add/Remove presses. Long enough to be shown as a recovery " +
+             "sweep on the button rather than silently swallowing the press. 0 = off.")]
+    public float addCooldown = 1f;
     private float _lastAddTime = -999f;
+
+    /// <summary>Seconds left on the shared add/remove cooldown; 0 when ready. Read by ButtonCooldownOverlay.</summary>
+    public float CooldownRemaining => Mathf.Max(0f, addCooldown - (Time.unscaledTime - _lastAddTime));
+
+    /// <summary>Full cooldown length, so the overlay can normalise its sweep.</summary>
+    public float CooldownDuration => addCooldown;
 
     [Header("Buttons (on the Info screen)")]
     public Button addButton;
@@ -118,7 +124,7 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
 
         int disp = OptimisticPopulationStore.Display(_index);
         int max = net.GetMaxSchools(_index);
-        if (addButton != null)    addButton.interactable    = !(max > 0 && disp >= max) && SelectedUnlocked(); // off at cap or while locked
+    if (addButton != null)    addButton.interactable    = !(max > 0 && disp >= max) && SelectedUnlocked() && CooldownRemaining <= 0f; // off at cap, while locked, or recovering
         if (removeButton != null) removeButton.interactable = disp > 0;                   // off at zero
         if (populationLabel != null) populationLabel.text = disp.ToString();
     }

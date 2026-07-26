@@ -9381,16 +9381,16 @@ MonoBehaviour:
   _exitStopDistance: 1.5
   _tailSwayResponsiveness: 4
   _reefBackstopTurnMultiplier: 3
-  _moraySpineTrailSampleCount: 48
+  _moraySpineTrailSampleCount: 28
   _moraySpineTrailSpacingOverride: 0
   _moraySpineBodyLengthOverride: 0
   _moraySpineHeadLocalZOverride: 0
-  _moraySpineUndulationAmplitude: 2
-  _moraySpineUndulationWaves: 1
-  _moraySpineUndulationSpeed: 1.2
+  _moraySpineUndulationAmplitude: 0.65
+  _moraySpineUndulationWaves: 0.4
+  _moraySpineUndulationSpeed: 0.8
   _moraySpineUndulationHeadHold: 0.03
-  _moraySpineSmoothingWindow: 0
-  _moraySpineFlipNormals: 1
+  _moraySpineSmoothingWindow: 1.2
+  _moraySpineFlipNormals: 0
   _moraySpineDebugStraight: 0
 --- !u!4 &69854444
 Transform:
@@ -98536,9 +98536,9 @@ MonoBehaviour:
   _boidSpawnData:
     BoidsCount: 10
     MinSpawnDistanceBetweenBoids: 0.5
-    BoidMesh: {fileID: 4023981112819473776, guid: 09b07def93206674c838a112bb9c6e43, type: 3}
-    BoidMaterial: {fileID: 2100000, guid: 5cb625ec19658aa4db5014d6bad643d3, type: 2}
-    BoidEyeMaterial: {fileID: 0}
+    BoidMesh: {fileID: -5495902117074765545, guid: dedbc5c2bfc257945bcc7067f0ebc5e7, type: 3}
+    BoidMaterial: {fileID: 2100000, guid: 39773805f62ba064ca2d09e2f702e263, type: 2}
+    BoidEyeMaterial: {fileID: 2100000, guid: 5d5b00a7955dac84b912a0370c1f8127, type: 2}
     FishSchoolProperties: {fileID: 11400000, guid: c9d02622afc8d50409cc9651e7903922, type: 2}
     Targets:
     - {fileID: 0}

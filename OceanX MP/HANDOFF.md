@@ -512,6 +512,7 @@ Eco-health-gated species unlock system (singleton). Ports the prototype's gate m
 - **`BoidSpawnerGPU.SetSpineRenderData(...)`** — 13-arg API called by `BoidSimulationGPU` every frame for the moray spawner. Feeds the material's `MaterialPropertyBlock` a set of `_Moray*` props: `_MorayTrail` (SRV to head-path buffer), `_MorayTrailCursor` (SRV to per-instance cursor), plus `_MorayTrailCount`, `_MorayTrailSpacing`, `_MorayHeadLocalZ`, `_MorayBodyLength`, `_MorayUndulation{Amplitude,Waves,Speed,HeadHold}`, `_MorayDebugStraight`, `_MorayFlipNormals`, `_MoraySmoothingWindow`. Vertex shader uses these to lay each eel's body along its recorded head-path (proper eel-like undulation, not a rigid mesh).
 - All values re-bound each frame → live-tunable in Play mode.
 - Untouched (and unbound) for every other spawner — no impact on the standard rigid fish path.
+- **Akil owns the moray tuning** — he authored the mesh + shader and drives the `_moraySpine*` values on `BoidSimulationGPU`. `SCENE_MainScene.unity` mirrors his `SCENE_MainScene 2.unity` values; sync from his scene when he changes them.
 
 **Environment coral health reveal shader (Akil, 2026-07-16 → 07-18):**
 - **`OceanX/CoralHealth`** — corals stay full-size and regain colour from a **bleached/dead** look as eco-health rises. `EnvironmentHealthReveal` drives `_Health` 0→1 via per-item `MaterialPropertyBlock` (cached so it doesn't clobber other overrides). `recoverStagger` spreads recovery across a group.

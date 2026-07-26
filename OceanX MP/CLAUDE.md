@@ -1,4 +1,6 @@
-# OceanX MP — Claude Context
+# Restore the Reef — Claude Context
+
+_Formerly named OceanX MP / Balance the Ocean — renamed to Restore the Reef 2026-07-26._
 
 ## What this project is
 An interactive Unity ocean ecosystem simulation built as an educational tool.

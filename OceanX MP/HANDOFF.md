@@ -1,29 +1,160 @@
-# OceanX MP — Handoff Document
-_Last updated: 2026-07-24_
+# Restore the Reef — Handoff Document
+
+_Last updated: 2026-07-26_
+
+> This is the single source of truth for the project. Update the date above whenever you edit this file.
+> Formerly named **OceanX MP** / **Balance the Ocean** — renamed to **Restore the Reef** 2026-07-26.
 
 ---
 
-## Project Goal
+## Table of Contents
 
-An interactive Unity ocean ecosystem simulation built as an **educational tool**.
+1. [Introduction](#1-introduction)
+2. [How to Use It](#2-how-to-use-it)
+3. [Sprint Plan Status](#3-sprint-plan-status)
+4. [Species List & Food Chain](#4-species-list--food-chain)
+5. [Codebase Structure](#5-codebase-structure)
+6. [Scene Architecture](#6-scene-architecture)
+7. [What Has Been Implemented](#7-what-has-been-implemented)
+8. [Prototype Specification](#8-prototype-specification)
+9. [Things Tried That Didn't Work — Avoid](#9-things-tried-that-didnt-work--avoid)
+10. [Known Issues / Watchpoints](#10-known-issues--watchpoints)
+11. [What Needs Building Next / To Do](#11-what-needs-building-next--to-do)
+12. [Reference — Population Dynamics Values](#12-reference--population-dynamics-values)
+13. [Reference — Scene Setup](#13-reference--scene-setup)
+14. [Team Structure](#14-team-structure)
+
+---
+
+# 1. Introduction
+
+## What the project is
+
+An interactive Unity ocean ecosystem simulation built as an **educational tool** for a museum/exhibit setting.
 
 **Problem it solves:** Lack of experiential learning tools limits ocean literacy and systems thinking.
 
 **What the user does:**
-- Opens a Food Chain view (icon → overlay) and clicks animals to read species info
-- Adds or removes marine species using UI buttons
-- Watches cascading effects unfold in real time
+- Opens a Food Chain view (icon → overlay) and taps animals to read species info.
+- Adds or removes marine species using UI buttons on a tablet.
+- Watches cascading effects unfold in real time on a big trifold screen.
 
 **What they learn:**
-- Marine ecosystems are interconnected systems
-- Sharks (apex predators) are critical to maintaining balance
-- Removing one species causes a chain reaction across the food chain
+- Marine ecosystems are interconnected systems.
+- Sharks (apex predators) are critical to maintaining balance.
+- Removing one species causes a chain reaction across the food chain.
 
-**Core demo moment:** Remove the blacktip reef shark → groupers and barracuda overpopulate → primary consumers collapse from over-predation → secondary consumers starve and collapse too.
+**Core demo moment:** Remove the blacktip reef shark → groupers and barracuda overpopulate → primary consumers collapse from over-predation → secondary consumers starve and collapse too. From a healthy 100% reef: **remove the shark → the bar drops straight to 73%.** One tap, and a quarter of the reef's health is gone. That's the whole point of the exhibit: the shark isn't a danger to the reef; it's what holds it together. Add it back → straight to 100%.
+
+## Hardware setup
+
+| Device | Role | Runs |
+|--------|------|------|
+| PC (Windows) | **Host** — GPU simulation authority | Big-screen (trifold) build; hosts the netcode session |
+| Android tablet | **Client** — visitor UI | Tablet build; connects to host over LAN |
+| Trifold display | Big-screen output | Attached to the host PC; shows the simulation, Alucia, reveal cards |
+
+Both devices must be on the **same WiFi** network. If the venue WiFi doesn't cooperate, use a hotspot or personal WiFi.
 
 ---
 
-## Sprint Plan Status
+# 2. How to Use It
+
+## Connecting
+
+1. Run the **Host** build on the PC.
+2. Run the **Tablet** build on the Android tablet.
+3. Both devices must be on the same WiFi.
+4. The tablet **auto-discovers the PC** via UDP broadcast: it shows "Searching…" then "Connected!"
+5. If it can't find it: use a hotspot or personal WiFi (venue WiFi sometimes blocks broadcast).
+
+## Using the tablet
+
+### Food Web tab
+
+- **Tap** a fish → opens its info card: Name, Role, short Description, and **[+]** button.
+- Click **"View Details"** on the info card to see more information.
+- **Hold** a fish → reveals its food chain (who it eats + what eats it).
+- Add fish with **[+]**.
+- Everything is counted in **groups**, not individual fish. **One tap = one group.**
+
+### Ecosystem tab
+
+- Shows everything currently living in the reef.
+- Remove fish with **[−]**.
+
+### Hints panel
+
+- Tells the player what the next locked fish is waiting for.
+- ⚠ **Try not to spam add/remove** — the UI struggles to keep up (there's a 0.3s add cooldown to stop accidental double-taps; still under investigation).
+
+## Unlocking
+
+- Player starts with the **five plant-eaters** — everything else is **locked**.
+- A locked fish is waiting for two things: **its food already in the water** AND the reef **healthy enough**.
+- Build the bottom of the food chain, and the hunters unlock on their own. Check the **Hints** tab if something is missing.
+- Watch the **big screen**: when a fish unlocks, or when a species is added for the first time, a **reveal card** appears announcing it.
+
+## Using the host (big screen)
+
+### Start
+
+- The ecosystem is **destroyed at the start** of the experience — no coral, no vegetation.
+- Add fish and balance the food web to help fix the ecosystem.
+- Alucia introduces herself and asks for the player's help to fix the ecosystem.
+
+### Warnings
+
+Alucia warns the player when something's off balance:
+- **Overpopulated** — too many of one fish, not enough predators to keep it in check.
+- **Starving / Underpopulated** — not enough food to go around.
+- She also gives hints from time to time.
+
+The health bar reacts the moment a player taps. Nothing changes on its own, so the player is always in control.
+
+## Getting to 100%
+
+Once everything is unlocked, this exact mix gives 100% eco-health:
+
+**The hunters — exactly 1 group each:**
+
+| Fish | Groups |
+|------|:---:|
+| Blacktip reef shark | 1 |
+| Brown-marbled grouper | 1 |
+| Giant moray | 1 |
+| Bluefin trevally | 1 |
+| Russell's snapper | 1 |
+| Yellowstripe scad | 1 |
+
+**The smaller fish (grazers) — range:**
+
+| Fish | Groups |
+|------|:---:|
+| Reticulated damselfish | 6 |
+| Fringelip mullet | 5–6 |
+| Eyestripe surgeonfish | 5–7 |
+| Bullethead parrotfish | 4–10 |
+| Streaked spinefoot | 4–8 |
+| Bluespotted ribbontail ray | 1–4 |
+
+Each grazer can range from its "predator-count" floor up to its cap and stay at 100%; the 7 hunters are locked at 1 (each extra predator raises the grazers' floor).
+
+## Operator controls (reset for next visitor)
+
+Hold **F9** on the host for ~1.5 seconds → the reset chain runs, hidden behind a **SpongeBob-style bubble wipe** on the big screen.
+
+- Ocean empties (all species → 0 schools).
+- Species re-lock to the 5 starters.
+- Eco-health drops to 0.
+- Both screens return to the "Tap to Start" attract state.
+- Intro is re-armed for the next visitor.
+
+The tablet flips back to the title screen (no bubble wipe on the tablet — just the flip).
+
+---
+
+# 3. Sprint Plan Status
 
 | Week | Sprint | Status |
 |------|--------|--------|
@@ -32,43 +163,39 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 | 3 | Core simulation manager + species data system | ✅ Done |
 | 4 | Spawning, removal, population tracking | ✅ Done |
 | 5 | Food chain relationships + predator-prey logic | ✅ Done |
-| 6 | Population growth/decline + ecosystem health system | ✅ Done — ratio-driven predator-prey dynamics + eco-health score (GPU side) |
-| 7 | Cascading effects + ecosystem state machine + codebase cleanup | 🔶 Partial — GPU cascade done, state machine not started, dead code removed |
-| 8 | Movement systems — flocking + predator behaviour | ✅ Done (completed Week 5) |
-| 9 | Event system + integration hooks for UI | 🔶 Partial — start-at-zero/extinction done; bounds derived from sim area; unlock C# events wired (`OnSpeciesUnlocked` / `OnUnlockStateChanged`); population/health/state events still partial |
+| 6 | Population growth/decline + ecosystem health system | ✅ Done — ratio-driven predator/prey dynamics + eco-health score |
+| 7 | Cascading effects + ecosystem state machine + codebase cleanup | 🔶 Partial — GPU cascade done, formal state-machine enum not built (health-band Alucia reactions cover it), CPU layer removed |
+| 8 | Movement systems — flocking + predator behaviour | ✅ Done (completed Week 5 in the schedule) |
+| 9 | Event system + integration hooks for UI | ✅ Done — start-at-zero/extinction, netcode + tablet add/remove, C# events (species / unlock / health-band) all wired |
 | 10 | Preset scenarios + complete core system | ❌ Not started |
 | 11 | Debugging, testing, system balancing | ❌ Not started |
 | 12 | Final optimisation, bug fixing, project completion | ❌ Not started |
 
 ---
 
-## Species List & Food Chain
+# 4. Species List & Food Chain
 
-> ✅ **CANONICAL species list (confirmed by JunHeng, 2026-06-12).** This table is now the single source of truth. The data assets and prototype must be aligned to it.
->
-> **Asset delta — ✅ applied (2026-06-18):**
-> - ➕ **Giant moray** (*Gymnothorax javanicus*) — data assets created and wired ✓
-> - ➖ **Great barracuda** — dropped from the roster (excluded from the wired set) ✓
-> - All 12 species now have data assets ✓
->
-> **Superseded names** (do not use): Humphead wrasse, Crescent grunter, Lined surgeonfish (never had assets); Great barracuda (removed). The **prototype** (`oceanx-prototype.html`) still uses placeholder names (Striped Mullet, Convict Surgeonfish, Reef Manta Ray, Malabar Grouper…) — these were **remapped to this canonical list when the unlock system was wired (2026-06-18)**.
->
-> **✅ Live sim now runs all 12 species** — `EcosystemDefinitionGPU.asset` has the full roster wired in fixed order, each with a matching `BoidSpawnerGPUMultiTargets` in `BoidSimulationGPU._gpuBoidSpawners`. (The old "1 species / Clownfish only" state is resolved.)
->
-> _Prey/predator columns below follow the game's tier-based cascade design (apex eats all below; each tier eats the tiers beneath it). Confirm the exact per-species prey/predator lists when filling in each `SpeciesDataGPU` asset._
+**Canonical species list — confirmed by JunHeng, 2026-06-12.** This table is the single source of truth. Data assets and prototype must align to it.
+
+**All 12 species have data assets.** `EcosystemDefinitionGPU.asset` has the full roster wired in fixed order, each with a matching `BoidSpawnerGPUMultiTargets` in `BoidSimulationGPU._gpuBoidSpawners`.
+
+**Superseded names — do not use:** Humphead wrasse, Crescent grunter, Lined surgeonfish (never had assets); Great barracuda (removed 2026-06-18). The prototype (`oceanx-prototype.html`) still uses placeholder names (Striped Mullet, Convict Surgeonfish, Reef Manta Ray, Malabar Grouper…) — these were **remapped to this canonical list when the unlock system was wired**.
 
 ### Keystone Species
+
 | Species | Scientific Name | Preys On | Preyed Upon By |
 |---------|----------------|----------|----------------|
 | Blacktip reef shark | *Carcharhinus melanopterus* | All species below | — |
 
 ### Tertiary Consumers
+
 | Species | Scientific Name | Preys On | Preyed Upon By |
 |---------|----------------|----------|----------------|
 | Brown-marbled grouper | *Epinephelus fuscoguttatus* | Secondary + primary consumers | Blacktip reef shark |
 | Giant moray | *Gymnothorax javanicus* | Secondary + primary consumers (nocturnal ambush) | Blacktip reef shark |
 
 ### Secondary Consumers
+
 | Species | Scientific Name | Preys On | Preyed Upon By |
 |---------|----------------|----------|----------------|
 | Bluefin trevally | *Caranx melampygus* | Primary consumers, small fish | Blacktip reef shark, Brown-marbled grouper, Giant moray |
@@ -77,6 +204,7 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 | Bluespotted ribbontail ray | *Taeniura lymma* | Benthic crustaceans, mollusks, worms | Blacktip reef shark |
 
 ### Primary Consumers
+
 | Species | Scientific Name | Preys On | Preyed Upon By |
 |---------|----------------|----------|----------------|
 | Fringelip mullet | *Crenemugil crenilabis* | Algae and organic detritus | Blacktip reef shark, Brown-marbled grouper, Giant moray, Bluefin trevally |
@@ -85,721 +213,324 @@ An interactive Unity ocean ecosystem simulation built as an **educational tool**
 | Eyestripe surgeonfish | *Acanthurus dussumieri* | Algae, detritus | Blacktip reef shark, Brown-marbled grouper, Giant moray, Bluefin trevally |
 | Reticulated damselfish | *Dascyllus reticulatus* | Algae, zooplankton, small invertebrates | Blacktip reef shark, Brown-marbled grouper, Giant moray, Bluefin trevally |
 
-**Total: 12 species** — 1 Keystone, 2 Tertiary, 4 Secondary, 5 Primary
+**Total: 12 species** — 1 Keystone, 2 Tertiary, 4 Secondary, 5 Primary.
+
+> ⚠ **Streaked spinefoot = "rabbitfish"** — *Siganus javus* is commonly called the rabbitfish, so the mesh/folder churn naming it `rabbitfish.fbx` (and akeel-h's *"FBX changes for damselfish and rabbitfish"* commit) is the **same species**, not a new one.
 
 ---
 
-## Codebase Structure
+# 5. Codebase Structure
 
-The dead Ecosystem CPU layer has been removed. The active product runs entirely on the GPU simulation pipeline.
-
-> ⚠ **Verified against the actual tree (2026-06-12; every one of the 58 scripts re-read & re-verified 2026-07-08).** All simulation scripts live directly under `Assets/Junheng/Scripts/` — the old `Junheng/Ecosystem/Scripts/` and `Junheng/Simulation/Scripts/` split no longer exists, and there is no `03_` prefix on the spatial-partition folder. The 2026-07-08 audit added `EcosystemTargetGPU` / `EcosystemUnlockManagerGPU` / `EcosystemDebugHarnessGPU` / `FishEntryPointGPU` / `OptimisticPopulationStore` to the tree below and removed the now-deleted `WanderingAffecterGPU` (replaced by `EcosystemTargetGPU`). See the 2026-07-08 audit note for details.
+The dead Ecosystem CPU layer has been removed. The active product runs entirely on the GPU simulation pipeline. All simulation scripts live directly under `Assets/Junheng/Scripts/` — the old `Junheng/Ecosystem/Scripts/` and `Junheng/Simulation/Scripts/` splits no longer exist, and there is no `03_` prefix on the spatial-partition folder.
 
 ```
 Assets/Junheng/
 ├── Scripts/
-│   ├── DualMonitor.cs                Activates Display 2 (Spacedesk/iPad) on startup
+│   ├── DualMonitor.cs                            Activates Display 2 (Spacedesk/iPad) on startup
 │   ├── Boids_GPU/
 │   │   ├── AffecterGPU.cs
-│   │   ├── BoidInfoGPU.cs
+│   │   ├── BoidInfoGPU.cs                        Per-boid struct — 18 floats incl. SignedTurnRate (for ray tail-sway)
 │   │   ├── BoidRenderInfoGPU.cs
 │   │   ├── BoidSchoolInfoGPU.cs
-│   │   ├── BoidSimulationBaseGPU.cs
+│   │   ├── BoidSimulationBaseGPU.cs              Abstract GPU sim base — owns shared compute buffers
 │   │   ├── BoidSimulationTargetAnimatorsSpawner.cs
-│   │   ├── BoidSpawnerGPU.cs
-│   │   ├── BoidSpawnerGPUMultiTargets.cs   Active spawner used in Boids_Demo
+│   │   ├── BoidSpawnerGPU.cs                     GPU spawner — position preservation + moray spine render hooks
+│   │   ├── BoidSpawnerGPUMultiTargets.cs         Active spawner used in production scenes
 │   │   ├── BoidSwirlSpawnerGPU.cs
 │   │   ├── Ecosystem/
-│   │   │   ├── EcosystemDefinitionGPU.cs   Species list + simulation bounds asset
-│   │   │   ├── EcosystemSimulationGPU.cs   Population tick + start-at-zero add/remove + entry/exit swim-in-out
-│   │   │   ├── EcosystemTargetGPU.cs       Per-school swim target (ParkAt drives swim-out) — REPLACED the deleted WanderingAffecterGPU
-│   │   │   ├── EcosystemUnlockManagerGPU.cs Eco-health/prey-gated species unlock system (singleton); prod replacement for Aloysius's GameState
-│   │   │   ├── EcosystemDebugHarnessGPU.cs  In-editor OnGUI add/remove panel (no netcode) — dev-only test harness
-│   │   │   ├── FishEntryPointGPU.cs         Marker for off-screen entry/exit points; schools swim in / out via these (auto-registers)
-│   │   │   ├── IntroductionCameraDirectorGPU.cs  Cinemachine — catches a species' first school at its gate & follows it in (0→1 only); host-only (added 2026-07-17)
-│   │   │   ├── EcosystemUIAdapterGPU.cs    UI→GPU bridge — ⚠ DEAD (zero external refs, confirmed 2026-07-08); safe to delete
-│   │   │   ├── SpeciesBehaviorPropertiesGPU.cs  Flee/hunt/hunger SO (⚠ currently UNREAD by runtime — see flee-gap note)
-│   │   │   └── SpeciesDataGPU.cs           Per-species SoT: Role, ScientificName, School/Movement/MotionRender/Behavior props, PathStyle, prey/predator lists, FishPerSchool, MaxSchools
+│   │   │   ├── EcosystemDefinitionGPU.cs         Species list + simulation bounds asset
+│   │   │   ├── EcosystemSimulationGPU.cs         Population tick + start-at-zero add/remove + entry/exit swim-in-out
+│   │   │   ├── EcosystemTargetGPU.cs             Per-school swim target (ParkAt drives swim-out) — REPLACED WanderingAffecterGPU
+│   │   │   ├── EcosystemUnlockManagerGPU.cs      Eco-health/prey-gated species unlock system (singleton)
+│   │   │   ├── EcosystemDebugHarnessGPU.cs       In-editor OnGUI add/remove panel (no netcode) — dev-only
+│   │   │   ├── FishEntryPointGPU.cs              Off-screen entry/exit markers; schools swim in/out via these (auto-registers)
+│   │   │   ├── IntroductionCameraDirectorGPU.cs  Cinemachine — catches a species' first school at its gate & follows it in (0→1 only); host-only
+│   │   │   ├── EcosystemUIAdapterGPU.cs          UI→GPU bridge — ⚠ DEAD (zero external refs, confirmed 2026-07-08); safe to delete
+│   │   │   ├── SpeciesBehaviorPropertiesGPU.cs   Flee/hunt/hunger SO (⚠ currently UNREAD by runtime — see flee-gap note in §9)
+│   │   │   └── SpeciesDataGPU.cs                 Per-species SoT: Role, ScientificName, School/Movement/MotionRender/Behavior props, PathStyle, prey/predator lists, FishPerSchool, MaxSchools, UseSpineDeformation
 │   │   ├── GPU_Spatial_Partition/
-│   │   │   └── SpatialPartitionGPU.cs      GPU spatial grid compute shader wrapper
+│   │   │   └── SpatialPartitionGPU.cs            GPU spatial grid compute shader wrapper
 │   │   └── Spatial_Partition_Instanced_Rendering/
-│   │       └── BoidSimulationGPU.cs        Active GPU simulation + ReinitializeBuffers()
-│   ├── Boids_CPU/                   Only two files remain — used by GPU base classes
-│   │   ├── BoidInformation.cs       Per-boid movement state struct (used by FishSwimmingUtility)
-│   │   └── BoidSpawnData.cs         Spawn config struct (used by BoidSpawnerBase)
-│   ├── Automatic_Fish_Swimming_CPU/   ⚠ Legacy single-fish CPU demo — no C# refs, but GameObjects using these still sit in several scenes (incl. Boids_Demo); disabled leftovers, LOOK before deleting
+│   │       └── BoidSimulationGPU.cs              Active GPU simulation + ReinitializeBuffers() + moray trail buffer + reef backstop turn tunable
+│   ├── Boids_CPU/                                Only two files remain — used by GPU base classes
+│   │   ├── BoidInformation.cs                    Per-boid movement state struct (used by FishSwimmingUtility)
+│   │   └── BoidSpawnData.cs                      Spawn config struct (used by BoidSpawnerBase)
+│   ├── Automatic_Fish_Swimming_CPU/              ⚠ Legacy single-fish CPU demo — no C# refs, BUT GameObjects using these still sit in several scenes (incl. Boids_Demo, MainScene, SCENE_MainScene 1). Disabled leftovers — LOOK before deleting (script-GUID grep, not just C# grep)
 │   │   ├── AutomaticFishSwimSimulation.cs
 │   │   └── AutomaticFishSwimming.cs
 │   ├── Networking/
-│   │   ├── BubbleSelectHook.cs              Per-bubble tap → selects species in TabletAddRemoveUIGPU (no SpeciesBubble edits)
-│   │   ├── ConnectionScreenUI.cs           Client IP input + connect button
-│   │   ├── EcosystemNetworkManagerGPU.cs   Syncs school counts + max-schools + eco-health via NetworkList/NetworkVariable, add/remove RPCs
-│   │   ├── HostSpawner.cs                  Spawns net-manager prefab on server start (⚠ likely redundant — NetworkBootstrap also spawns it)
-│   │   ├── LanDiscovery.cs                 UDP broadcast — tablet auto-finds host on WiFi
-│   │   ├── NetworkBootstrap.cs             Host/Client role setup, starts NGO, spawns net-manager
-│   │   ├── OptimisticPopulationStore.cs    Client-side optimistic count overlay — pending taps over synced counts so the tablet number updates instantly (per-species-index; fixes remove-lag / snap-back)
-│   │   ├── TabletAddRemoveUIGPU.cs          Singleton Add/Remove controller — fires RPCs, greys at cap/0, reads display counts via OptimisticPopulationStore
-│   │   └── TabletEcosystemUIGPU.cs         Pure species→index lookup service
-│   ├── Shader_GUI/Editor/          Custom material inspectors for the Fish_Lit shaders
+│   │   ├── BubbleSelectHook.cs                   Per-bubble tap → selects species in TabletAddRemoveUIGPU (no SpeciesBubble edits)
+│   │   ├── BubbleTransition.cs                   Procedural bubble-wipe overlay used by ExhibitReset (big-screen only)
+│   │   ├── ConnectionScreenUI.cs                 Client IP input + connect button
+│   │   ├── EcosystemNetworkManagerGPU.cs         Syncs school counts + max-schools + eco-health + species status via NetworkList/NetworkVariable, add/remove/reset RPCs
+│   │   ├── ExhibitReset.cs                       Operator F9 trigger + host wipe sequence + DoLocalReset on both screens
+│   │   ├── HostSpawner.cs                        ⚠ DEAD — zero refs anywhere (verified). Safe to delete
+│   │   ├── LanDiscovery.cs                       UDP broadcast — tablet auto-finds host on WiFi
+│   │   ├── NetworkBootstrap.cs                   Host/Client role setup, starts NGO, spawns net-manager
+│   │   ├── OptimisticPopulationStore.cs          Client-side optimistic count overlay — pending taps over synced counts so the tablet number updates instantly (per-species-index; fixes remove-lag / snap-back)
+│   │   ├── TabletAddRemoveUIGPU.cs               Singleton Add/Remove controller — fires RPCs, greys at cap/0, reads display counts via OptimisticPopulationStore, add cooldown, locked-species blocking
+│   │   └── TabletEcosystemUIGPU.cs               Pure species→index lookup service
+│   ├── Shader_GUI/Editor/                        Custom material inspectors for the Fish_Lit shaders (namespace: OceanX, formerly GameDevBuddies)
 │   │   ├── FishLitBaseShaderGUI.cs / FishLitDetailGUI.cs / FishLitShaderGUI.cs
 │   │   ├── FishSwimmingGUI.cs / MaterialAccess.cs / Property.cs / ShaderUtils.cs
+│   ├── Content/
+│   │   ├── ContentService.cs                     Downloads CSVs at launch → caches to persistentDataPath → falls back to StreamingAssets → hardcoded. Follows Google's 307 redirect (redirectLimit=32)
+│   │   ├── CsvUtil.cs                            One robust RFC-4180 parser (quotes, commas, embedded newlines) shared by both loaders. Quote-only-at-field-start bugfix
+│   │   └── AluciaEcologyEvents.cs                Polls sim, detects species starving/overpredated/overpopulated/extinct/added → speaks matching CSV line via AluciaController.Say
+│   ├── Environment/
+│   │   └── EnvironmentHealthReveal.cs            Reads EcosystemSimulationGPU.EcoHealth01 → drives per-item MaterialPropertyBlock/scale — corals grow in/retract with health
 │   ├── Other/
 │   │   ├── BoundsComparer.cs
 │   │   ├── ComputeShaderExtensions.cs
-│   │   ├── TransformAnimator.cs
+│   │   ├── TransformAnimator.cs                  Animates target transforms along Line / Circle / Rectangle paths
 │   │   ├── TransformAnimatorSpeedCorrection.cs
 │   │   └── TransformFollow.cs
 │   └── Shared/
 │       ├── BoidSimulationBase.cs
-│       ├── BoidSpawnerBase.cs            SchoolCount/IsActive + SetSchoolConfiguration
+│       ├── BoidSpawnerBase.cs                    SchoolCount/IsActive + SetSchoolConfiguration
 │       ├── BoidSpawnUtility.cs
 │       ├── FishMotionRenderProperties.cs
 │       ├── FishMovementProperties.cs
 │       ├── FishSchoolProperties.cs
-│       ├── FishSwimmingMaterialUpdate.cs   drives shader animation from speed
+│       ├── FishSwimmingMaterialUpdate.cs         Drives shader animation from speed
 │       ├── FishSwimmingUtility.cs
 │       ├── GlobalAffectersInjector.cs
 │       ├── GroupOfBoidsSpawnData.cs
 │       ├── SimulationAffecter.cs
 │       └── SimulationAffecterComponent.cs
 ├── Shaders/
-│   ├── Compute/                     Brute-force + spatial-partition + grid compute shaders
-│   └── Fish/                        Fish_Lit + Fish_Lit_Instanced shaders
-├── Data/                            EcosystemDefinitionGPU.asset + Fish/ species assets
-├── Scenes/                          Boids_Demo, Netcode Simulation Test, Swirl_Demo
-├── Prefabs/ · Settings/ · Visual/   Prefabs, URP/build settings, materials/meshes/textures
+│   ├── Compute/                                  Brute-force + spatial-partition + grid compute shaders (incl. reef-SDF backstop, capped-turn helpers)
+│   └── Fish/                                     Fish_Lit + Fish_Lit_Instanced shaders + moray-specific spine shader hooks
+├── Data/
+│   ├── Fish/                                     12 folders (canonical species) — each with SpeciesDataGPU + FishSchool/Movement/MotionRender/Behavior props
+│   └── Models/                                   Real fish meshes (imported 2026-07-07 onwards)
+├── Scenes/                                       SCENE_MainScene (canonical host), Boids_Demo (older host), Netcode Simulation Test (older tablet client), Swirl_Demo
+├── Prefabs/ · Settings/ · Visual/                Prefabs, URP/build settings, materials/meshes/textures
 
-Assets/Aloysius/                     UI team (see "Weeks 7–8 — UI Team" section)
-└── Scripts/  (grown well past the original 6 — verified 2026-07-01)
-    Core UI:    SpeciesBubble.cs · ModalController.cs · SpeciesInfoPanel.cs · TabController.cs · SwipeToClose.cs · DimFader.cs
-    Food web:   FoodWebLines.cs · FoodWebDragReveal.cs · CurrentOrganismsGrid.cs · OrganismCardData.cs
-    Health:     Health.cs (client/netcode bar) · HealthBarBinder.cs (host/large-screen bar, reads EcosystemSimulationGPU.EcoHealth01 direct) · EcoHealthDashboard.cs · EcoHealthChassis.cs
-    Unlock:     GameState.cs + UnlockTester.cs (Aloysius placeholders) · LockedHintPanel.cs · SpeciesUnlockReveal.cs · NotificationManager.cs (used by JunHeng's EcosystemUnlockManagerGPU)
-    NPC/FX:     AluciaController.cs · GodRays.cs · MarineSnow.cs · SonarPulse.cs · Bob.cs
-    Data link:  SpeciesData.cs (UI asset — carries the gpuSpecies → SpeciesDataGPU link)
+Assets/Aloysius/                                  UI team
+└── Scripts/
+    Core UI:        SpeciesBubble.cs · ModalController.cs · SpeciesInfoPanel.cs · TabController.cs · SwipeToClose.cs · DimFader.cs
+    Food web:       FoodWebLines.cs · FoodWebDragReveal.cs · CurrentOrganismsGrid.cs · OrganismCardData.cs
+    Health:         Health.cs (client/netcode bar) · HealthBarBinder.cs (host/large-screen bar, reads EcosystemSimulationGPU.EcoHealth01 direct) · EcoHealthDashboard.cs · EcoHealthChassis.cs
+    Unlock:         GameState.cs + UnlockTester.cs (Aloysius placeholders) · LockedHintPanel.cs · SpeciesUnlockReveal.cs · NotificationManager.cs (used by JunHeng's EcosystemUnlockManagerGPU)
+    Reveal:         SpeciesAddedReveal.cs · RevealQueue.cs
+    NPC/FX:         AluciaController.cs · AluciaLines.cs · GodRays.cs · MarineSnow.cs · SonarPulse.cs · Bob.cs
+    Onboarding:     TutorialPanel.cs · ContextNudge.cs · HideUntilStarted.cs · StartCrossfade.cs · ExperienceStartGate.cs
+    Title/Win:      FishSwim.cs (title screen) · WinCondition.cs · WinScreen.cs · SplashSequence.cs
+    Audio:          UISoundManager.cs · AdaptiveMusicSystem.cs · Editor/AdaptiveMusicSetup.cs (replaced deleted MusicDirector.cs)
+    Data link:      SpeciesData.cs (UI asset — carries the gpuSpecies → SpeciesDataGPU link; unlock config lives here)
+    Content DBs:    SpeciesContentDB.cs · RevealContentDB.cs · ViewedSpeciesReporter.cs
+
+Assets/Akil/                                      Scene environment / 3D art
+└── Assets/                                       Fish FBXs (shark, ray, damselfish, parrotfish, surgeonfish, spinefoot/rabbitfish, snapper, moray) + textures + materials
+└── Scenes/                                       SCENE_MainScene 2.unity (Akil's environment) + SCENE_MainSceneBackup.unity
 ```
 
----
-
-## What Is Currently Working
-
-### GPU Ecosystem (EcosystemSimulationGPU.cs) — Active System
-- **`SpeciesDataGPU`** — one asset per species holds all simulation SOs (FishSchoolProperties, FishMovementProperties, FishMotionRenderProperties, SpeciesBehaviorPropertiesGPU) plus population dynamics fields (`StarvationDeathRate`, `StarvationThreshold`, prey/predator lists)
-- **Population tick** — coroutine ticks every 5s (configurable). **Natural births and natural deaths were removed** (Week 8). Population now changes from:
-  - **Symmetric ratio-driven predator-prey dynamics** (Week 9) — each species feels a prey:predator balance ratio (in **school counts**) against a shared dead-band `[RatioBandLow, RatioBandHigh]` (default **1–3**):
-    - few predators (ratio high) → prey grows; many predators (ratio low) → prey shrinks
-    - prey abundant → predator grows (well-fed); prey scarce/gone → predator **starves** (hard override — can't grow without food)
-    - inside the band → stable. Rolled at `GrowRate` / `ShrinkRate` (default 0.3/tick). Counts snapshotted each tick so updates are order-independent.
-  - **Manual add/remove** via the UI / netcode RPCs
-- **Eco-health score** (Week 9) — `EcoHealth01` (0–1) derived live from the **same ratios**: `diversity` (fraction of species alive) + `balance` (fraction within the band) + `apex present`, weighted (0.4/0.4/0.2). Synced to the tablet and drives `Health.cs`.
-- **`AddSpecies` / `RemoveSpecies`** — public API for UI buttons and netcode RPCs. Species start at 0 schools; Add increments up to `MaxSchools`; Remove decrements to extinction (0). The ratio tick can also drive a species to extinction.
-- **`CountGroups`** — returns current school count for UI display
-- **`FishPerSchool` / `MaxSchools`** — per-species fields on `SpeciesDataGPU`; Add/Remove scales boid count by `FishPerSchool`; cap synced to clients
-- **Prey/predator lists are now load-bearing** — `PreySpecies` / `PredatorSpecies` on `SpeciesDataGPU` drive BOTH the dynamics and eco-health. A species with empty lists won't participate (no growth/decline, ignored by balance).
-- **Empty-ocean crash safety** — all GPU buffers sized `Mathf.Max(1, count)`; dispatch and render skipped when `_boidsCount == 0`
-- **Simulation bounds derived** — `EcosystemSimulationGPU.SimulationBounds` reads from `BoidSimulationGPU.SimulationAreaBounds`; no more manual sync of two separate bounds assets
-- `BoidSpawnerGPUMultiTargets` reads all spawn properties from `SpeciesDataGPU`
-
-### GPU Netcode
-- **Host/Client architecture** using Unity Netcode for GameObjects (NGO) over WiFi
-- `NetworkBootstrap` — sets role (Host/Client), starts NGO
-- `EcosystemNetworkManagerGPU` — auto-finds `EcosystemSimulationGPU` on server; syncs school counts via `NetworkList<int>` (periodic tick **+ immediate resync on add/remove**); exposes `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc`
-- `TabletEcosystemUIGPU` — now a pure species→index lookup service (card UI stripped out entirely)
-- **Decoupled tablet Add/Remove input layer (2026-06-29, `43fca49`)** — Add/Remove was extracted out of `ModalController` (which no longer touches netcode at all):
-  - `TabletAddRemoveUIGPU` (singleton) holds the +/− buttons and optional population label; `Select(species)` resolves the netcode index via `TabletEcosystemUIGPU` and the buttons fire `RequestAddSpeciesRpc`/`RequestRemoveSpeciesRpc`; greys Add at `MaxSchools`, Remove at 0
-  - `BubbleSelectHook` (one per species bubble) routes a bubble tap to `TabletAddRemoveUIGPU.Select(bubble.data.gpuSpecies)` **without editing the UI-team's `SpeciesBubble`** — add-component on each bubble, no per-bubble wiring
-- `ConnectionScreenUI` — tablet IP entry screen + LAN auto-discovery
-
-### Tablet UI (built by Aloysius, integrated into JunHeng's main `Netcode Simulation Test` scene)
-- **Food web graph** — 12 species bubbles (`SpeciesBubble.cs`) laid out in trophic tiers; `FoodWebLines.cs` edges exist but are hidden pending visual fix
-- **`ModalController.cs`** — species info modal with Add/Remove buttons wired to `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc`; now also greys buttons at cap/0 (connected in `e13e26b`)
-- **Eco-health bar — two drivers now:**
-  - `Health.cs` (tablet client) reads the **networked** value `EcosystemNetworkManagerGPU.GetEcoHealth()` when `readFromSimulation` is on (needs host running + `fillImage` assigned)
-  - `HealthBarBinder.cs` (host large screen, added by Aloysius `8d600f2`) reads **`EcosystemSimulationGPU.EcoHealth01` directly** — no netcode, auto-finds the sim. ⚠ Depends on JunHeng's `EcoHealth01` staying `public`.
-- **`SwipeToClose.cs`** — swipe to dismiss modal
-- **`Bob.cs`** — bobbing animation on species bubbles
-- **Fish image assets** — PNG sprites for most species in `Assets/Aloysius/Fishes/` and `Assets/Aloysius/iamge/`
-
-### LAN Discovery
-- `LanDiscovery.cs` — UDP broadcast on port 47777; tablet auto-discovers host on same WiFi network. Advertiser starts automatically when `NetworkBootstrap` starts the host.
-
-### TransformAnimator
-- Animates target transforms along Line / Circle / Rectangle paths
-- `GlobalScale` on `BoidSimulationTargetAnimatorsSpawner` uniformly scales all spawned path dimensions
+**Total scripts (Junheng):** all 58 read + verified 2026-07-08.
 
 ---
 
-## Scene Architecture
+# 6. Scene Architecture
+
+## Canonical (production) scenes
 
 | Scene | Owner | Role | Path |
 |-------|-------|------|------|
-| `Boids_Demo` | JunHeng | **Host** — GPU simulation + trifold display | `Assets/Junheng/Scenes/Boids_Demo.unity` |
-| `Netcode Simulation Test` | JunHeng | **Client — MAIN tablet UI scene** | `Assets/Junheng/Scenes/Netcode Simulation Test.unity` |
-| `Netcode Simulation Test 1` | Aloysius | UI prototyping only (handed off to JunHeng) | `Assets/Aloysius/Netcode Simulation Test 1.unity` |
+| `SCENE_MainScene.unity` | JunHeng | **Host — GPU simulation + trifold display** (main production scene) | `Assets/Junheng/Scenes/SCENE_MainScene.unity` |
+| `Netcode Simulation Test.unity` | JunHeng | **Client — tablet UI scene** | `Assets/Junheng/Scenes/Netcode Simulation Test.unity` |
 
-`Boids_Demo` is the host (GPU simulation, netcode host role, only scene in the build).
+## Build Settings (as of 2026-07-20, commit `74deb98`)
 
-**`Netcode Simulation Test` (JunHeng) is the canonical tablet client scene.** JunHeng is integrating Aloysius's UI into it — it already contains the food-web UI scripts (`SpeciesBubble`, `ModalController`, `FoodWebLines`, `Bob`, `SwipeToClose`) wired alongside the netcode layer (`NetworkBootstrap`, `ConnectionScreenUI`, `TabletEcosystemUIGPU`).
+- **Index 0:** `Assets/Aloysius/Start scene.unity`
+- **Index 1:** `Assets/Aloysius/Scenes/SCENE_MainScene 1.unity` (Aloysius's copy)
 
-**`Netcode Simulation Test 1` (Aloysius) is NOT the product scene** — Aloysius builds/prototypes the UI there, then hands the prefabs/scripts to JunHeng to wire into the main scene above. Treat it as a reference, not the shipping client.
+⚠ **Build Settings still references `SCENE_MainScene 1.unity` (Aloysius's), not `SCENE_MainScene.unity` (JunHeng's).** Confirm this is intended before final build — this decides which host scene actually ships. See To Do §11.
 
----
+⚠ **Two dead Build Settings entries to prune** (both `enabled: 0`, harmless but noisy): `Assets/Aloysius/SceneTemp.unity` and `Assets/Aloysius/SCENE_MainScene 1.unity` (the pre-move root path, missing from disk).
 
-## What Was Done — Week 7
+## Prototyping / deprecated / archived scenes
 
-- **Codebase cleanup** — removed ~40 dead scripts:
-  - All CPU Ecosystem scripts (Boid, BoidSimulation, EcosystemSimulation, SpatialPartition3D, all ScriptableObjects)
-  - Simple Flocking prototype folder
-  - CPU networking scripts (EcosystemNetworkManager, TabletEcosystemUI, TabletSpeciesCardUI)
-  - Old GPU variants (01 Brute Force Normal, 02 Brute Force Instanced)
-  - Editor-only shader GUI scripts
-  - Fish_Swimming_CPU, unused CPU boid variants
-  - Duplicate ComputeShaderExtensions (GameDevBuddies namespace)
-- **Shader paths fixed** — reorganised `Simulation/Shaders/` → `Shaders/`, updated all `#include` paths across compute and hlsl files
-- **Species list finalised** — 12 species confirmed (see table above)
+| Scene | Owner | Status | Notes |
+|-------|-------|--------|-------|
+| `Assets/Junheng/Scenes/Boids_Demo.unity` | JunHeng | Deprecated | Old host scene; superseded by SCENE_MainScene |
+| `Assets/Aloysius/Scenes/SCENE_MainScene 2.unity` | Aloysius | Prototyping | UI-team scene; **used for demo tuning** (JunHeng copied the converged main scene here for intro-camera/entry-point/card-hold tuning) |
+| `Assets/Akil/Scenes/SCENE_MainScene 2.unity` | Akil | Environment / art | Renamed from `SCENE_MainScene 1.unity` 2026-07-24; older `SCENE_MainScene.unity` deleted (280k lines wiped) |
+| `Assets/Akil/Scenes/SCENE_MainSceneBackup.unity` | Akil | Backup | — |
+| `Assets/Aloysius/Scenes/new netcode 2.unity` | Aloysius | Prototyping | Live UI client copy replacement (old `new netcode 1.unity` deleted 2026-07-25) |
+| `Assets/Junheng/Scenes/ALOYLOU VEFR @.unity` | JunHeng | WIP (local) | Newer tablet-client scene, 14 species bubbles — not committed to git at last check |
+| `Assets/Junheng/Scenes/Aloysius lololol.unity` | JunHeng | WIP (local) | 1-flag fork of Netcode Simulation Test with ConnectionScreen disabled |
+| `Assets/Junheng/Scenes/Swirl_Demo.unity` | JunHeng | Deprecated | Old swirl demo |
+| `Assets/Aloysius/Netcode Simulation Test 1.unity` | Aloysius | Prototyping | UI-only prototyping scene (superseded) |
+| `Assets/_Recovery/` | — | ⚠ **DELETE** | 9.9 MB of Unity crash-recovery dumps tracked in git; live script GUIDs pollute reference greps. `git rm -r --cached`, delete, add to `.gitignore` |
 
----
+## Scene divergence history (context)
 
-## What Was Done — Week 8 (JunHeng)
-
-Focus: real species data, Android tablet build pipeline, shaders in-scene, and wiring the new tablet UI to the netcode layer.
-
-### ✅ What Worked
-- **Species data assets created** — built the per-species `SpeciesDataGPU` assets (Blacktip reef shark, Bluefin trevally, Bullethead parrotfish, Eyestripe surgeonfish, Fringelip mullet, Reticulated damselfish, Streaked spinefoot, Bluespotted ribbontail ray, Russell's snapper, Yellowstripe scad, Brown-marbled grouper, Great barracuda) + iterated on their data values. These no longer "don't exist."
-- **Android APK builds** — got the tablet client building and deploying to Android; multiple successful test builds.
-- **Mobile renderer** — switched the build to a mobile-appropriate URP renderer for the tablet.
-- **Shaders in-scene** — implemented the `Fish_Lit` shader and a `Shader_GUI/Editor` property drawer into the simulation/UI scenes.
-- **New tablet scene** — built out the `Netcode Simulation Test` tablet scene with the new bubble/modal UI.
-- **Netcode UI integration (this session)** — wired the new UI to the existing netcode layer:
-  - `SpeciesBubble` now carries a `SpeciesDataGPU` reference and resolves its species **index** via `TabletEcosystemUIGPU.GetSpeciesIndex()` (robust to reordering — no hand-numbered indices).
-  - `TabletEcosystemUIGPU` became a lookup service (singleton + `GetSpeciesIndex`); legacy auto-card spawning is now optional.
-  - Add/Remove moved **into the modal card** (`ModalController`) — buttons fire `RequestAddSpeciesRpc` / `RequestRemoveSpeciesRpc` and show the synced population for the open species only.
-  - **Instant population feedback** — `EcosystemNetworkManagerGPU` now resyncs the `NetworkList<int>` immediately after an add/remove RPC instead of only on the 1s tick, so the tablet count updates without lag.
-  - Fixed stale-population bug — modal population is now per-species (cleared/hidden for cosmetic-only bubbles instead of showing the last card's number).
-- **Population model simplified (this session)** — removed natural births and natural deaths from `EcosystemSimulationGPU.RunPopulationTick`. Population now changes only via the **starvation/prey-ratio cascade** + manual add/remove. The starvation cascade (the core "remove the food → predators starve" demo) is intact.
-- **Removed dead rate fields (this session)** — deleted `ReproductionRate` and `NaturalDeathRate` from `SpeciesDataGPU` (gone from the Inspector; they were unused after the births/deaths removal). `StarvationDeathRate` / `StarvationThreshold` kept.
-- **Card UI fully removed (this session)** — deleted `TabletSpeciesCardUIGPU.cs` (+ meta); stripped `TabletEcosystemUIGPU` down to a pure species→index lookup (no more `CardPrefab` / `CardContainer` / `BuildCards`). Updated the stale comment in `EcosystemNetworkManagerGPU`. The new bubble/modal UI is the only tablet UI now.
-- **Planned next, spec'd this session** — start-at-zero / school-scaling / extinction model (player builds the ecosystem up from an empty ocean; species removable to 0; per-species `MaxSchools` cap). Full implementation prompt written (see "What Needs Building Next").
-
-### ❌ What Didn't Work / Still Open
-- **Hard crash with shark + water shader (URP).** See dedicated note in Known Issues below. This was the main blocker and is not fully resolved — only worked around.
-- **Ecosystem definition not fully populated** — the `SpeciesDataGPU` assets exist, but `EcosystemDefinitionGPU.asset` still needs all species added in a fixed order (host + tablet must share the same list). Until then, bubbles for unlisted species resolve to index -1 (card goes dead).
-- **Start-at-zero / extinction not yet built** — Add/Remove currently keeps ≥1 school per species (can't reach 0). The GPU pipeline assumes ≥1 boid per spawner, and an all-zero start would hit a zero-size `ComputeBuffer` crash. Spec'd and ready to implement.
-- **C# event system** — population/health/state events for the UI team still not wired.
-- **Ecosystem health bar** — GPU side still not connected.
+Historically had THREE `Boids_Demo` / `SCENE_MainScene` copies (JunHeng had the sim, Aloysius forked with health bar, Akil owned environment/lighting). Partial convergence happened as the health-bar (`HealthBarBinder`) and environment moved into JunHeng's `SCENE_MainScene`. **Full convergence into ONE host scene is still pending before final build** — see To Do §11.
 
 ---
 
-## What Was Done — Weeks 7–8 (UI Team / Aloysius)
+# 7. What Has Been Implemented
+
+## 7.1 GPU Ecosystem Simulation (core)
 
-All work lives in `Assets/Aloysius/` and the `Netcode Simulation Test 1` scene — this is a **prototyping scene**. Aloysius builds the UI here, then hands the scripts/prefabs to JunHeng, who integrates them into the main client scene (`Netcode Simulation Test`). The integration is already underway (the UI scripts are present in JunHeng's scene).
-
-### Food Web Graph UI
-- **`SpeciesBubble.cs`** — interactive species node bubbles on the food web panel; tapping opens a species info modal
-- **`FoodWebLines.cs`** — `LineRenderer`-based edges between species nodes (predator arrows). Currently hidden by default (`LINE FOOD WEB HIDE` commit) — the lines exist but are toggled off. Marked "wonky, TO BE CHANGED."
-- Food web nodes and layout working in the scene; full visual structure of 12 species bubbles present
-
-### Species Info Cards
-- Fish image assets added for multiple species (shark, grouper, mullet, scad, snapper, damselfish, eyestripe surgeonfish, moray, barracuda)
-- Species info card UI with fish image + info text wired to each `SpeciesBubble`
-
-### ModalController
-- **`ModalController.cs`** — modal popup card triggered by tapping a species bubble; shows species info, Add/Remove buttons. Connected to netcode RPCs in `e13e26b`.
-
-### Animations
-- **`Bob.cs`** — bobbing animation for UI species bubbles
-- Transition animation pass 1 committed (`1eae5f3`)
-- `SwipeToClose.cs` — swipe-down gesture to dismiss the species infobox modal
-
-### Eco-Health Bar
-- **`Health.cs`** — health bar UI script (reads eco-health, drives fill bar)
-- Bar/frame image assets: `bar.png`, `ecoheal.png`, `healthframe.png`
-- ✅ `Health.cs` now reads live eco-health from `EcosystemNetworkManagerGPU.GetEcoHealth()` (Week 9 code); in the standalone `Netcode Simulation Test 1` prototype scene it falls back to the manual value when no host is running
-
-### Mockup / Coral Assets (shared team)
-- Imported temporary 3D coral assets (`Assets/_Assets/3D Models/Corals/`) — *Acropora hyacinthus* hard coral model + *Rainbow Haven Reef* coral preset
-- `SCENE_MockupScene.unity` filled with coral assets for visual reference
-- Stylized Water 3 material tweaked for the mockup scene
-
-### Prototype (JunHeng + team)
-- `prototype/oceanx-prototype.html` — interactive HTML prototype created and iterated (`2a65a8d`, `039197a`). Full spec is in the **Prototype Specification** section of this document.
-
-### LanDiscovery + Connection UI (JunHeng)
-- **`LanDiscovery.cs`** — UDP broadcast so tablet auto-discovers the host on the same WiFi network (no manual IP entry needed after initial setup). Works alongside `ConnectionScreenUI`.
-- `NetworkBootstrap` updated to start the LAN advertiser when hosting.
-- Android APK build pipeline confirmed working (`dc77683`, `680c1be`).
-
----
-
-## What Was Done — Week 9 (JunHeng)
-
-### ✅ `e13e26b` — Start-at-zero / school-scaling / extinction model
-
-The GPU ecosystem now starts from a completely empty ocean and the player builds it up.
-
-**`SpeciesDataGPU`:**
-- Added `FishPerSchool` (int) — number of boids per school unit (constant density scaling)
-- Added `MaxSchools` (int) — static per-species cap; synced to clients via netcode
-
-**`BoidSpawnerBase`:**
-- Added `SchoolCount` / `IsActive` properties + `SetSchoolConfiguration(schoolCount, fishPerSchool)`
-- Inactive spawners (school count = 0) are excluded from the concat buffer, spatial grid, affecter targets, and rendering — no placeholder draw calls
-
-**`EcosystemSimulationGPU`:**
-- Owns `N` (school count) per species, initialised to 0
-- `AddSpecies`: increments N up to `MaxSchools`, calls `ReinitializeBuffers`
-- `RemoveSpecies`: decrements N down to 0 (extinction), calls `ReinitializeBuffers`
-- Starvation tick can now remove the last school (species goes fully extinct)
-- One `WanderingAffecterGPU` target per school for all roles — unifies the old apex-only wandering path, no memory leaks on rebuild _(⚠ `WanderingAffecterGPU` was later replaced by `EcosystemTargetGPU` — see the 2026-07-08 audit)_
-
-**Empty-ocean / extinction crash safety:**
-- All GPU compute buffers and spatial grid sized `Mathf.Max(1, count)` — zero is never passed to `new ComputeBuffer`
-- `SetData` / `GetData` guarded against empty arrays
-- Per-frame dispatch and render skip when `_boidsCount == 0`
-- Group IDs assigned densely over active spawners only
-
-**Netcode:**
-- `MaxSchools` synced to clients
-- Tablet Add button greys out at cap; Remove button greys out at 0
-
-**Bug fix:** NaN spawn positions for single-fish schools caused by a divide-by-zero in spawn grouping — fixed with a guard.
-
-> ⚠ **Not yet play-tested in the Unity Editor at time of commit.** Needs a full in-editor run with add/remove cycles.
-
----
-
-### ✅ `a47e2c7` — Remove redundant scripts / dead fields
-
-- Deleted `TabletSpeciesCardUIGPU.cs` (old card UI, fully replaced by `ModalController`)
-- Removed dead `_carryingCapacity` dict from `EcosystemSimulationGPU` (carrying capacity now derived from `MaxSchools × FishPerSchool`)
-- Cleaned up `EcosystemNetworkManagerGPU` stale comment
-- Trimmed `TabletEcosystemUIGPU` to pure lookup service
-
----
-
-### ✅ `e9ae364` — Derive ecosystem bounds from the BoidSimulationGPU area
-
-- `EcosystemSimulationGPU` now exposes a `SimulationBounds` property that reads directly from `BoidSimulationGPU.SimulationAreaBounds`
-- `EcosystemDefinitionGPU` SimulationCenter/SimulationSize are now only a fallback (no longer need to be hand-matched to the sim area)
-- Wandering affecter targets now spawn and roam inside the derived volume
-- Bounds gizmo draws the derived volume so it overlaps the BoidSimulationGPU box
-- Also added `SpeciesData_Clownfish.asset` (placeholder species data)
-
----
-
-### ✅ `1887612` — Null-guard in UpdateSimulation
-
-Added an early-return null-guard in `BoidSimulationGPU.UpdateSimulation` so the simulation gracefully skips a frame if called before GPU buffers are fully initialised (first-frame race condition).
-
----
-
-### ✅ Ratio-driven predator-prey dynamics + eco-health
-
-Replaced the old per-species starvation cascade with a **symmetric, global ratio model**, and wired up the eco-health bar.
-
-**`EcosystemSimulationGPU`:**
-- `PopulationPressure(species, counts)` → `+1 / 0 / -1` from the prey:predator balance ratio (school counts) vs a global dead-band. Combines predation pressure (top-down) and food availability (bottom-up). **Starvation is a hard override** — no/low food always shrinks, so the keystone-collapse cascade can't be cancelled by "no predators."
-- `RunPopulationTick` snapshots counts, then grows/shrinks each species via `AddSchool`/`RemoveSchool` rolled at `GrowRate`/`ShrinkRate`, one `ReinitializeBuffers` per tick.
-- `ComputeEcoHealth01` / `EcoHealth01` (0–1) = diversity + balance + apex presence, weighted; reads the same ratios.
-- New global tunables (Inspector): `RatioBandLow` (1), `RatioBandHigh` (3), `GrowRate` (0.3), `ShrinkRate` (0.3), health weights (0.4 / 0.4 / 0.2).
-
-**`SpeciesDataGPU`:** removed the now-unused `StarvationDeathRate` / `StarvationThreshold`. Balance is global; per-species behaviour comes from `FishPerSchool` / `MaxSchools` / `PreySpecies` / `PredatorSpecies`.
-
-**`EcosystemNetworkManagerGPU`:** added `NetworkVariable<float> _ecoHealth`, pushed each sync; `GetEcoHealth()` for clients.
-
-**`Health.cs`:** now pulls live health from `EcosystemNetworkManagerGPU.Instance.GetEcoHealth()` (toggle `readFromSimulation`); null-guarded.
-
-**Behaviour to expect:** prey with no predators climbs to its `MaxSchools` cap; a predator added before its prey starves out (gate this with the unlock UI); removing the shark makes mid fish overpopulate → over-predate their prey → then starve → oscillate, with eco-health dropping in step.
-
-> ⚠ **Not yet play-tested in the Unity Editor.** Needs an in-editor run; tune the band/rates if it swings too hard or flatlines.
-
----
-
-## What Was Done — 2026-06-18
-
-> Work split by contributor. See `git log` for commit-level detail.
-
-### JunHeng (simulation / backend + integration)
-
-**Eco-health-gated species unlock system — new `EcosystemUnlockManagerGPU`**
-(`Assets/Junheng/Scripts/Boids_GPU/Ecosystem/EcosystemUnlockManagerGPU.cs`)
-- Ports the prototype's gate model: a locked species unlocks when **all** its
-  `requires` (prey/support **school counts**) are met **AND** live eco-health %
-  ≥ its `minHealth`. Latching / one-way, like the prototype.
-- **Dual data source:** reads population + eco-health straight from
-  `EcosystemSimulationGPU` when present (host / standalone — testable with
-  `EcosystemDebugHarnessGPU`, no netcode needed), and falls back to the synced
-  netcode layer (`EcosystemNetworkManagerGPU.GetPopulation` / `GetEcoHealth`) on
-  the tablet client (where `_simulation` is left empty).
-- **Drop-in replacement for Aloysius's placeholder `GameState`:** exposes
-  `IsUnlocked`, `RegisterLockedTap` (progressive hints), `RefreshAllBubbles`, and
-  fires `NotificationManager.ShowUnlocked` on each unlock; plus `OnSpeciesUnlocked`
-  / `OnUnlockStateChanged` events and `GetLockInfo()` for the locked-modal
-  requirement checklist. Optional `[Unlock]` console logging for headless testing.
-
-**Species data model unified**
-- `SpeciesData` (the UI/unlock asset) is now the single config per fish and links
-  to its simulation species via a new **`gpuSpecies`** field (→ `SpeciesDataGPU`).
-  Removed the unused `description` / `photo` fields. `SpeciesDataGPU` stays pure
-  simulation data. Net: **one UI asset + one sim asset + one link** per fish — no
-  more parallel species systems.
-
-**Tablet UI wired to the real simulation**
-- `SpeciesBubble.OnTap` resolves the species' netcode index via `gpuSpecies`
-  (`TabletEcosystemUIGPU.GetSpeciesIndex`), so the modal's Add/Remove now drive the
-  real sim and the population number shows — previously cosmetic-only (index -1),
-  which is why Add was greyed and the count blank.
-- `SpeciesBubble` reads lock state + hint progression from the unlock manager when
-  present, falling back to `GameState` when it isn't — so **both** JunHeng's and
-  Aloysius's setups run. **`GameState.cs` left untouched** (still Aloysius's
-  placeholder).
-
-**12 canonical species wired into the sim**
-- All 12 `SpeciesDataGPU` added to `EcosystemDefinitionGPU` in fixed order, each
-  with a per-species `BoidSpawnerGPUMultiTargets` registered in the
-  `BoidSimulationGPU` **`_gpuBoidSpawners`** array — the list the sim actually
-  reads. ⚠ Child spawner objects are **not** auto-scanned; a species in the
-  definition list but missing from this array throws
-  *"no spawner has SpeciesData 'X' assigned"* and won't spawn.
-- Configured the 12 `SpeciesData` assets (gpuSpecies links, startUnlocked,
-  minHealth, requires) using the **canonical** names — the prototype's placeholder
-  names (Striped Mullet, Convict Surgeonfish, Reef Manta Ray, …) were remapped.
-
-**Netcode + build**
-- Verified host↔client over a `Boids_Demo` host + `Netcode Simulation Test` tablet
-  client: add/remove RPCs, synced population, and the eco-health bar all working.
-- Built Host + Tablet players under `Builds/Netcode Simulation Test/`.
-
-> ⚠ **`minHealth` thresholds need tuning** against the real eco-health curve — the
-> formula sits low early (diversity term), so a threshold like 70 can be
-> effectively unreachable. Set them against what the bar actually reaches in play.
-
-**Flocking / school tuning**
-- Unified all 12 species' `FishSchoolProperties` (`Assets/Junheng/Data/Fish/**/*_SchoolProperties.asset`)
-  to the Clownfish values: `VisionRange 15`, `ObstacleAvoidanceRange 3`,
-  **`SeparationRange 0.35`**, `CohesionWeight 0.4`, `AlignmentWeight 0.35`,
-  `SeparationWeight 1`, `TargetWeight 0.85`. Fixes fish spawning **too spread out** — the
-  old `SeparationRange: 5` made them hold ~5 m gaps. `MovementProperties` /
-  `MotionRenderProperties` left null on these assets (runtime-injected per species from
-  `SpeciesDataGPU`). Apex/solitary species (shark, moray) now school tightly too — re-tune
-  individually later if that looks unnatural.
-- **Flocking model confirmed** (compute `BoidsGPU_Spatial_Partition.compute`): a boid's
-  `BoidID` packs group ID (species, bits 0–7) + sub-group ID (school, bits 8–15).
-  **Cohesion + alignment apply only within the same species AND the same school** — different
-  species (and even different schools of one species) never merge. **Separation** applies to
-  same-species + **larger** species (smaller species are ignored; species are size-ranked by
-  group ID). So copying one species' school settings to all is safe — it doesn't blend species.
-
-### Aloysius (UI / UX)
-
-- **Shark info box** — new species info card / infobox for the shark (`0fe8695`).
-- **Tap animation** — `TapPunch()` scale-punch on species-bubble tap in
-  `SpeciesBubble` (`bff35e0`). Merged with JunHeng's netcode-index change in
-  `OnTap` — both kept (animation fires, then the modal opens with a real target).
-- **Lock/unlock placeholder** — `GameState` + `UnlockTester` remain his
-  keyboard-driven placeholders for testing the unlock UI in isolation; kept as-is
-  at his request. JunHeng's `EcosystemUnlockManagerGPU` is the production
-  replacement, and `SpeciesBubble` works with either.
-- Greyed-out food-web line styling for locked nodes.
-
-### Akil (akeel-h) — scene environment / art
-- Active contributor since ~2026-06-24. Owns the **3D scene environment**: coral
-  placement, rockwork, mockup-scene redo, shader/rock-colour passes.
-- Imported/added meshes & assets: fish + stingray assets, **parrotfish** mesh,
-  **damselfish**; added the **shark** to the scene and adjusted rock colour.
-
----
-
-## What Was Done — 2026-06-29 → 06-30
-
-### JunHeng (simulation / backend + integration)
-
-**Decoupled tablet Add/Remove input layer (`43fca49`)**
-- New `BubbleSelectHook.cs` + `TabletAddRemoveUIGPU.cs` (under `Scripts/Networking/`).
-  Add/Remove is now driven by a singleton controller fed by a per-bubble tap hook,
-  instead of living inside `ModalController`. `ModalController` was slimmed by ~50
-  lines and **no longer references netcode** (verified: no RPC/AddSpecies calls).
-- Wiring contract: drop `BubbleSelectHook` on every species bubble (auto-reads
-  `SpeciesBubble.data.gpuSpecies`), put one `TabletAddRemoveUIGPU` on an always-active
-  object (e.g. the **Ecosystem Panel**, which also holds `TabletEcosystemUIGPU`), and
-  assign its `addButton` / `removeButton` / `populationLabel`.
-
-**Prey/predator relationships populated for all 12 species (`dac6700`)**
-- `PreySpecies` / `PredatorSpecies` filled in on every `SpeciesDataGPU` asset from the
-  food-chain table — the ratio dynamics + eco-health now have real edges to work with.
-  (Was flagged "still worth a balance pass" in the 06-18 handoff; the lists themselves
-  are now populated — values may still need tuning in play.)
-
-**Clownfish placeholder dropped from the live sim (`e46bbd2`)**
-- `EcosystemDefinitionGPU.asset` now wires exactly the **canonical 12** (Clownfish entry
-  removed). The Clownfish data assets/mesh still exist on disk under
-  `Data/Fish/Placeholder FIsh/Clownfish/` but are no longer referenced by the definition.
-
-**Build scene switched to the tablet client**
-- `EditorBuildSettings`: **`Assets/Junheng/Scenes/Netcode Simulation Test.unity` is now
-  the enabled build scene** (Boids_Demo + Aloysius's client scene are present but
-  disabled). ⚠ This supersedes the older "only Boids_Demo is in the build" note below.
-- Multiple Android/host rebuilds across the team (`1001c91`, `eb0e945`, `8dd91c6`,
-  `2a1d7d4`).
-
-**New WIP client scenes (local, under `Assets/Junheng/Scenes/`)**
-- `ALOYLOU VEFR @.unity` — JunHeng's current working tablet-client scene (newer/bigger
-  than `Netcode Simulation Test`; 14 species bubbles). The decoupled Add/Remove layer
-  had to be re-linked into it (11 plain bubbles hooked + controller added; the 3
-  prefab-instanced bubbles — Shark, grouper, moray — and the controller's button refs
-  are assigned in-editor).
-- `Aloysius lololol.unity` — a 1-flag fork of `Netcode Simulation Test` with the
-  `ConnectionScreen` GameObject disabled (UI-only inspection variant).
-  > ⚠ Both of these are **not committed to git** at time of writing — treat as local
-  > scratch/WIP until they land in a commit.
-
-### Aloysius (UI / UX)
-- New sprite for **locked organisms** (`114ac9e`); **seagrass** bubble (`243b9f3`);
-  scene/build iterations (`502204d`, `6486453`, `4342b30`).
-
-### Akil (akeel-h)
-- See the Team section above — scene environment, coral/rockwork, fish/stingray/parrotfish/damselfish assets, shark added to scene.
-
----
-
-## What Was Done — 2026-06-30 → 07-01
-
-> Everything here post-dates the 06-30 handoff commit (`d57fbad`). Mostly teammate art/UI, but **two items land directly in JunHeng's host scene** — read the divergence note first.
-
-### ⚠ Scene divergence — THREE "large screen" host scenes now exist (verified on disk 2026-07-01)
-
-| Scene | Owner | Has the sim (`EcosystemSimulationGPU`)? | Health bar? | Notes |
-|-------|-------|:---:|:---:|-------|
-| `Assets/Junheng/Scenes/Boids_Demo.unity` | JunHeng | ✅ | ❌ | Canonical sim host — 12 spawners + netcode host role |
-| `Assets/Aloysius/Boids_Demo.unity` | Aloysius | ✅ | ✅ | **A fork of JunHeng's Boids_Demo** with the large-screen eco-health bar + `HealthBarBinder` added (`8d600f2`) |
-| `Assets/Akil/Scenes/SCENE_MainScene.unity` | Akil | ❌ | ❌ | Environment/art only — baked lighting, sky, reflection probes, coral, bubble particles; **no simulation** |
-
-The sim lives in JunHeng's copy, the health bar in Aloysius's copy, the baked environment in Akil's copy. **These must converge into ONE host scene before the final build**, and until then editing the wrong `Boids_Demo` is a live trap (two of them both contain the sim and will drift apart).
-
-### Aloysius (UI / UX)
-- **Eco-health bar on the large screen (`8d600f2`)** — new script **`Assets/Aloysius/Scripts/HealthBarBinder.cs`**: drives a Filled `Image` + `%` TMP label straight from **`EcosystemSimulationGPU.EcoHealth01`** (auto-finds the sim, exponential smoothing, **no netcode** — host-side). Complements `Health.cs` (networked, tablet-side). Added into `Assets/Aloysius/Boids_Demo.unity` with new bar art (`Assets/Aloysius/New/heaklhtbarr.png`, `hhealthtth.png`) + `Assets/Aloysius/Prefabs/LinearProgress002Blue.prefab`. ⚠ Hard dependency on JunHeng's `EcoHealth01` staying `public`.
-- **White infobox (`dcfa466`)** — new infobox art (`Assets/Aloysius/Info/WHITE KLAY.png`, `lighterbg.png`; removed `FRINGEEEEE.png`, `fish strroke.png`); renamed his client scene `help me burh.unity` → **`Assets/Aloysius/new netcode.unity`**.
-- **`ALOYSIUS_UI_HANDOFF.md` fully rewritten (`99285d7`, `39e361c`)** — Aloysius maintains his own handoff doc at repo root; read it for the UI-side detail (his ~28-script suite, food-web/Alucia/notifications, etc.).
-
-### Akil (akeel-h) — scene environment / lighting
-- **Baked lighting into `Assets/Akil/Scenes/SCENE_MainScene.unity` (`e874fd3`, `90aa18a`, `1199aa0`)** — Lightmaps + `LightingData.asset` + reflection probes + new `Sky.mat`, adjusted scene colours. This is his **own** environment scene (no sim in it).
-- **Bubble particles** added to the scene.
-- ⚠ **Changed the shark material** — `Assets/.../Blacktip reef shark/Materials/defaultMat.mat` (`e874fd3`). Because the shark+water crash below is material/shader-sensitive, **re-test that crash after pulling this**.
-
----
-
-## What Was Done — 2026-07-02
-
-### JunHeng — Fish model asset prep for the swim shader (Blender)
-
-Prepped the marine-creature meshes so they animate correctly under the `Fish_Lit` / `Fish_Swimming_Motion` shader. Done in **Blender 5.1** (driven over the Blender MCP). Source assets live **outside the repo** at `C:\Users\Admin\OneDrive\Documents\TP\year 3 sem 1\MP\assest\<species>\` — one folder per species (`.obj` + body/eye PNG textures, some with a `.mtl`).
-
-**Why:** `Assets/Junheng/Shaders/Fish/Shared/Fish_Swimming_Motion.hlsl` reads its tail mask from **TEXCOORD1** (`float2 tailMaskUV : TEXCOORD1`), as `tailMask = saturate(pow(1.0 - tailMaskUV.x, _TailMaskFalloff))`. Each mesh therefore needs a **second UV channel (UV1)** whose **`.x` is a head→tail gradient (tail = 0.0 → head = 1.0)** — mask ≈1 at the tail (full wave), ≈0 at the head (rigid). UV0 (`UVMap`) stays the texture unwrap.
-
-**⚠ Key point — UV1 is a MATH channel, NOT a texture unwrap.** It must not be seam-cut/unwrapped into islands: an island unwrap restarts U near 0 on every island, so the head of every segment reads as "tail" and wobbles. It's baked per-vertex as `UV1.x = (vert.z − z_min)/(z_max − z_min)` (models are oriented length-on-**Z**, head at **+Z**; head end confirmed via the eye-mesh centroid).
-
-**Per-model pipeline applied:** import `.obj` → wire body/eye textures (MTL auto-wires to Base Color; no-MTL wired manually to the Principled BSDF) → bake UV1 on body + eyes (eye verts normalized in **body-local Z space** so eyes stay rigid at the head) → **join eyes into body** (one mesh, two material slots: body + eye) → clear all seams → save `.blend` next to the `.obj` → export **mesh-only FBX** (`use_selection`, `object_types={'MESH'}`, `mesh_smooth_type='FACE'`, `path_mode='COPY'`).
-
-**⚠ Export must be FBX, not OBJ** — OBJ only stores one UV set and silently drops UV1. Blender writes `UVMap`→TEXCOORD0 and `UV1`→TEXCOORD1.
-
-**Processed (FBX written next to each `.obj`):**
-
-| Species | Source folder | Notes |
-|---------|--------------|-------|
-| Blacktip reef shark | `assest/Blacktip reef shark/` | `sharkv2_lowpoly.fbx` — folder renamed from `shark/`; ⚠ its `.blend` didn't survive the rename (only FBX + `.fbm` texture folder are there) |
-| Bluespotted ribbontail ray | `assest/Bluespotted ribbontail ray/` | `stingray 1.fbx` — ⚠ tail-sway only (see caveat) |
-| Reticulated damselfish | `assest/Reticulated damselfish/` | `damselfish.fbx` — no MTL, textures wired manually |
-| Yellowstripe scad | `assest/Yellowstripe scad/` | `YellowstripeScad.fbx` — eye texture not referenced by MTL, wired manually |
-
-**⚠ Ray caveat:** the ray got the same head→tail gradient, so under the fish tail-shader its **tail sways but the pectoral wings don't flap** (a tail-swimmer shader can't undulate ray wings). If a ray-specific wing shader is added later, its UV1 convention differs — re-bake that one.
-
-**⚠ [SUPERSEDED 2026-07-07 — now imported.]** These FBXs have since been copied into the project at `Assets/Junheng/Data/Models/<species>/` (see "What Was Done — 2026-07-07 (session 2)"). Original note kept for the pipeline detail: they were prepped in the OneDrive `assest/` folder; to use them, copy each `.fbx` (+ its `.fbm` texture folder) into `Assets/`, assign the `Fish_Lit` material, and confirm `UV1` imports as UV1/TEXCOORD1. With `UV1.x` = tail 0 / head 1 against the shader's `1.0 - tailMaskUV.x`, the tail waves while head + eyes stay rigid out of the box. (If the head wobbles instead, the channel got flipped.)
-
-> **Shark rebaked 2026-07-02 (scale fix).** The Blacktip shark FBX was re-exported to fix the unit-scale bug in **Gotcha B** below. New file (UnitScaleFactor 100, UV1 baked) is in `assest/Blacktip reef shark/sharkv2_lowpoly.fbx` + `.blend`. Still needs copying into `Assets/` over the old one.
-
-### ⚠⚠ Fish asset gotchas & checklist — learned the hard way, don't repeat
-
-A whole session was lost to the three traps below. Read this before importing/prepping any new fish.
-
-**A. Why UV1 is *baked*, not unwrapped (and how).**
-The swim shader (`Fish_Swimming_Motion.hlsl`) reads a per-vertex tail-mask from **TEXCOORD1** — `tailMask = saturate(pow(1.0 - tailMaskUV.x, _TailMaskFalloff))`. It needs **one smooth head→tail gradient**, `UV1.x` = **tail 0.0 → head 1.0**. This is a *math* channel, so:
-- **Do NOT seam-cut / Unwrap / Reset / Project-From-View it.** An island unwrap restarts U at ~0 on every island, so the front of every piece reads as "tail" and the whole fish wobbles.
-- **Bake it numerically:** for every vertex `UV1.x = (vert.z − z_min)/(z_max − z_min)` (models are length-on-**Z**, head at **+Z** — confirm head via the eye-mesh centroid). Eyes = a separate mesh, so normalize their verts **in the body's local-Z range** (then join eyes into body) so they read ~1 and stay rigid at the head.
-- Keep `UVMap` (UV0) as the texture unwrap + active-render channel. UV0 = texturing, UV1 = swim math. Never swap them.
-
-**B. FBX unit-scale bug — the "big in scene, tiny when instanced" trap.** ← the one that cost the most time
-- **Symptom:** dragging the FBX into a scene shows it at a normal size, but its Transform reads **scale 100**; when the GPU sim renders it (instanced), it's **tiny**. Other fish are 1-to-1.
-- **Cause:** GPU instancing (`RenderMeshIndirect`) draws the **raw mesh** with only per-boid position+rotation — it **ignores the Transform scale**. If the mesh imported tiny with a 100× root, instancing draws the tiny mesh. The tiny+100root happens when the FBX is exported in **metres** (FBX `UnitScaleFactor = 1`) → Unity applies fileScale **0.01** and compensates with root **100**. Working fish are exported in **centimetres** (`UnitScaleFactor = 100`) → fileScale 1, root 1.
-- **Check it:** in the `.fbx.meta`, a **working** fish has `bakeAxisConversion: 1` and the file-scale (`humanDescription.globalScale`) ≈ **1**; a **broken** one has `bakeAxisConversion: 0` and file-scale **0.01**.
-- **Fix (Blender export):** export with `apply_unit_scale=True` **and** `apply_scale_options='FBX_SCALE_ALL'`, `global_scale=1.0`. Verify the exported FBX's `UnitScaleFactor == 100` (must match the working fish) — parse it from the binary if unsure. Do **not** hand-scale the mesh to "fix" it; that doesn't remove the root-100 and it breaks the swim (see D).
-
-**C. Instanced material gotcha — the `_Boids` D3D12 error.**
-- Error: *`Fish_Lit_Instanced requires a buffer (SRV) _Boids ... none provided`*. It means a `Fish_Lit_Instanced` material is being drawn **outside** the sim's indirect-draw path (the sim binds `_Boids` via a `MaterialPropertyBlock` in `BoidSpawnerGPU.RenderBoids`; a plain scene MeshRenderer, or a mis-set-up material, has no buffer).
-- **Rules:** (1) `Fish_Lit_Instanced` materials belong **only** on a spawner's `BoidMaterial`, never on a scene MeshRenderer (use the non-instanced `Fish_Lit` for scene/hero objects). (2) The material **must have "Enable GPU Instancing" ON** (`m_EnableInstancingVariants: 1`). (3) **Do NOT hand-build the instanced material** (swapping the shader on a URP-Lit base leaves it missing passes/props); **duplicate a known-good one** (`Clownfish_Instanced.mat`) and just change its textures.
-
-**D. Mesh scale ↔ swim tuning are coupled.**
-The swim uses `position.z / _TailWaveLength` (native mesh units) and `sideToSide * 0.01`. If the mesh's native size changes by ×N, the tail wave gets N× tighter and side-to-side gets N× weaker. So **after any mesh-scale change, scale `_TailWaveLength` (and side-to-side amplitude) by the same factor.** Rotation amplitudes (roll/yaw/panning) and `_TailMaskFalloff` are angle/UV-based → scale-invariant, leave them.
-
-**E. Where the swim values live.** Material floats `_TailWaveLength` / `_TailMaskFalloff` stay on the **instanced material** (the sim's `BoidMaterial`). The five *animated* amplitudes are runtime-injected from each species' **`FishMotionRenderProperties`** asset (referenced by `SpeciesDataGPU`) — material values there are overwritten at runtime. Map material→SO: `_AutomaticSwimSpeed`→SwimPlaybackSpeed, `_SideToSideAmplitude`→SideToSide, `_YawRotationAmplitude`→Yaw, `_TailRollAmplitude`→Roll, `_TailYawAmplitude`→PanningYaw (each Min=cruise, Max=full-accel).
-
-**New-fish checklist:** import OBJ → wire body/eye textures → **bake** UV1 (A) → join eyes → clear seams → export FBX with `FBX_SCALE_ALL`, verify `UnitScaleFactor==100` (B) → in Unity, duplicate a working `*_Instanced.mat` + swap textures (C) → point the spawner's `BoidMesh`/`BoidMaterial` at it → set swim `_TailWaveLength` for the mesh's true size (D) → convert tuned amplitudes into the species' `FishMotionRenderProperties` (E).
-
----
-
-## What Was Done — 2026-07-07 (JunHeng)
-
-### 🐟 Fish render bug fixed — ray / scad / damsel spawned stacked at bounds centre
-- **Symptom:** these three species *simulated* (boided) correctly but every fish **rendered collapsed at the simulation-bounds centre** (a stack of mesh boxes), not at its live boid position.
-- **Root cause:** their `BoidMaterial` used the **non-instanced `Fish_Lit`** shader instead of **`Fish_Lit_Instanced`**. The non-instanced shader never reads per-boid positions from the `_Boids` GPU buffer, so all instances draw at one point. (The materials were even named `…Instanced.mat` — just pointed at the wrong shader on import.)
-- **Fix:** swapped the shader to `Fish_Lit_Instanced` on the 3 materials — Reticulated damselfish `MainTex Instanced.mat`, Bluespotted ray `MainTex Instanced.mat`, Yellowstripe scad `Main_Tex Instanced.mat`. All 12 spawner materials now verified on the instanced shader.
-
-### 🐠 Species behaviour/flocking tuning pass — all 12 species (biology-driven)
-Previously **all 12 species shared identical** SchoolProperties / MovementProperties / Behavior (zero per-species tuning). Researched real-world size + schooling per species and tuned by **5 archetypes** — dense schoolers (scad, damsel), loose shoalers (parrotfish/mullet/surgeonfish/spinefoot/snapper), solitary/territorial (grouper, moray), roving predators (shark, trevally), benthic (ray). ~45 asset files edited:
-- **`FishSchoolProperties`** — per-species Vision / SeparationRange / Cohesion / Alignment / Target weights.
-- **`FishMovementProperties`** — per-species CruisingSpeed / MaxSpeed (moray 0.3/4 … trevally 2.5/14).
-- **`SpeciesBehaviorPropertiesGPU`** — flee/hunt/detection values (⚠ currently inert — see next item).
-- **`FishMotionRenderProperties`** — authored by archetype for grouper/moray/trevally/scad/damsel (shark/ray already bespoke; the 5 mid shoalers kept the standard profile).
-- **`FishPerSchool`** — grouper→1, moray→1 (solitary), trevally→4, scad→15 (baitball); rest stay 10.
-- ⏸ **Relative fish scaling deferred** — there is **no per-boid scale field** (size = FBX import scale × mesh), and 6 species still use placeholder meshes. Do scale in-editor after real meshes land.
-
-### 🚨 Finding: prey do NOT flee predators in the current scene (feature gap)
-Confirmed the *visual* predator-prey reaction is **not wired**:
-- The `Behavior` asset (`SpeciesBehaviorPropertiesGPU`) is **dead data** — `SpeciesDataGPU` holds a reference but **no runtime code reads `FleeRange`/`HuntWeight`/etc.** (so the Behavior tuning above does nothing yet).
-- `PreySpecies` / `PredatorSpecies` only drive **population counts** (the ratio tick), not movement.
-- The compute shader's flee path fires only inside a **`Predator`-type affecter's** range, and there are **zero** in the scene; predator *fish* are never registered as predator affecters.
-- **Net:** the keystone "remove the shark → prey panic" moment is only a slow **number** change today, never visible fleeing. The darting/scatter currently seen is the **entry-sprint + new speed/target-weight tuning**, not fear.
-- **To build (planned):** each predator school emits a `Predator` affecter (radius = its detection range) so nearby prey flee — that's where the `Behavior` asset's FleeRange/FleeWeight finally get consumed.
-
-### 🗣️ Alucia dialogue → CSV (Phase 1: her spoken lines) — checker-editable, no Inspector
-So fact-checkers can edit what Alucia says in a spreadsheet instead of the Inspector/code. On the **Windows host** the CSV is editable *inside the build* (no rebuild).
-- **New `Assets/StreamingAssets/alucia_lines.csv`** — all 14 lines (3 intro, 5 health reactions, unlock pop-up, 4 hint templates, 1 fallback). Columns: `Key,Context,Mood,Text`.
-- **New `Assets/Aloysius/Scripts/AluciaLines.cs`** — static loader; reads the CSV from StreamingAssets at launch into a key→text lookup (quoted-CSV parser + BOM strip). **`Get(key, fallback)`** returns the original hardcoded line if the file/key is missing → edits can't break the build.
-- Swapped hardcoded strings to `AluciaLines.Get(...)` in `AluciaController` (intro + health), `NotificationManager` (`{species}` token), `SpeciesUnlockReveal.BuildHint` (4 templates + fallback, `{species}`/`{req}` tokens). Fallbacks preserve the exact current copy.
-- **Checker workflow:** edit the `Text` column → relaunch the host → new words. On the **Android tablet** the CSV is sealed in the APK (needs a rebuild) — StreamingAssets is host-live only.
-- ⚠ These are **Aloysius's scripts** — edits are minimal one-line swaps + preserved fallbacks; coordinate on merge.
-- **Phase 2 (not done):** per-species facts (`species_copy.csv` → scientific names, tier, blurbs, hints on the 12 `SpeciesData` assets) — the real fact-check surface; reuses this setup. `HintsPanel` (tablet hint tab) is still hardcoded, deferred with Phase 2. Several species info cards are **baked-text PNGs** (`Assets/Aloysius/Info/*.png`) and must be rebuilt as TMP text before their facts can be CSV-driven.
-
-### 🔗 Re-linked the tablet Add/Remove layer into `ALOYLOU VEFR @.unity`
-- `ALOYLOU VEFR @` (JunHeng's newer WIP client scene, 14 bubbles) was **missing** the decoupled input layer that `Netcode Simulation Test` has. Injected 11 `BubbleSelectHook` (plain bubbles) + 1 `TabletAddRemoveUIGPU` (on "Ecosystem Panel"); the 3 prefab-instanced bubbles (Shark, grouper, moray) + the controller's button refs were wired in-editor.
-
-### 🧹 Housekeeping
-- `.gitignore` now ignores `.claude/`; untracked `.claude/settings.local.json` (kept on disk). `CLAUDE.md` stays tracked (shared context).
-
----
-
-## What Was Done — 2026-07-07 (session 2 — models imported, CSV Phase 2, audio)
-
-> Post-dates the handoff-update commit `e1cb283`. Real fish meshes landed in the
-> project, per-species facts moved to a CSV, and a UI sound layer was added.
-
-### 🐟 Fish FBXs now IMPORTED into the project — new `Assets/Junheng/Data/Models/`
-**Supersedes the earlier "prepped but NOT imported" note.** The prepped meshes (plus
-two new ones) now live *inside* Unity at **`Assets/Junheng/Data/Models/<species>/`**,
-each with a `.fbm` texture folder and duplicated `*_Instanced` materials:
-
-| Species | Mesh file | Source |
-|---------|-----------|--------|
-| Blacktip reef shark | `sharkv2_lowpoly.fbx` | JunHeng (Blender prep) |
-| Bluespotted ribbontail ray | `stingray.fbx` | JunHeng |
-| Reticulated damselfish | `damselfish.fbx` | JunHeng |
-| Yellowstripe scad | `YellowstripeScad.fbx` | JunHeng |
-| Bullethead Parrotfish | `parrotfish.fbx` | akeel-h (`f983fbf`) |
-| Eyestripe surgeonfish | `surgeonfish.fbx` | JunHeng `f9cc3f0` + akeel-h `382e8a6` |
-| Streaked spinefoot | `rabbitfish.fbx` | JunHeng `d6c0cee` + akeel-h `9b475e6` |
-
-⚠ **Streaked spinefoot = "rabbitfish"** — *Siganus javus* is commonly called the
-rabbitfish, so the mesh/folder churn naming it `rabbitfish.fbx` (and akeel-h's
-`d222255` "FBX changes for damselfish and rabbitfish") is the **same species**, not a
-new one.
-
-**7 of 12 species now have real meshes.** Remaining **5 on placeholder**:
-brown-marbled grouper, giant moray, bluefin trevally, Russell's snapper, fringelip
-mullet.
-- ⚠ Fish-checklist gotchas **B–E** still apply to each new mesh — verify
-  `UnitScaleFactor == 100`, the material is on `Fish_Lit_Instanced` with GPU Instancing
-  **ON**, and `_TailWaveLength` is scaled to the mesh's true size.
-
-### 📄 Species facts → CSV (Phase 2 STARTED) — `SpeciesContent.csv`
-The per-species fact-check surface flagged as "not done" is now underway.
-- **New `Assets/StreamingAssets/SpeciesContent.csv`** — columns
-  `speciesName, sciName, iucnStatus, description, diet, habitat, imageFile`; filled for
-  the 12 species (several `diet`/`habitat` cells still blank).
-- **New `Assets/StreamingAssets/SpeciesImages/`** — per-species card PNGs referenced by
-  the `imageFile` column (blacktip, reticulated, Parrotfish, Eyestripe,
-  Streakedspinefoot, Mullet + a README).
-- **Aloysius wired the modal panels to read it** (`97e90ab`, `2172974`,
-  `4dad8fa` "Update Primary producers modal panels") — species info now comes from the
-  CSV, editable without a rebuild on the host (same StreamingAssets model as Alucia's
-  lines; sealed in the APK on tablet).
-- ⏳ Still to do: fill the blank `diet`/`habitat` cells; convert the remaining
-  baked-text info-card PNGs (`Assets/Aloysius/Info/*.png`) to TMP; per-species hints.
-
-### 🔊 UI sound layer (Aloysius) — new `UISoundManager.cs` + `Assets/Sounds/`
-- **New `Assets/Aloysius/Scripts/UISoundManager.cs`** — tiny singleton `AudioSource`
-  wrapper (`Instance`, `PlayTap()` one-shot + `tapVolume`). Drop one on a scene object,
-  assign the clip.
-- **`SpeciesBubble.OnTap` now calls `UISoundManager.Instance?.PlayTap()`** (shared
-  script — affects canonical scenes; null-guarded, harmless when absent).
-- **New `Assets/Sounds/`** — `Tap.mp3` (bubble tap) + `Ambient.mp3` (reef ambience).
-
-### 🎬 Scene consolidation (Aloysius / Akil)
-- Aloysius **deleted** `Assets/Aloysius/MainScene.unity`, `SCENE_MainScene.unity`, and
-  `new netcode.unity`; the live UI client copy is now
-  **`Assets/Aloysius/new netcode 1.unity`** (`SCENE_MainScene 1.unity` kept).
-- Akil updated `Assets/Akil/Scenes/SCENE_MainScene.unity` (`18c84bd`) + FBX/material
-  passes for damselfish/rabbitfish (`d222255`, `189a5c2`). The three-host-scene
-  divergence note below still stands — nothing has converged yet.
-
----
-
-## What Was Done — 2026-07-08 (JunHeng)
-
-### 🐟 Fixed schools spawning on top of each other when spam-adding
-- **Symptom:** spamming Add spawned several schools **stacked inside each other** at the same spot.
-- **Cause:** new schools swim in from `FishEntryPointGPU` markers, which are **single points with no size**. `ApplyEntrySpawnOrigin` picked a marker **uniformly at random each Add** and placed the whole school exactly on `marker.Position`, so back-to-back Adds (and two species entering at once) piled onto the same point before any school had moved off it.
-- **Fix — all in `EcosystemSimulationGPU`** (exit logic untouched — `PickMarker` / `PickExitPoint` unchanged):
-  - **`PickEntryMarker()`** avoids reusing the previous Add's marker when more than one entry point exists → consecutive schools fan out across gates.
-  - **`ChooseSpreadOrigin()`** jitters each new school **sideways** off the marker (perpendicular to its swim-in direction, so it stays off-screen) and retries a few times to stay clear of the **last 8 spawn origins** (shared across all species); falls back to the most-separated attempt.
-- **Two new Inspector knobs** on `EcosystemSimulationGPU` → **"Entry Spawn Spreading (anti-stacking)"**:
-  - `_entrySpawnJitterRadius` (default `4`) — sideways nudge radius; `0` = old spawn-exactly-on-marker behaviour.
-  - `_entrySpawnMinSeparation` (default `3`) — preferred gap between a new origin and recent ones (~one school's cluster diameter).
-- ⚠ **With only ONE entry marker under heavy spam** there's a hard space limit — add more entry markers (they round-robin) or raise the jitter radius. ⚠ **Not yet play-tested in-editor.**
-
-### 🔍 Full script audit + handoff reconciliation (all 58 Junheng scripts read)
-Read every `.cs` under `Assets/Junheng/` and reconciled this doc's file tree + claims against ground truth.
-
-**Systems that existed in code but were missing/undocumented here (now added to the tree):**
-- **`EcosystemTargetGPU`** — the per-school swim target. `AddSchool` creates one (+ a `TransformAnimator` on a Line/Circle/Rectangle path) per school; `ParkAt(exitPoint)` drives the swim-out on Remove. **This replaced the old `WanderingAffecterGPU`** (deleted — grep confirms the type no longer exists).
-- **`FishEntryPointGPU`** — drop-in marker (Entry / Exit / Both) placed OUTSIDE the bounds. New schools spawn at a random entry marker and swim in; removed schools swim out to a random exit marker. Auto-registers into a static list (no wiring). This is the system the spawn-spreading fix above operates on.
-- **`EcosystemDebugHarnessGPU`** — in-editor OnGUI panel (toggle key) with per-species +/− buttons calling the sim's Add/Remove directly — test the ecosystem with **no tablet / no netcode**.
-- **`OptimisticPopulationStore`** (Networking) — static client-side overlay: records each +/− tap and reports `synced + pending` so the tablet count updates **instantly** instead of lagging until removed fish finish swimming out; keyed per-species-index so it survives card/panel rebuilds (kills the old snap-back). Written by `TabletAddRemoveUIGPU` + Aloysius's `OrganismCardData`; read by those plus `CurrentOrganismsGrid`.
-- **`EcosystemUnlockManagerGPU`** — was described in the 2026-06-18 section but missing from the tree; now listed.
-
-**Removal / swim-out model (was undocumented):** Remove is immediate + concurrent — each press parks one more of the species' TOP schools at an off-screen exit point so it beelines out now; a single `BatchExitRoutine` culls the whole exiting block once all its fish reach the exit (no fixed timer). Spamming Remove sends several out at once. Tunables live in the **"Removal animation (swim-out)"** Inspector group on `EcosystemSimulationGPU` (`_exitArrivalRadius`, `_exitPollInterval`).
-
-**Dead / stale confirmed:**
-- **`EcosystemUIAdapterGPU`** — zero external references anywhere; genuinely dead. Safe to delete (was previously flagged "verify if still used").
-- **`Automatic_Fish_Swimming_CPU/` (both files)** — legacy single-fish CPU demo; **no C# references, BUT their script GUIDs are still on GameObjects in several scenes** (incl. `Boids_Demo`, `MainScene`, `SCENE_MainScene 1`). Almost certainly disabled leftovers — **look at the scene objects before deleting**, don't blind-delete (a plain name-grep misses these GUID refs).
-- `SpeciesDataGPU` — reconfirmed: `StarvationDeathRate` / `StarvationThreshold` / `ReproductionRate` / `NaturalDeathRate` all gone; population is global-ratio only.
-- **`HostSpawner`** looks redundant with `NetworkBootstrap` (both spawn the net-manager on server start) — worth consolidating to one.
-
-**Everything else matched:** Boids_GPU core, Shared, Other, Shader_GUI, and the two live `Boids_CPU` structs (`BoidInformation` / `BoidSpawnData` — still used by the GPU spawners + `FishSwimmingUtility`, NOT dead). `BoidSpawnerBase` has the start-at-zero API (`SchoolCount` / `IsActive` / `SetSchoolConfiguration`) as documented.
-
-> Note: `CLAUDE.md` (project root) still lists `WanderingAffecterGPU.cs` in its GPU Ecosystem Layer table and references `StarvationThreshold`/`StarvationDeathRate` in its Population-dynamics section — both stale. Fix there too when convenient (not done in this pass).
-
-### 🐟 Fish flocking + numbers rebuilt from the research doc (SUPERSEDES the 2026-07-07 archetype pass)
-
-Re-tuned all 12 species' `FishSchoolProperties` + `FishPerSchool`/`MaxSchools` **directly from the biology** in `OceanX MP Research Document.docx` (Akil Hussain — per-species *roaming* + *social* behaviour), instead of the earlier 5-archetype grouping. **Fixes the "solitary fish still flock" bug** (previously several solitary/small-group species carried schooling values, e.g. parrotfish & surgeonfish at 10 fish/school with Clownfish-style cohesion).
-
-**Key lever:** cohesion + alignment only bind fish *within the same school*, so `FishPerSchool = 1` makes a species physically unable to flock (multiple individuals then only *repel* via separation → realistic for solitary/territorial fish).
-
-**Behaviour tiers (from the doc's "Social behaviour" line):**
+**Active runtime:** `EcosystemSimulationGPU` runs in Awake **before** `BoidSimulationGPU.Start`. Tick coroutine every `_tickInterval` seconds (default 5).
+
+- **`SpeciesDataGPU`** — one asset per species holds all simulation SOs (FishSchoolProperties, FishMovementProperties, FishMotionRenderProperties, SpeciesBehaviorPropertiesGPU) plus per-species tuning (`FishPerSchool`, `MaxSchools`, `PreySpecies`, `PredatorSpecies`, `UseSpineDeformation`).
+- **`EcosystemDefinitionGPU`** — top-level asset: species list + simulation bounds. The 12 canonical species are wired in **fixed order**, each with a matching `BoidSpawnerGPUMultiTargets` in `BoidSimulationGPU._gpuBoidSpawners`. ⚠ Child spawner objects are **not** auto-scanned; a species in the definition list but missing from this array throws *"no spawner has SpeciesData 'X' assigned"* and won't spawn.
+- **`BoidSpawnerGPUMultiTargets`** reads all spawn properties from `SpeciesDataGPU`.
+- **`BoidSpawnerBase`** — `SchoolCount` / `IsActive` properties + `SetSchoolConfiguration(schoolCount, fishPerSchool)`.
+- **Simulation bounds derived** — `EcosystemSimulationGPU.SimulationBounds` reads from `BoidSimulationGPU.SimulationAreaBounds`. `EcosystemDefinitionGPU` SimulationCenter/SimulationSize are only a fallback; no more manual sync of two separate bounds assets. Bounds gizmo draws the derived volume; wandering affecter targets spawn and roam inside it.
+
+## 7.2 Population Dynamics + Eco-Health (ratio-driven, global)
+
+**⚠ Natural births/deaths (Week 8) AND per-species starvation fields (Week 9) are gone.** `ReproductionRate` / `NaturalDeathRate` / `StarvationDeathRate` / `StarvationThreshold` were all deleted from `SpeciesDataGPU`. Balance is now **global**; per-species behaviour comes from `FishPerSchool` / `MaxSchools` / prey/predator lists.
+
+**Symmetric ratio-driven predator/prey dynamics:**
+- Each species feels a prey:predator balance ratio (in **school counts**) against a shared dead-band `[RatioBandLow, RatioBandHigh]` (default **1–3**):
+  - Few predators (ratio high) → prey grows; many predators (ratio low) → prey shrinks.
+  - Prey abundant → predator grows (well-fed); prey scarce/gone → predator **starves** (hard override — can't grow without food).
+  - Inside the band → stable.
+- Rolled at `GrowRate` / `ShrinkRate` (default 0.3/tick).
+- Counts snapshotted each tick so updates are order-independent.
+- Can drive a species to extinction (0 schools).
+
+**`PopulationPressure(species, counts)` → +1 / 0 / -1** — combines predation pressure (top-down) and food availability (bottom-up). **Starvation is a hard override** — no/low food always shrinks, so the keystone-collapse cascade can't be cancelled by "no predators."
+
+**Eco-health (`EcoHealth01`, 0–1)** — diversity + balance + apex presence, weighted (0.4 / 0.4 / 0.2 default).
+- **Diversity** — fraction of species alive out of the whole roster (see fix note below).
+- **Balance** — fraction of present species that are **not declining** (`PopulationPressure >= 0`, i.e. stable or growing) AND not overpopulated. Well-fed apex filling toward its cap is fine; only actively starving / over-hunted / running-away species drag health down.
+- **Apex presence** — extra credit when the shark is in the reef.
+
+**Two key fixes to make 100% reachable:**
+1. **Old behaviour required perfect stillness** (`PopulationPressure == 0`) — impossible for every species at once with the dense food web + `MaxSchools` caps → health topped out at ~87%. Now "not declining and not overpopulated" counts as healthy → **100% reachable.**
+2. **Old balance divided by present species only** (`considered`), so the first fish added read as full balance → jumpy score. Now divides by `totalSpecies` (whole roster) → single fish contributes ~1/N; climbs smoothly as player builds the reef. **100% still requires every species alive AND healthy** — same ceiling, gentler ramp.
+
+**Overpopulation model (ratio + count based, replaces old "predators gone + near cap"):**
+- Shared helper **`IsOverpopulated(species, counts)`** used by BOTH `GetSpeciesStatus` and the eco-health balance term (bar + Alucia warnings always agree).
+- **Predators present** → overpopulated if species outnumbers combined predators by > `_overpopulatedRatio` (default **7:1**).
+- **Predators entirely gone** → overpopulated if > `_overpopulatedFreeCount` schools (default **3**).
+- Inspector: `_overpopulatedRatio = 7`, `_overpopulatedFreeCount = 3` (replaced old `_overpopulatedAtFraction`).
+- Apex species (no natural predators) are never overpopulated.
+
+**Grazer MaxSchools raised for overpopulation headroom:** Parrotfish 6→10, Surgeonfish 6→10, Mullet 7→10, Damselfish 7→12, Spinefoot 6→10. Mullet kept effectively at 10 (18 fish/school). Predator/mid-fish caps unchanged.
+
+**Cause-aware species status for Alucia (replaces `GetBalance`/`SpeciesBalance`):**
+- `enum SpeciesStatus { Absent, Balanced, Starving, OverPredated, Overpopulated }`. Cause-aware, computed on committed counts, **messaging-only — does NOT drive the population tick** (that still uses `PopulationPressure`).
+  - **Starving** — it eats prey, food *was* present at least once, and is now gone/below the low band (real collapse).
+  - **OverPredated** — its predators are actually present and outnumber it past the low band.
+  - **Overpopulated** — normally has predators, they're absent, and it has grown to overpopulated threshold.
+  - **Balanced** — none of the above, including a just-added species or a lone predator whose prey was never introduced (no false alarm).
+- Per-species `_foodWasPresent` memory distinguishes a genuine "prey ran out" from "prey were never added yet".
+
+## 7.3 Start-at-Zero / School-Scaling / Extinction Model (`e13e26b`)
+
+The GPU ecosystem starts from a completely empty ocean; the player builds it up.
+
+- **`SpeciesDataGPU.FishPerSchool`** (int) — number of boids per school (constant density scaling).
+- **`SpeciesDataGPU.MaxSchools`** (int) — static per-species cap; synced to clients via netcode.
+- **`EcosystemSimulationGPU`** owns `N` (school count) per species, initialised to 0.
+  - `AddSpecies` — increments N up to `MaxSchools`, calls `ReinitializeBuffers`.
+  - `RemoveSpecies` — decrements N down to 0 (extinction), calls `ReinitializeBuffers`.
+  - Population tick can now remove the last school (species goes fully extinct).
+  - **Public API for UI/RPCs:** `AddSpecies` / `RemoveSpecies` / `CountGroups(species)` (returns current school count for UI display).
+- **Inactive spawners** (school count = 0) are excluded from the concat buffer, spatial grid, affecter targets, and rendering — no placeholder draw calls.
+
+**`ReinitializeBuffers()` sequence:**
+1. Read live GPU positions back to CPU (from correct ping-pong buffer; skipped when empty).
+2. Slice per active spawner using `spawner.Boids.Length` (old count, not new).
+3. Call `spawner.StorePreservedBoids(slice)` on each spawner.
+4. Tear down all GPU buffers (derived → base → spatial partition → spawners).
+5. Re-run full init chain — `SpawnBoids` restores old positions, only new fish get fresh spawn positions.
+
+**Empty-ocean / last-extinction is crash-safe:**
+- All GPU compute buffers and spatial grid sized `Mathf.Max(1, count)` — zero never passed to `new ComputeBuffer`.
+- `SetData` / `GetData` guarded against empty arrays.
+- Per-frame dispatch and render skipped when `_boidsCount == 0`.
+- Group IDs assigned densely over active spawners only.
+- Null-guard in `UpdateSimulation` (`1887612`) — early-returns if called before GPU buffers are fully initialised (first-frame race).
+
+**Bug fix:** NaN spawn positions for single-fish schools caused by divide-by-zero in spawn grouping — fixed with a guard.
+
+**Carrying capacity** = `MaxSchools × FishPerSchool`. Dead `_carryingCapacity` dict removed from `EcosystemSimulationGPU`.
+
+## 7.4 Unlock System (`EcosystemUnlockManagerGPU`)
+
+Eco-health-gated species unlock system (singleton). Ports the prototype's gate model into Unity — a locked species unlocks when **all** its `requires` (prey/support **school counts**) are met **AND** live eco-health % ≥ its `minHealth`. Latching / one-way, like the prototype.
+
+- **Dual data source:** reads population + eco-health straight from `EcosystemSimulationGPU` when present (host / standalone — testable with `EcosystemDebugHarnessGPU`, no netcode needed), and falls back to the synced netcode layer (`EcosystemNetworkManagerGPU.GetPopulation` / `GetEcoHealth`) on the tablet client (where `_simulation` is empty).
+- **Drop-in replacement for Aloysius's placeholder `GameState`:** exposes `IsUnlocked`, `RegisterLockedTap` (progressive hints), `RefreshAllBubbles`; fires `NotificationManager.ShowUnlocked` on each unlock; plus `OnSpeciesUnlocked` / `OnUnlockStateChanged` events and `GetLockInfo()` for the locked-modal requirement checklist.
+- **New overload `IsUnlocked(SpeciesDataGPU gpu)`** — resolves the gpu-species to its `SpeciesData`; a species the manager doesn't track is treated as unlocked, so it never blocks something the unlock system isn't meant to govern.
+- **`ResetToStart()`** — re-locks all species to the initial "5 starters unlocked" state; resets hint counters. Called by `ExhibitReset.DoLocalReset`.
+- **Locked species can no longer be added from the tablet** — `TabletAddRemoveUIGPU` remembers the selected species; Add is blocked and the Add button greys out while that species is still locked (not yet discovered). Remove and adds of unlocked species are unchanged.
+- **Progressive locked hints** — `SpeciesBubble.ShowLockedHint` pulls `AluciaLines.GetVariants("hint.flavour", speciesName)` (ordered vague → clearer → almost there, matching the old `hint1/2/3`), falling back to the `SpeciesData` asset when the sheet has no rows for that fish. One source of truth with the host + Hints tab.
+- **Optional `[Unlock]` console logging** for headless testing.
+
+⚠ **`minHealth` thresholds need tuning** against the real eco-health curve — the formula can sit low early (diversity term), so a threshold like 70 can be effectively unreachable. Set them against what the bar actually reaches in play.
+
+## 7.5 Reef-SDF Obstacle Avoidance
+
+**`ReefSDFVolume` + `ReefSDFBaker`** — SDF-based obstacle avoidance for the reef mesh.
+- **`_padding` field** (default **4 m**) on `ReefSDFVolume`; `Bounds = _size + 2·padding`. **Not optional slack** — the escape direction is a central-difference gradient sampling one voxel either side, so a fish within a voxel of the un-padded edge would difference against a data cliff and get a garbage direction. Padding pushes the edge beyond where fish can swim and catches reef straddling the boundary. `ReefSDFBaker` bakes the padded volume.
+
+**Reef backstop "snap" fix (`BoidsGPU_Spatial_Partition.compute`):**
+- **Symptom:** fish avoiding a rock would *instantly* flip their rotation — worst dodging obstacles directly above/below (snap up/down); side-to-side too but rarer.
+- **Root cause:** the hard penetration backstop (`ResolveReefPenetration` + box-affecter fallback `ResolveObstaclePenetration`) rewrote `boidInfo.direction` in a **single frame**, bypassing the normal angular turn ramp. Vertical-dominant because flat rock tops / seabed give a vertical surface normal, and the "buried in a slab" escape hardcodes a +Y climb.
+- **Fix:** keep the instant **position** push (prevents tunnelling), but turn the heading toward the corrected direction at a **capped rate**. New helpers `RotateDirectionTowards(from, to, maxRadians)` (capped slerp) + `ReefBackstopMaxTurn(schoolInfo)` (= species `maxAngularVelocity × multiplier × dt`). Applied to all four direction rewrites across both resolvers.
+- **Live tunable:** `_reefBackstopTurnMultiplier` on `BoidSimulationGPU` (Inspector: "Reef Backstop Turn Multiplier", default **3**), pushed per-frame like `_TailSwayResponsiveness`. Lower = smoother; higher = snappier. Usable range ~2–4.
+
+**Big-fish obstacle avoidance (stops body clipping + on-the-spot spin):**
+- **Symptom:** big fish (grouper especially) had part of their body poking into coral/rock, sometimes appearing to rotate on the spot.
+- **Cause:** reef collision is a **point** test on the fish's pivot — keeps pivot one voxel (0.5m) clear, but a big fish's mesh extends past that. A fish pinned against the reef (position held, forward motion cancelled) looks like it's spinning in place.
+- **Quick fix (no code):** raised `ObstacleAvoidanceRange` so big fish bank away *earlier* (soft steer), before the hard backstop ever fires:
+  - **Grouper:** 2.1 → 6 → **8** (bumped again after Akil's environment changes)
+  - **Giant moray:** 0.75 → **5.5**
+  - Bluefin trevally left at 4.5, shark 10.5, ray 5.7 unchanged.
+- ⚠ **Moray value untested** at time of first bump (model wasn't in scene yet; now imported — re-verify).
+- **Proper fix deferred:** per-species **collision radius** (used for both backstop clearance and avoidance margin) so big bodies are physically kept clear — real solution to point-collision clipping, especially the long-bodied moray.
+
+## 7.6 Fish Rendering — Shaders + Species-Specific Deformations
+
+**Standard fish shaders:**
+- **`OceanX/Fish_Lit`** — non-instanced, for solitary/hero fish rendered as regular GameObjects (e.g. individual sharks placed in scene).
+- **`OceanX/Fish_Lit_Instanced`** — GPU-instanced, for schooled fish rendered via `Graphics.RenderMeshIndirect` from `BoidSpawnerGPU.RenderBoids`. Reads per-boid position/rotation/state from a `StructuredBuffer<Boid> _Boids` SRV. See §9 for the "wrong path" crash.
+- **`Fish_Swimming_Motion.hlsl`** shared library — procedural swim animation. Reads a per-vertex tail-mask from **TEXCOORD1**: `tailMask = saturate(pow(1.0 - tailMaskUV.x, _TailMaskFalloff))`. See §7.20 (Fish Asset Pipeline) for the UV1 baking rules.
+
+**Custom material inspector — `Shader_GUI/Editor/`:**
+- Custom UI for Fish_Lit materials (surface options, surface inputs, detail inputs, fish swimming properties, advanced options).
+- Namespace originally `GameDevBuddies` (forked from an asset), **renamed to `OceanX`** 2026-07-26 to match project namespace and stop the *"Could not create a custom UI for shader 'OceanX/Fish_Lit'"* warning.
+- Includes `FishLitBaseShaderGUI` / `FishLitDetailGUI` / `FishLitShaderGUI` / `FishSwimmingGUI` / `MaterialAccess` / `Property` / `ShaderUtils`.
+
+**Ray tail-sway (signed turn-rate):**
+- **`BoidInfoGPU` struct grew to 18 floats** (`Size = sizeof(float) * 18`) — new **`SignedTurnRate`** field (~[-1,1]: sign = bank/yaw direction, magnitude = turn hardness), written by the compute shader each frame. Carries the sign the sim otherwise discards (`AngularVelocity` is stored unsigned).
+- **Consumed only by `OceanX/Ray_Wing_Lit_Instanced`** (Akil's ray-specific shader) to sweep the tail toward the turn — behaviourally inert for every other boid (the fish shader ignores it).
+- **`BoidSimulationGPU` serialized `_tailSwayResponsiveness`** (default 4, frame-rate-independent ease), pushed to compute as `_TailSwayResponsiveness` — tune ray tail floatiness live.
+
+**Moray serpentine spine deformation (2026-07-24, `d36ee95`):**
+- **`SpeciesDataGPU.UseSpineDeformation`** (bool, in a "Rendering" header). **ONLY moray should tick this.** When ON, `BoidSimulationGPU` maintains a **per-instance head-path trail buffer** for the species, and the spawner's material MUST use `OceanX/Moray_Lit_Instanced` (a moray-only shader).
+- ⚠ **Only ONE species may enable this** — buffers are sized for it.
+- ⚠ **`OceanX/Moray_Lit_Instanced` shader not yet in the repo** (presumably still on Akil's side).
+- **`BoidSpawnerGPU.SetSpineRenderData(...)`** — 13-arg API called by `BoidSimulationGPU` every frame for the moray spawner. Feeds the material's `MaterialPropertyBlock` a set of `_Moray*` props: `_MorayTrail` (SRV to head-path buffer), `_MorayTrailCursor` (SRV to per-instance cursor), plus `_MorayTrailCount`, `_MorayTrailSpacing`, `_MorayHeadLocalZ`, `_MorayBodyLength`, `_MorayUndulation{Amplitude,Waves,Speed,HeadHold}`, `_MorayDebugStraight`, `_MorayFlipNormals`, `_MoraySmoothingWindow`. Vertex shader uses these to lay each eel's body along its recorded head-path (proper eel-like undulation, not a rigid mesh).
+- All values re-bound each frame → live-tunable in Play mode.
+- Untouched (and unbound) for every other spawner — no impact on the standard rigid fish path.
+- **Akil owns the moray tuning** — he authored the mesh + shader and drives the `_moraySpine*` values on `BoidSimulationGPU`. `SCENE_MainScene.unity` mirrors his `SCENE_MainScene 2.unity` values; sync from his scene when he changes them.
+
+**Environment coral health reveal shader (Akil, 2026-07-16 → 07-18):**
+- **`OceanX/CoralHealth`** — corals stay full-size and regain colour from a **bleached/dead** look as eco-health rises. `EnvironmentHealthReveal` drives `_Health` 0→1 via per-item `MaterialPropertyBlock` (cached so it doesn't clobber other overrides). `recoverStagger` spreads recovery across a group.
+- New `ColorRecover` reveal style added alongside the placeholder `ScalePopIn`. Use `ColorRecover` for "all corals present but washed-out" + the dead-coral half of a hybrid scene; keep seagrass / "new" corals on `ScalePopIn`.
+
+## 7.7 Flocking + Species Behavior Tuning (biology-driven)
+
+Fish flocking + numbers were **re-tuned from the research doc** (Akil Hussain, `OceanX MP Research Document.docx`, per-species roaming + social behaviour). Supersedes an earlier 5-archetype grouping. **Fixes the "solitary fish still flock" bug** (previously several solitary/small-group species carried schooling values).
+
+**Key lever:** cohesion + alignment only bind fish **within the same school**, so `FishPerSchool = 1` makes a species physically unable to flock (multiple individuals then only *repel* via separation → realistic for solitary/territorial fish).
+
+**Behaviour tiers:**
 - **Solitary — never school** (`FishPerSchool 1`, cohesion/align 0.05–0.15, wide separation): Blacktip shark, Brown-marbled grouper, Giant moray, Bluespotted ray, **Bullethead parrotfish**.
 - **Pairs / small loose groups** (`FishPerSchool 2–3`, cohesion ~0.25–0.3): Bluefin trevally, Eyestripe surgeonfish.
 - **Loose aggregation** (`FishPerSchool 7`, cohesion 0.4): Russell's snapper.
 - **Tight / large schools** (high `FishPerSchool` + high cohesion/align, tight separation): Yellowstripe scad (25), Fringelip mullet (18), Streaked spinefoot (9), Reticulated damselfish (8).
 
-**Final values** (`ObstacleAvoidanceRange 3` and `SeparationWeight 1` unchanged on all):
+**Final values** (`ObstacleAvoidanceRange 3` and `SeparationWeight 1` were the defaults; grouper/moray now different — see §7.5):
 
 | Species | Vision | SepRange | Cohesion | Align | Target | FishPerSchool | MaxSchools |
 |---|---|---|---|---|---|---|---|
@@ -818,577 +549,487 @@ Re-tuned all 12 species' `FishSchoolProperties` + `FishPerSchool`/`MaxSchools` *
 
 **⚠ Bullethead parrotfish = the MODELLED SEX drives behaviour.** Doc: "males highly solitary, females move in small groups." Our texture/model is the **terminal-phase male** (vivid blue-green), so it's set **solitary** (`FishPerSchool 1`, cohesion 0.1, wide separation, territorial). If a **female/initial-phase** parrotfish model is added later, give *that* asset the small-group values (`FishPerSchool ~3`, cohesion ~0.3) — don't overwrite the male's.
 
-- **`MaxSchools`** now follows a trophic pyramid (apex 3 → tertiary 4 → secondary 5–6 → primary 6–7) so "remove the shark → prey overpopulate" reads more clearly.
-- **Speed untouched** — `FishMovementProperties` (CruisingSpeed/MaxSpeed) was NOT changed this pass; the doc has size/speed hints (e.g. moray "stealth not speed", scad "rapid directional changes") if a per-species speed pass is wanted next.
-- ⚠ **Not yet play-tested in-editor.**
-
----
-
-## What Was Done — 2026-07-11 (JunHeng) — Editable content pipeline (CSV + live-fetch)
-
-Reworked the fact-checkable text so non-technical checkers (incl. overseas) can edit what the game says
-in a spreadsheet, and — with a published-sheet URL — see it in the game **on next launch with no rebuild**,
-on the host **and** the tablet. Everything degrades gracefully (nothing breaks offline / with no sheet).
-
-### ✅ Alucia dialogue → event/variant model (`StreamingAssets/alucia_lines.csv`)
-- New columns: **`Event, Species, Mood, Weight, Text, Notes`** (was `Key, Context, Mood, Text`).
-  - **Event** = the stable ID the game matches on (old keys preserved: `intro.1`, `health.critical`, `hint.withReq.1-4`, …).
-  - **Multiple rows per Event = variants** — the game picks one (weighted, no immediate repeat) so she doesn't
-    sound repetitive. Checkers add a variant by copying a row.
-  - **Species** (optional) scopes a line to one fish; blank = any fish. Species-specific rows win over generic.
-  - **Mood** (Calm/Warn/Win) now actually drives the bubble tint for the new ecological lines.
-  - Rows whose Event starts with `#` are comments (there's a built-in instructions/legend block at the top).
-- **New ecological events** (per-species): `species.overpopulated`, `species.underpopulated`, `species.extinct`,
-  `species.added` — this is the "add a hint if a certain fish overpopulates" ask, now **data-only** for checkers.
-  > ⚠ **Superseded 2026-07-13:** `species.underpopulated` was replaced by cause-aware `species.starving` + `species.overpredated`. See the 2026-07-13 section.
-- `AluciaLines.Get(key, fallback)` is unchanged, so `AluciaController` / `NotificationManager` /
-  `SpeciesUnlockReveal` were **not touched**. New `AluciaLines.GetLine(event, species)` returns text + mood.
-
-### ✅ Species info cards → stable ids (`StreamingAssets/SpeciesContent.csv`)
-- Added a stable **`id`** column (e.g. `blacktip_reef_shark`) as the real match key, with `speciesName` as
-  display text — so a name can be reworded/translated later **without breaking the card**. Also added
-  `habitat` / `funFact` columns the code already expected. `SpeciesContentDB` now indexes by **both** id and
-  name, so either resolves. `SpeciesData.contentId` (new, optional) + one line in `ModalController` use it.
-
-### ✅ Live-fetch content service (new)
-- **`Assets/Junheng/Scripts/Content/ContentService.cs`** — downloads each CSV from its published URL at launch
-  → caches to `persistentDataPath` → falls back to the baked `StreamingAssets` copy → then the hardcoded lines.
-  This also **fixes tablet editing**: baked StreamingAssets is unreadable on Android, but the downloaded cache is.
-- **`ContentService.LocalPathFor(file)`** is what the loaders read; it works with or without a `ContentService`
-  in the scene (no service = baked copy, exactly like before).
-- **`Assets/Junheng/Scripts/Content/CsvUtil.cs`** — one robust RFC-4180 parser (quotes, commas, embedded
-  newlines) now shared by both loaders (previously `AluciaLines` couldn't handle a line break inside a cell).
-
-### ✅ Ecosystem → Alucia reactions (new)
-- **`Assets/Junheng/Scripts/Content/AluciaEcologyEvents.cs`** — polls the sim, detects a species going
-  over/under-populated / extinct / added, and speaks the matching CSV line via `AluciaController.Say`.
-- Added **`EcosystemSimulationGPU.GetBalance(species)`** + `SpeciesBalance` enum (reuses the existing ratio
-  logic) so the reaction agrees with the actual dynamics.
-  > ⚠ **Replaced 2026-07-13** by cause-aware `GetSpeciesStatus` / `SpeciesStatus`. See the 2026-07-13 section.
-
-### Files touched
-- **New:** `Junheng/Scripts/Content/{CsvUtil,ContentService,AluciaEcologyEvents}.cs`.
-- **Changed:** `Junheng/…/EcosystemSimulationGPU.cs` (additive `GetBalance`); **Aloysius**
-  `AluciaLines.cs` (reworked, back-compat), `SpeciesContentDB.cs` (reworked, back-compat), `SpeciesData.cs`
-  (+`contentId`), `ModalController.cs` (1 line). ⚠ 4 Aloysius files touched — all backward-compatible, coordinate on merge.
-- **Data:** `StreamingAssets/alucia_lines.csv` + `SpeciesContent.csv` regenerated (all original wording preserved;
-  minor whitespace/"Indo-Pacific" tidy-ups on the species sheet).
-
-### Google Sheet (the editable content workbook)
-- **"OceanX Content"** — created + populated in **junheng's** Google account (2026-07-11), two tabs
-  `alucia_lines` (34 rows) and `SpeciesContent` (15 rows), imported from the two `StreamingAssets` CSVs.
-- **URL:** https://docs.google.com/spreadsheets/d/1yjne2lD4rmjwjPwED5OUm1_14MigDqRZOFVaaG7YjqU/edit
-- **Published to web as CSV (2026-07-11)** — read-only endpoints the game fetches (editing stays private to
-  whoever the doc is shared with; un-publish anytime via File → Share → Publish to web → Stop publishing).
-  Both verified returning valid CSV; sheet edits propagate after a short Google cache delay (~minutes):
-  - **`alucia_lines.csv`** → `https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=1093782534&single=true&output=csv`
-  - **`SpeciesContent.csv`** → `https://docs.google.com/spreadsheets/d/e/2PACX-1vRSMpbFeGI8_YNg7GQvBSVUPNGdvzsMoZEkp1MbV8zfnr0Z179X4Az3cm04QVTXkxe0ZsEf9dXFtA2j/pub?gid=196784187&single=true&output=csv`
-
-### Wiring still needed in Unity (not done here — no Unity access)
-- ~~Publish the two tabs and grab the two CSV URLs~~ ✅ done — URLs above.
-- Put a **`ContentService`** on an always-active object in each content scene and paste the URLs above into
-  its Sources — host → `alucia_lines.csv` (gid 1093782534); tablet → `SpeciesContent.csv` (gid 196784187).
-  ← JunHeng doing next.
-- Put **`AluciaEcologyEvents`** in the host scene; assign the `EcosystemSimulationGPU` + `AluciaController`.
-- (Optional) fill **`contentId`** on the 12 `SpeciesData` assets. Add the missing `seagrass.png` /
-  `macroalgae.png` to `StreamingAssets/SpeciesImages/` (those two cards are blank without them).
-- **Status:** Phase A (compile + no-regression) and Phase B (ecological reactions) **confirmed by JunHeng.**
-  Phase C — Google Sheet **created + populated + published (URLs verified live)**; **remaining = add the two
-  `ContentService`s and paste the URLs in** (JunHeng, next session).
-
-### ⚠ Editing tool — Google Sheets vs Excel
-The live-fetch needs a URL that returns **CSV text**. **Google Sheets** does this cleanly (File → Share →
-Publish to web → CSV). **Excel does not** publish a CSV URL — an Excel Online / OneDrive link returns the web
-viewer (HTML) or the binary `.xlsx`, neither of which the loader reads. With Excel the options are (a) manual
-"Save As CSV → drop it in" (no live updates), or (b) keep a `.csv` (not `.xlsx`) on OneDrive/Dropbox/GitHub with
-a direct link (semi-live; must re-upload to change). **For live, no-rebuild editing, use Google Sheets.**
-
-### 🔮 FUTURE / POSSIBLE — multi-language content (NOT built; deferred on purpose)
-Teacher flagged overseas use → multiple languages. **Do NOT make a separate build per language** (that would
-mean re-pasting a URL + rebuilding each time). The intended design, cheap to add later because the schema is
-already localization-ready (stable ids, all text in one column):
-- **One Google Sheet workbook, one tab per language** (English / Spanish / Malay / …), each published as its
-  own CSV URL.
-- **One build** that picks the active language **at runtime** → no rebuild to switch or update a language.
-- Choose the language by: tablet **system-language auto-detect** + an **in-app override menu** (recommended for
-  an exhibit), or an editable config value.
-- Implementation: extend `ContentService` from one URL per file to a **`{language → URL}` map** + a "current
-  language" setting (~20 lines). Nothing already built needs redoing; today's single URL becomes the "English" entry.
-- Translating is then just retyping the display text in each tab — no structural changes.
-
----
-
-## What Was Done — 2026-07-24 (JunHeng) — Reset-flow fixes (tablet re-start, tutorial, tabs, Alucia) + Aloysius prompt-layout port
-
-Follow-up to the fresh-start reset: closing the gaps where a SECOND visitor (after an F9 reset) didn't get a clean start. Root cause in every case was a **one-shot latch that was never re-armed on reset** — the component fired for the first visitor and stayed dead.
-
-### 🔁 Reset gaps fixed
-- **Tablet UI didn't reveal on the 2nd start** — `StartCrossfade` (the crossfade that reveals the food-web UI on start; `HideUntilStarted.deferRevealToTransition = true` defers to it) latched `_played` and never replayed. Added `StartCrossfade.ResetForNewSession()` (re-arms `_played`, restores the tap overlay + re-hides the pieces). It stays subscribed to `OnStarted`, so the next start replays it. *(Also fixed the `ReturnToAttract` case where the tablet's TapOverlay came back with CanvasGroup alpha stuck at 0 → invisible "empty water"; alpha/interactable/blocksRaycasts are now restored.)*
-- **Tablet onboarding tutorial didn't show again** — `TutorialPanel._shownOnce` latched forever. Added `TutorialPanel.ResetForNewSession()` (hides + re-arms).
-- **Stale tab on restart** — `TabController._initialized` latched; the next visitor inherited the previous tab. Added `TabController.ResetForNewSession()` (snaps back to `defaultTab`, no re-wiring).
-- **Alucia + reveal/unlock cards lingered ~1.5s** — they were only cleared at the covered peak (`DoLocalReset`). Moved the host-side visual cleanup to the **F9 request** (`StartHostSequence`): Alucia silence + `RevealQueue.ClearAll` + `SpeciesAddedReveal.ResetShownHistory` + `NotificationManager.ClearAll` now fire the instant reset is requested (important because the veil is transparent — you'd otherwise see them through the bubbles).
-- **Alucia "can still play after reset" (UNCONFIRMED)** — added a hard **`_muted`** flag to `AluciaController`: set true in `ResetForNewSession`, cleared in `HandleStarted`; `Say()` is a no-op while muted. She physically can't speak between a reset and the next real start. ⚠ Still needs an on-device confirm — see temp diagnostics below.
-- All new resets wired into `ExhibitReset.DoLocalReset` (and the visual ones into `StartHostSequence`).
-
-### 🖥️ Ported Aloysius's `SCENE_MainScene 2` prompt layout into the host scene (`8c8159a`)
-His two scenes share the same object graph (both forked from Akil's), so a 1:1 fileID port is safe. Applied the **intentional** changes only ("Changed pos of the prompts"): two prompt `m_AnchoredPosition` moves (`y -10→-358`, `-364,-35 → -336,-373`) + a group rescale (`0.647→0.584`). **Skipped** the incidental `m_Alpha`/`m_IsActive` editor-state toggles (those are runtime-driven by `HideUntilStarted`/`StartCrossfade`/the bystander panel — baking them in fights the reset). Font change was a re-bake of the shared `Roboto-Bold SDF` atlas — propagates automatically, no scene edit.
-
-### ⚠ Temporary debug logs still in (STRIP before final build)
-`[Alucia] ResetForNewSession …` / `[Alucia] Say(…) muted=…` (AluciaController), `[ExhibitReset] …`, `[NetMgr] _resetGeneration …`. Kept in this checkpoint to diagnose the Alucia report — press F9 and check whether `[Alucia] ResetForNewSession` fires.
-
-### New / changed files
-| File | Change |
-|------|--------|
-| Aloysius: `StartCrossfade`, `TutorialPanel`, `TabController` | added `ResetForNewSession()` (re-arm one-shot latches). |
-| Aloysius: `ExperienceStartGate` | `ReturnToAttract` restores TapOverlay CanvasGroup alpha. |
-| Aloysius: `AluciaController` | `_muted` hard-mute + temp diagnostics. |
-| `Networking/ExhibitReset.cs` | F9-time host visual cleanup in `StartHostSequence`; `TutorialPanel`/`TabController` resets in `DoLocalReset`. |
-| `Junheng/Scenes/SCENE_MainScene.unity` | ported prompt positions/scale from Aloysius `8c8159a`. |
-
----
-
-## What Was Done — 2026-07-24 (JunHeng, session 2) — Reef-avoidance "snap" fix + big-fish avoidance tuning
-
-Polishing Akil's reef-SDF obstacle avoidance. Two issues, both around fish near rock/coral.
-
-### 🎯 Fixed the sudden up/down "snap" near obstacles
-- **Symptom:** fish avoiding a rock would *instantly* flip their rotation — worst when dodging obstacles directly above/below (snap up or down); side-to-side too but rarer.
-- **Root cause:** the hard penetration backstop (`ResolveReefPenetration`, and the box-affecter fallback `ResolveObstaclePenetration`) rewrote `boidInfo.direction` in a **single frame**, bypassing the normal angular turn ramp. It's vertical-dominant because flat rock tops / the seabed give a vertical surface normal, and the "buried in a slab" escape hardcodes a +Y climb. The *steering* was already smooth — only the backstop snapped.
-- **Fix (`BoidsGPU_Spatial_Partition.compute`):** keep the instant **position** push (that's what prevents tunnelling), but turn the heading toward the corrected direction at a **capped rate** instead of rewriting it. New helpers `RotateDirectionTowards(from, to, maxRadians)` (capped slerp) + `ReefBackstopMaxTurn(schoolInfo)` (= species `maxAngularVelocity × multiplier × dt`). Applied to all four direction rewrites across both resolvers. Turn-rate only — **no speed change**, and the position guarantee is untouched so fish still can't tunnel through rock.
-- **New live tunable:** `_reefBackstopTurnMultiplier` on `BoidSimulationGPU` (Inspector: "Reef Backstop Turn Multiplier", default **3**), pushed every frame like `_TailSwayResponsiveness` so it's adjustable in Play mode. Lower = smoother (fish may scrape the surface a touch longer); higher = snappier. Usable range ~2–4.
-
-### 🐟 Widened big-fish obstacle avoidance (stops body clipping + on-the-spot spin)
-- **Symptom:** big fish (grouper especially) had part of their body poking into coral/rock, and sometimes appeared to rotate on the spot.
-- **Cause:** reef collision is a **point** test on the fish's pivot — it keeps the pivot one voxel (0.5m) clear, but a big fish's mesh extends past that, so the body clips; and a fish pinned against the reef (position held, forward motion cancelled) looks like it's spinning in place. The eased turn above makes fish linger near the surface a hair longer, which exposed it.
-- **Quick fix (no code):** raised `ObstacleAvoidanceRange` so big fish bank away *earlier* (soft steer), before the hard backstop ever fires — **grouper 2.1 → 6**, **giant moray 0.75 → 5.5**. Kept below the shark's 10.5 and proportional to body size. (Bluefin trevally left at 4.5 — looked fine; shark 10.5 / ray 5.7 unchanged.)
-- ⚠ **Moray value is a guess** — its model isn't in the scene yet, so untested; re-check when it lands.
-- **Proper fix deferred:** a per-species **collision radius** (used for both the backstop clearance and the avoidance margin) so big bodies are physically kept clear — that's the real solution to point-collision clipping, especially the long-bodied moray.
-
-### Files changed
-| File | Change |
-|------|--------|
-| `Shaders/Compute/Boids_GPU_Spatial_Partition/BoidsGPU_Spatial_Partition.compute` | Capped-turn helpers + rate-limited heading in both penetration resolvers; `_ReefBackstopTurnMultiplier` uniform. |
-| `Boids_GPU/…/BoidSimulationGPU.cs` | `_reefBackstopTurnMultiplier` inspector field + per-frame push. |
-| `Data/Fish/**/Brown-marbled grouper_SchoolProperties.asset`, `Giant moray_SchoolProperties.asset` | `ObstacleAvoidanceRange` bumps. |
-
----
-
-## What Was Done — 2026-07-23 (JunHeng, session 3) — Exhibit "fresh start" reset + big-screen bubble wipe
-
-A full reset for the next visitor: empties the ocean, re-locks every species, zeroes eco-health, and returns BOTH screens to the "Tap to Start" attract state with the intro re-armed. The big screen plays a SpongeBob-style bubble wipe that hides the reset; the tablet just flips back to the title.
-
-### 🔁 The reset chain (host-authoritative, hidden behind the wipe)
-- Operator holds **F9** on the host (a hold, not a tap — `ExhibitReset.holdSeconds`, default 1.5s). Trigger: `RequestResetRpc()` → server fires `OnHostResetRequested` → the host plays the bubble wipe.
-- **At the wipe's covered PEAK** (screen hidden): `EcosystemNetworkManagerGPU.PerformResetCore()` empties the ocean (`EcosystemSimulationGPU.ResetToEmpty()` — instant hard-remove of every school via the tested cull path, one rebuild), drops `_hasStarted` to false, syncs 0 counts + 0 health; then `SignalResetApplied()` bumps `_resetGeneration` → `OnReset` on host **and** tablet.
-- **On `OnReset` (both devices)** `ExhibitReset.DoLocalReset()` runs: `OptimisticPopulationStore.Clear()` (drop pending taps), `EcosystemUnlockManagerGPU.ResetToStart()` (re-lock to the 5 starters + reset hints), and `FindObjectsByType` → per-component reset on `ExperienceStartGate` (`ReturnToAttract`), `AluciaController` (`ResetForNewSession` — re-arms the intro), `HideUntilStarted`, `ContextNudge`, `SpeciesAddedReveal` (`ResetShownHistory`), `RevealQueue`/`NotificationManager` (`ClearAll`), and `WinCondition.Reset`.
-- ⚠ **Two-phase timing is deliberate**: the tablet re-locks only after the host has synced health→0, so its unlock check (which never re-locks) can't immediately re-unlock. That's why the tablet resets ~coverDuration after F9, not instantly.
+**`MaxSchools`** follows a trophic pyramid (apex 3 → tertiary 4 → secondary 5–6 → primary 6–7) so "remove the shark → prey overpopulate" reads more clearly. Later raised primary caps for overpopulation headroom — see §7.2.
 
-### 🫧 `BubbleTransition` (new, big-screen only)
-- Self-contained: builds its own full-screen overlay canvas + generates a soap-bubble sprite (or uses an assigned one). A stream of mixed-size bubbles rises CONTINUOUSLY bottom→top (matches the prototype's `resetGame` flood — no stop/hold on the bubbles); each fades only when it reaches the TOP (by height, not a global timer). A water **veil** fades in→hold→out to hide/reveal the screen.
-- `Play(onCovered, onComplete)`: `onCovered` fires at full veil cover (the reset runs there). Tunables: `coverDuration`/`holdDuration`/`revealDuration` (the veil), `bubbleRiseSeconds` (how long a bubble takes to rise before it fades at the top), `bubbleCount`, `bubbleSizeRange`, `waterColor` (**lower alpha = lighter, more see-through; alpha 0 = pure bubbles, no opaque hide**), `bubbleSprite`.
-- Big-screen only because it's played inside the host's `OnHostResetRequested` path (`IsServer`); the tablet never calls `Play`.
+**Speed untouched** — `FishMovementProperties` (CruisingSpeed/MaxSpeed) was NOT changed this pass; the doc has size/speed hints (moray "stealth not speed", scad "rapid directional changes") if a per-species speed pass is wanted next.
 
-### New / changed files
-| File | Change |
-|------|--------|
-| `Networking/BubbleTransition.cs` | **New** — the procedural bubble wipe. |
-| `Networking/ExhibitReset.cs` | **New** — operator F9 trigger + host wipe sequence + `DoLocalReset` on both screens. |
-| `Networking/EcosystemNetworkManagerGPU.cs` | `RequestResetRpc` / `PerformResetCore` / `SignalResetApplied`, `OnReset` + `OnHostResetRequested` events, `_resetGeneration`. |
-| `Boids_GPU/Ecosystem/EcosystemSimulationGPU.cs` | `ResetToEmpty()`. |
-| `Boids_GPU/Ecosystem/EcosystemUnlockManagerGPU.cs` | `ResetToStart()`. |
-| `Networking/OptimisticPopulationStore.cs` | public `Clear()`. |
-| Aloysius: `ExperienceStartGate`, `AluciaController`, `HideUntilStarted`, `ContextNudge`, `SpeciesAddedReveal`, `RevealQueue`, `NotificationManager` | one public reset method each (called by `ExhibitReset`). |
+**`SpeciesBehaviorPropertiesGPU` (flee/hunt/hunger) is currently INERT** — see §9 (Things Tried).
 
-### Scene wiring
-- `ExhibitReset` + `BubbleTransition` are on a GameObject in **`Junheng/Scenes/SCENE_MainScene.unity`** (currently tuned: transparent veil `waterColor a=0`, `bubbleCount 1000`, custom `bubble.png` sprite, cover 1.5s). One placement serves host + tablet (same scene; bubbles only play on the host). Add the same GameObject to any other demo scene you use.
+**Flocking model confirmed** (`BoidsGPU_Spatial_Partition.compute`): a boid's `BoidID` packs group ID (species, bits 0–7) + sub-group ID (school, bits 8–15). **Cohesion + alignment apply only within the same species AND the same school** — different species (and even different schools of one species) never merge. **Separation** applies to same-species + **larger** species (smaller species ignored; species size-ranked by group ID). Copying one species' school settings to all is safe — doesn't blend species.
 
----
+## 7.8 Introduction Camera (Cinemachine, host-only)
 
-## What Was Done — 2026-07-23 (JunHeng, session 2) — Swim-out anti-freeze timeout; intro-camera framing rework; card hold time
+`IntroductionCameraDirectorGPU.cs` — cinematic shot that catches a species' **first** school at its off-screen entry gate and follows the real fish as they swim in, then releases so the `CinemachineBrain` blends back to the overview camera.
 
-Backend/presentation pass after the folder rename. Three things: a safety timeout so a stuck fish can't freeze a species, a rebuild of the introduction camera so the shot is relative to the fish and doesn't lurch, and a small reveal/unlock card hold-time bump.
+**Driven by two hooks on `EcosystemSimulationGPU`:**
+- **`OnSpeciesFirstIntroduced`** (`event Action<SpeciesDataGPU>`) — fires inside `AddSchool` **only on the 0→1 transition** (fresh species entering), after the fish exist at the gate. Not fired for subsequent adds or automatic population-tick growth.
+- **`TryGetSchoolCentroid(species, schoolIndex, out Vector3)`** — public wrapper over the private `TrySchoolCentroid`; synchronous GPU readback of one school's live centre-of-mass. ⚠ Throttle callers — do **not** poll every frame.
 
-### 🧊 Swim-out can no longer freeze a species (fixes HANDOFF §9.4) — committed `f5df461`
-- `EcosystemSimulationGPU.BatchExitRoutine` had a `while(true)` with no timeout: one fish snagged on a reef obstacle (or pinned between forces) never reached its exit radius, so `_exitingCount` never cleared, `IsExiting` stayed true, and that species ignored **Add and Remove for the rest of the session**.
-- Added `_exitTimeoutSeconds` (**default 25s**, serialised, in the "Removal animation (swim-out)" group). Past the deadline the routine force-commits the exiting block and clears the count, logging a warning that names the species. The deadline **resets when the exiting block grows** (another Remove joins), so a long removal spree gets the full window.
-- Added `OnDisable` cleanup (`_exitingCount.Clear()`) — the other §9.4 trigger: disabling the component mid-exit killed the coroutine without clearing state, freezing the species on re-enable.
-- Code-only + a new serialised field, so every scene inherits the 25s default at runtime without editing any scene.
+**Smooth follow:** readback is throttled + the centroid jitters, so the director `SmoothDamp`s a proxy transform toward the latest read every frame; the intro camera Follows/LookAts the proxy (continuous motion regardless of readback rate).
 
-### 🎥 Introduction camera — framing is now relative to the fish, and the move doesn't lurch
-(`Assets/Junheng/Scripts/Boids_GPU/Ecosystem/IntroductionCameraDirectorGPU.cs`)
-- **Was:** a fixed WORLD-space Follow offset tuned for fish swimming +X, so "side view" was only a broadside when the school happened to move along that world axis — enter from another gate and the camera framed them head-on / from behind.
-- **Now:** at each shot the director reads the school's **entry heading** (averaged over a few frames) and which **side faces the camera**, bakes that into a world offset, so the framing is fish-relative (a side view is a real broadside from any gate, on the near side so the camera moves *toward* the fish instead of crossing to the far side to look back). The camera then **holds that spot and turns to keep the fish framed** (Cinemachine aim damping, pushed from code) rather than riding locked inside the fish's frame (which read as static).
-- **Anti-lurch:** the proxy is now kept **glued to the fish during the pre-shot settle frames** (`_entrySettleFrames`, default 5) instead of frozen at the gate — so the shot cuts in already on the fish and doesn't jump to catch up ("move then change direction abruptly").
-- The three framing offsets were re-authored into the school's local frame and **renamed** (`…OffsetLocal`) so the stale world-space values in existing scenes are orphaned and every scene picks up the new defaults, while staying inspector-tunable. New tunables: `_aimDamping` (turn smoothness), `_entrySettleFrames`, `_minHeadingSpeed` (milling fallback). Binding mode (World Space) + aim damping are forced from code so all scenes match. **Test in Play mode** — the runtime-forced binding/damping don't show in the editor Solo preview.
+**`FramingMode` enum** — `FollowBehind` / `SideView` / `ThreeQuarter`, each with its own follow-offset, written onto the camera's `CinemachineFollow` at startup / on change.
 
-### ⏱️ Big-screen card hold time
-- `SpeciesAddedReveal.holdSeconds` (arrival/reveal card) and `SpeciesUnlockReveal.revealHoldSeconds` (unlock card) bumped **2 → 2.5s** in the demo scene (both are scene-serialised, so the code defaults of 4 / 5.5 were never the live values). Total on-screen ≈ hold + a `fadeDuration` (0.4s) fade each end.
+**Framing rework (relative to the fish, no lurch):**
+- **Was:** fixed WORLD-space Follow offset tuned for fish swimming +X, so "side view" was only a broadside when the school happened to move along that world axis — enter from another gate and the camera framed head-on / from behind.
+- **Now:** at each shot the director reads the school's **entry heading** (averaged over a few frames) and which **side faces the camera**, bakes that into a world offset — framing is fish-relative (side view is a real broadside from any gate, on the near side so the camera moves *toward* the fish instead of crossing to the far side). Camera then **holds that spot and turns to keep the fish framed** (Cinemachine aim damping, pushed from code) rather than riding locked inside the fish's frame (which read as static).
+- **Anti-lurch:** the proxy is now kept **glued to the fish during the pre-shot settle frames** (`_entrySettleFrames`, default 5) instead of frozen at the gate — so the shot cuts in already on the fish and doesn't jump to catch up.
+- Framing offsets re-authored into the school's local frame and **renamed** (`…OffsetLocal`) so stale world-space values in existing scenes are orphaned and every scene picks up the new defaults, while staying inspector-tunable.
+- **New tunables:** `_aimDamping` (turn smoothness), `_entrySettleFrames`, `_minHeadingSpeed` (milling fallback). Binding mode (World Space) + aim damping forced from code so all scenes match.
+- ⚠ **Test in Play mode** — runtime-forced binding/damping don't show in the editor Solo preview.
 
-### 🎬 Demo scene
-- **`Assets/Aloysius/Scenes/SCENE_MainScene 2.unity` is now the scene used for the demo** (JunHeng copied the converged main scene here and is tuning it: intro-camera position/offsets, entry-point placement, the card hold times above). Treat this as the live target for final tuning.
+## 7.9 Big-Screen Reveal & Unlock Cards
 
----
+Two sibling components sharing a common queue + CSV backend, fire on different events. Live in Aloysius's script folder.
 
-## What Was Done — 2026-07-23 (JunHeng) — Image folders renamed Tablet/Trifold; tablet cards use reveal art; overpopulation badge fix
+### `SpeciesAddedReveal.cs` — "NEW ARRIVAL" card
 
-Two things this session: (1) rebuilt the image-folder naming so the three image types are unambiguous and the tablet can show the big-screen reveal art on its organism cards; (2) the tablet Overpopulated badge now reflects the sim's own rule instead of "at capacity".
+- **Fires when:** a species goes 0 → 1+ population for the first time (per species). Listens to `EcosystemSimulationGPU.OnSpeciesFirstIntroduced` — same signal the intro-camera zoom uses, so card + camera never desync under rapid adds.
+- **Content source:** `RevealContentDB` (`RevealContent.csv`) → `speciesName`, `role`, `firstAddedMessage`, plus `imageFile` (when `useCsvImage` is on). Every field falls back to the `SpeciesData` asset if the CSV row is missing.
+- **Photo location:** `StreamingAssets/Trifold/` (big-screen images).
+- **After the card:** kicks the hint via `hintSource.HintNextLocked()` after `hintDelayAfterAdd`.
+- **`useCsvImage` toggle** — default OFF (text-only card, current design). Turn ON only after the `RevealImage` slot is laid out (sized + Preserve Aspect).
 
-### 🗂️ Image folders renamed + the 3 image types are now cleanly separated
-- **`StreamingAssets/SpeciesImages/` → `Tablet/`** and **`StreamingAssets/RevealImages/` → `Trifold/`** (folders + their `.meta`, via `git mv` so history is preserved). Names now say *which screen* uses them.
-- The three image types and where they live:
-  | Type | Shown | CSV → column | Folder |
-  |------|-------|--------------|--------|
-  | **Info** | tablet modal (fish description) | `SpeciesContent.csv` → `imageFile` | `Tablet/` |
-  | **Reveal** | big screen, first **added** + now **tablet organism cards** | `RevealContent.csv` → `imageFile` **and** `SpeciesContent.csv` → `revealImageFile` | `Trifold/` (big screen) + `Tablet/` (tablet copy) |
-  | **Unlock** | big screen, first **unlocked** | `RevealContent.csv` → `unlockImageFile` | `Trifold/` |
-- **Reveal images renamed with a `Reveal` suffix** (`blacktip.png` → `blacktipReveal.png`, ×12) so, inside the `Tablet/` folder, the reveal copy never collides with the same-named info photo. Info + unlock names unchanged. The 12 `*Reveal.png` were copied into `Tablet/` (fresh unique meta GUIDs; the tablet holds **info + reveal**).
-- **Matrix: `Trifold/` = reveal + unlock · `Tablet/` = info + reveal.**
+### `SpeciesUnlockReveal.cs` — "NEW SPECIES DISCOVERED" card
 
-### 🖼️ Tablet Current-Organisms cards now use the REVEAL photo (reverses 07-21)
-- **`CurrentOrganismsGrid`** now reads **`SpeciesContent.csv` `revealImageFile`** (a tablet-folder copy of the big-screen arrival art), falling back to `imageFile` (info portrait), then the bubble's inspector `cardImage`, so a card never goes blank.
-- **`SpeciesContentDB`** gained a **`revealImageFile`** field (Entry + parse + `AllImageRefs`, so the Android warm-up caches it into `Tablet/`). Folder constant → `"Tablet"`. **`RevealContentDB`** folder constant → `"Trifold"`.
+- **Fires when:** a locked species unlocks. Listens to `EcosystemUnlockManagerGPU.OnSpeciesUnlocked`.
+- **Content source:** same `RevealContentDB` sheet, but uses **`unlockMessage`** column (not `firstAddedMessage`) so unlock copy can differ from arrival copy.
+- **Photo source:** **`unlockImageFile`** column (falls back to `imageFile` if blank). Same `Trifold/` folder, different filename. The friend dropped 12 unlock-specific photos (`SharkUnlock.png`, `MorayUnlock.png`, `ParrotfishUnlock.png`, …) into `RevealImages/` (git-tracked).
+- **`HintNextLocked()`** — finds the locked species with the fewest unmet requirements, builds a rotating hint via `BuildHint` (CSV templates → per-species flavour lines → fallback), pipes it through `AluciaController.Say()`.
 
-### ✅ Google Sheet updated to match (via `gws` CLI as junheng, `OceanX Content` sheet)
-- **RevealContent tab** (gid `1248841811`): `imageFile` column → `*Reveal.png` (12 fish rows; `unlockImageFile` untouched).
-- **SpeciesContent tab** (gid `196784187`): inserted a **`revealImageFile`** column after `imageFile` (`IUCNImage` shifted one right, cleanly); filled with the 12 `*Reveal.png`, producers blank.
-- Also fixed the seagrass/macroalgae **`imageFile`** casing `seagrass.png`/`macroalgae.png` → **`Seagrass.png`/`Macroalgae.png`** to match the on-disk files (case-sensitive on Android) — carries over the merge-conflict fix so a sheet-pull won't revert it.
-- ⚠ **CSV file names + local CSV↔scene wiring were deliberately NOT renamed** — the `fileName` is serialized in ~10 scenes (all teammates'), so a rename can't be confined to one scene. The Tablet/Trifold folder rename was safe because those names live in **code constants** shared by all scenes.
+### Shared plumbing
 
-### 🟠 Tablet Overpopulated badge now uses the sim's rule, not "at capacity"
-- Both tablet badges (`SpeciesBubble.UpdateOverpopulation`, `OrganismCardData.UpdateOverpop`) previously fired on `pop >= MaxSchools` — a species sitting at its cap in a healthy ocean, which is *at capacity*, not overpopulated (why 6 damselfish falsely showed the badge at 100% health).
-- **`EcosystemNetworkManagerGPU`** now syncs a per-species `NetworkList<int> _speciesStatus` (the sim's `SpeciesStatus` as int, written each `SyncPopulations`), exposed as `GetSpeciesStatus(i)` / `IsOverpopulated(i)`. Both badges now call `net.IsOverpopulated(index)`, so tablet and sim agree.
-- Also raised three prey caps earlier (RD 6→10, FM 6→9, ES 7→9); 100% eco-health still reachable (MaxSchools is no longer in the health math).
+- **`RevealQueue.Get().Enqueue(...)`** — center-stage slot is serialized; an unlock card can't slam on top of an arrival card. Both cards enqueue with `key: species.speciesName`.
+- **`RevealContentDB`** — one sheet feeds both cards, edited independently by fact-checkers. Header-driven parser; unknown columns ignored.
+- **Both cards fade in → hold → fade out.** Hold times are **scene-serialised** (per-scene Inspector values override code defaults). Current live values in `SCENE_MainScene.unity`: **`holdSeconds` = 4s, `revealHoldSeconds` = 4s** (bumped from 2.5s → 4s on 2026-07-25 by Aloysius after testers said "too fast"). Total on-screen ≈ hold + 0.4s fade each end.
+- **Reset:** `ResetShownHistory()` on `SpeciesAddedReveal` just hides the group; the actual "first added" gating lives in the sim, so `EcosystemSimulationGPU.ResetToEmpty()` re-arms both cards automatically.
 
----
+### Arrival vs unlock messages are separate columns (2026-07-14)
 
-## What Was Done — 2026-07-21 (JunHeng) — Tablet organism cards use portraits; unlock-image duplication cleaned up
+- **`RevealContent.csv`** gained `sciName` and `unlockMessage` columns, old arrival column `blurb` renamed → `FirstAddedMessage`. Parser is header-driven, so column order doesn't matter.
+- `unlockMessage` seeded from each species' `SpeciesData.addedMessage` so it starts sensible, but the two lines can now **diverge**.
 
-Reverses the 07-20 tablet card-icon source per teammate request, and removes the now-dead tablet-side unlock images.
+### Historical fix — "NEW ARRIVAL" card showed placeholder text
 
-### 🖼️ Tablet Current Organisms cards now use the PORTRAIT, not the unlock image
-- **`CurrentOrganismsGrid`** now reads **`SpeciesContent.csv` `imageFile`** (the 12 portraits — the *same* image the species modal shows) instead of `unlockImageFile`. Teammate didn't want the unlock art on the organism cards.
-- **No Google Sheet change needed** — verified against the **live** published tablet tab (gid `196784187`): its `imageFile` column already holds the portraits (`blacktip.png`, `Grouper.png`, …). The code was just pointing at the wrong column.
+- **Symptom:** the host card faded in but text stayed the design placeholder ("Species Name / ROLE / Description…") — never displayed real content.
+- **Root cause (NOT the CSV):** `SpeciesAddedReveal` declared its text fields as `TMP_Text`, but the `AddedRevealCard` in the scene was built with legacy `UnityEngine.UI.Text`. Unity **cannot** assign a legacy `UI.Text` into a `TMP_Text` slot, so fields were stuck at `fileID: 0` (impossible to drag in) — every `if (nameText != null)` failed.
+- **Fix:** changed the three fields in `SpeciesAddedReveal` from `TMP_Text` → **`Text`** (dropped `using TMPro;`), then wired them to the card's existing `NameText`/`TierText`/`MsgText` `UI.Text` objects. `FillCard` only ever calls `.text`, which both types have.
 
-### 🧹 Removed the dead tablet-side unlock images + column
-- **Deleted the 12 `StreamingAssets/SpeciesImages/*Unlock.png` (+ `.meta`)** — nothing on the tablet references them anymore (~3 MB). ⚠ **The big-screen `StreamingAssets/RevealImages/*Unlock.png` are UNTOUCHED** — the unlock reveal card still uses those (separate folder + separate `RevealContentDB`).
-- **`SpeciesContentDB`** — removed the `unlockImageFile` field (Entry + parse + `AllImageRefs`), so the Android image warm-up no longer tries to cache them.
-- ✅ **Deleted the `unlockImageFile` column from the tablet `SpeciesContent` Google Sheet tab** (via the `gws` CLI as junheng; column K removed, `dry-run`-validated, RevealContent tab untouched). The big-screen **`RevealContent`** sheet's `unlockImageFile` is unrelated and still live. ⚠ The **local `StreamingAssets/SpeciesContent.csv` still carries the column** (harmless — code ignores it); it'll drop out next time the sheet is pulled to CSV.
+## 7.10 Tablet UI
 
-### 🔁 Duplication note (context for the cleanup)
-The 12 `*Unlock.png` had been **byte-identical duplicates** across `SpeciesImages/` and `RevealImages/` (each `*DB` only reads its own folder, so a shared image must exist in both). The 12 portraits are *not* byte-identical across folders — same subjects, different exports (the tablet `SpeciesImages/` copies are notably larger than the big-screen `RevealImages/` ones — worth a look in the final asset pass).
+**Built by Aloysius, integrated into JunHeng's main scene.**
 
-> ⚠ Touched Aloysius's `CurrentOrganismsGrid.cs` + `SpeciesContentDB.cs` (one-column removal + icon-source swap, both backward-compatible) — coordinate on merge.
+### Food Web Graph
+- **`SpeciesBubble.cs`** — 12 species bubbles laid out in trophic tiers; tapping opens species info modal. `TapPunch()` scale-punch on bubble tap (from Aloysius).
+- **`FoodWebLines.cs`** — `LineRenderer` edges between species nodes (predator arrows). Currently hidden by default (`LINE FOOD WEB HIDE` commit). Marked "wonky, TO BE CHANGED."
+- Food web nodes and layout working in the scene; full visual structure of 12 species bubbles present.
+- **`FoodWebDragReveal.cs`** — drag/long-press reveal of predator arrows (from prototype spec).
 
----
+### Species info modal
+- **`ModalController.cs`** — species info modal triggered by tapping a species bubble; shows species info, Add/Remove buttons. Data-driven: pulls text + image from CSV.
+- **`SpeciesInfoPanel.cs`** — panel opened via "View Details". Added `detailsHintFallbackSeconds` (default **8s**) fallback: if visitor selects a fish but never opens View Details, release the `details` gate after grace period so the food-web hint isn't gated indefinitely. Clock starts on the **first** selection only (not restarted by further bubble taps), otherwise browsing bubbles would postpone the hint indefinitely.
 
-## What Was Done — 2026-07-19 → 07-20 — Build scene re-pointed, CSV-driven hints, unlock-image column, modal coroutine fix
+### Add/Remove input layer (decoupled)
+- Add/Remove was extracted out of `ModalController` (which no longer touches netcode at all):
+  - **`TabletAddRemoveUIGPU`** (singleton) holds the +/− buttons and optional population label; `Select(species)` resolves the netcode index via `TabletEcosystemUIGPU` and buttons fire `RequestAddSpeciesRpc`/`RequestRemoveSpeciesRpc`; greys Add at `MaxSchools`, Remove at 0.
+  - **`BubbleSelectHook`** (one per species bubble) routes a bubble tap to `TabletAddRemoveUIGPU.Select(bubble.data.gpuSpecies)` **without editing the UI-team's `SpeciesBubble`** — add-component on each bubble, no per-bubble wiring.
+- **Add cooldown** (default **0.3s**, `unscaledTime`-based) blocks accidental double-taps / mashing on Add without hurting deliberate tapping. 0 = off.
+- **Locked-species blocking** — Add greys out when the selected species is still locked.
 
-> Post-dates the 07-19 handoff commit (`b90b4f1`). JunHeng: build-settings re-point, progressive hints moved onto the CSV, a tablet `unlockImageFile` column, and a real modal/dim-overlay bug fix. Aloysius: start gate, win screen, tablet title screen.
+### Current Organisms view
+- **`CurrentOrganismsGrid.cs`** — grid of currently-living species; card icons now come from `SpeciesContent.csv` `revealImageFile` (a tablet-folder copy of the big-screen arrival art), falling back to `imageFile` (info portrait), then the bubble's inspector `cardImage`, so a card never goes blank.
+- **`OrganismCardData.cs`** — per-card data + overpopulation badge (reads from sim via `NetworkList`).
+- **Scrollbar** added to the Current Organisms panel (design pass).
 
-### JunHeng (integration / content pipeline)
+### Health bar (two drivers)
+- **`Health.cs`** (tablet client) — reads the **networked** value `EcosystemNetworkManagerGPU.GetEcoHealth()` when `readFromSimulation` is on (needs host running + `fillImage` assigned). In the standalone prototype scene, falls back to the manual value when no host is running. ⚠ Superseded by `HealthBarBinder` on the host side.
+- **`HealthBarBinder.cs`** (host large screen) — reads **`EcosystemSimulationGPU.EcoHealth01` directly** — no netcode, auto-finds the sim. ⚠ Depends on JunHeng's `EcoHealth01` staying `public`. Auto-finds the sim; exponential smoothing.
 
-**🎬 Build Settings re-pointed (`74deb98` "netcode") — ⚠ the shipping game scene CHANGED**
-- Enabled build scenes are now **`Assets/Aloysius/Start scene.unity`** (index 0) → **`Assets/Aloysius/Scenes/SCENE_MainScene 1.unity`** (index 1). `Assets/Aloysius/new netcode 1.unity` was **disabled**. Matches `SplashSequence`'s `buildIndex + 1` model.
-- ⚠ **This supersedes the 07-19 review note** that recorded the pair as `Aloysius/Start scene.unity` → `Junheng/Scenes/SCENE_MainScene.unity`. The game scene is now **Aloysius's copy under `Scenes/`**, not JunHeng's. Worth confirming this is intended — it decides which host scene actually ships.
-- ⚠ Stale disabled entry `Assets/Aloysius/SCENE_MainScene 1.unity` (the pre-move root path, missing from disk) is still listed — prune it.
+### Hints panel
+- **`LockedHintPanel.cs`** / `HintsPanel.BuildHint` — computes **live** unmet requirements first ("get eco-health to X%", "add N more Y") so the Hints tab is always accurate against current populations, only falling back to `hint.flavour` → `SpeciesData.hint1` → generic line when nothing concrete is outstanding. **Priority was inverted** — previously a non-empty `hint1` short-circuited everything and hid the real requirements.
 
-**🗣️ Progressive hints are now CSV-driven on the tablet too (`74deb98`)**
-- **`SpeciesBubble.ShowLockedHint`** now pulls `AluciaLines.GetVariants("hint.flavour", speciesName)` (ordered vague → clearer → almost there, matching the old `hint1/2/3`), falling back to the `SpeciesData` asset when the sheet has no rows for that fish. One source of truth with the host + Hints tab — fact-checkers edit them in the sheet, no rebuild.
-- **`HintsPanel.BuildHint` priority inverted** — it now computes the **live** unmet requirements first ("get eco-health to X%", "add N more Y") so the Hints tab is always accurate against current populations, and only falls back to `hint.flavour` → `SpeciesData.hint1` → a generic line when nothing concrete is outstanding. Previously a non-empty `hint1` short-circuited everything and hid the real requirements.
-
-**🖼️ `unlockImageFile` column added to the TABLET sheet (`b728f83`)**
-- `SpeciesContent.csv` + `SpeciesContentDB.Entry` gained **`unlockImageFile`** (header-driven parse, and added to `AllImageFiles` so the Android warm-up caches it).
-- **`CurrentOrganismsGrid` card icons now come from `unlockImageFile`** — deliberately a *different* column from the modal (which uses `imageFile`) — falling back to the bubble's inspector `cardImage` so a card never goes blank. 12 `*Unlock.png` added to `StreamingAssets/SpeciesImages/`.
-- ⚠ **There are now TWO `unlockImageFile` columns in play:** `RevealContent.csv` → big-screen unlock card (`StreamingAssets/RevealImages/`), and `SpeciesContent.csv` → tablet organism cards (`StreamingAssets/SpeciesImages/`). Same column name, different sheets + different folders — don't cross-wire them.
-
-**🐛 Fixed "Coroutine couldn't be started because the game object 'DimOverlay' is inactive" (`b728f83`)**
-- **`ModalController`** — the dim-overlay reset moved out of `Start()` into `Awake()`. The panel is authored inactive, so `Start()` ran a frame **after** the first `Show()` had already activated the overlay, deactivating the dim right after it appeared (and breaking swipe-close). `Awake` runs synchronously inside `Show()`'s `SetActive(true)`, *before* the overlay is re-activated, so it can't clobber the open.
-- **`DimFader.FadeTo`** — now snaps to the target and fires `onComplete` **synchronously** when `!isActiveAndEnabled`, instead of starting a coroutine on an inactive object, so callers like `ModalController.Close` still finish.
-
-### Aloysius (UI / UX)
-- **Start gate + win condition (`1fcb911`, `46b79d3`)** — new `HideUntilStarted.cs`, `WinCondition.cs`, `WinScreen.cs`, plus `TabController` additions and an `ExperienceStartGate` tweak. **His scene moved to `Assets/Aloysius/Scenes/SCENE_MainScene 1.unity`** — now the enabled build scene (above).
-- **Tablet title screen (`9b080be`, `d4e3104`)** — title art (`bluefo`, `fish`, `seaweed`, `taptosat`, `coral` PNGs) + new **`FishSwim.cs`** driving the "fishy" title-screen animation, in `new netcode 1.unity`. Detail in `ALOYSIUS_UI_HANDOFF.md`.
-
----
-
-## What Was Done — 2026-07-16 → 07-18 — Intro camera, ray tail-sway, adaptive music, reef-SDF padding, UI polish
-
-> Everything here post-dates the last handoff commit (`e75b54c`, 07-16 — the section-9 review). Presentation/polish pass across all three contributors: a cinematic species-intro camera, a health-driven music system, a signed turn-rate for ray tail deformation, reef-SDF gradient padding, and a round of tablet + large-screen UI work. Aloysius's UI details live in the separate **`ALOYSIUS_UI_HANDOFF.md`** (which he now maintains in parallel).
-
-### JunHeng (simulation / backend + presentation)
-
-**🎬 Introduction camera director — new `IntroductionCameraDirectorGPU.cs` (`122387f` "cam")**
-(`Assets/Junheng/Scripts/Boids_GPU/Ecosystem/IntroductionCameraDirectorGPU.cs`, Cinemachine)
-- Cinematic shot that catches a species' **first** school at its off-screen entry gate and follows the real fish as they swim in, then releases so the `CinemachineBrain` blends back to the overview camera. **Host-side only.**
-- Driven by two new hooks on `EcosystemSimulationGPU`:
-  - **`OnSpeciesFirstIntroduced`** (`event Action<SpeciesDataGPU>`) — fires inside `AddSchool` **only on the 0→1 transition** (fresh species entering), after the fish exist at the gate. Not fired for subsequent adds or automatic population-tick growth.
-  - **`TryGetSchoolCentroid(species, schoolIndex, out Vector3)`** — public wrapper over the private `TrySchoolCentroid`; synchronous GPU readback of one school's live centre-of-mass. ⚠ Throttle callers — do **not** poll every frame.
-- **Smooth follow:** readback is throttled + the centroid jitters, so the director `SmoothDamp`s a proxy transform toward the latest read every frame; the intro camera Follows/LookAts the proxy (continuous motion regardless of readback rate).
-- **`FramingMode`** enum — `FollowBehind` / `SideView` / `ThreeQuarter`, each with its own follow-offset, written onto the camera's `CinemachineFollow` at startup / on change. Full scene-wiring checklist is in the comment block at the bottom of the file.
-
-**🐟 Signed turn-rate for ray tail-sway (`BoidInfoGPU` + `BoidSimulationGPU`; shader-side by akeel-h)**
-- `BoidInfoGPU` struct grew to **18 floats** (`Size = sizeof(float) * 18`) — new **`SignedTurnRate`** field (~[-1,1]: sign = bank/yaw direction, magnitude = turn hardness), written by the compute shader each frame. Carries the sign the sim otherwise discards (`AngularVelocity` is stored unsigned).
-- **Consumed only by the new ray-wing shader `OceanX/Ray_Wing_Lit_Instanced`** to sweep the tail toward the turn — **behaviourally inert for every other boid** (the fish shader ignores it).
-- `BoidSimulationGPU` added serialized **`_tailSwayResponsiveness`** (default 4, frame-rate-independent ease), pushed to the compute shader as `_TailSwayResponsiveness` — tune the ray tail's floatiness live in the Inspector. (akeel-h's "Added dynamic ray tail turning" is the shader/mesh side.)
-
-**🪸 Reef-SDF gradient padding (`ReefSDFVolume` + `ReefSDFBaker`; last touched akeel-h "Rebaked reef obstacles")**
-- New **`_padding`** field (default **4 m**) on `ReefSDFVolume`; `Bounds` now = `_size + 2·padding`. **Not optional slack:** the escape direction is a central-difference gradient sampling one voxel either side, so a fish within a voxel of the un-padded edge would difference against a data cliff and get a garbage direction. Padding pushes the edge beyond where fish can swim and catches reef straddling the boundary. `ReefSDFBaker` updated to bake the padded volume. Reef obstacles were rebaked against the environment mesh (`f1e7a1c`, `ba795b0`).
-
-**🔊 Audio experiments (`c7c676e`, `7e9f2bd`, `c9b4316`, `a52f6a3`, `0aab757`)**
-- JunHeng's "trying to make audio / piano audios / more music / more sound" commits — spike work that fed into Aloysius's `AdaptiveMusicSystem` (below). Scene updated to host the audio setup.
-
-**🚫 Tablet Add spam-guard (`TabletAddRemoveUIGPU`)**
-- New **`addCooldown`** (default **0.3 s**, `unscaledTime`-based) blocks accidental double-taps / mashing on Add without hurting deliberate tapping. 0 = off.
-
-### Aloysius (UI / UX + audio)
-
-**🎵 Adaptive music system — new `AdaptiveMusicSystem.cs` (replaces deleted `MusicDirector.cs`) + `Editor/AdaptiveMusicSetup.cs`**
-- **Health-driven whole-song switcher** (horizontal re-sequencing): one mood track plays at a time, each owning a band of live eco-health (0–1); crossing a band **crossfades** to that band's song. Songs are standalone tracks of different lengths/tempo/key — switching whole songs avoids the phase-drift of permanent vertical layering.
-- **Won't flicker** on the (deliberately oscillating) sim: health input is smoothed (`healthSmoothing`), band selection has **hysteresis**, and a **minimum dwell** (`minMoodSeconds`) blocks rapid re-switching.
-- **Equal-power fades in dB** (sin/cos) driving each song's mixer-group volume — no mid-crossfade "hole." Individual soundtracks now play one-at-a-time instead of all at once (`1f22c0a`); add/remove audio feedback (`4e41992`). Also "Changed health smoothing" (`ee39c1e`).
-
-**📱 Tablet + large-screen UI polish**
-- **Unlock notification on the tablet** when a fish is discovered (`b2cd8b3`) — `NotificationManager` +114 lines.
-- **Current-organisms panel** — scrollbar added (`26480a8`) + design pass on it and the **hint UI** (`dfc7ff1`, `f09f338`, `26298a5`); reveal-card opacity/queue tweaks (`SpeciesAddedReveal`, `RevealQueue`).
+### Notifications
+- **`NotificationManager.cs`** — tablet unlock/notify popups. Called by `EcosystemUnlockManagerGPU` on unlock.
 - **Unlock popup redesign on tablet** (`d521c5f`).
-- **Large-screen (host) UI:** health bar **made modular** (`d52728d`) and resized (`c3ac406`, `240f8e4` `SCENE_MainScene.unity`). See `ALOYSIUS_UI_HANDOFF.md`.
 
-### Akil (akeel-h) — scene environment / art / shaders
+### Overpopulated badge — sim rule not "at capacity"
+- **Both tablet badges** (`SpeciesBubble.UpdateOverpopulation`, `OrganismCardData.UpdateOverpop`) previously fired on `pop >= MaxSchools` — a species sitting at its cap in a healthy ocean, which is *at capacity*, not overpopulated (why 6 damselfish falsely showed the badge at 100% health).
+- **`EcosystemNetworkManagerGPU`** now syncs a per-species `NetworkList<int> _speciesStatus` (the sim's `SpeciesStatus` as int, written each `SyncPopulations`), exposed as `GetSpeciesStatus(i)` / `IsOverpopulated(i)`. Both badges now call `net.IsOverpopulated(index)`, so tablet and sim agree.
 
-- **`EnvironmentHealthReveal` — new `ColorRecover` reveal style** alongside `ScalePopIn`: corals stay full-size and regain colour from a **bleached/dead** look as health rises, driving the **`OceanX/CoralHealth`** material's `_Health` 0→1 via a per-item `MaterialPropertyBlock` (cached so it doesn't clobber other overrides). `recoverStagger` spreads recovery across a group. Use for "all corals present but washed-out" + the dead-coral half of a hybrid scene; keep seagrass / "new" corals on `ScalePopIn`. (`080fd1d`, `64c42f1` "underwater cascading effect").
-- **Dynamic ray tail turning** shader/mesh side (pairs with JunHeng's `SignedTurnRate`), **adjusted swimming animations** (`04509da`) and **boiding behaviour** (`64c42f1`), **rebaked reef obstacles** to the environment mesh (`f1e7a1c`, `ba795b0`).
+### Instant population feedback
+- `EcosystemNetworkManagerGPU` resyncs the `NetworkList<int>` immediately after an add/remove RPC instead of only on the 1s tick, so tablet count updates without lag.
+- **`OptimisticPopulationStore`** (static, client-side) — records each +/− tap and reports `synced + pending` so the tablet count updates **instantly** instead of lagging until removed fish finish swimming out; keyed per-species-index so it survives card/panel rebuilds. Kills the old snap-back bug.
+
+### Modal / DimOverlay fix
+- **"Coroutine couldn't be started because the game object 'DimOverlay' is inactive"** — dim-overlay reset moved out of `Start()` into `Awake()`. The panel is authored inactive, so `Start()` ran a frame **after** the first `Show()` had already activated the overlay, deactivating the dim right after it appeared (and breaking swipe-close). `Awake` runs synchronously inside `Show()`'s `SetActive(true)`, *before* the overlay is re-activated.
+- **`DimFader.FadeTo`** — snaps to target and fires `onComplete` **synchronously** when `!isActiveAndEnabled`, instead of starting a coroutine on an inactive object.
+
+## 7.11 Alucia (voice / NPC guide)
+
+- **`AluciaController.cs`** — translucent speech bubble, big-screen only. 3 visual states: **Default** (light blue, tips + unlock announcements) / **Warn** (orange, overpop/underpop alerts) / **Win** (green, ecosystem recovered). Auto-hides after 5.2s; sticky for win message.
+- **Speech bubble auto-sizes to text** — `VerticalLayoutGroup + ContentSizeFitter (Vertical Fit = Preferred)` on `AluciaBubble` so it grows/shrinks with the line; `AluciaController.Say()` calls `LayoutRebuilder.ForceRebuildLayoutImmediate` so it resizes the same frame. ⚠ Bubble sprite should be Image Type = **Sliced** so it doesn't distort.
+
+### Event system
+
+- **Health-band reactions:** `EvaluateHealth(EcoHealth01)` → `health.critical` / `unstable.up` / `unstable.down` / `healthy` / `thriving`.
+- **Intro:** `intro.1` / `intro.2` / `intro.3` (multi-line intro).
+- **Unlock:** `NotificationManager` speaks unlock lines.
+- **Cause-aware ecological events** (per-species): `species.starving` / `species.overpredated` / `species.overpopulated` / `species.extinct` / `species.added` (first-ever add only).
+- **`AluciaEcologyEvents.cs`** polls the sim, detects each state, speaks the matching CSV line. Wired with a **settle window** after a count change and fire-once-per-entry to prevent spam.
+
+### Timing gates (`AluciaEcologyEvents`)
+- `startupGrace = 8s` — ignore first 8s.
+- `settleSeconds = 5s` — waits 5s of NO count change; every tick that changes a count resets the settle. Growing species stays silent until it stabilises at its cap.
+- `checkInterval = 2s`.
+- Lower to ~**3 / 2 / 1** for snappier reactions.
+
+### Hard-mute flag (reset safety)
+- **`_muted`** flag on `AluciaController`: set true in `ResetForNewSession`, cleared in `HandleStarted`; `Say()` is a no-op while muted. She physically can't speak between a reset and the next real start.
+
+### Per-species ecological hints (specific, kid-friendly, food-web-accurate)
+- `alucia_lines.csv` (~67 rows) — for `species.overpopulated / overpredated / starving`, every one of the 12 fish has a **species-scoped** line that names its **real predators/prey** (pulled from the `SpeciesDataGPU` prey/predator lists) and tells the player what to do. Example: scad overpredated → *"remove a Brown Marbled Grouper or a Bluefin Trevally"*.
+- **No dashes/hyphens in visible text** (kids/families).
+- **Moods set by meaning**: real problems = `Warn`, reassuring "this fish is fine" lines (top predators can't be over-predated, grazers/ray can't starve) = `Calm`.
+- ⚠ The `Species` column must equal `SpeciesDataGPU.SpeciesName` EXACTLY (case-insensitive) — keeps original spelling incl. the grouper's hyphen and **Russell's snapper's curly apostrophe (’)**.
+- Em dashes → commas across Alucia's lines (kid-friendly punctuation pass).
+
+## 7.12 Content Pipeline (Google Sheets → CSV → StreamingAssets)
+
+**Fact-checkers (incl. overseas) edit game content in a spreadsheet; with a published-sheet URL, changes appear in the game on next launch with no rebuild.** Everything degrades gracefully offline.
+
+### Three CSVs / three Google Sheet tabs
+
+**Google Sheet: "OceanX Content"** — created in JunHeng's Google account 2026-07-11.
+- **URL:** https://docs.google.com/spreadsheets/d/1yjne2lD4rmjwjPwED5OUm1_14MigDqRZOFVaaG7YjqU/edit
+- Published-to-web endpoints (public read-only by design, **not** API keys); the game fetches these:
+  - `alucia_lines.csv` → gid `1093782534`
+  - `SpeciesContent.csv` → gid `196784187`
+  - `RevealContent.csv` → gid `1248841811`
+
+| CSV | Content | Read by | Shown on |
+|-----|---------|---------|----------|
+| `alucia_lines.csv` | Alucia's spoken lines — intro, health reactions, unlock, hints, ecological events | `AluciaController`, `NotificationManager`, `SpeciesUnlockReveal.BuildHint`, `AluciaEcologyEvents` | Big screen |
+| `SpeciesContent.csv` | Per-species facts — long-form modal detail (name, sciName, iucnStatus, description, diet, habitat, imageFile, revealImageFile) | `SpeciesContentDB` → `ModalController`, `CurrentOrganismsGrid` | Tablet |
+| `RevealContent.csv` | Big-screen card copy — short punchy blurbs (id, speciesName, sciName, role, firstAddedMessage, unlockMessage, imageFile, unlockImageFile) | `RevealContentDB` → `SpeciesAddedReveal`, `SpeciesUnlockReveal` | Big screen |
+
+### Live-fetch service (new)
+
+- **`ContentService.cs`** (`Assets/Junheng/Scripts/Content/`) — downloads each CSV from its published URL at launch → caches to `persistentDataPath` → falls back to the baked `StreamingAssets` copy → then the hardcoded lines. **Fixes tablet editing:** baked StreamingAssets is unreadable on Android, but the downloaded cache is.
+- **`redirectLimit = 32`** — a Google published-CSV URL 307-redirects to `googleusercontent`; the fetch must follow it.
+- Non-CSV downloads log the **HTTP code, final URL, and a 120-char body snippet** + a reminder the URL must end in `&output=csv`.
+- **`ContentService.LocalPathFor(file)`** — what the loaders read; works with or without a `ContentService` in the scene (no service = baked copy, exactly like before).
+- **`CsvUtil.cs`** — one robust RFC-4180 parser (quotes, commas, embedded newlines) shared by both loaders. **Quote-only-at-field-start bugfix** (was HIGH severity — a stray `"` in a cell put the parser in quoted mode for the rest of the file → silent row loss).
+
+### Alucia event/variant model (`alucia_lines.csv` columns: `Event, Species, Mood, Weight, Text, Notes`)
+
+- **Event** = stable ID the game matches on (`intro.1`, `health.critical`, `hint.withReq.1-4`, `species.starving`, `species.overpredated`, `species.overpopulated`, `species.extinct`, `species.added`, `hint.flavour`, …).
+- **Multiple rows per Event = variants** — the game picks one (weighted, no immediate repeat) so she doesn't sound repetitive. Checkers add a variant by copying a row.
+- **Species** (optional) scopes a line to one fish; blank = any fish. Species-specific rows win over generic.
+- **Mood** (Calm/Warn/Win) drives the bubble tint.
+- Rows whose Event starts with `#` are comments (there's a built-in instructions/legend block at the top).
+- **`AluciaLines.GetVariants(event, species)`** returns every variant for an event scoped to a species — used for `hint.flavour` per-species hints.
+- **`AluciaLines.GetLine(event, species)`** returns text + mood.
+
+### `SpeciesContent.csv` — stable ids (2026-07-11)
+
+- Added **`id`** column (e.g. `blacktip_reef_shark`) as the real match key, with `speciesName` as display text — so a name can be reworded/translated without breaking the card.
+- Added `habitat` / `funFact` / `revealImageFile` columns.
+- `SpeciesContentDB` indexes by **both** id and name, so either resolves.
+- `SpeciesData.contentId` (new, optional) + one line in `ModalController` use it.
+
+### Image folders — three types, cleanly separated
+
+- **`StreamingAssets/SpeciesImages/` → renamed to `Tablet/`** (via `git mv` so history preserved).
+- **`StreamingAssets/RevealImages/` → renamed to `Trifold/`** (via `git mv`).
+
+| Image type | Shown | CSV → column | Folder |
+|------|-------|--------------|--------|
+| **Info** | tablet modal (fish description) | `SpeciesContent.csv` → `imageFile` | `Tablet/` |
+| **Reveal** | big screen, first **added** + tablet organism cards | `RevealContent.csv` → `imageFile` **AND** `SpeciesContent.csv` → `revealImageFile` | `Trifold/` (big screen) + `Tablet/` (tablet copy) |
+| **Unlock** | big screen, first **unlocked** | `RevealContent.csv` → `unlockImageFile` | `Trifold/` |
+
+- **Matrix: `Trifold/` = reveal + unlock · `Tablet/` = info + reveal.**
+- Reveal images renamed with `Reveal` suffix (`blacktip.png` → `blacktipReveal.png`, ×12) so inside `Tablet/` the reveal copy never collides with the same-named info photo.
+- **`SpeciesContentDB.cs`** folder constant → `"Tablet"`. **`RevealContentDB.cs`** folder constant → `"Trifold"`.
+
+### Editing tool — Google Sheets vs Excel
+
+The live-fetch needs a URL that returns **CSV text**. **Google Sheets** does this cleanly (File → Share → Publish to web → CSV). **Excel does NOT** publish a CSV URL — an Excel Online / OneDrive link returns the web viewer (HTML) or the binary `.xlsx`, neither of which the loader reads. With Excel the options are (a) manual "Save As CSV → drop it in" (no live updates), or (b) keep a `.csv` (not `.xlsx`) on OneDrive/Dropbox/GitHub with a direct link (semi-live; must re-upload to change). **For live, no-rebuild editing, use Google Sheets.**
+
+### Sheet workflow
+
+- The **Google Sheet is the source of truth** once the team edits it directly.
+- Sensible habit: pull the sheet → local CSV, and prefer pushing *new* columns / individual cells over blanket overwrites of existing data columns.
+- Any change is recoverable via the sheet's **File → Version history**.
+- Programmatic sheet edits are fine (e.g. the `gws` CLI is used as JunHeng for column deletes).
+
+## 7.13 Netcode (Unity Netcode for GameObjects / NGO)
+
+**Host/Client architecture over WiFi.**
+
+- **`NetworkBootstrap.cs`** — sets role (Host/Client), starts NGO. Reads `boot.config` (`player-connection-mode=Listen`, `player-connection-debug=1` in dev builds).
+- **`EcosystemNetworkManagerGPU.cs`** — auto-finds `EcosystemSimulationGPU` on server. Syncs:
+  - `NetworkList<int>` school counts (periodic tick **+ immediate resync on add/remove**).
+  - `NetworkList<int> _speciesStatus` — per-species `SpeciesStatus` as int (for tablet Overpopulated badge).
+  - `NetworkVariable<float> _ecoHealth` — pushed each sync; `GetEcoHealth()` for clients.
+  - `NetworkVariable<bool> _hasStarted` — the "tap to begin" gate.
+- **RPCs exposed:** `RequestAddSpeciesRpc(index)`, `RequestRemoveSpeciesRpc(index)`, `RequestStartRpc()`, `RequestResetRpc()`.
+- **Cap/floor enforcement is server-side** (not just greyed in the UI) — a rogue LAN client can only do what the tablet can do. Index validation uses an unsigned cast that rejects negatives and `int.MinValue`.
+- `NetworkList`/`NetworkVariable` are server-write-only.
+- Player counts as Client 0 in host mode.
+
+### `TabletEcosystemUIGPU`
+Pure species→index lookup service (card UI stripped out entirely).
+
+### `HostSpawner.cs`
+⚠ **DEAD** — zero refs anywhere (verified 2026-07-16). `NetworkBootstrap` spawns the net-manager on server start. Safe to delete.
+
+## 7.14 LAN Discovery
+
+**`LanDiscovery.cs`** — UDP broadcast on port 47777; tablet auto-discovers host on same WiFi network. Advertiser starts automatically when `NetworkBootstrap` starts the host. No manual IP entry needed after initial setup.
+
+**`ConnectionScreenUI.cs`** — tablet IP entry screen + LAN auto-discovery. IP field pre-fills with the discovered IP when available.
+
+## 7.15 Reset Flow (F9 → bubble wipe → attract state)
+
+A full reset for the next visitor: empties the ocean, re-locks every species, zeroes eco-health, returns BOTH screens to "Tap to Start" attract state with the intro re-armed. The big screen plays a SpongeBob-style bubble wipe that hides the reset; the tablet flips back to the title.
+
+### The reset chain (host-authoritative, hidden behind the wipe)
+
+1. Operator holds **F9** on the host (a hold, not a tap — `ExhibitReset.holdSeconds`, default 1.5s).
+2. Trigger: `RequestResetRpc()` → server fires `OnHostResetRequested` → the host plays the bubble wipe.
+3. **At the wipe's covered PEAK** (screen hidden): `EcosystemNetworkManagerGPU.PerformResetCore()` empties the ocean (`EcosystemSimulationGPU.ResetToEmpty()` — instant hard-remove of every school via the tested cull path, one rebuild), drops `_hasStarted` to false, syncs 0 counts + 0 health; then `SignalResetApplied()` bumps `_resetGeneration` → `OnReset` on host **and** tablet.
+4. **On `OnReset` (both devices)** `ExhibitReset.DoLocalReset()` runs:
+   - `OptimisticPopulationStore.Clear()` — drop pending taps.
+   - `EcosystemUnlockManagerGPU.ResetToStart()` — re-lock to the 5 starters + reset hints.
+   - `FindObjectsByType` → per-component reset on: `ExperienceStartGate.ReturnToAttract`, `AluciaController.ResetForNewSession` (re-arms the intro), `HideUntilStarted`, `ContextNudge`, `SpeciesAddedReveal.ResetShownHistory`, `RevealQueue.ClearAll`, `NotificationManager.ClearAll`, `WinCondition.Reset`, `StartCrossfade.ResetForNewSession`, `TutorialPanel.ResetForNewSession`, `TabController.ResetForNewSession`.
+
+⚠ **Two-phase timing is deliberate**: the tablet re-locks only after the host has synced health→0, so its unlock check (which never re-locks) can't immediately re-unlock. That's why the tablet resets ~coverDuration after F9, not instantly.
+
+### `BubbleTransition.cs` (big-screen only)
+- Self-contained: builds its own full-screen overlay canvas + generates a soap-bubble sprite (or uses an assigned one).
+- Stream of mixed-size bubbles rises **continuously bottom→top** (matches the prototype's `resetGame` flood — no stop/hold on the bubbles); each fades only when it reaches the TOP (by height, not a global timer).
+- A water **veil** fades in→hold→out to hide/reveal the screen.
+- `Play(onCovered, onComplete)`: `onCovered` fires at full veil cover (the reset runs there).
+- **Tunables:** `coverDuration` / `holdDuration` / `revealDuration` (the veil), `bubbleRiseSeconds` (how long a bubble takes to rise before it fades at the top), `bubbleCount`, `bubbleSizeRange`, `waterColor` (**lower alpha = lighter, more see-through; alpha 0 = pure bubbles, no opaque hide**), `bubbleSprite`.
+- Big-screen only because it's played inside the host's `OnHostResetRequested` path (`IsServer`); the tablet never calls `Play`.
+- **Currently tuned:** transparent veil `waterColor a=0`, `bubbleCount 1000`, custom `bubble.png` sprite, cover 1.5s.
+
+### Reset gaps fixed (one-shot latch → re-armable)
+The following components latched `_played` / `_shownOnce` / `_initialized` and never fired again after reset. All got a `ResetForNewSession()` (or equivalent) so they re-fire on the next start:
+
+- **`StartCrossfade`** — reveals the food-web UI on start; latched `_played`. Now re-arms on reset, restores the tap overlay, re-hides the pieces. Stays subscribed to `OnStarted` so next start replays it.
+- **`ExperienceStartGate.ReturnToAttract`** — restores TapOverlay CanvasGroup alpha/interactable/blocksRaycasts (was coming back invisible: "empty water" bug).
+- **`TutorialPanel`** — `_shownOnce` latched forever. Now hides + re-arms on reset.
+- **`TabController`** — `_initialized` latched; next visitor inherited previous tab. Now snaps back to `defaultTab` on reset.
+- **`AluciaController`** — added hard `_muted` flag (see §7.11).
+- **`RevealQueue.ClearAll`** + **`SpeciesAddedReveal.ResetShownHistory`** + **`NotificationManager.ClearAll`** — fire at the F9 request instant (not just at covered peak) so they can't linger visible under the transparent veil.
+
+## 7.16 Adaptive Music System
+
+**`AdaptiveMusicSystem.cs`** (Aloysius) + `Editor/AdaptiveMusicSetup.cs`. Replaces deleted `MusicDirector.cs`.
+
+- **Health-driven whole-song switcher** (horizontal re-sequencing): one mood track plays at a time, each owning a band of live eco-health (0–1); crossing a band **crossfades** to that band's song.
+- Songs are standalone tracks of different lengths/tempo/key — switching whole songs avoids the phase-drift of permanent vertical layering.
+- **Won't flicker** on the (deliberately oscillating) sim:
+  - Health input is smoothed (`healthSmoothing`).
+  - Band selection has **hysteresis**.
+  - **Minimum dwell** (`minMoodSeconds`) blocks rapid re-switching.
+- **Equal-power fades in dB** (sin/cos) driving each song's mixer-group volume — no mid-crossfade "hole."
+- Individual soundtracks play one-at-a-time instead of all at once.
+- Add/remove audio feedback via `UISoundManager`.
+
+### UI sound layer
+- **`UISoundManager.cs`** — tiny singleton `AudioSource` wrapper (`Instance`, `PlayTap()` one-shot + `tapVolume`). Drop one on a scene object, assign the clip.
+- `SpeciesBubble.OnTap` calls `UISoundManager.Instance?.PlayTap()` (null-guarded, harmless when absent).
+- **`Assets/Sounds/`** — `Tap.mp3` (bubble tap) + `Ambient.mp3` (reef ambience).
+
+## 7.17 Environment (Coral Growth + Reef Ambience)
+
+**`EnvironmentHealthReveal.cs`** — the reef visually builds up as `EcoHealth01` rises: corals start hidden and pop in (one-by-one or in groups) as health climbs; retract as it declines. **Play-tested and working.**
+
+- **Host-side driver** (`[ExecuteAlways]`) reads `EcosystemSimulationGPU.EcoHealth01` **directly** (mirrors `HealthBarBinder` — the sim + corals only exist on the big-screen host; no netcode). Smooths + clamps `0..1`.
+
+### ⚠ Corals MUST have "Batching Static" UNCHECKED
+- Static batching bakes transforms into a combined mesh, so runtime `localScale` changes are ignored — the effect silently does nothing in Play (works in edit mode only).
+- Keep Contribute GI / Lightmap Static for the baked lighting; only *Batching* Static must be off.
+- **Do not re-enable Batching Static on the corals** or this breaks.
+- Suggestion: tick GPU Instancing on the coral materials to offset extra draw calls from un-batching.
+
+### Preview toggles (turn OFF for the exhibit + before saving)
+- `debugOverride` + `debugHealth` slider — fake a health value.
+- `previewInEditor` — drive scale in edit mode (⚠ off before saving or corals save shrunk).
+- `logDebug` — logs collected counts + live health/visible.
+
+### Master toggle `effectEnabled`
+- OFF = all corals forced fully visible (normal scene).
+- ON = start-hidden reveal effect.
+
+### Reveal groups
+- A list; members collected from a **labelled parent Transform** (auto-collect child renderers).
+- **Three per-group `appearMode`s:**
+  - **Proportional** — visible count tracks health: `round(health01 * childCount)`. 100 corals → 1 per 1%; 300 → 3 per 1%; corals pop in/retract one-by-one as the bar moves — no manual grouping needed. Has `startHealth`/`endHealth` range.
+  - **AllAtOnce** — whole group at one `threshold`.
+  - **Staggered** — one-by-one via `staggerInterval` after the threshold.
+- Plus `randomOrder` (shuffle the reveal sequence), `growDuration`, overshoot pop, hysteresis margin.
+- ⚠ **All corals are flat under a single `Corals` parent** (with separate `Seagrass` / `Rockwork` parents) — intended setup is **one Proportional group on `Corals`**.
+
+### Reveal technique = SCALE POP-IN (placeholder)
+- Chosen as a placeholder — swapped from an earlier transparency attempt because the corals are opaque and dense.
+- Corals grow from scale 0 → authored scale with an optional overshoot "pop."
+- All visual writes go through `ApplyReveal` / `ForceVisible` so the technique stays swappable.
+- ⚠ **Transparency-alpha and a dissolve/alpha-clip shader are BOTH still on the table** and may replace scale pop-in later.
+- Akil added `ColorRecover` reveal style alongside `ScalePopIn` — corals stay full-size and regain colour from bleached (see §7.6).
+
+### Scene environment (Akil)
+- **Baked lighting** — Lightmaps + `LightingData.asset` + reflection probes + `Sky.mat`.
+- **Bubble particles** added to the scene.
+- **Reef obstacles rebaked** against the environment mesh.
+- **Coral placement, rockwork, mockup-scene redo, shader/rock-colour passes.**
+- Imported fish + stingray + parrotfish + damselfish + shark meshes.
+
+## 7.18 Onboarding (Tutorial, Context Nudges)
+
+**`TutorialPanel.cs`** — onboarding HOW TO PLAY panel. Auto-shows once on start. Now hides + re-arms on reset (see §7.15).
+
+**`ContextNudge.cs`** — progressive hint bubbles ("tap a fish", "hold to see food web", etc.). Chainable via `showAfterId` and a public static **`ContextNudge.Advance(gateId)`** — call from anywhere to release nudges gated on `gateId`.
+
+**Rejoin-race fix** — a tablet that joins a session **already started** receives `_hasStarted` inside the network spawn payload, which lands **before** `OnNetworkSpawn` wires up `OnValueChanged`, so `OnStarted` never fires. Root pattern in both `ContextNudge` and `TutorialPanel`:
+- Now **ALWAYS subscribes** (not just in the "not started" branch) AND polls `HasStarted` every Update as a backstop.
+- Added `_rearmPending` so a reset waits for `HasStarted` to go back to false before re-arming (avoids a stale-true re-show).
+
+**Details-hint chain:**
+- **`ModalController.Close`** calls `ContextNudge.Advance("details")` when a species panel closes — releases the "hold to see food web" hint at the moment a visitor has actually **read and dismissed** a panel (not just tapped a bubble).
+- **`SpeciesInfoPanel.detailsHintFallbackSeconds`** (default **8s**) safety net — if visitor selects a fish but never opens View Details, release the gate after grace period so the hint isn't blocked forever.
+
+## 7.19 Fish Entry / Exit + Swim-in-out Animation
+
+**`FishEntryPointGPU.cs`** — drop-in marker (Entry / Exit / Both) placed OUTSIDE the bounds. New schools spawn at a random entry marker and swim in; removed schools swim out to a random exit marker. Auto-registers into a static list (no wiring).
+
+**`EcosystemTargetGPU.cs`** — per-school swim target. `AddSchool` creates one (+ a `TransformAnimator` on a Line/Circle/Rectangle path) per school; `ParkAt(exitPoint)` drives the swim-out on Remove. **REPLACED the deleted `WanderingAffecterGPU`** (grep confirms the type no longer exists).
+
+### Removal / swim-out model
+- Remove is **immediate + concurrent** — each press parks one more of the species' TOP schools at an off-screen exit point so it beelines out now.
+- A single `BatchExitRoutine` culls the whole exiting block once all its fish reach the exit (no fixed timer).
+- Spamming Remove sends several out at once.
+- **Tunables** in the "Removal animation (swim-out)" Inspector group on `EcosystemSimulationGPU`: `_exitArrivalRadius`, `_exitPollInterval`.
+
+### Anti-stack spawning (2026-07-08)
+- **Symptom:** spamming Add spawned several schools **stacked inside each other** at the same spot.
+- **Cause:** new schools swim in from `FishEntryPointGPU` markers, which are **single points with no size**. `ApplyEntrySpawnOrigin` picked a marker **uniformly at random each Add** and placed the whole school exactly on `marker.Position`.
+- **Fix (all in `EcosystemSimulationGPU`; exit logic untouched):**
+  - **`PickEntryMarker()`** avoids reusing the previous Add's marker when more than one entry point exists → consecutive schools fan out across gates.
+  - **`ChooseSpreadOrigin()`** jitters each new school **sideways** off the marker (perpendicular to its swim-in direction, so it stays off-screen) and retries a few times to stay clear of the **last 8 spawn origins** (shared across all species); falls back to the most-separated attempt.
+- **Two new Inspector knobs** on `EcosystemSimulationGPU` → "Entry Spawn Spreading (anti-stacking)":
+  - `_entrySpawnJitterRadius` (default `4`) — sideways nudge radius; `0` = old behaviour.
+  - `_entrySpawnMinSeparation` (default `3`) — preferred gap between a new origin and recent ones.
+- ⚠ **With only ONE entry marker under heavy spam** there's a hard space limit — add more entry markers (they round-robin) or raise the jitter radius.
+
+### Swim-out anti-freeze timeout (fixes §10.4)
+- **`_exitTimeoutSeconds`** (default **25s**, serialised, in "Removal animation (swim-out)" group).
+- Was: `BatchExitRoutine` had a `while(true)` with no timeout — one fish snagged on a reef obstacle never reached its exit radius, so `_exitingCount` never cleared, `IsExiting` stayed true, and that species ignored **Add and Remove for the rest of the session**.
+- Now: past the deadline, the routine force-commits the exiting block and clears the count, logging a warning that names the species. The deadline **resets when the exiting block grows** (another Remove joins), so a long removal spree gets the full window.
+- Added `OnDisable` cleanup (`_exitingCount.Clear()`) — disabling the component mid-exit killed the coroutine without clearing state, freezing the species on re-enable.
+
+## 7.20 Fish Asset Pipeline (Blender UV1 baking)
+
+**Full spec for prepping fish meshes so they animate correctly under the `Fish_Lit` / `Fish_Swimming_Motion` shader.**
+
+Source assets live **outside the repo** at `C:\Users\Admin\OneDrive\Documents\TP\year 3 sem 1\MP\assest\<species>\` — one folder per species (`.obj` + body/eye PNG textures, some with a `.mtl`). Done in **Blender 5.1** (driven over the Blender MCP).
+
+### Why UV1 is a MATH channel, not a texture unwrap
+
+`Fish_Swimming_Motion.hlsl` reads its tail mask from **TEXCOORD1** (`float2 tailMaskUV : TEXCOORD1`), as `tailMask = saturate(pow(1.0 - tailMaskUV.x, _TailMaskFalloff))`. Each mesh needs a **second UV channel (UV1)** whose **`.x` is a head→tail gradient (tail = 0.0 → head = 1.0)** — mask ≈1 at the tail (full wave), ≈0 at the head (rigid). UV0 (`UVMap`) stays the texture unwrap.
+
+**⚠ Do NOT seam-cut / Unwrap / Reset / Project-From-View UV1.** An island unwrap restarts U at ~0 on every island, so the front of every piece reads as "tail" and the whole fish wobbles.
+
+**Bake it numerically:** for every vertex `UV1.x = (vert.z − z_min)/(z_max − z_min)` (models are oriented length-on-**Z**, head at **+Z**; head end confirmed via the eye-mesh centroid). Eyes = a separate mesh, so normalize their verts **in the body's local-Z range** (then join eyes into body) so they read ~1 and stay rigid at the head.
+
+Keep `UVMap` (UV0) as the texture unwrap + active-render channel. UV0 = texturing, UV1 = swim math. Never swap them.
+
+### Per-model Blender pipeline
+
+1. Import `.obj`.
+2. Wire body/eye textures (MTL auto-wires to Base Color; no-MTL wired manually to the Principled BSDF).
+3. Bake UV1 on body + eyes (eye verts normalized in **body-local Z space** so eyes stay rigid at the head).
+4. **Join eyes into body** (one mesh, two material slots: body + eye).
+5. Clear all seams.
+6. Save `.blend` next to the `.obj`.
+7. Export **mesh-only FBX**: `use_selection`, `object_types={'MESH'}`, `mesh_smooth_type='FACE'`, `path_mode='COPY'`, `apply_unit_scale=True`, `apply_scale_options='FBX_SCALE_ALL'`, `global_scale=1.0`.
+
+**⚠ Export must be FBX, not OBJ** — OBJ only stores one UV set and silently drops UV1. Blender writes `UVMap`→TEXCOORD0 and `UV1`→TEXCOORD1.
+
+### FBX unit-scale bug — the "big in scene, tiny when instanced" trap ⚠
+
+**The one that cost the most session time.**
+
+- **Symptom:** dragging the FBX into a scene shows it at a normal size, but its Transform reads **scale 100**; when the GPU sim renders it (instanced), it's **tiny**. Other fish are 1-to-1.
+- **Cause:** GPU instancing (`RenderMeshIndirect`) draws the **raw mesh** with only per-boid position+rotation — it **ignores the Transform scale**. If the mesh imported tiny with a 100× root, instancing draws the tiny mesh. The tiny+100root happens when the FBX is exported in **metres** (FBX `UnitScaleFactor = 1`) → Unity applies fileScale **0.01** and compensates with root **100**. Working fish are exported in **centimetres** (`UnitScaleFactor = 100`) → fileScale 1, root 1.
+- **Check it:** in the `.fbx.meta`, a **working** fish has `bakeAxisConversion: 1` and file-scale (`humanDescription.globalScale`) ≈ **1**; a **broken** one has `bakeAxisConversion: 0` and file-scale **0.01**.
+- **Fix (Blender export):** `apply_unit_scale=True` + `apply_scale_options='FBX_SCALE_ALL'`, `global_scale=1.0`. Verify the exported FBX's `UnitScaleFactor == 100` (must match the working fish). Do **not** hand-scale the mesh to "fix" it; that doesn't remove the root-100 and it breaks the swim.
+
+### Mesh scale ↔ swim tuning are coupled
+
+- The swim uses `position.z / _TailWaveLength` (native mesh units) and `sideToSide * 0.01`.
+- If mesh's native size changes by ×N, tail wave gets N× tighter and side-to-side gets N× weaker.
+- **After any mesh-scale change, scale `_TailWaveLength` (and side-to-side amplitude) by the same factor.**
+- Rotation amplitudes (roll/yaw/panning) and `_TailMaskFalloff` are angle/UV-based → scale-invariant, leave them.
+
+### Where the swim values live
+
+- Material floats `_TailWaveLength` / `_TailMaskFalloff` stay on the **instanced material** (the sim's `BoidMaterial`).
+- The five *animated* amplitudes are runtime-injected from each species' **`FishMotionRenderProperties`** asset (referenced by `SpeciesDataGPU`) — material values there are overwritten at runtime.
+- Map material→SO: `_AutomaticSwimSpeed`→SwimPlaybackSpeed, `_SideToSideAmplitude`→SideToSide, `_YawRotationAmplitude`→Yaw, `_TailRollAmplitude`→Roll, `_TailYawAmplitude`→PanningYaw (each Min=cruise, Max=full-accel).
+
+### Species mesh status (12/12 imported)
+
+| Species | Mesh file | Source |
+|---------|-----------|--------|
+| Blacktip reef shark | `sharkv2_lowpoly.fbx` | JunHeng (Blender prep) |
+| Bluespotted ribbontail ray | `stingray.fbx` | JunHeng — ⚠ tail-sways but pectoral wings don't flap (a tail-swimmer shader can't undulate ray wings); Akil later added `Ray_Wing_Lit_Instanced` shader with the signed turn-rate |
+| Reticulated damselfish | `damselfish.fbx` | JunHeng — no MTL, textures wired manually |
+| Yellowstripe scad | `YellowstripeScad.fbx` | JunHeng — eye texture wired manually |
+| Bullethead parrotfish | `parrotfish.fbx` | akeel-h |
+| Eyestripe surgeonfish | `surgeonfish.fbx` | JunHeng + akeel-h |
+| Streaked spinefoot | `rabbitfish.fbx` | JunHeng + akeel-h |
+| Russell's snapper | (imported) | JunHeng |
+| Fringelip mullet | `mullet.fbx` | akeel-h (textures re-exported 2026-07-24, 46KB → 115KB) |
+| Brown-marbled grouper | (imported) | — |
+| Bluefin trevally | (imported) | — |
+| Giant moray | `giant-moray.fbx` | akeel-h (2026-07-24, `d36ee95`) — plus moray-specific `Moray_Lit_Instanced` shader hooks (see §7.6) |
+
+### New-fish checklist
+
+1. Import OBJ → wire body/eye textures.
+2. **Bake** UV1 (numeric gradient, not unwrap).
+3. Join eyes into body → clear seams.
+4. Export FBX with `FBX_SCALE_ALL`, verify `UnitScaleFactor==100`.
+5. In Unity, **duplicate a working `*_Instanced.mat`** (e.g. `Clownfish_Instanced.mat`) + swap textures (don't hand-build).
+6. Point the spawner's `BoidMesh`/`BoidMaterial` at it.
+7. Set swim `_TailWaveLength` for the mesh's true size.
+8. Convert tuned amplitudes into the species' `FishMotionRenderProperties`.
+
+## 7.21 Editor Debug Harness
+
+**`EcosystemDebugHarnessGPU.cs`** — in-editor OnGUI add/remove panel with per-species +/− buttons calling the sim's Add/Remove directly. **Test the ecosystem with no tablet, no netcode.** Dev-only test harness.
+
+## 7.22 Splash Screen + Win Condition
+
+- **`SplashSequence.cs`** — auto-advances by `GetActiveScene().buildIndex + 1` (splash = index 0, game scene = index 1). Works for both host and tablet builds; each ships its own scene 1. Removed the `gameScene`/`tabletScene` name fields. `waitForTap = false` for pure auto-advance. (Aloysius also added a black screen-fade overlay to this same script.)
+- **`WinCondition.cs`** — eco-health = 100% detection; fires the win screen.
+- **`WinScreen.cs`** — sticky win overlay.
+- **`FishSwim.cs`** — title-screen "fishy" animation (title art assets: `bluefo`, `fish`, `seaweed`, `taptosat`, `coral` PNGs).
+
+## 7.23 DualMonitor Support
+
+**`DualMonitor.cs`** — activates Display 2 (Spacedesk / iPad) on startup. Used for the trifold display setup.
 
 ---
 
-## What Was Done — 2026-07-14 (JunHeng, session 3) — Unlock card is CSV-driven; arrival vs unlock messages split
+# 8. Prototype Specification
 
-Follows session 2 (which made the **arrival** card TMP + CSV-driven). This session brings the **unlock** card onto the same content pipeline and separates the two messages so each big-screen card can say its own thing.
+_Reference — full interactive prototype at `prototype/oceanx-prototype.html`. Everything below derived from reading its source code._
 
-### 🗂️ Unlock card now reads from `RevealContent.csv` (`c10aee3`)
-- **`SpeciesUnlockReveal.FillCard`** was hardcoded to the `SpeciesData` asset (name/sciName/tier/`addedMessage`). It now reads **name / sciName / role / unlockMessage + per-species image** from **`RevealContentDB`** (`RevealContent.csv`), matched by the species' stable **`contentId`** (falling back to `speciesName`). **Every field falls back to the `SpeciesData` asset** when the CSV row/value is missing, so the card never goes blank offline.
-- Shares the **same `RevealContent` sheet + `StreamingAssets/RevealImages/` folder** as the arrival card (`SpeciesAddedReveal`) — one sheet, two big-screen cards, edited independently by the fact-checkers. Per-species photo comes from the `imageFile` column; keeps whatever sprite was pre-assigned in the scene if the CSV has none.
-
-### 🔀 Arrival vs unlock messages are now separate columns
-- **`RevealContent.csv` (+ the Google sheet)** gained **`sciName`** and **`unlockMessage`** columns, and the old arrival column **`blurb` was renamed → `FirstAddedMessage`**. Parser is header-driven, so column order doesn't matter; unknown columns are ignored.
-- **`RevealContentDB.Entry`** gains `sciName`, `firstAddedMessage`, `unlockMessage` (replacing `blurb`); `SpeciesAddedReveal` now reads `firstAddedMessage` for the arrival card.
-- **`unlockMessage` was seeded from each species' `SpeciesData.addedMessage`** (the descriptions) so it starts sensible, but the two lines can now **diverge** — the "you unlocked X" line no longer has to match the "X just arrived" line.
-
-### 🖼️ Two big-screen cards, TWO image columns (same folder)
-- **`RevealContent.csv` (+ sheet, col H)** gained **`unlockImageFile`**. The **arrival** card loads its photo from `imageFile`, the **unlock** card from `unlockImageFile` — **both from the same `StreamingAssets/RevealImages/` folder**, just different filenames. `SpeciesUnlockReveal` falls back to `imageFile` (the arrival photo) when `unlockImageFile` is blank, so the card is never image-less.
-- The friend dropped 12 unlock-specific photos (`SharkUnlock.png`, `MorayUnlock.png`, `ParrotfishUnlock.png`, …) into `RevealImages/` (git-tracked); the column now points at them. Mapping isn't 1:1 with the arrival names (e.g. `blacktip.png`→`SharkUnlock.png`, `RusselsSnapper.png`→`RusselUnlock.png`).
-
-### 🐟 Tablet vs big-screen images fully separated (`564c036`)
-- The tablet modal (`SpeciesContentDB` → `StreamingAssets/SpeciesImages/`) and the big-screen cards (`RevealContentDB` → `StreamingAssets/RevealImages/`) had been sharing `SpeciesImages`, so copying the friend's card art in there clobbered the tablet's photos. Restored the tablet originals from git and gave the big screen its **own** `RevealImages/` folder + `imageFile` column. The two are now independent — editing one never touches the other.
-
-### CSV ↔ Google Sheet workflow
-- The **Google Sheet is the source of truth** once the team edits it directly. Sensible habit: **pull the sheet → local CSV**, and prefer pushing *new* columns / individual cells over blanket overwrites of existing data columns. (Any change is recoverable via the sheet's **File → Version history**.)
-  > _Correction (2026-07-21): an earlier version of this note claimed a full-column push once overwrote a teammate's live edits — that never happened; the note was wrong. Kept only as a precaution, not a recorded incident. Programmatic sheet edits are fine (e.g. the 07-21 `unlockImageFile` column delete was done via the `gws` CLI as junheng)._
-
-### 🎬 Scene rebuild (`863ee47`)
-- Rebuilt `Assets/Junheng/Scenes/SCENE_MainScene.unity`; trimmed the `Oswald Bold SDF` / `LiberationSans SDF - Fallback` TMP font atlases (large deletions — regenerated glyph tables).
-
----
-
-## What Was Done — 2026-07-14 (JunHeng, session 2) — Reveal card TMP + CSV images + Alucia event wiring + bubble auto-size
-
-### 🗂️ Scene landscape (IMPORTANT — coordinate)
-Alucia + the reveal card now exist in **7 scenes** after all the merges. The two live ones:
-- **JunHeng's working scene = `Assets/Junheng/Scenes/SCENE_MainScene.unity`** (git renamed it from `SCENE_MainScene 1.unity`; carries Akil's environment).
-- **Aloysius's = `Assets/Aloysius/SCENE_MainScene 1.unity`** (his own copy — DON'T edit his; JunHeng's is the one we fix).
-- ⚠ **Build Settings still points at `Junheng/Scenes/SCENE_MainScene 1.unity`, which was renamed away** → the Start-scene→game build/Play flow references a missing scene. Needs the build list re-pointed to `SCENE_MainScene.unity` (+ prune the dead scene entries).
-
-### 🖼️ New-arrival card → TextMeshPro + CSV-driven images
-- **`SpeciesAddedReveal.cs`** text fields are now **`TMP_Text`** (the card was rebuilt with TMP; legacy-`Text` cards no longer wire). Wired name/role/desc to the TMP objects in JunHeng's scene.
-- **Card images are CSV-driven**: the per-species photos were copied into `StreamingAssets/SpeciesImages/` under the `SpeciesContent.csv` `imageFile` names, and **`useCsvImage = 1`** on the card. A fact-checker can now swap a fish photo via the sheet + a PNG. ⚠ Shark/Grouper/Moray PNGs are tiny (17–26 KB) — likely low-res, replace when possible.
-
-### 🩹 Alucia events wired in JunHeng's scene (this was the "events don't fire" bug)
-- **`AluciaEcologyEvents.alucia` was NULL** → its `Update()` bailed on `alucia == null`, blocking ALL species events (`starving`/`overpredated`/`overpopulated`). **Wired to the AluciaController.** ✅
-- `AluciaController.simulation` wired to the sim + **`waitForExperienceStart = 0`** (so `Start()` sets `_started`, letting health-band lines fire without the networked tap). All react toggles ON; components enabled/active; sim `_ecosystem` assigned; CSV has every event row.
-
-### 💬 Alucia speech bubble auto-sizes to the text
-- Added **VerticalLayoutGroup + ContentSizeFitter (Vertical Fit = Preferred)** to `AluciaBubble` so the bubble grows/shrinks with the line; **`AluciaController.Say()`** now `LayoutRebuilder.ForceRebuildLayoutImmediate`s so it resizes the same frame. ⚠ Bubble sprite should be Image Type = **Sliced** so it doesn't distort.
-
-### 🐞 DEBUG LOGGING — KEEP FOR NOW, then REMOVE before final
-- **`AluciaEcologyEvents.debugLog`** (new bool, default OFF): logs each live species' `count` + `GetSpeciesStatus` + `concerning?` + settle/cooldown/lastReported state, and a `NOT running` line if a ref is null. Turn it ON in the Inspector to trace why Alucia isn't reacting. **Turn OFF for the exhibit and strip the logging before the final build.**
-
-### ⏱️ Why Alucia is slow to react (timing gates on AluciaEcologyEvents)
-`startupGrace = 8s` (ignore first 8s), `settleSeconds = 5s` (waits 5s of NO count change), `checkInterval = 2s`. **Every tick that changes a count resets the 5s settle** — so a still-growing species stays silent until it stabilises at its cap. Lower to **~3 / 2 / 1** for snappier reactions.
-
-### 🎯 100% eco-health recipe (current bands 1–3, stable-or-growing rule)
-Grazers at their predator-count: **Parrotfish 4, Surgeonfish 5, Mullet 5, Damselfish 6, Spinefoot 4**; **1 of every hunter** (Shark/Trevally/Ray/Snapper/Scad/Grouper/Moray). Grazers can range up to their caps and stay 100%; the 7 hunters are locked at 1 (each extra predator raises the grazers' floor).
-
----
-
-## What Was Done — 2026-07-14 (JunHeng) — Eco-health rework + overpopulation model + flavour hints
-
-### 🩺 Eco-health now rewards "stable OR growing" (100% is reachable)
-The `balance` term of `EcoHealth01` counted a food-web species only when its `PopulationPressure == 0`
-(perfectly still). With the dense food web + `MaxSchools` caps that was **impossible for every species at once**,
-so eco-health topped out around **87%** — 100% was unreachable.
-- **`ComputeEcoHealth01`** now counts a species as healthy when it is **not declining** (`PopulationPressure >= 0`,
-  i.e. stable or growing) **and not overpopulated**. A well-fed apex filling out toward its cap is fine; only a
-  species actively starving / being over-hunted, or genuinely running away, drags health down. → **100% reachable.**
-- Matches the intent of the HTML prototype (`prototype/oceanx-prototype.html`): generous, apex exempt, reaches 100%
-  without demanding perfect balance.
-
-### 📈 Eco-health now ramps up gradually as the reef is built (`d17fdea`)
-The `balance` term divided healthy species by `considered` (only the species currently *present*), so the very first
-fish added read as a **full** balance score — eco-health jumped rather than climbing. Now it divides by **`totalSpecies`**
-(the whole roster): a single healthy fish contributes ~1/N, and balance climbs smoothly as the player builds the reef.
-**100% still requires every species alive AND healthy** — same ceiling, gentler ramp.
-
-### 🐟 Overpopulation is now ratio + count based (was "predators gone + near cap")
-Extracted a shared **`IsOverpopulated(species, counts)`** helper used by BOTH `GetSpeciesStatus` and the eco-health
-balance term (bar + Alucia warnings always agree). New rule (an **OR**):
-- **predators present** → overpopulated if it outnumbers its combined predators by **> `_overpopulatedRatio`** (default **7:1**);
-- **predators entirely gone** → overpopulated if it has **> `_overpopulatedFreeCount`** schools (default **3**).
-- New Inspector fields **`_overpopulatedRatio = 7`** + **`_overpopulatedFreeCount = 3`** REPLACE the old
-  `_overpopulatedAtFraction` (0.8-of-cap). Apex species (no natural predators) are never overpopulated.
-
-### 🔧 Raised grazer `MaxSchools` (headroom to actually overpopulate)
-Raised the 5 primary-consumer caps: **Parrotfish 6→10, Surgeonfish 6→10, Mullet 7→10, Damselfish 7→12,
-Spinefoot 6→10** (Mullet kept at 10 — 18 fish/school). Predator/mid-fish caps unchanged.
-- **100% recipe (bands low=1 high=3):** grazers at their predator-count (Parrotfish 4, Surgeonfish 5, Mullet 5,
-  Damselfish 6, Spinefoot 4), **1 of everything else**. Each grazer can range from that floor up to its cap and stay
-  at 100%; the predators are locked at 1 (each extra predator raises the grazers' floor).
-
-### 💬 Alucia flavour hints ("fun facts") are now CSV-driven
-The per-species hints Alucia says while pointing at the next unlock (`SpeciesData.hint1/2/3`) were baked into the
-assets — editing the sheet did nothing.
-- **`AluciaLines.GetVariants(event, species)`** (new) returns every variant for an event scoped to a species.
-- **`SpeciesUnlockReveal.BuildHint`** reads flavour from the CSV first (**`hint.flavour`**, scoped to the fish),
-  falling back to `SpeciesData.hint1/2/3`. Fact-checkers can now edit/shorten them in the sheet.
-- **`alucia_lines.csv` + the `alucia_lines` sheet tab** — added **`hint.flavour`** rows for all 13 species (38 lines).
-- Data fixes: **Seagrass** rows carried Scad's text → proper seagrass hints (CSV + sheet + asset, incl. its
-  `addedMessage`); **Giant Moray** *"Russel Snappers"* typo → *"Russell's snappers"*.
-
-### 🧹 Em dashes → commas across Alucia's lines
-Replaced every em/en dash and spaced-hyphen-as-punctuation with a comma in `alucia_lines.csv` AND the sheet (the
-sheet stored them as `â€"` mojibake from an earlier mis-encoded push — now clean). Compound hyphens (Brown-marbled)
-left intact.
-
-### ✅ Alucia wiring CONFIRMED (supersedes the "pending wiring" note in the 2026-07-13 section)
-In `SCENE_MainScene 1` (the only scene with Alucia) all three are already wired in the committed scene:
-`AluciaController.simulation` → EcosystemSimulationGPU (fileID 222838834), `AluciaEcologyEvents.alucia` →
-AluciaController (621817932), and its `simulation` too. Health-band lines (`health.critical/unstable.up/
-unstable.down/healthy/thriving`) fire via `AluciaController.EvaluateHealth(simulation.EcoHealth01)`.
-`waitForExperienceStart = 1` is intentional (waits for the networked tap-to-begin); set 0 for standalone testing.
-
----
-
-## What Was Done — 2026-07-13 (JunHeng)
-
-### 🩺 Cause-aware species status for Alucia (REPLACES `GetBalance` / `SpeciesBalance`)
-Adding a lone species whose prey/predators aren't in the ocean yet was wrongly announced as
-"underpopulated — too many predators" (because `PopulationPressure` returns −1 for any species whose prey list
-is non-empty but currently absent). Fixed by separating the **messaging** read-out from the population **tick**.
-- **`EcosystemSimulationGPU`** — `GetBalance(species)` + `enum SpeciesBalance {Absent, Underpopulated, Balanced, Overpopulated}`
-  **removed**, replaced by **`GetSpeciesStatus(species)`** + **`enum SpeciesStatus {Absent, Balanced, Starving, OverPredated, Overpopulated}`**.
-  Cause-aware, computed on committed counts, **messaging-only — does NOT drive the population tick** (that still uses `PopulationPressure`):
-  - **Starving** — it eats prey, that food *was* present at least once, and is now gone / below the low band (a real collapse).
-  - **OverPredated** — its predators are actually present and outnumber it past the low band.
-  - **Overpopulated** — it normally has predators, they are absent, and it has grown to ≥ `_overpopulatedAtFraction` of its cap.
-  - **Balanced** — none of the above, including a just-added species or a lone predator whose prey was never introduced (no false alarm).
-  - New Inspector field **`_overpopulatedAtFraction`** (default `0.8`, under a "Messaging thresholds" header) + a per-species
-    `_foodWasPresent` memory set that tells a genuine "prey ran out" apart from "prey were never added yet".
-  - ⚠ **API rename — any caller of `GetBalance` / `SpeciesBalance` must switch to `GetSpeciesStatus` / `SpeciesStatus`.**
-- **`AluciaEcologyEvents`** — now fires **per-cause** events `species.starving` / `species.overpredated` /
-  `species.overpopulated` (+ `species.extinct`), with a settle window after a count change and fire-once-per-entry;
-  `species.added` now fires only on the **first-ever** add of a species.
-- **`alucia_lines.csv`** — dropped `species.underpopulated`; added `species.starving` (no "too many predators" wording)
-  and `species.overpredated`; legend updated. Google Sheet `alucia_lines` tab updated to match.
-
-### 🔒 Locked species can no longer be added from the tablet
-- **`EcosystemUnlockManagerGPU`** — new **`IsUnlocked(SpeciesDataGPU gpu)`** overload (resolves the gpu-species to its
-  `SpeciesData`; a species the manager doesn't track is treated as unlocked, so it never blocks something the unlock
-  system isn't meant to govern).
-- **`TabletAddRemoveUIGPU`** — remembers the selected species; **Add is blocked and the Add button greys out while that
-  species is still locked** (not yet discovered). Remove and adds of unlocked species are unchanged.
-
-### 🌐 ContentService — follow the published-CSV redirect + clearer failures
-- Set **`redirectLimit = 32`** (a Google published-CSV URL 307-redirects to `googleusercontent` — the fetch must follow it).
-- Non-CSV downloads now log the **HTTP code, final URL, and a 120-char body snippet** + a reminder the URL must end in
-  `&output=csv`, so a wrong/unpublished link is obvious instead of silently falling back to the baked copy.
-
-### 🐟 Russell's snapper real mesh imported + animated
-- **8 of 12 species now have real meshes** (was 7). Remaining **4 on placeholder:** brown-marbled grouper, giant moray,
-  bluefin trevally, fringelip mullet.
-
-### 🗣️ Per-species ecological hints — specific, kid-friendly, food-web-accurate
-- **`alucia_lines.csv` (now ~67 rows)** — for `species.overpopulated / overpredated / starving`, every one of the 12
-  fish has a **species-scoped** line that names its **real predators/prey** (pulled from the `SpeciesDataGPU`
-  prey/predator lists) and tells the player what to do, e.g. scad overpredated → *"remove a Brown Marbled Grouper or a
-  Bluefin Trevally"*. No dashes/hyphens in visible text (kids/families). **Moods set by meaning**: real problems = `Warn`,
-  reassuring "this fish is fine" lines (top predators can't be over-predated, grazers/ray can't starve) = `Calm`.
-  - ⚠ The `Species` column must equal `SpeciesDataGPU.SpeciesName` EXACTLY (case-insensitive) — keeps original spelling
-    incl. the grouper's hyphen and **Russell's snapper's curly apostrophe (’)**.
-  - Which actually fire: overpop+overpredated for the 8 fish with predators; starving for the 6 that hunt.
-  - Pushed to the Google Sheet `alucia_lines` tab. **`Weight` left blank** (one line per species+event → no effect;
-    add variants later if repetition matters).
-
-### 📄 Big-screen vs tablet content split — TWO separate sheets
-The host "NEW ARRIVAL" card and the tablet modal want **different-length copy** (big screen = short punchy blurb,
-tablet = full detail), so they read from **two separate CSVs / sheet tabs**:
-- **`RevealContent.csv`** (NEW) — columns `id, speciesName, role, blurb`. Drives the HOST big-screen arrival card.
-  Populated with Aloysius's original per-species big-screen copy (his `SpeciesData.addedMessage` values); the two
-  broken ones were fixed (Seagrass had scad's text by a copy-paste slip; Macroalgae was blank). New reader
-  **`RevealContentDB.cs`** mirrors `SpeciesContentDB` (header-driven, indexed by id + name, live-reloadable).
-- **`SpeciesContent.csv`** — the TABLET modal only. **Reverted to its original columns** (the temporary `role` column
-  that was added while the big screen briefly shared this sheet has been removed from both the CSV and the sheet tab —
-  the tablet never used it; role now lives in `RevealContent`). Descriptions/rows untouched.
-- **`SpeciesAddedReveal.FillCard()`** reads **name / role / blurb from `RevealContentDB`** (matched by
-  `SpeciesData.contentId` → falls back to `speciesName`), with the `SpeciesData` asset as fallback so it's never blank.
-- New **`useCsvImage`** toggle on `SpeciesAddedReveal` (default **OFF = text-only**, the current card design). Turn ON
-  only after the `RevealImage` slot is laid out (sized + Preserve Aspect); the photo still comes from the tablet sheet
-  (`SpeciesContent.csv` `imageFile`) since `RevealContent` is text-only by design.
-- **Google Sheet** "OceanX Content" now has **3 tabs**: `alucia_lines`, `SpeciesContent`, `RevealContent`
-  (gid `1248841811`). All 3 published-to-web and wired as Sources on the HOST `ContentService` (see below).
-
-### 🎬 SplashSequence — auto-advance by build index (no scene name)
-- **`SplashSequence.cs`** now loads **`GetActiveScene().buildIndex + 1`** instead of a named scene, so splash = build
-  index 0, game scene = index 1 (works for both the host and tablet builds; each ships its own scene 1). Removed the
-  `gameScene`/`tabletScene` name fields. Set **`waitForTap = false`** for pure auto-advance. (Aloysius also added a
-  black screen-fade overlay to this same script — coordinate.)
-
-### 🔀 Merge with Aloysius's scene rewrite (commit `1087342`)
-- Aloysius pushed `cfb2bd3 "update jh scene"` (a ~5000-line `SCENE_MainScene 1.unity` rewrite) that conflicted with
-  JunHeng's ContentService/AluciaEcologyEvents wiring. **Resolved by taking Aloysius's scene** (`git checkout --theirs`)
-  and re-wiring in Unity. ⚠ **Agree with Aloysius who owns that scene** to avoid repeat conflicts.
-
-### ⚠ Wiring STILL pending in `SCENE_MainScene 1` (host) — verified empty on disk
-- **`AluciaController.simulation` = None** → assign `EcosystemSimulationGPU` (else her health-band lines don't fire).
-- **`AluciaEcologyEvents.alucia` = None** → assign `AluciaController` (else NONE of the ecology lines fire; its
-  `simulation` IS assigned).
-- ✅ **Host `ContentService`** → all 3 Sources now wired (`alucia_lines`, `SpeciesContent`, `RevealContent`).
-- `AluciaController.waitForExperienceStart = 1` → Alucia (intro + all) waits for the networked "tap to begin"
-  (`ExperienceStartGate` → `EcosystemNetworkManagerGPU.RequestStartRpc` → `HasStarted`). Set 0 for standalone testing.
-
-### ✅ FIXED — "NEW ARRIVAL" reveal card showed placeholder text (type mismatch)
-- **Symptom:** the host `SpeciesAddedReveal` card faded in but the text stayed the design placeholder
-  **"Species Name / ROLE / Description…"** — it never displayed real content.
-- **Root cause (NOT the CSV):** `SpeciesAddedReveal` declared its text fields as **`TMP_Text`** (TextMeshPro), but the
-  `AddedRevealCard` in the scene was built with **legacy `UnityEngine.UI.Text`** (same convention as the working sibling
-  `SpeciesUnlockReveal`, which uses `public Text`). Unity **cannot** assign a legacy `UI.Text` into a `TMP_Text` slot, so
-  `nameText`/`tierText`/`msgText` were stuck at `fileID: 0` (impossible to drag in) and every `if (nameText != null)`
-  failed. The card had literally never displayed filled text — this was true in committed code, unrelated to any content edit.
-- **Fix:** changed the three fields in `SpeciesAddedReveal` from `TMP_Text` → **`Text`** (dropped `using TMPro;`), then
-  wired them to the card's existing `NameText`/`TierText`/`MsgText` `UI.Text` objects in the scene
-  (fileIDs `261435216` / `732151819` / `1231601646`). `FillCard` only ever calls `.text`, which both types have.
-
-### Teammates (UI / art) — for context
-- **Aloysius** — splash-screen sequence reworked + **3 splash logos**; large-screen **add-popup UI box** redesigned +
-  new add-button image; fixed a splash-screen bug; added a screen-fade overlay to `SplashSequence`.
-- **Akil** — reworked `SCENE_MainScene` + **rebaked lighting**.
-
----
-
-## Prototype Specification (`prototype/oceanx-prototype.html`)
-
-_Full interactive reference — open it in a browser. Everything below is derived from reading its source code._
-
----
-
-### Layout — two panels
+## Layout — two panels
 
 | Panel | Description |
 |-------|-------------|
@@ -1399,67 +1040,55 @@ _Full interactive reference — open it in a browser. Everything below is derive
 
 Left reef panel also has a **vertical Eco-Health bar** on its left edge (same colour logic).
 
----
+## Food Web view
 
-### Food Web view
+- SVG canvas, nodes arranged by trophic tier (top = Keystone, bottom = Primary).
+- Each node is a **glass bubble**: radial-gradient fill, white ring, highlight ellipse, emoji inside, name label below.
+- Ring colour = trophic tier (Keystone=cyan, Tertiary=orange, Secondary/Primary=teal/green).
+- **Locked nodes**: emoji shown as dark silhouette, name shows "???".
+- **Count badge** top-right corner of bubble: cyan normal, red = overpopulated, orange = underpopulated.
+- **Over/under glow**: ring turns red/orange + drop-shadow glow when imbalanced.
+- **Predator arrows** (edges): hidden by default. **Long-press** a node to reveal arrows TO its predators; all other nodes dim; predators get a cyan highlight ring. Releasing clears the overlay.
+- **Tap** (short press) → opens modal.
 
-- SVG canvas, nodes arranged by trophic tier (top = Keystone, bottom = Primary)
-- Each node is a **glass bubble**: radial-gradient fill, white ring, highlight ellipse, emoji inside, name label below
-- Ring colour = trophic tier (Keystone=cyan, Tertiary=orange, Secondary/Primary=teal/green)
-- **Locked nodes**: emoji shown as dark silhouette, name shows "???"
-- **Count badge** top-right corner of bubble: cyan normal, red = overpopulated, orange = underpopulated
-- **Over/under glow**: ring turns red/orange + drop-shadow glow when imbalanced
-- **Predator arrows** (edges): hidden by default. **Long-press** a node to reveal arrows TO its predators; all other nodes dim; predators get a cyan highlight ring. Releasing clears the overlay
-- **Tap** (short press) → opens modal
-
----
-
-### Modal — tap a node
+## Modal — tap a node
 
 **Unlocked species:**
-- Left column: large emoji (animates bobbing on first-reveal), common name, **[+ ADD]** button (rounded, cyan glow)
-- Right column: trophic tier label (tier colour), Scientific Name, Role description (what it does in the reef), "What's next" contextual hint, count currently in ecosystem + balance status (✓ balanced / ⚠ overpopulated / ⚠ underpopulated)
+- Left column: large emoji (animates bobbing on first-reveal), common name, **[+ ADD]** button (rounded, cyan glow).
+- Right column: trophic tier label (tier colour), Scientific Name, Role description (what it does in the reef), "What's next" contextual hint, count currently in ecosystem + balance status (✓ balanced / ⚠ overpopulated / ⚠ underpopulated).
 
 **Locked species:**
-- Left: silhouette emoji + no name shown
+- Left: silhouette emoji + no name shown.
 - Right: "Species Missing" label, **progressive hint** (gets more specific each time the player taps — 3 levels: vague → clearer → almost there), requirements checklist:
-  - Eco-health ≥ X% (shown if minHealth > 0)
-  - Specific prey species count ≥ N (one row per requirement, green ✓ met / red ○ missing)
+  - Eco-health ≥ X% (shown if minHealth > 0).
+  - Specific prey species count ≥ N (one row per requirement, green ✓ met / red ○ missing).
 
----
+## Current Organisms view
 
-### Current Organisms view
-
-- Trapezoid "tank" shape with subtle grid overlay
-- Grid of bubbles: species emoji + count badge, over/under colour coding, tap → remove popup (−1 or All)
+- Trapezoid "tank" shape with subtle grid overlay.
+- Grid of bubbles: species emoji + count badge, over/under colour coding, tap → remove popup (−1 or All).
 - Empty state: "No organisms yet — add species from the food web."
 
----
-
-### Game flow
+## Game flow
 
 1. **Intro screen** (inside the food-web panel): "⚠ REEF STATUS: CRITICAL" badge + Alucia's opening message + "Begin →" button. Disappears when Begin is pressed.
-2. **Player taps nodes to Add** species one school at a time
-3. **Eco-health updates** every render frame (based on diversity + ratio scores)
-4. **Unlock gate**: locked nodes auto-unlock when prerequisites are met → Alucia announces it
-5. **First-time add**: "New Species Discovered" reveal card floats over the reef panel for 5.5 s (emoji, name, sci name, tier badge, description, hint, countdown bar)
-6. **Win**: eco-health reaches 100% → Alucia celebrates, sticky win message
-7. **Reset** (↺ button): SpongeBob-style bubble-flood animation wipes the screen, then intro re-appears
+2. **Player taps nodes to Add** species one school at a time.
+3. **Eco-health updates** every render frame (based on diversity + ratio scores).
+4. **Unlock gate**: locked nodes auto-unlock when prerequisites are met → Alucia announces it.
+5. **First-time add**: "New Species Discovered" reveal card floats over the reef panel for 5.5s (emoji, name, sci name, tier badge, description, hint, countdown bar).
+6. **Win**: eco-health reaches 100% → Alucia celebrates, sticky win message.
+7. **Reset** (↺ button): SpongeBob-style bubble-flood animation wipes the screen, then intro re-appears.
 
----
-
-### Alucia — NPC guide
+## Alucia — NPC guide
 
 Translucent speech bubble, bottom-left of reef panel, mermaid avatar (🧜‍♀️). Three visual states:
-- **Default** (light blue): tips on first add, unlock announcements
-- **Warn** (orange): overpopulation / underpopulation alerts (fires whenever player taps an imbalanced node, and after adding a species that tips the balance)
-- **Win** (green): ecosystem fully recovered
+- **Default** (light blue): tips on first add, unlock announcements.
+- **Warn** (orange): overpopulation / underpopulation alerts (fires whenever player taps an imbalanced node, and after adding a species that tips the balance).
+- **Win** (green): ecosystem fully recovered.
 
-Auto-hides after 5.2 s. Sticky for win message.
+Auto-hides after 5.2s. Sticky for win message.
 
----
-
-### Eco-Health formula (from prototype JS)
+## Eco-Health formula (from prototype JS)
 
 ```
 h = (distinct species count) × 6          // up to 66 for 11 non-shark species
@@ -1475,11 +1104,9 @@ h = clamp(0, 100)
 
 Visual warning ring fires at **ratio ≥ 4:1** (before the 8:1 penalty threshold). States: `< 35% = low`, `35–70% = mid`, `≥ 70% = high`.
 
----
+## Unlock prerequisites (prototype — placeholder species names, remap to canonical 12)
 
-### Unlock prerequisites (from prototype — note species names differ from HANDOFF list)
-
-| Species | Requires | Min health |
+| Species (placeholder) | Requires | Min health |
 |---------|----------|-----------|
 | Striped Mullet | — (start unlocked) | 0% |
 | Reticulated Damselfish | — (start unlocked) | 0% |
@@ -1494,325 +1121,347 @@ Visual warning ring fires at **ratio ≥ 4:1** (before the 8:1 penalty threshold
 | Great Barracuda | scad ×2 | 45% |
 | Blacktip Reef Shark | mullet ×2, surgeonfish ×2, grouper ×1 | 55% |
 
-> ⚠ **Prototype uses placeholder species names** (Striped Mullet, Convict Surgeonfish, Reef Manta Ray, Malabar Grouper, Yellowtail Scad, Brown Surgeonfish) that do **not** match the now-canonical list (see **Species List & Food Chain**). The prototype's unlock prerequisites and node layout are still valid as *design reference* — but remap every species to the canonical 12 (and drop Manta Ray / Convict Surgeonfish, add Giant moray / the ray / snapper / spinefoot) when porting the unlock system to Unity.
+> ⚠ **Prototype uses placeholder species names** that do **not** match the now-canonical list (see §4). The prototype's unlock prerequisites and node layout are still valid as *design reference* — but remap every species to the canonical 12 (and drop Manta Ray / Convict Surgeonfish, add Giant moray / the ray / snapper / spinefoot) when porting.
 
----
-
-### Reef visual — habitat growth
+## Reef visual — habitat growth
 
 Ocean background colour interpolates across 8 keyframes from dark murky teal (health 0%) to vivid cyan (health 100%). Flora appears in layers (back/mid/front/tall) with each item having a `minHealth` threshold — items fade in gradually as health crosses their threshold. Murk overlay opacity = `max(0, (70 - health) / 70 × 0.5)`, fully gone above 70%.
 
----
+## ⚠ Key design difference vs current build
 
-### ⚠ Key design difference vs current build
-
-The prototype uses a **locked progression** model: only 2 species are available at start; the rest unlock gate-by-gate as the player adds prey first. **✅ Implemented in Unity (2026-06-18)** via `EcosystemUnlockManagerGPU`: unlock config lives on the `SpeciesData` assets (`startUnlocked`, `minHealth`, `requires`) and the manager gates on live eco-health % + school counts (latching). Progressive 3-level hints run through `SpeciesBubble.ShowLockedHint`. **Remaining:** the locked-modal requirement checklist UI (the data is already exposed via `EcosystemUnlockManagerGPU.GetLockInfo`).
+The prototype uses a **locked progression** model: only 2 species available at start; the rest unlock gate-by-gate as the player adds prey first. **✅ Implemented in Unity (2026-06-18)** via `EcosystemUnlockManagerGPU`. Progressive 3-level hints run through `SpeciesBubble.ShowLockedHint`. **Remaining:** the locked-modal requirement checklist UI (the data is already exposed via `EcosystemUnlockManagerGPU.GetLockInfo`).
 
 ---
 
-## What Needs Building Next (Priority Order)
+# 9. Things Tried That Didn't Work — Avoid
 
-### ~~1. Start-at-Zero / School-Scaling / Extinction model~~ ✅ Done (`e13e26b`)
+## 9.1 Water shader + shark = GPU crash (hard native crash)
 
-Implemented in commit `e13e26b`. Player builds from empty ocean; Add/Remove scale schools; extinction at 0; `MaxSchools` cap; crash-safe empty-ocean state. **Needs an in-editor play-test with full add/remove cycles to confirm no regressions.**
+- **Symptom:** built player crashed at first render frame when the shark GameObject was present and using the URP water shader in view.
+- **Diagnosed cause:** the Stylized Water 3 asset's Underwater Renderer Feature (installed as a URP renderer feature) fails on the specific Unity/URP version combo when the scene has too few opaque renderers in view — likely tied to `_CameraOpaqueTexture` / `_CameraDepthTexture` sampling.
+- **Confirmed via bisection:**
+  - Shark **alone with water shader** → crash.
+  - Shark **without** water shader → runs fine.
+  - Shark **+ water shader + any other opaque object** in scene → runs fine.
+  - Swapping the shark's material to URP Lit didn't help (not the shader).
+  - Import setting changes on the shark FBX didn't help (not the mesh).
+  - Deleting Library and rebuilding didn't help.
+- **Workaround (in place):** commit `b85296d` "fixing Crashing error" in `Boids_Demo.unity`. Also: keeping the Stylized Water 3 Underwater Renderer Feature disabled in some builds, OR ensuring other opaque geometry (coral, seabed) is always in the scene.
+- **Not fully root-caused.** Stylized Water 3 v3.2.6 targets Unity 6.0; project runs Unity 6000.3.14f1. Version drift is likely.
+- **Proper fix:** update Stylized Water 3 to latest (3.2.7+ has explicit Unity 6.4 compatibility notes), then re-enable the underwater renderer feature and re-test.
 
-### ~~1. Finalise the 12 canonical species + wire them into the sim~~ ✅ Done (2026-06-18)
-The 12 canonical species are created and wired into `EcosystemDefinitionGPU.asset` in fixed order,
-each with a matching `BoidSpawnerGPUMultiTargets` in `BoidSimulationGPU._gpuBoidSpawners`. Giant
-moray added; Great barracuda dropped. `PreySpecies` / `PredatorSpecies` populated from the
-food-chain table. **Still worth a balance pass** on the prey/predator lists + `MaxSchools` values.
+## 9.2 CPU ecosystem layer — deleted in Week 7
 
-> **Where the UI/unlock fields ended up:** these did **not** go on `SpeciesDataGPU` as originally
-> planned. Unlock config lives on the UI asset **`SpeciesData`** (`startUnlocked`, `minHealth`,
-> `requires`, hints), linked to its sim species via a `gpuSpecies` field. `SpeciesDataGPU` stays
-> pure simulation data. Remaining UI-only fields (Icon, TrophicTier, FoodWebPosition) can be added
-> to `SpeciesData` as the food-web graph UI is built.
+Full CPU implementation existed (Boid.cs, BoidSimulation.cs, EcosystemSimulation.cs, SpatialPartition3D.cs, EcosystemDefinition.cs, SpeciesDefinition.cs) but was superseded by the GPU pipeline. **Deleted, do not resurrect.** ~40 scripts removed in the cleanup (Week 7 codebase cleanup):
+- All CPU Ecosystem scripts.
+- Simple Flocking prototype folder.
+- CPU networking scripts (`EcosystemNetworkManager`, `TabletEcosystemUI`, `TabletSpeciesCardUI`).
+- Old GPU variants (`01 Brute Force Normal`, `02 Brute Force Instanced`).
+- Editor-only shader GUI scripts.
+- Fish_Swimming_CPU, unused CPU boid variants.
+- Duplicate `ComputeShaderExtensions` (GameDevBuddies namespace).
 
-### 1b. Reconcile the three host scenes (NEW — 2026-07-01)
-There are now three "large screen" scenes and only JunHeng's has the live sim. Decide the canonical host scene and merge into it: the **simulation** (from `Assets/Junheng/Scenes/Boids_Demo.unity`), the **large-screen eco-health bar + `HealthBarBinder`** (from `Assets/Aloysius/Boids_Demo.unity`), and the **baked environment/lighting** (from `Assets/Akil/Scenes/SCENE_MainScene.unity`). Do this before the final build — two of the three both contain `EcosystemSimulationGPU` and will keep drifting until merged.
+## 9.3 `Fish_Lit_Instanced` on regular MeshRenderers — GPU crash
 
-### 2. Build Tablet UI (Food Web Graph)
-Full spec in **Prototype Specification** section above. Key pieces missing in Unity:
+- **Error:** *"Fish_Lit_Instanced requires a buffer (SRV) _Boids ... none provided"* at draw time.
+- **Cause:** `Fish_Lit_Instanced` reads per-boid data from a `StructuredBuffer<Boid> _Boids` SRV that's only bound inside `BoidSpawnerGPU.RenderBoids()` via a `MaterialPropertyBlock` during `Graphics.RenderMeshIndirect`. A plain MeshRenderer never binds it → shader samples an unbound resource → D3D12 crash (or "skipping draw calls to avoid crashing" warning + downstream corruption).
+- **Rules:**
+  1. `Fish_Lit_Instanced` materials belong **only** on a spawner's `BoidMaterial`, never on a scene MeshRenderer.
+  2. Use the non-instanced `Fish_Lit` for scene/hero objects.
+  3. The instanced material **must have "Enable GPU Instancing" ON** (`m_EnableInstancingVariants: 1`).
+  4. **Do NOT hand-build the instanced material** (swapping the shader on a URP-Lit base leaves it missing passes/props); **duplicate a known-good one** (`Clownfish_Instanced.mat`) and just change its textures.
 
-| Feature | Notes |
-|---------|-------|
-| Food web SVG canvas | Bubble nodes, trophic-tier colour rings, count badge, over/under glow |
-| Predator arrow edges | Hidden by default; revealed on long-press (dim all, show connected edges + highlight predators) |
-| Species lock/unlock system | ✅ Logic done (`EcosystemUnlockManagerGPU` + `SpeciesBubble`): lock state, eco-health/requirements gating, progressive 3-level hints. Remaining: silhouette/"???" visuals + locked-modal checklist |
-| Eco-health bar (GPU-wired) | ✅ `Health.cs` reads `GetEcoHealth()` from the sim/netcode. Remaining: the prototype's low/mid/high colour states |
-| Over/underpopulation indicators | Ring colour + glow; Alucia warns when player taps an imbalanced node |
-| Species info modal | Left: emoji + ADD button; Right: tier, sci name, role, "What's next" hint, count + balance status |
-| Locked modal | Silhouette, progressive hint, requirements checklist (eco-health % + prey counts) |
-| Current Organisms view | Toggle via chevron; trapezoid tank with grid; tap bubble → remove popup |
-| Alucia NPC | Mermaid speech bubble, 3 states (default/warn/win), auto-hides 5.2 s |
-| First-time reveal card | "New Species Discovered" overlay on reef panel, 5.5 s |
-| Intro screen | Inside food-web panel; "REEF STATUS: CRITICAL" badge + Begin button |
-| Reset | SpongeBob bubble-flood animation, state wipe, intro re-appears |
-| Reef habitat visual | Layered flora growth, murk fade, ocean colour keyframes (GPU-side equivalent) |
+## 9.4 Instant rewrite of `boidInfo.direction` in reef backstop → "snap" bug
 
-### 3. Ecosystem State Machine (health score ✅ done)
-**Health score ✅** — `EcosystemSimulationGPU.EcoHealth01` (diversity + balance + apex, weighted) is built and synced; the bar moves. Remaining:
+The hard penetration backstop originally rewrote `boidInfo.direction` in a **single frame**, bypassing the normal angular turn ramp → visible up/down snap when fish avoided rocks. Fix: capped-turn helpers (see §7.5). Direct-rewrite approach is off-limits — always cap the turn.
 
-**State machine (not built):** Healthy → Unstable → Critical → Collapsing → Recovering — derive from the `EcoHealth01` value (and/or its rate of change) and expose it for the UI / Alucia warnings.
+## 9.5 Per-species starvation model — replaced by global ratio model
 
-### 3b. Environment health-reveal — corals scale in with eco-health (WORKING 2026-07-14)
-The reef visually builds up as `EcoHealth01` rises: corals start **hidden** and pop in (one-by-one or in groups) as health climbs; retract as it declines. **Play-tested and working.**
-- ✅ **Script:** `Assets/Junheng/Scripts/Environment/EnvironmentHealthReveal.cs`.
-- **Host-side driver `EnvironmentHealthReveal`** (`[ExecuteAlways]`) reads `EcosystemSimulationGPU.EcoHealth01` **directly** (mirrors `HealthBarBinder` — the sim + corals only exist on the big-screen host; no netcode). Smooths + clamps `0..1`.
-- **⚠ The coral objects MUST have "Batching Static" UNCHECKED.** Static batching bakes transforms into a combined mesh, so runtime `localScale` changes are ignored — the effect silently does nothing in Play (works in edit mode only). Keep Contribute GI / Lightmap Static for the baked lighting; only *Batching* Static must be off. **Do not re-enable Batching Static on the corals** or this breaks. (Suggestion: tick GPU Instancing on the coral materials to offset the extra draw calls from un-batching.)
-- **Preview toggles (tuning aids — turn OFF for the exhibit + before saving):** `debugOverride` + `debugHealth` slider fake a health value; `previewInEditor` drives scale in edit mode (⚠ off before saving or corals save shrunk); `logDebug` logs collected counts + live health/visible.
-- **Master toggle `effectEnabled`** — OFF = all corals forced fully visible (normal scene); ON = start-hidden reveal effect. This is the on/off switch requested.
-- **Reveal groups** — a list; members collected from a **labelled parent Transform** (auto-collect child renderers). Three per-group `appearMode`s: **Proportional** (visible count tracks health: `round(health01 * childCount)` — 100 corals → 1 per 1%, 300 → 3 per 1%; corals pop in/retract one-by-one as the bar moves — **no manual grouping needed**; has `startHealth`/`endHealth` range), **AllAtOnce** (whole group at one `threshold`), **Staggered** (one-by-one via `staggerInterval` after the threshold). Plus `randomOrder` (shuffle the reveal sequence), `growDuration`, overshoot pop, hysteresis margin. ⚠ **The corals are all flat under a single `Corals` parent** (with separate `Seagrass` / `Rockwork` parents) — so the intended setup is **one Proportional group on `Corals`**.
-- **Reveal technique = SCALE POP-IN, chosen as a PLACEHOLDER** (swapped from an earlier transparency attempt because the corals are opaque and dense). Corals grow from scale 0 → authored scale with an optional overshoot "pop"; all visual writes go through `ApplyReveal` / `ForceVisible` so the technique stays swappable. ⚠ **Transparency-alpha and a dissolve/alpha-clip shader are BOTH still on the table** and may replace scale pop-in later.
-- ⚠ **Scale is serialized, so the component only drives scale in PLAY mode** — in edit mode it forces corals to authored scale (so you can't save a scene of zero-scaled corals). Preview via Play + `debugOverride` + `debugHealth` slider (Play-mode transform changes auto-revert on stop).
+- Original design had `StarvationDeathRate` + `StarvationThreshold` per species on `SpeciesDataGPU`.
+- Original Week 8 also had `ReproductionRate` + `NaturalDeathRate` per species.
+- **All four fields deleted.** Population is now driven by:
+  - Global ratio dynamics (§7.2) — one rule for all species.
+  - Manual add/remove via UI/RPCs.
+- If you're tempted to re-add per-species rates, know that they were tried, felt fiddly to tune, and drifted out of sync with the eco-health formula. The global model is unified with eco-health so both agree.
 
-### 4. Finish Netcode Client Setup
-Resolve NetworkConfig mismatch — both host and client NetworkManagers must have the **exact same Network Prefabs List**. Register `EcosystemNetworkManagerGPU` prefab on the client's NetworkManager.
+## 9.6 `TMP_Text` fields with legacy `UI.Text` scene bindings — silently fails
 
-### 5. Preset Scenarios
-- **Balanced Ocean**, **Shark Removed**, **Overpopulation**, **Collapse**, **Recovery**
+Unity **cannot** assign a legacy `UnityEngine.UI.Text` GameObject into a `TMP_Text` component slot. The Inspector slot is stuck at `fileID: 0` — impossible to drag in. Every `if (nameText != null)` fails → placeholder text stays visible. See §7.9 for the specific instance that bit us. Rule: match the field type to what your scene actually has.
 
-### 6. Visible predator-prey flee (make the keystone demo real)
-Today only population *numbers* react to predators; fish don't visibly flee (confirmed 2026-07-07 — no `Predator` affecters exist and the `Behavior` asset is unread). To make "remove the shark → prey scatter" visible: have each predator school emit a **`Predator`-type affecter** (radius from its `Behavior.DetectionRange`), so nearby prey hit the compute shader's existing flee path. This finally consumes the per-species `Behavior` values (FleeRange/FleeWeight/DetectionRange) that were tuned but are currently inert.
+## 9.7 Onboarding scripts subscribing only in "not started" branch — misses late-joining tablets
 
-### 7. Alucia/UI copy → CSV, Phase 2 (🔶 started 2026-07-07)
-Phase 1 (Alucia's spoken lines → `StreamingAssets/alucia_lines.csv`) is done. **Phase 2 is now underway:** per-species facts live in **`StreamingAssets/SpeciesContent.csv`** (`speciesName, sciName, iucnStatus, description, diet, habitat, imageFile`) with card art in `StreamingAssets/SpeciesImages/`, and the modal panels read from it (Aloysius). **Remaining:** fill the blank `diet`/`habitat` cells; per-species hints; convert the baked-text info-card PNGs (`Assets/Aloysius/Info/*.png`) to TMP so their facts become checkable.
+A tablet that joins a session already-started receives `_hasStarted` inside the network spawn payload, which lands **before** `OnNetworkSpawn` wires up `OnValueChanged`. Old code only checked `HasStarted` inside the "just subscribed" branch → `OnStarted` never fires for the late joiner → nudge/tutorial stuck. Fix: always subscribe **and** poll `HasStarted` (see §7.18).
 
-> ✅ **Superseded/advanced 2026-07-11** — the whole content layer was reworked into an **editable CSV + live-fetch
-> pipeline** (event/variant Alucia lines, stable species ids, `ContentService` remote fetch, ecological reaction
-> events). See **"What Was Done — 2026-07-11"**. Remaining checker tasks (fill blank cells, per-species hints,
-> TMP-ify the baked PNG cards) still stand.
+## 9.8 Hardcoded shader `CustomEditor` pointing at GameDevBuddies namespace
 
-### 8. Multi-language content (FUTURE — not started)
-Overseas use → translations. **Do NOT build one player per language.** Add a runtime language pick to
-`ContentService`: one Google-Sheet workbook with a **tab per language** (each a published CSV URL), one build
-that selects the active language at launch (system-language auto-detect + in-app override). No rebuild to switch
-or update a language; schema is already localization-ready (stable ids). Full note under **"What Was Done —
-2026-07-11 → 🔮 FUTURE"**.
+Both `Fish_Lit.shader` and `Fish_Lit_Instanced.shader` originally referenced `CustomEditor "GameDevBuddies.FishLitShaderGUI"` — a class from the third-party asset the shader was forked from. Class wasn't in the project → *"Could not create a custom UI for shader"* warning + no inspector foldouts.
 
----
+**Fix (2026-07-26):** copied the editor scripts from the source project (`Underwater_Fish_Simulation_Unity_6`), renamed namespace `GameDevBuddies` → `OceanX` in all 7 files, updated both shaders' `CustomEditor` lines to `OceanX.FishLitShaderGUI`. Also removed a stray `using Codice.Client.BaseCommands;` (Plastic SCM leftover) that would've broken the build.
 
-### 9. Findings from the full codebase review (2026-07-16) — the CRITICAL/HIGH backlog
+## 9.9 `_FORWARD_PLUS` → `_CLUSTER_LIGHT_LOOP` shader keyword swap — crashed player
 
-> Source: a five-pass expert review (netcode/security, GPU/compute, ecosystem, UI/content, project hygiene).
-> **Good news first:** the RPC/security boundary is *correctly built* — index validation uses an unsigned
-> cast that rejects negatives and `int.MinValue` in one comparison, caps/floors are enforced **server-side**
-> (not just greyed in the UI), and NetworkList/NetworkVariable are server-write-only. A rogue LAN client
-> can only do what the tablet can do. There are **no secrets** anywhere; the Google `2PACX-` URLs are
-> publish-to-web endpoints — public read-only by design, *not* keys.
->
-> Everything below is ordered by what will actually hurt, not by how clever it is.
+Attempted to fix the URP 6.1 deprecation warning by renaming the multi_compile keyword. Player crashed on first render. The URP runtime still sets `_FORWARD_PLUS` for draw calls, so the swapped shaders had no matching variant → broken shader submitted → GPU crash. **Reverted.** The deprecation warning is harmless — leave it.
 
-#### ✅ 9.1 — Per-frame GPU stall (was CRITICAL) — **FIXED 2026-07-16**
-`SpatialPartitionGPU.UpdateGridOccupancy` called `_cellOccupancyBuffer.GetData()` **every frame** — a
-synchronous readback that flushes the command buffer and blocks the main thread until the GPU drains
-everything queued, destroying CPU/GPU overlap. **~1–8 ms/frame, in the shipping build**, for data consumed
-only by `OnDrawGizmosSelected` — and Gizmo callbacks never fire in a player, so it was thrown away.
-**Fix applied:** the readback is now wrapped in `#if UNITY_EDITOR`, so it is compiled out of builds
-*regardless* of the serialised checkbox; field default flipped to `false`.
-⚠ **Still ON in 4 scenes** (`Junheng/SCENE_MainScene`, `Akil/SCENE_MainScene`, `Aloysius/SCENE_MainScene`,
-`Boids_Demo`). Harmless to the build, but the **Editor** keeps paying it until you untick
-**Visualize Occupancy** on the `Spatial_Partition_GPU` object. Do that or your in-editor perf lies to you.
+## 9.10 `UnityGBuffer.hlsl` → `GBufferOutput.hlsl` include swap — compile error
 
-#### ✅ 9.2 — One stray quote wipes out the rest of a sheet (was HIGH) — **FIXED 2026-07-16**
-`CsvUtil.Parse` treated `"` as a field-opener **anywhere**, not just at field start (RFC-4180). A checker
-writing `Grows to 3" long` put the parser in quoted mode for the rest of the file — every following row
-collapsed into one field, those species silently vanished, **no error**. Google Sheets escapes on export,
-so the live trigger was the documented *hand-edit StreamingAssets on the host* workflow.
-**Fix applied:** `"` only opens when the field is empty; loud warning if the file ends mid-quote; the
-previously-silent zero-row parse in `SpeciesContentDB`/`RevealContentDB` now logs. Regression-tested:
-all three sheets parse **byte-identically** to before.
+URP 6.1 deprecates `UnityGBuffer.hlsl` and suggests `GBufferOutput.hlsl`. Swap breaks the shader — the API changed too (`FragmentOutput` → `GBufferFragOutput`), not just the filename. Fix would require rewriting the entire GBuffer pass. **Reverted.** Deprecation warning is harmless.
 
-#### 🔴 9.3 — Tablet can lock on "Connecting…" forever (HIGH — most likely to bite live)
-`ConnectionScreenUI.Connect` discards `StartClient()`'s bool and waits for a connect/disconnect callback.
-If the transport **fails to start**, *neither* fires — and by then `_connecting = true`, discovery is
-stopped and the button is disabled. No timeout. **Only an app force-quit recovers.**
-Trivially reachable: `:60` pre-fills the IP field with the **malformed** `"192.168.1."`, and `OnConnect`
-only rejects empty, not malformed. Attendant waits out discovery → taps Connect on the default → bricked.
-**Fix:** return `StartClient()`'s bool; on false reset `_connecting`, re-enable the button, restart
-discovery; validate with `IPAddress.TryParse`; add a ~10 s watchdog; stop pre-filling a broken IP.
+## 9.11 Wrong shader on a fish material → fish render stacked at bounds centre
 
-#### 🔴 9.4 — A stalled swim-out freezes a species permanently (HIGH)
-`EcosystemSimulationGPU.BatchExitRoutine`'s `while(true)` has **no timeout**. One fish held off its exit
-point → `_exitingCount` never clears → `IsExiting` stays true → that species ignores **Add and Remove**
-for the rest of the session. The tooltip at `:45-48` already admits *"a stray fish can stop the school
-being removed."* Also reachable by disabling the component mid-exit (`_exitingCount` is never cleared).
-**Fix:** deadline in the routine → force `CommitRemoveSchools` + clear `_exitingCount`; add `OnDisable`
-cleanup. Expose the timeout as a serialised field.
+The GPU sim needs each species' `BoidMaterial` on `Fish_Lit_Instanced` (reads per-boid position from `_Boids`). A material on the plain `Fish_Lit` shader draws every instance at one point (the world origin / bounds centre) because the shader doesn't consume the per-instance buffer. Newly-imported fish assets often come in on `Fish_Lit` — **always verify the shader**. (Hit ray/scad/damsel on 2026-07-07; fixed by swapping shader on 3 materials.)
 
-#### 🔴 9.5 — Two schools added in one frame: only the last swims in (HIGH)
-`ReinitializeBuffers` coalesces to one rebuild/frame, but `SetPendingSpawnOrigin` is a **single slot** and
-`RelocateGroupToEntryPoint` only relocates the **last** sub-group. Double-tap Add (or batched RPCs, or a
-queue drained after an exit) and the earlier schools **pop into existence mid-tank, on camera** — killing
-the swim-in presentation.
-**Fix:** make the pending origin a list keyed by sub-group; relocate *every* newly added group.
-⚠ Touches spawn positioning + position-preservation — the most delicate code in the project. **Do this one
-alone**, nothing else in flight.
+## 9.12 Assigning the instanced material to the wrong shader base
 
-#### 🔴 9.6 — Texture leak on content reload (HIGH — latent, one field from live)
-`SpeciesContentDB.Reload` / `RevealContentDB.Reload` clear `_spriteCache` **without destroying** the
-Sprites or their Texture2Ds. These are native objects; GC does not free them, and a single-scene exhibit
-never triggers `UnloadUnusedAssets`. Measured on **decompressed RGBA32** (file sizes badly understate it):
-`SpeciesImages` **39.6 MB** (the 3 IUCN badges are 1283×1283 = **6.28 MB each**), `RevealImages` 12.4 MB —
-**~52 MB orphaned per reload cycle**.
-**Not firing today** only because `refreshIntervalSeconds` defaults to `0`. Set it to 5 min for live sheet
-updates and you leak ~52 MB every 5 min → Android OOM-kills the tablet mid-exhibit.
-**Fix:** destroy texture + sprite before `Clear()`; only fire `NotifyReload` when the file actually changed
-(it currently fires twice per sheet at startup for nothing). ⚠ Trap: destroying a sprite while a modal is
-displaying it blanks that image — handle properly, don't rely on "reload only happens at startup".
-> ✅ A *different*, smaller leak was fixed 2026-07-16: `ContentService.LoadSprite` now destroys the
-> throwaway Texture2D when a PNG fails to decode (it re-leaked on every card open, since misses aren't cached).
+Swapping the shader on a URP-Lit base to create an instanced material leaves it missing passes/props. **Always duplicate a working `*_Instanced.mat` and swap only the textures.**
 
-#### 🔴 9.7 — Reef stutters every 5 s (HIGH)
-`RunShoalingTick` calls `TryGetBoidsCentroid` → `GetData()` (a full pipeline stall + array alloc) **once per
-school in the outer loop and again per candidate in the inner loop** — nested over species × schools. Worst
-case **~900 blocking readbacks + 900 allocations in one frame, every 5 s**.
-**Fix:** read the whole boid buffer back **once** per tick and compute all centroids from that snapshot.
-**Worth asking first: do you actually want school-merging?** If it isn't load-bearing for the exhibit,
-turning it off is a one-line fix that deletes the whole problem.
+## 9.13 `BubbleTransition` initially had `bubbleRiseSeconds` too short
 
-#### 🔴 9.8 — One unwired species caps eco-health below 100% forever (HIGH)
-`SetupAllSpecies` warns and `continue`s when a species has no spawner — it never enters `_schoolCount`. But
-`ComputeEcoHealth01` still counts it in `totalSpecies`, so **both** `diversity` and `balance` are divided by
-an unreachable total. One orphan out of 12 caps health at **~92%**. Any `SpeciesData.minHealth` gate above
-that becomes **unreachable → the exhibit softlocks**, explained only by one startup `LogWarning`.
-**Fix:** build a list of species that actually have a working spawner in `SetupAllSpecies` and use *that* as
-the eco-health denominator; raise the missing-spawner warning to `LogError`.
+Early tuning: bubbles rose so fast the veil looked empty at the peak. Fixed by decoupling `bubbleRiseSeconds` from the veil timing (bubbles fade only when they reach the top by height, not by a global timer).
 
-#### 🔴 9.9 — `VisionRange` above 8 is silently meaningless (HIGH — blocks Week 11–12 balancing)
-The neighbour search scans a **3×3×3 cell block** — one cell each way. With `_cellSize: 8`, the guaranteed
-sensing radius is **8 m**, and it's asymmetric (a boid at a cell edge sees 8 m one way, 16 m the other).
-**13 of the 18 authored vision values exceed 8** (12/14/15/18/22). The shark's 22 gets ~a third of its
-authored radius. `visionRangeSquared` is checked and dutifully passes fish the grid never handed it.
-**This is a correctness bug that presents as a tuning problem** — you cannot tune `VisionRange` above 8 and
-have it mean anything. **Decide before balancing:**
-- **(a) widen the search to `ceil(vision / cellSize)` cells** — keeps authored numbers honest, costs GPU.
-  With only ~889 boids in 183,000 m³ there is headroom. *Recommended.*
-- (b) raise `_cellSize` to 22 — collapses the grid to ~432 cells, partition becomes near-pointless.
-- (c) accept 8 m as the real cap and re-author the assets — cheapest, but the shark can no longer see
-  further than a damselfish.
+## 9.14 Modal dim-overlay coroutine on inactive GameObject
 
-#### 🟠 9.10 — Repo + scene hygiene (HIGH, boring, ~20 min for most of it)
-- **`Assets/_Recovery/` — 9.9 MB of Unity crash-recovery dumps tracked in git** (`0 (3).unity` alone is
-  8.4 MB). Not in Build Settings so nothing ships, but Unity imports/parses them every project open and
-  their live script GUIDs **pollute every reference grep**. → `git rm -r --cached "Assets/_Recovery"`,
-  delete, add to `.gitignore`.
-- **THREE live copies of `SCENE_MainScene`** — `Akil/` 10.7 MB, `Junheng/` 10.0 MB (**the build scene**),
-  `Aloysius/` 9.4 MB — plus two of `new netcode 1.unity`. ~40 MB of near-duplicate YAML and the single
-  biggest merge-conflict generator left. Converge on `Junheng/Scenes/SCENE_MainScene.unity`.
-  ⚠ This is a **team decision** about whose environment work survives — not a solo cleanup.
-- **Confirmed dead, verified by C# *and* script-GUID grep across every scene/prefab/asset** — safe to
-  delete: `EcosystemUIAdapterGPU.cs`, `Networking/HostSpawner.cs` (zero refs — HANDOFF undersold it as
-  "likely redundant"; it isn't attached to *anything*), `Aloysius/Scripts/UnlockTester.cs`,
-  `Aloysius/Scripts/Health.cs` (superseded by `HealthBarBinder`).
-- ❌ **Do NOT delete `Automatic_Fish_Swimming_CPU/*.cs`** — no C# refs, but the GUIDs are **live in 4
-  scenes including the enabled build scene**. Deleting them = missing-script errors. HANDOFF's existing
-  warning is correct and load-bearing.
-- `SpeciesBehaviorPropertiesGPU` is confirmed never read at runtime, but **is not deletable as-is** — 11
-  `_Behavior.asset` + 10 `_Data.asset` files reference it. Delete the assets and the field together, or
-  leave it as documented-inert.
-- Build Settings: 2 entries point at scenes **missing from disk** (`Aloysius/SceneTemp.unity`,
-  `Aloysius/SCENE_MainScene 1.unity`); both `enabled: 0` so harmless — prune them.
+**Error:** *"Coroutine couldn't be started because the game object 'DimOverlay' is inactive"*. Moved reset from `Start()` to `Awake()` so it runs before the first `Show()` re-activates the overlay. See §7.10.
 
-> #### 📌 Corrections to this document, from the same review
-> - **"Re-point Build Settings" (CLAUDE.md line 81) is STALE — already done.** The enabled set is correct:
->   `Aloysius/Start scene.unity` → `Junheng/Scenes/SCENE_MainScene.unity`, both exist. Close that item.
->   > ⚠ **Superseded 2026-07-20 (`74deb98`):** the second enabled scene was changed to
->   > **`Assets/Aloysius/Scenes/SCENE_MainScene 1.unity`** (Aloysius's copy), not JunHeng's. See the
->   > 07-19 → 07-20 section.
-> - **"Strip debug logging" (CLAUDE.md line 82) overstates it.** 70 log calls total across Junheng+Aloysius,
->   and **no unconditional per-frame or per-tick logging exists**. `AluciaEcologyEvents.debugLog` and
->   `EnvironmentHealthReveal.logDebug` are already **default-off Inspector toggles**. The rest are one-shot
->   init/error paths in `NetworkBootstrap`/`ContentService`/`LanDiscovery` — genuinely useful on exhibit day.
->   **Recommendation: don't strip them.** Confirm the toggles are off and ship.
-> - **The target/animator leak worry is unfounded** — every `CreateTarget` is matched by a `DestroyLastTarget`
->   that destroys *both* the Target and its paired Animator. Rapid remove is safe. No count desync on the
->   normal paths.
-> - **Eco-health does NOT allocate and its per-frame cost is fine** — `_committedScratch` is reused and every
->   enumerator is a struct. Five live readers per frame is negligible. (The real defect there is that
->   `BuildCommittedCounts` hands callers a *shared mutable* dictionary — latent aliasing hazard.)
-> - **The unlock events are instance events, not static** — no cross-scene-reload subscriber leak. The
->   singleton guard is correct.
-> - **Two compute-shader bugs previously flagged are already fixed** — the cell Z-stride now correctly reads
->   `_CellCountX * _CellCountY`, and cohesion averaging divides by `neighborsCount + 1`.
+## 9.15 Google Sheet CSV: RFC-4180 parse bug — one stray quote wipes a sheet
+
+`CsvUtil.Parse` originally treated `"` as a field-opener **anywhere**, not just at field start. A checker writing `Grows to 3" long` put the parser in quoted mode for the rest of the file → every following row collapsed into one field, those species silently vanished, **no error**. Fixed 2026-07-16: `"` only opens when the field is empty; loud warning if the file ends mid-quote; the previously-silent zero-row parse now logs. Regression-tested: all three sheets parse byte-identically to before.
+
+## 9.16 Per-frame `GetData()` on the spatial-partition buffer — CRITICAL GPU stall
+
+`SpatialPartitionGPU.UpdateGridOccupancy` originally called `_cellOccupancyBuffer.GetData()` **every frame** — a synchronous readback that flushes the command buffer and blocks the main thread. **~1–8 ms/frame in shipping builds** for data consumed only by `OnDrawGizmosSelected` (never fires in a player). Fixed 2026-07-16: readback wrapped in `#if UNITY_EDITOR`, compiled out of builds. Field default flipped to `false`. ⚠ **Still ON in 4 scenes** — untick **Visualize Occupancy** on the `Spatial_Partition_GPU` object.
+
+## 9.17 `SpeciesContentDB.Reload` / `RevealContentDB.Reload` — texture leak
+
+Both clear `_spriteCache` **without destroying** the Sprites or their Texture2Ds. Native objects; GC doesn't free them. Measured on decompressed RGBA32: `SpeciesImages` **39.6 MB** (3 IUCN badges are 6.28 MB each), `RevealImages` 12.4 MB — **~52 MB orphaned per reload cycle**. Not firing today only because `refreshIntervalSeconds` defaults to `0`. **Fix pending:** destroy texture + sprite before `Clear()`; only fire `NotifyReload` when the file actually changed.
+
+A smaller adjacent leak was fixed 2026-07-16: `ContentService.LoadSprite` now destroys the throwaway Texture2D when a PNG fails to decode (was re-leaking on every card open, since misses aren't cached).
 
 ---
 
-## Population Dynamics Values
+# 10. Known Issues / Watchpoints
 
-> ⚠ **The per-species rate fields are gone.** `ReproRate` / `NaturalDeath` were deleted in Week 8; `StarvationDeathRate` / `StarvationThreshold` were deleted in Week 9 when the model became a **global, ratio-driven** system. Population behaviour is now tuned by **global constants** on `EcosystemSimulationGPU` plus **per-species** `FishPerSchool` / `MaxSchools` / prey-predator lists.
+## Live blockers / trap for the shipping build
 
-### Global tuning (on the `EcosystemSimulationGPU` component)
+- **[HIGH] Tablet can lock on "Connecting…" forever.** `ConnectionScreenUI.Connect` discards `StartClient()`'s bool and waits for a connect/disconnect callback. If the transport fails to start, *neither* fires — and by then `_connecting = true`, discovery is stopped and the button is disabled. No timeout. **Only an app force-quit recovers.** Trivially reachable: `:60` pre-fills the IP field with the **malformed** `"192.168.1."`, and `OnConnect` only rejects empty, not malformed. Attendant waits out discovery → taps Connect on the default → bricked. **Fix:** return `StartClient()`'s bool; on false reset `_connecting`, re-enable the button, restart discovery; validate with `IPAddress.TryParse`; add a ~10s watchdog; stop pre-filling a broken IP.
+- **[HIGH] Two schools added in one frame: only the last swims in.** `ReinitializeBuffers` coalesces to one rebuild/frame, but `SetPendingSpawnOrigin` is a **single slot** and `RelocateGroupToEntryPoint` only relocates the **last** sub-group. Double-tap Add (or batched RPCs, or a queue drained after an exit) and the earlier schools **pop into existence mid-tank, on camera**. **Fix:** make the pending origin a list keyed by sub-group; relocate *every* newly added group. ⚠ Touches spawn positioning + position-preservation — the most delicate code in the project.
+- **[HIGH] Reef stutters every 5s.** `RunShoalingTick` calls `TryGetBoidsCentroid` → `GetData()` (a full pipeline stall + array alloc) **once per school in the outer loop and again per candidate in the inner loop**. Worst case **~900 blocking readbacks + 900 allocations in one frame, every 5s**. **Fix:** read the whole boid buffer back **once** per tick and compute all centroids from that snapshot. Worth asking: do we actually want school-merging? If not, turning it off is a one-line fix that deletes the whole problem.
+- **[HIGH] One unwired species caps eco-health below 100% forever.** `SetupAllSpecies` warns and `continue`s when a species has no spawner — never enters `_schoolCount`. But `ComputeEcoHealth01` still counts it in `totalSpecies`, so **both** `diversity` and `balance` are divided by an unreachable total. One orphan out of 12 caps health at **~92%**. Any `SpeciesData.minHealth` gate above that becomes **unreachable → the exhibit softlocks**. **Fix:** build a list of species that actually have a working spawner in `SetupAllSpecies` and use *that* as the eco-health denominator; raise the missing-spawner warning to `LogError`.
+- **[HIGH] `VisionRange` above 8 is silently meaningless.** The neighbour search scans a **3×3×3 cell block** — one cell each way. With `_cellSize: 8`, the guaranteed sensing radius is **8m**, asymmetric (a boid at a cell edge sees 8m one way, 16m the other). **13 of 18 authored vision values exceed 8** (12/14/15/18/22). The shark's 22 gets ~a third of its authored radius. `visionRangeSquared` is checked and dutifully passes fish the grid never handed it. **Blocks Week 11–12 balancing.** Decide before balancing:
+  - **(a) Widen search to `ceil(vision / cellSize)` cells** — keeps authored numbers honest, costs GPU. With ~889 boids in 183,000 m³ there is headroom. **Recommended.**
+  - (b) Raise `_cellSize` to 22 — collapses grid to ~432 cells, partition becomes near-pointless.
+  - (c) Accept 8m as the real cap and re-author assets — cheapest, but shark can no longer see further than a damselfish.
+- **[HIGH — latent] `SpeciesContentDB.Reload` / `RevealContentDB.Reload` texture leak.** See §9.17. Set `refreshIntervalSeconds` to 5 min for live sheet updates and you leak ~52 MB every 5 min → Android OOM-kills the tablet mid-exhibit. **Not firing today** only because the interval defaults to 0.
+
+## Scene / build hygiene
+
+- **Scene divergence — three "large screen" scenes historically drifted.** JunHeng had sim, Aloysius forked with health bar, Akil owned environment/lighting. Convergence into JunHeng's `SCENE_MainScene.unity` is partial but not complete. See §11.
+- **Build Settings still points at Aloysius's `SCENE_MainScene 1.unity` (index 1), not JunHeng's `SCENE_MainScene.unity`.** Confirm this is intended.
+- **Two dead Build Settings entries** (both `enabled: 0`): `Aloysius/SceneTemp.unity`, `Aloysius/SCENE_MainScene 1.unity` (missing from disk). Prune them.
+- **`Assets/_Recovery/` — 9.9 MB of Unity crash-recovery dumps tracked in git.** `0 (3).unity` alone is 8.4 MB. Not in Build Settings so nothing ships, but Unity imports/parses them every project open and their live script GUIDs pollute every reference grep. → `git rm -r --cached "Assets/_Recovery"`, delete, add to `.gitignore`.
+- **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active.
+- **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene.
+
+## Dead code / assets confirmed by both C# and script-GUID grep
+
+- **`EcosystemUIAdapterGPU.cs`** — safe to delete.
+- **`Networking/HostSpawner.cs`** — zero refs anywhere. Safe to delete.
+- **`Aloysius/Scripts/UnlockTester.cs`** — safe to delete (Aloysius's keyboard-driven placeholder; `EcosystemUnlockManagerGPU` is the production replacement).
+- **`Aloysius/Scripts/Health.cs`** — superseded by `HealthBarBinder`; safe to delete (but check tablet still uses `Health.cs` — actually keep for tablet client).
+
+## Do NOT delete without checking
+
+- **`Automatic_Fish_Swimming_CPU/*.cs`** — no C# refs, but GUIDs are **live in 4 scenes including the enabled build scene**. Deleting = missing-script errors. LOOK at the scene objects first, don't blind-delete.
+- **`SpeciesBehaviorPropertiesGPU`** — confirmed never read at runtime, but **not deletable as-is** — 11 `_Behavior.asset` + 10 `_Data.asset` files reference it. Delete the assets and the field together, or leave documented-inert.
+
+## Feature gaps
+
+- **Food web lines broken** — `FoodWebLines.cs` `LineRenderer` edges are present but hidden (`LINE FOOD WEB HIDE`). Marked "wonky, TO BE CHANGED." Predator arrows need a rework before they can be shown.
+- **Ecosystem state machine (Healthy/Unstable/Critical/Collapsing/Recovering) not built** — only the 0–1 score. Health-band Alucia reactions cover it for now.
+- **Prey do NOT visibly flee predators** — confirmed 2026-07-07. `Behavior` asset (`SpeciesBehaviorPropertiesGPU`) is **dead data** — no runtime code reads `FleeRange`/`HuntWeight`/etc. `PreySpecies`/`PredatorSpecies` only drive **population counts** (the ratio tick), not movement. The compute shader's flee path fires only inside a `Predator`-type affecter's range, and there are **zero** in the scene. **Net:** "remove the shark → prey panic" is only a slow **number** change today, never visible fleeing. See §11 for the fix.
+- **⚠ `OceanX/Moray_Lit_Instanced` shader not in the repo yet.** `BoidSpawnerGPU.SetSpineRenderData` and `SpeciesDataGPU.UseSpineDeformation` are wired for it (§7.6), but the shader itself is presumably still on Akil's side.
+- **⚠ `minHealth` thresholds need tuning** against the real eco-health curve.
+- **NetworkConfig mismatch** — client and host must have identical Network Prefabs Lists. Register `EcosystemNetworkManagerGPU` prefab on the client's NetworkManager.
+- **`EcosystemDefinitionGPU.asset` species order** — all 12 species must be added in a fixed, shared order so index-based RPCs match between host and tablet.
+- **Species UI fields split across two assets** — unlock config (`startUnlocked`, `minHealth`, `requires`, hints) lives on `SpeciesData` (linked to sim via `gpuSpecies`); `SpeciesDataGPU` stays pure sim data. Remaining UI-only fields (Icon, TrophicTier, FoodWebPosition) still to add to `SpeciesData` for the food-web graph.
+- **Add/Remove wiring is a re-link trap when duplicating client scenes** — the decoupled input layer (`BubbleSelectHook` on every bubble + a `TabletAddRemoveUIGPU` with its buttons assigned) lives in the scene, not on a prefab, so a copied/new client scene (e.g. `ALOYLOU VEFR @`) loses it and taps do nothing until it's re-added. If population shows but Add/Remove are dead, check: hooks present on bubbles, controller present + buttons assigned, `TabletEcosystemUIGPU.Ecosystem` points at the **same** `EcosystemDefinitionGPU` (same order) as the host.
+
+## Corrections to older claims
+
+- **"Re-point Build Settings"** — the enabled set was corrected 2026-07-20 (`74deb98`): now `Aloysius/Start scene.unity` → `Aloysius/Scenes/SCENE_MainScene 1.unity`.
+- **"Strip debug logging"** — 70 log calls total across Junheng+Aloysius, and **no unconditional per-frame or per-tick logging exists**. `AluciaEcologyEvents.debugLog` and `EnvironmentHealthReveal.logDebug` are already default-off Inspector toggles. The rest are one-shot init/error paths. Recommendation: don't strip, confirm toggles off and ship. ⚠ EXCEPTION: temporary `[Alucia] ResetForNewSession / muted / [ExhibitReset] / [NetMgr] _resetGeneration` diagnostics kept in for reset-flow debugging — STRIP those before final build.
+- **Target/animator leak worry is unfounded** — every `CreateTarget` is matched by a `DestroyLastTarget` that destroys both the Target and its paired Animator. Rapid remove is safe.
+- **Eco-health does NOT allocate** and its per-frame cost is fine — `_committedScratch` is reused and every enumerator is a struct. (Real latent defect: `BuildCommittedCounts` hands callers a *shared mutable* dictionary — aliasing hazard.)
+- **Unlock events are instance events, not static** — no cross-scene-reload subscriber leak. Singleton guard is correct.
+- **Two compute-shader bugs previously flagged are already fixed** — cell Z-stride now correctly reads `_CellCountX * _CellCountY`, and cohesion averaging divides by `neighborsCount + 1`.
+
+---
+
+# 11. What Needs Building Next / To Do
+
+Priority order.
+
+## 1. Preset Scenarios (Week 10) — not started
+- **Balanced Ocean** — everything at healthy equilibrium.
+- **Shark Removed** — the keystone demo starting state.
+- **Overpopulation** — one species runaway.
+- **Collapse** — everything crashing.
+- **Recovery** — mid-recovery state to demonstrate the reef bouncing back.
+
+## 2. Converge the host scenes into ONE canonical scene
+Sim (from JunHeng's `SCENE_MainScene`) + health bar (`HealthBarBinder` already merged) + baked environment (from Akil's `SCENE_MainScene 2`) + Alucia + reveal cards + `ExhibitReset` + `BubbleTransition` should all live in one scene. Alucia + reveal cards now exist in **7 scenes** after all the merges. **Team decision required about whose environment work survives.**
+
+## 3. Re-point Build Settings
+Currently indices 0/1 = `Aloysius/Start scene.unity` / `Aloysius/Scenes/SCENE_MainScene 1.unity`. If the merged scene lives elsewhere (e.g. JunHeng's `SCENE_MainScene.unity`), re-point index 1. Prune two dead entries (`Aloysius/SceneTemp.unity`, `Aloysius/SCENE_MainScene 1.unity` (root)).
+
+## 4. Strip temporary debug logging before final build
+Specifically the temp diagnostics kept in for the reset-flow work: `[Alucia] ResetForNewSession …`, `[Alucia] Say(…) muted=…` (`AluciaController`), `[ExhibitReset] …`, `[NetMgr] _resetGeneration …`. Keep the general operational logs (see §10 correction).
+
+## 5. Playtest reveal-card hold time (currently 4s)
+Bumped from 2.5s → 4s on 2026-07-25 after testers said "too fast". If still too fast at playtest, push to 5–6s (both `SpeciesAddedReveal.holdSeconds` and `SpeciesUnlockReveal.revealHoldSeconds` in `SCENE_MainScene.unity`).
+
+## 6. Bring the `OceanX/Moray_Lit_Instanced` shader into the repo
+Referenced by Akil's moray render hooks (§7.6) but not yet committed. Without it, `UseSpineDeformation = true` would fail (unknown shader). Pull from Akil or ship the moray with the standard `Fish_Lit_Instanced` shader if the spine deformation is dropped.
+
+## 7. Per-species collision radius (proper fix for big-body clipping)
+Rather than raising `ObstacleAvoidanceRange` per species, add a **per-species collision radius** field used for both the backstop clearance and the avoidance margin. Essential for the long-bodied moray (§7.5).
+
+## 8. Predator-prey **visual** flee (make the keystone demo real)
+Currently only population *numbers* react to predators; fish don't visibly flee (§10). Fix: have each predator school emit a **`Predator`-type affecter** (radius from its `Behavior.DetectionRange`), so nearby prey hit the compute shader's existing flee path. This finally consumes the per-species `Behavior` values (FleeRange/FleeWeight/DetectionRange) that were tuned but are currently inert.
+
+## 9. Ecosystem State Machine (Healthy → Unstable → Critical → Collapsing → Recovering)
+Derive from `EcoHealth01` value and/or its rate of change; expose for the UI / Alucia warnings. Not urgent — health-band reactions cover it for now.
+
+## 10. Address the CRITICAL/HIGH backlog from §10
+- Tablet "Connecting…" watchdog.
+- Multi-add spawn origin queue.
+- Shoaling tick GPU stall (fix or turn off school-merging).
+- Unwired-species eco-health denominator fix.
+- `VisionRange` search-cell widening (option a).
+- Content-DB texture leak (destroy before `Clear()`).
+
+## 11. Multi-language content (FUTURE — deferred)
+Overseas use → translations. **Do NOT build one player per language.** Add a runtime language pick to `ContentService`: one Google-Sheet workbook with a **tab per language** (each a published CSV URL), one build that selects the active language at launch (system-language auto-detect + in-app override). No rebuild to switch or update a language; schema is already localization-ready (stable ids).
+- **Implementation:** extend `ContentService` from one URL per file to a `{language → URL}` map + a "current language" setting (~20 lines). Nothing already built needs redoing; today's single URL becomes the "English" entry.
+- **Translating** is then just retyping the display text in each tab — no structural changes.
+
+## 12. Repo/scene cleanup (~20 min for most of it)
+- Delete `Assets/_Recovery/` (9.9 MB in git).
+- Delete confirmed-dead scripts (`EcosystemUIAdapterGPU`, `HostSpawner`, `UnlockTester`).
+- Prune dead Build Settings entries.
+- Delete `Aloysius/Scripts/Health.cs` **only if** tablet uses `HealthBarBinder` instead (check first — tablet may still need `Health.cs`).
+
+## 13. Final optimisation, balancing, and build (Weeks 11–12)
+
+## 14. Update this HANDOFF regularly
+Update the "Last updated" date at the top of this file whenever you edit it, so future readers know how recent the info is.
+
+---
+
+# 12. Reference — Population Dynamics Values
+
+> ⚠ **The per-species rate fields are gone.** `ReproRate` / `NaturalDeath` were deleted in Week 8; `StarvationDeathRate` / `StarvationThreshold` were deleted in Week 9 when the model became a **global, ratio-driven** system.
+
+## Global tuning (on the `EcosystemSimulationGPU` component)
+
 | Constant | Default | Meaning |
 |----------|---------|---------|
-| `RatioBandLow` | 1 | below this prey:predator ratio (schools) → prey shrinks / predators starve |
-| `RatioBandHigh` | 3 | above this → prey overpopulates / well-fed predators grow |
-| `GrowRate` | 0.3 | per-tick chance an out-of-band species gains a school |
-| `ShrinkRate` | 0.3 | per-tick chance an out-of-band species loses a school |
-| `_tickInterval` | 5 s | seconds between population ticks |
-| Eco-health weights | 0.4 / 0.4 / 0.2 | diversity / balance / apex |
+| `RatioBandLow` | 1 | Below this prey:predator ratio (schools) → prey shrinks / predators starve |
+| `RatioBandHigh` | 3 | Above this → prey overpopulates / well-fed predators grow |
+| `GrowRate` | 0.3 | Per-tick chance an out-of-band species gains a school |
+| `ShrinkRate` | 0.3 | Per-tick chance an out-of-band species loses a school |
+| `_tickInterval` | 5s | Seconds between population ticks |
+| Eco-health weights | 0.4 / 0.4 / 0.2 | Diversity / balance / apex |
+| `_overpopulatedRatio` | 7 | Predators-present: overpopulated if outnumbers combined predators by > this |
+| `_overpopulatedFreeCount` | 3 | Predators-gone: overpopulated if > this many schools |
+| `_reefBackstopTurnMultiplier` | 3 | Reef-backstop turn rate multiplier (Play-mode tunable) |
+| `_tailSwayResponsiveness` | 4 | Ray tail-sway ease (frame-rate-independent) |
+| `_entrySpawnJitterRadius` | 4 | Sideways nudge radius for new schools at entry markers |
+| `_entrySpawnMinSeparation` | 3 | Preferred gap between new origin and recent ones |
+| `_exitTimeoutSeconds` | 25 | Force-commit swim-out after this many seconds |
+| `_exitArrivalRadius` | (tunable) | Distance to exit marker that counts as "arrived" |
+| `_exitPollInterval` | (tunable) | Seconds between arrival polls |
 
-### Per-species (on each `SpeciesDataGPU` asset)
-- `FishPerSchool` — fish per school (constant density)
-- `MaxSchools` — hard cap; carrying capacity = `MaxSchools × FishPerSchool`
-- `PreySpecies` / `PredatorSpecies` — **required**: they drive both the dynamics and eco-health (empty lists = species doesn't participate)
+## Per-species (on each `SpeciesDataGPU` asset)
+
+- **`FishPerSchool`** — fish per school (constant density).
+- **`MaxSchools`** — hard cap; carrying capacity = `MaxSchools × FishPerSchool`.
+- **`PreySpecies` / `PredatorSpecies`** — **required**: drive both the dynamics and eco-health (empty lists = species doesn't participate).
+- **`UseSpineDeformation`** — bool, moray-only. See §7.6.
 
 Tune the global band/rates live in Play mode by watching whether the reef settles or collapses.
 
----
+## 100% eco-health recipe
 
-## Scene Setup Reference
+Grazers at their predator-count: **Parrotfish 4, Surgeonfish 5, Mullet 5, Damselfish 6, Spinefoot 4**; **1 of every hunter** (Shark/Trevally/Ray/Snapper/Scad/Grouper/Moray). Grazers can range up to their caps and stay 100%; the 7 hunters are locked at 1 (each extra predator raises the grazers' floor).
 
-> ⚠ **Updated 2026-06-30:** the enabled build scene is now **`Assets/Junheng/Scenes/Netcode Simulation Test.unity`** (the tablet client), verified in `EditorBuildSettings.asset`. `Boids_Demo` and Aloysius's `Netcode Simulation Test` are listed but **disabled**. (Previously Boids_Demo was the only enabled scene.) Other scenes present: `Swirl_Demo`, `ALOYLOU VEFR @`, `Aloysius lololol` (Junheng, local WIP), `Netcode Simulation Test 1` + `Health` (Aloysius), plus mockup/shader-test scenes.
+## AluciaEcologyEvents timing
 
-### Boids_Demo (host/trifold display scene — the build scene)
-- GameObject with `BoidSimulationGPU` + `EcosystemSimulationGPU` (verified present)
-- `BoidSpawnerGPUMultiTargets` per species + `BoidSimulationTargetAnimatorsSpawner` (verified present)
-- `NetworkBootstrap` (Role: Host) present in scene
-- ✅ All 12 species wired into `EcosystemDefinitionGPU` in fixed order, each with a matching `BoidSpawnerGPUMultiTargets` registered in `BoidSimulationGPU._gpuBoidSpawners` (the tablet's `TabletEcosystemUIGPU.Ecosystem` must point at the same definition asset/order)
-- `EcosystemNetworkManagerGPU` prefab registered in NetworkManager's Network Prefabs List
-
-### Netcode Simulation Test (client/tablet scene — MAIN, JunHeng)
-This is the canonical tablet client. `Netcode Simulation Test 1` (Aloysius) is only a UI prototyping scene fed into this one.
-- `NetworkBootstrap` (Role: **Client**), same `EcosystemNetworkManagerGPU` prefab registered (must match host exactly)
-- `ConnectionScreenUI` for IP entry / LAN auto-discovery (`LanDiscovery`)
-- `TabletEcosystemUIGPU` — species→index lookup service
-- Food-web UI (integrated from Aloysius): `SpeciesBubble`, `ModalController`, `FoodWebLines`, `Bob`, `SwipeToClose`
-- ✅ `Health.cs` eco-health bar reads `EcosystemNetworkManagerGPU.GetEcoHealth()` (assign its `fillImage`); `EcosystemUnlockManagerGPU` also lives here (client) with `_simulation` left empty so it reads via netcode
+- `startupGrace = 8s`, `settleSeconds = 5s`, `checkInterval = 2s`.
+- Lower to ~**3 / 2 / 1** for snappier reactions (though a still-growing species stays silent until it stabilises at its cap, since every count change resets the 5s settle).
 
 ---
 
-## Known Issues / Watchpoints
+# 13. Reference — Scene Setup
 
-- **🛑 CRASH — shark + water shader (suspected URP / Stylized Water opaque-texture interaction).**
-  - **Repro:** when the **shark** enters the scene **together with the water shader**, the app crashes.
-  - **Workarounds that run fine:** removing the **shader** alone, or the **shark** alone, runs without crashing.
-  - **Oddity:** with the **shark + water + (some) other GameObject** all present, everything runs smoothly — so it appears to be a fragile state, not a clean reproduction.
-  - **Suspected cause:** URP / Stylized Water shader not resolving correctly, likely tied to the **Opaque Texture** setting (camera/URP asset `_CameraOpaqueTexture`). The shark material rendering with the water shader's opaque-texture sampling may be the trigger.
-  - **Status:** worked around (commit `b85296d` "fixing Crashing error" in `Boids_Demo.unity`), **not root-caused.** Next step: verify URP asset has Opaque Texture enabled and matches between desktop + mobile renderers, and test the shark material in isolation against the water shader.
-  - ⚠ **Update 2026-07-01:** akeel-h changed the shark material (`Blacktip reef shark/Materials/defaultMat.mat`, `e874fd3`). Since this crash is material/shader-sensitive, re-verify it after pulling that commit.
-- **🔀 Scene divergence — three host/large-screen scenes (2026-07-01).** `Assets/Junheng/Scenes/Boids_Demo.unity` (sim, no bar), `Assets/Aloysius/Boids_Demo.unity` (fork with sim + health bar), `Assets/Akil/Scenes/SCENE_MainScene.unity` (environment/lighting, no sim). Two of the three both contain `EcosystemSimulationGPU` and will drift. Pick the canonical host scene and merge the health bar + baked environment into it before the final build. See the "2026-06-30 → 07-01" section for the table.
-- **Start-at-zero not yet play-tested** — `e13e26b` was committed without an in-editor run. First full add/remove cycle in the editor may surface buffer or affecter regressions.
-- **Food web lines broken** — `FoodWebLines.cs` `LineRenderer` edges are present but hidden (`LINE FOOD WEB HIDE`). Marked "wonky, TO BE CHANGED." Predator arrows need a rework before they can be shown.
-- **Eco-health bar — now wired** (Week 9). `Health.cs` reads `EcosystemNetworkManagerGPU.Instance.GetEcoHealth()` when `readFromSimulation` is on. To work it needs: the network manager spawned (host), `Health.fillImage` assigned, and prey/predator lists filled so the score is meaningful. The **state machine** (Healthy/Unstable/Critical/…) is still not built — only the 0–1 score.
-- **NetworkConfig mismatch** — client and host must have identical Network Prefabs Lists
-- **`EcosystemDefinitionGPU.asset` species order** — all 12 species must be added in a fixed, shared order so index-based RPCs match between host and tablet
-- **Species UI fields split across two assets** — unlock config (`startUnlocked`, `minHealth`, `requires`, hints) lives on **`SpeciesData`** (linked to the sim via `gpuSpecies`); `SpeciesDataGPU` stays pure sim data. Remaining UI-only fields (Icon, TrophicTier, FoodWebPosition) still to add to `SpeciesData` for the food-web graph
-- **🐟 Fish meshes — ✅ 7/12 imported (updated 2026-07-07).** Blacktip reef shark, Bluespotted ribbontail ray, Reticulated damselfish, Yellowstripe scad, Bullethead parrotfish, Eyestripe surgeonfish, and Streaked spinefoot (rabbitfish) are now in `Assets/Junheng/Data/Models/`. **5 still on placeholder:** grouper, moray, trevally, snapper, mullet. The ray only tail-sways (no wing flap). When importing the remaining 5, verify `UV1`→TEXCOORD1 and the `Fish_Lit_Instanced` shader (checklist gotchas A–E in "What Was Done — 2026-07-02").
-- **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active
-- **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene
-- **Add/Remove wiring is a re-link trap when duplicating client scenes** — the decoupled input layer (`BubbleSelectHook` on every bubble + a `TabletAddRemoveUIGPU` with its buttons assigned) lives in the scene, not on a prefab, so a copied/new client scene (e.g. `ALOYLOU VEFR @`) loses it and taps do nothing until it's re-added. If population shows but Add/Remove are dead, check: hooks present on bubbles, controller present + buttons assigned, and `TabletEcosystemUIGPU.Ecosystem` points at the **same** `EcosystemDefinitionGPU` (same order) as the host.
-- **Wrong shader on a fish material → fish render stacked at the bounds centre.** The GPU sim needs each species' `BoidMaterial` on **`Fish_Lit_Instanced`** (reads per-boid position from `_Boids`). A material on the plain **`Fish_Lit`** shader draws every instance at one point. Newly-imported fish assets often come in on `Fish_Lit` — always verify the shader. (Hit ray/scad/damsel on 2026-07-07; fixed.)
-- **Predator-prey flee is NOT wired (visual).** Prey do not flee predator fish — there are no `Predator`-type affecters and the `Behavior` asset (`SpeciesBehaviorPropertiesGPU`) is unread by runtime code. The relationship only changes population *numbers*. See "What Needs Building Next" to make it visible.
+## Canonical host scene wiring checklist (`SCENE_MainScene.unity`)
+
+Every host scene should have these components + wiring:
+
+- **`EcosystemSimulationGPU`** — the sim itself. On a top-level GameObject.
+- **`BoidSimulationGPU`** — reads from the sim.
+- **12 spawner GameObjects**, each with a **`BoidSpawnerGPUMultiTargets`** — assigned into `BoidSimulationGPU._gpuBoidSpawners` array **in fixed order** matching `EcosystemDefinitionGPU.Species`.
+- **`EcosystemNetworkManagerGPU`** — auto-finds the sim; syncs counts/health/status.
+- **`NetworkManager`** (NGO) + **`UnityTransport`** — network prefabs list must match on host + client.
+- **`NetworkBootstrap`** — role setup, spawns net-manager.
+- **`LanDiscovery`** — UDP broadcast on port 47777.
+- **`HealthBarBinder`** — large-screen health bar (host reads `EcoHealth01` direct).
+- **`AluciaController`** — wire `simulation` → the `EcosystemSimulationGPU`. `waitForExperienceStart = 1` (waits for networked "tap to begin"); set 0 for standalone testing.
+- **`AluciaEcologyEvents`** — wire `alucia` → `AluciaController`, `simulation` → the sim.
+- **`ContentService`** — wire all 3 Sources (`alucia_lines`, `SpeciesContent`, `RevealContent`) with their published CSV URLs.
+- **`RevealQueue`** + **`SpeciesAddedReveal`** + **`SpeciesUnlockReveal`** + **`NotificationManager`** — big-screen cards + hint queue.
+- **`EnvironmentHealthReveal`** — with a Proportional group on the `Corals` parent. ⚠ Corals must NOT be "Batching Static."
+- **`FishEntryPointGPU`** markers — one or more Entry / Exit / Both markers placed OUTSIDE the sim bounds.
+- **`ReefSDFVolume`** — baked reef SDF for obstacle avoidance.
+- **`IntroductionCameraDirectorGPU`** + Cinemachine setup.
+- **`ExhibitReset`** + **`BubbleTransition`** — F9 operator reset.
+- **`AdaptiveMusicSystem`** + audio mixer setup.
+- **`WinCondition`** + **`WinScreen`**.
+- **`SplashSequence`** on the splash scene.
+- **`DualMonitor`** — activates Display 2 on startup.
+
+## Canonical tablet client scene wiring checklist
+
+- **`NetworkBootstrap`** — client role.
+- **`ConnectionScreenUI`** — IP entry + auto-discovery.
+- **`TabletEcosystemUIGPU`** on always-active object (e.g. Ecosystem Panel) — species→index lookup. `.Ecosystem` must point at the **same** `EcosystemDefinitionGPU` (same order) as the host.
+- **`TabletAddRemoveUIGPU`** on same always-active object — Add/Remove +/− buttons + population label. Assign `addButton` / `removeButton` / `populationLabel`.
+- **`ContentService`** — wire `SpeciesContent` source (tablet doesn't need Alucia lines).
+- **12 species bubbles** (`SpeciesBubble`), each with:
+  - A **`BubbleSelectHook`** component (auto-reads `SpeciesBubble.data.gpuSpecies`).
+  - `data.gpuSpecies` linking to the correct `SpeciesDataGPU`.
+- **`ModalController`** singleton — species info modal.
+- **`SpeciesInfoPanel`** — the "View Details" panel.
+- **`CurrentOrganismsGrid`** — Ecosystem tab.
+- **`HintsPanel` / `LockedHintPanel`** — Hints tab.
+- **`Health.cs`** — reads networked value; wire `fillImage`.
+- **`TabController`** — food web / ecosystem / hints tab switcher.
+- **`FoodWebLines`** — predator arrow lines (currently hidden).
+- **`TutorialPanel`** — onboarding HOW TO PLAY.
+- **`ContextNudge`** GameObjects — the various onboarding hints.
+- **`StartCrossfade` / `HideUntilStarted` / `ExperienceStartGate`** — reveal-on-start.
+- **`SplashSequence`** + `FishSwim` (title screen).
+- **`UISoundManager`** with `Tap.mp3` assigned.
 
 ---
 
-## Team Structure
+# 14. Team Structure
 
 | Role | Person |
 |------|--------|
-| Simulation / backend + integration | JunHeng |
-| UI / UX (tablet food-web, modals, Alucia) | Aloysius |
-| Scene environment / 3D art (coral, rockwork, meshes) | Akil (akeel-h) |
+| Simulation / backend + integration | **JunHeng** |
+| UI / UX (tablet food-web, modals, Alucia, notifications, adaptive music) | **Aloysius** |
+| Scene environment / 3D art (coral, rockwork, fish/ray/moray meshes, lighting bake) | **Akil (akeel-h)** |
 
 Each person has their own Claude session. Share context via this file and `CLAUDE.md` (project root), both committed to git.
+
+Aloysius maintains a parallel **`ALOYSIUS_UI_HANDOFF.md`** at repo root for UI-side detail (his ~28-script suite, food-web/Alucia/notifications work). Read it for anything UI-team-specific.

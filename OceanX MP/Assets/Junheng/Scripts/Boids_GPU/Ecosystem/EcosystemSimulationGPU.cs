@@ -247,6 +247,13 @@ namespace OceanX.BoidsGPU.Ecosystem
             SetupAllSpecies();
         }
 
+        // Editor-only: auto-wire _simulation to a sibling BoidSimulationGPU when the component is
+        // first added (Reset) or any Inspector value changes (OnValidate). Prevents the bounds gizmo
+        // from silently falling back to EcosystemDefinitionGPU.SimulationBounds and drifting away
+        // from the live BoidSimulationGPU.SimulationAreaBounds when the reference is unassigned.
+        private void Reset()      { if (_simulation == null) _simulation = GetComponent<BoidSimulationGPU>(); }
+        private void OnValidate() { if (_simulation == null) _simulation = GetComponent<BoidSimulationGPU>(); }
+
         // Disabling the component stops its coroutines, so any in-flight BatchExitRoutine dies WITHOUT
         // clearing _exitingCount — which would leave IsExiting() stuck true and freeze the species (no
         // Add/Remove) if it is ever re-enabled. Clear the exiting state here so re-enable starts clean.
@@ -1574,20 +1581,5 @@ namespace OceanX.BoidsGPU.Ecosystem
             return true;
         }
 
-        // -------------------------------------------------------------------------
-        // Editor visualisation
-        // -------------------------------------------------------------------------
-
-        private void OnDrawGizmosSelected()
-        {
-            // Draw the volume actually used (from BoidSimulationGPU when available), so this box always
-            // overlaps the BoidSimulationGPU's own bounds gizmo instead of drifting from it.
-            if (_simulation == null && _ecosystem == null) return;
-            Bounds bounds = SimulationBounds;
-            Gizmos.color = new Color(0f, 0.8f, 1f, 0.12f);
-            Gizmos.DrawCube(bounds.center, bounds.size);
-            Gizmos.color = new Color(0f, 0.8f, 1f, 0.5f);
-            Gizmos.DrawWireCube(bounds.center, bounds.size);
-        }
     }
 }

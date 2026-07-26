@@ -125,6 +125,7 @@ public class ExhibitReset : MonoBehaviour
         foreach (var t in FindObjectsByType<TutorialPanel>(INC, NONE))       t.ResetForNewSession();  // re-arm the onboarding panel
         foreach (var tc in FindObjectsByType<TabController>(INC, NONE))      tc.ResetForNewSession();  // snap back to the default tab
         foreach (var c in FindObjectsByType<ContextNudge>(INC, NONE))        c.ResetForNewSession();
+        foreach (var p in FindObjectsByType<LookUpPrompt>(INC, NONE))        p.ResetForNewSession();  // drop the look-up toast
         foreach (var s in FindObjectsByType<SpeciesAddedReveal>(INC, NONE))  s.ResetShownHistory();
         foreach (var r in FindObjectsByType<RevealQueue>(INC, NONE))         r.ClearAll();
         foreach (var n in FindObjectsByType<NotificationManager>(INC, NONE)) n.ClearAll();

@@ -82,6 +82,7 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
 
         OptimisticPopulationStore.RegisterDelta(_index, +1);
         net.RequestAddSpeciesRpc(_index);
+        LookUpPrompt.Trigger();   // visitors stare at the tablet and miss the fish arriving on the big screen
         RefreshButtons();
     }
 

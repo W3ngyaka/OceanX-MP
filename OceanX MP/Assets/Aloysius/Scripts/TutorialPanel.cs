@@ -27,6 +27,14 @@ public class TutorialPanel : MonoBehaviour
 
     // True while the panel is showing (used by ContextNudge so hints don't overlap it).
     public bool IsOpen => _open;
+
+    // True while the panel is showing OR queued to appear on the auto-show delay. Other UI should
+    // gate on THIS rather than IsOpen: between the session starting and the panel fading in there is
+    // an autoShowDelay-long window where IsOpen is still false, and anything keying off IsOpen alone
+    // flashes on screen for exactly that long before the tutorial covers it.
+    public bool IsOpenOrPending => _open || _autoShowPending;
+
+    private bool _autoShowPending;
     private bool _shownOnce;
     private bool _subscribed;
     private bool _rearmPending;   // set by ResetForNewSession; cleared in Update once HasStarted is false
@@ -73,12 +81,14 @@ public class TutorialPanel : MonoBehaviour
     {
         if (_shownOnce) return;
         _shownOnce = true;
+        _autoShowPending = true;      // claim the screen NOW, not in autoShowDelay seconds
         StartCoroutine(AutoShowAfterDelay());
     }
 
     IEnumerator AutoShowAfterDelay()
     {
         yield return new WaitForSecondsRealtime(autoShowDelay);
+        _autoShowPending = false;
         Show();
     }
 
@@ -95,6 +105,7 @@ public class TutorialPanel : MonoBehaviour
         StopAllCoroutines();          // cancel any pending AutoShowAfterDelay / fade
         _fade = null;
         _rearmPending = true;         // Update() clears _shownOnce once HasStarted is false again
+        _autoShowPending = false;     // a queued auto-show is cancelled with the coroutines above
         SetVisible(false, instant: true);
     }
 

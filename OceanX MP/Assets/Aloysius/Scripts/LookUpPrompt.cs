@@ -48,7 +48,7 @@ public class LookUpPrompt : MonoBehaviour
     public void Show()
     {
         if (group == null) return;
-        if (suppressWhileTutorialOpen && TutorialPanel.Instance != null && TutorialPanel.Instance.IsOpen) return;
+        if (suppressWhileTutorialOpen && TutorialPanel.Instance != null && TutorialPanel.Instance.IsOpenOrPending) return;
 
         // Already up: restart the hold window instead of fading in again. Re-fading on every
         // press reads as a flicker when the visitor taps Add several times in a row.

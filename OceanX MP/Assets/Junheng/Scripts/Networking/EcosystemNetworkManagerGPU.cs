@@ -21,6 +21,9 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     // NetworkList needs an unmanaged serialisable type). Written by the server each sync so the
     // tablet's Overpopulated badge uses the simulation's own rule instead of re-deriving one.
     private NetworkList<int> _speciesStatus;
+    // BALANCE DELTA: signed per-species count change that would clear its own unhealthy state.
+    // Computed host-side because the thresholds are private to the simulation.
+    private NetworkList<int> _speciesDelta;
     // Live ecosystem health in 0..1, written by the server each sync, read by the tablet health bar.
     private readonly NetworkVariable<float> _ecoHealth = new NetworkVariable<float>(
         0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
@@ -58,6 +61,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         _populationCounts = new NetworkList<int>();
         _maxSchools = new NetworkList<int>();
         _speciesStatus = new NetworkList<int>();
+        _speciesDelta = new NetworkList<int>();   // BALANCE DELTA
     }
 
     public override void OnNetworkSpawn()
@@ -90,6 +94,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         {
             _populationCounts.Add(0);
             _speciesStatus.Add((int)EcosystemSimulationGPU.SpeciesStatus.Absent);
+            _speciesDelta.Add(0);   // BALANCE DELTA
             SpeciesDataGPU s = _simulation.Ecosystem.Species[i];
             _maxSchools.Add(s != null ? _simulation.GetMaxSchools(s) : 0);
         }
@@ -121,6 +126,8 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
                 _populationCounts[i] = _simulation.CountCommittedGroups(s);
             if (i < _speciesStatus.Count)
                 _speciesStatus[i] = (int)_simulation.GetSpeciesStatus(s);
+            if (i < _speciesDelta.Count)
+                _speciesDelta[i] = _simulation.GetSpeciesDelta(s);   // BALANCE DELTA
         }
         _ecoHealth.Value = _simulation.EcoHealth01;   // push the live health score to clients
         _syncTimer = 0f;   // reset so the periodic tick doesn't immediately re-fire
@@ -212,6 +219,14 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         if (speciesIndex < 0 || speciesIndex >= _speciesStatus.Count)
             return EcosystemSimulationGPU.SpeciesStatus.Absent;
         return (EcosystemSimulationGPU.SpeciesStatus)_speciesStatus[speciesIndex];
+    }
+
+    // BALANCE DELTA: how many of this species to add (+) or remove (-) to make it healthy.
+    // 0 means it is fine, or the fix belongs to another species (check GetSpeciesStatus).
+    public int GetSpeciesDelta(int speciesIndex)
+    {
+        if (_speciesDelta == null || speciesIndex < 0 || speciesIndex >= _speciesDelta.Count) return 0;
+        return _speciesDelta[speciesIndex];
     }
 
     // Convenience for the tablet badges: is the sim currently calling this species overpopulated?

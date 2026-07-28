@@ -450,6 +450,56 @@ namespace OceanX.BoidsGPU.Ecosystem
             return SpeciesStatus.Balanced;
         }
 
+        // ===== BALANCE DELTA (added for the tablet Organisms readout) ==========================
+        // How many of THIS species to add (+) or remove (-) to clear its own unhealthy state.
+        // Returns 0 when it is already fine, or when the fix lies with a DIFFERENT species: a
+        // starving predator needs more prey, not fewer of itself, and the status enum already
+        // says so. Checks run in the same order as GetSpeciesStatus so the number can never
+        // contradict the badge.
+        //
+        // Lives here because _ratioBandLow / _overpopulatedRatio / _overpopulatedFreeCount are
+        // private to this class; the tablet cannot do this arithmetic itself.
+        public int GetSpeciesDelta(SpeciesDataGPU species)
+        {
+            if (species == null) return 0;
+            Dictionary<SpeciesDataGPU, int> counts = BuildCommittedCounts();
+            int n = CountIn(counts, species);
+
+            if (n <= 0) return 1;   // absent: one school is enough to start counting toward diversity
+
+            bool hasPrey = HasAny(species.PreySpecies);
+            int  preyN   = hasPrey ? SumCounts(counts, species.PreySpecies) : 0;
+            int  predN   = HasAny(species.PredatorSpecies) ? SumCounts(counts, species.PredatorSpecies) : 0;
+
+            // Starving -> the answer is more prey, so there is no useful number for this row.
+            if (hasPrey && _foodWasPresent.Contains(species)
+                && (preyN <= 0 || (float)preyN / n < _ratioBandLow))
+                return 0;
+
+            // Over-predated -> needs to outnumber its predators by at least the low band. But it
+            // cannot exceed its own MaxSchools, and asking for schools the visitor is forbidden to
+            // add is worse than saying nothing. At the cap the only remaining lever is thinning the
+            // predators, so report 0 and let the status (OverPredated) carry the message.
+            if (predN > 0 && (float)n / predN < _ratioBandLow)
+            {
+                int need = Mathf.CeilToInt(_ratioBandLow * predN) - n;
+                int room = Mathf.Max(0, GetMaxSchools(species) - n);
+                return need <= room ? Mathf.Max(1, need) : 0;
+            }
+
+            // Overpopulated -> trim under the runaway ratio, or under the flat count once its
+            // predators are gone entirely.
+            if (IsOverpopulated(species, counts))
+            {
+                int target = predN > 0 ? Mathf.FloorToInt(_overpopulatedRatio * predN)
+                                       : _overpopulatedFreeCount;
+                return Mathf.Min(-1, target - n);
+            }
+
+            return 0;
+        }
+        // ===== END BALANCE DELTA ==============================================================
+
         /// <summary>
         /// Genuine runaway overpopulation: a species that SHOULD be regulated by predators, but either
         /// outnumbers the remaining ones past <see cref="_overpopulatedRatio"/>, or has outlived them

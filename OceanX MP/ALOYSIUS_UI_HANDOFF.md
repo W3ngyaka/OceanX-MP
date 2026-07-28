@@ -1,5 +1,5 @@
 # OceanX MP — UI/UX Handoff (Aloysius)
-_Last updated: 2026-07-18 (rev 8)_
+_Last updated: 2026-07-28 (rev 9)_
 
 > Companion to JunHeng's main handoff. Covers UI/UX work across recent sessions.
 > Scope: food-web layout, species info card, atmospheric FX, bug fixes, the
@@ -8,7 +8,17 @@ _Last updated: 2026-07-18 (rev 8)_
 > dashboard gauge + status word, and a right-side species info panel**, plus
 > **producer unlock-registration, a new Macroalgae species, and a host
 > health-bar binding**.
-> **Newest (2026-07-18b):** **win screen** (WinCondition + WinScreen, Alucia
+> **Newest (2026-07-28):** tablet session on a NEW scene,
+> `Assets/Aloysius/Scenes/new netcode 2.unity` (see READ FIRST #7 — it is
+> **unchecked in Build Settings**). Fixed a **late-join `OnStarted` subscription bug**
+> that stopped the tutorial auto-showing, added a **"look up at the big screen" toast**,
+> a **visible FFXIV-style Add cooldown**, **milestone-gated hint chaining**, a
+> **"HOW TO BALANCE" advisor panel**, and **per-species add/remove numbers on the
+> Organisms rows** (host-computed, networked). Also confirmed **100% eco-health IS
+> reachable** and captured a **verified winning configuration**. Built and then
+> **removed** a per-action health-delta popup (too distracting).
+>
+> **Previous (2026-07-18b):** **win screen** (WinCondition + WinScreen, Alucia
 > thank-you, health hits 100%), **back button replacing swipe-to-close** on the
 > modal, and a **hide-until-started gate** (Ecosystem Panel UI hidden until the
 > tablet tap-to-start). Confirmed the **action->health narration was already fully
@@ -90,9 +100,281 @@ _Last updated: 2026-07-18 (rev 8)_
    opens). To make them sim-interactive, JunHeng must register their GPU species
    in `TabletEcosystemUIGPU`.
 
+7. **(2026-07-28) The scene this session's work lives in is NOT in Build Settings.**
+   All of the 2026-07-28 tablet work is in `Assets/Aloysius/Scenes/new netcode 2.unity`.
+   In Build Settings only **`Assets/Aloysius/Scenes/Start scene.unity`** and
+   **`Assets/Junheng/Scenes/SCENE_MainScene.unity`** are enabled — `new netcode 2` is
+   **unchecked**. If the tablet build does not load it some other way, **none of this
+   session's scene objects ship**. Confirm before the next showcase. This is on top of
+   the existing scene-proliferation problem (`new netcode 1`, `new netcode 2`,
+   `new netcode 3`, and four `SCENE_MainScene` copies) — worth a consolidation pass.
+
+8. **(2026-07-28) Rajdhani has no check mark, minus sign, or em dash.**
+   `Rajdhani-Medium SDF` and `Rajdhani-Bold SDF` both report `HasCharacter == false` for
+   **U+2713 (checkmark)**, **U+2212 (minus)** and **U+2014 (em dash)**, and neither font
+   asset has a local fallback (`fallbackFontAssetTable` is empty). A tick rendered as a
+   tofu box in the Organisms list until it was swapped for the word `ok`. Em dashes DO
+   currently render, which means something in **TMP's global fallback list** is supplying
+   them — a thin dependency. **Use ASCII (`-`, `->`) in any new tablet UI string**, or
+   generate a Rajdhani font asset with the extra glyphs.
+
 ---
 
-## This session (2026-07-18b) — win screen, back button, hide-until-started
+## This session (2026-07-28) — hint sequencing, balance advisor, per-species numbers
+
+Tablet scene: **`Assets/Aloysius/Scenes/new netcode 2.unity`** (NEW — previous sessions
+used `new netcode 1`). **See READ FIRST #7: this scene is unchecked in Build Settings.**
+
+> **Nothing in this section is runtime-verified.** Every change compiles clean and scene
+> wiring was confirmed by inspection, but the host sim is not in this scene, so no play
+> test was possible from the tooling side. Aloysius spot-checked several items in a build
+> during the session (noted per item).
+
+### Fixed: tutorial never auto-showed on a late-joining tablet (`TutorialPanel.cs`, `ContextNudge.cs`)
+- **Symptom:** in a build, the HOW TO PLAY panel did not appear on start; the (?) button
+  had to be tapped manually. Worked fine in editor playtests.
+- **Cause:** both scripts used this shape —
+  `if (net.HasStarted) DoIt(); else net.OnStarted += DoIt;` — subscribing **only** in the
+  else branch. `EcosystemNetworkManagerGPU` assigns `Instance` in **`Awake`**, but wires
+  `_hasStarted.OnValueChanged` in **`OnNetworkSpawn`**. A tablet joining a session already
+  in progress therefore receives `_hasStarted = true` inside the spawn payload, *before*
+  the handler exists, so **`OnStarted` never fires for it**. The polling latch had already
+  set `_subscribed = true` while `HasStarted` still read its default `false`.
+- **Fixed:** always subscribe on first sight of the manager, **and** separately poll
+  `HasStarted` (which is what catches the silent late-join sync).
+- **Also fixed:** `ResetForNewSession()` claimed it "stays subscribed to OnStarted" — false
+  if the `if (HasStarted)` branch had been taken, in which case the hint never returned for
+  the next visitor. Re-arm is now **deferred** via a `_rearmPending` flag until `HasStarted`
+  is observed back at `false`, so a reset cannot re-trigger the panel off a stale `true`.
+- **Reference:** `ExperienceStartGate.cs` had the correct pattern all along (subscribe
+  **then** check) — that is why the rest of the tablet UI came up normally.
+
+### Fixed: UI flashed for ~0.6s at session start (`TutorialPanel.IsOpenOrPending` NEW)
+- Anything gating on `TutorialPanel.IsOpen` gets a window where `HasStarted` is true but
+  the panel has not faded in yet — `autoShowDelay` is 0.6s. The advisor and the look-up
+  toast both appeared in that gap.
+- **Added `IsOpenOrPending`** (`_open || _autoShowPending`), set the moment `TryAutoShow`
+  runs rather than when the panel appears, cleared on show and on reset.
+- `BalanceAdvisor` and `LookUpPrompt` gate on this. **`ContextNudge` deliberately still
+  uses `IsOpen`** — it is a `while` loop *waiting* for the tutorial to close, where "open"
+  is the correct read.
+
+### "Look up at the big screen" toast (`LookUpPrompt.cs` NEW)
+- **Problem observed in testing:** visitors add a fish and keep staring at the tablet,
+  missing it arriving in the reef.
+- Deliberately **not** a `ContextNudge`. A nudge is a one-shot onboarding hint that
+  dismisses permanently; this is a recurring event toast that re-fires on every add for
+  the whole session. Same `CanvasGroup` fade and the same BG+Text child layout so it reads
+  as the same family, but its own lifecycle.
+- Repeat adds **restart the hold window** instead of re-fading from zero (re-fading reads
+  as a flicker when tapping quickly). `holdDuration` 2.5s, `fadeDuration` 0.35s.
+- Suppressed while the tutorial is open/pending; dropped instantly on reset.
+- **Scene:** `LookUpPrompt` on `TabletCanvas (1)` at y=-940, cloned from `TapFishNudge` so
+  the styling matches. Copy is a placeholder: *"Look up! Your fish is joining the reef"*.
+- **Hook:** one line in `TabletAddRemoveUIGPU.OnAdd()` after `RequestAddSpeciesRpc`, so it
+  only fires on adds that actually pass the cooldown / cap / unlock checks.
+
+### Visible Add cooldown, FFXIV-style (`ButtonCooldownOverlay.cs` NEW)
+- The existing `addCooldown` was a **silent** guard: during it the button stayed fully lit
+  and simply ate the press, which read as "the button is broken" rather than "not ready".
+- **`TabletAddRemoveUIGPU`:** exposed `CooldownRemaining` / `CooldownDuration`, and folded
+  cooldown into `addButton.interactable` so the button greys out through its existing
+  ColorTint transition.
+- **`ButtonCooldownOverlay`:** a dark radial wipe over the icon that unwinds clockwise from
+  the top as the cooldown recovers. Read-only against the source above, so the visual and
+  the gate cannot drift apart. `raycastTarget` off.
+- **Scene:** `CooldownSweep` child under `Ecosystem Panel/Info/Add`, using the Add sprite
+  itself as the fill so the wipe follows the icon silhouette. Editor properties pre-set to
+  match what `Awake` does, so the scene view previews correctly instead of showing a white
+  blob.
+- **OPEN:** the source default was raised 0.3 -> 1.0 but **the serialized instance is still
+  0.3** (same serialized-field trap as `_populationSyncInterval` in rev 8). At 0.3s the
+  sweep is a blink. Set it on the `Ecosystem Panel` instance.
+
+### Hint chaining now waits for a real milestone (`ContextNudge.Advance` NEW, `ModalController`, `SpeciesInfoPanel`)
+- **Goal:** the hold-for-food-web hint should appear only after the visitor has opened a
+  species' View Details modal **and closed it** — read the info first, then learn the hold
+  gesture.
+- Previously `showAfterId` only unlocked when the named nudge was **dismissed**, and the
+  tap nudge dismisses on tap, so the hold hint fired while the info panel was still open.
+- **`ContextNudge.Advance(gateId)`** decouples unlocking from dismissal. `Dismiss()` calls
+  it internally so existing nudge-to-nudge chaining is unchanged, but any milestone can now
+  release a gate.
+- **`ModalController.Close()`** calls `Advance("details")`. That is the single close funnel
+  (`ModalCloseButton` + `SwipeToClose` are its only callers, and no reset path calls it), so
+  it cannot fire spuriously.
+- **Scene:** `HoldFishNudge.showAfterId` changed `tap` -> `details`.
+- **Safety net (`SpeciesInfoPanel.detailsHintFallbackSeconds`, default 8):** a visitor who
+  selects a fish but never taps View Details would otherwise never discover the food web at
+  all. The clock starts on the **first** species selection and is **not** restarted by
+  further bubble taps (otherwise browsing bubbles postpones the hint forever). Tapping View
+  Details cancels it; the real close path takes over. `0` disables it.
+- **`Advance` also guards on `_rearmPending`** so a fallback timer still pending when the
+  exhibit resets cannot fade a hint in over the attract screen.
+
+### "HOW TO BALANCE" advisor panel (`BalanceAdvisor.cs` NEW) — went through five revisions
+Bottom-left panel on `TabletCanvas (1)` (620x240 at 48,48, reusing the nudge `button2`
+background and Rajdhani). Non-interactive so it cannot eat taps meant for the reef.
+
+**The one architectural decision worth preserving:** every line is derived from the
+**simulation's own verdict** — `GetSpeciesStatus`, already synced per species — never from
+a second opinion computed on the tablet. Eco-health is a weighted mix of diversity,
+per-species balance and apex presence; a panel that recomputed any of that itself would
+eventually disagree with the bar and send visitors chasing fixes that do not move it.
+
+Behaviour after the five revisions (each driven by showcase/playtest feedback):
+- **Grouped, not enumerated.** Problems collapse by kind, so nine missing species is one
+  line, not nine. Ranked so an active collapse outranks an empty reef: starving ->
+  over-hunted -> overcrowded -> missing apex -> merely sparse. `maxLines` default 2.
+- **Escalating detail.** Opens vague and only sharpens when the visitor is genuinely stuck,
+  measured as eco-health failing to reach a **new high** for `escalateAfter` (25s) seconds.
+  Any improvement resets to vague, so someone making progress is never handed the answer.
+  The stuck clock is **frozen while the tutorial is open** (reading instructions is not
+  failing to balance the reef) and **reset on the attract screen** so each visitor starts
+  vague.
+- **`maxDetailLevel` = 1 (ceiling).** Level 0 describes the problem, 1 also names the
+  species, 2 would also state the fix. **Capped below 2 on purpose so the HINTS tab remains
+  the only place that tells the visitor what to press** — otherwise the panel makes that tab
+  redundant.
+- **`reportMissingSpecies` = false.** It no longer mentions mere absence at all: the health
+  card already shows "n / 12 species present" and the Organisms rows now carry per-species
+  numbers. The panel earns its space on the **dynamics** — starving / over-hunted /
+  overcrowded — which nothing else on the tablet explains.
+- **Prose, not bullets.** `Line()` returns fragments with no terminal punctuation so they
+  stay composable; an `AsSentence()` helper closes each one when rendered.
+  `eachSentenceOnNewLine` (default off) stacks them instead of running them together.
+
+**Fixed mid-session: it claimed "balanced" when it was not.** It inferred balance from
+having no suggestions, but absent-and-locked species are deliberately skipped (the visitor
+cannot add them) while `ComputeEcoHealth01` still counts them against diversity. It now
+checks the health value against `balancedThreshold` (0.99) and otherwise shows
+`nothingToDoMessage`.
+
+**Also fixed: the quiet message pointed at the wrong tab.** It said "check the Organisms
+list for gaps" — but organism cards `SetActive(false)` at zero population, so that list
+*structurally cannot* show what is missing. Now points at the Food Web tab.
+
+### Per-species add/remove numbers on the Organisms rows (host-computed, networked)
+**This is the direct answer to the showcase feedback** that visitors could not tell which
+species needed what amount.
+
+- **`EcosystemSimulationGPU.GetSpeciesDelta(species)` NEW** — signed count change that
+  would clear **that species' own** unhealthy state. Checks run in the **same order as
+  `GetSpeciesStatus`** so the number can never contradict the badge.
+  - `Absent` -> `+1`
+  - `OverPredated` -> `ceil(_ratioBandLow * predN) - n`, **clamped to `MaxSchools`**
+  - `Overpopulated` -> trim under `_overpopulatedRatio * predN`, or under
+    `_overpopulatedFreeCount` if its predators are gone
+  - `Starving` -> **0**. The fix is more prey, not fewer of itself, and the row only has a
+    `-1` button. Mathematically you *can* clear starvation by removing the starving fish
+    (fewer mouths), but that teaches the wrong lesson.
+  - Lives in the sim because `_ratioBandLow` / `_overpopulatedRatio` /
+    `_overpopulatedFreeCount` are private to that class — the tablet cannot do the
+    arithmetic itself.
+- **`EcosystemNetworkManagerGPU`** — new `NetworkList<int> _speciesDelta`, following
+  `_speciesStatus` exactly (constructed in `Awake`, seeded in the spawn loop, written in
+  `SyncPopulations`), plus `GetSpeciesDelta(int)`.
+- **`OrganismCardData.UpdateDelta()`** — renders `+2` (blue), `-3` (red), `ok` (green) on
+  the existing 0.2s poll. `needsFoodLabel` ("needs food") for `Starving`.
+- **Scene/prefab:** new `DeltaLabel` child on `Assets/Aloysius/Prefabs/OrganismCard.prefab`
+  at x=830, Rajdhani-Medium 30 to match the name label.
+- **All additions are marked `BALANCE DELTA`** in all three scripts. To revert: grep for
+  that marker, delete the marked blocks, delete `DeltaLabel` from the prefab. The advisor
+  panel has no dependency on any of it.
+
+**Fixed mid-session: the delta ignored the school cap.** It asked for `+2` damselfish when
+they were already at `MaxSchools = 10`. It now measures remaining room
+(`GetMaxSchools(species) - n`) and only reports a positive number if the increase actually
+fits; at the cap it returns 0 and the row shows **`huntedOutLabel`** ("too many hunters")
+rather than falling through to `ok`, which would have been worse than the wrong number.
+**This is the exhibit's most interesting ecological idea** — at the cap the only remaining
+lever is *thinning the predators to save the prey* — and nothing else on the tablet hints
+at it.
+
+### Built and then REMOVED: per-action health-delta popup
+- `HealthChangeFeedback.cs` showed the eco-health change each action caused (`+4%` / `-2%`)
+  floating off the gauge, with bursts sharing one baseline so four quick adds gave one
+  combined total rather than four numbers fighting.
+- **Removed the same session — too distracting.** A number firing on *every* press is
+  noise, not feedback. Script deleted, `HealthDelta` object deleted, all three hooks
+  (`OnAdd`, `OnTapRemoveOne`, `ExhibitReset`) stripped, zero lingering references.
+- **If revisited:** the version that plausibly works only speaks when something *notable*
+  happens — crossing into THRIVING, or an action that made things measurably worse — rather
+  than annotating every tap.
+
+### Reference findings (2026-07-28)
+- **100% IS reachable — confirmed.** The runtime roster is `Assets/Junheng/Data/EcosystemDefinitionGPU.asset`
+  with **12 species**, and **every one has food-web links**. The three assets with neither
+  predators nor prey — **Clownfish, Macroalgae, Seagrass** — are **not** in that definition.
+  This matters because `ComputeEcoHealth01` only counts a species toward `healthy` if
+  `HasAny(PredatorSpecies) || HasAny(PreySpecies)`, while dividing `balance` by
+  **`totalSpecies`**. Any link-less species in the roster would cap `balance` below 1 and
+  make 100% impossible. **Do not add Clownfish / Seagrass / Macroalgae to the 12-species
+  definition without giving them food-web links first.**
+- **A verified 100% configuration** (read off the F1 debug overlay during the session):
+
+  | | Species | Schools |
+  |---|---|---|
+  | Apex | Blacktip reef shark | 1 |
+  | Meso | Bluefin trevally, Bluespotted ribbontail ray, Brown-marbled grouper, Giant moray, Russell's snapper, Yellowstripe scad | 1 each |
+  | Prey | Bullethead parrotfish 5, Eyestripe surgeonfish 5, Fringelip mullet 5, Reticulated damselfish 6, Streaked spinefoot 5 | |
+
+- **The shape of that solution is the design story.** Every predator at 1; prey at 5-6; and
+  **nothing anywhere near its cap** (prey sit at 5-6 of 8-10, predators at 1 of 3-6).
+  **You win by restraint, not accumulation** — and the tablet currently teaches the
+  opposite. There is an Add button, counts read as `n/10` like a progress bar, "11 / 12
+  species present" implies more is better, and species unlock as rewards for adding.
+  Nothing anywhere says *predators must stay scarce*. That is the most likely single
+  explanation for the showcase difficulty.
+- **`MaxSchools` on the asset does not match the live cap for predators.** The debug overlay
+  showed shark `1/3` against an asset `MaxSchools` of 6; trevally `1/3` against 8; grouper
+  and moray `1/3` against 6. Prey matched (damselfish `6/10`, asset 10). So the live cap
+  looks **dynamic** for predators, probably prey-dependent carrying capacity.
+  `GetSpeciesDelta` calls `GetMaxSchools()` — the same function the Add button greys off —
+  so it follows the live value either way, but **JunHeng should confirm which number is
+  authoritative**.
+- **Unresolved:** with rev 8's documented `_ratioBandLow = 1`, a snapper at 1 school with 3
+  predators present at 1 each gives `n/predN = 0.33 < 1`, which should classify it
+  `OverPredated` and make the verified 100% configuration impossible. Either the tuning has
+  changed since rev 8, `SumCounts` does not mean what is assumed here, or the overlay's
+  100% was a rounded 99.5%+. **`GetSpeciesDelta`'s arithmetic assumes that rule**, so this
+  is worth pinning down — open the host scene and read the live serialized values.
+
+### Performance note
+`GetSpeciesDelta` calls `BuildCommittedCounts()` on **every** invocation, so at 12 species
+and a 0.15s sync interval the dictionary is rebuilt 12x per tick. `GetSpeciesStatus` has
+the same pattern (pre-existing), so this **doubles** it. Not observed as a problem, but if
+it shows up in the profiler, build the counts once in `SyncPopulations` and pass them in.
+
+### Ideas considered and NOT built (2026-07-28)
+- **Route balance advice through Alucia.** Rejected: `AluciaController` has **zero
+  instances in `new netcode 2`** — she lives in the host scene, i.e. the screen visitors are
+  *not* looking at. Guidance has to stay on the tablet. Worth a team discussion though: the
+  tutorial promises "Alucia will guide you along the way", but if she only exists on the
+  large screen she is atmosphere for bystanders rather than guidance for the operator.
+- **Pressure on the food-web edges — the strongest unbuilt idea.** Bubble colour = status,
+  ring/size = population, and **edge appearance = the ratio across that link** (a starving
+  predator's link to its prey goes thin/red; an overcrowded species' link to its absent
+  predators goes dashed). "Which species needs what amount" becomes a picture instead of a
+  sentence, requires no reading, teaches the actual mental model, and finally gives the
+  hold-to-reveal food web a consequence. The Food Web tab is currently a browser; this
+  would make it the balance instrument.
+- **Show absent species in the Organisms list** (greyed, count 0, delta `+1`) instead of
+  hiding them. Small change — `CurrentOrganismsGrid.Refresh()` plus removing the
+  `SetActive(false)` in `OrganismCardData.Update()`. Would fix the "everything says ok but
+  I'm at 93%" confusion, and would finally display the `+1` deltas that are already
+  computed and synced for absent species but shown to nobody. Changes what the tab *means*
+  (from "my reef" to "the roster and its state") — deliberately left as Aloysius's call.
+- **`ContentSizeFitter` on the advisor panel** so 620x240 shrinks to fit one short sentence
+  instead of sitting mostly empty.
+- **Move `TutorialPanel` to the last sibling index.** Everything added this session landed
+  above it in `TabletCanvas (1)` (TutorialPanel is index 5; TapFishNudge 7, HoldFishNudge 8,
+  LookUpPrompt 9, BalanceAdvisor 10), so each one needs its own suppression gate. Reordering
+  once would make those gates a nicety rather than the only thing holding it together.
+
+---
+
+## Previous session (2026-07-18b) — win screen, back button, hide-until-started
 
 Tablet scene: `Assets/Aloysius/new netcode 1.unity`. Win screen also placed in the
 host scene copy being used (`Assets/Aloysius/Scenes/SCENE_MainScene 1.unity` — a
@@ -165,7 +447,7 @@ duplicate of JH's host scene). NOTE: there are now MULTIPLE `SCENE_MainScene` co
 
 ---
 
-## This session (2026-07-18a) — organism cards, tablet fixes, health responsiveness
+## Previous session (2026-07-18a) — organism cards, tablet fixes, health responsiveness
 
 Tablet scene this session: `Assets/Aloysius/new netcode 1.unity`. Reveal-card TMP
 work touched the host scene (`SCENE_MainScene`) via shared scripts.
@@ -335,7 +617,7 @@ work touched the host scene (`SCENE_MainScene`) via shared scripts.
 
 ---
 
-## This session (2026-07-14) — reveal-card images, TMP, health-bar colour
+## Previous session (2026-07-14) — reveal-card images, TMP, health-bar colour
 
 Host scene this session: `Assets/Aloysius/Scenes/SCENE_MainScene.unity`.
 
@@ -663,6 +945,33 @@ working via forced-event test.
 - **`SwipeToClose.cs`** now unused (back button replaced it) — delete if the gesture isn't
   wanted elsewhere.
 
+**Tablet UI (2026-07-28 — open items):**
+- **`new netcode 2` is UNCHECKED in Build Settings** — confirm the tablet build actually
+  loads it, or none of this session's scene objects ship. See READ FIRST #7.
+- **Set `addCooldown` on the `Ecosystem Panel` INSTANCE** — source default is now 1.0 but
+  the serialized instance still reads 0.3, so the cooldown sweep is only a blink.
+- **Pin down `_ratioBandLow`** by reading the live serialized value in the host scene — the
+  delta arithmetic assumes rev 8's documented value of 1, and that does not reconcile with
+  the verified 100% configuration (see the unresolved note above).
+- **Confirm asset `MaxSchools` vs the live `GetMaxSchools()`** with JunHeng — the debug
+  overlay's predator denominators disagree with the assets.
+- **Tune the advisor's `escalateAfter`** (25s is a guess; 15s if museum visitors bail
+  faster) and its placeholder copy.
+- **Verify the `LookUpPrompt` position** (y=-940 was eyeballed from the two hint banners)
+  and rewrite its placeholder copy.
+- **Verify the `DeltaLabel` position** on `OrganismCard.prefab` (x=830) against a real
+  populated list.
+- **Consider whether the HINTS tab covers "remove predators to save prey"** — with
+  `maxDetailLevel = 1` the advisor stops at "are being hunted out" and never says the fix.
+  A visitor's instinct is to add more of the dying fish, which at the cap they cannot do.
+- **Check every species' `MaxSchools` against its summed predator requirement.** Damselfish
+  sits right on the line (cap 10, six predators). Any species whose cap is below its
+  requirement can *never* be healthy, which would make 100% impossible rather than hard.
+- **Re-audit the em dashes** in `BalanceAdvisor`'s strings — they render only via TMP's
+  global fallback (READ FIRST #8).
+- Consider the **food-web pressure display** and **showing absent species in the Organisms
+  list** (both written up under "Ideas considered and NOT built").
+
 **Alucia / reveal:**
 - Real art (placeholder block); reveal card image slot empty.
 - **Lower the "Thriving" win trigger from 100% to \~90%** (health likely tops out <100). Not yet applied.
@@ -698,6 +1007,29 @@ working via forced-event test.
   that runs only after `HasStarted` (for the hide-Ecosystem-Panel-until-start feature). Behaviour
   is identical once started; it just defers the initial tab/prompt show. Waits on `OnStarted`, or
   a coroutine until the manager spawns. FYI in case you touch that script.
+- **(2026-07-28) I edited FOUR of your scripts** — all additions are marked with a
+  `BALANCE DELTA` comment where they belong to the per-species number feature:
+  1. **`EcosystemSimulationGPU.cs`** — new `public int GetSpeciesDelta(SpeciesDataGPU)`.
+     Read-only; uses your private `_ratioBandLow` / `_overpopulatedRatio` /
+     `_overpopulatedFreeCount` / `BuildCommittedCounts()` / `GetMaxSchools()`. Mirrors
+     `GetSpeciesStatus`'s check order deliberately so the two can never disagree.
+  2. **`EcosystemNetworkManagerGPU.cs`** — new `NetworkList<int> _speciesDelta` alongside
+     `_speciesStatus` (constructed in `Awake`, seeded in the spawn loop, written in
+     `SyncPopulations`) + `GetSpeciesDelta(int)`. **This is a networked layout change —
+     host and tablet MUST be rebuilt together** (see the rev 8 buffer-overflow note).
+  3. **`TabletAddRemoveUIGPU.cs`** — `CooldownRemaining` / `CooldownDuration` properties;
+     cooldown folded into `addButton.interactable`; `addCooldown` source default 0.3 -> 1.0
+     (instance still 0.3); one `LookUpPrompt.Trigger()` line in `OnAdd`.
+  4. **`ExhibitReset.cs`** — one `LookUpPrompt.ResetForNewSession()` line in
+     `DoLocalReset()`, alongside the existing `ContextNudge` line.
+- **(2026-07-28) `removeButton` is NULL** on the `Ecosystem Panel` instance of
+  `TabletAddRemoveUIGPU`, so `OnRemove` is dead code and the shared `_lastAddTime` guard
+  only ever gates Add. Removal happens exclusively through the organism rows'
+  `OnTapRemoveOne`. Intentional or an oversight?
+- **(2026-07-28) `SyncPopulations` writes `_ecoHealth.Value` AFTER the per-species loop**, so
+  anything that throws inside that loop leaves health frozen at its last value. We briefly
+  saw 0% stuck during the session. Moving the health assignment **above** the loop would make
+  it immune to that class of failure.
 
 **This session (2026-07-12) — open items:**
 - **Text-hint half of the hold prompt** — the "Tap on any species!" banner (`aa.png`,
@@ -781,6 +1113,29 @@ working via forced-event test.
 - **ScrollRect scrollbar visibility** — `AutoHideAndExpandViewport` **resizes the viewport**
   and can shift your content layout. Use `Permanent` (overlay) if you just want a visible
   scrollbar without touching the list.
+- **(2026-07-28) NGO delivers NetworkVariable initial values BEFORE `OnNetworkSpawn`.** A
+  late-joining client gets the current value in the spawn payload, so an `OnValueChanged`
+  handler wired in `OnNetworkSpawn` **never fires for it**. Any "wait for the session to
+  start" code must **subscribe AND poll the current value** — subscribing alone silently
+  does nothing for a client that joined mid-session. This broke the tutorial auto-show.
+- **(2026-07-28) A singleton assigned in `Awake` is visible before its NetworkObject
+  spawns.** `EcosystemNetworkManagerGPU.Instance` exists while its NetworkVariables still
+  hold defaults, so a poll that latches on `Instance != null` can read stale state.
+- **(2026-07-28) Changing a field's initializer does NOT change already-serialized
+  instances.** Unity only uses the default for components that have no value saved. Bit us
+  twice this session (`addCooldown`, `nothingToDoMessage`) and once in rev 8
+  (`_populationSyncInterval`). **Always set the value on the instance/prefab too, and
+  verify by reading it back.**
+- **(2026-07-28) Rajdhani is missing common typographic glyphs** — no checkmark, minus sign
+  or em dash, and no local fallback. Use ASCII in tablet UI strings. See READ FIRST #8.
+- **(2026-07-28) A "compiles clean" check can be a false negative after a script edit.**
+  A stale assembly kept loading and reflection reported a newly added field as absent;
+  `UnityEditor.EditorUtility.scriptCompilationFailed` was `true` while the console looked
+  quiet. Check that flag, not just the absence of console errors.
+- **(2026-07-28) Namespace trap for new tablet scripts:** `EcosystemSimulationGPU`,
+  `SpeciesDataGPU` and `SpeciesRoleGPU` live in `OceanX.BoidsGPU.Ecosystem`, but
+  `EcosystemNetworkManagerGPU` is in the **global** namespace. A new script that uses the
+  manager compiles without a `using`, then fails the moment it references `SpeciesStatus`.
 - `Boids_Demo` shark+water shader crash warning still applies (JunHeng's note).
 
 ---
@@ -886,6 +1241,44 @@ working via forced-event test.
 - Tablet scene (`new netcode 1`): `Ecosystem Panel/ModalPanel` -> `SwipeToClose` removed,
   `BackButton` (X) added; new always-active `PanelStartGate` object with `HideUntilStarted`
   (hides prompt/panel/FoodWebLayer/TabBar/Health/Info until start)
+
+**New (2026-07-28):**
+- `LookUpPrompt.cs` — recurring "look up at the big screen" toast, fires on every add
+- `ButtonCooldownOverlay.cs` — FFXIV-style radial cooldown sweep for the Add button
+- `BalanceAdvisor.cs` — bottom-left "HOW TO BALANCE" panel (grouped, escalating, diagnostic-only)
+
+**Deleted (2026-07-28):**
+- `HealthChangeFeedback.cs` — per-action `+4%` health popup; built and removed the same
+  session as too distracting. All hooks stripped, no lingering references.
+
+**Edited (2026-07-28):**
+- `TutorialPanel.cs` — always subscribe to `OnStarted` + poll `HasStarted` (late-join fix);
+  `_rearmPending` deferred re-arm; new `IsOpenOrPending` property + `_autoShowPending`
+- `ContextNudge.cs` — same subscribe/poll fix + `_rearmPending`; new static
+  `Advance(gateId)` extracted from `Dismiss` so a milestone can release a gate; `Advance`
+  guards on `_rearmPending`; `showAfterId` tooltip rewritten
+- `ModalController.cs` — `Close()` now calls `ContextNudge.Advance("details")`
+- `SpeciesInfoPanel.cs` — `detailsHintFallbackSeconds` (default 8) + `EnsureHintFallback` /
+  `CancelHintFallback` / `DetailsHintFallback`; cancelled by `OpenModal`
+- `OrganismCardData.cs` — `BALANCE DELTA` block: `deltaText` / `okLabel` / `needsFoodLabel` /
+  `huntedOutLabel` / colours, `UpdateDelta()`, `cappedHunted` branch; `using OceanX.BoidsGPU.Ecosystem`
+- `EcosystemSimulationGPU.cs` (JunHeng's) — new `GetSpeciesDelta(SpeciesDataGPU)`, cap-aware
+- `EcosystemNetworkManagerGPU.cs` (JunHeng's) — `NetworkList<int> _speciesDelta` + getter
+  (**networked layout change — rebuild host + tablet together**)
+- `TabletAddRemoveUIGPU.cs` (JunHeng's) — `CooldownRemaining` / `CooldownDuration`; cooldown
+  folded into `addButton.interactable`; `addCooldown` default 0.3 -> 1.0; `LookUpPrompt.Trigger()`
+- `ExhibitReset.cs` (JunHeng's) — `LookUpPrompt.ResetForNewSession()` in `DoLocalReset()`
+
+**Scene changes (2026-07-28, `Assets/Aloysius/Scenes/new netcode 2.unity`):**
+- `TabletCanvas (1)` -> new `LookUpPrompt` (cloned from `TapFishNudge`, y=-940)
+- `TabletCanvas (1)` -> new `BalanceAdvisor` (bottom-left 48,48, 620x240, BG + Header + Body)
+- `Ecosystem Panel/Info/Add` -> new `CooldownSweep` child (`ButtonCooldownOverlay`)
+- `HoldFishNudge.showAfterId` -> `tap` changed to `details`
+- **Deleted:** `Ecosystem Panel/Health/HealthDelta` (the removed popup)
+
+**Prefab changes (2026-07-28):**
+- `Assets/Aloysius/Prefabs/OrganismCard.prefab` -> new `DeltaLabel` child (Rajdhani-Medium 30,
+  x=830), wired to `OrganismCardData.deltaText`; `okLabel` set to `ok` (was a tofu checkmark)
 
 **Edited (earlier):**
 - `SpeciesBubble.cs` (shared) — TapPunch fix + OnTap routes to the info panel

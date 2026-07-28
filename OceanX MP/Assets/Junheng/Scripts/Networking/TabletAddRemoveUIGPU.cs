@@ -27,16 +27,25 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
     public static TabletAddRemoveUIGPU Instance { get; private set; }
 
     [Header("Spam guard")]
-    [Tooltip("Minimum seconds between Add/Remove presses. Long enough to be shown as a recovery " +
+    [Tooltip("Minimum seconds between normal Add/Remove presses. Long enough to be shown as a recovery " +
              "sweep on the button rather than silently swallowing the press. 0 = off.")]
     public float addCooldown = 1f;
+
+    [Tooltip("Longer lockout applied when a species is added for the FIRST time (count 0 -> 1). Blocks " +
+             "adding ANY species until it elapses, giving the big-screen reveal card + intro camera time " +
+             "to fully show the new fish before the next add. Size it to cover the reveal hold + camera " +
+             "blend (~reveal ~4.8s / camera ~5.5s). Set equal to addCooldown to disable the two-tier behaviour.")]
+    public float firstAddCooldown = 6f;
+
     private float _lastAddTime = -999f;
+    // The cooldown length currently in effect — set per press (short for normal, long for a first-time add).
+    private float _currentCooldown = 1f;
 
     /// <summary>Seconds left on the shared add/remove cooldown; 0 when ready. Read by ButtonCooldownOverlay.</summary>
-    public float CooldownRemaining => Mathf.Max(0f, addCooldown - (Time.unscaledTime - _lastAddTime));
+    public float CooldownRemaining => Mathf.Max(0f, _currentCooldown - (Time.unscaledTime - _lastAddTime));
 
-    /// <summary>Full cooldown length, so the overlay can normalise its sweep.</summary>
-    public float CooldownDuration => addCooldown;
+    /// <summary>Full length of the cooldown currently in effect, so the overlay can normalise its sweep.</summary>
+    public float CooldownDuration => _currentCooldown;
 
     [Header("Buttons (on the Info screen)")]
     public Button addButton;
@@ -54,6 +63,7 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _currentCooldown = addCooldown;   // start ready on the short cooldown
         if (addButton != null)    addButton.onClick.AddListener(OnAdd);
         if (removeButton != null) removeButton.onClick.AddListener(OnRemove);
         RefreshButtons();
@@ -81,10 +91,15 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
         var net = EcosystemNetworkManagerGPU.Instance;
         if (_index < 0 || net == null) return;
         if (!SelectedUnlocked()) return; // locked species can't be added until discovered
-        if (Time.unscaledTime - _lastAddTime < addCooldown) return; // spam cooldown
-        _lastAddTime = Time.unscaledTime;
+        if (CooldownRemaining > 0f) return; // spam / first-add cooldown still recovering
         int max = net.GetMaxSchools(_index);
         if (max > 0 && OptimisticPopulationStore.Display(_index) >= max) return; // already at cap optimistically
+
+        // A first-time add (this species is currently absent) triggers the big-screen reveal card + intro
+        // camera, so lock out the NEXT add for longer to let that play; normal adds keep the short cooldown.
+        bool firstTime = OptimisticPopulationStore.Display(_index) <= 0;
+        _lastAddTime = Time.unscaledTime;
+        _currentCooldown = firstTime ? Mathf.Max(addCooldown, firstAddCooldown) : addCooldown;
 
         OptimisticPopulationStore.RegisterDelta(_index, +1);
         net.RequestAddSpeciesRpc(_index);
@@ -97,8 +112,9 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
         var net = EcosystemNetworkManagerGPU.Instance;
         if (_index < 0 || net == null) return;
         if (OptimisticPopulationStore.Display(_index) <= 0) return; // already at zero optimistically
-        if (Time.unscaledTime - _lastAddTime < addCooldown) return; // spam cooldown (shared with Add)
+        if (CooldownRemaining > 0f) return; // spam / first-add cooldown (shared with Add)
         _lastAddTime = Time.unscaledTime;
+        _currentCooldown = addCooldown;   // a remove is a normal-cadence action
 
         OptimisticPopulationStore.RegisterDelta(_index, -1);
         net.RequestRemoveSpeciesRpc(_index);

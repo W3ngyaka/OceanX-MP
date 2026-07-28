@@ -51,6 +51,13 @@ public class BalanceAdvisor : MonoBehaviour
     public string headerText = "HOW TO BALANCE";
     public string balancedMessage = "The reef is balanced. Nice work!";
 
+    [Tooltip("Eco-health (0-1) at or above which the reef genuinely counts as balanced.")]
+    [Range(0.5f, 1f)] public float balancedThreshold = 0.99f;
+
+    [Tooltip("Nothing is wrong that the visitor can act on, but health is still short \u2014 usually " +
+             "because the remaining species have not unlocked yet.")]
+    public string nothingToDoMessage = "The reef is stable \u2014 keep it steady and more species will unlock";
+
     private float _timer;
     private float _bestHealth = -1f;
     private float _stuckTime;
@@ -146,7 +153,15 @@ public class BalanceAdvisor : MonoBehaviour
         _issues.Sort((a, b) => Rank(a.Kind).CompareTo(Rank(b.Kind)));
 
         _sb.Clear();
-        if (_issues.Count == 0) _sb.Append(balancedMessage);
+        if (_issues.Count == 0)
+        {
+            // "Nothing to suggest" is NOT "balanced". Absent species that are still locked are
+            // skipped above because the visitor cannot add them, but ComputeEcoHealth01 divides its
+            // diversity term by EVERY species in the ecosystem, locked or not. So a reef where
+            // everything unlocked is present and thriving still scores well under 100%, and the old
+            // code congratulated the visitor for it. Ask the health value instead of inferring.
+            _sb.Append(health >= balancedThreshold ? balancedMessage : nothingToDoMessage);
+        }
         else
         {
             int n = Mathf.Min(maxLines, _issues.Count);

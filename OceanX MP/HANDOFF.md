@@ -1,6 +1,6 @@
 # Restore the Reef — Handoff Document
 
-_Last updated: 2026-07-26_
+_Last updated: 2026-07-28_
 
 > This is the single source of truth for the project. Update the date above whenever you edit this file.
 > Formerly named **OceanX MP** / **Balance the Ocean** — renamed to **Restore the Reef** 2026-07-26.
@@ -315,7 +315,8 @@ Assets/Aloysius/                                  UI team
     Unlock:         GameState.cs + UnlockTester.cs (Aloysius placeholders) · LockedHintPanel.cs · SpeciesUnlockReveal.cs · NotificationManager.cs (used by JunHeng's EcosystemUnlockManagerGPU)
     Reveal:         SpeciesAddedReveal.cs · RevealQueue.cs
     NPC/FX:         AluciaController.cs · AluciaLines.cs · GodRays.cs · MarineSnow.cs · SonarPulse.cs · Bob.cs
-    Onboarding:     TutorialPanel.cs · ContextNudge.cs · HideUntilStarted.cs · StartCrossfade.cs · ExperienceStartGate.cs
+    Onboarding:     TutorialPanel.cs (now exposes IsOpenOrPending) · ContextNudge.cs · HideUntilStarted.cs · StartCrossfade.cs · ExperienceStartGate.cs
+    Guidance/feedback: BalanceAdvisor.cs (bottom-left "HOW TO BALANCE" hint panel) · LookUpPrompt.cs ("look at the big screen" toast on Add) · ButtonCooldownOverlay.cs (radial Add-button cooldown sweep)   [all added 2026-07-26/27]
     Title/Win:      FishSwim.cs (title screen) · WinCondition.cs · WinScreen.cs · SplashSequence.cs
     Audio:          UISoundManager.cs · AdaptiveMusicSystem.cs · Editor/AdaptiveMusicSetup.cs (replaced deleted MusicDirector.cs)
     Data link:      SpeciesData.cs (UI asset — carries the gpuSpecies → SpeciesDataGPU link; unlock config lives here)
@@ -337,16 +338,18 @@ Assets/Akil/                                      Scene environment / 3D art
 | Scene | Owner | Role | Path |
 |-------|-------|------|------|
 | `SCENE_MainScene.unity` | JunHeng | **Host — GPU simulation + trifold display** (main production scene) | `Assets/Junheng/Scenes/SCENE_MainScene.unity` |
-| `Netcode Simulation Test.unity` | JunHeng | **Client — tablet UI scene** | `Assets/Junheng/Scenes/Netcode Simulation Test.unity` |
+| `new netcode 2.unity` | Aloysius | **Client — tablet UI scene (ACTIVE, in build)** | `Assets/Aloysius/Scenes/new netcode 2.unity` |
 
-## Build Settings (as of 2026-07-20, commit `74deb98`)
+## Build Settings (as of 2026-07-28)
 
-- **Index 0:** `Assets/Aloysius/Start scene.unity`
-- **Index 1:** `Assets/Aloysius/Scenes/SCENE_MainScene 1.unity` (Aloysius's copy)
+**One project ships two players by toggling which scene is enabled at index 1.** Index 0 is always `Assets/Aloysius/Scenes/Start scene.unity` (splash → auto-advances to buildIndex 1 via `SplashSequence`):
 
-⚠ **Build Settings still references `SCENE_MainScene 1.unity` (Aloysius's), not `SCENE_MainScene.unity` (JunHeng's).** Confirm this is intended before final build — this decides which host scene actually ships. See To Do §11.
+- **Host build (big-screen, Windows)** → enable `Assets/Junheng/Scenes/SCENE_MainScene.unity`.
+- **Tablet build (client, Android)** → enable `Assets/Aloysius/Scenes/new netcode 2.unity`.
 
-⚠ **Two dead Build Settings entries to prune** (both `enabled: 0`, harmless but noisy): `Assets/Aloysius/SceneTemp.unity` and `Assets/Aloysius/SCENE_MainScene 1.unity` (the pre-move root path, missing from disk).
+Only ONE of those two is enabled at a time. The `fdcfc4c3` **"android to window"** commit is exactly this flip. ⚠ **Flip the enabled scene AND the Player platform target together.** Working tree at last check = **tablet build** (`new netcode 2` enabled, Android). The `74deb98` `SCENE_MainScene 1.unity` reference is gone — that scene was renamed/removed; the earlier "still points at Aloysius's copy" warning no longer applies.
+
+All other scenes (Boids_Demo, both `new netcode 1`, Akil's + Aloysius's `SCENE_MainScene`/`SCENE_MainScene 2`) are present but disabled.
 
 ## Prototyping / deprecated / archived scenes
 
@@ -356,7 +359,8 @@ Assets/Akil/                                      Scene environment / 3D art
 | `Assets/Aloysius/Scenes/SCENE_MainScene 2.unity` | Aloysius | Prototyping | UI-team scene; **used for demo tuning** (JunHeng copied the converged main scene here for intro-camera/entry-point/card-hold tuning) |
 | `Assets/Akil/Scenes/SCENE_MainScene 2.unity` | Akil | Environment / art | Renamed from `SCENE_MainScene 1.unity` 2026-07-24; older `SCENE_MainScene.unity` deleted (280k lines wiped) |
 | `Assets/Akil/Scenes/SCENE_MainSceneBackup.unity` | Akil | Backup | — |
-| `Assets/Aloysius/Scenes/new netcode 2.unity` | Aloysius | Prototyping | Live UI client copy replacement (old `new netcode 1.unity` deleted 2026-07-25) |
+| `Assets/Aloysius/Scenes/new netcode 2.unity` | Aloysius | **ACTIVE tablet client** | The tablet UI scene enabled in Build Settings (index 1, Android build) |
+| `Assets/Aloysius/Scenes/new netcode 3.unity` | Aloysius | Prototyping | Newer client copy added 2026-07-26; not in Build Settings — `new netcode 2` is the live one |
 | `Assets/Junheng/Scenes/ALOYLOU VEFR @.unity` | JunHeng | WIP (local) | Newer tablet-client scene, 14 species bubbles — not committed to git at last check |
 | `Assets/Junheng/Scenes/Aloysius lololol.unity` | JunHeng | WIP (local) | 1-flag fork of Netcode Simulation Test with ConnectionScreen disabled |
 | `Assets/Junheng/Scenes/Swirl_Demo.unity` | JunHeng | Deprecated | Old swirl demo |
@@ -379,7 +383,7 @@ Historically had THREE `Boids_Demo` / `SCENE_MainScene` copies (JunHeng had the 
 - **`EcosystemDefinitionGPU`** — top-level asset: species list + simulation bounds. The 12 canonical species are wired in **fixed order**, each with a matching `BoidSpawnerGPUMultiTargets` in `BoidSimulationGPU._gpuBoidSpawners`. ⚠ Child spawner objects are **not** auto-scanned; a species in the definition list but missing from this array throws *"no spawner has SpeciesData 'X' assigned"* and won't spawn.
 - **`BoidSpawnerGPUMultiTargets`** reads all spawn properties from `SpeciesDataGPU`.
 - **`BoidSpawnerBase`** — `SchoolCount` / `IsActive` properties + `SetSchoolConfiguration(schoolCount, fishPerSchool)`.
-- **Simulation bounds derived** — `EcosystemSimulationGPU.SimulationBounds` reads from `BoidSimulationGPU.SimulationAreaBounds`. `EcosystemDefinitionGPU` SimulationCenter/SimulationSize are only a fallback; no more manual sync of two separate bounds assets. Bounds gizmo draws the derived volume; wandering affecter targets spawn and roam inside it.
+- **Simulation bounds derived** — `EcosystemSimulationGPU.SimulationBounds` reads from `BoidSimulationGPU.SimulationAreaBounds`. `EcosystemDefinitionGPU` SimulationCenter/SimulationSize are only a fallback; no more manual sync of two separate bounds assets; wandering affecter targets spawn and roam inside it. **`_simulation` now auto-wires** to a sibling `BoidSimulationGPU` via editor `Reset()` / `OnValidate()` (2026-07-26, `7f680929`) so the reference is never silently unassigned. The old `OnDrawGizmosSelected` bounds-box gizmo was **removed** in the same change (was drifting/duplicating BoidSimulationGPU's own gizmo).
 
 ## 7.2 Population Dynamics + Eco-Health (ratio-driven, global)
 
@@ -632,8 +636,15 @@ Two sibling components sharing a common queue + CSV backend, fire on different e
 - Add/Remove was extracted out of `ModalController` (which no longer touches netcode at all):
   - **`TabletAddRemoveUIGPU`** (singleton) holds the +/− buttons and optional population label; `Select(species)` resolves the netcode index via `TabletEcosystemUIGPU` and buttons fire `RequestAddSpeciesRpc`/`RequestRemoveSpeciesRpc`; greys Add at `MaxSchools`, Remove at 0.
   - **`BubbleSelectHook`** (one per species bubble) routes a bubble tap to `TabletAddRemoveUIGPU.Select(bubble.data.gpuSpecies)` **without editing the UI-team's `SpeciesBubble`** — add-component on each bubble, no per-bubble wiring.
-- **Add cooldown** (default **0.3s**, `unscaledTime`-based) blocks accidental double-taps / mashing on Add without hurting deliberate tapping. 0 = off.
+- **Add cooldown** (default **1s** as of 2026-07-26, was 0.3s; `unscaledTime`-based) blocks accidental double-taps / mashing on Add. Now exposed as `CooldownRemaining` / `CooldownDuration` and Add greys out while recovering. 0 = off.
+- **`ButtonCooldownOverlay.cs`** (Aloysius, `103401b3`) — FFXIV-style **radial recovery sweep** over the Add button icon that unwinds as the cooldown recovers, so a swallowed press reads as "not ready yet" instead of "broken". Purely presentational — reads `TabletAddRemoveUIGPU.CooldownRemaining/Duration`, never gates anything itself (`raycastTarget=false`), so it can't disagree with the real gate.
 - **Locked-species blocking** — Add greys out when the selected species is still locked.
+
+### Look-up prompt (Aloysius, `9ad7463a`)
+- **`LookUpPrompt.cs`** — a transient "look up at the big screen" toast fired on **every Add** (`TabletAddRemoveUIGPU.OnAdd` → `LookUpPrompt.Trigger()`), because visitors stare at the tablet and miss the fish arriving on the trifold. Singleton + static `Trigger()`; repeated adds restart the hold window instead of re-fading (no flicker); suppressed while the tutorial is open; `ResetForNewSession()` clears it on exhibit reset (wired into `ExhibitReset.DoLocalReset`). **Not** a `ContextNudge` — it re-fires all session rather than dismissing once.
+
+### Balance advisor (Aloysius, `c4d0a8b8`)
+- **`BalanceAdvisor.cs`** — bottom-left **"HOW TO BALANCE"** panel. Every line is derived from the **sim's own** `GetSpeciesStatus` per species (so it can never disagree with the eco-health bar). Two anti-answer-key rules: **(1) grouped, not enumerated** — problems collapse by kind (eight missing species = one "sparse reef" line); **(2) escalating detail** — opens vague and only names the species, then the fix, after eco-health fails to reach a new high for `escalateAfter` (25s); any progress drops it back to vague. Hidden before start and while the tutorial is open (which also freezes the stuck-clock). Advisory-only (never blocks taps). Ranks active collapses (starving/over-predated) above mere absences.
 
 ### Current Organisms view
 - **`CurrentOrganismsGrid.cs`** — grid of currently-living species; card icons now come from `SpeciesContent.csv` `revealImageFile` (a tablet-folder copy of the big-screen arrival art), falling back to `imageFile` (info portrait), then the bubble's inspector `cardImage`, so a card never goes blank.
@@ -801,7 +812,7 @@ A full reset for the next visitor: empties the ocean, re-locks every species, ze
 4. **On `OnReset` (both devices)** `ExhibitReset.DoLocalReset()` runs:
    - `OptimisticPopulationStore.Clear()` — drop pending taps.
    - `EcosystemUnlockManagerGPU.ResetToStart()` — re-lock to the 5 starters + reset hints.
-   - `FindObjectsByType` → per-component reset on: `ExperienceStartGate.ReturnToAttract`, `AluciaController.ResetForNewSession` (re-arms the intro), `HideUntilStarted`, `ContextNudge`, `SpeciesAddedReveal.ResetShownHistory`, `RevealQueue.ClearAll`, `NotificationManager.ClearAll`, `WinCondition.Reset`, `StartCrossfade.ResetForNewSession`, `TutorialPanel.ResetForNewSession`, `TabController.ResetForNewSession`.
+   - `FindObjectsByType` → per-component reset on: `ExperienceStartGate.ReturnToAttract`, `AluciaController.ResetForNewSession` (re-arms the intro), `HideUntilStarted`, `ContextNudge`, `SpeciesAddedReveal.ResetShownHistory`, `RevealQueue.ClearAll`, `NotificationManager.ClearAll`, `WinCondition.Reset`, `StartCrossfade.ResetForNewSession`, `TutorialPanel.ResetForNewSession`, `TabController.ResetForNewSession`, `LookUpPrompt.ResetForNewSession` (added 2026-07-27).
 
 ⚠ **Two-phase timing is deliberate**: the tablet re-locks only after the host has synced health→0, so its unlock check (which never re-locks) can't immediately re-unlock. That's why the tablet resets ~coverDuration after F9, not instantly.
 
@@ -1255,8 +1266,7 @@ A smaller adjacent leak was fixed 2026-07-16: `ContentService.LoadSprite` now de
 ## Scene / build hygiene
 
 - **Scene divergence — three "large screen" scenes historically drifted.** JunHeng had sim, Aloysius forked with health bar, Akil owned environment/lighting. Convergence into JunHeng's `SCENE_MainScene.unity` is partial but not complete. See §11.
-- **Build Settings still points at Aloysius's `SCENE_MainScene 1.unity` (index 1), not JunHeng's `SCENE_MainScene.unity`.** Confirm this is intended.
-- **Two dead Build Settings entries** (both `enabled: 0`): `Aloysius/SceneTemp.unity`, `Aloysius/SCENE_MainScene 1.unity` (missing from disk). Prune them.
+- **Build Settings = one-project-two-players toggle** (as of 2026-07-28): index 0 `Aloysius/Scenes/Start scene.unity`, index 1 is EITHER `Junheng/SCENE_MainScene.unity` (host/Windows) OR `Aloysius/Scenes/new netcode 2.unity` (tablet/Android) — enable one, match the Player platform. The stale `SCENE_MainScene 1.unity` reference is gone. ⚠ Easy to ship the wrong scene/platform pair — double-check before each build.
 - **`Assets/_Recovery/` — 9.9 MB of Unity crash-recovery dumps tracked in git.** `0 (3).unity` alone is 8.4 MB. Not in Build Settings so nothing ships, but Unity imports/parses them every project open and their live script GUIDs pollute every reference grep. → `git rm -r --cached "Assets/_Recovery"`, delete, add to `.gitignore`.
 - **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active.
 - **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene.
@@ -1287,7 +1297,7 @@ A smaller adjacent leak was fixed 2026-07-16: `ContentService.LoadSprite` now de
 
 ## Corrections to older claims
 
-- **"Re-point Build Settings"** — the enabled set was corrected 2026-07-20 (`74deb98`): now `Aloysius/Start scene.unity` → `Aloysius/Scenes/SCENE_MainScene 1.unity`.
+- **"Re-point Build Settings"** — superseded 2026-07-28 (`fdcfc4c3` "android to window"): index 0 `Aloysius/Scenes/Start scene.unity`, index 1 toggles `Junheng/SCENE_MainScene.unity` (host) ↔ `Aloysius/Scenes/new netcode 2.unity` (tablet). `SCENE_MainScene 1.unity` no longer in the list.
 - **"Strip debug logging"** — 70 log calls total across Junheng+Aloysius, and **no unconditional per-frame or per-tick logging exists**. `AluciaEcologyEvents.debugLog` and `EnvironmentHealthReveal.logDebug` are already default-off Inspector toggles. The rest are one-shot init/error paths. Recommendation: don't strip, confirm toggles off and ship. ⚠ EXCEPTION: temporary `[Alucia] ResetForNewSession / muted / [ExhibitReset] / [NetMgr] _resetGeneration` diagnostics kept in for reset-flow debugging — STRIP those before final build.
 - **Target/animator leak worry is unfounded** — every `CreateTarget` is matched by a `DestroyLastTarget` that destroys both the Target and its paired Animator. Rapid remove is safe.
 - **Eco-health does NOT allocate** and its per-frame cost is fine — `_committedScratch` is reused and every enumerator is a struct. (Real latent defect: `BuildCommittedCounts` hands callers a *shared mutable* dictionary — aliasing hazard.)
@@ -1310,8 +1320,8 @@ Priority order.
 ## 2. Converge the host scenes into ONE canonical scene
 Sim (from JunHeng's `SCENE_MainScene`) + health bar (`HealthBarBinder` already merged) + baked environment (from Akil's `SCENE_MainScene 2`) + Alucia + reveal cards + `ExhibitReset` + `BubbleTransition` should all live in one scene. Alucia + reveal cards now exist in **7 scenes** after all the merges. **Team decision required about whose environment work survives.**
 
-## 3. Re-point Build Settings
-Currently indices 0/1 = `Aloysius/Start scene.unity` / `Aloysius/Scenes/SCENE_MainScene 1.unity`. If the merged scene lives elsewhere (e.g. JunHeng's `SCENE_MainScene.unity`), re-point index 1. Prune two dead entries (`Aloysius/SceneTemp.unity`, `Aloysius/SCENE_MainScene 1.unity` (root)).
+## 3. Build Settings — now a host/tablet toggle (mostly resolved)
+Index 0 = `Aloysius/Scenes/Start scene.unity`; index 1 toggles between `Junheng/SCENE_MainScene.unity` (host/Windows) and `Aloysius/Scenes/new netcode 2.unity` (tablet/Android) — the `fdcfc4c3` "android to window" flip. Remaining care: enable the right scene AND set the matching Player platform for each of the two builds; don't ship both index-1 scenes enabled at once.
 
 ## 4. Strip temporary debug logging before final build
 Specifically the temp diagnostics kept in for the reset-flow work: `[Alucia] ResetForNewSession …`, `[Alucia] Say(…) muted=…` (`AluciaController`), `[ExhibitReset] …`, `[NetMgr] _resetGeneration …`. Keep the general operational logs (see §10 correction).

@@ -459,44 +459,79 @@ namespace OceanX.BoidsGPU.Ecosystem
         //
         // Lives here because _ratioBandLow / _overpopulatedRatio / _overpopulatedFreeCount are
         // private to this class; the tablet cannot do this arithmetic itself.
+        // Does this species currently COUNT toward eco-health? This is deliberately the health
+        // formula's own test (ComputeEcoHealth01, ~line 683) and NOT GetSpeciesStatus, because the
+        // two disagree: the formula tests PopulationPressure and overpopulation, while the status
+        // enum also has a pure predator-RATIO test (OverPredated). A species can therefore be
+        // OverPredated and still count as healthy -- which is exactly why Russell's snapper asked
+        // for +2 schools while eco-health sat at 100%.
+        public bool CountsTowardHealth(SpeciesDataGPU species)
+        {
+            return species != null && CountsTowardHealth(species, BuildCommittedCounts());
+        }
+
+        public bool CountsTowardHealth(SpeciesDataGPU species, Dictionary<SpeciesDataGPU, int> committed)
+        {
+            if (species == null) return false;
+            if (CountIn(committed, species) <= 0) return false;
+            if (!HasAny(species.PredatorSpecies) && !HasAny(species.PreySpecies)) return false;
+            bool declining = PopulationPressure(species, committed) < 0;
+            return !declining && !IsOverpopulated(species, committed);
+        }
+
+        // Sentinel delta values. The tablet renders the number ALONE and never consults
+        // GetSpeciesStatus, because that enum and the health formula disagree (see
+        // CountsTowardHealth above). One authority, one value, no way for the row to contradict
+        // the bar.
+        public const int DeltaOk        = 0;                 // counts toward health: nothing to do
+        public const int DeltaNeedsPrey = int.MinValue + 1;  // starving: fix is more prey
+        public const int DeltaCapped    = int.MinValue + 2;  // over-hunted AT its cap: fix is fewer predators
+
         public int GetSpeciesDelta(SpeciesDataGPU species)
         {
-            if (species == null) return 0;
+            if (species == null) return DeltaOk;
+
             Dictionary<SpeciesDataGPU, int> counts = BuildCommittedCounts();
-            int n = CountIn(counts, species);
 
-            if (n <= 0) return 1;   // absent: one school is enough to start counting toward diversity
+            // If the bar already counts this species as healthy, nothing the visitor does to it can
+            // raise the score, so there is nothing to report -- whatever GetSpeciesStatus thinks.
+            if (CountsTowardHealth(species, counts)) return DeltaOk;
 
-            bool hasPrey = HasAny(species.PreySpecies);
-            int  preyN   = hasPrey ? SumCounts(counts, species.PreySpecies) : 0;
-            int  predN   = HasAny(species.PredatorSpecies) ? SumCounts(counts, species.PredatorSpecies) : 0;
+            SpeciesStatus status = GetSpeciesStatus(species);
+            if (status == SpeciesStatus.Balanced) return DeltaOk;
 
-            // Starving -> the answer is more prey, so there is no useful number for this row.
-            if (hasPrey && _foodWasPresent.Contains(species)
-                && (preyN <= 0 || (float)preyN / n < _ratioBandLow))
-                return 0;
+            int n     = CountIn(counts, species);
+            int predN = HasAny(species.PredatorSpecies) ? SumCounts(counts, species.PredatorSpecies) : 0;
 
-            // Over-predated -> needs to outnumber its predators by at least the low band. But it
-            // cannot exceed its own MaxSchools, and asking for schools the visitor is forbidden to
-            // add is worse than saying nothing. At the cap the only remaining lever is thinning the
-            // predators, so report 0 and let the status (OverPredated) carry the message.
-            if (predN > 0 && (float)n / predN < _ratioBandLow)
+            switch (status)
             {
-                int need = Mathf.CeilToInt(_ratioBandLow * predN) - n;
-                int room = Mathf.Max(0, GetMaxSchools(species) - n);
-                return need <= room ? Mathf.Max(1, need) : 0;
-            }
+                case SpeciesStatus.Absent:
+                    return 1;   // one school is enough to start counting toward diversity
 
-            // Overpopulated -> trim under the runaway ratio, or under the flat count once its
-            // predators are gone entirely.
-            if (IsOverpopulated(species, counts))
-            {
-                int target = predN > 0 ? Mathf.FloorToInt(_overpopulatedRatio * predN)
-                                       : _overpopulatedFreeCount;
-                return Mathf.Min(-1, target - n);
-            }
+                case SpeciesStatus.Starving:
+                    return DeltaNeedsPrey;
 
-            return 0;
+                case SpeciesStatus.OverPredated:
+                {
+                    if (predN <= 0) return DeltaOk;
+                    int need = Mathf.CeilToInt(_ratioBandLow * predN) - n;
+                    int room = Mathf.Max(0, GetMaxSchools(species) - n);
+                    if (need <= 0) return DeltaOk;
+                    // Cannot add its way out (at or near MaxSchools) -> the only lever is thinning
+                    // the predators, which is not something this row's buttons can do.
+                    return need <= room ? need : DeltaCapped;
+                }
+
+                case SpeciesStatus.Overpopulated:
+                {
+                    int target = predN > 0 ? Mathf.FloorToInt(_overpopulatedRatio * predN)
+                                           : _overpopulatedFreeCount;
+                    return Mathf.Min(-1, target - n);
+                }
+
+                default:
+                    return DeltaOk;
+            }
         }
         // ===== END BALANCE DELTA ==============================================================
 

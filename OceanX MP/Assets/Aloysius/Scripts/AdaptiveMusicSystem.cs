@@ -359,6 +359,15 @@ public class AdaptiveMusicSystem : MonoBehaviour
             _swellSource.PlayOneShot(swell, swellVolume * masterVolume);
     }
 
+    /// <summary>Per-species intro sting on first introduction, routed through the swell source so it
+    /// respects masterVolume. Falls back to the generic swell when <paramref name="clip"/> is null.</summary>
+    public void PlayIntro(AudioClip clip, float volume = 1f)
+    {
+        if (clip == null) { PlaySwell(); return; }
+        if (_swellSource != null)
+            _swellSource.PlayOneShot(clip, Mathf.Clamp01(volume) * masterVolume);
+    }
+
     void OnGUI()
     {
         if (!showDebugReadout) return;

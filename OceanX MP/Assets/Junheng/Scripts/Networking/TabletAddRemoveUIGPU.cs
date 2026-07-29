@@ -26,20 +26,17 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
 {
     public static TabletAddRemoveUIGPU Instance { get; private set; }
 
-    [Header("Spam guard")]
-    [Tooltip("Minimum seconds between normal Add/Remove presses. Long enough to be shown as a recovery " +
-             "sweep on the button rather than silently swallowing the press. 0 = off.")]
-    public float addCooldown = 1f;
-
-    [Tooltip("Longer lockout applied when a species is added for the FIRST time (count 0 -> 1). Blocks " +
+    [Header("First-add reveal lockout")]
+    [Tooltip("Lockout applied ONLY when a species is added for the FIRST time (count 0 -> 1). Blocks " +
              "adding ANY species until it elapses, giving the big-screen reveal card + intro camera time " +
              "to fully show the new fish before the next add. Size it to cover the reveal hold + camera " +
-             "blend (~reveal ~4.8s / camera ~5.5s). Set equal to addCooldown to disable the two-tier behaviour.")]
+             "blend (~reveal ~4.8s / camera ~5.5s). Set to 0 to disable the lockout as well. " +
+             "Normal (non-first) add/remove has NO cooldown.")]
     public float firstAddCooldown = 6f;
 
     private float _lastAddTime = -999f;
-    // The cooldown length currently in effect — set per press (short for normal, long for a first-time add).
-    private float _currentCooldown = 1f;
+    // The cooldown length currently in effect — 0 for a normal add/remove, firstAddCooldown for a first-time add.
+    private float _currentCooldown = 0f;
 
     /// <summary>Seconds left on the shared add/remove cooldown; 0 when ready. Read by ButtonCooldownOverlay.</summary>
     public float CooldownRemaining => Mathf.Max(0f, _currentCooldown - (Time.unscaledTime - _lastAddTime));
@@ -63,7 +60,7 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _currentCooldown = addCooldown;   // start ready on the short cooldown
+        _currentCooldown = 0f;   // normal add/remove has no cooldown; only a first-time add sets one
         if (addButton != null)    addButton.onClick.AddListener(OnAdd);
         if (removeButton != null) removeButton.onClick.AddListener(OnRemove);
         RefreshButtons();
@@ -96,10 +93,10 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
         if (max > 0 && OptimisticPopulationStore.Display(_index) >= max) return; // already at cap optimistically
 
         // A first-time add (this species is currently absent) triggers the big-screen reveal card + intro
-        // camera, so lock out the NEXT add for longer to let that play; normal adds keep the short cooldown.
+        // camera, so lock out the NEXT add until that plays. Normal (non-first) adds have NO cooldown.
         bool firstTime = OptimisticPopulationStore.Display(_index) <= 0;
         _lastAddTime = Time.unscaledTime;
-        _currentCooldown = firstTime ? Mathf.Max(addCooldown, firstAddCooldown) : addCooldown;
+        _currentCooldown = firstTime ? firstAddCooldown : 0f;
 
         OptimisticPopulationStore.RegisterDelta(_index, +1);
         net.RequestAddSpeciesRpc(_index);
@@ -112,9 +109,9 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
         var net = EcosystemNetworkManagerGPU.Instance;
         if (_index < 0 || net == null) return;
         if (OptimisticPopulationStore.Display(_index) <= 0) return; // already at zero optimistically
-        if (CooldownRemaining > 0f) return; // spam / first-add cooldown (shared with Add)
+        if (CooldownRemaining > 0f) return; // still inside a first-add reveal lockout (shared with Add)
         _lastAddTime = Time.unscaledTime;
-        _currentCooldown = addCooldown;   // a remove is a normal-cadence action
+        _currentCooldown = 0f;   // remove has no cooldown
 
         OptimisticPopulationStore.RegisterDelta(_index, -1);
         net.RequestRemoveSpeciesRpc(_index);

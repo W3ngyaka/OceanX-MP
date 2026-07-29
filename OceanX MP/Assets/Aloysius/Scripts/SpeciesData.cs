@@ -33,4 +33,10 @@ public class SpeciesData : ScriptableObject
     [TextArea(2, 3)] public string hint2;
     [TextArea(2, 3)] public string hint3;
     [TextArea(2, 3)] public string addedMessage;
+
+    [Header("Audio")]
+    [Tooltip("Optional host/big-screen sting played the FIRST time this species is introduced (0 -> 1). " +
+             "Leave empty to fall back to the generic music swell.")]
+    public AudioClip introSound;
+    [Range(0f, 1f)] public float introVolume = 1f;
 }

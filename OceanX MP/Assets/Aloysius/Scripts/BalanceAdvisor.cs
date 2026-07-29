@@ -38,6 +38,18 @@ public class BalanceAdvisor : MonoBehaviour
     [Tooltip("Hide while the HOW TO PLAY panel is open, so the two don't compete for attention.")]
     public bool hideWhileTutorialOpen = true;
 
+    [Header("Division of labour")]
+    [Tooltip("Ceiling on how specific this panel may get. 0 = describe the problem only, 1 = also name " +
+             "the species, 2 = also state the fix. Keep below 2 so the HINTS tab stays the place that " +
+             "actually tells the visitor what to press.")]
+    [Range(0, 2)] public int maxDetailLevel = 1;
+
+    [Tooltip("Report species that are simply missing. Off by default: the health card already shows " +
+             "'n / 12 species present' and the Organisms rows show per-species numbers, so this panel " +
+             "earns its space on the DYNAMICS \u2014 starving, over-hunted, overcrowded \u2014 which nothing " +
+             "else on the tablet explains.")]
+    public bool reportMissingSpecies = false;
+
     [Header("Escalation")]
     [Tooltip("Seconds of no NEW eco-health high before the panel gets more specific. Each step of " +
              "this long moves it one level: vague -> names the species -> names the fix.")]
@@ -48,8 +60,18 @@ public class BalanceAdvisor : MonoBehaviour
     public float progressEpsilon = 0.01f;
 
     [Header("Copy")]
+    [Tooltip("Put each sentence on its own line instead of running them together as a paragraph.")]
+    public bool eachSentenceOnNewLine = false;
+
     public string headerText = "HOW TO BALANCE";
     public string balancedMessage = "The reef is balanced. Nice work!";
+
+    [Tooltip("Eco-health (0-1) at or above which the reef genuinely counts as balanced.")]
+    [Range(0.5f, 1f)] public float balancedThreshold = 0.99f;
+
+    [Tooltip("Nothing is wrong that the visitor can act on, but health is still short \u2014 usually " +
+             "because the remaining species have not unlocked yet.")]
+    public string nothingToDoMessage = "Nothing here is in trouble. The reef is just missing species, over on the Food Web tab.";
 
     private float _timer;
     private float _bestHealth = -1f;
@@ -68,7 +90,8 @@ public class BalanceAdvisor : MonoBehaviour
     }
 
     // 0 = vague, 1 = names the species, 2 = names the fix.
-    private int Level => Mathf.Clamp(Mathf.FloorToInt(_stuckTime / Mathf.Max(1f, escalateAfter)), 0, 2);
+    private int Level => Mathf.Clamp(Mathf.FloorToInt(_stuckTime / Mathf.Max(1f, escalateAfter)),
+                                     0, Mathf.Clamp(maxDetailLevel, 0, 2));
 
     void Awake()
     {
@@ -128,6 +151,7 @@ public class BalanceAdvisor : MonoBehaviour
             {
                 case EcosystemSimulationGPU.SpeciesStatus.Absent:
                     if (!canAdd) break;   // locked: the visitor can't act on it, so never mention it
+                    if (!reportMissingSpecies) break;   // covered by the health card + Organisms rows
                     Add(sp.Role == SpeciesRoleGPU.Apex ? Kind.MissingApex : Kind.Missing, sp, null);
                     break;
                 case EcosystemSimulationGPU.SpeciesStatus.Overpopulated:
@@ -146,14 +170,22 @@ public class BalanceAdvisor : MonoBehaviour
         _issues.Sort((a, b) => Rank(a.Kind).CompareTo(Rank(b.Kind)));
 
         _sb.Clear();
-        if (_issues.Count == 0) _sb.Append(balancedMessage);
+        if (_issues.Count == 0)
+        {
+            // "Nothing to suggest" is NOT "balanced". Absent species that are still locked are
+            // skipped above because the visitor cannot add them, but ComputeEcoHealth01 divides its
+            // diversity term by EVERY species in the ecosystem, locked or not. So a reef where
+            // everything unlocked is present and thriving still scores well under 100%, and the old
+            // code congratulated the visitor for it. Ask the health value instead of inferring.
+            _sb.Append(health >= balancedThreshold ? balancedMessage : nothingToDoMessage);
+        }
         else
         {
             int n = Mathf.Min(maxLines, _issues.Count);
             for (int i = 0; i < n; i++)
             {
-                if (i > 0) _sb.Append('\n');
-                _sb.Append("\u2022 ").Append(Line(_issues[i], Level));
+                if (i > 0) _sb.Append(eachSentenceOnNewLine ? "\n" : " ");
+                _sb.Append(AsSentence(Line(_issues[i], Level)));
             }
         }
 
@@ -242,6 +274,15 @@ public class BalanceAdvisor : MonoBehaviour
             return string.IsNullOrEmpty(s.SpeciesName) ? null : s.SpeciesName;
         }
         return null;
+    }
+
+    // Line() returns fragments without terminal punctuation so they compose either way; read as
+    // prose each one needs to close properly. Leaves existing punctuation alone.
+    private static string AsSentence(string s)
+    {
+        if (string.IsNullOrEmpty(s)) return s;
+        char last = s[s.Length - 1];
+        return (last == '.' || last == '!' || last == '?') ? s : s + ".";
     }
 
     private void SetShown(bool shown)

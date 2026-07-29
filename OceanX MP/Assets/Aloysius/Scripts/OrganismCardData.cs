@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using OceanX.BoidsGPU.Ecosystem;   // SpeciesStatus (BALANCE DELTA)
 
 public class OrganismCardData : MonoBehaviour
 {
@@ -15,6 +16,29 @@ public class OrganismCardData : MonoBehaviour
              "food-web bubble's overpop logic.")]
     public GameObject overpopBadge;
 
+    // ===== BALANCE DELTA (revert: delete this block, the two marked calls, and UpdateDelta) =====
+    [Header("Balance hint")]
+    [Tooltip("Shows how many to add (+) or remove (-) to make this species healthy, using the " +
+             "simulation's own thresholds. Auto-found (child named 'DeltaLabel') if left empty. " +
+             "Leave unassigned to disable entirely.")]
+    public TMP_Text deltaText;
+
+    [Tooltip("Text when this species is already fine.")]
+        // Rajdhani has no U+2713 check mark and no fallback supplies one, so a tick renders as tofu.
+    public string okLabel = "ok";
+
+    [Tooltip("Text when the fix belongs to another species (e.g. it is starving and needs more prey).")]
+    public string needsFoodLabel = "needs food";
+
+    [Tooltip("Text when a species is being hunted out but is already at its MaxSchools cap, so the " +
+             "only fix is removing some of its predators. Without this the row would read 'ok'.")]
+    public string huntedOutLabel = "too many hunters";
+
+    public Color addColor    = new Color(0.55f, 0.90f, 1f, 1f);
+    public Color removeColor = new Color(1f, 0.62f, 0.55f, 1f);
+    public Color okColor     = new Color(0.60f, 0.95f, 0.72f, 1f);
+    // ===== END BALANCE DELTA ====================================================================
+
     [Header("Live update")]
     [Tooltip("Seconds between population polls. 0 = every frame.")]
     public float pollInterval = 0.2f;
@@ -23,6 +47,7 @@ public class OrganismCardData : MonoBehaviour
     private int lastShown = -1;
     private float pollTimer;
     private bool overpopShown;
+    private int lastDelta = int.MinValue;   // BALANCE DELTA
 
     public void Setup(Sprite icon, string speciesName, int count, int index)
     {
@@ -41,8 +66,16 @@ public class OrganismCardData : MonoBehaviour
 
         // Show the optimistic count so a card recreated after a panel switch reflects a pending
         // removal instead of snapping back to the host's not-yet-lowered count.
+        if (deltaText == null)   // BALANCE DELTA
+        {
+            var d = transform.Find("DeltaLabel");
+            if (d != null) deltaText = d.GetComponent<TMP_Text>();
+        }
+        lastDelta = int.MinValue;
+
         SetShown(OptimisticPopulationStore.Display(index));
         UpdateOverpop();
+        UpdateDelta();   // BALANCE DELTA
     }
 
     void Update()
@@ -62,6 +95,7 @@ public class OrganismCardData : MonoBehaviour
         }
         if (display != lastShown) SetShown(display);
         UpdateOverpop();
+        UpdateDelta();   // BALANCE DELTA
     }
 
     void SetShown(int count)
@@ -85,6 +119,36 @@ public class OrganismCardData : MonoBehaviour
             overpopBadge.SetActive(over);
         }
     }
+
+    // ===== BALANCE DELTA ========================================================================
+    // Renders the host-computed advice for this species. The number is a live target: it moves
+    // whenever this species' predators or prey change, because the simulation defines "healthy"
+    // as a ratio to neighbours rather than a fixed count. Never recomputed here.
+    void UpdateDelta()
+    {
+        if (deltaText == null) return;
+        var net = EcosystemNetworkManagerGPU.Instance;
+        if (speciesIndex < 0 || net == null) return;
+
+        int delta  = net.GetSpeciesDelta(speciesIndex);
+        var status = net.GetSpeciesStatus(speciesIndex);
+        bool starving = status == EcosystemSimulationGPU.SpeciesStatus.Starving;
+        // Over-predated with no actionable number means it is capped: adding more is not allowed,
+        // so the fix is fewer predators. Must not fall through to the "ok" branch.
+        bool cappedHunted = delta == 0
+                            && status == EcosystemSimulationGPU.SpeciesStatus.OverPredated;
+
+        int key = starving ? int.MaxValue : (cappedHunted ? int.MinValue + 1 : delta);
+        if (key == lastDelta) return;
+        lastDelta = key;
+
+        if (starving)          { deltaText.text = needsFoodLabel; deltaText.color = removeColor; }
+        else if (cappedHunted) { deltaText.text = huntedOutLabel; deltaText.color = removeColor; }
+        else if (delta > 0){ deltaText.text = "+" + delta;    deltaText.color = addColor; }
+        else if (delta < 0){ deltaText.text = "-" + (-delta); deltaText.color = removeColor; }
+        else               { deltaText.text = okLabel;         deltaText.color = okColor; }
+    }
+    // ===== END BALANCE DELTA ====================================================================
 
     // Hook this to the card's "-1" Button.onClick (prototype spec: -1 or All).
     public void OnTapRemoveOne()

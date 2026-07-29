@@ -46,6 +46,18 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private float _overpopCheckTimer;
     private bool _overpopShown;
 
+    // Re-sync lock state every time the bubble becomes visible again.
+    //
+    // EcosystemUnlockManagerGPU pushes unlocks with FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None),
+    // and that overload SKIPS INACTIVE OBJECTS. Switching tabs deactivates FoodWebLayer, so a species
+    // unlocked while the visitor is on another tab never reaches these bubbles and the padlock stays
+    // on permanently. Pulling the current state on enable makes that unmissable: whatever happened
+    // while we were hidden, we read the truth the moment we come back.
+    void OnEnable()
+    {
+        if (Application.isPlaying) Refresh();
+    }
+
     void Start()
     {
         baseScale = transform.localScale;

@@ -170,15 +170,13 @@ public class BalanceAdvisor : MonoBehaviour
         _issues.Sort((a, b) => Rank(a.Kind).CompareTo(Rank(b.Kind)));
 
         _sb.Clear();
-        if (_issues.Count == 0)
-        {
-            // "Nothing to suggest" is NOT "balanced". Absent species that are still locked are
-            // skipped above because the visitor cannot add them, but ComputeEcoHealth01 divides its
-            // diversity term by EVERY species in the ecosystem, locked or not. So a reef where
-            // everything unlocked is present and thriving still scores well under 100%, and the old
-            // code congratulated the visitor for it. Ask the health value instead of inferring.
-            _sb.Append(health >= balancedThreshold ? balancedMessage : nothingToDoMessage);
-        }
+        // At or above the balanced threshold the bar is already telling the visitor the reef is
+        // fine, so nothing is worth reporting. This matters because GetSpeciesStatus and the health
+        // formula do not agree: a species can be flagged OverPredated on a pure predator-ratio test
+        // while still counting as healthy for eco-health. Printing that underneath 100% THRIVING
+        // just reads as the panel contradicting the gauge.
+        if (health >= balancedThreshold) _sb.Append(balancedMessage);
+        else if (_issues.Count == 0) _sb.Append(nothingToDoMessage);
         else
         {
             int n = Mathf.Min(maxLines, _issues.Count);

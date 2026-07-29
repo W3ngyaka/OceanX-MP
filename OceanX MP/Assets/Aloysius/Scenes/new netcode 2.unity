@@ -1498,10 +1498,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 72
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -1537,7 +1537,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 156.70447, w: 0}
+  m_margin: {x: 0, y: 0, z: 171.41281, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -14752,7 +14752,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1321687486}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -16505,7 +16505,7 @@ RectTransform:
   m_GameObject: {fileID: 1429282708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99417824, y: 1.3203104, z: 0.93686336}
+  m_LocalScale: {x: 0.9944038, y: 1.32061, z: 0.9370759}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 43056380}
@@ -16619,7 +16619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afcae2689686b5445affaa9d54b89a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabletAddRemoveUIGPU
-  addCooldown: 2.5
+  addCooldown: 0
   firstAddCooldown: 6
   addButton: {fileID: 1090360380}
   removeButton: {fileID: 0}

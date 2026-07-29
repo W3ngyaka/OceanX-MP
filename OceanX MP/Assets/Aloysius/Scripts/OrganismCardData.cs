@@ -28,11 +28,11 @@ public class OrganismCardData : MonoBehaviour
     public string okLabel = "ok";
 
     [Tooltip("Text when the fix belongs to another species (e.g. it is starving and needs more prey).")]
-    public string needsFoodLabel = "needs food";
+    public string needsFoodLabel = "hungry";
 
     [Tooltip("Text when a species is being hunted out but is already at its MaxSchools cap, so the " +
              "only fix is removing some of its predators. Without this the row would read 'ok'.")]
-    public string huntedOutLabel = "too many hunters";
+    public string huntedOutLabel = "hunted";
 
     public Color addColor    = new Color(0.55f, 0.90f, 1f, 1f);
     public Color removeColor = new Color(1f, 0.62f, 0.55f, 1f);
@@ -130,23 +130,24 @@ public class OrganismCardData : MonoBehaviour
         var net = EcosystemNetworkManagerGPU.Instance;
         if (speciesIndex < 0 || net == null) return;
 
-        int delta  = net.GetSpeciesDelta(speciesIndex);
-        var status = net.GetSpeciesStatus(speciesIndex);
-        bool starving = status == EcosystemSimulationGPU.SpeciesStatus.Starving;
-        // Over-predated with no actionable number means it is capped: adding more is not allowed,
-        // so the fix is fewer predators. Must not fall through to the "ok" branch.
-        bool cappedHunted = delta == 0
-                            && status == EcosystemSimulationGPU.SpeciesStatus.OverPredated;
+        // Switch on the NUMBER ALONE. The status enum is deliberately not consulted: it and the
+        // health formula disagree (a species can be OverPredated on a pure predator-ratio test yet
+        // still count as healthy for eco-health), and mixing the two is what put "too many hunters"
+        // on rows while the gauge read 100%. The host encodes everything it means in one int.
+        int delta = net.GetSpeciesDelta(speciesIndex);
+        if (delta == lastDelta) return;
+        lastDelta = delta;
 
-        int key = starving ? int.MaxValue : (cappedHunted ? int.MinValue + 1 : delta);
-        if (key == lastDelta) return;
-        lastDelta = key;
-
-        if (starving)          { deltaText.text = needsFoodLabel; deltaText.color = removeColor; }
-        else if (cappedHunted) { deltaText.text = huntedOutLabel; deltaText.color = removeColor; }
-        else if (delta > 0){ deltaText.text = "+" + delta;    deltaText.color = addColor; }
-        else if (delta < 0){ deltaText.text = "-" + (-delta); deltaText.color = removeColor; }
-        else               { deltaText.text = okLabel;         deltaText.color = okColor; }
+        if (delta == EcosystemSimulationGPU.DeltaNeedsPrey)
+        { deltaText.text = needsFoodLabel; deltaText.color = removeColor; }
+        else if (delta == EcosystemSimulationGPU.DeltaCapped)
+        { deltaText.text = huntedOutLabel; deltaText.color = removeColor; }
+        else if (delta > 0)
+        { deltaText.text = "+" + delta;    deltaText.color = addColor; }
+        else if (delta < 0)
+        { deltaText.text = "-" + (-delta); deltaText.color = removeColor; }
+        else
+        { deltaText.text = okLabel;        deltaText.color = okColor; }
     }
     // ===== END BALANCE DELTA ====================================================================
 

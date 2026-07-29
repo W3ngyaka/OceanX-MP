@@ -12610,7 +12610,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afcae2689686b5445affaa9d54b89a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabletAddRemoveUIGPU
-  addCooldown: 0.3
   addButton: {fileID: 1090360380}
   removeButton: {fileID: 0}
   populationLabel: {fileID: 0}

@@ -144,8 +144,10 @@ public class SpeciesAddedReveal : MonoBehaviour
             () =>
             {
                 FillCard(species);
-                // Positive beat — lift the music the moment the card appears.
-                if (AdaptiveMusicSystem.Instance != null) AdaptiveMusicSystem.Instance.PlaySwell();
+                // Positive beat — lift the music the moment the card appears. Play this species' own
+                // intro sting when one is assigned; PlayIntro falls back to the generic swell otherwise.
+                if (AdaptiveMusicSystem.Instance != null)
+                    AdaptiveMusicSystem.Instance.PlayIntro(species.introSound, species.introVolume);
             },
             holdSeconds,
             fadeDuration,

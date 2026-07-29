@@ -1,6 +1,6 @@
 # Restore the Reef — Handoff Document
 
-_Last updated: 2026-07-28_
+_Last updated: 2026-07-29_
 
 > This is the single source of truth for the project. Update the date above whenever you edit this file.
 > Formerly named **OceanX MP** / **Balance the Ocean** — renamed to **Restore the Reef** 2026-07-26.
@@ -86,7 +86,7 @@ Both devices must be on the **same WiFi** network. If the venue WiFi doesn't coo
 ### Hints panel
 
 - Tells the player what the next locked fish is waiting for.
-- ⚠ **Try not to spam add/remove** — the UI struggles to keep up (there's a 0.3s add cooldown to stop accidental double-taps; still under investigation).
+- Normal add/remove has **no cooldown** (removed 2026-07-29). Only a **first-time add** of a species (0→1) briefly locks out adding while the big-screen reveal card + intro camera play (~6s).
 
 ## Unlocking
 
@@ -268,7 +268,7 @@ Assets/Junheng/
 │   │   ├── LanDiscovery.cs                       UDP broadcast — tablet auto-finds host on WiFi
 │   │   ├── NetworkBootstrap.cs                   Host/Client role setup, starts NGO, spawns net-manager
 │   │   ├── OptimisticPopulationStore.cs          Client-side optimistic count overlay — pending taps over synced counts so the tablet number updates instantly (per-species-index; fixes remove-lag / snap-back)
-│   │   ├── TabletAddRemoveUIGPU.cs               Singleton Add/Remove controller — fires RPCs, greys at cap/0, reads display counts via OptimisticPopulationStore, add cooldown, locked-species blocking
+│   │   ├── TabletAddRemoveUIGPU.cs               Singleton Add/Remove controller — fires RPCs, greys at cap/0, reads display counts via OptimisticPopulationStore, first-add reveal lockout (normal cooldown removed 2026-07-29), locked-species blocking
 │   │   └── TabletEcosystemUIGPU.cs               Pure species→index lookup service
 │   ├── Shader_GUI/Editor/                        Custom material inspectors for the Fish_Lit shaders (namespace: OceanX, formerly GameDevBuddies)
 │   │   ├── FishLitBaseShaderGUI.cs / FishLitDetailGUI.cs / FishLitShaderGUI.cs
@@ -425,6 +425,11 @@ Historically had THREE `Boids_Demo` / `SCENE_MainScene` copies (JunHeng had the 
   - **Overpopulated** — normally has predators, they're absent, and it has grown to overpopulated threshold.
   - **Balanced** — none of the above, including a just-added species or a lone predator whose prey was never introduced (no false alarm).
 - Per-species `_foodWasPresent` memory distinguishes a genuine "prey ran out" from "prey were never added yet".
+
+**⚠ `GetSpeciesStatus` and the eco-health formula do NOT use the same test — reconciled at the tablet layer (2026-07-29, `cc0cabe8`).** `GetSpeciesStatus` flags **OverPredated** on a pure predator:prey school-**ratio** (`n / predN < RatioBandLow`), but `ComputeEcoHealth01` counts a species as healthy on **`PopulationPressure` + overpopulation**. A well-fed species that is merely *outnumbered* by predators is therefore **healthy for the bar but OverPredated for the status** — which is why Russell's snapper's row asked for **+2** while the gauge read **100% THRIVING**.
+- **Fix — one authority:** new **`EcosystemSimulationGPU.CountsTowardHealth(species[, committed])`** is literally the health formula's own test (`!declining && !overpopulated`, present + food-web-linked). **`GetSpeciesDelta` now returns `DeltaOk` the moment `CountsTowardHealth` is true**, regardless of the status enum — if the bar counts a species as healthy, its row is silent.
+- **One value, no mixing:** the delta is sent as a single int with sentinel constants **`DeltaOk` / `DeltaNeedsPrey` / `DeltaCapped`** (public consts on `EcosystemSimulationGPU`). The tablet card switches on the number alone and never re-reads `GetSpeciesStatus`, so it can't re-introduce the disagreement.
+- ⚠ **Known gaps (accepted for now, play-tested OK):** (1) `EcoHealthDashboard` still **rounds ≥99.5% → 100%**, so a genuinely-declining species can still show a number under a *displayed* "100%"; (2) the delta still guides "add more of yourself" for a real OverPredated case rather than pointing at the actual lever (more prey / fewer predators) — the signs are honest but not yet a full guide to a real 100%.
 
 ## 7.3 Start-at-Zero / School-Scaling / Extinction Model (`e13e26b`)
 
@@ -624,6 +629,7 @@ Two sibling components sharing a common queue + CSV backend, fire on different e
 
 ### Food Web Graph
 - **`SpeciesBubble.cs`** — 12 species bubbles laid out in trophic tiers; tapping opens species info modal. `TapPunch()` scale-punch on bubble tap (from Aloysius).
+  - **Padlock stuck after a cross-tab unlock — fixed 2026-07-29 (`cc0cabe8`).** `EcosystemUnlockManagerGPU` pushes unlocks via `FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None)`, which **skips inactive objects**; switching tabs deactivates `FoodWebLayer`, so a species unlocked while the visitor was on another tab never reached its bubble and kept its padlock. `SpeciesBubble.OnEnable` now calls `Refresh()` (play mode only) so every bubble re-reads the current lock state whenever it becomes visible again.
 - **`FoodWebLines.cs`** — `LineRenderer` edges between species nodes (predator arrows). Currently hidden by default (`LINE FOOD WEB HIDE` commit). Marked "wonky, TO BE CHANGED."
 - Food web nodes and layout working in the scene; full visual structure of 12 species bubbles present.
 - **`FoodWebDragReveal.cs`** — drag/long-press reveal of predator arrows (from prototype spec).
@@ -636,9 +642,8 @@ Two sibling components sharing a common queue + CSV backend, fire on different e
 - Add/Remove was extracted out of `ModalController` (which no longer touches netcode at all):
   - **`TabletAddRemoveUIGPU`** (singleton) holds the +/− buttons and optional population label; `Select(species)` resolves the netcode index via `TabletEcosystemUIGPU` and buttons fire `RequestAddSpeciesRpc`/`RequestRemoveSpeciesRpc`; greys Add at `MaxSchools`, Remove at 0.
   - **`BubbleSelectHook`** (one per species bubble) routes a bubble tap to `TabletAddRemoveUIGPU.Select(bubble.data.gpuSpecies)` **without editing the UI-team's `SpeciesBubble`** — add-component on each bubble, no per-bubble wiring.
-- **Add cooldown — two-tier** (`unscaledTime`-based, exposed as `CooldownRemaining` / `CooldownDuration`; Add greys out while recovering):
-  - **Normal add/remove:** short anti-spam (`addCooldown`, default **1s**, was 0.3s).
-  - **First-time add (count 0→1):** longer **`firstAddCooldown`** (default **6s**) that locks out adding **any** species until it elapses, so the big-screen reveal card + intro camera can fully show the new fish before the next add. Detected tablet-side via `OptimisticPopulationStore.Display(index) <= 0` before the add; `_currentCooldown` drives both the gate and the overlay sweep, so the radial sweep automatically shows the long lockout on a first add and the short one otherwise. Set `firstAddCooldown == addCooldown` to disable the two-tier. ⚠ It's a **local heuristic** — a re-add after extinction (also 0→1) gets the long lockout even though the *card* is first-ever-only; harmless. Exact sync would need a host "reveal in progress" NetworkVariable.
+- **Add cooldown — first-add only** (`unscaledTime`-based, exposed as `CooldownRemaining` / `CooldownDuration`; Add greys out while recovering). ⚠ **The general anti-spam `addCooldown` was removed 2026-07-29** (`fb99e6ad` "removed cooldown"): normal add/remove now has **NO cooldown** (`_currentCooldown = 0`), so rapid deliberate tapping is no longer swallowed.
+  - **First-time add (count 0→1):** the only remaining lockout — **`firstAddCooldown`** (default **6s**) locks out adding **any** species until it elapses, so the big-screen reveal card + intro camera can fully show the new fish before the next add. Detected tablet-side via `OptimisticPopulationStore.Display(index) <= 0` before the add; `_currentCooldown` drives both the gate and the overlay sweep, so the radial sweep only appears on a first add. Set `firstAddCooldown = 0` to disable it entirely. ⚠ It's a **local heuristic** — a re-add after extinction (also 0→1) gets the lockout even though the *card* is first-ever-only; harmless. Exact sync would need a host "reveal in progress" NetworkVariable.
 - **`ButtonCooldownOverlay.cs`** (Aloysius, `103401b3`) — FFXIV-style **radial recovery sweep** over the Add button icon that unwinds as the cooldown recovers, so a swallowed press reads as "not ready yet" instead of "broken". Purely presentational — reads `TabletAddRemoveUIGPU.CooldownRemaining/Duration`, never gates anything itself (`raycastTarget=false`), so it can't disagree with the real gate.
 - **Locked-species blocking** — Add greys out when the selected species is still locked.
 
@@ -646,11 +651,12 @@ Two sibling components sharing a common queue + CSV backend, fire on different e
 - **`LookUpPrompt.cs`** — a transient "look up at the big screen" toast fired on **every Add** (`TabletAddRemoveUIGPU.OnAdd` → `LookUpPrompt.Trigger()`), because visitors stare at the tablet and miss the fish arriving on the trifold. Singleton + static `Trigger()`; repeated adds restart the hold window instead of re-fading (no flicker); suppressed while the tutorial is open; `ResetForNewSession()` clears it on exhibit reset (wired into `ExhibitReset.DoLocalReset`). **Not** a `ContextNudge` — it re-fires all session rather than dismissing once.
 
 ### Balance advisor (Aloysius, `c4d0a8b8`)
-- **`BalanceAdvisor.cs`** — bottom-left **"HOW TO BALANCE"** panel. Every line is derived from the **sim's own** `GetSpeciesStatus` per species (so it can never disagree with the eco-health bar). Two anti-answer-key rules: **(1) grouped, not enumerated** — problems collapse by kind (eight missing species = one "sparse reef" line); **(2) escalating detail** — opens vague and only names the species, then the fix, after eco-health fails to reach a new high for `escalateAfter` (25s); any progress drops it back to vague. Hidden before start and while the tutorial is open (which also freezes the stuck-clock). Advisory-only (never blocks taps). Ranks active collapses (starving/over-predated) above mere absences.
+- **`BalanceAdvisor.cs`** — bottom-left **"HOW TO BALANCE"** panel. Every line is derived from the **sim's own** `GetSpeciesStatus` per species (so it can never disagree with the eco-health bar). Two anti-answer-key rules: **(1) grouped, not enumerated** — problems collapse by kind (eight missing species = one "sparse reef" line); **(2) escalating detail** — opens vague and only names the species, then the fix, after eco-health fails to reach a new high for `escalateAfter` (25s); any progress drops it back to vague. Hidden before start and while the tutorial is open (which also freezes the stuck-clock). Advisory-only (never blocks taps). Ranks active collapses (starving/over-predated) above mere absences. **2026-07-29 (`cc0cabe8`):** now shows `balancedMessage` whenever eco-health ≥ `balancedThreshold`, so it can't print an issue line under a THRIVING gauge (same status-vs-health disagreement fixed for the row numbers — see §7.2).
 
 ### Current Organisms view
 - **`CurrentOrganismsGrid.cs`** — grid of currently-living species; card icons now come from `SpeciesContent.csv` `revealImageFile` (a tablet-folder copy of the big-screen arrival art), falling back to `imageFile` (info portrait), then the bubble's inspector `cardImage`, so a card never goes blank.
 - **`OrganismCardData.cs`** — per-card data + overpopulation badge (reads from sim via `NetworkList`).
+- **Per-species +/− numbers on each row** (`_speciesDelta` `NetworkList<int>` on `EcosystemNetworkManagerGPU`, host-computed via `GetSpeciesDelta`): shows how many to add (`+N`, blue) / remove (`−N`, red), or a word — **"hungry"** (`DeltaNeedsPrey`, fix is more prey) / **"hunted"** (`DeltaCapped`, over-hunted at its `MaxSchools` cap so the only lever is fewer predators) / **"ok"** (`DeltaOk`). Renders on the number/sentinel **alone** (see §7.2 consistency fix) so it can't contradict the gauge. Labels shortened 2026-07-29 to fit the Rajdhani row width.
 - **Scrollbar** added to the Current Organisms panel (design pass).
 
 ### Health bar (two drivers)

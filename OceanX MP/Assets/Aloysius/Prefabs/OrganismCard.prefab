@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OVER
+  m_text: STABLE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7711997, g: 0.9034435, b: 0.98490566, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -516,7 +516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8398211232310406900
 RectTransform:
   m_ObjectHideFlags: 0
@@ -526,7 +526,7 @@ RectTransform:
   m_GameObject: {fileID: 1676855276790851932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.3081, y: 2.3081, z: 2.3081}
+  m_LocalScale: {x: 1.8837327, y: 1.8837327, z: 1.8837327}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6800381187525110195}
@@ -564,7 +564,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ok
+  m_text: Stable
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 396b32e4de413264987437c1faee536c, type: 2}
   m_sharedMaterial: {fileID: 3428264576480750596, guid: 396b32e4de413264987437c1faee536c, type: 2}
@@ -573,8 +573,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294960780
-  m_fontColor: {r: 0.55, g: 0.9, b: 1, a: 1}
+    rgba: 4286326528
+  m_fontColor: {r: 0, g: 0.15452483, b: 0.4867924, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -630,7 +630,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 61.946045, w: 0}
+  m_margin: {x: 0, y: 0, z: -94.89079, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -706,13 +706,18 @@ MonoBehaviour:
   countText: {fileID: 327277992403695497}
   nameText: {fileID: 8901020694130887012}
   overpopBadge: {fileID: 3097309538208351819}
-  deltaText: {fileID: 6690986192677491740}
-  okLabel: ok
-  needsFoodLabel: hungry
-  huntedOutLabel: hunted
-  addColor: {r: 0.55, g: 0.9, b: 1, a: 1}
-  removeColor: {r: 1, g: 0.62, b: 0.55, a: 1}
-  okColor: {r: 0.6, g: 0.95, b: 0.72, a: 1}
+  deltaText: {fileID: 0}
+  stableLabel: STABLE
+  underLabel: UNDER
+  overLabel: OVER
+  badgeLabel: {fileID: 7501793076770793947}
+  badgeImage: {fileID: 2974228119487731974}
+  overBadgeColor: {r: 0.9490196, g: 0.41960785, b: 0.14901961, a: 1}
+  underBadgeColor: {r: 0.18039216, g: 0.60784316, b: 0.8392157, a: 1}
+  stableBadgeColor: {r: 0.18039216, g: 0.60784316, b: 0.35686275, a: 1}
+  underColor: {r: 0.55, g: 0.9, b: 1, a: 1}
+  overColor: {r: 1, g: 0.62, b: 0.55, a: 1}
+  stableColor: {r: 0.6, g: 0.95, b: 0.72, a: 1}
   pollInterval: 0
 --- !u!114 &6998101412582634018
 MonoBehaviour:
@@ -761,7 +766,7 @@ RectTransform:
   m_GameObject: {fileID: 3097309538208351819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0849, y: 1.0849, z: 1.0849}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2556530694357266719}
@@ -769,7 +774,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 668, y: 5}
+  m_AnchoredPosition: {x: 223, y: -56}
   m_SizeDelta: {x: 150, y: 44}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4236223857620073195
@@ -793,7 +798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.95, g: 0.42, b: 0.15, a: 1}
+  m_Color: {r: 0.18039216, g: 0.60784316, b: 0.35686275, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -44,6 +44,21 @@ namespace OceanX.BoidsGPU
         private float         _spineSmoothingWindow     = 1f;
         private float         _spineUndulationHeadHold   = 0.03f;
 
+        // ---- Moray resting-in-cave pose + mouth gape (set by BoidSimulationGPU from MorayCaveDirector) ----
+        // Cave anchors near which a moray lays its body back into the rock and breathes. Fixed-length so
+        // the material array bind is always valid; only the first _spineRestAnchorCount entries are live.
+        private const int     SpineMaxRestAnchors        = 8; // must match MORAY_MAX_REST_ANCHORS in the shader
+        private readonly Vector4[] _spineRestAnchorPos    = new Vector4[SpineMaxRestAnchors];
+        private readonly Vector4[] _spineRestAnchorDir    = new Vector4[SpineMaxRestAnchors];
+        private int           _spineRestAnchorCount       = 0;
+        private float         _spineRestRadius            = 10f;
+        private float         _spineRestCurlRadius        = 3f;
+        private float         _spineRestUndulationScale   = 0.15f;
+        private float         _spineMouthMaxAngle         = 0f;
+        private float         _spineMouthRate             = 0.5f;
+        private float         _spineMouthLength           = 0.5f;
+        private float         _spineMouthHingeY           = 0f;
+
         /// <summary>Global offset of this spawner's slice in the shared boids compute buffer.</summary>
         public int RenderingOffset => _renderingOffset;
 
@@ -194,6 +209,32 @@ namespace OceanX.BoidsGPU
         }
 
         /// <summary>
+        /// Moray only: the cave rest anchors + pose/mouth tuning, forwarded to the material each frame so the
+        /// vertex shader lays a resting eel's body into the rock and gapes its jaw. <paramref name="count"/>
+        /// entries of the two arrays are read (capped to <see cref="SpineMaxRestAnchors"/>). Called by
+        /// BoidSimulationGPU right before RenderBoids; pass count 0 to disable resting entirely.
+        /// </summary>
+        public void SetSpineRestData(Vector4[] anchorPos, Vector4[] anchorDir, int count,
+            float restRadius, float restCurlRadius, float restUndulationScale,
+            float mouthMaxAngle, float mouthRate, float mouthLength, float mouthHingeY)
+        {
+            int n = Mathf.Clamp(count, 0, SpineMaxRestAnchors);
+            for (int i = 0; i < SpineMaxRestAnchors; i++)
+            {
+                _spineRestAnchorPos[i] = (anchorPos != null && i < anchorPos.Length) ? anchorPos[i] : Vector4.zero;
+                _spineRestAnchorDir[i] = (anchorDir != null && i < anchorDir.Length) ? anchorDir[i] : Vector4.zero;
+            }
+            _spineRestAnchorCount     = n;
+            _spineRestRadius          = restRadius;
+            _spineRestCurlRadius      = restCurlRadius;
+            _spineRestUndulationScale = restUndulationScale;
+            _spineMouthMaxAngle       = mouthMaxAngle;
+            _spineMouthRate           = mouthRate;
+            _spineMouthLength         = mouthLength;
+            _spineMouthHingeY         = mouthHingeY;
+        }
+
+        /// <summary>
         /// Function should issue a draw call on the GPU using the static mesh instancing method to
         /// render the boids from this spawn group. The data for the position, speed, and rotation 
         /// of each boid instance is contained inside the <paramref name="boidsComputeBuffer"/>.
@@ -230,6 +271,19 @@ namespace OceanX.BoidsGPU
                 matProps.SetInt("_MorayFlipNormals", _spineFlipNormals ? 1 : 0);
                 matProps.SetFloat("_MoraySmoothingWindow", _spineSmoothingWindow);
                 matProps.SetFloat("_MorayUndulationHeadHold", _spineUndulationHeadHold);
+
+                // Resting-in-cave pose + mouth gape. Arrays are always the fixed max length so the bind is
+                // valid even with 0 active anchors (count gates it in the shader).
+                matProps.SetVectorArray("_MorayRestAnchorPos", _spineRestAnchorPos);
+                matProps.SetVectorArray("_MorayRestAnchorDir", _spineRestAnchorDir);
+                matProps.SetInt("_MorayRestAnchorCount", _spineRestAnchorCount);
+                matProps.SetFloat("_MorayRestRadius", _spineRestRadius);
+                matProps.SetFloat("_MorayRestCurlRadius", _spineRestCurlRadius);
+                matProps.SetFloat("_MorayRestUndulationScale", _spineRestUndulationScale);
+                matProps.SetFloat("_MorayMouthMaxAngle", _spineMouthMaxAngle);
+                matProps.SetFloat("_MorayMouthRate", _spineMouthRate);
+                matProps.SetFloat("_MorayMouthLength", _spineMouthLength);
+                matProps.SetFloat("_MorayMouthHingeY", _spineMouthHingeY);
             }
 
             // Increase the culling area a bit so that some fish don't randomly

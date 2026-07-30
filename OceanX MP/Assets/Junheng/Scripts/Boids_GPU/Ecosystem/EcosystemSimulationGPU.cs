@@ -370,6 +370,18 @@ namespace OceanX.BoidsGPU.Ecosystem
         }
 
         /// <summary>
+        /// The roaming swim-target for one school (sub-group) of a species, or null if out of range.
+        /// Exposed so bespoke directors (e.g. the giant-moray cave AI) can take over a school's target
+        /// the same way the removal path does via <see cref="EcosystemTargetGPU.ParkAt"/>: disable the
+        /// target's paired animator and drive its position yourself. Only drive schools whose index is
+        /// &lt; <see cref="CountCommittedGroups"/> — schools at or above that are already swimming out
+        /// (their target has been parked for exit) and must be left alone. Read-only accessor; the sim
+        /// still owns the target's lifecycle (creation on Add, destruction on Remove).
+        /// </summary>
+        public EcosystemTargetGPU GetSchoolTarget(SpeciesDataGPU species, int subGroupIndex)
+            => GetTargetAt(species, subGroupIndex);
+
+        /// <summary>
         /// School count the player has committed to, i.e. excluding schools currently swimming
         /// out. Drops the instant Remove is pressed (which parks a school for exit) while its
         /// fish still animate away on-screen. This is what the UI/netcode should display so the

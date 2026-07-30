@@ -128,6 +128,76 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
                  "spine) so you can A/B compare against the path-following body. Live-tunable.")]
         [SerializeField] private bool _moraySpineDebugStraight = false;
 
+        [Header("Moray Cave Rest Pose + Mouth (MorayCaveDirector drives the anchors)")]
+        [Tooltip("MATCH radius (m): how near the head must be to a cave anchor to bind to it. Make it larger " +
+                 "than the eel's loiter/mill radius so the pose doesn't flicker while it idles at the mouth. " +
+                 "The pose intensity is driven by the director's ramp, NOT by this distance.")]
+        [Min(0.1f)]
+        [SerializeField] private float _moraySpineRestRadius = 10f;
+
+        [Tooltip("Radius (m) of the resting body's horizontal coil. Smaller = tighter curl tucked in the " +
+                 "cave; larger = a looser, straighter body. Tune in Play mode.")]
+        [Min(0.05f)]
+        [SerializeField] private float _moraySpineRestCurlRadius = 3f;
+
+        [Tooltip("Fraction of the swim sway kept while fully resting (0 = dead still, ~0.15 = a faint breath).")]
+        [Range(0f, 1f)]
+        [SerializeField] private float _moraySpineRestUndulationScale = 0.15f;
+
+        [Tooltip("Max jaw-open angle in DEGREES while resting (buccal breathing). 0 = mouth stays shut. " +
+                 "Geometric jaw (no mesh mask): opens verts near the head tip and below Hinge Y. Defaults are " +
+                 "scaled to the giant-moray mesh (body ~12 units, head tip Z 5.07, head Y range -0.28..1.19).")]
+        [Range(0f, 60f)]
+        [SerializeField] private float _moraySpineMouthMaxAngle = 18f;
+
+        [Tooltip("Breaths per second (jaw open/close cycles).")]
+        [Min(0f)]
+        [SerializeField] private float _moraySpineMouthRate = 0.5f;
+
+        [Tooltip("Object-space length back from the head tip (Z) that counts as jaw, in MESH units. The moray " +
+                 "body is ~12 units long, so the jaw is a couple of units - not a fraction. Tune so only the " +
+                 "mouth opens, not the throat.")]
+        [Min(0f)]
+        [SerializeField] private float _moraySpineMouthLength = 2f;
+
+        [Tooltip("Object-space Y below which vertices are the lower jaw, in MESH units. The head spans Y " +
+                 "-0.28..1.19; ~0.45 is the midline (lower half opens). Raise to catch more of the jaw, lower " +
+                 "to open only the very bottom. Tune in Play mode.")]
+        [SerializeField] private float _moraySpineMouthHingeY = 0.45f;
+
+        // Cave rest anchors, refreshed each frame by MorayCaveDirector via SetMorayRestAnchors. Fixed-length
+        // (matches the shader's MORAY_MAX_REST_ANCHORS); only the first _morayRestAnchorCount are live.
+        private const int MorayMaxRestAnchors = 8;
+        private readonly Vector4[] _morayRestAnchorPos = new Vector4[MorayMaxRestAnchors];
+        private readonly Vector4[] _morayRestAnchorDir = new Vector4[MorayMaxRestAnchors];
+        private int _morayRestAnchorCount = 0;
+
+        /// <summary>
+        /// Publishes the active moray cave rest anchors for this frame (called by MorayCaveDirector). Each
+        /// anchor is a cave mouth: <paramref name="anchorPos"/>.xyz = where the head sits, <paramref
+        /// name="anchorDir"/>.xyz = the head-out direction (body trails along -dir into the rock). A moray
+        /// whose head is near an anchor lays into the rock and gapes; count 0 = no resting this frame.
+        /// </summary>
+        public void SetMorayRestAnchors(Vector4[] anchorPos, Vector4[] anchorDir, int count)
+        {
+            int n = Mathf.Clamp(count, 0, MorayMaxRestAnchors);
+            for (int i = 0; i < MorayMaxRestAnchors; i++)
+            {
+                _morayRestAnchorPos[i] = (anchorPos != null && i < anchorPos.Length) ? anchorPos[i] : Vector4.zero;
+                _morayRestAnchorDir[i] = (anchorDir != null && i < anchorDir.Length) ? anchorDir[i] : Vector4.zero;
+            }
+            _morayRestAnchorCount = n;
+        }
+
+        // Runtime override of the moray's obstacle-avoidance range (< 0 = no override, use the species value).
+        // MorayCaveDirector drops this to 0 while the moray is path-following into a cave so it hugs the
+        // authored route and clips slightly into the reef, and clears it (normal avoidance) while roaming.
+        private float _morayAvoidanceOverride = -1f;
+
+        /// <summary>Override the moray's obstacle-avoidance range for this frame; pass a negative value to
+        /// clear the override and use the species' authored range. Called by MorayCaveDirector.</summary>
+        public void SetMorayAvoidanceOverride(float range) => _morayAvoidanceOverride = range;
+
         private ComputeBuffer _sortedBoidsComputeBuffer = null;
         private ComputeBuffer _boidSchoolsRenderInfoBuffer = null;
 
@@ -582,6 +652,24 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
                 _boidsSchoolsComputeBuffer.SetData(_boidSchoolsInfos);
             }
 
+            // Moray cave AI: apply the director's obstacle-avoidance override on top of the (per-group)
+            // school info, whether or not _updateSchoolSettingsEveryFrame rebuilt it this frame. Only the
+            // single moray group element is re-uploaded, and only when its value actually changes.
+            if (_moraySpawner != null && _morayGroupId >= 0 && _boidSchoolsInfos != null
+                && _morayGroupId < _boidSchoolsInfos.Length && _boidsSchoolsComputeBuffer != null)
+            {
+                float baseRange = _moraySpawner.SpawnData.FishSchoolProperties.ObstacleAvoidanceRange;
+                float range     = _morayAvoidanceOverride >= 0f ? _morayAvoidanceOverride : baseRange;
+                float rangeSq   = range * range;
+                if (_boidSchoolsInfos[_morayGroupId].ObstacleAvoidanceRangeSquared != rangeSq)
+                {
+                    BoidSchoolInfoGPU info = _boidSchoolsInfos[_morayGroupId];
+                    info.ObstacleAvoidanceRangeSquared = rangeSq;
+                    _boidSchoolsInfos[_morayGroupId] = info;
+                    _boidsSchoolsComputeBuffer.SetData(_boidSchoolsInfos, _morayGroupId, _morayGroupId, 1);
+                }
+            }
+
             // Update properties that change every frame to the compute shader.
             _boidsComputeShader.SetFloat("_TimeDelta", timeDelta);
             // Push the entry-sprint duration every frame so it can be tuned live in the Inspector.
@@ -607,6 +695,14 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             ComputeBuffer boidsOutputDataBuffer = _sortedBoidsBufferIsOutput ? _boidsComputeBuffer : _sortedBoidsComputeBuffer;
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_Boids", boidsInputDataBuffer);
             _boidsComputeShader.SetBuffer(_boidsKernelId, "_BoidsOutput", boidsOutputDataBuffer);
+
+            // Moray cave freeze: hand the kernel the same rest anchors the render pose uses, so a settling
+            // moray is eased onto its cave anchor and held there (a boid can't otherwise stop). Bound every
+            // frame because the weights ramp; inert when no anchors / no moray (guarded in the kernel).
+            _boidsComputeShader.SetVectorArray("_MorayRestAnchorPos", _morayRestAnchorPos);
+            _boidsComputeShader.SetInt("_MorayRestAnchorCount", _morayRestAnchorCount);
+            _boidsComputeShader.SetFloat("_MorayRestMatchRadius", _moraySpineRestRadius);
+
             _boidsComputeShader.DispatchThreads(_boidsKernelId, _boidsCount);
 
             // Moray only: refresh the spine render tuning on the moray spawner before it draws, so the
@@ -621,6 +717,13 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
                     _moraySpineUndulationAmplitude, _moraySpineUndulationWaves, _moraySpineUndulationSpeed,
                     _moraySpineDebugStraight, _moraySpineFlipNormals, _moraySpineSmoothingWindow,
                     _moraySpineUndulationHeadHold);
+
+                // Cave rest pose + mouth gape: forward the anchors MorayCaveDirector set this frame plus the
+                // live tuning, so a caved eel lays into the rock and breathes.
+                _moraySpawner.SetSpineRestData(
+                    _morayRestAnchorPos, _morayRestAnchorDir, _morayRestAnchorCount,
+                    _moraySpineRestRadius, _moraySpineRestCurlRadius, _moraySpineRestUndulationScale,
+                    _moraySpineMouthMaxAngle, _moraySpineMouthRate, _moraySpineMouthLength, _moraySpineMouthHingeY);
             }
 
             // Issue an instanced static mesh rendering call to render all boids in the scene.

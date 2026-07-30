@@ -47,6 +47,26 @@ int   _MorayFlipNormals;         // 1 => negate object-space normals (for a mirr
 float _MoraySmoothingWindow;     // arclength (metres) each side used to estimate a steady body tangent
 float _MorayUndulationHeadHold;  // fraction of body behind the head kept still; smaller => sway starts nearer the head
 
+// ---- Resting-in-cave pose + mouth gape (OceanX cave AI, MorayCaveDirector) --------------------
+// A moray whose head is near an active cave anchor "rests": its body is laid STRAIGHT BACK INTO the
+// rock from the cave mouth (occluded by the reef, which hides the head-path trail bunching a truly
+// still eel would otherwise show), its swim undulation fades out, and its lower jaw gapes rhythmically
+// (buccal breathing). All driven by proximity to the anchors below, so it eases in/out as the eel
+// arrives at / leaves its cave — no per-instance state needed. Empty (count 0) => everything below is
+// inert and the eel renders exactly as the free-swimming path.
+#define MORAY_MAX_REST_ANCHORS 8
+float4 _MorayRestAnchorPos[MORAY_MAX_REST_ANCHORS]; // xyz = cave-mouth world pos (head sits here); w = rest WEIGHT 0..1
+float4 _MorayRestAnchorDir[MORAY_MAX_REST_ANCHORS]; // xyz = head-out direction (head faces here, body curls back)
+int   _MorayRestAnchorCount;      // number of active anchors (0 => no resting)
+float _MorayRestRadius;           // MATCH radius: how near the head must be to bind to an anchor (metres)
+float _MorayRestFullDistance;     // (unused - retained for binding compatibility)
+float _MorayRestCurlRadius;       // radius (m) of the resting body's horizontal coil; smaller = tighter curl
+float _MorayRestUndulationScale;  // swim-sway amplitude retained while fully resting (0..1, small)
+float _MorayMouthMaxAngle;        // max jaw open angle (degrees); 0 => no gape
+float _MorayMouthRate;            // breathing cycles per second
+float _MorayMouthLength;          // object-space length of the jaw region back from the head tip
+float _MorayMouthHingeY;          // object-space Y below which vertices count as lower jaw
+
 // Position at arclength `s` behind the head. Linear interp with the continuous headProgress offset:
 // samples are recorded at fixed spacing but the head moves CONTINUOUSLY between recordings, so
 // headProgress (how far the head currently leads the newest sample, 0..spacing) makes the whole body
@@ -113,17 +133,116 @@ float3 MoraySpinePoint(uint morayIndex, float3 headPos, float3 headDir, float s,
     return pos;
 }
 
+// Resting rest-amount [0..1] for a head at `headPosWorld`. The amount is the WEIGHT the director ramps
+// on the eel's own cave anchor (0 while swimming in / leaving, ramping to 1 once it has settled), NOT a
+// function of live distance — so the eel swims in fully normally and doesn't flicker as it mills at the
+// mouth. Distance is used only to BIND the eel to its nearest anchor (within _MorayRestRadius). Outputs
+// the chosen anchor's head position + head-out direction. 0 anchors / none in range => 0 (free-swimming).
+float MorayRestAmount(float3 headPosWorld, out float3 anchorPos, out float3 anchorDir)
+{
+    float bestDist = _MorayRestRadius;
+    float weight   = 0.0;
+    anchorPos = headPosWorld;
+    anchorDir = float3(0, 0, 1);
+    int count = min(_MorayRestAnchorCount, MORAY_MAX_REST_ANCHORS);
+    [loop] for (int i = 0; i < count; i++)
+    {
+        float3 ap = _MorayRestAnchorPos[i].xyz;
+        float  d  = distance(headPosWorld, ap);
+        if (d < bestDist)
+        {
+            bestDist  = d;
+            weight    = saturate(_MorayRestAnchorPos[i].w);
+            anchorPos = ap;
+            anchorDir = _MorayRestAnchorDir[i].xyz;
+        }
+    }
+    return weight;
+}
+
+// A resting eel's body point at arclength `s` behind the head. The head sits at `headWorld` — the eel's
+// OWN live head position, NOT the fixed cave point — facing `anchorDir` (out of the cave); the body arcs
+// to the side on a horizontal coil of radius _MorayRestCurlRadius, receding into the cave. Anchoring to
+// the live head means the pose does not translate the eel across the water into place (no "dragged to the
+// cave"): it just reshapes the body and turns the head where the eel already swam to. Outputs the roll-free
+// travel frame at that point (belly-down), like MoraySpinePoint.
+float3 MorayRestSpinePoint(float3 headWorld, float3 anchorDir, float s,
+                           out float3 axisRight, out float3 axisUp, out float3 axisFwd)
+{
+    float3 worldUp = float3(0.0, 1.0, 0.0);
+    float3 fwd0 = anchorDir - worldUp * dot(anchorDir, worldUp);       // head-out, flattened to horizontal
+    fwd0 = (dot(fwd0, fwd0) < 1e-5) ? anchorDir : normalize(fwd0);
+    float3 dirIn = -fwd0;                                              // INTO the cave: the body extends this way
+    float3 side = cross(worldUp, dirIn);
+    side = (dot(side, side) < 1e-5) ? float3(1, 0, 0) : normalize(side);
+
+    // Head tip (s=0) at headWorld; as s grows toward the tail the body recedes INTO the cave (dirIn) and
+    // curls to the side. So the head pokes OUT (faces +fwd0 = anchorDir) with the body coiled in the hole.
+    float  R      = max(_MorayRestCurlRadius, 0.05);
+    float  ang    = s / R;                                             // constant-curvature arc
+    float3 center = headWorld + side * R;
+    float3 pos    = center - side * (R * cos(ang)) + dirIn * (R * sin(ang));
+    float3 tangent = normalize(side * sin(ang) + dirIn * cos(ang));    // toward the tail (into the cave)
+    float3 fwd     = -tangent;                                         // frame forward faces the HEAD (out), like the swim frame
+
+    float3 right = cross(worldUp, fwd);
+    right = (dot(right, right) < 1e-5) ? cross(float3(0, 0, 1), fwd) : right;
+    right = normalize(right);
+    float3 up = normalize(cross(fwd, right));
+
+    axisRight = right;
+    axisUp    = up;
+    axisFwd   = fwd;
+    return pos;
+}
+
+// Geometric lower-jaw gape (no mesh mask): rotates vertices near the head tip and below the hinge line
+// open about a hinge across the mesh X axis. Tuned live via the _MorayMouth* params. gape 0 => no-op.
+float3 MorayMouthDeform(float3 posOS, float gape)
+{
+    if (gape <= 1e-4 || _MorayMouthMaxAngle <= 0.0 || _MorayMouthLength <= 1e-4) return posOS;
+
+    float sLocal = _MorayHeadLocalZ - posOS.z;                          // 0 at head tip, grows backward
+    float inJaw  = 1.0 - smoothstep(0.0, _MorayMouthLength, sLocal);    // 1 at tip -> 0 at mouth length back
+    float below  = saturate((_MorayMouthHingeY - posOS.y) / max(1e-3, _MorayMouthLength * 0.5)); // ventral
+    float w = inJaw * below;
+    if (w <= 1e-4) return posOS;
+
+    float  ang   = radians(_MorayMouthMaxAngle) * gape * w;
+    float2 hinge = float2(_MorayMouthHingeY, _MorayHeadLocalZ - _MorayMouthLength); // (y, z)
+    float2 rel   = float2(posOS.y - hinge.x, posOS.z - hinge.y);
+    float  ca = cos(ang), sa = sin(ang);
+    float2 rot = float2(rel.x * ca - rel.y * sa, rel.x * sa + rel.y * ca);          // swing jaw down/open
+    posOS.y = hinge.x + rot.x;
+    posOS.z = hinge.y + rot.y;
+    return posOS;
+}
+
 // Full per-vertex deformation. posOS = object-space vertex. Returns the sim-space position
 // (already offset by _SimulationAreaCenter, exactly like the fish shader) and, via frameMatrix,
 // the per-vertex rotation used to transform the normal/tangent.
 float3 ApplyMoraySpine(float3 posOS, uint morayIndex, float3 headPosWorld, float3 headDir,
                        float currentSwimTime, out float4x4 frameMatrix)
 {
+    // How much this eel is resting in a cave, and where. Drives the pose, the mouth and the sway fade.
+    float3 anchorPos, anchorDir;
+    float  rest = MorayRestAmount(headPosWorld, anchorPos, anchorDir);
+    anchorDir = (dot(anchorDir, anchorDir) < 1e-6) ? headDir : normalize(anchorDir);
+
+    // Lower-jaw gape: only when resting, breathing on a slow sine (buccal pumping).
+    float gape = rest * saturate(0.5 + 0.5 * sin(_Time.y * _MorayMouthRate * 6.28318530718));
+    posOS = MorayMouthDeform(posOS, gape);
+
     float bodyLen = max(_MorayBodyLength, 1e-3);
     float s = clamp(_MorayHeadLocalZ - posOS.z, 0.0, bodyLen); // arclength behind the head
 
     float3 right, up, fwd;
     float3 spine = MoraySpinePoint(morayIndex, headPosWorld, headDir, s, right, up, fwd);
+
+    // Resting: the body shape comes entirely from the head-path trail the eel actually swam (the director
+    // routes it along a curling path into the cave, then the compute-shader freeze pins the head so the
+    // trail holds that shape). So there is NO synthetic pose override here — `rest` only calms the swim
+    // undulation (below) and drives the mouth, letting the real swum coil read as a settled, still eel.
 
     // The vertex's cross-section (its components perpendicular to the body axis) rides the frame.
     float3 offset = right * posOS.x + up * posOS.y;
@@ -135,11 +254,13 @@ float3 ApplyMoraySpine(float3 posOS, uint morayIndex, float3 headPosWorld, float
     // (mask squared) so the head barely sways and the tail whips, like a real eel.
     // Amplitude ramps LINEARLY from _MorayUndulationHeadHold (fraction of body behind the head kept still)
     // out to full at the tail. Linear (not squared) so the sway begins close to the head instead of only
-    // kicking in well down the body; lower the hold to start it even nearer the head.
+    // kicking in well down the body; lower the hold to start it even nearer the head. Faded out while
+    // resting so a caved eel is nearly still.
     float ampMask = saturate((s / bodyLen - _MorayUndulationHeadHold) / max(1e-3, 1.0 - _MorayUndulationHeadHold));
     float phase = s * _MorayUndulationWaves * 6.28318530718
                 - _Time.y * _MorayUndulationSpeed * 6.28318530718;
-    offset += right * (sin(phase) * ampMask * _MorayUndulationAmplitude);
+    float undScale = lerp(1.0, saturate(_MorayRestUndulationScale), rest);
+    offset += right * (sin(phase) * ampMask * _MorayUndulationAmplitude * undScale);
 
     // Rotation matrix mapping object axes -> world frame (columns = right, up, fwd). Normals only.
     frameMatrix = float4x4(

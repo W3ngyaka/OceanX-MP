@@ -18,25 +18,36 @@ public class OrganismCardData : MonoBehaviour
 
     // ===== BALANCE DELTA (revert: delete this block, the two marked calls, and UpdateDelta) =====
     [Header("Balance hint")]
-    [Tooltip("Shows how many to add (+) or remove (-) to make this species healthy, using the " +
-             "simulation's own thresholds. Auto-found (child named 'DeltaLabel') if left empty. " +
-             "Leave unassigned to disable entirely.")]
+    [Tooltip("Shows this species' population state relative to what supports it. Auto-found " +
+             "(child named 'DeltaLabel') if left empty. Leave unassigned to disable entirely.")]
     public TMP_Text deltaText;
 
-    [Tooltip("Text when this species is already fine.")]
-        // Rajdhani has no U+2713 check mark and no fallback supplies one, so a tick renders as tofu.
-    public string okLabel = "ok";
+    // Three descriptive states only, deliberately WITHOUT a magnitude. The row tells the visitor
+    // which direction is wrong, not how far, so the ratio still has to be discovered by trying --
+    // a printed "+2" is an instruction, "Under" is an observation.
+    [Tooltip("Population is where it needs to be.")]
+    public string stableLabel = "Stable";
 
-    [Tooltip("Text when the fix belongs to another species (e.g. it is starving and needs more prey).")]
-    public string needsFoodLabel = "hungry";
+    [Tooltip("Too few for what preys on it \u2014 outnumbered by its predators.")]
+    public string underLabel = "Under";
 
-    [Tooltip("Text when a species is being hunted out but is already at its MaxSchools cap, so the " +
-             "only fix is removing some of its predators. Without this the row would read 'ok'.")]
-    public string huntedOutLabel = "hunted";
+    [Tooltip("Too many for what supports it \u2014 either runaway numbers, or too many mouths for " +
+             "the prey available.")]
+    public string overLabel = "Over";
 
-    public Color addColor    = new Color(0.55f, 0.90f, 1f, 1f);
-    public Color removeColor = new Color(1f, 0.62f, 0.55f, 1f);
-    public Color okColor     = new Color(0.60f, 0.95f, 0.72f, 1f);
+    [Tooltip("Label inside the badge (child 'OverpopBadge/Label'). Auto-found if left empty.")]
+    public TMP_Text badgeLabel;
+
+    [Tooltip("Badge background Image (on 'OverpopBadge'). Auto-found if left empty. Recoloured per state.")]
+    public UnityEngine.UI.Image badgeImage;
+
+    public Color overBadgeColor  = new Color32(0xF2, 0x6B, 0x26, 0xFF);   // the card's existing orange
+    public Color underBadgeColor = new Color32(0x2E, 0x9B, 0xD6, 0xFF);
+    public Color stableBadgeColor = new Color32(0x2E, 0x9B, 0x5B, 0xFF);   // white text needs a deep green
+
+    public Color underColor  = new Color(0.55f, 0.90f, 1f, 1f);
+    public Color overColor   = new Color(1f, 0.62f, 0.55f, 1f);
+    public Color stableColor = new Color(0.60f, 0.95f, 0.72f, 1f);
     // ===== END BALANCE DELTA ====================================================================
 
     [Header("Live update")]
@@ -66,6 +77,11 @@ public class OrganismCardData : MonoBehaviour
 
         // Show the optimistic count so a card recreated after a panel switch reflects a pending
         // removal instead of snapping back to the host's not-yet-lowered count.
+        if (overpopBadge != null)   // BALANCE DELTA: badge parts
+        {
+            if (badgeImage == null) badgeImage = overpopBadge.GetComponent<UnityEngine.UI.Image>();
+            if (badgeLabel == null) badgeLabel = overpopBadge.GetComponentInChildren<TMP_Text>(true);
+        }
         if (deltaText == null)   // BALANCE DELTA
         {
             var d = transform.Find("DeltaLabel");
@@ -74,7 +90,6 @@ public class OrganismCardData : MonoBehaviour
         lastDelta = int.MinValue;
 
         SetShown(OptimisticPopulationStore.Display(index));
-        UpdateOverpop();
         UpdateDelta();   // BALANCE DELTA
     }
 
@@ -94,7 +109,6 @@ public class OrganismCardData : MonoBehaviour
             return;
         }
         if (display != lastShown) SetShown(display);
-        UpdateOverpop();
         UpdateDelta();   // BALANCE DELTA
     }
 
@@ -106,27 +120,13 @@ public class OrganismCardData : MonoBehaviour
 
     // Toggle the overpopulation badge using the SAME check the food-web bubbles use: the
     // simulation's own status, synced from the host. Being at MaxSchools is NOT enough.
-    void UpdateOverpop()
-    {
-        if (overpopBadge == null) return;
-        bool over = false;
-        var net = EcosystemNetworkManagerGPU.Instance;
-        if (speciesIndex >= 0 && net != null)
-            over = net.IsOverpopulated(speciesIndex);
-        if (over != overpopShown)
-        {
-            overpopShown = over;
-            overpopBadge.SetActive(over);
-        }
-    }
-
     // ===== BALANCE DELTA ========================================================================
     // Renders the host-computed advice for this species. The number is a live target: it moves
     // whenever this species' predators or prey change, because the simulation defines "healthy"
     // as a ratio to neighbours rather than a fixed count. Never recomputed here.
     void UpdateDelta()
     {
-        if (deltaText == null) return;
+        // NO early-out on deltaText: the BADGE is the readout now and deltaText is optional.
         var net = EcosystemNetworkManagerGPU.Instance;
         if (speciesIndex < 0 || net == null) return;
 
@@ -138,16 +138,31 @@ public class OrganismCardData : MonoBehaviour
         if (delta == lastDelta) return;
         lastDelta = delta;
 
-        if (delta == EcosystemSimulationGPU.DeltaNeedsPrey)
-        { deltaText.text = needsFoodLabel; deltaText.color = removeColor; }
-        else if (delta == EcosystemSimulationGPU.DeltaCapped)
-        { deltaText.text = huntedOutLabel; deltaText.color = removeColor; }
-        else if (delta > 0)
-        { deltaText.text = "+" + delta;    deltaText.color = addColor; }
-        else if (delta < 0)
-        { deltaText.text = "-" + (-delta); deltaText.color = removeColor; }
-        else
-        { deltaText.text = okLabel;        deltaText.color = okColor; }
+        // -1 = Over, 0 = Stable, +1 = Under.
+        // The sentinels are tested FIRST: both are negative (int.MinValue + n), so a plain
+        // `delta < 0` test would swallow DeltaCapped and mislabel it.
+        int state;
+        if (delta == EcosystemSimulationGPU.DeltaCapped)          state =  1;  // outnumbered, at its cap
+        else if (delta == EcosystemSimulationGPU.DeltaNeedsPrey)   state = -1;  // too many mouths for its prey
+        else if (delta > 0)                                        state =  1;
+        else if (delta < 0)                                        state = -1;
+        else                                                       state =  0;
+
+        // The badge is the single readout for all three states and is always visible. It replaces
+        // the old net.IsOverpopulated() path, which was a second opinion that could disagree with
+        // the health bar.
+        if (overpopBadge != null) overpopBadge.SetActive(true);
+        if (badgeLabel != null)
+            badgeLabel.text = state == 0 ? stableLabel : (state > 0 ? underLabel : overLabel);
+        if (badgeImage != null)
+            badgeImage.color = state == 0 ? stableBadgeColor : (state > 0 ? underBadgeColor : overBadgeColor);
+
+        // Optional secondary text readout; normally left unassigned now the badge carries it.
+        if (deltaText != null)
+        {
+            deltaText.text  = state == 0 ? stableLabel : (state > 0 ? underLabel  : overLabel);
+            deltaText.color = state == 0 ? stableColor : (state > 0 ? underColor  : overColor);
+        }
     }
     // ===== END BALANCE DELTA ====================================================================
 

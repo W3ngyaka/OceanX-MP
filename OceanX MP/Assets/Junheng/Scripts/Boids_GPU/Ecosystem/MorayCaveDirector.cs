@@ -161,15 +161,12 @@ namespace OceanX.BoidsGPU.Ecosystem
 
             int committed = _sim.CountCommittedGroups(_moraySpecies); // schools NOT swimming out
 
-            // Obstacle-avoidance override: suppress the moray's reef avoidance (0) ONLY when EVERY moray is
-            // cave-managed (path-following / resting), so it hugs the authored path and clips slightly into
-            // the reef. If any moray is roaming (an extra with no free cave), keep the species' normal
-            // avoidance so it still steers around the reef. Uses last frame's agent set (1-frame lag, fine).
-            if (_boidSim != null)
-            {
-                bool allManaged = committed > 0 && _agents.Count >= committed;
-                _boidSim.SetMorayAvoidanceOverride(allManaged ? 0f : -1f);
-            }
+            // NOTE: obstacle avoidance is left at the moray's normal species value for ALL morays (no
+            // suppression / no all-or-nothing toggle). A moray that is being driven onto a cave is PINNED by
+            // the compute freeze, which overrides its position AFTER steering + the reef backstop — so
+            // avoidance simply doesn't affect a pinned moray, while an approaching / roaming moray keeps
+            // avoiding obstacles normally. The freeze + backstop-skip are matched per-moray by TARGET in the
+            // kernel, so they only ever affect the one moray actually assigned to each cave.
 
             if (MorayCave.All.Count == 0) return; // no caves placed -> nothing to manage or publish
 
@@ -320,13 +317,17 @@ namespace OceanX.BoidsGPU.Ecosystem
                         }
                         else
                         {
+                            // Target == pin point exactly, so the compute freeze matches this moray to its
+                            // cave anchor by target (a passing moray's target is elsewhere -> never grabbed).
                             state.pinTarget = PathPositionAtDistance(cave, state.cursorDist);
-                            target.AffecterPosition = PathPositionAtDistance(cave, state.cursorDist + _pathLookAhead);
+                            target.AffecterPosition = state.pinTarget;
                         }
                     }
                     break;
 
                 case MorayState.Phase.InCave:
+                    // Target == the rest point exactly, so the compute freeze matches this moray to its cave
+                    // by target and pins it here. Facing direction is unused (render uses the head-path trail).
                     state.pinTarget = cave.RestPoint;
                     target.AffecterPosition = state.pinTarget;
                     state.dwell += dt;

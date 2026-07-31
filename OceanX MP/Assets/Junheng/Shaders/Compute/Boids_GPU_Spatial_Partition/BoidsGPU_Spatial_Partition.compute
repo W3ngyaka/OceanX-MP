@@ -1090,14 +1090,32 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     // After the movement properties have been updated, update the current position of the boid.
     UpdatePosition(boidInfo);
 
+    // ---- Moray cave PIN match ------------------------------------------------------------------
+    // Decide whether THIS moray is being driven onto a cave anchor, by matching the boid's TARGET (what the
+    // director is sending it to) against the published anchors — NOT its position. So only the ONE moray
+    // actually assigned to a cave is pinned; a roaming / passing / exiting moray near an occupied cave is
+    // left alone (its target is elsewhere). Computed here so the reef backstop can also be skipped for a
+    // pinned moray (it should clip into the reef along its authored path) while every other fish — and an
+    // approaching / roaming moray, whose obstacle avoidance stays ON — keeps the backstop.
+    float  morayPinWeight = 0.0;
+    float3 morayPinPos    = boidInfo.position;
+    if (_MorayGroupId >= 0 && boidGroupId == _MorayGroupId && _MorayRestAnchorCount > 0 && !exiting
+        && exitTarget.affecterType == TARGET_AFFECTER_TYPE)
+    {
+        float bestDist = _MorayRestMatchRadius; // small tolerance: "is the boid's target THIS anchor?"
+        int rc = min(_MorayRestAnchorCount, MORAY_MAX_REST_ANCHORS);
+        for (int ri = 0; ri < rc; ri++)
+        {
+            float3 ap = _MorayRestAnchorPos[ri].xyz;
+            float  d  = distance(exitTarget.position, ap);
+            if (d < bestDist) { bestDist = d; morayPinWeight = saturate(_MorayRestAnchorPos[ri].w); morayPinPos = ap; }
+        }
+    }
+    bool morayClipping = morayPinWeight > 0.0;
+
     // Hard guarantee: if the frame's movement still landed this boid in the reef (steering can be outrun
-    // by a sprinting entry/exit fish, or a school push can shove one in), get it back out.
-    // Skip the reef backstop for a path-following moray. MorayCaveDirector suppresses the moray's obstacle
-    // avoidance range to ~0 while it heads into a cave; when it is, let it follow its authored path STRAIGHT
-    // into the reef and clip slightly, instead of being shoved back out (which read as it still "avoiding"
-    // obstacles and straying off the path). A roaming moray keeps its normal avoidance range, so it still
-    // gets the backstop, as does every other fish.
-    bool morayClipping = (boidGroupId == _MorayGroupId) && (boidSchoolInfo.obstacleAvoidanceRangeSquared < 0.02);
+    // by a sprinting entry/exit fish, or a school push can shove one in), get it back out. Skipped for a
+    // pinned moray so it follows its authored path straight into the reef and clips.
     if(_ReefSDFEnabled != 0)
     {
         if(!morayClipping) ResolveReefPenetration(boidInfo, boidSchoolInfo);
@@ -1116,24 +1134,12 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
     UpdateSwimMotionTime(boidInfo);
 
     // ---- Moray cave freeze ---------------------------------------------------------------------
-    // Ease a moray onto its cave anchor by the director-ramped weight so it swims the last stretch in
-    // and stops. Runs on the FINAL post-physics position, before the trail append so the trail records
+    // Ease the head onto the cave anchor it is being driven to (matched above by target, so it can never
+    // grab a passing / roaming / exiting moray) by the director-ramped weight, so it swims the last stretch
+    // in and stops. Runs on the FINAL post-physics position, before the trail append so the trail records
     // the settled position. w=1 => position is the anchor every frame (pinned). Non-destructive: leaves
     // speed/direction alone, so when the weight drops (leaving / removed) the boid simply swims off again.
-    if (_MorayGroupId >= 0 && boidGroupId == _MorayGroupId && _MorayRestAnchorCount > 0)
-    {
-        float bestDist = _MorayRestMatchRadius;
-        float w = 0.0;
-        float3 anchorPos = boidInfo.position;
-        int rc = min(_MorayRestAnchorCount, MORAY_MAX_REST_ANCHORS);
-        for (int ri = 0; ri < rc; ri++)
-        {
-            float3 ap = _MorayRestAnchorPos[ri].xyz;
-            float  d  = distance(boidInfo.position, ap);
-            if (d < bestDist) { bestDist = d; w = saturate(_MorayRestAnchorPos[ri].w); anchorPos = ap; }
-        }
-        if (w > 0.0) boidInfo.position = lerp(boidInfo.position, anchorPos, w);
-    }
+    if (morayPinWeight > 0.0) boidInfo.position = lerp(boidInfo.position, morayPinPos, morayPinWeight);
 
     // ---- Moray trail append --------------------------------------------------------------------
     // Record this moray's HEAD path so its render shader can trail the body along it. Fixed-distance

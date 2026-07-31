@@ -565,19 +565,31 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
 
             if (!reuse)
             {
+                // PRESERVE the existing head-path across a buffer RECREATE (not just the reuse-in-place case):
+                // read the old ring back first. A resting eel's head doesn't move, so if we straight-seed on a
+                // recreate its coiled body snaps to a straight T-pose (and never recovers because no new samples
+                // are appended). By copying the old path into the surviving moray slots we keep the coil no
+                // matter WHY the buffer had to be recreated (count change, group re-sort, etc.). Only genuinely
+                // new slots fall back to the straight seed. GetData here is cheap and only runs on a recreate.
+                Vector4[] oldTrail = null; int[] oldCursor = null; int oldK = 0, oldCount = 0;
+                if (_morayTrailBuffer != null && _morayTrailCursorBuffer != null
+                    && _morayTrailBuffer.count > 0 && _morayTrailCursorBuffer.count > 0)
+                {
+                    oldCount  = _morayTrailCursorBuffer.count;
+                    oldK      = _morayTrailBuffer.count / oldCount;
+                    oldTrail  = new Vector4[_morayTrailBuffer.count]; _morayTrailBuffer.GetData(oldTrail);
+                    oldCursor = new int[oldCount];                    _morayTrailCursorBuffer.GetData(oldCursor);
+                }
+
                 CleanUpComputeBuffer(ref _morayTrailBuffer);
                 CleanUpComputeBuffer(ref _morayTrailCursorBuffer);
                 _morayTrailBuffer       = new ComputeBuffer(trailLen, sizeof(float) * 4);
                 _morayTrailCursorBuffer = new ComputeBuffer(cursorLen, sizeof(int));
 
-                // Seed each moray's ring as a STRAIGHT tail receding behind the head along its heading, so the
-                // body renders as a straight eel from frame one and then relaxes into trailing as the kernel
-                // appends real path samples. (Seeding every sample to the same point would collapse the whole
-                // body onto the head, since the render shader plants each slice at its sampled point.)
-                //
-                // Ring semantics (cursor = 0 at seed): the n-th oldest sample (n = 1 newest .. K oldest) lives
-                // at ring index (1 - n) mod K, and sits n * spacing behind the head. That is exactly the
-                // straight line pos - dir * (n * spacing), which the shader reconstructs as a straight body.
+                // Straight seed: each moray's ring as a STRAIGHT tail receding behind the head along its heading,
+                // so a NEW eel renders straight from frame one and relaxes into trailing as the kernel appends.
+                // Ring semantics (cursor = 0): the n-th oldest sample lives at ring index (1 - n) mod K and sits
+                // n * spacing behind the head, i.e. the straight line pos - dir * (n * spacing).
                 if (_morayCount > 0 && _morayGroupId >= 0 && _boidsInfos != null)
                 {
                     Vector4[] trailSeed  = new Vector4[trailLen];
@@ -601,6 +613,19 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
                             trailSeed[local * K + idx] = new Vector4(sp.x, sp.y, sp.z, 1f);
                         }
                     }
+
+                    // Overwrite surviving slots with the PRESERVED path (same local index, same ring length K),
+                    // so an existing eel keeps its exact coiled body across the recreate.
+                    if (oldTrail != null && oldK == K)
+                    {
+                        int survive = Mathf.Min(oldCount, _morayCount);
+                        for (int local = 0; local < survive; local++)
+                        {
+                            cursorSeed[local] = oldCursor[local];
+                            for (int j = 0; j < K; j++) trailSeed[local * K + j] = oldTrail[local * K + j];
+                        }
+                    }
+
                     _morayTrailBuffer.SetData(trailSeed);
                     _morayTrailCursorBuffer.SetData(cursorSeed);
                 }

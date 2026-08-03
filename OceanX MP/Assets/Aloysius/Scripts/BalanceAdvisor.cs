@@ -76,6 +76,7 @@ public class BalanceAdvisor : MonoBehaviour
     private float _timer;
     private float _bestHealth = -1f;
     private float _stuckTime;
+    private bool _hadProblem;   // edge-detect: play the warning cue only when a NEW problem appears
     private readonly List<Issue> _issues = new List<Issue>();
     private readonly StringBuilder _sb = new StringBuilder();
 
@@ -117,7 +118,7 @@ public class BalanceAdvisor : MonoBehaviour
         if (hideBeforeStart && !net.HasStarted)
         {
             // Attract screen: forget the previous visitor's progress so the next one starts vague.
-            _bestHealth = -1f; _stuckTime = 0f;
+            _bestHealth = -1f; _stuckTime = 0f; _hadProblem = false;
             SetShown(false);
             return;
         }
@@ -188,6 +189,14 @@ public class BalanceAdvisor : MonoBehaviour
         }
 
         if (bodyLabel != null) bodyLabel.text = _sb.ToString();
+
+        // Warning cue on the rising edge only: fires once when the reef first slips into an
+        // actionable problem, not every 0.5s refresh while it stays broken.
+        bool hasProblem = health < balancedThreshold && _issues.Count > 0;
+        if (hasProblem && !_hadProblem && UISoundManager.Instance != null)
+            UISoundManager.Instance.Play(UISound.Warning);
+        _hadProblem = hasProblem;
+
         SetShown(true);
     }
 

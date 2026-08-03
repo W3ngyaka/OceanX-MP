@@ -100,6 +100,14 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
 
         OptimisticPopulationStore.RegisterDelta(_index, +1);
         net.RequestAddSpeciesRpc(_index);
+
+        // UI sound: a first-time add plays the "joining the reef" flourish; the add that tops a
+        // species out to its cap plays the cap cue; every other add plays the normal add sound.
+        bool nowAtCap = max > 0 && OptimisticPopulationStore.Display(_index) >= max;
+        UISoundManager.Instance?.Play(firstTime ? UISound.SpeciesAdded
+                                               : nowAtCap ? UISound.Disabled
+                                                          : UISound.Add);
+
         LookUpPrompt.Trigger();   // visitors stare at the tablet and miss the fish arriving on the big screen
         RefreshButtons();
     }
@@ -115,6 +123,7 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
 
         OptimisticPopulationStore.RegisterDelta(_index, -1);
         net.RequestRemoveSpeciesRpc(_index);
+        UISoundManager.Instance?.Play(UISound.Remove);   // no clip assigned yet — safely no-ops
         RefreshButtons();
     }
 

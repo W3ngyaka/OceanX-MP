@@ -74,6 +74,7 @@ public class NotificationManager : MonoBehaviour
     {
         if (s == null) return;
         EnsureRefs();
+        if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.Unlock);
         if (messageText != null)
             messageText.text = s.speciesName;   // just the organism name
 

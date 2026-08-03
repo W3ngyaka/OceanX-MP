@@ -137,7 +137,10 @@ public class ModalController : MonoBehaviour
 
     void Show()
     {
+        bool wasClosed = !gameObject.activeSelf;
         gameObject.SetActive(true);
+        if (wasClosed && UISoundManager.Instance != null)
+            UISoundManager.Instance.Play(UISound.ModalOpen);
 
         if (DimOverlay != null && dimFader != null)
         {
@@ -149,6 +152,11 @@ public class ModalController : MonoBehaviour
 
     public void Close()
     {
+        // Only sound an actual close (guard against defensive Close() calls while already hidden,
+        // e.g. session reset), so the close cue never fires with no card on screen.
+        if (gameObject.activeSelf && UISoundManager.Instance != null)
+            UISoundManager.Instance.Play(UISound.ModalClose);
+
         ViewedSpeciesReporter.Clear();
 
         // The visitor has now read a species panel and closed it again — that is the moment the

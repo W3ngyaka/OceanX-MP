@@ -185,6 +185,8 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (locked)
         {
+            if (UISoundManager.Instance != null)
+                UISoundManager.Instance.Play(UISound.Locked);
             ShowLockedHint();
             return;
         }

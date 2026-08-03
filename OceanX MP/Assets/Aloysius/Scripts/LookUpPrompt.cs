@@ -59,7 +59,13 @@ public class LookUpPrompt : MonoBehaviour
         // Already up: restart the hold window instead of fading in again. Re-fading on every
         // press reads as a flicker when the visitor taps Add several times in a row.
         if (_hide != null) { StopCoroutine(_hide); _hide = null; }
-        if (!_visible) { _visible = true; Fade(1f); }
+        if (!_visible)
+        {
+            _visible = true;
+            Fade(1f);
+            // Sound only on a fresh appearance, not on every re-tap that just extends the hold.
+            if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.Notification);
+        }
         _hide = StartCoroutine(HideAfterHold());
     }
 

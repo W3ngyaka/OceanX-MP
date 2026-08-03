@@ -5947,7 +5947,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 7, y: 0}
   m_SizeDelta: {x: -48, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &527308344
@@ -9299,7 +9299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 684, y: -168}
+  m_AnchoredPosition: {x: 709, y: -168}
   m_SizeDelta: {x: 820, y: 84}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &846968026
@@ -16083,14 +16083,14 @@ RectTransform:
   m_GameObject: {fileID: 1402711782}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2579254, y: 0.49548033, z: 0.49548033}
+  m_LocalScale: {x: 1.1359569, y: 0.5328891, z: 0.49548033}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 846968025}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 416, y: 38}
+  m_AnchoredPosition: {x: 416, y: 44}
   m_SizeDelta: {x: 528, y: 201}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1402711784
@@ -16113,7 +16113,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3b16166252121d344b7e6cc9fb480a49, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a9140a87fb63bae43a27ddbb8fb91250, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -18567,7 +18567,7 @@ RectTransform:
   m_GameObject: {fileID: 1636729366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5908162, y: 0.4019456, z: 0.5058655}
+  m_LocalScale: {x: 0.5759513, y: 0.3513527, z: 0.5058655}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 130809801}
@@ -18597,7 +18597,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3b16166252121d344b7e6cc9fb480a49, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a9140a87fb63bae43a27ddbb8fb91250, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19042,6 +19042,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27dd9ad0f7f48549b7c3ac0c6fe2989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UISoundManager
+  masterVolume: 1
+  muted: 0
+  sounds: []
+  voiceCount: 4
+  autoLoadFromResources: 1
+  resourcesFolder: UISounds
   tapSound: {fileID: 8300000, guid: 6b50ee20d5a8a08479d5a5c985ea6b21, type: 3}
   tapVolume: 1
 --- !u!1 &1681137650
@@ -22098,14 +22104,14 @@ RectTransform:
   m_GameObject: {fileID: 1858812005}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5058655, y: 0.4019456, z: 0.5058655}
+  m_LocalScale: {x: 0.5058655, y: 0.3311469, z: 0.5058655}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1658973651}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 363, y: 46}
+  m_AnchoredPosition: {x: 363, y: 46.9}
   m_SizeDelta: {x: 528, y: 201}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1858812007
@@ -22128,7 +22134,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3b16166252121d344b7e6cc9fb480a49, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a9140a87fb63bae43a27ddbb8fb91250, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

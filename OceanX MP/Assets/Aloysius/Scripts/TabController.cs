@@ -138,6 +138,7 @@ public class TabController : MonoBehaviour
     public void Select(int index)
     {
         if (_animating || index == _current || index < 0 || index >= tabs.Count) return;
+        if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.TabSwitch);
         if (SpeciesInfoPanel.Instance != null) SpeciesInfoPanel.Instance.Clear();
         StartCoroutine(Transition(_current, index));
     }

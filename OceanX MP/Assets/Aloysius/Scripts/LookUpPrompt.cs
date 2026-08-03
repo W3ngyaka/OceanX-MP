@@ -39,6 +39,12 @@ public class LookUpPrompt : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
+    // The three tablet banners (TapFishNudge, HoldFishNudge, this) share ONE screen slot, so only
+    // one may be visible at a time. Alpha rather than the _visible flag, so the fade-out counts as
+    // occupying the slot too -- otherwise a hint pops in underneath this while it is still fading.
+    public static bool IsShowing =>
+        Instance != null && Instance.group != null && Instance.group.alpha > 0.01f;
+
     // Static entry point so call sites don't need their own null check.
     public static void Trigger()
     {

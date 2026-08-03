@@ -90,10 +90,37 @@ public class ContextNudge : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.4f);   // small beat after it closes
             if (_dismissed) yield break;
         }
+        // BANNER SLOT: this hint, the other nudge and LookUpPrompt all sit at the same position on
+        // the canvas, so only one may be visible. The toast wins -- it is tied to an action the
+        // visitor just took and is only useful while the fish is actually arriving, whereas an
+        // onboarding hint is happy to wait a couple of seconds.
+        while (LookUpPrompt.IsShowing) yield return null;
+        if (_dismissed) yield break;
+
         Fade(1f);
+        bool visible = true;
         if (autoHideAfter > 0f)
         {
-            yield return new WaitForSecondsRealtime(autoHideAfter);
+            // Time spent yielding to the toast does NOT count against the hint's visible time,
+            // otherwise a burst of adds could silently eat the whole window and the visitor would
+            // never actually get to read it.
+            float shown = 0f;
+            while (shown < autoHideAfter && !_dismissed)
+            {
+                if (LookUpPrompt.IsShowing)
+                {
+                    if (visible) { visible = false; HideInstant(); }   // vacate at once: a 0.35s
+                                                                        // cross-fade with the toast at
+                                                                        // the same position reads as a
+                                                                        // garbled double-exposure.
+                }
+                else
+                {
+                    if (!visible) { visible = true; Fade(1f); }
+                    shown += Time.unscaledDeltaTime;
+                }
+                yield return null;
+            }
             if (!_dismissed) Fade(0f);
         }
     }
@@ -147,6 +174,13 @@ public class ContextNudge : MonoBehaviour
         _started = false;
         _rearmPending = true;
         if (group != null) { group.alpha = 0f; group.blocksRaycasts = false; group.interactable = false; }
+    }
+
+    // Drop out of the shared banner slot with no fade at all.
+    void HideInstant()
+    {
+        if (_fade != null) { StopCoroutine(_fade); _fade = null; }
+        if (group != null) group.alpha = 0f;
     }
 
     void Fade(float target)

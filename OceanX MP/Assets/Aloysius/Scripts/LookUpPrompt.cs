@@ -71,7 +71,16 @@ public class LookUpPrompt : MonoBehaviour
 
     IEnumerator HideAfterHold()
     {
-        yield return new WaitForSecondsRealtime(holdDuration);
+        // Bail early if the tutorial opens mid-toast: it owns the screen, and the toast would
+        // otherwise sit on top of HOW TO PLAY for the rest of its hold.
+        float t = 0f;
+        while (t < holdDuration)
+        {
+            if (suppressWhileTutorialOpen && TutorialPanel.Instance != null && TutorialPanel.Instance.IsOpenOrPending)
+                break;
+            t += Time.unscaledDeltaTime;
+            yield return null;
+        }
         _hide = null;
         _visible = false;
         Fade(0f);

@@ -21532,7 +21532,7 @@ MonoBehaviour:
   maxPower: 0.75
   glowOuter: 0.35
   period: 2.2
-  pulseScale: 0
+  pulseScale: 1
   scalePeak: 1.02
 --- !u!1 &1793193785
 GameObject:
@@ -22685,7 +22685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1843461423
 MonoBehaviour:
   m_ObjectHideFlags: 0

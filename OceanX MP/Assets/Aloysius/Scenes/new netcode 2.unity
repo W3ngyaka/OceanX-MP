@@ -10378,12 +10378,12 @@ RectTransform:
   - {fileID: 1429282709}
   - {fileID: 1860359808}
   - {fileID: 1453276400}
-  - {fileID: 1190481521}
   - {fileID: 1155013534}
   - {fileID: 1658973651}
   - {fileID: 846968025}
   - {fileID: 130809801}
   - {fileID: 667818149}
+  - {fileID: 1190481521}
   - {fileID: 1400912236}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17712,6 +17712,7 @@ MonoBehaviour:
   - {fileID: 1098807345}
   - {fileID: 1045821172}
   - {fileID: 983577947}
+  - {fileID: 1155013533}
   deferRevealToTransition: 1
 --- !u!114 &1453276402
 MonoBehaviour:

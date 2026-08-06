@@ -19045,9 +19045,19 @@ MonoBehaviour:
   masterVolume: 1
   muted: 0
   sounds:
+  - id: 0
+    variants:
+    - {fileID: 8300000, guid: a90e1e29167492d2e22377f80dc42706, type: 3}
+    volume: 1
+    pitchJitter: 0.04
   - id: 1
     variants:
     - {fileID: 8300000, guid: f802b853f77f5064f803fa7e8068cbf7, type: 3}
+    volume: 1
+    pitchJitter: 0
+  - id: 2
+    variants:
+    - {fileID: 8300000, guid: 0dff347ef8f6a5f4cb596ed0006ce7f0, type: 3}
     volume: 1
     pitchJitter: 0
   - id: 3
@@ -19098,7 +19108,7 @@ MonoBehaviour:
   voiceCount: 4
   autoLoadFromResources: 1
   resourcesFolder: UISounds
-  tapSound: {fileID: 8300000, guid: 6b50ee20d5a8a08479d5a5c985ea6b21, type: 3}
+  tapSound: {fileID: 8300000, guid: a90e1e29167492d2e22377f80dc42706, type: 3}
   tapVolume: 1
 --- !u!1 &1681137650
 GameObject:

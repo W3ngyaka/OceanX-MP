@@ -94,7 +94,7 @@ public class ContextNudge : MonoBehaviour
         // the canvas, so only one may be visible. The toast wins -- it is tied to an action the
         // visitor just took and is only useful while the fish is actually arriving, whereas an
         // onboarding hint is happy to wait a couple of seconds.
-        while (LookUpPrompt.IsShowing) yield return null;
+        while (SlotBlocked()) yield return null;
         if (_dismissed) yield break;
 
         Fade(1f);
@@ -107,7 +107,7 @@ public class ContextNudge : MonoBehaviour
             float shown = 0f;
             while (shown < autoHideAfter && !_dismissed)
             {
-                if (LookUpPrompt.IsShowing)
+                if (SlotBlocked())
                 {
                     if (visible) { visible = false; HideInstant(); }   // vacate at once: a 0.35s
                                                                         // cross-fade with the toast at
@@ -174,6 +174,16 @@ public class ContextNudge : MonoBehaviour
         _started = false;
         _rearmPending = true;
         if (group != null) { group.alpha = 0f; group.blocksRaycasts = false; group.interactable = false; }
+    }
+
+    // Anything that outranks a hint for the visitor's attention. Checked continuously while the
+    // hint is visible, not just before it appears: tapping the (?) button opens the tutorial
+    // UNDER an already-visible nudge, which is how the hint ended up drawn over HOW TO PLAY.
+    static bool SlotBlocked()
+    {
+        if (LookUpPrompt.IsShowing) return true;
+        var tut = TutorialPanel.Instance;
+        return tut != null && tut.IsOpenOrPending;
     }
 
     // Drop out of the shared banner slot with no fade at all.

@@ -175,6 +175,7 @@ public class OrganismCardData : MonoBehaviour
         // Record the intent in the shared store (persists across panel switches), then fire the RPC.
         OptimisticPopulationStore.RegisterDelta(speciesIndex, -1);
         EcosystemNetworkManagerGPU.Instance.RequestRemoveSpeciesRpc(speciesIndex);
+        if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.Remove);
 
         // Update the number the instant the player taps — don't wait for the next poll.
         int display = OptimisticPopulationStore.Display(speciesIndex);

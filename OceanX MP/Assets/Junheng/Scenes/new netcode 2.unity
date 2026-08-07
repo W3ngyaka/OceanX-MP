@@ -19063,7 +19063,7 @@ MonoBehaviour:
   - id: 3
     variants:
     - {fileID: 8300000, guid: 696d1c9215921da48b6b6669de58cd70, type: 3}
-    volume: 1
+    volume: 0.65
     pitchJitter: 0
   - id: 4
     variants:
@@ -19078,12 +19078,12 @@ MonoBehaviour:
   - id: 6
     variants:
     - {fileID: 8300000, guid: 517003f84f8491b44b7e313a56b65e88, type: 3}
-    volume: 1
+    volume: 0.44
     pitchJitter: 0
   - id: 7
     variants:
     - {fileID: 8300000, guid: 74d1b506116995f4ea0fea26ca886c5c, type: 3}
-    volume: 1
+    volume: 0.43
     pitchJitter: 0
   - id: 8
     variants:
@@ -19093,16 +19093,21 @@ MonoBehaviour:
   - id: 9
     variants:
     - {fileID: 8300000, guid: 7df49c2ff3d105e4dbd8163d6762cdcf, type: 3}
-    volume: 1
+    volume: 0.54
     pitchJitter: 0
   - id: 10
     variants:
     - {fileID: 8300000, guid: 8a1aae1ee679d494e9e56f3c069d42f9, type: 3}
-    volume: 1
+    volume: 0.93
     pitchJitter: 0
   - id: 11
     variants:
     - {fileID: 8300000, guid: 05c82f1d74bc87a47b188ac69aeec3f1, type: 3}
+    volume: 0.47
+    pitchJitter: 0
+  - id: 12
+    variants:
+    - {fileID: 8300000, guid: cb2413cd79db437a816eec3938212e97, type: 3}
     volume: 1
     pitchJitter: 0
   voiceCount: 4

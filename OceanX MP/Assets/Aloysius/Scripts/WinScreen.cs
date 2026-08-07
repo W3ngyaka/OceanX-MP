@@ -45,6 +45,7 @@ public class WinScreen : MonoBehaviour
     void Show()
     {
         _shown = true;
+        if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.Win);
         if (titleText != null) titleText.text = title;
         if (messageText != null)
             messageText.text = AluciaLines.Get("win.thankyou", thankYou);

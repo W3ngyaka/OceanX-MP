@@ -2201,7 +2201,7 @@ GameObject:
   - component: {fileID: 191577054}
   - component: {fileID: 191577053}
   m_Layer: 5
-  m_Name: Grouper
+  m_Name: Mullet image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4080,7 +4080,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 38b4cdbea02404b48ab65fbf987ea642, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a78e437d9de6c8b49b41146b9f2e989d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4821,7 +4821,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bea05f450a8383c4189b3816436814d1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 56049ad5e9a4077428bf46d8afe6a132, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7285,7 +7285,7 @@ PrefabInstance:
     - target: {fileID: 8454286959265224971, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 9c7ddf02b186af048b88dc622ebd1cf0, type: 3}
+      objectReference: {fileID: 21300000, guid: 694b56081dc58a746bfeebbc99881765, type: 3}
     - target: {fileID: 8557370570891920623, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
       propertyPath: m_LocalScale.x
       value: 4.600046
@@ -11793,7 +11793,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8b49fb0c62522644094f14c7125cd8c9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 48be8a9c1b5b01940a41990a6780dcda, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13644,7 +13644,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 396c10b518d04df41b9fda123c424de7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5d4602c31f3dbf344978db96658cda4a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15112,7 +15112,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 08086be6087394641b8158cada342744, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 780a6da6617bb5340af120868caa246e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17569,7 +17569,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 91ca471c6bc507a40bf9403ca62e117e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 917206fffb6754f4baef7fd6735106bf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -22118,7 +22118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1843461423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22307,7 +22307,7 @@ GameObject:
   - component: {fileID: 1847912409}
   - component: {fileID: 1847912408}
   m_Layer: 5
-  m_Name: Grouper
+  m_Name: Parrotfish image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22588,7 +22588,7 @@ GameObject:
   - component: {fileID: 1871884587}
   - component: {fileID: 1871884586}
   m_Layer: 5
-  m_Name: Grouper IMAGE
+  m_Name: Ray Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22633,7 +22633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f61fd5909ac47f741a3fbe9daae28361, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3f1ff8e7241aaa14d9b0a3a0f5368dfc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -23352,7 +23352,7 @@ GameObject:
   - component: {fileID: 1924001443}
   - component: {fileID: 1924001442}
   m_Layer: 0
-  m_Name: Image
+  m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24019,7 +24019,7 @@ GameObject:
   - component: {fileID: 1993546681}
   - component: {fileID: 1993546680}
   m_Layer: 5
-  m_Name: Grouper
+  m_Name: Damsel image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

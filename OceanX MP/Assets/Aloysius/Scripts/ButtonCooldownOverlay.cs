@@ -27,30 +27,43 @@ public class ButtonCooldownOverlay : MonoBehaviour
         if (overlay == null) overlay = GetComponent<Image>();
         if (overlay == null) return;
 
-        overlay.raycastTarget = false;   // must never eat the button's own presses
-        overlay.type = Image.Type.Filled;
-        overlay.fillMethod = Image.FillMethod.Radial360;
-        overlay.fillOrigin = (int)Image.Origin360.Top;
-        overlay.fillClockwise = clockwise;
-        overlay.color = sweepColor;
-        overlay.fillAmount = 0f;
+        ApplyStyle();
+        SetSweep(0f);
     }
 
     void Update()
     {
         if (overlay == null) return;
 
-        var src = TabletAddRemoveUIGPU.Instance;
-        if (src == null)
-        {
-            overlay.fillAmount = 0f;
-            if (hideWhenReady) overlay.enabled = false;
-            return;
-        }
+        SetSweep(RecoveryFraction());
+    }
 
-        float dur = src.CooldownDuration;
-        float amt = dur <= 0f ? 0f : Mathf.Clamp01(src.CooldownRemaining / dur);
-        overlay.fillAmount = amt;
-        if (hideWhenReady) overlay.enabled = amt > 0f;
+    /// <summary>How much of the cooldown is still to run, 0 (ready) to 1 (just fired).</summary>
+    private float RecoveryFraction()
+    {
+        var source = TabletAddRemoveUIGPU.Instance;
+        if (source == null) return 0f;
+
+        float duration = source.CooldownDuration;
+        if (duration <= 0f) return 0f;   // cooldown disabled
+
+        return Mathf.Clamp01(source.CooldownRemaining / duration);
+    }
+
+    /// <summary>One-time Image configuration: this is a radial fill, not a plain sprite.</summary>
+    private void ApplyStyle()
+    {
+        overlay.raycastTarget = false;   // must never eat the button's own presses
+        overlay.type = Image.Type.Filled;
+        overlay.fillMethod = Image.FillMethod.Radial360;
+        overlay.fillOrigin = (int)Image.Origin360.Top;
+        overlay.fillClockwise = clockwise;
+        overlay.color = sweepColor;
+    }
+
+    private void SetSweep(float fraction)
+    {
+        overlay.fillAmount = fraction;
+        if (hideWhenReady) overlay.enabled = fraction > 0f;
     }
 }

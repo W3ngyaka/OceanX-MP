@@ -37,22 +37,14 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Coroutine punchRoutine;
     private bool locked = false;
 
-    // The extracted hold-to-reveal ring component; owns the press-and-hold gesture + ring visual.
     private SpeciesBubbleHoldRing _holdRing;
 
-    // Overpopulation overlay state. _speciesIndex is resolved lazily: -2 = not yet
-    // resolved, -1 = species not in the netcode ecosystem (cosmetic-only bubble).
+  
     private int _speciesIndex = -2;
     private float _overpopCheckTimer;
     private bool _overpopShown;
 
-    // Re-sync lock state every time the bubble becomes visible again.
-    //
-    // EcosystemUnlockManagerGPU pushes unlocks with FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None),
-    // and that overload SKIPS INACTIVE OBJECTS. Switching tabs deactivates FoodWebLayer, so a species
-    // unlocked while the visitor is on another tab never reaches these bubbles and the padlock stays
-    // on permanently. Pulling the current state on enable makes that unmissable: whatever happened
-    // while we were hidden, we read the truth the moment we come back.
+   
     void OnEnable()
     {
         if (Application.isPlaying) Refresh();
@@ -64,7 +56,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Refresh();
         _holdRing = GetComponentInChildren<SpeciesBubbleHoldRing>(true);
 
-        // Baseline the overlay to hidden so its scene-authored state can't leave it stuck on.
         if (overpopulatedOverlay != null) overpopulatedOverlay.SetActive(false);
         _overpopShown = false;
     }
@@ -73,7 +64,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (data == null) return;
 
-        // Prefer the live unlock manager; fall back to GameState, else the asset default.
         bool isUnlocked;
         if (EcosystemUnlockManagerGPU.Instance != null)
             isUnlocked = EcosystemUnlockManagerGPU.Instance.IsUnlocked(data);
@@ -87,26 +77,20 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (lockOverlay != null)
             lockOverlay.SetActive(locked);
 
-        // Auto-find the overpopulation status overlay (child named 'Overpopulated').
         if (overpopulatedOverlay == null)
         {
             var op = transform.Find("Overpopulated");
             if (op != null) overpopulatedOverlay = op.gameObject;
         }
-        // A locked/extinct species is never "overpopulated"; drop the badge immediately.
         if (locked) UpdateOverpopulation();
 
-        // Auto-find the name label (first TMP child) if not assigned.
         if (nameLabel == null)
             nameLabel = GetComponentInChildren<TMPro.TMP_Text>(true);
 
-        // Show '???' while locked (Play only); real name once unlocked.
         if (nameLabel != null)
             nameLabel.text = (locked && Application.isPlaying) ? lockedNameText : data.speciesName;
 
-        // Auto-find the fish image: the Image child that is NOT the 'Overpopulated' status
-        // overlay and NOT inside the lock overlay. (Bubbles name the fish image inconsistently,
-        // so we identify it by exclusion rather than by name.)
+   
         if (fishImage == null)
         {
             foreach (Transform c in transform)
@@ -127,7 +111,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     void Update()
     {
-        // Poll the species' synced status on a throttled cadence and toggle the badge.
         _overpopCheckTimer += Time.unscaledDeltaTime;
         if (_overpopCheckTimer >= overpopCheckInterval)
         {
@@ -139,8 +122,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (_holdRing != null) _holdRing.Tick();
     }
 
-    // Resolve (once) this species' netcode index from its GPU sim link. -1 = not in the
-    // ecosystem list (a cosmetic-only bubble), so it can never report a population.
     void ResolveSpeciesIndex()
     {
         if (_speciesIndex != -2) return;
@@ -149,12 +130,7 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             : -1;
     }
 
-    // Show the 'Overpopulated' badge when the SIMULATION classifies this species as
-    // overpopulated (it outnumbers its predators past the ratio, or its predators are gone
-    // entirely and it has grown past the free-count). Deliberately NOT "pop >= MaxSchools":
-    // a species sitting at its cap in a healthy ocean is at capacity, not overpopulated.
-    // The status arrives already-synced from the host, so no server round-trip is needed.
-    // Locked/extinct species never qualify.
+  
     void UpdateOverpopulation()
     {
         if (overpopulatedOverlay == null) return;
@@ -191,8 +167,7 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             return;
         }
 
-        // EndHold returns true when this press was a completed hold (connections were
-        // revealed); in that case it is not a tap.
+        
         bool wasHold = _holdRing != null && _holdRing.EndHold();
         if (wasHold) ContextNudge.DismissId("hold");   // learned the hold gesture
         if (!wasHold)

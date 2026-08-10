@@ -23,6 +23,9 @@ public class TabletWinScreen : MonoBehaviour
              "with the host, and a tablet that blocks all input until someone resets it is a soft-lock.")]
     public Button continueButton;
 
+    [Tooltip("The exhibit reset that owns the full restart. Auto-found if left empty.")]
+    public ExhibitReset exhibitReset;
+
     [Header("Copy")]
     public string title = "REEF RESTORED";
 
@@ -47,7 +50,7 @@ public class TabletWinScreen : MonoBehaviour
     {
         if (group == null) group = GetComponent<CanvasGroup>();
         SetVisible(false, instant: true);
-        if (continueButton != null) continueButton.onClick.AddListener(Dismiss);
+        if (continueButton != null) continueButton.onClick.AddListener(RestartExhibit);
     }
 
     void Update()
@@ -63,12 +66,40 @@ public class TabletWinScreen : MonoBehaviour
 
     void Show()
     {
+        if (continueButton != null) continueButton.interactable = true;   // re-arm after a restart
         Compose();
         SetVisible(true);
     }
 
-    // Local dismiss only. The visitor may want to keep tinkering after winning, and the exhibit
-    // reset stays the host's job.
+    // Full restart of the whole exhibit, on BOTH screens. ExhibitReset.TriggerReset sends an RPC to
+    // the host, which clears populations and unlocks, plays its wipe, and drops both devices back to
+    // the attract screen. This panel then hides itself automatically once WinCondition.Won clears.
+    public void RestartExhibit()
+    {
+        if (!_shown) return;
+
+        // One press only. The reset is a networked round-trip, so the panel stays up for a moment
+        // afterwards -- without this a visitor can fire several resets before the first lands.
+        if (continueButton != null) continueButton.interactable = false;
+
+        var reset = exhibitReset != null
+            ? exhibitReset
+            : FindFirstObjectByType<ExhibitReset>(FindObjectsInactive.Include);
+
+        if (reset != null)
+        {
+            reset.TriggerReset();
+        }
+        else
+        {
+            // No reset in the scene: fall back to just closing the panel rather than trapping the
+            // visitor behind a dead button.
+            Debug.LogWarning("[TabletWinScreen] No ExhibitReset found; dismissing locally instead.", this);
+            Dismiss();
+        }
+    }
+
+    // Local hide, with no effect on the exhibit. Kept so the panel can be closed without a reset.
     public void Dismiss()
     {
         if (_shown) SetVisible(false);

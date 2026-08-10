@@ -7960,6 +7960,7 @@ GameObject:
   - component: {fileID: 667818149}
   - component: {fileID: 667818151}
   - component: {fileID: 667818150}
+  - component: {fileID: 667818152}
   m_Layer: 0
   m_Name: BalanceAdvisor
   m_TagString: Untagged
@@ -8030,6 +8031,20 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &667818152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667818148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5884b38e020eb374e80be8a6e6908628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bob
+  speed: 1.2
+  height: 6
 --- !u!1 &669722181
 GameObject:
   m_ObjectHideFlags: 0
@@ -8157,7 +8172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 31, y: 1}
+  m_AnchoredPosition: {x: 47, y: 7}
   m_SizeDelta: {x: -56, y: 42}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &670734875
@@ -19122,7 +19137,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658973650}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

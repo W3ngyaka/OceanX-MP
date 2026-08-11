@@ -41,10 +41,19 @@ public class AluciaController : MonoBehaviour
     public float healthyMin = 70f;    // above this = healthy
     public float hysteresis = 4f;     // dead-zone around each boundary so jitter doesn't re-fire
 
+    [Header("Bubble sprites (per mood) \u2014 leave empty to keep the scene sprite")]
+    [Tooltip("Bubble art for calm/positive lines. Also used for Win.")]
+    public Sprite bubbleCalmSprite;
+    [Tooltip("Bubble art for warnings \u2014 reef critical or slipping.")]
+    public Sprite bubbleWarnSprite;
+
     [Header("Mood colours (bubble tint)")]
-    public Color calmColor = new Color(0.85f, 0.96f, 1f, 0.92f);
-    public Color warnColor = new Color(1f, 0.93f, 0.85f, 0.92f);
-    public Color winColor  = new Color(0.86f, 0.99f, 0.94f, 0.92f);
+    // White by default now that the bubble has its own per-mood art: a tint MULTIPLIES over the
+    // sprite, so anything other than white discolours the drawn bubble (a pale orange tint over
+    // blue art reads as muddy teal). Tint is still here for fading or for a mood with no sprite.
+    public Color calmColor = Color.white;
+    public Color warnColor = Color.white;
+    public Color winColor  = Color.white;
 
     [Header("Mood sprites (Alucia poses) — leave empty to keep current")]
     public Sprite calmSprite;
@@ -175,7 +184,12 @@ public class AluciaController : MonoBehaviour
         // force an immediate rebuild so it resizes the same frame the text changes.
         if (bubbleGroup != null)
             LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)bubbleGroup.transform);
-        if (_bubbleBg != null) _bubbleBg.color = MoodColor(mood);
+        if (_bubbleBg != null)
+        {
+            Sprite bs = MoodBubbleSprite(mood);
+            if (bs != null) _bubbleBg.sprite = bs;   // null = keep whatever the scene assigned
+            _bubbleBg.color = MoodColor(mood);
+        }
         if (characterImage != null)
         {
             Sprite s = MoodSprite(mood);
@@ -264,6 +278,13 @@ public class AluciaController : MonoBehaviour
             case Mood.Win:  return winSprite;
             default:        return calmSprite;
         }
+    }
+
+    // Only two bubble images exist, so Win reuses the calm one — a win is a positive message.
+    // Returning null leaves the sprite alone, so a half-assigned setup degrades quietly.
+    Sprite MoodBubbleSprite(Mood m)
+    {
+        return m == Mood.Warn ? bubbleWarnSprite : bubbleCalmSprite;
     }
 
     Color MoodColor(Mood m)

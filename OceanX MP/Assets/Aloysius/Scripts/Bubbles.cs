@@ -6,7 +6,7 @@ using UnityEngine.UI;
 // Attach to a full-size UI RectTransform behind the bubbles (stretched to fill the panel).
 // Self-contained: generates its own soft-dot sprite at runtime, no assets needed.
 [RequireComponent(typeof(RectTransform))]
-public class MarineSnow : MonoBehaviour
+public class Bubbles : MonoBehaviour
 {
     [Header("Amount")]
     [Tooltip("How many particles exist at once.")]

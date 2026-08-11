@@ -19,19 +19,15 @@ public class TabletWinScreen : MonoBehaviour
     public TMP_Text lessonText;
     public TMP_Text checksText;
     public TMP_Text rosterText;
-    [Tooltip("Local dismiss so a visitor can keep playing. Does NOT reset the exhibit -- that stays " +
-             "with the host, and a tablet that blocks all input until someone resets it is a soft-lock.")]
+    
     public Button continueButton;
 
-    [Tooltip("The exhibit reset that owns the full restart. Auto-found if left empty.")]
     public ExhibitReset exhibitReset;
 
     [Header("Copy")]
     public string title = "REEF RESTORED";
 
-    [Tooltip("The takeaway. Every affordance on this tablet pushes the visitor to ADD -- there is an " +
-             "Add button, counts read like progress bars, species unlock as rewards. The winning reef " +
-             "is the opposite: predators at one school each, prey well under their caps. Say so.")]
+    
     [TextArea(2, 4)]
     public string lesson = "You did it with only a few predators. A real reef needs balance, not more fish — " +
                            "too many hunters and the whole web collapses.";

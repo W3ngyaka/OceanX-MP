@@ -19380,11 +19380,76 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UISoundManager
   masterVolume: 1
   muted: 0
-  sounds: []
+  sounds:
+  - id: 0
+    variants:
+    - {fileID: 8300000, guid: a90e1e29167492d2e22377f80dc42706, type: 3}
+    volume: 1
+    pitchJitter: 0.04
+  - id: 1
+    variants:
+    - {fileID: 8300000, guid: f802b853f77f5064f803fa7e8068cbf7, type: 3}
+    volume: 1
+    pitchJitter: 0
+  - id: 2
+    variants:
+    - {fileID: 8300000, guid: 0dff347ef8f6a5f4cb596ed0006ce7f0, type: 3}
+    volume: 1
+    pitchJitter: 0
+  - id: 3
+    variants:
+    - {fileID: 8300000, guid: 696d1c9215921da48b6b6669de58cd70, type: 3}
+    volume: 0.65
+    pitchJitter: 0
+  - id: 4
+    variants:
+    - {fileID: 8300000, guid: ee48a57681fbdc14da6dd8a2cf04f9bd, type: 3}
+    volume: 1
+    pitchJitter: 0
+  - id: 5
+    variants:
+    - {fileID: 8300000, guid: 0d9b7d66c599ed343bed708f0b3f4f5d, type: 3}
+    volume: 1
+    pitchJitter: 0
+  - id: 6
+    variants:
+    - {fileID: 8300000, guid: 517003f84f8491b44b7e313a56b65e88, type: 3}
+    volume: 0.44
+    pitchJitter: 0
+  - id: 7
+    variants:
+    - {fileID: 8300000, guid: 74d1b506116995f4ea0fea26ca886c5c, type: 3}
+    volume: 0.43
+    pitchJitter: 0
+  - id: 8
+    variants:
+    - {fileID: 8300000, guid: 0514882fe96449c4eb344989f57b7912, type: 3}
+    volume: 1
+    pitchJitter: 0
+  - id: 9
+    variants:
+    - {fileID: 8300000, guid: 7df49c2ff3d105e4dbd8163d6762cdcf, type: 3}
+    volume: 0.54
+    pitchJitter: 0
+  - id: 10
+    variants:
+    - {fileID: 8300000, guid: 8a1aae1ee679d494e9e56f3c069d42f9, type: 3}
+    volume: 0.93
+    pitchJitter: 0
+  - id: 11
+    variants:
+    - {fileID: 8300000, guid: 05c82f1d74bc87a47b188ac69aeec3f1, type: 3}
+    volume: 0.47
+    pitchJitter: 0
+  - id: 12
+    variants:
+    - {fileID: 8300000, guid: cb2413cd79db437a816eec3938212e97, type: 3}
+    volume: 1
+    pitchJitter: 0
   voiceCount: 4
   autoLoadFromResources: 1
   resourcesFolder: UISounds
-  tapSound: {fileID: 8300000, guid: 6b50ee20d5a8a08479d5a5c985ea6b21, type: 3}
+  tapSound: {fileID: 8300000, guid: a90e1e29167492d2e22377f80dc42706, type: 3}
   tapVolume: 1
 --- !u!1 &1679565530
 GameObject:

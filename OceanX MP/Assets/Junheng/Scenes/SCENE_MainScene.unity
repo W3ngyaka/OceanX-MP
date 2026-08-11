@@ -15980,7 +15980,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 310, y: 97}
+  m_AnchoredPosition: {x: 229, y: 68}
   m_SizeDelta: {x: 420, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &117657192
@@ -186528,7 +186528,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400155367}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -206250,6 +206250,8 @@ MonoBehaviour:
   criticalMax: 35
   healthyMin: 70
   hysteresis: 4
+  bubbleCalmSprite: {fileID: 21300000, guid: cebffcbbe283f46469d778104e5797ef, type: 3}
+  bubbleWarnSprite: {fileID: 21300000, guid: e81dc6d1ca681eb47879b9c37424230f, type: 3}
   calmColor: {r: 0.85, g: 0.96, b: 1, a: 0.92}
   warnColor: {r: 1, g: 0.93, b: 0.85, a: 0.92}
   winColor: {r: 0.86, g: 0.99, b: 0.94, a: 0.92}

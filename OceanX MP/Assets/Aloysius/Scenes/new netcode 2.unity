@@ -14300,7 +14300,7 @@ GameObject:
   - component: {fileID: 1249489003}
   - component: {fileID: 1249489004}
   m_Layer: 0
-  m_Name: Taptostat
+  m_Name: TapToStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21049,7 +21049,7 @@ GameObject:
   - component: {fileID: 1775682363}
   - component: {fileID: 1775682365}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

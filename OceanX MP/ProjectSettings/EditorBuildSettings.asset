@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Aloysius/Scenes/Start scene.unity
     guid: 064e0f2b3b9099b46af3be59870f4b93
   - enabled: 0
@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Akil/Scenes/SCENE_MainScene.unity
     guid: 3942392e28d9a3b49a38776cc85c06de
-  - enabled: 1
+  - enabled: 0
     path: Assets/Junheng/Scenes/SCENE_MainScene.unity
     guid: 184737b04498bd64987629c5a8b07370
   - enabled: 0
@@ -29,6 +29,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Aloysius/Scenes/Tablet.unity
     guid: 3d6b3564319f3694b9546569e4613502
+  - enabled: 0
+    path: Assets/Main Scenes/Host.unity
+    guid: 7236dcbc3e82d5948812ee993bdc186f
+  - enabled: 1
+    path: Assets/Main Scenes/Start scene.unity
+    guid: b3af2dcd7576f8b409d0cec18c70bbc6
+  - enabled: 1
+    path: Assets/Main Scenes/Tablet.unity
+    guid: 0d89bab7b00538a4cbaf245ce2e16b18
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

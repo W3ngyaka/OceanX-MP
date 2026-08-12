@@ -24156,7 +24156,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177479707}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -157775,7 +157775,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1184151410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186501,7 +186501,6 @@ MonoBehaviour:
   titleText: {fileID: 348893827}
   messageText: {fileID: 792941474}
   aluciaImage: {fileID: 615877082}
-  resetButton: {fileID: 0}
   title: ECOSYSTEM RESTORED
   thankYou: "You did it \u2014 thank you for bringing the reef back to life!"
   aluciaWinSprite: {fileID: 21300000, guid: 1bf59f66bcfdfc8428036af0b7189ba7, type: 3}
@@ -234137,7 +234136,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 55.756927, y: -3.0339813, z: -28.037308, w: 3.5709257}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -234160,7 +234159,7 @@ RectTransform:
   m_GameObject: {fileID: 1754703265}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.87811553, y: 0.87811553, z: 0.87811553}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 117657191}

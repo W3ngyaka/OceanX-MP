@@ -4,23 +4,18 @@ using TMPro;
 using System.Collections;
 
 // Full-screen win overlay. One per scene (host + tablet). Watches WinCondition.HasWon and
-// fades in when the ecosystem is won: shows Alucia thanking the player, a title, and a Reset
-// button. Reset asks the host (authoritative) to clear the win so the next visitor starts fresh.
+// fades in when the ecosystem is won: shows Alucia thanking the player, a title
 public class WinScreen : MonoBehaviour
 {
-    [Header("Refs")]
     public CanvasGroup group;            // fade this whole overlay
     public TMP_Text titleText;           // e.g. "ECOSYSTEM RESTORED"
     public TMP_Text messageText;         // Alucia's thank-you line
     public Image aluciaImage;            // Alucia portrait (use her win sprite)
-    public Button resetButton;           // "Play Again" — host only reacts
 
-    [Header("Content")]
-    [TextArea] public string title = "ECOSYSTEM RESTORED";
-    [TextArea] public string thankYou = "You did it — thank you for bringing the reef back to life!";
-    public Sprite aluciaWinSprite;       // optional; assign her happy sprite
+    public string title = "ECOSYSTEM RESTORED";
+    public string thankYou = "You did it — thank you for bringing the reef back to life!";
+    public Sprite aluciaWinSprite;       
 
-    [Header("Anim")]
     public float fadeDuration = 0.6f;
 
     private bool _shown;
@@ -30,7 +25,6 @@ public class WinScreen : MonoBehaviour
     {
         if (group == null) group = GetComponent<CanvasGroup>();
         SetVisible(false, instant: true);
-        if (resetButton != null) resetButton.onClick.AddListener(OnResetPressed);
     }
 
     void Update()

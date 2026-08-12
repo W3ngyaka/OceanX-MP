@@ -106145,7 +106145,7 @@ GameObject:
   - component: {fileID: 805584805}
   - component: {fileID: 805584807}
   m_Layer: 0
-  m_Name: Hint
+  m_Name: TapStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210533,7 +210533,7 @@ GameObject:
   - component: {fileID: 1576444569}
   - component: {fileID: 1576444570}
   m_Layer: 0
-  m_Name: Winmessage'
+  m_Name: Winmessage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

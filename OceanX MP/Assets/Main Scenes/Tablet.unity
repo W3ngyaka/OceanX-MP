@@ -2064,7 +2064,7 @@ GameObject:
   - component: {fileID: 191577054}
   - component: {fileID: 191577053}
   m_Layer: 5
-  m_Name: Mullet image
+  m_Name: MulletImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2527,7 +2527,7 @@ GameObject:
   - component: {fileID: 254135740}
   - component: {fileID: 254135742}
   m_Layer: 0
-  m_Name: Image (1)
+  m_Name: CoralImage4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2542,10 +2542,10 @@ RectTransform:
   m_GameObject: {fileID: 254135738}
   m_LocalRotation: {x: -0, y: -0, z: 0.25413266, w: 0.9671694}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.4515617, y: 3.4515617, z: 3.4515617}
+  m_LocalScale: {x: 3.451562, y: 3.451562, z: 3.451562}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 973922878}
+  m_Father: {fileID: 1448588160}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 29.444}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2572,7 +2572,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c78b2ad1f9251bd4ca0ba2fe7a03b14f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c42aa427d74f2974f8e349cb450199e4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2711,7 +2711,7 @@ GameObject:
   - component: {fileID: 276752665}
   - component: {fileID: 276752666}
   m_Layer: 5
-  m_Name: Locked (1)
+  m_Name: Locked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3918,7 +3918,7 @@ GameObject:
   - component: {fileID: 396436259}
   - component: {fileID: 396436258}
   m_Layer: 5
-  m_Name: scad
+  m_Name: ScadImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4477,7 +4477,7 @@ GameObject:
   - component: {fileID: 421249176}
   - component: {fileID: 421249178}
   m_Layer: 0
-  m_Name: Image
+  m_Name: CoralImage3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4495,7 +4495,7 @@ RectTransform:
   m_LocalScale: {x: 4.9099, y: 4.9099, z: 4.9099}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 973922878}
+  m_Father: {fileID: 1448588160}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 29.444}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4522,7 +4522,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c78b2ad1f9251bd4ca0ba2fe7a03b14f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c42aa427d74f2974f8e349cb450199e4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4659,7 +4659,7 @@ GameObject:
   - component: {fileID: 425673935}
   - component: {fileID: 425673934}
   m_Layer: 5
-  m_Name: Grouper IMAGE
+  m_Name: GrouperImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4809,7 +4809,7 @@ GameObject:
   - component: {fileID: 434304784}
   - component: {fileID: 434304783}
   m_Layer: 5
-  m_Name: Grouper
+  m_Name: StreakedImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5377,7 +5377,7 @@ GameObject:
   - component: {fileID: 498641586}
   - component: {fileID: 498641590}
   m_Layer: 5
-  m_Name: parrotbubble
+  m_Name: Parrotbubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7194,7 +7194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7118194484329517317, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
       propertyPath: m_Name
-      value: sharkbubble
+      value: Sharkbubble
       objectReference: {fileID: 0}
     - target: {fileID: 8454286959265224971, guid: 0868864ce65cfc74bbca46a575ecbc50, type: 3}
       propertyPath: m_Sprite
@@ -7339,7 +7339,6 @@ GameObject:
   - component: {fileID: 648665374}
   - component: {fileID: 648665373}
   - component: {fileID: 648665375}
-  - component: {fileID: 648665376}
   - component: {fileID: 648665377}
   - component: {fileID: 648665378}
   - component: {fileID: 648665379}
@@ -7439,20 +7438,6 @@ MonoBehaviour:
   - {fileID: 498641586}
   - {fileID: 1208796832}
   - {fileID: 1051391725}
---- !u!114 &648665376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648665371}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5884b38e020eb374e80be8a6e6908628, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bob
-  speed: 1.2
-  height: 6
 --- !u!114 &648665377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8274,7 +8259,7 @@ GameObject:
   - component: {fileID: 686193732}
   - component: {fileID: 686193734}
   m_Layer: 0
-  m_Name: Image (1)
+  m_Name: CoralImage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8319,7 +8304,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c78b2ad1f9251bd4ca0ba2fe7a03b14f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c42aa427d74f2974f8e349cb450199e4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9384,7 +9369,7 @@ GameObject:
   - component: {fileID: 843167626}
   - component: {fileID: 843167628}
   m_Layer: 0
-  m_Name: Image
+  m_Name: CoralImage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9429,7 +9414,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c78b2ad1f9251bd4ca0ba2fe7a03b14f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c42aa427d74f2974f8e349cb450199e4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10199,7 +10184,7 @@ GameObject:
   - component: {fileID: 931584197}
   - component: {fileID: 931584198}
   m_Layer: 5
-  m_Name: Locked (1)
+  m_Name: Locked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10512,43 +10497,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 960665206}
   m_CullTransparentMesh: 1
---- !u!1 &973922877
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 973922878}
-  m_Layer: 0
-  m_Name: Coral (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &973922878
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973922877}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 421249175}
-  - {fileID: 254135739}
-  m_Father: {fileID: 1102473157}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &983577947
 GameObject:
   m_ObjectHideFlags: 0
@@ -11000,7 +10948,7 @@ GameObject:
   - component: {fileID: 1027214596}
   - component: {fileID: 1027214600}
   m_Layer: 5
-  m_Name: scadbubble
+  m_Name: Scadbubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11165,7 +11113,7 @@ GameObject:
   - component: {fileID: 1027824021}
   - component: {fileID: 1027824020}
   m_Layer: 5
-  m_Name: Macroalgae image
+  m_Name: MacroalgaeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11427,7 +11375,7 @@ GameObject:
   - component: {fileID: 1044990425}
   - component: {fileID: 1044990426}
   m_Layer: 5
-  m_Name: Locked (1)
+  m_Name: Locked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11543,7 +11491,7 @@ GameObject:
   - component: {fileID: 1051391725}
   - component: {fileID: 1051391729}
   m_Layer: 5
-  m_Name: eyestripebubble
+  m_Name: Eyestripebubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11845,7 +11793,7 @@ GameObject:
   - component: {fileID: 1067737457}
   - component: {fileID: 1067737456}
   m_Layer: 5
-  m_Name: snapper image
+  m_Name: SnapperImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12627,7 +12575,6 @@ RectTransform:
   - {fileID: 954842420}
   - {fileID: 1249489002}
   - {fileID: 1448588160}
-  - {fileID: 973922878}
   - {fileID: 1198857641}
   - {fileID: 1668220418}
   - {fileID: 2143141154}
@@ -13229,7 +13176,7 @@ GameObject:
   - component: {fileID: 1160316767}
   - component: {fileID: 1160316771}
   m_Layer: 5
-  m_Name: damselbubble
+  m_Name: Damselbubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13696,7 +13643,7 @@ GameObject:
   - component: {fileID: 1200253573}
   - component: {fileID: 1200253572}
   m_Layer: 5
-  m_Name: Moray IMAGE
+  m_Name: MorayImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13957,7 +13904,7 @@ GameObject:
   - component: {fileID: 1208796832}
   - component: {fileID: 1208796836}
   m_Layer: 5
-  m_Name: streakedbubble
+  m_Name: Streakedbubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15164,7 +15111,7 @@ GameObject:
   - component: {fileID: 1329607696}
   - component: {fileID: 1329607695}
   m_Layer: 5
-  m_Name: trevally image
+  m_Name: TrevallyImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15239,7 +15186,7 @@ GameObject:
   - component: {fileID: 1331814850}
   - component: {fileID: 1331814849}
   m_Layer: 5
-  m_Name: Seagrass image
+  m_Name: SeagrassImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15392,7 +15339,7 @@ GameObject:
   - component: {fileID: 1335586775}
   - component: {fileID: 1335586779}
   m_Layer: 5
-  m_Name: snapperbubble
+  m_Name: Snapperbubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15581,7 +15528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       propertyPath: m_Name
-      value: moraybubble
+      value: Moraybubble
       objectReference: {fileID: 0}
     - target: {fileID: 3905239900824112151, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       propertyPath: m_Sprite
@@ -17336,6 +17283,8 @@ RectTransform:
   m_Children:
   - {fileID: 843167625}
   - {fileID: 686193731}
+  - {fileID: 421249175}
+  - {fileID: 254135739}
   m_Father: {fileID: 1102473157}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -17625,7 +17574,7 @@ GameObject:
   - component: {fileID: 1468270429}
   - component: {fileID: 1468270428}
   m_Layer: 5
-  m_Name: Sharkimage
+  m_Name: SharkImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18049,7 +17998,7 @@ GameObject:
   - component: {fileID: 1496209747}
   - component: {fileID: 1496209746}
   m_Layer: 5
-  m_Name: Grouper
+  m_Name: EyestripeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19781,7 +19730,7 @@ GameObject:
   - component: {fileID: 1694656287}
   - component: {fileID: 1694656291}
   m_Layer: 5
-  m_Name: trevallybubble
+  m_Name: Trevallybubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20088,7 +20037,7 @@ GameObject:
   - component: {fileID: 1708969467}
   - component: {fileID: 1708969471}
   m_Layer: 5
-  m_Name: raybubble
+  m_Name: Raybubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21632,7 +21581,7 @@ GameObject:
   - component: {fileID: 1811861558}
   - component: {fileID: 1811861562}
   m_Layer: 5
-  m_Name: mulletbubble
+  m_Name: Mulletbubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22471,7 +22420,7 @@ GameObject:
   - component: {fileID: 1847912409}
   - component: {fileID: 1847912408}
   m_Layer: 5
-  m_Name: Parrotfish image
+  m_Name: ParrotfishImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22752,7 +22701,7 @@ GameObject:
   - component: {fileID: 1871884587}
   - component: {fileID: 1871884586}
   m_Layer: 5
-  m_Name: Ray Image
+  m_Name: RayImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22853,7 +22802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2825851514806027360, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       propertyPath: m_Name
-      value: grouperbubble
+      value: Grouperbubble
       objectReference: {fileID: 0}
     - target: {fileID: 3905239900824112151, guid: 39ec8d3afb8dba840adab025849e80af, type: 3}
       propertyPath: m_Sprite
@@ -24183,7 +24132,7 @@ GameObject:
   - component: {fileID: 1993546681}
   - component: {fileID: 1993546680}
   m_Layer: 5
-  m_Name: Damsel image
+  m_Name: DamselImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24644,7 +24593,7 @@ GameObject:
   - component: {fileID: 2015562269}
   - component: {fileID: 2015562270}
   m_Layer: 5
-  m_Name: macroalgae bubble
+  m_Name: Macroalgaebubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

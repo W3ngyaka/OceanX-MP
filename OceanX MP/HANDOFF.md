@@ -1,6 +1,6 @@
 # Restore the Reef — Handoff Document
 
-_Last updated: 2026-07-29_
+_Last updated: 2026-08-12 — reflects all commits through 21a01f9f (2026-08-11)_
 
 > This is the single source of truth for the project. Update the date above whenever you edit this file.
 > Formerly named **OceanX MP** / **Balance the Ocean** — renamed to **Restore the Reef** 2026-07-26.
@@ -168,7 +168,7 @@ The tablet flips back to the title screen (no bubble wipe on the tablet — just
 | 8 | Movement systems — flocking + predator behaviour | ✅ Done (completed Week 5 in the schedule) |
 | 9 | Event system + integration hooks for UI | ✅ Done — start-at-zero/extinction, netcode + tablet add/remove, C# events (species / unlock / health-band) all wired |
 | 10 | Preset scenarios + complete core system | ❌ Not started |
-| 11 | Debugging, testing, system balancing | ❌ Not started |
+| 11 | Debugging, testing, system balancing | 🔶 In progress — win condition + win screens, UI audio pass, moray cave navigation, tablet UI polish (Jul 30 – Aug 10) |
 | 12 | Final optimisation, bug fixing, project completion | ❌ Not started |
 
 ---
@@ -245,6 +245,8 @@ Assets/Junheng/
 │   │   │   ├── EcosystemDebugHarnessGPU.cs       In-editor OnGUI add/remove panel (no netcode) — dev-only
 │   │   │   ├── FishEntryPointGPU.cs              Off-screen entry/exit markers; schools swim in/out via these (auto-registers)
 │   │   │   ├── IntroductionCameraDirectorGPU.cs  Cinemachine — catches a species' first school at its gate & follows it in (0→1 only); host-only
+│   │   │   ├── MorayCave.cs                      Cave marker (mouth + ordered child path); self-registers to MorayCave.All  [Akil, 2026-07-30]
+│   │   │   ├── MorayCaveDirector.cs              Moray AI — claims a cave, drives the school target in, pins it head-out via GPU rest anchors  [Akil]
 │   │   │   ├── EcosystemUIAdapterGPU.cs          UI→GPU bridge — ⚠ DEAD (zero external refs, confirmed 2026-07-08); safe to delete
 │   │   │   ├── SpeciesBehaviorPropertiesGPU.cs   Flee/hunt/hunger SO (⚠ currently UNREAD by runtime — see flee-gap note in §9)
 │   │   │   └── SpeciesDataGPU.cs                 Per-species SoT: Role, ScientificName, School/Movement/MotionRender/Behavior props, PathStyle, prey/predator lists, FishPerSchool, MaxSchools, UseSpineDeformation
@@ -310,14 +312,15 @@ Assets/Junheng/
 Assets/Aloysius/                                  UI team
 └── Scripts/
     Core UI:        SpeciesBubble.cs · ModalController.cs · SpeciesInfoPanel.cs · TabController.cs · SwipeToClose.cs · DimFader.cs
-    Food web:       FoodWebLines.cs · FoodWebDragReveal.cs · CurrentOrganismsGrid.cs · OrganismCardData.cs
-    Health:         Health.cs (client/netcode bar) · HealthBarBinder.cs (host/large-screen bar, reads EcosystemSimulationGPU.EcoHealth01 direct) · EcoHealthDashboard.cs · EcoHealthChassis.cs
-    Unlock:         GameState.cs + UnlockTester.cs (Aloysius placeholders) · LockedHintPanel.cs · SpeciesUnlockReveal.cs · NotificationManager.cs (used by JunHeng's EcosystemUnlockManagerGPU)
+    Food web:       FoodWebLines.cs · CurrentOrganismsGrid.cs · OrganismCardData.cs
+    Health:         Health.cs (client/netcode bar) · HealthBarBinder.cs (host/large-screen bar, reads EcosystemSimulationGPU.EcoHealth01 direct) · EcoHealthDashboard.cs
+    Unlock:         GameState.cs + UnlockTester.cs (Aloysius placeholders) · HintsPanel.cs (live-requirement hints) · SpeciesUnlockReveal.cs · NotificationManager.cs (used by JunHeng's EcosystemUnlockManagerGPU)
     Reveal:         SpeciesAddedReveal.cs · RevealQueue.cs
-    NPC/FX:         AluciaController.cs · AluciaLines.cs · GodRays.cs · MarineSnow.cs · SonarPulse.cs · Bob.cs
+    NPC/FX:         AluciaController.cs · AluciaLines.cs · GodRays.cs · MarineSnow.cs · SonarPulse.cs · Bob.cs · TextGlowPulse.cs (play-mode TMP glow on material instance) · Bubbles.cs (marine-snow UI particles behind the bubbles)
+    ⚠ Deleted 2026-08-11 (`9768838d`, "Delete old scripts", 0 refs): EcoHealthChassis.cs · FoodWebDragReveal.cs · LockedHintPanel.cs
     Onboarding:     TutorialPanel.cs (now exposes IsOpenOrPending) · ContextNudge.cs · HideUntilStarted.cs · StartCrossfade.cs · ExperienceStartGate.cs
     Guidance/feedback: BalanceAdvisor.cs (bottom-left "HOW TO BALANCE" hint panel) · LookUpPrompt.cs ("look at the big screen" toast on Add) · ButtonCooldownOverlay.cs (radial Add-button cooldown sweep)   [all added 2026-07-26/27]
-    Title/Win:      FishSwim.cs (title screen) · WinCondition.cs · WinScreen.cs · SplashSequence.cs
+    Title/Win:      FishSwim.cs (title screen) · WinCondition.cs (health ≥0.99 held 2s) · WinScreen.cs (large screen) · TabletWinScreen.cs (tablet debrief + restart) · SplashSequence.cs
     Audio:          UISoundManager.cs · AdaptiveMusicSystem.cs · Editor/AdaptiveMusicSetup.cs (replaced deleted MusicDirector.cs)
     Data link:      SpeciesData.cs (UI asset — carries the gpuSpecies → SpeciesDataGPU link; unlock config lives here)
     Content DBs:    SpeciesContentDB.cs · RevealContentDB.cs · ViewedSpeciesReporter.cs
@@ -632,7 +635,7 @@ Two sibling components sharing a common queue + CSV backend, fire on different e
   - **Padlock stuck after a cross-tab unlock — fixed 2026-07-29 (`cc0cabe8`).** `EcosystemUnlockManagerGPU` pushes unlocks via `FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None)`, which **skips inactive objects**; switching tabs deactivates `FoodWebLayer`, so a species unlocked while the visitor was on another tab never reached its bubble and kept its padlock. `SpeciesBubble.OnEnable` now calls `Refresh()` (play mode only) so every bubble re-reads the current lock state whenever it becomes visible again.
 - **`FoodWebLines.cs`** — `LineRenderer` edges between species nodes (predator arrows). Currently hidden by default (`LINE FOOD WEB HIDE` commit). Marked "wonky, TO BE CHANGED."
 - Food web nodes and layout working in the scene; full visual structure of 12 species bubbles present.
-- **`FoodWebDragReveal.cs`** — drag/long-press reveal of predator arrows (from prototype spec).
+- ~~**`FoodWebDragReveal.cs`** — drag/long-press reveal of predator arrows.~~ **Deleted 2026-08-11 (`9768838d`, 0 refs)** — never fully wired; the food-web arrows remain the open item (see `FoodWebLines` above).
 
 ### Species info modal
 - **`ModalController.cs`** — species info modal triggered by tapping a species bubble; shows species info, Add/Remove buttons. Data-driven: pulls text + image from CSV.
@@ -664,7 +667,7 @@ Two sibling components sharing a common queue + CSV backend, fire on different e
 - **`HealthBarBinder.cs`** (host large screen) — reads **`EcosystemSimulationGPU.EcoHealth01` directly** — no netcode, auto-finds the sim. ⚠ Depends on JunHeng's `EcoHealth01` staying `public`. Auto-finds the sim; exponential smoothing.
 
 ### Hints panel
-- **`LockedHintPanel.cs`** / `HintsPanel.BuildHint` — computes **live** unmet requirements first ("get eco-health to X%", "add N more Y") so the Hints tab is always accurate against current populations, only falling back to `hint.flavour` → `SpeciesData.hint1` → generic line when nothing concrete is outstanding. **Priority was inverted** — previously a non-empty `hint1` short-circuited everything and hid the real requirements.
+- **`HintsPanel.cs`** (`HintsPanel.BuildHint`) — computes **live** unmet requirements first ("get eco-health to X%", "add N more Y") so the Hints tab is always accurate against current populations, only falling back to `hint.flavour` → `SpeciesData.hint1` → generic line when nothing concrete is outstanding. **Priority was inverted** — previously a non-empty `hint1` short-circuited everything and hid the real requirements.
 
 ### Notifications
 - **`NotificationManager.cs`** — tablet unlock/notify popups. Called by `EcosystemUnlockManagerGPU` on unlock.
@@ -681,6 +684,16 @@ Two sibling components sharing a common queue + CSV backend, fire on different e
 ### Modal / DimOverlay fix
 - **"Coroutine couldn't be started because the game object 'DimOverlay' is inactive"** — dim-overlay reset moved out of `Start()` into `Awake()`. The panel is authored inactive, so `Start()` ran a frame **after** the first `Show()` had already activated the overlay, deactivating the dim right after it appeared (and breaking swipe-close). `Awake` runs synchronously inside `Show()`'s `SetActive(true)`, *before* the overlay is re-activated.
 - **`DimFader.FadeTo`** — snaps to target and fires `onComplete` **synchronously** when `!isActiveAndEnabled`, instead of starting a coroutine on an inactive object.
+
+### Recent polish (2026-07-30 → 08-10)
+- **Current Organisms** reworked (`363a8331`, `213dbb90`) — card prefab + `OrganismCardData` layout fixes ("Fixed currentorganisms").
+- **View-details / look-up arbitration** (`211dca1c`) — swapped the button art; added `LookUpPrompt.IsShowing` so `ContextNudge` yields the shared banner slot to the toast and pauses its own visible-time counter (bursts of adds no longer eat the hint window).
+- **Prompt redesign** (`e920d3bf`) — scene-only prompt art/layout.
+- **Help button gated** (`b39a52a8`) — hidden until after the start-gate canvas.
+- **Bystander UI panel fix** (`0dec41e3`) — scene / font-asset only.
+- **Balance UI restyle** (`0c363b9d`) — new `Balance.png`; asset renames (lollll→Hintfish, baa→hinttextbox, newbggggg→UIBG); deleted the stale `new netcode 3.unity` scene.
+- **`ButtonCooldownOverlay` refactor** (`37ace428`) — split into `RecoveryFraction` / `ApplyStyle` / `SetSweep` helpers, behaviour unchanged (radial Add-button cooldown).
+- **`TextGlowPulse.cs`** (`73dbed3a`) — play-mode-only soft TMP glow pulse on the **material instance** (not the shared material, so it doesn't throb all ~28 Rajdhani labels); optional subtle scale breath.
 
 ## 7.11 Alucia (voice / NPC guide)
 
@@ -855,12 +868,13 @@ The following components latched `_played` / `_shownOnce` / `_initialized` and n
   - **Minimum dwell** (`minMoodSeconds`) blocks rapid re-switching.
 - **Equal-power fades in dB** (sin/cos) driving each song's mixer-group volume — no mid-crossfade "hole."
 - Individual soundtracks play one-at-a-time instead of all at once.
-- Add/remove audio feedback via `UISoundManager`.
+- **Per-species intro stings** (2026-07-29, `3217cd24`): `SpeciesData` gained `introSound`/`introVolume`; `AdaptiveMusicSystem.PlayIntro()` routes a species' sting through the swell source (falls back to generic swell if null). `SpeciesAddedReveal` now calls `PlayIntro` instead of `PlaySwell`.
 
-### UI sound layer
-- **`UISoundManager.cs`** — tiny singleton `AudioSource` wrapper (`Instance`, `PlayTap()` one-shot + `tapVolume`). Drop one on a scene object, assign the clip.
-- `SpeciesBubble.OnTap` calls `UISoundManager.Instance?.PlayTap()` (null-guarded, harmless when absent).
-- **`Assets/Sounds/`** — `Tap.mp3` (bubble tap) + `Ambient.mp3` (reef ambience).
+### UI sound layer (rewritten 2026-08-03, `88522e05`)
+- **`UISoundManager.cs` is now a full multi-voice SFX manager** (was a one-shot `PlayTap` wrapper). Scene singleton (`Instance`) with a round-robin pool of 2D `AudioSource` voices (default 4) so rapid sounds don't cut each other off. `Play(UISound, volumeScale)` where `UISound` is an enum: **Tap, Add, Remove, Locked, Disabled, TabSwitch, ModalOpen, ModalClose, Unlock, SpeciesAdded, Notification, Warning, Win**. Each entry supports random `variants`, per-sound `volume`, and `pitchJitter`. Clips wired in the Inspector (optional `Resources/UISounds/<Enum>` autoload fallback).
+- **Call sites** fire directly, all null-guarded: `TabController.Select`→TabSwitch, locked bubble tap→Locked, `ModalController`→ModalOpen/Close (edge-guarded), `NotificationManager`→Unlock, `LookUpPrompt`→Notification, `BalanceAdvisor`→Warning (rising-edge only), `TabletAddRemoveUIGPU.Add`→ first-time SpeciesAdded / cap Disabled / else Add, `Remove`→Remove, `WinScreen.Show`→Win.
+- **Clips** live in `Assets/Sounds/UI/OceanX/`. ⚠ The first Add/Remove batch (`73d18ddd`, "added remove audio (not working)") were placeholder duplicates (all identical 168014-byte files, so Remove didn't sound distinct); `6aaffd73` (2026-08-07) swapped in distinct real Add/Remove clips + loudness-matched volumes. **Verify in-scene that the Remove entry references the new clip** — final clip wiring lives in the `.unity` scene, and Remove is triggered from two sites (`OrganismCardData.RemoveSpecies` + `TabletAddRemoveUIGPU.Remove`).
+- `841e85cd` imported an unused alt SFX set under `Sounds/UI/` labelled "prob wont be used".
 
 ## 7.17 Environment (Coral Growth + Reef Ambience)
 
@@ -1034,13 +1048,31 @@ Keep `UVMap` (UV0) as the texture unwrap + active-render channel. UV0 = texturin
 ## 7.22 Splash Screen + Win Condition
 
 - **`SplashSequence.cs`** — auto-advances by `GetActiveScene().buildIndex + 1` (splash = index 0, game scene = index 1). Works for both host and tablet builds; each ships its own scene 1. Removed the `gameScene`/`tabletScene` name fields. `waitForTap = false` for pure auto-advance. (Aloysius also added a black screen-fade overlay to this same script.)
-- **`WinCondition.cs`** — eco-health = 100% detection; fires the win screen.
-- **`WinScreen.cs`** — sticky win overlay.
+- **`WinCondition.cs`** — the win detector. Latches `Won = true` when networked eco-health ≥ `winThreshold01` (default **0.99**) is held continuously for `holdSeconds` (default **2 s**) — one-frame spikes ignored. Reads `EcosystemNetworkManagerGPU.Instance.GetEcoHealth()`. It's a **local, per-scene** detector (singleton `Instance`, plain C# `Won` — NOT a NetworkVariable); host and tablet each run their own copy but read the same synced health, so they trip within a frame of each other. `WinCondition.Reset()` is called by the reset flow on every device.
+- **Two separate win screens** (deliberately different, not copies):
+  - **Large screen** — `WinScreen.cs`: full-screen celebration for bystanders. Watches `WinCondition.Instance.Won`, fades in, plays `UISound.Win`, shows a title ("ECOSYSTEM RESTORED"), an Alucia thank-you line (`AluciaLines.Get`) + her win sprite. `f39f7240` restyled it (`Wintext.png`). Its `resetButton` was **removed in-scene** (`3ce58787`) — the field/listener still exist in code but are unwired (the big screen is spectacle; restart belongs on the tablet + host F9).
+  - **Tablet** — `TabletWinScreen.cs`: the **debrief**. Title "REEF RESTORED" + the lesson (balance over quantity: predators at ~1 school, prey under caps) + a real-world note. `Compose()` aggregates live populations into "N predators / M prey species" and "X of Y species, all healthy". Its **continue button restarts the exhibit** (`8812a384`): rewired from local `Dismiss` to `RestartExhibit()` → `ExhibitReset.TriggerReset()` (full networked reset), double-fire-guarded, falls back to local `Dismiss()` if no `ExhibitReset` found.
+- **Reset integration:** the win is cleared by the host-authoritative reset (F9 hold or tablet Continue → `ExhibitReset` → `WinCondition.Reset()` on all devices), so both win screens hide in lockstep when `Won` clears.
 - **`FishSwim.cs`** — title-screen "fishy" animation (title art assets: `bluefo`, `fish`, `seaweed`, `taptosat`, `coral` PNGs).
 
 ## 7.23 DualMonitor Support
 
 **`DualMonitor.cs`** — activates Display 2 (Spacedesk / iPad) on startup. Used for the trifold display setup.
+
+## 7.24 Moray Cave Navigation (Akil, `2053e8b9` + `2024bc52`, 2026-07-30/31)
+
+The Giant moray no longer roams — each one claims a cave, swims an authored path into it, freezes head-out with its body coiled into the rock, gapes its jaw, and after a dwell timer relocates to another free cave.
+
+- **`MorayCave.cs`** — marker component on an empty GameObject at a cave mouth. Self-registers into a static `MorayCave.All` (no wiring). Position = neck point, +Z = head-out direction; ordered child GameObjects define the swim-in path (last child = rest spot). Editor gizmos included.
+- **`MorayCaveDirector.cs`** — the AI, sits beside the sim (like a camera director; one per scene, auto-finds sim/species/boidSim on Awake, matches the moray species by name containing "moray"). It does NOT touch the compute shader directly: it disables the claimed school's `EcosystemTargetGPU` and drives the target itself (same mechanism as `ParkAt`), running a `Travelling`/`InCave` state machine that steers to the path, locks the head to a kinematic cursor at `_pathSpeed`, and ramps `restWeight` 0→1.
+- **GPU/compute hook:** new `EcosystemSimulationGPU.GetSchoolTarget()`; the director calls `BoidSimulationGPU.SetMorayRestAnchors(pos,dir,count)` each frame → compute kernel (`_MorayRestAnchorPos/Count`, `_MorayRestMatchRadius`) + render material via `BoidSpawnerGPU.SetSpineRestData(...)`. In the compute shader a moray whose **target** matches an anchor is `lerp`ed onto it by weight (so it can actually stop — boids can't otherwise slow below cruise), and the reef-penetration backstop is skipped for a pinned moray so it can clip into the rock. `2024bc52` switched matching from position-based to **target-based** (only the one assigned eel pins, never a passing one) and made `BoidSimulationGPU` preserve the moray head-path ring buffer across buffer recreates (else a resting eel snaps to a T-pose).
+- **Scene setup:** one `MorayCave` per cave (at the mouth, +Z pointing out, ordered child path points ending deep in the hole) + one `MorayCaveDirector` in the scene. First N morays claim N caves; extras keep roaming until one frees.
+- **⚠ Caveats / cleanup:**
+  - `_enableRestPose` master switch has an OFF fallback ("if the pose misbehaves" → loiter-only) — the pose was fragile. `EnterCave()` has a `// FUTURE hook` for the curl/mouth animation (with Akil's spine shader).
+  - `BoidSimulationGPU.SetMorayAvoidanceOverride()` / `_morayAvoidanceOverride` are now **dead code** (their only caller was removed in `2024bc52`).
+  - Mouth-gape + body defaults are hand-tuned to the specific giant-moray mesh (body ~12 units) — **they will break on a different mesh**.
+  - Tunables: `_caveDwellSeconds=100`, `_leaveRollInterval=30`, `_leaveChance=0.375`, `_pathSpeed=4`, `_arriveRadius=4.5`, `_restRadius=10`; arrival uses synchronous GPU read-backs (`_centroidPollInterval=0.5s`), with `_travelTimeout`/`_waypointTimeout` so a reef snag can't stall the eel forever.
+  - `2024bc52` also committed a stray ~1M-line recovery artifact `Assets/_Recovery/0 (6).unity` — likely unintended and unrelated to the feature (candidate for deletion).
 
 ---
 
@@ -1275,7 +1307,7 @@ A smaller adjacent leak was fixed 2026-07-16: `ContentService.LoadSprite` now de
 
 - **Scene divergence — three "large screen" scenes historically drifted.** JunHeng had sim, Aloysius forked with health bar, Akil owned environment/lighting. Convergence into JunHeng's `SCENE_MainScene.unity` is partial but not complete. See §11.
 - **Build Settings = one-project-two-players toggle** (as of 2026-07-28): index 0 `Aloysius/Scenes/Start scene.unity`, index 1 is EITHER `Junheng/SCENE_MainScene.unity` (host/Windows) OR `Aloysius/Scenes/new netcode 2.unity` (tablet/Android) — enable one, match the Player platform. The stale `SCENE_MainScene 1.unity` reference is gone. ⚠ Easy to ship the wrong scene/platform pair — double-check before each build.
-- **`Assets/_Recovery/` — 9.9 MB of Unity crash-recovery dumps tracked in git.** `0 (3).unity` alone is 8.4 MB. Not in Build Settings so nothing ships, but Unity imports/parses them every project open and their live script GUIDs pollute every reference grep. → `git rm -r --cached "Assets/_Recovery"`, delete, add to `.gitignore`.
+- **`Assets/_Recovery/` — Unity crash-recovery dumps tracked in git.** `0 (3).unity` alone is 8.4 MB; `2024bc52` (2026-07-31) committed another, `0 (6).unity` (~1M lines), alongside the moray work. Not in Build Settings so nothing ships, but Unity imports/parses them every project open and their live script GUIDs pollute every reference grep. → `git rm -r --cached "Assets/_Recovery"`, delete, add to `.gitignore`.
 - **Duplicate AudioListener** — multiple cameras in scene, keep exactly one active.
 - **`Boids_Simulation_CPU` GameObject in Boids_Demo** — disabled, holds missing script refs to deleted CPU scripts. Safe to delete from scene.
 
@@ -1283,6 +1315,7 @@ A smaller adjacent leak was fixed 2026-07-16: `ContentService.LoadSprite` now de
 
 - **`EcosystemUIAdapterGPU.cs`** — safe to delete.
 - **`Networking/HostSpawner.cs`** — zero refs anywhere. Safe to delete.
+- **`BoidSimulationGPU.SetMorayAvoidanceOverride()` / `_morayAvoidanceOverride`** — dead since `2024bc52` (its only caller was removed when moray pinning switched to target-based matching). Safe to delete the method + field.
 - **`Aloysius/Scripts/UnlockTester.cs`** — safe to delete (Aloysius's keyboard-driven placeholder; `EcosystemUnlockManagerGPU` is the production replacement).
 - **`Aloysius/Scripts/Health.cs`** — superseded by `HealthBarBinder`; safe to delete (but check tablet still uses `Health.cs` — actually keep for tablet client).
 
@@ -1460,7 +1493,7 @@ Every host scene should have these components + wiring:
 - **`ModalController`** singleton — species info modal.
 - **`SpeciesInfoPanel`** — the "View Details" panel.
 - **`CurrentOrganismsGrid`** — Ecosystem tab.
-- **`HintsPanel` / `LockedHintPanel`** — Hints tab.
+- **`HintsPanel`** — Hints tab.
 - **`Health.cs`** — reads networked value; wire `fillImage`.
 - **`TabController`** — food web / ecosystem / hints tab switcher.
 - **`FoodWebLines`** — predator arrow lines (currently hidden).

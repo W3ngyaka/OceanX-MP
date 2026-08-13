@@ -2,13 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-// Species detail modal. YOU design the panel (background, icons, static labels, layout);
-// this just fills the value slots you drag in from the CSV (SpeciesContentDB). Any slot
-// left unassigned is simply skipped, so you only wire the ones your design uses.
 public class ModalController : MonoBehaviour
 {
-    // Resolve lazily (including inactive) so callers work even if the modal starts inactive
-    // or gets deactivated before its Awake runs.
+
     static ModalController _instance;
     public static ModalController Instance
     {
@@ -24,7 +20,6 @@ public class ModalController : MonoBehaviour
     public CanvasGroup DimOverlay;
     public float dimFadeDuration = 0.25f;
 
-    
     public Image photo;
     public Image IUCNPhoto;
     public TMP_Text titleText;
@@ -33,7 +28,7 @@ public class ModalController : MonoBehaviour
     public TMP_Text iucnStatusText;
     public TMP_Text descriptionText;
 
-    private Image img;                  
+    private Image img;
     private DimFader dimFader;
 
     void Awake()
@@ -46,31 +41,22 @@ public class ModalController : MonoBehaviour
             dimFader = DimOverlay.GetComponent<DimFader>();
             if (dimFader == null) dimFader = DimOverlay.gameObject.AddComponent<DimFader>();
 
-            // Initialise the overlay to hidden HERE, not in Start(). The panel is authored
-            // inactive, so its Start() is deferred until the first Show() has ALREADY activated
-            // the overlay — running the reset there deactivated the dim a frame after it appeared,
-            // and made the first swipe-close call FadeTo on an inactive overlay ("Coroutine
-            // couldn't be started because the game object 'DimOverlay' is inactive!"). Awake runs
-            // synchronously inside Show()'s SetActive(true), BEFORE the overlay is re-activated, so
-            // it can't clobber the open.
             DimOverlay.alpha = 0f;
             DimOverlay.blocksRaycasts = false;
             DimOverlay.gameObject.SetActive(false);
         }
     }
 
-    // Primary, data-driven entry point.
     public void Open(SpeciesData data)
     {
         Populate(data);
         Show();
     }
 
-    // Back-compat: legacy callers that only had a card sprite. Shows it in the photo slot.
     public void Open(Sprite card) => Open(card, -1);
     public void Open(Sprite card, int speciesIndex)
     {
-        // Mirror to the large screen so bystanders see what's being read (-1 clears).
+
         ViewedSpeciesReporter.Report(speciesIndex);
         if (photo != null && card != null) { photo.sprite = card; photo.enabled = true; photo.preserveAspect = true; }
         Show();
@@ -78,8 +64,7 @@ public class ModalController : MonoBehaviour
 
     void Populate(SpeciesData data)
     {
-        // Prefer the stable contentId (rename/translation-safe); fall back to the display name.
-        // SpeciesContentDB is indexed by both, so either resolves the same row.
+
         string lookupKey = data == null ? null
             : (!string.IsNullOrEmpty(data.contentId) ? data.contentId : data.speciesName);
         var e = lookupKey != null ? SpeciesContentDB.Get(lookupKey) : null;
@@ -91,11 +76,10 @@ public class ModalController : MonoBehaviour
         if (iucnStatusText != null)
         {
             var col = IucnColor(e?.iucnStatus);
-            if (col.HasValue) iucnStatusText.color = col.Value;   // else keep its authored colour
+            if (col.HasValue) iucnStatusText.color = col.Value;
         }
         SetText(descriptionText, e?.description);
 
-        // Main species photo.
         Sprite pic = e != null ? SpeciesContentDB.GetImage(e.imageFile) : null;
         if (photo != null)
         {
@@ -104,7 +88,6 @@ public class ModalController : MonoBehaviour
             photo.preserveAspect = true;
         }
 
-        // Extra image (e.g. IUCN badge) — its own 'iucnImage' CSV column + its own slot.
         Sprite iucnPic = e != null ? SpeciesContentDB.GetImage(e.iucnImage) : null;
         if (IUCNPhoto != null)
         {
@@ -114,14 +97,11 @@ public class ModalController : MonoBehaviour
         }
     }
 
-    // Fill a value slot (no label prefix — your design supplies the labels).
     static void SetText(TMP_Text t, string val)
     {
         if (t != null) t.text = val ?? "";
     }
 
-    // IUCN status -> label colour. Returns null to leave the text's own colour untouched
-    // (so any status not listed here keeps whatever colour you set in the design).
     static Color? IucnColor(string status)
     {
         switch ((status ?? "").Trim().ToLowerInvariant())
@@ -152,15 +132,12 @@ public class ModalController : MonoBehaviour
 
     public void Close()
     {
-        // Only sound an actual close (guard against defensive Close() calls while already hidden,
-        // e.g. session reset), so the close cue never fires with no card on screen.
+
         if (gameObject.activeSelf && UISoundManager.Instance != null)
             UISoundManager.Instance.Play(UISound.ModalClose);
 
         ViewedSpeciesReporter.Clear();
 
-        // The visitor has now read a species panel and closed it again — that is the moment the
-        // hold-to-see-the-food-web hint becomes useful, so release anything gated on 'details'.
         ContextNudge.Advance("details");
 
         if (DimOverlay != null && dimFader != null)
@@ -174,6 +151,5 @@ public class ModalController : MonoBehaviour
 
         gameObject.SetActive(false);
     }
-
 
 }

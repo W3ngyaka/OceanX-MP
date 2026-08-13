@@ -2,30 +2,13 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-/// <summary>
-/// Loads Alucia's dialogue from <c>alucia_lines.csv</c> so non-developers (fact-checkers) can edit
-/// what she says in a spreadsheet — online or on disk — without opening Unity.
-///
-/// The CSV is EVENT + VARIANT based: columns are <c>Event, Species, Mood, Weight, Text, Notes</c>.
-///  • <b>Event</b> is the stable ID the game matches on (e.g. <c>health.critical</c>, <c>species.overpopulated</c>).
-///  • Multiple rows with the same Event are <b>variants</b> — the game picks one (weighted, avoiding an
-///    immediate repeat) so Alucia doesn't sound repetitive. Editors add a variant by copying a row.
-///  • <b>Species</b> (optional) scopes a line to one fish; blank = any fish. Species-specific rows are
-///    preferred over generic ones when a species is supplied.
-///  • <b>Mood</b> (Calm/Warn/Win) tints her bubble. <b>Weight</b> biases random selection (blank = 1).
-///  • Rows whose Event starts with <c>#</c> are comments and are ignored.
-///
-/// The file is resolved via <see cref="ContentService.LocalPathFor"/> (fresh online cache → baked copy),
-/// and every caller passes the original hardcoded line as a fallback, so a missing/broken file or key
-/// never breaks the game.
-/// </summary>
 public static class AluciaLines
 {
-    /// <summary>One resolved line: its text and mood, plus whether a CSV row was actually found.</summary>
+
     public struct Line
     {
         public string Text;
-        public string Mood;  // "Calm" / "Warn" / "Win"
+        public string Mood;
         public bool Found;
     }
 
@@ -39,25 +22,15 @@ public static class AluciaLines
 
     private const string FileName = "alucia_lines.csv";
 
-    private static Dictionary<string, List<Variant>> _events;                 // eventKey (lower) -> variants
-    private static readonly Dictionary<string, string> _lastShown = new Dictionary<string, string>(); // anti-repeat
+    private static Dictionary<string, List<Variant>> _events;
+    private static readonly Dictionary<string, string> _lastShown = new Dictionary<string, string>();
 
-    /// <summary>
-    /// Backward-compatible accessor: returns the text for <paramref name="key"/> (an Event name),
-    /// or <paramref name="fallback"/> if the file/event is missing. Picks a variant when several exist.
-    /// </summary>
     public static string Get(string key, string fallback)
     {
         Line l = GetLine(key, null);
         return l.Found && !string.IsNullOrEmpty(l.Text) ? l.Text : fallback;
     }
 
-    /// <summary>
-    /// Resolves an event to a line (text + mood). When <paramref name="species"/> is given, a row scoped
-    /// to that species wins over a generic one. <c>Found == false</c> means the caller should use its own
-    /// hardcoded fallback. Tokens like <c>{species}</c>/<c>{count}</c>/<c>{req}</c> are left in the text
-    /// for the caller to substitute.
-    /// </summary>
     public static Line GetLine(string eventKey, string species)
     {
         EnsureLoaded();
@@ -93,12 +66,6 @@ public static class AluciaLines
         return result;
     }
 
-    /// <summary>
-    /// Returns EVERY text variant for an event, scoped to a species (species-specific rows win over
-    /// generic ones; blank list if none). Unlike <see cref="GetLine"/> — which picks one — this hands back
-    /// the whole set so the caller can rotate through them itself (e.g. Alucia's per-species flavour hints).
-    /// Empty means "no CSV rows" so the caller can fall back to its own built-in lines.
-    /// </summary>
     public static List<string> GetVariants(string eventKey, string species)
     {
         EnsureLoaded();
@@ -129,7 +96,6 @@ public static class AluciaLines
         return result;
     }
 
-    // Weighted random selection that avoids repeating the last line shown for this event+species.
     private static Variant Pick(List<Variant> pool, string memoryKey)
     {
         if (pool.Count == 1)
@@ -152,13 +118,12 @@ public static class AluciaLines
                 acc += Mathf.Max(1, pool[i].Weight);
                 if (roll < acc) { chosen = pool[i]; break; }
             }
-            if (chosen.Text != last) break; // got a non-repeat — good
+            if (chosen.Text != last) break;
         }
         _lastShown[memoryKey] = chosen.Text;
         return chosen;
     }
 
-    /// <summary>Force a re-read (called after a live download, or from a debug hotkey while iterating).</summary>
     public static void Reload() { _events = null; _lastShown.Clear(); EnsureLoaded(); }
 
     private static void EnsureLoaded()
@@ -205,7 +170,7 @@ public static class AluciaLines
         {
             List<string> row = rows[i];
             string evt = CsvUtil.Cell(row, cEvent).Trim();
-            if (evt.Length == 0 || evt.StartsWith("#")) continue;   // blank or comment row
+            if (evt.Length == 0 || evt.StartsWith("#")) continue;
             string body = CsvUtil.Cell(row, cText);
             if (string.IsNullOrWhiteSpace(body)) continue;
 

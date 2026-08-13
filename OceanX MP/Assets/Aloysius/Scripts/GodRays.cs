@@ -2,33 +2,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// God rays: soft light shafts fanning down from the surface (top of the panel).
-// Attach to a full-size UI RectTransform behind the fish. Self-contained: builds its
-// own soft vertical-gradient sprite at runtime, no assets needed.
 [RequireComponent(typeof(RectTransform))]
 public class GodRays : MonoBehaviour
 {
     [Header("Rays")]
-    [Tooltip("How many light shafts.")]
-    public int rayCount = 5;
-    [Tooltip("Width of each shaft in pixels (at the top).")]
-    public float rayWidth = 120f;
-    [Tooltip("How tall the shafts are, as a fraction of panel height (0-1).")]
-    [Range(0.3f, 1f)] public float rayHeightFraction = 0.85f;
-    [Tooltip("Tilt of the shafts in degrees (they fan diagonally).")]
-    public float tilt = 12f;
+        public int rayCount = 5;
+        public float rayWidth = 120f;
+        [Range(0.3f, 1f)] public float rayHeightFraction = 0.85f;
+        public float tilt = 12f;
 
     [Header("Look")]
-    [Tooltip("Ray colour. Alpha is the peak opacity (keep low and subtle).")]
-    public Color color = new Color(0.85f, 0.95f, 1f, 0.12f);
+        public Color color = new Color(0.85f, 0.95f, 1f, 0.12f);
 
     [Header("Motion")]
-    [Tooltip("How far each shaft sways horizontally (pixels).")]
-    public float swayAmount = 30f;
-    [Tooltip("Sway speed.")]
-    public float swaySpeed = 0.25f;
-    [Tooltip("How much the opacity shimmers (0 = none).")]
-    [Range(0f, 1f)] public float shimmer = 0.4f;
+        public float swayAmount = 30f;
+        public float swaySpeed = 0.25f;
+        [Range(0f, 1f)] public float shimmer = 0.4f;
 
     private RectTransform _rt;
     private Sprite _shaftSprite;
@@ -85,7 +74,7 @@ public class GodRays : MonoBehaviour
         var go = new GameObject("Ray", typeof(RectTransform), typeof(Image));
         var rt = go.GetComponent<RectTransform>();
         rt.SetParent(transform, false);
-        // Anchor to top center; pivot at top so it hangs down from the surface.
+
         rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 1f);
         rt.pivot = new Vector2(0.5f, 1f);
         float rh = h * rayHeightFraction;
@@ -102,7 +91,6 @@ public class GodRays : MonoBehaviour
         return new Ray { rt = rt, img = img, baseX = x, phase = Random.Range(0f, 6.28f), baseAlpha = a };
     }
 
-    // Vertical shaft: brightest at top, fading to nothing at the bottom, and soft on the sides.
     Sprite BuildShaftSprite(int w, int h)
     {
         var tex = new Texture2D(w, h, TextureFormat.RGBA32, false);
@@ -110,14 +98,14 @@ public class GodRays : MonoBehaviour
         float cx = w / 2f;
         for (int y = 0; y < h; y++)
         {
-            // y=0 is bottom in texture space; we want bright at top (y = h-1).
-            float vTop = (float)y / (h - 1);          // 0 bottom -> 1 top
-            float vertical = vTop * vTop;             // fade out toward bottom
+
+            float vTop = (float)y / (h - 1);
+            float vertical = vTop * vTop;
             for (int x = 0; x < w; x++)
             {
-                float hx = 1f - Mathf.Abs(x - cx + 0.5f) / cx; // 1 center -> 0 edge
+                float hx = 1f - Mathf.Abs(x - cx + 0.5f) / cx;
                 hx = Mathf.Clamp01(hx);
-                hx = hx * hx;                          // soft sides
+                hx = hx * hx;
                 float a = vertical * hx;
                 tex.SetPixel(x, y, new Color(1, 1, 1, a));
             }

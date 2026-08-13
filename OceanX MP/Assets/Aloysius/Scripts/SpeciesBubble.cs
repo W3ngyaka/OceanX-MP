@@ -12,22 +12,14 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public Sprite cardImage;
     public GameObject lockOverlay;
     public GameObject glowRing;
-    [Tooltip("Name label under the bubble. Auto-found if left empty. Shows '???' when locked.")]
-    public TMPro.TMP_Text nameLabel;
-    [Tooltip("Text shown in place of the species name while locked.")]
-    public string lockedNameText = "???";
-    [Tooltip("The fish image. Auto-found (child whose name contains 'IMAGE') if empty. Greyed when locked.")]
-    public UnityEngine.UI.Image fishImage;
-    [Tooltip("Tint applied to the fish image while locked.")]
-    public Color lockedTint = new Color(0.45f, 0.45f, 0.45f, 1f);
+        public TMPro.TMP_Text nameLabel;
+        public string lockedNameText = "???";
+        public UnityEngine.UI.Image fishImage;
+        public Color lockedTint = new Color(0.45f, 0.45f, 0.45f, 1f);
 
     [Header("Overpopulation")]
-    [Tooltip("Status overlay shown when the simulation reports this species as overpopulated " +
-             "(too few predators left to keep it in check). Auto-found (child named " +
-             "'Overpopulated') if left empty.")]
-    public GameObject overpopulatedOverlay;
-    [Tooltip("How often (seconds) to re-check the species' live status from the host.")]
-    public float overpopCheckInterval = 0.4f;
+        public GameObject overpopulatedOverlay;
+        public float overpopCheckInterval = 0.4f;
 
     [Header("Food Web")]
     public List<SpeciesBubble> prey = new List<SpeciesBubble>();
@@ -39,12 +31,10 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private SpeciesBubbleHoldRing _holdRing;
 
-  
     private int _speciesIndex = -2;
     private float _overpopCheckTimer;
     private bool _overpopShown;
 
-   
     void OnEnable()
     {
         if (Application.isPlaying) Refresh();
@@ -90,7 +80,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (nameLabel != null)
             nameLabel.text = (locked && Application.isPlaying) ? lockedNameText : data.speciesName;
 
-   
         if (fishImage == null)
         {
             foreach (Transform c in transform)
@@ -130,7 +119,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             : -1;
     }
 
-  
     void UpdateOverpopulation()
     {
         if (overpopulatedOverlay == null) return;
@@ -167,16 +155,15 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             return;
         }
 
-        
         bool wasHold = _holdRing != null && _holdRing.EndHold();
-        if (wasHold) ContextNudge.DismissId("hold");   // learned the hold gesture
+        if (wasHold) ContextNudge.DismissId("hold");
         if (!wasHold)
             OnTap();
     }
 
     void OnTap()
     {
-        ContextNudge.DismissId("tap");   // learned to tap — this unlocks the 'hold' nudge
+        ContextNudge.DismissId("tap");
         if (locked)
         {
             ShowLockedHint();
@@ -188,19 +175,16 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         if (punchRoutine != null) StopCoroutine(punchRoutine);
         transform.localScale = baseScale;
-        punchRoutine = StartCoroutine(TapPunch());   // tap-punch animation (Aloysius)
+        punchRoutine = StartCoroutine(TapPunch());
 
-        // Resolve this species' netcode index from its sim link so the modal's Add/Remove
-        // buttons drive the real simulation (and the population number shows). -1 = cosmetic only.
         int speciesIndex = -1;
         if (data != null && data.gpuSpecies != null && TabletEcosystemUIGPU.Instance != null)
             speciesIndex = TabletEcosystemUIGPU.Instance.GetSpeciesIndex(data.gpuSpecies);
 
-        // Fill the right-side info panel (summary). Its 'View Details' button opens the full modal.
         if (SpeciesInfoPanel.Instance != null)
             SpeciesInfoPanel.Instance.Show(data, cardImage, speciesIndex);
         else if (ModalController.Instance != null)
-            ModalController.Instance.Open(data); // fallback: open modal directly (data-driven)
+            ModalController.Instance.Open(data);
     }
 
     void PlayPunch()
@@ -243,8 +227,6 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (SpeciesInfoPanel.Instance != null)
             SpeciesInfoPanel.Instance.ShowLocked(data);
 
-        // Still register the tap even though the hint panel is gone — the unlock manager keeps
-        // the per-species tap count, and the Hints tab and Alucia read from it.
         if (EcosystemUnlockManagerGPU.Instance != null)
         {
             EcosystemUnlockManagerGPU.Instance.RegisterLockedTap(data);
@@ -258,4 +240,3 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
 }
-

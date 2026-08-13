@@ -8,7 +8,7 @@ public class SwipeToClose : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public float slideDuration = 0.25f;
 
     private RectTransform rt;
-    private Vector2 originalPos; // never changes
+    private Vector2 originalPos;
     private Vector2 dragStartPos;
 
     void Start()
@@ -17,7 +17,6 @@ public class SwipeToClose : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         originalPos = rt.anchoredPosition;
     }
 
-    // reset position every time modal opens
     void OnEnable()
     {
         if (rt != null)
@@ -27,7 +26,7 @@ public class SwipeToClose : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public void OnPointerDown(PointerEventData e)
     {
         StopAllCoroutines();
-        rt.anchoredPosition = originalPos; // snap to original before drag
+        rt.anchoredPosition = originalPos;
         dragStartPos = originalPos;
     }
 

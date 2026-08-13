@@ -2,21 +2,17 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-// Quick, robust crossfade from the start screen to the Food Web UI on experience start.
-// Fades the Tap overlay out while the UI pieces fade in together. Waits a couple frames after
-// activating the pieces so the food web finishes building BEFORE fading (prevents the hitch).
-// No slide, no stagger, no dim. Pairs with HideUntilStarted (deferRevealToTransition = true).
 public class StartCrossfade : MonoBehaviour
 {
     [Header("Refs")]
-    public CanvasGroup tapOverlay;      // start screen (title + deco) to fade out
-    public GameObject tapOverlayRoot;   // deactivated after fade (usually same object as tapOverlay)
-    public HideUntilStarted hideGate;   // provides the UI pieces to fade in
+    public CanvasGroup tapOverlay;
+    public GameObject tapOverlayRoot;
+    public HideUntilStarted hideGate;
 
     [Header("Timing")]
     public float fadeOut = 0.4f;
     public float fadeIn = 0.5f;
-    public int settleFrames = 2;        // let the UI build before fading in (anti-clank)
+    public int settleFrames = 2;
 
     private bool _played;
 
@@ -45,10 +41,9 @@ public class StartCrossfade : MonoBehaviour
 
     IEnumerator Play()
     {
-        // Fade the start screen out (runs alongside the UI fade-in).
+
         if (tapOverlay != null) StartCoroutine(FadeCG(tapOverlay, tapOverlay.alpha, 0f, fadeOut, tapOverlayRoot));
 
-        // Activate UI pieces hidden, let them build, then fade in together.
         var pieces = new List<CanvasGroup>();
         if (hideGate != null)
             foreach (var go in hideGate.HideTargets)
@@ -65,7 +60,7 @@ public class StartCrossfade : MonoBehaviour
         while (t < 1f)
         {
             t += Time.unscaledDeltaTime / Mathf.Max(0.0001f, fadeIn);
-            float e = 1f - Mathf.Pow(1f - Mathf.Clamp01(t), 3f); // ease-out
+            float e = 1f - Mathf.Pow(1f - Mathf.Clamp01(t), 3f);
             foreach (var cg in pieces) if (cg != null) cg.alpha = e;
             yield return null;
         }
@@ -96,10 +91,6 @@ public class StartCrossfade : MonoBehaviour
         StartCoroutine(Play());
     }
 
-    // Fresh-start reset: re-arm the one-shot so the crossfade PLAYS AGAIN on the next start (otherwise
-    // _played stays true and the second visitor's start never reveals the UI), and return the start
-    // overlay + UI pieces to their pre-start state. Does NOT re-enable this component (it stays subscribed
-    // to OnStarted from its first setup — re-enabling would double-subscribe).
     public void ResetForNewSession()
     {
         StopAllCoroutines();

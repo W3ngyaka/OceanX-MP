@@ -11132,6 +11132,10 @@ PrefabInstance:
       value: -121
       objectReference: {fileID: 0}
     - target: {fileID: 1715292132026904590, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
+      propertyPath: m_Name
+      value: EmptyBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715292132026904590, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -11280,12 +11284,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7507499787425969214, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
+      propertyPath: m_Name
+      value: FullHealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 7507499787425969214, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8654333621639123857, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
       propertyPath: m_Name
-      value: healthbar
+      value: HealthBar
       objectReference: {fileID: 0}
     - target: {fileID: 8654333621639123857, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
       propertyPath: m_IsActive
@@ -15957,7 +15965,7 @@ GameObject:
   - component: {fileID: 117657193}
   - component: {fileID: 117657192}
   m_Layer: 0
-  m_Name: AluciaBubble
+  m_Name: AluciaBubbleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40048,7 +40056,7 @@ GameObject:
   - component: {fileID: 303161986}
   - component: {fileID: 303161985}
   m_Layer: 5
-  m_Name: Image
+  m_Name: LeafIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45366,7 +45374,7 @@ GameObject:
   - component: {fileID: 342504642}
   - component: {fileID: 342504641}
   m_Layer: 0
-  m_Name: Image
+  m_Name: AluciaImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58624,7 +58632,7 @@ GameObject:
   - component: {fileID: 451036085}
   - component: {fileID: 451036084}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: EcosystemHealthText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141029,7 +141037,7 @@ GameObject:
   - component: {fileID: 1062558385}
   - component: {fileID: 1062558384}
   m_Layer: 0
-  m_Name: alucia box
+  m_Name: AluciaPortraitBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -273995,7 +274003,7 @@ GameObject:
   - component: {fileID: 2086215056}
   - component: {fileID: 2086215055}
   m_Layer: 0
-  m_Name: Arrwo
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

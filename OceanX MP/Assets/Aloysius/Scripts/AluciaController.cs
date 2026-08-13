@@ -5,52 +5,35 @@ using UnityEngine.UI;
 using TMPro;
 using OceanX.BoidsGPU.Ecosystem;
 
-// Alucia — 2D character overlay on the large/host screen.
-// Plays an intro sequence, then reacts to live ecosystem health (EcoHealth01)
-// by speaking when health crosses a band boundary (debounced, with hysteresis).
-//
-// SETUP (assign in Inspector):
-//   characterImage  -> the Image showing Alucia's sprite (placeholder ok)
-//   bubbleGroup     -> CanvasGroup on the speech-bubble container (for fade)
-//   bubbleText      -> the Text/TMP on the speech bubble
-//   simulation      -> the EcosystemSimulationGPU in the scene (host). If left
-//                      null, health reactions are skipped (intro still plays).
-//
-// MOODS just tint the bubble; swap for sprite/animation states when art exists.
 public class AluciaController : MonoBehaviour
 {
     public enum Mood { Calm, Warn, Win }
 
     [Header("Refs")]
-    public CanvasGroup characterGroup;     // CanvasGroup on the character (for fade in/out)
-    public Image characterImage;          // Alucia sprite (placeholder for now)
-    public CanvasGroup bubbleGroup;        // speech bubble container
-    public TMP_Text bubbleText;            // message text (TextMeshPro)
+    public CanvasGroup characterGroup;
+    public Image characterImage;
+    public CanvasGroup bubbleGroup;
+    public TMP_Text bubbleText;
 
     [Header("Simulation (host)")]
-    [Tooltip("EcosystemSimulationGPU in this scene. Leave null to skip health reactions.")]
-    public EcosystemSimulationGPU simulation;
+        public EcosystemSimulationGPU simulation;
 
     [Header("Timing")]
     public float autoHideSeconds = 5.2f;
-    public float minGapBetweenMessages = 1.5f;  // anti-spam floor
+    public float minGapBetweenMessages = 1.5f;
     public float introStartDelay = 0.6f;
 
     [Header("Health bands (0-100%)")]
-    public float criticalMax = 35f;   // below this = critical
-    public float healthyMin = 70f;    // above this = healthy
-    public float hysteresis = 4f;     // dead-zone around each boundary so jitter doesn't re-fire
+    public float criticalMax = 35f;
+    public float healthyMin = 70f;
+    public float hysteresis = 4f;
 
     [Header("Bubble sprites (per mood) \u2014 leave empty to keep the scene sprite")]
-    [Tooltip("Bubble art for calm/positive lines. Also used for Win.")]
-    public Sprite bubbleCalmSprite;
-    [Tooltip("Bubble art for warnings \u2014 reef critical or slipping.")]
-    public Sprite bubbleWarnSprite;
+        public Sprite bubbleCalmSprite;
+        public Sprite bubbleWarnSprite;
 
     [Header("Mood colours (bubble tint)")]
-    // White by default now that the bubble has its own per-mood art: a tint MULTIPLIES over the
-    // sprite, so anything other than white discolours the drawn bubble (a pale orange tint over
-    // blue art reads as muddy teal). Tint is still here for fading or for a mood with no sprite.
+
     public Color calmColor = Color.white;
     public Color warnColor = Color.white;
     public Color winColor  = Color.white;
@@ -67,27 +50,21 @@ public class AluciaController : MonoBehaviour
     public float introLineGap = 3f;
 
     [Header("Start gating")]
-    [Tooltip("Wait for the tablet's 'tap to begin' (networked OnStarted) before playing the intro " +
-             "and reacting to health, so players don't miss it. Turn off to play on scene load.")]
-    public bool waitForExperienceStart = true;
+        public bool waitForExperienceStart = true;
 
-    private Image _bubbleBg;            // optional bg image on the bubble for tinting
+    private Image _bubbleBg;
     private float _lastMsgTime = -99f;
     private Coroutine _hideRoutine;
     private bool _sticky;
 
-    // Health-band tracking
     private enum Band { Critical, Unstable, Healthy, Thriving }
     private Band _lastBand = Band.Critical;
     private bool _bandInit;
 
-    // Start gating
     private bool _started;
     private bool _introPlayed;
     private bool _subscribed;
-    // Hard mute: true from a reset until the next start. While muted, Say() is a no-op, so NOTHING can
-    // make Alucia speak between a fresh-start reset and the next visitor tapping start — belt-and-braces
-    // on top of _started, in case any code path tries to talk during the reset/attract window.
+
     private bool _muted;
 
     void Awake()
@@ -98,15 +75,14 @@ public class AluciaController : MonoBehaviour
 
     void Start()
     {
-        // When not gating on the networked start, play the intro immediately (e.g. standalone testing).
+
         if (!waitForExperienceStart)
             HandleStarted();
     }
 
     void Update()
     {
-        // Begin only once the tablet's "tap to begin" flips the shared HasStarted flag,
-        // so the intro isn't spoken to an empty title screen.
+
         if (waitForExperienceStart && !_subscribed)
         {
             var net = EcosystemNetworkManagerGPU.Instance;
@@ -114,21 +90,20 @@ public class AluciaController : MonoBehaviour
             {
                 _subscribed = true;
                 net.OnStarted += HandleStarted;
-                if (net.HasStarted) HandleStarted();   // already started (e.g. joined late)
+                if (net.HasStarted) HandleStarted();
             }
         }
 
-        if (!_started) return;                          // no intro / health chatter before we begin
+        if (!_started) return;
         if (simulation == null) return;
         float h = Mathf.Clamp01(simulation.EcoHealth01) * 100f;
         EvaluateHealth(h);
     }
 
-    // Fires once, when the experience actually begins.
     void HandleStarted()
     {
         if (_started) return;
-        _muted = false;          // a real start un-mutes her so the intro can play
+        _muted = false;
         _started = true;
         if (!_introPlayed)
         {
@@ -143,20 +118,15 @@ public class AluciaController : MonoBehaviour
         if (net != null) net.OnStarted -= HandleStarted;
     }
 
-    // Re-arm for a fresh visitor: cancels any in-flight intro/speech, hides the bubble,
-    // and clears the health-band state so the intro plays cleanly the NEXT time the
-    // networked OnStarted fires. HandleStarted stays hooked (it never unsubscribes on
-    // play), so we leave _subscribed alone — the next start re-triggers it.
     public void ResetForNewSession()
     {
         Debug.Log($"[Alucia] ResetForNewSession — hiding + re-arming (was started={_started}, introPlayed={_introPlayed}).", this);
-        StopAllCoroutines();                 // cancel any running intro / speech / fade
+        StopAllCoroutines();
 
-        _muted = true;                       // silence Say() until the next real start
-        _started = false;                    // wait for the next OnStarted before replaying
-        _introPlayed = false;                // so HandleStarted plays the intro again
+        _muted = true;
+        _started = false;
+        _introPlayed = false;
 
-        // Hide / clear the current speech bubble.
         if (bubbleGroup != null) bubbleGroup.alpha = 0f;
         if (characterGroup != null) characterGroup.alpha = 0f;
         if (bubbleText != null) bubbleText.text = "";
@@ -164,30 +134,26 @@ public class AluciaController : MonoBehaviour
         _hideRoutine = null;
         _lastMsgTime = -99f;
 
-        // Reset health-band tracking so a stale line doesn't fire on the first read.
         _lastBand = Band.Critical;
         _bandInit = false;
     }
 
-    // ---------- Public API ----------
-
     public void Say(string message, Mood mood = Mood.Calm, bool sticky = false)
     {
         Debug.Log($"[Alucia] Say(\"{message}\") started={_started} muted={_muted} sticky={sticky}.", this);
-        if (_muted) return;   // reset in effect — stay silent until the next start
+        if (_muted) return;
         if (Time.unscaledTime - _lastMsgTime < minGapBetweenMessages && !sticky) return;
         _lastMsgTime = Time.unscaledTime;
         _sticky = sticky;
 
         if (bubbleText != null) bubbleText.text = message;
-        // The bubble auto-sizes to the text (VerticalLayoutGroup + ContentSizeFitter on AluciaBubble);
-        // force an immediate rebuild so it resizes the same frame the text changes.
+
         if (bubbleGroup != null)
             LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)bubbleGroup.transform);
         if (_bubbleBg != null)
         {
             Sprite bs = MoodBubbleSprite(mood);
-            if (bs != null) _bubbleBg.sprite = bs;   // null = keep whatever the scene assigned
+            if (bs != null) _bubbleBg.sprite = bs;
             _bubbleBg.color = MoodColor(mood);
         }
         if (characterImage != null)
@@ -207,8 +173,6 @@ public class AluciaController : MonoBehaviour
         StartCoroutine(FadeBoth(0f, 0.3f));
     }
 
-    // ---------- Intro ----------
-
     IEnumerator IntroSequence()
     {
         yield return new WaitForSeconds(introStartDelay);
@@ -219,8 +183,6 @@ public class AluciaController : MonoBehaviour
         Say(AluciaLines.Get("intro.3", introLine3), Mood.Calm);
     }
 
-    // ---------- Health reactions ----------
-
     void EvaluateHealth(float h)
     {
         Band band = BandFor(h);
@@ -229,7 +191,7 @@ public class AluciaController : MonoBehaviour
         {
             _lastBand = band;
             _bandInit = true;
-            return; // don't speak on the very first read
+            return;
         }
 
         if (band == _lastBand) return;
@@ -257,8 +219,7 @@ public class AluciaController : MonoBehaviour
 
     Band BandFor(float h)
     {
-        // Hysteresis: require crossing a boundary by `hysteresis` before changing band,
-        // biased by the current band so we don't flap right on the line.
+
         float critLine = criticalMax + (_lastBand == Band.Critical ? hysteresis : -hysteresis);
         float healLine = healthyMin + (_lastBand == Band.Healthy || _lastBand == Band.Thriving ? -hysteresis : hysteresis);
 
@@ -267,8 +228,6 @@ public class AluciaController : MonoBehaviour
         if (h <= critLine) return Band.Critical;
         return Band.Unstable;
     }
-
-    // ---------- Helpers ----------
 
     Sprite MoodSprite(Mood m)
     {
@@ -280,8 +239,6 @@ public class AluciaController : MonoBehaviour
         }
     }
 
-    // Only two bubble images exist, so Win reuses the calm one — a win is a positive message.
-    // Returning null leaves the sprite alone, so a half-assigned setup degrades quietly.
     Sprite MoodBubbleSprite(Mood m)
     {
         return m == Mood.Warn ? bubbleWarnSprite : bubbleCalmSprite;

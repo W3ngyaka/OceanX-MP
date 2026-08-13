@@ -3,24 +3,6 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-// One-click configuration for AdaptiveMusicSystem (the WHOLE-SONG mood switcher).
-//
-// Two menus under  OceanX :
-//   • "Setup Adaptive Music (full)"   — first-time setup. Adds the component and makes sure there are
-//                                       4 named mood layers (LOW health first), sets the band edges, the
-//                                       exposed mixer params, and the transition-feel defaults.
-//                                       ⚠ Does NOT touch clips or mixer groups you've already assigned —
-//                                       assign each mood's SONG (and its mixer group) yourself.
-//   • "Set Music Bands (keep clips)"  — only rewrites the band edges + names + transition defaults on the
-//                                       existing layers. Leaves clips, groups, params untouched.
-//
-// BANDS (whole-song, one plays at a time; a crossfade at each edge hands over smoothly):
-//   layer 0  Somber    below 30%   (reef collapsing)
-//   layer 1  Unstable  30% – 60%
-//   layer 2  Hopeful   60% – 90%
-//   layer 3  Thriving  above 90%
-//
-// After running either: SAVE THE SCENE (Ctrl+S).
 public static class AdaptiveMusicSetup
 {
     static readonly string[] MoodNames    = { "Somber", "Unstable", "Hopeful", "Thriving" };
@@ -45,7 +27,7 @@ public static class AdaptiveMusicSetup
         {
             var l = amp.layers[i] ?? (amp.layers[i] = new AdaptiveMusicSystem.Layer());
             l.name = MoodNames[i];
-            if (string.IsNullOrEmpty(l.exposedParam)) l.exposedParam = ExposedParams[i];   // don't stomp custom wiring
+            if (string.IsNullOrEmpty(l.exposedParam)) l.exposedParam = ExposedParams[i];
             if (l.clip == null) missingClips.Add(MoodNames[i]);
         }
 
@@ -93,12 +75,9 @@ public static class AdaptiveMusicSetup
             "\n\nCtrl+S to save. Play + Override Health + drag Debug Health 0→1 to test.");
     }
 
-    // ---- shared -------------------------------------------------------------------------------
-
     static void ApplyBandsAndFeel(AdaptiveMusicSystem amp)
     {
-        // Band edges need (layers - 1) entries. Use the 30/60/90 defaults for the 4-mood setup, otherwise
-        // fall through to an even split (the component itself also normalises on Start).
+
         int need = Mathf.Max(0, amp.layers.Count - 1);
         if (need == DefaultEdges.Length)
             amp.bandEdges = (float[])DefaultEdges.Clone();

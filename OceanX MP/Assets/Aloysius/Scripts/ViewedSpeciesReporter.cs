@@ -1,9 +1,7 @@
 using UnityEngine;
 
-
 public class ViewedSpeciesReporter : MonoBehaviour
 {
-
 
     public static void Report(int speciesIndex)
     {

@@ -3,49 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Single owner of the center-stage reveal slot. Every reveal source (SpeciesAddedReveal,
-// SpeciesUnlockReveal, ...) submits its card here instead of fading its own CanvasGroup,
-// so two cards can never overlap — the queue plays exactly one at a time.
-//
-// The card's content is filled by the caller's `onShow` callback the instant before it
-// fades in (not at enqueue time), so a shared card can hold different species back-to-back
-// without an earlier submission clobbering a later one.
-//
-// Spam handling: when a burst backs up, each waiting card plays for `shortHoldSeconds`
-// instead of its full hold, so mashing Add clears in a couple of seconds rather than
-// blocking the screen for a minute.
-//
-// No manual scene setup required — auto-creates itself on first use via Get().
 public class RevealQueue : MonoBehaviour
 {
     public static RevealQueue Instance { get; private set; }
 
     [Header("Backlog handling")]
-    [Tooltip("When more than this many cards are still waiting, each plays for shortHoldSeconds " +
-             "instead of its full hold so a burst of adds clears quickly.")]
-    public int backlogThreshold = 2;
-    [Tooltip("Shortened hold (seconds) used while the backlog is above the threshold.")]
-    public float shortHoldSeconds = 1.5f;
+        public int backlogThreshold = 2;
+        public float shortHoldSeconds = 1.5f;
 
-    [Tooltip("Hard cap on waiting cards. Extra submissions beyond this drop the OLDEST " +
-             "waiting card so a spam burst can't create a long tail. 0 = unlimited.")]
-    public int maxBacklog = 3;
+        public int maxBacklog = 3;
 
     private class Request
     {
         public CanvasGroup group;
-        public Action onShow;      // fills the card content, run just before fade-in
+        public Action onShow;
         public float hold;
         public float fade;
-        public Action onComplete;  // run after the card fully fades out
-        public string key;         // optional dedupe key (e.g. species name)
+        public Action onComplete;
+        public string key;
     }
 
     private readonly Queue<Request> _queue = new Queue<Request>();
     private bool _playing;
-    private CanvasGroup _currentGroup;   // the card currently on screen (for ClearAll)
+    private CanvasGroup _currentGroup;
 
-    // Lazily returns the single instance, creating a host GameObject if none exists yet.
     public static RevealQueue Get()
     {
         if (Instance == null)
@@ -62,16 +43,10 @@ public class RevealQueue : MonoBehaviour
         Instance = this;
     }
 
-    /// <summary>
-    /// Submit a card to the center-stage queue. Fill nothing yet — pass an <paramref name="onShow"/>
-    /// that sets the card's texts/image; it runs the moment before the card fades in.
-    /// </summary>
     public void Enqueue(CanvasGroup group, Action onShow, float holdSeconds, float fadeDuration, Action onComplete = null, string key = null)
     {
         if (group == null) { onComplete?.Invoke(); return; }
 
-        // Dedupe: if the last WAITING card has the same key (e.g. spamming Add on the
-        // same species), don't stack another identical card.
         if (!string.IsNullOrEmpty(key) && _queue.Count > 0)
         {
             var arr = _queue.ToArray();
@@ -89,14 +64,12 @@ public class RevealQueue : MonoBehaviour
             key = key
         });
 
-        // Hard cap: while more than maxBacklog cards WAIT (excludes the one playing),
-        // drop the oldest waiting one so a burst can't create a long tail.
         if (maxBacklog > 0)
         {
             while (_queue.Count > maxBacklog)
             {
                 var dropped = _queue.Dequeue();
-                dropped.onComplete?.Invoke(); // let the caller reset its card
+                dropped.onComplete?.Invoke();
             }
         }
 
@@ -111,10 +84,8 @@ public class RevealQueue : MonoBehaviour
             var r = _queue.Dequeue();
             _currentGroup = r.group;
 
-            // Fill this card's content right before it appears (shared cards, back-to-back safe).
             r.onShow?.Invoke();
 
-            // Shorten the hold while a burst is still backing up behind this one.
             float hold = _queue.Count > backlogThreshold ? Mathf.Min(shortHoldSeconds, r.hold) : r.hold;
 
             yield return Fade(r.group, 1f, r.fade);
@@ -127,9 +98,6 @@ public class RevealQueue : MonoBehaviour
         _playing = false;
     }
 
-    // Fresh-start reset: drop every waiting card and stop whatever is on screen now,
-    // returning the shared reveal slot to idle. Callbacks are NOT invoked, so clearing
-    // doesn't fire follow-on hints or music swells from cards that never finished.
     public void ClearAll()
     {
         StopAllCoroutines();

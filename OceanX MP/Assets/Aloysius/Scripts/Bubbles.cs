@@ -2,29 +2,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Marine snow: faint particles drifting slowly through the water for depth/atmosphere.
-// Attach to a full-size UI RectTransform behind the bubbles (stretched to fill the panel).
-// Self-contained: generates its own soft-dot sprite at runtime, no assets needed.
 [RequireComponent(typeof(RectTransform))]
 public class Bubbles : MonoBehaviour
 {
     [Header("Amount")]
-    [Tooltip("How many particles exist at once.")]
-    public int particleCount = 60;
+        public int particleCount = 60;
 
     [Header("Drift")]
-    [Tooltip("Downward fall speed (pixels/sec). Negative would rise.")]
-    public float fallSpeed = 14f;
-    [Tooltip("Sideways sway amount in pixels.")]
-    public float swayAmount = 18f;
-    [Tooltip("How fast the sway oscillates.")]
-    public float swaySpeed = 0.5f;
+        public float fallSpeed = 14f;
+        public float swayAmount = 18f;
+        public float swaySpeed = 0.5f;
 
     [Header("Size & Look")]
     public float minSize = 2f;
     public float maxSize = 7f;
-    [Tooltip("Particle colour. Alpha sets max opacity (kept low for subtlety).")]
-    public Color color = new Color(0.8f, 0.95f, 1f, 0.25f);
+        public Color color = new Color(0.8f, 0.95f, 1f, 0.25f);
 
     private RectTransform _rt;
     private Sprite _dot;
@@ -35,11 +27,11 @@ public class Bubbles : MonoBehaviour
     {
         public RectTransform rt;
         public Image img;
-        public float baseX;      // horizontal anchor before sway
-        public float swayPhase;  // offset so they don't sway in unison
-        public float swayMul;    // per-flake sway scale
-        public float speedMul;   // per-flake fall speed variation
-        public float alpha;      // per-flake opacity
+        public float baseX;
+        public float swayPhase;
+        public float swayMul;
+        public float speedMul;
+        public float alpha;
     }
 
     void Awake()
@@ -66,11 +58,10 @@ public class Bubbles : MonoBehaviour
         foreach (var f in _flakes)
         {
             var p = f.rt.anchoredPosition;
-            p.y += fallSpeed * f.speedMul * Time.deltaTime;   // rise upward (fallSpeed reused as rise)
+            p.y += fallSpeed * f.speedMul * Time.deltaTime;
             float sway = Mathf.Sin(Time.time * swaySpeed + f.swayPhase) * swayAmount * f.swayMul;
             p.x = f.baseX + sway;
 
-            // Recycle to the bottom once it rises off the top.
             if (p.y > halfH + 10f)
             {
                 f.baseX = Random.Range(-halfW, halfW);
@@ -116,7 +107,6 @@ public class Bubbles : MonoBehaviour
         };
     }
 
-    // Soft round dot: white, fading to transparent at the edge.
     Sprite BuildDotSprite(int size)
     {
         var tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
@@ -128,10 +118,10 @@ public class Bubbles : MonoBehaviour
             {
                 float dx = x - c + 0.5f;
                 float dy = y - c + 0.5f;
-                float d = Mathf.Sqrt(dx * dx + dy * dy) / c; // 0 centre -> 1 edge
+                float d = Mathf.Sqrt(dx * dx + dy * dy) / c;
                 if (d > 1f) { tex.SetPixel(x, y, new Color(1, 1, 1, 0)); continue; }
-                float rim = Mathf.Clamp01(1f - Mathf.Abs(d - 0.88f) / 0.16f); // bright outer rim
-                float fill = Mathf.Clamp01(1f - d) * 0.18f;                    // faint interior
+                float rim = Mathf.Clamp01(1f - Mathf.Abs(d - 0.88f) / 0.16f);
+                float fill = Mathf.Clamp01(1f - d) * 0.18f;
                 float a = Mathf.Clamp01(rim * 0.9f + fill);
                 tex.SetPixel(x, y, new Color(1, 1, 1, a));
             }

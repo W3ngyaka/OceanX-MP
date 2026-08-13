@@ -1,37 +1,20 @@
 using UnityEngine;
 
-// Uniformly scales the food-web contents so the whole radial cluster fits inside
-// the available panel area at any resolution/aspect ratio. Never scales above 1
-// (won't blow the layout up on huge screens). Preserves each child's own
-// authored localScale by multiplying the fit factor onto it.
-//
-// Put this on FoodWebLayer. It scales the listed content roots (or all direct
-// children if none are listed).
 [ExecuteAlways]
 public class FoodWebFitScaler : MonoBehaviour
 {
-    [Tooltip("The design-time area the food web was laid out for (canvas ref res or the panel size).")]
-    public Vector2 designSize = new Vector2(1920f, 1080f);
+        public Vector2 designSize = new Vector2(1920f, 1080f);
 
-    [Tooltip("Content roots to scale. If empty, all direct children are scaled.")]
-    public Transform[] contentRoots;
+        public Transform[] contentRoots;
 
-    [Tooltip("Extra safety margin (0.9 = leave 10% breathing room so nothing touches the edge).")]
-    [Range(0.5f, 1f)] public float fitMargin = 0.95f;
+        [Range(0.5f, 1f)] public float fitMargin = 0.95f;
 
-    [Tooltip("Never scale larger than the original layout.")]
-    public bool clampToOne = true;
+        public bool clampToOne = true;
 
-    [Tooltip("Measure available space from the root Canvas (true = reacts to real screen resolution) instead of this object's own rect.")]
-    public bool measureAgainstCanvas = true;
+        public bool measureAgainstCanvas = true;
 
-    [Tooltip("When scaling this object itself: fit its real rendered box (rect x base scale) into the available area, accounting for non-uniform base scale.")]
-    public bool fitSelfRenderedSize = true;
+        public bool fitSelfRenderedSize = true;
 
-    // Persisted authored scales. We overwrite localScale every frame in edit mode
-    // ([ExecuteAlways]), so reading localScale on reload would treat an already-fit
-    // value as the authored base and compound the shrink each session. Serializing
-    // the base keeps the non-uniform baked scale stable across save/reload.
     [SerializeField, HideInInspector] private Vector3[] _persistentBaseScales;
     [SerializeField, HideInInspector] private bool _hasPersistentBase;
 
@@ -62,7 +45,6 @@ public class FoodWebFitScaler : MonoBehaviour
             _targets = list.ToArray();
         }
 
-        // Reuse the persisted authored scales when they still match the target set.
         if (_hasPersistentBase && _persistentBaseScales != null && _persistentBaseScales.Length == _targets.Length)
         {
             _baseScales = _persistentBaseScales;
@@ -96,7 +78,7 @@ public class FoodWebFitScaler : MonoBehaviour
         float factor;
         if (fitSelfRenderedSize && _targets.Length == 1 && _targets[0] == transform)
         {
-            // Real rendered size of this panel at base scale.
+
             Vector2 rectSize = _rt.rect.size;
             Vector3 baseS = _baseScales[0];
             float renderedW = rectSize.x * Mathf.Abs(baseS.x);
@@ -123,12 +105,10 @@ public class FoodWebFitScaler : MonoBehaviour
         }
     }
 
-    // Re-capture authored scales (call if you tweak child scales in the editor).
     [ContextMenu("Recache Base Scales")]
     public void RecacheBaseScales()
     {
-        // Force a fresh capture from the current localScale — call this only when the
-        // targets are at their authored (unfit) scale, e.g. reference resolution.
+
         _hasPersistentBase = false;
         _persistentBaseScales = null;
         CacheTargets();

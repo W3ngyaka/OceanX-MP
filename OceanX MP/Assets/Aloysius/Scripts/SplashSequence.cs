@@ -3,10 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 public class SplashSequence : MonoBehaviour
 {
-    
+
     public CanvasGroup logosGroup;
     public Image logoImage;
     public float holdDuration = 1.3f;
@@ -22,12 +21,11 @@ public class SplashSequence : MonoBehaviour
 
     IEnumerator Run()
     {
-     
+
         if (fadeOverlay != null) SetFade(1f);
         if (logosGroup != null) logosGroup.alpha = 1f;
         else if (logoImage != null) SetAlpha(1f);
 
-        
         int current = SceneManager.GetActiveScene().buildIndex;
         int nextIndex = current + 1;
 
@@ -54,30 +52,27 @@ public class SplashSequence : MonoBehaviour
             logosGroup.alpha = 1f;
         }
 
-       
         if (fadeOverlay != null) yield return FadeScreen(1f, 0f);
 
         yield return new WaitForSecondsRealtime(holdDuration);
 
         while (_load != null && _load.progress < 0.9f) yield return null;
 
-       
         if (fadeOverlay != null) yield return FadeScreen(0f, 1f);
         if (_load != null) _load.allowSceneActivation = true;
     }
-
 
     IEnumerator FadeScreen(float from, float to)
     {
         if (fadeOverlay == null) yield break;
         fadeOverlay.gameObject.SetActive(true);
         SetFade(from);
-        yield return null;   
+        yield return null;
 
         float t = 0f;
         while (t < screenFadeDuration)
         {
-            t += Mathf.Min(Time.unscaledDeltaTime, 0.05f);   
+            t += Mathf.Min(Time.unscaledDeltaTime, 0.05f);
             SetFade(Mathf.Lerp(from, to, EaseInOut(t, screenFadeDuration)));
             yield return null;
         }

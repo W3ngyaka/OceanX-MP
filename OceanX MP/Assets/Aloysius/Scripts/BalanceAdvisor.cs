@@ -2,22 +2,8 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using TMPro;
-using OceanX.BoidsGPU.Ecosystem;   // SpeciesDataGPU / SpeciesRoleGPU / EcosystemSimulationGPU
+using OceanX.BoidsGPU.Ecosystem;
 
-// Bottom-left "how do I balance this?" panel.
-//
-// Every line is derived from the SIMULATION's own verdict (GetSpeciesStatus, synced per species)
-// rather than a second opinion computed up here. Eco-health is a weighted mix of diversity,
-// per-species balance and apex presence, so a panel that recomputed any of that itself would
-// eventually disagree with the bar and send visitors chasing fixes that don't move it.
-//
-// Two rules keep it from becoming an answer key:
-//
-//   1. GROUPED, NOT ENUMERATED. Problems collapse by kind, so eight missing species is one line
-//      about a sparse reef, not eight lines naming each fish.
-//   2. ESCALATING DETAIL. It opens vague and only gets specific when the visitor is genuinely
-//      stuck — measured as eco-health failing to reach a new high for a while. Any improvement
-//      drops it back to vague, so a visitor who is making progress is never handed the answer.
 public class BalanceAdvisor : MonoBehaviour
 {
     [Header("Refs")]
@@ -26,57 +12,38 @@ public class BalanceAdvisor : MonoBehaviour
     public TMP_Text bodyLabel;
 
     [Header("Behaviour")]
-    [Tooltip("How many problem categories to show at once. Two is usually plenty — more reads as a checklist.")]
-    [Range(1, 4)] public int maxLines = 2;
+        [Range(1, 4)] public int maxLines = 2;
 
-    [Tooltip("Seconds between recalculations.")]
-    public float refreshInterval = 0.5f;
+        public float refreshInterval = 0.5f;
 
-    [Tooltip("Hide the panel until the experience has started.")]
-    public bool hideBeforeStart = true;
+        public bool hideBeforeStart = true;
 
-    [Tooltip("Hide while the HOW TO PLAY panel is open, so the two don't compete for attention.")]
-    public bool hideWhileTutorialOpen = true;
+        public bool hideWhileTutorialOpen = true;
 
     [Header("Division of labour")]
-    [Tooltip("Ceiling on how specific this panel may get. 0 = describe the problem only, 1 = also name " +
-             "the species, 2 = also state the fix. Keep below 2 so the HINTS tab stays the place that " +
-             "actually tells the visitor what to press.")]
-    [Range(0, 2)] public int maxDetailLevel = 1;
+        [Range(0, 2)] public int maxDetailLevel = 1;
 
-    [Tooltip("Report species that are simply missing. Off by default: the health card already shows " +
-             "'n / 12 species present' and the Organisms rows show per-species numbers, so this panel " +
-             "earns its space on the DYNAMICS \u2014 starving, over-hunted, overcrowded \u2014 which nothing " +
-             "else on the tablet explains.")]
-    public bool reportMissingSpecies = false;
+        public bool reportMissingSpecies = false;
 
     [Header("Escalation")]
-    [Tooltip("Seconds of no NEW eco-health high before the panel gets more specific. Each step of " +
-             "this long moves it one level: vague -> names the species -> names the fix.")]
-    public float escalateAfter = 25f;
+        public float escalateAfter = 25f;
 
-    [Tooltip("How much eco-health must rise above its previous best to count as progress and reset " +
-             "the panel to vague. Small, so genuine progress is recognised quickly.")]
-    public float progressEpsilon = 0.01f;
+        public float progressEpsilon = 0.01f;
 
     [Header("Copy")]
-    [Tooltip("Put each sentence on its own line instead of running them together as a paragraph.")]
-    public bool eachSentenceOnNewLine = false;
+        public bool eachSentenceOnNewLine = false;
 
     public string headerText = "HOW TO BALANCE";
     public string balancedMessage = "The reef is balanced. Nice work!";
 
-    [Tooltip("Eco-health (0-1) at or above which the reef genuinely counts as balanced.")]
-    [Range(0.5f, 1f)] public float balancedThreshold = 0.99f;
+        [Range(0.5f, 1f)] public float balancedThreshold = 0.99f;
 
-    [Tooltip("Nothing is wrong that the visitor can act on, but health is still short \u2014 usually " +
-             "because the remaining species have not unlocked yet.")]
-    public string nothingToDoMessage = "Nothing here is in trouble. The reef is just missing species, over on the Food Web tab.";
+        public string nothingToDoMessage = "Nothing here is in trouble. The reef is just missing species, over on the Food Web tab.";
 
     private float _timer;
     private float _bestHealth = -1f;
     private float _stuckTime;
-    private bool _hadProblem;   // edge-detect: play the warning cue only when a NEW problem appears
+    private bool _hadProblem;
     private readonly List<Issue> _issues = new List<Issue>();
     private readonly StringBuilder _sb = new StringBuilder();
 
@@ -85,12 +52,11 @@ public class BalanceAdvisor : MonoBehaviour
     private struct Issue
     {
         public Kind Kind;
-        public int Count;              // how many species share this problem
-        public SpeciesDataGPU First;   // exemplar, used once the panel is allowed to name names
-        public string Fix;             // species to add/remove, null if all candidates are locked
+        public int Count;
+        public SpeciesDataGPU First;
+        public string Fix;
     }
 
-    // 0 = vague, 1 = names the species, 2 = names the fix.
     private int Level => Mathf.Clamp(Mathf.FloorToInt(_stuckTime / Mathf.Max(1f, escalateAfter)),
                                      0, Mathf.Clamp(maxDetailLevel, 0, 2));
 
@@ -117,23 +83,18 @@ public class BalanceAdvisor : MonoBehaviour
         if (ui == null || ui.Ecosystem == null || net == null) { SetShown(false); return; }
         if (hideBeforeStart && !net.HasStarted)
         {
-            // Attract screen: forget the previous visitor's progress so the next one starts vague.
+
             _bestHealth = -1f; _stuckTime = 0f; _hadProblem = false;
             SetShown(false);
             return;
         }
 
-        // The onboarding panel owns the screen while it is up, and two sets of instructions at once
-        // is just noise. Returning here also freezes the stuck clock, which is deliberate: time spent
-        // reading HOW TO PLAY is not the visitor failing to balance the reef, so it must not count
-        // toward escalating the hint.
         if (hideWhileTutorialOpen && TutorialPanel.Instance != null && TutorialPanel.Instance.IsOpenOrPending)
         {
             SetShown(false);
             return;
         }
 
-        // Progress tracking. A new high resets the ladder; otherwise the stuck clock runs.
         float health = net.GetEcoHealth();
         if (health > _bestHealth + progressEpsilon) { _bestHealth = health; _stuckTime = 0f; }
         else _stuckTime += elapsed;
@@ -151,8 +112,8 @@ public class BalanceAdvisor : MonoBehaviour
             switch (net.GetSpeciesStatus(idx))
             {
                 case EcosystemSimulationGPU.SpeciesStatus.Absent:
-                    if (!canAdd) break;   // locked: the visitor can't act on it, so never mention it
-                    if (!reportMissingSpecies) break;   // covered by the health card + Organisms rows
+                    if (!canAdd) break;
+                    if (!reportMissingSpecies) break;
                     Add(sp.Role == SpeciesRoleGPU.Apex ? Kind.MissingApex : Kind.Missing, sp, null);
                     break;
                 case EcosystemSimulationGPU.SpeciesStatus.Overpopulated:
@@ -167,15 +128,10 @@ public class BalanceAdvisor : MonoBehaviour
             }
         }
 
-        // A collapsing reef matters more than a sparse one, so problems outrank absences.
         _issues.Sort((a, b) => Rank(a.Kind).CompareTo(Rank(b.Kind)));
 
         _sb.Clear();
-        // At or above the balanced threshold the bar is already telling the visitor the reef is
-        // fine, so nothing is worth reporting. This matters because GetSpeciesStatus and the health
-        // formula do not agree: a species can be flagged OverPredated on a pure predator-ratio test
-        // while still counting as healthy for eco-health. Printing that underneath 100% THRIVING
-        // just reads as the panel contradicting the gauge.
+
         if (health >= balancedThreshold) _sb.Append(balancedMessage);
         else if (_issues.Count == 0) _sb.Append(nothingToDoMessage);
         else
@@ -190,8 +146,6 @@ public class BalanceAdvisor : MonoBehaviour
 
         if (bodyLabel != null) bodyLabel.text = _sb.ToString();
 
-        // Warning cue on the rising edge only: fires once when the reef first slips into an
-        // actionable problem, not every 0.5s refresh while it stays broken.
         bool hasProblem = health < balancedThreshold && _issues.Count > 0;
         if (hasProblem && !_hadProblem && UISoundManager.Instance != null)
             UISoundManager.Instance.Play(UISound.Warning);
@@ -200,7 +154,6 @@ public class BalanceAdvisor : MonoBehaviour
         SetShown(true);
     }
 
-    // Merge into an existing issue of the same kind rather than adding a second line for it.
     private void Add(Kind kind, SpeciesDataGPU sp, string fix)
     {
         for (int i = 0; i < _issues.Count; i++)
@@ -219,11 +172,11 @@ public class BalanceAdvisor : MonoBehaviour
     {
         switch (k)
         {
-            case Kind.Starving:      return 0;   // an active collapse
+            case Kind.Starving:      return 0;
             case Kind.OverPredated:  return 1;
             case Kind.Overpopulated: return 2;
             case Kind.MissingApex:   return 3;
-            default:                 return 4;   // merely sparse
+            default:                 return 4;
         }
     }
 
@@ -265,8 +218,6 @@ public class BalanceAdvisor : MonoBehaviour
         }
     }
 
-    // Name of the first species in the list the visitor could act on right now, or null if they
-    // are all locked — so the caller can fall back to wording that doesn't name one.
     private static string FirstActionable(List<SpeciesDataGPU> list,
                                           EcosystemUnlockManagerGPU unlock,
                                           TabletEcosystemUIGPU ui)
@@ -283,8 +234,6 @@ public class BalanceAdvisor : MonoBehaviour
         return null;
     }
 
-    // Line() returns fragments without terminal punctuation so they compose either way; read as
-    // prose each one needs to close properly. Leaves existing punctuation alone.
     private static string AsSentence(string s)
     {
         if (string.IsNullOrEmpty(s)) return s;
@@ -296,7 +245,7 @@ public class BalanceAdvisor : MonoBehaviour
     {
         if (group == null) return;
         group.alpha = shown ? 1f : 0f;
-        group.blocksRaycasts = false;   // advisory only; never intercept taps meant for the reef
+        group.blocksRaycasts = false;
         group.interactable = false;
     }
 }

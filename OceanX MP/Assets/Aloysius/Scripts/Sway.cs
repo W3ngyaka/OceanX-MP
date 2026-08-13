@@ -1,26 +1,17 @@
 using UnityEngine;
 
-// Gentle looping sway for 2D deco (seaweed, coral, fish) — Paper-Mario-ish rock.
-// Rotates back and forth on a sine wave. Can pivot from the BASE (bottom) so rooted things
-// like seaweed sway from the seabed instead of spinning around their center.
 [DisallowMultipleComponent]
 public class Sway : MonoBehaviour
 {
-    [Tooltip("Max rotation in degrees each way.")]
-    public float angle = 5f;
+        public float angle = 5f;
 
-    [Tooltip("Full sways per second (lower = lazier).")]
-    public float speed = 0.5f;
+        public float speed = 0.5f;
 
-    [Tooltip("Randomized per-instance so deco doesn't move in unison. Leave on.")]
-    public bool randomPhase = true;
+        public bool randomPhase = true;
 
-    [Tooltip("Pivot the rotation around the object's bottom edge (good for seaweed/coral). " +
-             "Off = rotate around center (good for free-floating fish).")]
-    public bool pivotFromBase = false;
+        public bool pivotFromBase = false;
 
-    [Tooltip("Optional tiny bob added on top of the sway (px). 0 = none.")]
-    public float bobHeight = 0f;
+        public float bobHeight = 0f;
 
     private float _phase;
     private Quaternion _baseRot;
@@ -45,15 +36,15 @@ public class Sway : MonoBehaviour
 
     void Update()
     {
-        float s = Mathf.Sin(Time.unscaledTime * speed * Mathf.PI * 2f + _phase); // -1..1
+        float s = Mathf.Sin(Time.unscaledTime * speed * Mathf.PI * 2f + _phase);
         float a = s * angle;
 
         if (pivotFromBase && _rt != null)
         {
-            // Rotate around the bottom-center: offset down, rotate, offset back.
+
             Quaternion rot = _baseRot * Quaternion.Euler(0, 0, a);
             transform.localRotation = rot;
-            // compensate position so the base stays put
+
             Vector3 down = _baseRot * new Vector3(0, -_halfHeight, 0);
             Vector3 rotatedDown = rot * new Vector3(0, -_halfHeight, 0);
             transform.localPosition = _basePos + (down - rotatedDown);

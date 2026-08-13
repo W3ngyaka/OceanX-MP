@@ -12,7 +12,7 @@ public class Bob : MonoBehaviour
     void Start()
     {
         startPos = transform.localPosition;
-        offset = Random.Range(0f, Mathf.PI * 2f); 
+        offset = Random.Range(0f, Mathf.PI * 2f);
     }
 
     void Update()
@@ -22,5 +22,4 @@ public class Bob : MonoBehaviour
 
     }
 
- 
 }

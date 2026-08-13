@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-// Runs the fade coroutine on the overlay's own GameObject so it isn't killed
-// when the modal that owns it gets SetActive(false).
 public class DimFader : MonoBehaviour
 {
     private CanvasGroup cg;
@@ -15,9 +13,7 @@ public class DimFader : MonoBehaviour
 
     public void FadeTo(float target, float duration, System.Action onComplete = null)
     {
-        // A coroutine can't run on an inactive GameObject (Unity logs "Coroutine couldn't be
-        // started..."). If the overlay is already inactive/disabled, just snap to the target and
-        // fire the callback synchronously so callers (e.g. ModalController.Close) still finish.
+
         if (!isActiveAndEnabled)
         {
             if (cg != null) cg.alpha = target;

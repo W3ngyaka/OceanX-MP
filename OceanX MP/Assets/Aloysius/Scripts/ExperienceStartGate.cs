@@ -2,35 +2,19 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Cross-device "tap the tablet to start" gate. Fits the existing netcode: the host (large
-// screen) and tablet are already connected via EcosystemNetworkManagerGPU. The tablet's tap
-// flips one shared networked flag (HasStarted) that BOTH screens react to — no cross-device
-// scene loading, no change to JunHeng's connect flow.
-//
-//   • LargeScreen: shows a title/attract overlay; hides it (revealing the reef) once started.
-//   • Tablet:      shows a "Tap to Start" prompt once connected; the tap fires RequestStartRpc,
-//                  then the tablet UI is revealed when the shared flag turns true.
 public class ExperienceStartGate : MonoBehaviour
 {
     public enum Mode { LargeScreen, Tablet }
 
-    [Header("Role")]
     public Mode mode = Mode.LargeScreen;
 
-    [Header("Large screen")]
-    [Tooltip("Title / attract overlay ('Tap tablet to begin') shown until the experience starts, then hidden.")]
-    public GameObject titleOverlay;
-    [Tooltip("Seconds for the large-screen title to FADE IN when shown (initial attract + after a reset). 0 = instant.")]
-    [Min(0f)]
+        public GameObject titleOverlay;
+        [Min(0f)]
     public float titleFadeSeconds = 0.6f;
 
-    [Header("Tablet")]
-    [Tooltip("'Tap to Start' prompt (contains the full-screen button). Shown once connected, hidden after the tap.")]
-    public GameObject tapToStart;
-    [Tooltip("Full-screen button that fires the start (wired automatically).")]
-    public Button startButton;
-    [Tooltip("Tablet UI to reveal once the experience starts. Leave null if something else reveals it.")]
-    public GameObject tabletUIRoot;
+        public GameObject tapToStart;
+        public Button startButton;
+        public GameObject tabletUIRoot;
 
     private bool _started;
     private bool _subscribed;
@@ -42,7 +26,7 @@ public class ExperienceStartGate : MonoBehaviour
         if (mode == Mode.LargeScreen) ShowTitle();
         if (mode == Mode.Tablet)
         {
-            if (tapToStart != null) tapToStart.SetActive(false);     // shown once connected (Update)
+            if (tapToStart != null) tapToStart.SetActive(false);
             if (tabletUIRoot != null) tabletUIRoot.SetActive(false);
         }
         if (startButton != null) startButton.onClick.AddListener(RequestStart);
@@ -51,30 +35,27 @@ public class ExperienceStartGate : MonoBehaviour
     void Update()
     {
         var net = EcosystemNetworkManagerGPU.Instance;
-        if (net == null) return;   // not connected / manager not spawned yet
+        if (net == null) return;
 
-        // Subscribe once the networked manager exists (host spawns it; client receives on connect).
         if (!_subscribed)
         {
             _subscribed = true;
             net.OnStarted += OnStarted;
-            if (net.HasStarted) OnStarted();   // already started (e.g. tablet joined late)
+            if (net.HasStarted) OnStarted();
         }
 
-        // Tablet: reveal the "Tap to Start" prompt now that we're connected.
         if (mode == Mode.Tablet && !_started && !_requested && tapToStart != null && !tapToStart.activeSelf)
             tapToStart.SetActive(true);
     }
 
-    // Wired to the tablet's full-screen button.
     public void RequestStart()
     {
         if (mode != Mode.Tablet || _requested || _started) return;
         var net = EcosystemNetworkManagerGPU.Instance;
-        if (net == null) return;   // not connected yet — ignore taps
+        if (net == null) return;
         _requested = true;
         if (tapToStart != null) tapToStart.SetActive(false);
-        net.RequestStartRpc();     // -> host flips HasStarted -> OnStarted fires on both screens
+        net.RequestStartRpc();
     }
 
     void OnStarted()
@@ -82,13 +63,11 @@ public class ExperienceStartGate : MonoBehaviour
         if (_started) return;
         _started = true;
         if (_titleFade != null) { StopCoroutine(_titleFade); _titleFade = null; }
-        if (titleOverlay != null) titleOverlay.SetActive(false);   // large screen: reveal the reef
+        if (titleOverlay != null) titleOverlay.SetActive(false);
         if (tapToStart != null) tapToStart.SetActive(false);
         if (tabletUIRoot != null) tabletUIRoot.SetActive(true);
     }
 
-    // LargeScreen: show the title / "Tap tablet to begin" overlay and fade it in via a CanvasGroup (added if
-    // absent). Fading the overlay's own group composes with any child show/hide alphas underneath it.
     void ShowTitle()
     {
         if (titleOverlay == null) return;
@@ -116,20 +95,15 @@ public class ExperienceStartGate : MonoBehaviour
         _titleFade = null;
     }
 
-    // Fresh-start reset: reverses OnStarted so this screen returns to its pre-start
-    // (attract) state. The "Tap to Start" prompt re-appears on its own via Update once
-    // connected, so we don't force tapToStart back on here.
     public void ReturnToAttract()
     {
         _started = false;
         _requested = false;
-        if (mode == Mode.LargeScreen) ShowTitle();   // fade the title back in
+        if (mode == Mode.LargeScreen) ShowTitle();
         if (mode == Mode.Tablet && tapToStart != null)
         {
             if (tabletUIRoot != null) tabletUIRoot.SetActive(false);
-            // Re-show the "Tap to Start" prompt. It was both deactivated AND faded out (CanvasGroup alpha 0)
-            // when the experience started, so restore its active state AND its CanvasGroup — otherwise it
-            // comes back fully transparent (invisible "empty water").
+
             tapToStart.SetActive(true);
             var cg = tapToStart.GetComponent<CanvasGroup>();
             if (cg != null) { cg.alpha = 1f; cg.interactable = true; cg.blocksRaycasts = true; }

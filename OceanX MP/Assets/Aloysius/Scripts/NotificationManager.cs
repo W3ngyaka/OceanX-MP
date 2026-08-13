@@ -7,26 +7,20 @@ public class NotificationManager : MonoBehaviour
     public static NotificationManager Instance;
     public TextMeshProUGUI messageText;
 
-    [Tooltip("Seconds the toast stays fully shown before auto-hiding (excludes the fades).")]
-    public float showSeconds = 4f;
+        public float showSeconds = 4f;
 
     [Header("Animation")]
-    [Tooltip("Seconds for the slide-in + fade-in.")]
-    public float inDuration = 0.35f;
-    [Tooltip("Seconds for the fade-out + slide-out.")]
-    public float outDuration = 0.3f;
-    [Tooltip("How far (px) the panel slides up from as it appears.")]
-    public float slideDistance = 60f;
+        public float inDuration = 0.35f;
+        public float outDuration = 0.3f;
+        public float slideDistance = 60f;
 
-    [Tooltip("If true, this toast auto-subscribes to the unlock event and pops itself.")]
-    public bool autoSubscribeUnlock = true;
+        public bool autoSubscribeUnlock = true;
 
-    [Tooltip("The panel to show/hide. If unset, falls back to this GameObject (legacy behavior).")]
-    public GameObject panel;
+        public GameObject panel;
 
     private CanvasGroup _cg;
     private RectTransform _panelRt;
-    private Vector2 _restPos;      // authored resting position
+    private Vector2 _restPos;
     private bool _posCaptured;
 
     void Awake()
@@ -44,7 +38,7 @@ public class NotificationManager : MonoBehaviour
         if (_cg == null) _cg = target.AddComponent<CanvasGroup>();
         if (!_posCaptured && _panelRt != null)
         {
-            _restPos = _panelRt.anchoredPosition; // remember where the designer placed it
+            _restPos = _panelRt.anchoredPosition;
             _posCaptured = true;
         }
     }
@@ -76,7 +70,7 @@ public class NotificationManager : MonoBehaviour
         EnsureRefs();
         if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.Unlock);
         if (messageText != null)
-            messageText.text = s.speciesName;   // just the organism name
+            messageText.text = s.speciesName;
 
         var target = panel != null ? panel : gameObject;
         target.SetActive(true);
@@ -86,7 +80,7 @@ public class NotificationManager : MonoBehaviour
 
     IEnumerator PlaySequence()
     {
-        // --- slide up + fade in ---
+
         float t = 0f;
         Vector2 from = _restPos + Vector2.down * slideDistance;
         while (t < 1f)
@@ -100,10 +94,8 @@ public class NotificationManager : MonoBehaviour
         _cg.alpha = 1f;
         _panelRt.anchoredPosition = _restPos;
 
-        // --- hold ---
         yield return new WaitForSecondsRealtime(showSeconds);
 
-        // --- fade out + slide down ---
         t = 0f;
         Vector2 to = _restPos + Vector2.down * (slideDistance * 0.5f);
         while (t < 1f)
@@ -117,7 +109,6 @@ public class NotificationManager : MonoBehaviour
         HideInstant();
     }
 
-    // Fresh-start reset: cancel any in-flight or queued toast and hide the panel.
     public void ClearAll()
     {
         StopAllCoroutines();

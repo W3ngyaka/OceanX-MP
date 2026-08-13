@@ -3,41 +3,31 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
-// Tablet onboarding: shows a 'how to use this' panel the first time the experience starts, and
-// again whenever the (?) help button is tapped. Fades in/out; blocks input while open so a
-// visitor can't half-tap the UI behind it.
 public class TutorialPanel : MonoBehaviour
 {
     public static TutorialPanel Instance { get; private set; }
 
     [Header("Refs")]
-    public CanvasGroup group;          // fade + block raycasts
-    public Button closeButton;         // 'Got it' / X
-    public Button helpButton;          // the (?) button that reopens this
+    public CanvasGroup group;
+    public Button closeButton;
+    public Button helpButton;
 
     [Header("Behaviour")]
-    [Tooltip("Show automatically the first time the experience starts.")]
-    public bool showOnStart = true;
-    [Tooltip("Seconds to wait after start before auto-showing (lets the UI settle).")]
-    public float autoShowDelay = 0.6f;
+        public bool showOnStart = true;
+        public float autoShowDelay = 0.6f;
     public float fadeDuration = 0.3f;
 
     private Coroutine _fade;
     private bool _open;
 
-    // True while the panel is showing (used by ContextNudge so hints don't overlap it).
     public bool IsOpen => _open;
 
-    // True while the panel is showing OR queued to appear on the auto-show delay. Other UI should
-    // gate on THIS rather than IsOpen: between the session starting and the panel fading in there is
-    // an autoShowDelay-long window where IsOpen is still false, and anything keying off IsOpen alone
-    // flashes on screen for exactly that long before the tutorial covers it.
     public bool IsOpenOrPending => _open || _autoShowPending;
 
     private bool _autoShowPending;
     private bool _shownOnce;
     private bool _subscribed;
-    private bool _rearmPending;   // set by ResetForNewSession; cleared in Update once HasStarted is false
+    private bool _rearmPending;
 
     void Awake()
     {
@@ -54,14 +44,8 @@ public class TutorialPanel : MonoBehaviour
         var net = EcosystemNetworkManagerGPU.Instance;
         if (net == null) return;
 
-        // ALWAYS subscribe (not just in the not-started branch). A tablet that joins a session that is
-        // already running receives _hasStarted inside the spawn payload, which lands BEFORE
-        // OnNetworkSpawn wires up OnValueChanged, so OnStarted never fires for it. The HasStarted poll
-        // below is what catches that case; the event covers the normal start-while-connected case.
         if (!_subscribed) { _subscribed = true; net.OnStarted += TryAutoShow; }
 
-        // After a reset, only re-arm once HasStarted is actually back to false, otherwise the panel can
-        // re-show instantly off the stale true that may still be in flight.
         if (_rearmPending)
         {
             if (!net.HasStarted) { _rearmPending = false; _shownOnce = false; }
@@ -81,7 +65,7 @@ public class TutorialPanel : MonoBehaviour
     {
         if (_shownOnce) return;
         _shownOnce = true;
-        _autoShowPending = true;      // claim the screen NOW, not in autoShowDelay seconds
+        _autoShowPending = true;
         StartCoroutine(AutoShowAfterDelay());
     }
 
@@ -95,17 +79,13 @@ public class TutorialPanel : MonoBehaviour
     public void Show() { SetVisible(true); }
     public void Hide() { SetVisible(false); }
 
-    // Fresh-start reset: hide the panel and re-arm the "show once on start" latch so the onboarding
-    // panel auto-shows again for the NEXT visitor (otherwise _shownOnce stays true forever and it never
-    // reappears). The re-arm is DEFERRED to Update() until HasStarted is observed false again, so the
-    // panel can't pop straight back up off a stale true while the reset is still propagating.
     public void ResetForNewSession()
     {
         if (_fade != null) { StopCoroutine(_fade); _fade = null; }
-        StopAllCoroutines();          // cancel any pending AutoShowAfterDelay / fade
+        StopAllCoroutines();
         _fade = null;
-        _rearmPending = true;         // Update() clears _shownOnce once HasStarted is false again
-        _autoShowPending = false;     // a queued auto-show is cancelled with the coroutines above
+        _rearmPending = true;
+        _autoShowPending = false;
         SetVisible(false, instant: true);
     }
 

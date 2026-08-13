@@ -12,78 +12,53 @@ public class FoodWebLines : MonoBehaviour
     public List<Image> glowRings = new List<Image>();
 
     [Header("Energy flow animation")]
-    [Tooltip("Animate dots drifting prey -> predator along each revealed line.")]
-    public bool animateFlow = true;
-    [Tooltip("How fast a dot travels the line, in fractions of the line per second.")]
-    public float flowSpeed = 0.35f;
-    [Tooltip("Dots per line (spaced evenly).")]
-    public int dotsPerLine = 3;
-    [Tooltip("Dot diameter in pixels.")]
-    public float dotSize = 14f;
+        public bool animateFlow = true;
+        public float flowSpeed = 0.35f;
+        public int dotsPerLine = 3;
+        public float dotSize = 14f;
 
     [Header("Hold-reveal glow")]
-    [Tooltip("Also halo the connected bubbles in their link colour (green = prey, orange = predator).")]
-    public bool glowConnected = true;
-    [Tooltip("Halo size as a multiple of the bubble diameter.")]
-    public float glowScale = 1.25f;
+        public bool glowConnected = true;
+        public float glowScale = 1.25f;
     [Range(0f,1f)] public float glowAlpha = 0.8f;
 
     [Header("Hold-reveal colours (prey vs predator)")]
-    [Tooltip("Links flowing INTO this species (what it eats). Green = its food.")]
-    public Color preyColor = new Color(0.35f, 1f, 0.55f, 1f);
-    [Tooltip("Links flowing OUT to predators (what eats it). Orange = its threats.")]
-    public Color predatorColor = new Color(1f, 0.55f, 0.2f, 1f);
+        public Color preyColor = new Color(0.35f, 1f, 0.55f, 1f);
+        public Color predatorColor = new Color(1f, 0.55f, 0.2f, 1f);
 
     [Header("Ambient web (pulses ONE link at a time)")]
-    [Tooltip("Softly cycle a single predator/prey connection at a time so the layout reads as a web without any clutter.")]
-    public bool showAmbientWeb = true;
-    [Tooltip("Colour + alpha of the pulsing link. Defaults to match the hold-reveal exactly.")]
-    public Color ambientColor = new Color(0f, 0.85f, 1f, 1f);
-    [Tooltip("Thickness (px) of the pulsing link. Matches the hold-reveal (4).")]
-    public float ambientThickness = 4f;
-    [Tooltip("Arrowhead (prey -> predator) on the pulsing link.")]
-    public bool ambientArrows = true;
-    [Tooltip("How much clear links bow into an arc, as a fraction of link length. 0 = straight.")]
-    [Range(0f, 0.3f)] public float ambientArc = 0.15f;
-    [Tooltip("Max arc bow in pixels (caps the curve on long links so they can't swoop).")]
-    public float ambientArcMax = 120f;
-    [Tooltip("Length (px) of each dash/segment. Keeps dashes the SAME size on short and long links.")]
-    public float segmentLength = 18f;
-    [Tooltip("Draw links as dashes (dash-gap-dash) instead of one solid line.")]
-    public bool dashed = true;
-    [Tooltip("Seconds to fade the link in.")]
-    public float pulseFadeIn = 0.35f;
-    [Tooltip("Seconds the link stays full while the energy dot travels.")]
-    public float pulseHold = 0.8f;
-    [Tooltip("Seconds to fade the link out.")]
-    public float pulseFadeOut = 0.35f;
-    [Tooltip("Seconds of blank space between links.")]
-    public float pulseGap = 0.12f;
+        public bool showAmbientWeb = true;
+        public Color ambientColor = new Color(0f, 0.85f, 1f, 1f);
+        public float ambientThickness = 4f;
+        public bool ambientArrows = true;
+        [Range(0f, 0.3f)] public float ambientArc = 0.15f;
+        public float ambientArcMax = 120f;
+        public float segmentLength = 18f;
+        public bool dashed = true;
+        public float pulseFadeIn = 0.35f;
+        public float pulseHold = 0.8f;
+        public float pulseFadeOut = 0.35f;
+        public float pulseGap = 0.12f;
 
     private List<CanvasGroup> dimmedBubbles = new List<CanvasGroup>();
 
-    // One flow per drawn line: the curve it rides plus its dot images.
     private class Flow { public Vector2 a, c, b; public Image[] dots; }
     private readonly List<Flow> _flows = new List<Flow>();
     private float _flowT;
     private Sprite _dotSprite;
 
-    // Always-on ambient web (pulse mode).
     private Transform _ambientRoot;
     private readonly List<GameObject> _pulseObjs = new List<GameObject>();
     private GameObject _pulseContainer;
-    private bool _revealActive;   // a bright hold-reveal is up -> pause the pulse
+    private bool _revealActive;
 
     void Awake()
     {
         Instance = this;
     }
 
-    // NOTE: pulse startup moved to OnEnable so the ambient web survives tab switches.
-    // Deactivating this layer kills its coroutines permanently; Unity does not resume
-    // them on re-enable and Start() only runs once. OnEnable re-arms it every time.
     private bool _pulseRunning;
-    private int _pulseIdx;   // persists across tab switches so the web resumes, not restarts
+    private int _pulseIdx;
 
     void OnEnable()
     {
@@ -96,8 +71,7 @@ public class FoodWebLines : MonoBehaviour
 
     void OnDisable()
     {
-        // Coroutines are already dead here; just reset so OnEnable restarts cleanly
-        // and no stale reveal/pulse state carries across the tab switch.
+
         _pulseRunning = false;
         _revealActive = false;
         ClearPulse();
@@ -116,21 +90,15 @@ public class FoodWebLines : MonoBehaviour
                 var img = f.dots[i];
                 if (img == null) continue;
 
-                // Evenly-offset dots looping along the curve, prey (t=0) -> predator (t=1).
                 float t = Mathf.Repeat(_flowT + i / (float)f.dots.Length, 1f);
                 img.rectTransform.position = Bezier(f.a, f.c, f.b, t);
 
-                // Fade in as it leaves the prey and out as it reaches the predator.
                 const float edge = 0.18f;
                 float a = Mathf.Clamp01(Mathf.Min(t, 1f - t) / edge);
                 var col = img.color; col.a = a; img.color = col;
             }
         }
     }
-
-    // ---------------------------------------------------------------------------
-    // Interactive reveal — bright, on hold.
-    // ---------------------------------------------------------------------------
 
     public void ShowConnections(SpeciesBubble source)
     {
@@ -152,13 +120,9 @@ public class FoodWebLines : MonoBehaviour
             }
         }
 
-        // Pause + clear the ambient pulse so the bright reveal is clean.
         _revealActive = true;
         ClearPulse();
 
-        // Colour-code by direction:
-        //   ORANGE  source -> predator  (what eats this fish)
-        //   GREEN   prey   -> source    (what this fish eats)
         foreach (var predator in source.predators)
             if (predator != null)
             {
@@ -191,20 +155,15 @@ public class FoodWebLines : MonoBehaviour
             if (ring != null) ring.enabled = false;
         glowRings.Clear();
 
-        _revealActive = false; // ambient pulse resumes
+        _revealActive = false;
     }
-
-    // ---------------------------------------------------------------------------
-    // Ambient web — one link pulses at a time (clean, no tangle).
-    // ---------------------------------------------------------------------------
 
     IEnumerator PulseLoop()
     {
         yield return null;
-        yield return null; // let any runtime layout settle
+        yield return null;
         EnsureAmbientRoot();
 
-        // Collect each unique prey -> predator link once.
         var links = new List<KeyValuePair<Transform, Transform>>();
         var bubbles = FindObjectsByType<SpeciesBubble>(FindObjectsSortMode.None);
         var seen = new HashSet<long>();
@@ -221,15 +180,13 @@ public class FoodWebLines : MonoBehaviour
 
         while (true)
         {
-            while (_revealActive) yield return null;   // paused during a hold reveal
+            while (_revealActive) yield return null;
 
             var link = links[_pulseIdx % links.Count];
             _pulseIdx++;
             Transform from = link.Key, to = link.Value;
             if (from == null || to == null) { yield return null; continue; }
 
-            // Draw the link with the SAME renderer the hold-reveal uses (curved line +
-            // arrow + animated energy dots), inside a CanvasGroup we fade in/out.
             var container = new GameObject("PulseLink", typeof(RectTransform), typeof(CanvasGroup));
             var crt = (RectTransform)container.transform;
             crt.SetParent(_ambientRoot, false);
@@ -274,14 +231,14 @@ public class FoodWebLines : MonoBehaviour
             rt.offsetMin = Vector2.zero; rt.offsetMax = Vector2.zero;
             _ambientRoot = rt;
         }
-        _ambientRoot.SetAsFirstSibling(); // behind the bubbles
+        _ambientRoot.SetAsFirstSibling();
     }
 
     void ClearPulse()
     {
-        _pulseObjs.Clear(); // these are children of the container, destroyed with it below
+        _pulseObjs.Clear();
         if (_pulseContainer != null) { DestroyImmediate(_pulseContainer); _pulseContainer = null; }
-        // Drop flow entries whose dots were destroyed with the container (avoids a slow leak).
+
         _flows.RemoveAll(f => f.dots == null || AllNull(f.dots));
     }
 
@@ -294,25 +251,17 @@ public class FoodWebLines : MonoBehaviour
     static long Key(Object from, Object to)
         => ((long)from.GetInstanceID() << 32) ^ (uint)to.GetInstanceID();
 
-    // ---------------------------------------------------------------------------
-    // Shared drawing primitives.
-    // ---------------------------------------------------------------------------
-
     void DrawLineInto(Transform parent, List<GameObject> list, Transform from, Transform to,
                       Color color, float thickness, bool drawArrow, bool drawFlow)
     {
         if (linePrefab == null) { Debug.LogError("linePrefab is null!"); return; }
 
-        Vector2 startC = from.position;   // bubble centres
+        Vector2 startC = from.position;
         Vector2 endC = to.position;
         if (Vector2.Distance(startC, endC) < 0.001f) return;
 
-        // Curve shape from the centres so it stays stable regardless of edge-trimming.
         Vector2 control = ComputeCurveControl(startC, endC, from, to);
 
-        // Trim each end back to the bubble rim ALONG the curve's approach direction
-        // (control -> centre), so the line meets the edge and the arrowhead points AT the
-        // bubble's centre instead of grazing its side.
         Vector2 endTan = endC - control;
         if (endTan.sqrMagnitude < 0.0001f) endTan = endC - startC;
         endTan.Normalize();
@@ -323,10 +272,8 @@ public class FoodWebLines : MonoBehaviour
         Vector2 start = startC - startTan * BubbleRadius(from);
         Vector2 end = endC - endTan * BubbleRadius(to);
 
-        // If the bubbles are so close the trims cross over, fall back to centre-to-centre.
         if (Vector2.Dot(end - start, endC - startC) <= 0f) { start = startC; end = endC; }
-        // Segment count scales with the curve length so every dash is the same size,
-        // whether the link is short or long.
+
         float approxLen = Vector2.Distance(start, control) + Vector2.Distance(control, end);
         int segments = Mathf.Clamp(Mathf.RoundToInt(approxLen / Mathf.Max(4f, segmentLength)), 1, 80);
         Vector2 prev = start;
@@ -334,7 +281,7 @@ public class FoodWebLines : MonoBehaviour
         {
             float t = i / (float)segments;
             Vector2 point = Bezier(start, control, end, t);
-            if (!dashed || (i % 2) == 1)   // dashed -> draw every other segment (dash, gap, dash)
+            if (!dashed || (i % 2) == 1)
                 DrawSegmentInto(parent, list, prev, point, color, thickness);
             prev = point;
         }
@@ -406,9 +353,6 @@ public class FoodWebLines : MonoBehaviour
         return new Vector2(v.x * c - v.y * s, v.x * s + v.y * c);
     }
 
-    // Pick a bezier control point for a nice curved link: bow around any bubbles in the
-    // way, and — when the path is already clear — still apply a gentle arc bowing away from
-    // the layout centre so no link is dead straight.
     Vector2 ComputeCurveControl(Vector2 start, Vector2 end, Transform from, Transform to)
     {
         Vector2 mid = (start + end) / 2f;
@@ -449,7 +393,6 @@ public class FoodWebLines : MonoBehaviour
             }
         }
 
-        // Clear path -> apply a GENTLE arc bowing outward from the layout centre.
         if (control == mid && ambientArc > 0f)
         {
             float side = Vector2.Dot(mid - centroid, perp) >= 0f ? 1f : -1f;
@@ -514,8 +457,6 @@ public class FoodWebLines : MonoBehaviour
         return Mathf.Min(w, h) * 0.5f + 8f;
     }
 
-    // Soft coloured halo behind a connected bubble. Registered in activeLines so
-    // HideConnections() destroys it with the rest of the reveal.
     void AddGlow(Transform bubble, Color color)
     {
         var go = new GameObject("HoldGlow", typeof(RectTransform), typeof(CanvasRenderer), typeof(UnityEngine.UI.Image));
@@ -527,7 +468,7 @@ public class FoodWebLines : MonoBehaviour
         rt.localScale = Vector3.one;
         float d = BubbleRadius(bubble) * 2f * glowScale;
         rt.sizeDelta = new Vector2(d, d);
-        rt.SetAsFirstSibling();               // sit behind the bubble art
+        rt.SetAsFirstSibling();
         var img = go.GetComponent<UnityEngine.UI.Image>();
         img.sprite = GlowSprite();
         img.color = new Color(color.r, color.g, color.b, glowAlpha);
@@ -547,7 +488,7 @@ public class FoodWebLines : MonoBehaviour
             {
                 float dist = Vector2.Distance(new Vector2(x, y), c) / (S * 0.5f);
                 float a = Mathf.Clamp01(1f - dist);
-                a = a * a * a;                 // soft outer falloff
+                a = a * a * a;
                 tex.SetPixel(x, y, new Color(1f, 1f, 1f, a));
             }
         tex.Apply();

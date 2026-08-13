@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Tab switcher with a horizontal swipe transition: the outgoing panel slides
-// off one side while the incoming panel slides in from the other.
-// Also updates a shared header title per tab.
 public class TabController : MonoBehaviour
 {
     [System.Serializable]
@@ -13,32 +10,26 @@ public class TabController : MonoBehaviour
     {
         public Button button;
         public GameObject panel;
-        [Tooltip("Header title shown when this tab is active, e.g. FOOD WEB.")]
-        public string title;
+                public string title;
     }
 
     [Header("Tabs (button + panel, same order)")]
     public List<Tab> tabs = new List<Tab>();
 
     [Header("Header title")]
-    [Tooltip("The shared title text at the top that changes per tab.")]
-    public TMPro.TMP_Text titleText;
+        public TMPro.TMP_Text titleText;
 
     [Header("Food Web prompt")]
-    [Tooltip("The 'Tap on any species' hint. Shown only on the Food Web tab (index 0). Auto-found by name 'prompt' if left null.")]
-    public GameObject foodWebPrompt;
-    [Tooltip("Index of the tab the prompt belongs to.")]
-    public int promptTabIndex = 0;
+        public GameObject foodWebPrompt;
+        public int promptTabIndex = 0;
 
     [Header("Button tint")]
     public Color activeColor = new Color(0.20f, 0.55f, 0.95f, 1f);
     public Color inactiveColor = new Color(1f, 1f, 1f, 0.12f);
 
     [Header("Transition")]
-    [Tooltip("Seconds for the slide.")]
-    public float slideDuration = 0.3f;
-    [Tooltip("How far panels slide, in pixels. Set ~ panel width.")]
-    public float slideDistance = 1000f;
+        public float slideDuration = 0.3f;
+        public float slideDistance = 1000f;
 
     [Header("Start")]
     public int defaultTab = 0;
@@ -51,8 +42,7 @@ public class TabController : MonoBehaviour
 
     void Start()
     {
-        // Stay dormant until the experience begins (tablet 'tap to start' flips HasStarted),
-        // so the tab UI + Food Web prompt aren't shown on the title screen.
+
         var net = EcosystemNetworkManagerGPU.Instance;
         if (net == null || !net.HasStarted)
         {
@@ -100,7 +90,6 @@ public class TabController : MonoBehaviour
         SetTitle(defaultTab);
         UpdatePrompt(defaultTab);
 
-        // Refresh the default panel's content if it needs it.
         if (tabs.Count > 0 && tabs[defaultTab].panel != null)
         {
             var g = tabs[defaultTab].panel.GetComponent<CurrentOrganismsGrid>();
@@ -108,12 +97,9 @@ public class TabController : MonoBehaviour
         }
     }
 
-    // Fresh-start reset: snap back to the default tab so the next visitor doesn't inherit whichever
-    // tab the previous one left open. Listeners were wired once in InitializeTabs and persist, so we
-    // only reset the visible state (active panel, tint, title, prompt, home positions) — no re-wiring.
     public void ResetForNewSession()
     {
-        if (!_initialized) return;   // never started — nothing to reset
+        if (!_initialized) return;
         StopAllCoroutines();
         _animating = false;
         for (int i = 0; i < tabs.Count; i++)
@@ -160,7 +146,6 @@ public class TabController : MonoBehaviour
         inPanel.SetActive(true);
         inRT.anchoredPosition = inHome + new Vector2(dir * slideDistance, 0f);
 
-        // Refresh content that needs to rebuild when shown (e.g. the organisms grid).
         var grid = inPanel.GetComponent<CurrentOrganismsGrid>();
         if (grid != null) grid.Refresh();
 

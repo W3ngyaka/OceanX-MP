@@ -2,12 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;using OceanX.BoidsGPU.Ecosystem;
 
-
-/// <summary>
-/// Drives the Boids_Demo health bar from the live ecosystem health value
-/// (EcosystemSimulationGPU.EcoHealth01, normalized 0..1).
-/// Updates a Filled Image's fillAmount and an optional percent TMP label.
-/// </summary>
 [ExecuteAlways]
 public class HealthBarBinder : MonoBehaviour
 {
@@ -15,24 +9,21 @@ public class HealthBarBinder : MonoBehaviour
     [SerializeField] private EcosystemSimulationGPU sim;
 
     [Header("UI targets (auto-found from children if left empty)")]
-    [SerializeField] private Image fillImage;     // the Filled (Horizontal) image
-    [SerializeField] private TMP_Text percentText; // e.g. "79%"
+    [SerializeField] private Image fillImage;
+    [SerializeField] private TMP_Text percentText;
 
     [Header("Options")]
     [SerializeField] private bool smooth = true;
     [SerializeField] private float smoothSpeed = 4f;
 
     [Header("Debug / preview")]
-    [Tooltip("Ignore the live sim and use the slider below. For testing colours/fill in the Inspector.")]
-    [SerializeField] private bool debugOverride = false;
+        [SerializeField] private bool debugOverride = false;
     [Range(0f, 1f)]
     [SerializeField] private float debugHealth01 = 1f;
 
     [Header("Colour by health state")]
-    [Tooltip("Tint the fill green -> amber -> red as health drops. Needs a white/neutral fill sprite so the tint shows.")]
-    [SerializeField] private bool colorFill = true;
-    [Tooltip("Optional: also tint the percent label to match.")]
-    [SerializeField] private bool colorPercentText = false;
+        [SerializeField] private bool colorFill = true;
+        [SerializeField] private bool colorPercentText = false;
 
     private float _displayed;
 
@@ -50,7 +41,7 @@ public class HealthBarBinder : MonoBehaviour
 
         if (percentText == null)
         {
-            // pick the TMP child whose text looks like a percentage, else last TMP
+
             TMP_Text fallback = null;
             foreach (var t in GetComponentsInChildren<TMP_Text>(true))
             {
@@ -75,7 +66,7 @@ public class HealthBarBinder : MonoBehaviour
 
         if (smooth && Application.isPlaying)
         {
-            // Exponential ease-out: frame-rate independent, decelerates near target.
+
             float k = 1f - Mathf.Exp(-smoothSpeed * Time.deltaTime);
             _displayed = Mathf.Lerp(_displayed, target, k);
             if (Mathf.Abs(_displayed - target) < 0.001f) _displayed = target;
@@ -97,7 +88,6 @@ public class HealthBarBinder : MonoBehaviour
         }
     }
 
-    // Smooth green -> amber -> red gradient (matches EcoHealthDashboard).
     static readonly Color HealthRed   = new Color(0.95f, 0.30f, 0.30f);
     static readonly Color HealthAmber = new Color(1f,    0.75f, 0.20f);
     static readonly Color HealthGreen = new Color(0.35f, 0.90f, 0.50f);

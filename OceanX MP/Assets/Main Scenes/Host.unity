@@ -11132,6 +11132,10 @@ PrefabInstance:
       value: -121
       objectReference: {fileID: 0}
     - target: {fileID: 1715292132026904590, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
+      propertyPath: m_Name
+      value: EmptyBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715292132026904590, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -11280,12 +11284,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7507499787425969214, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
+      propertyPath: m_Name
+      value: FullHealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 7507499787425969214, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8654333621639123857, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
       propertyPath: m_Name
-      value: healthbar
+      value: HealthBar
       objectReference: {fileID: 0}
     - target: {fileID: 8654333621639123857, guid: b2cbad4bfa809d6459f467c98fb7b7c3, type: 3}
       propertyPath: m_IsActive
@@ -15957,7 +15965,7 @@ GameObject:
   - component: {fileID: 117657193}
   - component: {fileID: 117657192}
   m_Layer: 0
-  m_Name: AluciaBubble
+  m_Name: AluciaBubbleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40048,7 +40056,7 @@ GameObject:
   - component: {fileID: 303161986}
   - component: {fileID: 303161985}
   m_Layer: 5
-  m_Name: Image
+  m_Name: LeafIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45366,7 +45374,7 @@ GameObject:
   - component: {fileID: 342504642}
   - component: {fileID: 342504641}
   m_Layer: 0
-  m_Name: Image
+  m_Name: AluciaImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58624,7 +58632,7 @@ GameObject:
   - component: {fileID: 451036085}
   - component: {fileID: 451036084}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: EcosystemHealthText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85157,6 +85165,96 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 657396268}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &658056546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 658056547}
+  - component: {fileID: 658056549}
+  - component: {fileID: 658056548}
+  - component: {fileID: 658056550}
+  m_Layer: 0
+  m_Name: TITLE
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &658056547
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658056546}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.14565603, y: 0.14565603, z: 0.14565603}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2062190932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -9, y: 102}
+  m_SizeDelta: {x: 6000.0005, y: 6000.0005}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &658056548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658056546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b3510c661321dbf429cdeb9a81d1626e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &658056549
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658056546}
+  m_CullTransparentMesh: 1
+--- !u!114 &658056550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658056546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5884b38e020eb374e80be8a6e6908628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bob
+  speed: 1.2
+  height: 6
 --- !u!1001 &659291885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106053,8 +106151,9 @@ GameObject:
   - component: {fileID: 805584804}
   - component: {fileID: 805584806}
   - component: {fileID: 805584805}
+  - component: {fileID: 805584807}
   m_Layer: 0
-  m_Name: Hint
+  m_Name: TapStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106076,7 +106175,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -140}
+  m_AnchoredPosition: {x: 0, y: -287}
   m_SizeDelta: {x: 1800, y: 260}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &805584805
@@ -106179,6 +106278,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805584803}
   m_CullTransparentMesh: 1
+--- !u!114 &805584807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805584803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76404691f126ebb4fbb644c82e7d5255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIPulse
+  mode: 0
+  pulseScale: 1.08
+  minAlpha: 0.55
+  brighten: 0.35
+  speed: 1.2
 --- !u!1 &805589270
 GameObject:
   m_ObjectHideFlags: 0
@@ -107661,7 +107777,7 @@ GameObject:
   - component: {fileID: 818978594}
   - component: {fileID: 818978595}
   m_Layer: 0
-  m_Name: Entry/Exit 2
+  m_Name: GameObject (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140921,7 +141037,7 @@ GameObject:
   - component: {fileID: 1062558385}
   - component: {fileID: 1062558384}
   m_Layer: 0
-  m_Name: alucia box
+  m_Name: AluciaPortraitBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140966,7 +141082,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 26404644cfccab7448867e45081db620, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 96954d60cfd19c74f9174e66ba520520, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -176038,7 +176154,7 @@ GameObject:
   - component: {fileID: 1316830886}
   - component: {fileID: 1316830887}
   m_Layer: 0
-  m_Name: Entry/Exit 5
+  m_Name: GameObject (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180126,7 +180242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1351906311
 RectTransform:
   m_ObjectHideFlags: 0
@@ -182984,7 +183100,7 @@ GameObject:
   - component: {fileID: 1374950403}
   - component: {fileID: 1374950404}
   m_Layer: 0
-  m_Name: Entry/Exit 3
+  m_Name: GameObject (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183495,7 +183611,7 @@ GameObject:
   - component: {fileID: 1378942272}
   - component: {fileID: 1378942273}
   m_Layer: 0
-  m_Name: Entry/Exit 6
+  m_Name: GameObject (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186501,7 +186617,6 @@ MonoBehaviour:
   titleText: {fileID: 348893827}
   messageText: {fileID: 792941474}
   aluciaImage: {fileID: 615877082}
-  resetButton: {fileID: 0}
   title: ECOSYSTEM RESTORED
   thankYou: "You did it \u2014 thank you for bringing the reef back to life!"
   aluciaWinSprite: {fileID: 21300000, guid: 1bf59f66bcfdfc8428036af0b7189ba7, type: 3}
@@ -190715,7 +190830,7 @@ GameObject:
   - component: {fileID: 1432542148}
   - component: {fileID: 1432542149}
   m_Layer: 0
-  m_Name: Entry/Exit 4
+  m_Name: GameObject (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210426,7 +210541,7 @@ GameObject:
   - component: {fileID: 1576444569}
   - component: {fileID: 1576444570}
   m_Layer: 0
-  m_Name: Winmessage'
+  m_Name: Winmessage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227176,7 +227291,7 @@ GameObject:
   - component: {fileID: 1708938498}
   - component: {fileID: 1708938499}
   m_Layer: 0
-  m_Name: Entry/Exit 1
+  m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234137,7 +234252,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 55.756927, y: -3.0339813, z: -28.037308, w: 3.5709257}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -234160,7 +234275,7 @@ RectTransform:
   m_GameObject: {fileID: 1754703265}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.87811553, y: 0.87811553, z: 0.87811553}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 117657191}
@@ -271398,6 +271513,7 @@ RectTransform:
   m_Children:
   - {fileID: 1351906311}
   - {fileID: 805584804}
+  - {fileID: 658056547}
   m_Father: {fileID: 1184151414}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -273887,7 +274003,7 @@ GameObject:
   - component: {fileID: 2086215056}
   - component: {fileID: 2086215055}
   m_Layer: 0
-  m_Name: Arrwo
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276842,7 +276958,7 @@ GameObject:
   - component: {fileID: 2107874506}
   - component: {fileID: 2107874507}
   m_Layer: 0
-  m_Name: Entry/Exit 7
+  m_Name: GameObject (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -891,15 +891,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.9828424
+      value: -14.869755
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.74595
+      value: -13.316355
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.8577171
+      value: 3.256374
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalRotation.w
@@ -24164,7 +24164,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177479707}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -42380,15 +42380,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.9828424
+      value: -14.869755
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.964954
+      value: -13.316355
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.8577171
+      value: 3.256374
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -46261,7 +46261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.65, y: 0.68}
   m_AnchorMax: {x: 0.65, y: 0.68}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -252}
   m_SizeDelta: {x: 760, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &348893827
@@ -47686,6 +47686,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 358102749}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &358397296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 358397297}
+  - component: {fileID: 358397298}
+  m_Layer: 0
+  m_Name: Cave1
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &358397297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358397296}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.31123343, z: -0, w: 0.95033354}
+  m_LocalPosition: {x: -2.7140002, y: 0, z: -38.222}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2008551800}
+  - {fileID: 680236351}
+  - {fileID: 992028452}
+  - {fileID: 1080314973}
+  - {fileID: 1967478054}
+  - {fileID: 1109013606}
+  - {fileID: 1188543807}
+  m_Father: {fileID: 1971234006}
+  m_LocalEulerAnglesHint: {x: 0, y: -36.267, z: 0}
+--- !u!114 &358397298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358397296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e44dc26d753e840a7864b5e242cf44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.MorayCave
 --- !u!1001 &359472786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87618,6 +87669,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 680050875}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &680236350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 680236351}
+  m_Layer: 0
+  m_Name: Cave1_Point2
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &680236351
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680236350}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.74085295, z: -0, w: 0.67166734}
+  m_LocalPosition: {x: 12.7, y: 2.093, z: -2.813}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 358397297}
+  m_LocalEulerAnglesHint: {x: 0, y: -131.875, z: 0}
 --- !u!1001 &680532735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112985,6 +113067,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 854277144}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &855414788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 855414789}
+  m_Layer: 0
+  m_Name: Cave2_Point4
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &855414789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855414788}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7323105, z: -0, w: 0.680971}
+  m_LocalPosition: {x: -4.46, y: -0.08, z: -8.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695155139}
+  m_LocalEulerAnglesHint: {x: 0, y: 94.161, z: 0}
 --- !u!1001 &855417886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -114552,6 +114665,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2753770016014726719, guid: f797e2e4cc4b8cb4ba803156236dac26, type: 3}
   m_PrefabInstance: {fileID: 861795934}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &861962514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 861962515}
+  m_Layer: 0
+  m_Name: Cave2_Point1
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &861962515
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861962514}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.98797005, z: -0, w: 0.15464573}
+  m_LocalPosition: {x: -9.620001, y: 1.86, z: -5.88}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695155139}
+  m_LocalEulerAnglesHint: {x: 0, y: 162.208, z: 0}
 --- !u!1001 &862615713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -122442,6 +122586,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 928853271}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &928941925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 928941926}
+  m_Layer: 0
+  m_Name: Cave2_Point7
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &928941926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928941925}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.2577053, y: 0, z: -3.3850532}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695155139}
+  m_LocalEulerAnglesHint: {x: 0, y: -78.71, z: 0}
 --- !u!1001 &929560824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131090,6 +131265,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 990936175}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &992028451
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 992028452}
+  m_Layer: 0
+  m_Name: Cave1_Point3
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &992028452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992028451}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.74085295, z: -0, w: 0.67166734}
+  m_LocalPosition: {x: 10.35, y: 0.935, z: -3.71}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 358397297}
+  m_LocalEulerAnglesHint: {x: 0, y: -131.875, z: 0}
 --- !u!1001 &992246754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143279,6 +143485,37 @@ Transform:
   - {fileID: 1809769130}
   m_Father: {fileID: 748463649}
   m_LocalEulerAnglesHint: {x: 0, y: -140.166, z: 0}
+--- !u!1 &1080314972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1080314973}
+  m_Layer: 0
+  m_Name: Cave1_Point4
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1080314973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080314972}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.74085295, z: -0, w: 0.67166734}
+  m_LocalPosition: {x: 7.696591, y: 0.097, z: -3.9700541}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 358397297}
+  m_LocalEulerAnglesHint: {x: 0, y: -131.875, z: 0}
 --- !u!1001 &1081108415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -147250,6 +147487,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 1108459255}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1109013605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1109013606}
+  m_Layer: 0
+  m_Name: Cave1_Point6
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1109013606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109013605}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.16556863, z: -0, w: 0.98619825}
+  m_LocalPosition: {x: 0.5321332, y: 0, z: -3.1847773}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 358397297}
+  m_LocalEulerAnglesHint: {x: 0, y: -55.328, z: 0}
 --- !u!1001 &1109102912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -157324,6 +157592,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 1181332727}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1181347493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1181347494}
+  m_Layer: 0
+  m_Name: Cave2_Point6
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1181347494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181347493}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.1305587, z: -0, w: 0.99144065}
+  m_LocalPosition: {x: -0.855, y: -0.658, z: -6.334}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695155139}
+  m_LocalEulerAnglesHint: {x: 0, y: -63.706, z: 0}
 --- !u!1001 &1182596924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -158321,6 +158620,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4960dc20c120f09418a1708b494773e8, type: 3}
   m_PrefabInstance: {fileID: 1185763122}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1186052792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1186052793}
+  m_Layer: 0
+  m_Name: Cave2_Point5
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1186052793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186052792}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.57620543, z: -0, w: 0.81730485}
+  m_LocalPosition: {x: -2.7064643, y: -0.464, z: -8.136318}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695155139}
+  m_LocalEulerAnglesHint: {x: 0, y: -8.342, z: 0}
 --- !u!1 &1186166617
 GameObject:
   m_ObjectHideFlags: 0
@@ -158448,6 +158778,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3caca06b2b9327f4c89b649ca2864fec, type: 3}
   m_PrefabInstance: {fileID: 2013359893}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1188543806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1188543807}
+  m_Layer: 0
+  m_Name: Cave1_Point7
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1188543807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188543806}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 358397297}
+  m_LocalEulerAnglesHint: {x: 0, y: -36.267, z: 0}
 --- !u!1001 &1188764989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186588,7 +186949,7 @@ RectTransform:
   m_GameObject: {fileID: 1400155367}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.488, y: 1.488, z: 1.488}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 615877081}
@@ -186598,7 +186959,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -97, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1400155369
@@ -205766,15 +206127,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.9828424
+      value: -14.869755
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.74595
+      value: -13.316355
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.8577171
+      value: 3.256374
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -218892,7 +219253,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1644898078}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -226072,6 +226433,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 1694915919}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1695155138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1695155139}
+  - component: {fileID: 1695155140}
+  m_Layer: 0
+  m_Name: Cave2
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1695155139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695155138}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.6341223, z: -0, w: 0.7732328}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 861962515}
+  - {fileID: 2018480346}
+  - {fileID: 1901741202}
+  - {fileID: 855414789}
+  - {fileID: 1186052793}
+  - {fileID: 1181347494}
+  - {fileID: 928941926}
+  - {fileID: 1717717866}
+  m_Father: {fileID: 1971234006}
+  m_LocalEulerAnglesHint: {x: 0, y: -78.71, z: 0}
+--- !u!114 &1695155140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695155138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e44dc26d753e840a7864b5e242cf44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.MorayCave
 --- !u!1001 &1697696005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -229271,6 +229684,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7443742261565630498, guid: f8c89491b9d152146a2f56e843bc4a97, type: 3}
   m_PrefabInstance: {fileID: 1717655990}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1717717865
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1717717866}
+  m_Layer: 0
+  m_Name: Cave2_Point8
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1717717866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717717865}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.14739315, y: -0.1557452, z: 0.023509275, w: 0.9764558}
+  m_LocalPosition: {x: -0.122, y: 0.609, z: 0.739}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695155139}
+  m_LocalEulerAnglesHint: {x: -16.291, y: -18.911, z: 5.49}
 --- !u!1001 &1720255647
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -253210,6 +253654,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3899d5cc4380d3a43ae50fbd8a1c5d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1901741201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1901741202}
+  m_Layer: 0
+  m_Name: Cave2_Point3
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1901741202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901741201}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7323105, z: -0, w: 0.680971}
+  m_LocalPosition: {x: -6.195, y: 0.428, z: -7.446}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695155139}
+  m_LocalEulerAnglesHint: {x: 0, y: 94.161, z: 0}
 --- !u!1 &1901781818
 GameObject:
   m_ObjectHideFlags: 0
@@ -260492,6 +260967,37 @@ Transform:
   - {fileID: 1201988803}
   m_Father: {fileID: 141073779}
   m_LocalEulerAnglesHint: {x: 0, y: -276.945, z: 0}
+--- !u!1 &1967478053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1967478054}
+  m_Layer: 0
+  m_Name: Cave1_Point5
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1967478054
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967478053}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.5870735, z: -0, w: 0.8095337}
+  m_LocalPosition: {x: 4.0315566, y: -0.26999998, z: -4.328429}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 358397297}
+  m_LocalEulerAnglesHint: {x: 0, y: -108.166, z: 0}
 --- !u!1001 &1969020125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -260876,6 +261382,71 @@ MonoBehaviour:
     Type: 1
     BoidGroupId: 255
     BoidSubGroupId: 255
+--- !u!1 &1971234004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1971234006}
+  - component: {fileID: 1971234005}
+  m_Layer: 0
+  m_Name: Caves
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1971234005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971234004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7205db7c22d992847b237a641a064758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.MorayCaveDirector
+  _sim: {fileID: 0}
+  _moraySpecies: {fileID: 0}
+  _boidSim: {fileID: 0}
+  _caveDwellSeconds: 100
+  _leaveRollInterval: 30
+  _leaveChance: 0.375
+  _enableRestPose: 1
+  _restEaseSeconds: 1.5
+  _headLead: 2
+  _arriveRadius: 4
+  _waypointRadius: 1.5
+  _waypointTimeout: 8
+  _travelTimeout: 30
+  _centroidPollInterval: 0.5
+  _idleBobAmplitude: 0
+  _idleBobSpeed: 0.6
+  _pathSpeed: 2
+  _pathStartRadius: 3.5
+  _pathLookAhead: 2.5
+--- !u!4 &1971234006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971234004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.44, y: 1.83, z: 34.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 358397297}
+  - {fileID: 1695155139}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1971270449 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4960dc20c120f09418a1708b494773e8, type: 3}
@@ -264858,6 +265429,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8456125644450630886, guid: b8465399a2898c14a80517e1db02e7b9, type: 3}
   m_PrefabInstance: {fileID: 2008219993}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2008551799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2008551800}
+  m_Layer: 0
+  m_Name: Cave1_Point1
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2008551800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008551799}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.74085295, z: -0, w: 0.67166734}
+  m_LocalPosition: {x: 14.37, y: 2.67, z: -1.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 358397297}
+  m_LocalEulerAnglesHint: {x: 0, y: -131.875, z: 0}
 --- !u!1001 &2008581794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -266170,6 +266772,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81841cbb99cd8234facbfd3386b94129, type: 3}
   m_PrefabInstance: {fileID: 2018339658}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2018480345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2018480346}
+  m_Layer: 0
+  m_Name: Cave2_Point2
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2018480346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018480345}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7323105, z: -0, w: 0.680971}
+  m_LocalPosition: {x: -8.44, y: 1.315, z: -7.283}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695155139}
+  m_LocalEulerAnglesHint: {x: 0, y: 94.161, z: 0}
 --- !u!1001 &2019184481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -282227,6 +282860,7 @@ SceneRoots:
   - {fileID: 59291937}
   - {fileID: 1157040162}
   - {fileID: 687692929}
+  - {fileID: 1971234006}
   - {fileID: 582318400}
   - {fileID: 1966061599}
   - {fileID: 492231013}

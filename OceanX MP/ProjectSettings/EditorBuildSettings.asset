@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Aloysius/Scenes/Tablet.unity
     guid: 3d6b3564319f3694b9546569e4613502
-  - enabled: 1
+  - enabled: 0
     path: Assets/Main Scenes/Start scene.unity
     guid: b3af2dcd7576f8b409d0cec18c70bbc6
   - enabled: 0
@@ -39,6 +39,12 @@ EditorBuildSettings:
     path: Assets/Main Scenes/Tablet.unity
     guid: 0d89bab7b00538a4cbaf245ce2e16b18
   - enabled: 1
+<<<<<<< HEAD
+=======
+    path: Assets/Main Scenes/Trifold Start Scene.unity
+    guid: 972ffdc48990c9b4b81ab66ac0d09a2e
+  - enabled: 1
+>>>>>>> 7700a708c857a4c802b14aea628ebba3eecc4fe7
     path: Assets/Main Scenes/Trifold.unity
     guid: bfbd5cd3507994e49affd5cbc47e2e2c
   m_configObjects:

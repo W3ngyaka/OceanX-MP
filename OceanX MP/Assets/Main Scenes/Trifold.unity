@@ -891,15 +891,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.869755
+      value: -7.8723145
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.316355
+      value: -17.670477
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.256374
+      value: -1.752417
       objectReference: {fileID: 0}
     - target: {fileID: 1601354369822315696, guid: 1547e00092a8c1847b40d67f29c0c299, type: 3}
       propertyPath: m_LocalRotation.w
@@ -42380,15 +42380,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.869755
+      value: -7.8723145
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.316355
+      value: -13.964954
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.256374
+      value: -1.752417
       objectReference: {fileID: 0}
     - target: {fileID: 622543205247438978, guid: 403a9af4ecfc8fa4db7cf2680a4bb3cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -206127,15 +206127,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.869755
+      value: -7.8723145
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.316355
+      value: -17.670477
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.256374
+      value: -1.752417
       objectReference: {fileID: 0}
     - target: {fileID: 4569636453055604739, guid: 07d6ca6898263394c9e08e1b92a333ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -260607,6 +260607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1966061599}
+  - component: {fileID: 1966061600}
   m_Layer: 0
   m_Name: Waypoints
   m_TagString: Untagged
@@ -260637,6 +260638,31 @@ Transform:
   - {fileID: 800908643}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1966061600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966061598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0326c9e7af44b14ea7fe53079699d0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OceanX.BoidsGPU.Ecosystem.SharkPatrolDirector
+  _sim: {fileID: 0}
+  _sharkSpecies: {fileID: 0}
+  _waypointsRoot: {fileID: 0}
+  _closedLoop: 1
+  _samplesPerSegment: 20
+  _patrolSpeed: 0
+  _speedFactor: 1.15
+  _spawnStaggerMetres: 0
+  _useLeash: 1
+  _maxLeadDistance: 18
+  _leashMinSpeedFactor: 0.25
+  _centroidPollInterval: 0.4
+  _drawGizmos: 1
 --- !u!1001 &1966998376
 PrefabInstance:
   m_ObjectHideFlags: 0

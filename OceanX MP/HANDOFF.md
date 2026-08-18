@@ -1,6 +1,6 @@
 # Restore the Reef — Handoff Document
 
-_Last updated: 2026-08-12 — reflects all commits through 21a01f9f (2026-08-11)_
+_Last updated: 2026-08-18 — reflects all commits through 21a01f9f (2026-08-11), plus the uncommitted shark waypoint patrol (§7.25)_
 
 > This is the single source of truth for the project. Update the date above whenever you edit this file.
 > Formerly named **OceanX MP** / **Balance the Ocean** — renamed to **Restore the Reef** 2026-07-26.
@@ -247,6 +247,7 @@ Assets/Junheng/
 │   │   │   ├── IntroductionCameraDirectorGPU.cs  Cinemachine — catches a species' first school at its gate & follows it in (0→1 only); host-only
 │   │   │   ├── MorayCave.cs                      Cave marker (mouth + ordered child path); self-registers to MorayCave.All  [Akil, 2026-07-30]
 │   │   │   ├── MorayCaveDirector.cs              Moray AI — claims a cave, drives the school target in, pins it head-out via GPU rest anchors  [Akil]
+│   │   │   ├── SharkPatrolDirector.cs            Blacktip shark patrol — drives the school target along the Waypoints loop instead of a random path  [2026-08-18]
 │   │   │   ├── EcosystemUIAdapterGPU.cs          UI→GPU bridge — ⚠ DEAD (zero external refs, confirmed 2026-07-08); safe to delete
 │   │   │   ├── SpeciesBehaviorPropertiesGPU.cs   Flee/hunt/hunger SO (⚠ currently UNREAD by runtime — see flee-gap note in §9)
 │   │   │   └── SpeciesDataGPU.cs                 Per-species SoT: Role, ScientificName, School/Movement/MotionRender/Behavior props, PathStyle, prey/predator lists, FishPerSchool, MaxSchools, UseSpineDeformation
@@ -1073,6 +1074,22 @@ The Giant moray no longer roams — each one claims a cave, swims an authored pa
   - Mouth-gape + body defaults are hand-tuned to the specific giant-moray mesh (body ~12 units) — **they will break on a different mesh**.
   - Tunables: `_caveDwellSeconds=100`, `_leaveRollInterval=30`, `_leaveChance=0.375`, `_pathSpeed=4`, `_arriveRadius=4.5`, `_restRadius=10`; arrival uses synchronous GPU read-backs (`_centroidPollInterval=0.5s`), with `_travelTimeout`/`_waypointTimeout` so a reef snag can't stall the eel forever.
   - `2024bc52` also committed a stray ~1M-line recovery artifact `Assets/_Recovery/0 (6).unity` — likely unintended and unrelated to the feature (candidate for deletion).
+
+## 7.25 Blacktip Shark Waypoint Patrol (2026-08-18)
+
+The blacktip reef shark no longer roams a random Circle/Rectangle/Line route — it patrols the authored `Waypoints` loop in `SCENE_MainScene`. **Its movement is still pure boiding.** Nothing writes the shark's position or speed; the director only changes *where its swim-target goes*, so the shark still corner-cuts, swings wide, dodges reef via the SDF and obeys its turn-rate limits — along your route instead of a random one.
+
+- **`SharkPatrolDirector.cs`** — sits beside the sim like `MorayCaveDirector`, auto-finds sim + species (name contains "blacktip") on Awake. For each committed school it disables the `EcosystemTargetGPU`'s paired `TransformAnimator` and drives the target itself (same mechanism as `ParkAt`). No compute-shader changes; the only sim hooks used are the existing `GetSchoolTarget` / `CountCommittedGroups` / `TryGetSchoolCentroid`.
+- **Path** = the ordered children of `_waypointsRoot` (defaults to the component's own transform), sampled into a closed Catmull-Rom spline with an arclength table, so the target advances at constant m/s regardless of waypoint spacing. Spline rather than polyline because the shark's `MaxAngularVelocity 22°/s` at cruise 2.7 m/s gives a ~7 m minimum turning radius, and the corner at waypoint 4 is ~80° — a raw polyline just gets overshot every lap.
+- **Scene setup:** one `SharkPatrolDirector` on the `Waypoints` object. Nothing to wire. Current loop: 8 waypoints, 128.3 m, ~41 s/lap, entirely inside the sim bounds (min clearance 5.1 m — important, a target outside the bounds reads as "exiting" and would drag the school off-screen).
+- **On spawn** the shark enters at its normal off-screen `FishEntryPointGPU` marker and beelines to waypoint 0, then rides the loop. **On removal** the director stops driving any school with index ≥ `CountCommittedGroups` (i.e. already parked for exit), so the swim-out is untouched — verified in play mode.
+- **⚠ The leash — two non-obvious traps, both hit while building this:**
+  - A boid only accelerates above cruising when fleeing a predator or sprinting in/out (`UpdateMovementSpeed`), so a patrolling shark swims at *exactly* 2.7 m/s and **can never catch up**. Its target must be slightly faster than cruise or the shark overtakes and mills around it. So the target permanently outruns the shark; left alone it eventually laps it, and the shark then turns round and cuts across the reef to chase — patrol gone. The leash caps the target at `_maxLeadDistance` **ahead along the path**.
+  - Lead **must** be measured as arclength (project the centroid onto the spline), not straight-line distance to the target. A shark faithfully tracing the loop is far from a target half a lap ahead, and a straight-line measure can't distinguish that from a shark that has wandered off sideways. The first version used straight-line and mis-fired constantly.
+  - The leash **slows, never stops**, the target (`_leashMinSpeedFactor` is a floor). A stopped target is a fixed point, and a fish that can't swim below cruise can't hover — it circles it at ≥ its turning radius. A stop-and-resume leash keyed on any threshold under ~7 m therefore **deadlocks**: observed live, target held for 40 s while the shark looped around it.
+- **Measured equilibrium** (1 shark, defaults): target held ~18 m ahead along the path, shark tracking 4–7 m off the spline, leash oscillating 0.25↔1.0. Stable across laps.
+- Tunables: `_speedFactor=1.15` (target speed = cruise × this), `_maxLeadDistance=18`, `_leashMinSpeedFactor=0.25`, `_centroidPollInterval=0.4s` (synchronous GPU read-back — do not poll per-frame), `_samplesPerSegment=20`, `_spawnStaggerMetres=0`.
+- **Known:** with `_spawnStaggerMetres=0` every shark starts at waypoint 0, so concurrent sharks travel in near-lockstep (measured 9.2 m apart with 2 sharks). Fine for the 1-shark demo; set it to ~21 (loop length ÷ `MaxSchools` 6) to fan them around the loop.
 
 ---
 

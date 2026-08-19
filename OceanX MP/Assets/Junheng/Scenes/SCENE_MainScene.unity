@@ -107661,7 +107661,7 @@ GameObject:
   - component: {fileID: 818978594}
   - component: {fileID: 818978595}
   m_Layer: 0
-  m_Name: GameObject (4)
+  m_Name: Entry/Exit 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157775,7 +157775,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1184151410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176038,7 +176038,7 @@ GameObject:
   - component: {fileID: 1316830886}
   - component: {fileID: 1316830887}
   m_Layer: 0
-  m_Name: GameObject (6)
+  m_Name: Entry/Exit 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182984,7 +182984,7 @@ GameObject:
   - component: {fileID: 1374950403}
   - component: {fileID: 1374950404}
   m_Layer: 0
-  m_Name: GameObject (5)
+  m_Name: Entry/Exit 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183495,7 +183495,7 @@ GameObject:
   - component: {fileID: 1378942272}
   - component: {fileID: 1378942273}
   m_Layer: 0
-  m_Name: GameObject (7)
+  m_Name: Entry/Exit 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190715,7 +190715,7 @@ GameObject:
   - component: {fileID: 1432542148}
   - component: {fileID: 1432542149}
   m_Layer: 0
-  m_Name: GameObject (8)
+  m_Name: Entry/Exit 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227176,7 +227176,7 @@ GameObject:
   - component: {fileID: 1708938498}
   - component: {fileID: 1708938499}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: Entry/Exit 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276842,7 +276842,7 @@ GameObject:
   - component: {fileID: 2107874506}
   - component: {fileID: 2107874507}
   m_Layer: 0
-  m_Name: GameObject (2)
+  m_Name: Entry/Exit 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

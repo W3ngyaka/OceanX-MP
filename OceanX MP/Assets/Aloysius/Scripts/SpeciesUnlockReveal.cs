@@ -4,24 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-// Shows a "New Species Discovered" reveal card on the host screen when a species
-// unlocks for the first time, then asks Alucia to hint the closest-to-unlockable
-// locked species. Subscribes to EcosystemUnlockManagerGPU.OnSpeciesUnlocked.
-//
-// SETUP (assign in Inspector):
-//   revealGroup   -> CanvasGroup on the reveal card container
-//   revealImage   -> Image for the fish picture (leave empty for now; text-only)
-//   nameText      -> "New Species Discovered" species name
-//   sciText       -> scientific name
-//   tierText      -> trophic tier
-//   msgText       -> addedMessage
-//   alucia        -> the AluciaController (for the follow-up hint)
-//   allSpecies    -> all 12 SpeciesData assets (drag them in, or auto-loaded if empty)
 public class SpeciesUnlockReveal : MonoBehaviour
 {
     [Header("Reveal card refs")]
     public CanvasGroup revealGroup;
-    public Image revealImage;       // optional; leave null for text-only
+    public Image revealImage;
     public TMP_Text nameText;
     public TMP_Text sciText;
     public TMP_Text tierText;
@@ -80,18 +67,13 @@ public class SpeciesUnlockReveal : MonoBehaviour
         Debug.Log("[Reveal] HandleUnlock fired for: " + (species != null ? species.speciesName : "NULL"), this);
         if (species == null) return;
 
-        // Route through the shared queue so an unlock card waits its turn instead of
-        // slamming on top of an added card (they share the same center-stage slot).
         RevealQueue.Get().Enqueue(revealGroup, () => FillCard(species), revealHoldSeconds, fadeDuration, key: species.speciesName);
-        // Hint moved to SpeciesAddedReveal (fires on fish ADDED, not on unlock).
+
     }
 
     void FillCard(SpeciesData species)
     {
-        // Read the unlock card from RevealContent.csv (the SAME sheet as the arrival card), matched by the
-        // species' stable contentId (falling back to its display name). Uses the 'unlockMessage' column so the
-        // unlock line can differ from the arrival 'blurb'. Every field falls back to the SpeciesData asset if
-        // the CSV row/value is missing, so the card never goes blank offline.
+
         string key = !string.IsNullOrEmpty(species.contentId) ? species.contentId : species.speciesName;
         RevealContentDB.Entry e = RevealContentDB.Get(key);
 
@@ -107,10 +89,7 @@ public class SpeciesUnlockReveal : MonoBehaviour
 
         if (revealImage != null)
         {
-            // The unlock card has its OWN photo column (unlockImageFile), loaded from the SAME folder as the
-            // arrival card (StreamingAssets/Trifold), just a different filename. If unlockImageFile is blank
-            // it falls back to the arrival photo (imageFile), so the card is never image-less while the friend
-            // hasn't dropped the unlock-specific pics yet. Then to any sprite pre-assigned in the scene.
+
             string imgFile = (e != null && !string.IsNullOrWhiteSpace(e.unlockImageFile)) ? e.unlockImageFile
                             : (e != null ? e.imageFile : null);
             Sprite img = RevealContentDB.GetImage(imgFile);
@@ -151,12 +130,10 @@ public class SpeciesUnlockReveal : MonoBehaviour
             alucia.Say(bestHint, AluciaController.Mood.Calm);
     }
 
-
-
     string BuildHint(SpeciesData sp, bool healthMet, int minHealth,
                      List<EcosystemUnlockManagerGPU.RequirementStatus> reqs)
     {
-        // Build a progress-aware requirement phrase.
+
         var parts = new List<string>();
         if (!healthMet && minHealth > 0)
             parts.Add("get eco-health to " + minHealth + "%");
@@ -170,15 +147,13 @@ public class SpeciesUnlockReveal : MonoBehaviour
                 }
         string reqPhrase = parts.Count > 0 ? string.Join(", and ", parts) : null;
 
-        // Rotate through several phrasings so repeats don't feel identical.
         int rot = 0;
         if (_hintRotation.TryGetValue(sp, out int v)) rot = v;
         _hintRotation[sp] = rot + 1;
 
         string name = sp.speciesName;
         string rp = reqPhrase ?? "";
-        // Templates are checker-editable in StreamingAssets/alucia_lines.csv; the
-        // string here is the fallback if the CSV/key is missing. {species}=name, {req}=requirements.
+
         string[] withReq = new string[]
         {
             AluciaLines.Get("hint.withReq.1", "To bring in the {species}, you'll need to {req}.").Replace("{species}", name).Replace("{req}", rp),
@@ -186,9 +161,7 @@ public class SpeciesUnlockReveal : MonoBehaviour
             AluciaLines.Get("hint.withReq.3", "The {species} is waiting \u2014 {req}.").Replace("{species}", name).Replace("{req}", rp),
             AluciaLines.Get("hint.withReq.4", "Keep going! {req} to attract the {species}.").Replace("{species}", name).Replace("{req}", rp),
         };
-        // Variants that lean on the species' own flavour hints. These come from the CSV first (event
-        // 'hint.flavour', scoped to this species) so fact-checkers can edit them in the sheet; if the CSV
-        // has no rows for this fish, fall back to the SpeciesData asset's hint1/2/3 so nothing breaks.
+
         var flavour = AluciaLines.GetVariants("hint.flavour", name);
         if (flavour.Count == 0)
         {
@@ -197,7 +170,6 @@ public class SpeciesUnlockReveal : MonoBehaviour
             if (!string.IsNullOrEmpty(sp.hint3)) flavour.Add(sp.hint3);
         }
 
-        // Interleave: even rotations use flavour (if any), odd use progress phrasing.
         if (reqPhrase == null)
             return flavour.Count > 0 ? flavour[rot % flavour.Count] : AluciaLines.Get("hint.fallback", "Something new is almost ready to appear...");
 

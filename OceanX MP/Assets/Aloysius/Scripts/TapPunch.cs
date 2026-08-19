@@ -1,19 +1,13 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// Reusable tap "punch" scale animation. Matches the feel of SpeciesBubble's TapPunch:
-// scale up to 1.2x over 0.1s, then ease back to 1x over 0.15s. Drop this on any UI
-// element (e.g. the Add button) to give it the same tactile tap as the food-web bubbles.
 public class TapPunch : MonoBehaviour, IPointerDownHandler
 {
-    [Tooltip("Peak scale multiplier at the top of the punch.")]
-    public float punchScale = 1.2f;
+        public float punchScale = 1.2f;
 
-    [Tooltip("Seconds to scale up to the peak.")]
-    public float upTime = 0.1f;
+        public float upTime = 0.1f;
 
-    [Tooltip("Seconds to settle back to rest.")]
-    public float downTime = 0.15f;
+        public float downTime = 0.15f;
 
     private Vector3 baseScale = Vector3.one;
     private Coroutine punchRoutine;
@@ -25,14 +19,14 @@ public class TapPunch : MonoBehaviour, IPointerDownHandler
 
     void OnDisable()
     {
-        // Coroutines die on deactivation; make sure we don't get frozen mid-punch (stuck big).
+
         if (punchRoutine != null) { StopCoroutine(punchRoutine); punchRoutine = null; }
         transform.localScale = baseScale;
     }
 
     void OnEnable()
     {
-        transform.localScale = baseScale; // always start at rest when shown
+        transform.localScale = baseScale;
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -71,6 +71,18 @@ namespace OceanX.BoidsGPU.Ecosystem
             ThreeQuarter
         }
 
+        /// <summary>One species' correction to how far back the intro camera frames from.</summary>
+        [System.Serializable]
+        public struct FramingDistanceOverride
+        {
+            [Tooltip("The species this applies to. Any species not listed frames at 1x.")]
+            public SpeciesDataGPU Species;
+
+            [Tooltip("Multiplies the whole framing offset. Above 1 pushes the camera back (a big fish that " +
+                     "does not fit in frame); below 1 brings it in. 1 = no change.")]
+            [Range(0.25f, 4f)] public float DistanceScale;
+        }
+
         [Header("References")]
         [Tooltip("The EcosystemSimulationGPU whose first-introduction event drives the shot. Auto-found in " +
                  "the scene if left empty.")]
@@ -107,6 +119,19 @@ namespace OceanX.BoidsGPU.Ecosystem
 
         [Tooltip("ThreeQuarter offset (school-local): a blend — behind (-Z) AND out to the side (X).")]
         [SerializeField] private Vector3 _threeQuarterOffsetLocal = new Vector3(7f, 2.5f, -5f);
+
+        [Tooltip("Species that need the camera further back (or closer) than the shared offset above gives " +
+                 "them. Leave a species out and it frames at 1x, unchanged.\n\n" +
+                 "The offsets are one set of numbers for twelve species whose bodies are nothing like the " +
+                 "same size, so a distance that frames a damselfish school nicely crops a shark. The scale " +
+                 "multiplies the WHOLE offset, so the angle you picked is preserved exactly — the camera " +
+                 "only sits further out along it.\n\n" +
+                 "How far back a given fish needs depends on the SCREEN as much as the fish: Cinemachine's " +
+                 "field of view is VERTICAL, so a narrow viewport (a trifold panel) shows less to the sides " +
+                 "than a wide one at the same setting, and crops a broadside sooner. Dial this in on the " +
+                 "real display, not in the editor Game view.")]
+        [SerializeField] private FramingDistanceOverride[] _framingDistanceOverrides
+            = new FramingDistanceOverride[0];
 
         [Header("Shot")]
         [Tooltip("Priority given to the intro camera while the shot plays. Must be ABOVE the overview " +
@@ -339,6 +364,23 @@ namespace OceanX.BoidsGPU.Ecosystem
             _introFollow.FollowOffset = SelectedOffset();
         }
 
+        // This species' correction to the shared framing distance, or 1 when it is not listed. Linear scan:
+        // the list holds at most a handful of entries and this runs once per shot, not per frame.
+        private float FramingDistanceScaleFor(SpeciesDataGPU species)
+        {
+            if (_framingDistanceOverrides == null || species == null) return 1f;
+
+            for (int i = 0; i < _framingDistanceOverrides.Length; i++)
+            {
+                if (_framingDistanceOverrides[i].Species != species) continue;
+                // A scale left at 0 is an entry someone added and never filled in — treat it as "no
+                // correction" rather than collapsing the camera onto the fish.
+                float scale = _framingDistanceOverrides[i].DistanceScale;
+                return scale > 0f ? scale : 1f;
+            }
+            return 1f;
+        }
+
         private Vector3 SelectedOffset()
         {
             switch (_framingMode)
@@ -424,7 +466,9 @@ namespace OceanX.BoidsGPU.Ecosystem
             Vector3 schoolRight = Vector3.Cross(Vector3.up, _heading).normalized;
             _sideSign = Vector3.Dot(camHome - _followProxy.position, schoolRight) >= 0f ? 1f : -1f;
 
-            Vector3 localOffset = SelectedOffset();
+            // Scaling the whole offset keeps the chosen angle exactly and only changes how far out along it
+            // the camera sits, so a big fish gets room without its shot becoming a different shot.
+            Vector3 localOffset = SelectedOffset() * FramingDistanceScaleFor(species);
             localOffset.x *= _sideSign;
             if (_introFollow != null)
                 _introFollow.FollowOffset = Quaternion.LookRotation(_heading, Vector3.up) * localOffset;

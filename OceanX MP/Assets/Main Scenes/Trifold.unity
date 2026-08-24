@@ -89425,6 +89425,9 @@ MonoBehaviour:
   _followBehindOffsetLocal: {x: 4, y: 2.5, z: -8}
   _sideViewOffsetLocal: {x: 9, y: 2, z: 0}
   _threeQuarterOffsetLocal: {x: 7, y: 2.5, z: -5}
+  _framingDistanceOverrides:
+  - Species: {fileID: 11400000, guid: 28ab075c094107a46a43ca11a323eeee, type: 2}
+    DistanceScale: 1.5
   _activePriority: 20
   _idlePriority: 0
   _followDuration: 3.5

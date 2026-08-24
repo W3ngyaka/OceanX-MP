@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using Unity.Cinemachine;
 using Unity.Cinemachine.TargetTracking;
 using UnityEngine;
@@ -71,16 +71,26 @@ namespace OceanX.BoidsGPU.Ecosystem
             ThreeQuarter
         }
 
-        /// <summary>One species' correction to how far back the intro camera frames from.</summary>
+        /// <summary>One species' corrections to how the intro camera frames it.</summary>
         [System.Serializable]
-        public struct FramingDistanceOverride
+        public struct SpeciesFramingOverride
         {
-            [Tooltip("The species this applies to. Any species not listed frames at 1x.")]
+            [Tooltip("The species this applies to. Any species not listed is framed with the shared " +
+                     "settings, unchanged.")]
             public SpeciesDataGPU Species;
 
             [Tooltip("Multiplies the whole framing offset. Above 1 pushes the camera back (a big fish that " +
                      "does not fit in frame); below 1 brings it in. 1 = no change.")]
             [Range(0.25f, 4f)] public float DistanceScale;
+
+            [Tooltip("Metres to pull the AIM POINT back along the fish's heading. 0 = aim at the school's " +
+                     "centre of mass, which is the default and right for a school of ordinary fish.\n\n" +
+                     "It exists for the long-bodied species. A boid's position is a single point at the " +
+                     "HEAD, and the moray's body is drawn trailing back along the path its head has already " +
+                     "travelled — so aiming at the centre of mass puts the camera on its face with the " +
+                     "whole animal behind the frame. Pulling the aim back a little centres the eel instead " +
+                     "of its nose. Moves the camera body with it, so the shot angle is unchanged.")]
+            public float AimOffsetBehind;
         }
 
         [Header("References")]
@@ -130,8 +140,8 @@ namespace OceanX.BoidsGPU.Ecosystem
                  "field of view is VERTICAL, so a narrow viewport (a trifold panel) shows less to the sides " +
                  "than a wide one at the same setting, and crops a broadside sooner. Dial this in on the " +
                  "real display, not in the editor Game view.")]
-        [SerializeField] private FramingDistanceOverride[] _framingDistanceOverrides
-            = new FramingDistanceOverride[0];
+        [SerializeField] private SpeciesFramingOverride[] _speciesFramingOverrides
+            = new SpeciesFramingOverride[0];
 
         [Header("Shot")]
         [Tooltip("Priority given to the intro camera while the shot plays. Must be ABOVE the overview " +
@@ -284,6 +294,10 @@ namespace OceanX.BoidsGPU.Ecosystem
         private Vector3 _heading = Vector3.forward;
         private float _sideSign = 1f;
 
+        // This shot's aim offset (metres behind the school centre), read from the override list when the
+        // shot starts so the lookup is not repeated every frame. 0 for every species that is not listed.
+        private float _aimOffsetBehind = 0f;
+
         private void OnEnable()
         {
             if (_simulation == null)
@@ -366,19 +380,42 @@ namespace OceanX.BoidsGPU.Ecosystem
 
         // This species' correction to the shared framing distance, or 1 when it is not listed. Linear scan:
         // the list holds at most a handful of entries and this runs once per shot, not per frame.
+        private bool TryGetFramingOverride(SpeciesDataGPU species, out SpeciesFramingOverride result)
+        {
+            result = default;
+            if (_speciesFramingOverrides == null || species == null) return false;
+
+            for (int i = 0; i < _speciesFramingOverrides.Length; i++)
+            {
+                if (_speciesFramingOverrides[i].Species != species) continue;
+                result = _speciesFramingOverrides[i];
+                return true;
+            }
+            return false;
+        }
+
+        // This species' correction to the shared framing distance, or 1 when it is not listed.
         private float FramingDistanceScaleFor(SpeciesDataGPU species)
         {
-            if (_framingDistanceOverrides == null || species == null) return 1f;
+            if (!TryGetFramingOverride(species, out SpeciesFramingOverride o)) return 1f;
+            // A scale left at 0 is an entry someone added for the aim offset alone and never filled in —
+            // treat it as "no correction" rather than collapsing the camera onto the fish.
+            return o.DistanceScale > 0f ? o.DistanceScale : 1f;
+        }
 
-            for (int i = 0; i < _framingDistanceOverrides.Length; i++)
-            {
-                if (_framingDistanceOverrides[i].Species != species) continue;
-                // A scale left at 0 is an entry someone added and never filled in — treat it as "no
-                // correction" rather than collapsing the camera onto the fish.
-                float scale = _framingDistanceOverrides[i].DistanceScale;
-                return scale > 0f ? scale : 1f;
-            }
-            return 1f;
+        // Where to actually point the proxy, given the school's centre. Normally the centre itself; for a
+        // species with an AimOffsetBehind it is pulled back along the direction of travel, so a long body
+        // that trails behind its head-point sits centred in frame instead of hanging out the back of it.
+        //
+        // Pulled back along the LIVE velocity rather than the shot's baked _heading, because the eel's body
+        // follows the path its head actually took — so as it turns, "behind the head" turns with it. Falls
+        // back to the baked heading when the school is too slow for its velocity to carry a direction.
+        private Vector3 AimPointFor(Vector3 schoolCentre)
+        {
+            if (_aimOffsetBehind == 0f) return schoolCentre;
+
+            Vector3 forward = _schoolVelocity.sqrMagnitude > 1e-6f ? _schoolVelocity.normalized : _heading;
+            return schoolCentre - forward * _aimOffsetBehind;
         }
 
         private Vector3 SelectedOffset()
@@ -409,6 +446,12 @@ namespace OceanX.BoidsGPU.Ecosystem
             // Make sure the camera is framing with the currently-selected mode's offset.
             ApplyFramingOffset();
 
+            // Resolve this species' aim correction once, before the first proxy placement below, so the
+            // proxy is offset from the very first frame and the shot never has to slide back into place.
+            _aimOffsetBehind = TryGetFramingOverride(species, out SpeciesFramingOverride framing)
+                ? framing.AimOffsetBehind
+                : 0f;
+
             // 1a) Wait for the freshly spawned school to become readable, then snap the proxy onto it. Buffers
             //     were just rebuilt, so the first read can miss by a frame or two — retry briefly.
             bool seeded = false;
@@ -421,7 +464,7 @@ namespace OceanX.BoidsGPU.Ecosystem
                     _schoolVelocity = vel; // seed raw — there is no earlier reading to smooth against yet
                     _smoothVel = vel;      // start with the fish's momentum, not from a standstill
                     _timeSinceRead = 0f;
-                    _followProxy.position = pos;
+                    _followProxy.position = AimPointFor(pos);
                     seeded = true;
                 }
                 else yield return null;
@@ -449,7 +492,8 @@ namespace OceanX.BoidsGPU.Ecosystem
                     _lastReadCentroid = pos;
                     _schoolVelocity = BlendVelocity(_schoolVelocity, vel, Time.deltaTime);
                     _timeSinceRead = 0f;
-                    _followProxy.position = pos; // stay on the fish so there's no catch-up when the shot starts
+                    // Stay on the fish so there's no catch-up when the shot starts.
+                    _followProxy.position = AimPointFor(pos);
                 }
             }
 
@@ -504,7 +548,7 @@ namespace OceanX.BoidsGPU.Ecosystem
                 // settle. _leadStrength scales it back to something that holds through both phases.
                 float stale = Mathf.Min(_timeSinceRead, _maxExtrapolationTime);
                 float lead  = _followSmoothTime * _leadStrength + _velocityLeadTime;
-                Vector3 aimPoint = _lastReadCentroid + _schoolVelocity * (stale + lead);
+                Vector3 aimPoint = AimPointFor(_lastReadCentroid + _schoolVelocity * (stale + lead));
 
                 // Damping the POSITION is what filters the centroid's jitter (it wobbles — it is an average
                 // over a school of milling fish, sampled in steps). Because the aim point above is led, this

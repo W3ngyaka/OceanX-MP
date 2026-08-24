@@ -9353,7 +9353,7 @@ MonoBehaviour:
   _simulationAreaBounds:
     m_Center: {x: 10.6, y: 13.98, z: 18.5}
     m_Extent: {x: 32.9, y: 13.58, z: 36.9}
-  _simulationSpeedMultiplier: 1
+  _simulationSpeedMultiplier: 0.5
   _globalAffecters:
   - {fileID: 1334412032}
   - {fileID: 2062365523}
@@ -167397,7 +167397,7 @@ MonoBehaviour:
     DefaultMode: 2
   DefaultBlend:
     Style: 1
-    Time: 2
+    Time: 1.2
     CustomCurve:
       serializedVersion: 2
       m_Curve: []

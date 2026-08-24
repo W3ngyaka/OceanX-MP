@@ -198,6 +198,24 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         /// clear the override and use the species' authored range. Called by MorayCaveDirector.</summary>
         public void SetMorayAvoidanceOverride(float range) => _morayAvoidanceOverride = range;
 
+        // The two boid buffers have FIXED roles — they are NOT ping-ponged, and must never be:
+        //
+        //   _boidsComputeBuffer       the canonical state, in ORIGINAL (spawner) order. The grid sort reads
+        //                             it, the kernel writes it back (_BoidsOutput[originalIndex]), rendering
+        //                             and every CPU readback slice it by BoidSpawnerGPU.RenderingOffset.
+        //   _sortedBoidsComputeBuffer scratch, rewritten every frame by the grid's ReArrangeBoids kernel:
+        //                             the same fish REORDERED so each cell's members are contiguous. This is
+        //                             what the simulation kernel binds as _Boids, because its neighbour loop
+        //                             walks index ranges taken from _CellsOffsetsBuffer, and those ranges are
+        //                             only meaningful in the rearranged layout.
+        //
+        // Swapping them alternately (as this used to) breaks both halves at once: on the frames where the
+        // kernel read the original-order buffer, its neighbour lookups indexed the wrong fish entirely, and
+        // on the frames where it read the sorted one, the sort had already overwritten the PREVIOUS frame's
+        // simulation result with a re-sort of stale state — so every other frame's work was discarded and
+        // the fish only actually advanced once per two frames (a visible half-rate stutter, worst while
+        // entering at MaxSpeed). Two buffers is exactly enough for src + sorted-scratch and leaves no room
+        // for a state ping-pong; there is nothing to alternate.
         private ComputeBuffer _sortedBoidsComputeBuffer = null;
         private ComputeBuffer _boidSchoolsRenderInfoBuffer = null;
 
@@ -215,7 +233,6 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
         private float _morayHeadLocalZ   = 0f;
         private float _morayBodyLength    = 1f;
 
-        private bool _sortedBoidsBufferIsOutput = false;
         private BoidRenderInfoGPU[] _boidSchoolsRenderInfos = null;
 
         /// <inheritdoc/>
@@ -276,10 +293,9 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             // teleporting them to fresh spawn positions.
             //
             // Two subtleties:
-            //   1. Read from the buffer that was the LAST render output, which alternates each
-            //      frame. After each UpdateSimulation the flag is toggled, so the last output is
-            //      in _boidsComputeBuffer when the flag is now false, and in
-            //      _sortedBoidsComputeBuffer when it is now true.
+            //   1. Read from _boidsComputeBuffer: it is the kernel's output and the only buffer in
+            //      original (spawner) order, so RenderingOffset slices address it correctly. The sorted
+            //      buffer is cell-order scratch and means nothing to a per-spawner slice.
             //   2. Use spawner.Boids.Length (the live local array) for the slice size — NOT
             //      SpawnData.BoidsCount, which may already reflect the new target count because
             //      EcosystemSimulationGPU calls SetBoidsCount BEFORE ReinitializeBuffers.
@@ -288,9 +304,7 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             //      (the buffers themselves are size-1 placeholders). Nothing to preserve anyway.
             if (_boidsCount > 0 && _boidsComputeBuffer != null && _boidsInfos != null)
             {
-                ComputeBuffer readBuffer = _sortedBoidsBufferIsOutput
-                    ? _sortedBoidsComputeBuffer
-                    : _boidsComputeBuffer;
+                ComputeBuffer readBuffer = _boidsComputeBuffer;
 
                 if (readBuffer != null)
                 {
@@ -322,7 +336,6 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             _moraySpawner              = null;
             _morayGroupId              = -1;
             _boidSchoolsRenderInfos    = null;
-            _sortedBoidsBufferIsOutput = false;
 
             // Release the base-class compute buffers and reset cached collections.
             CleanupBaseGPUBuffers();
@@ -406,9 +419,9 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             if (count <= 0 || _boidsCount == 0) return false;
             if (startIndex < 0 || startIndex + count > _boidsCount) return false;
 
-            ComputeBuffer readBuffer = _sortedBoidsBufferIsOutput
-                ? _sortedBoidsComputeBuffer
-                : _boidsComputeBuffer;
+            // Original-order buffer: startIndex/count come from BoidSpawnerGPU.RenderingOffset, which only
+            // addresses this one. The sorted buffer is cell-order scratch.
+            ComputeBuffer readBuffer = _boidsComputeBuffer;
             if (readBuffer == null) return false;
 
             BoidInfoGPU[] slice = new BoidInfoGPU[count];
@@ -418,6 +431,55 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             Vector3 sum = Vector3.zero;
             for (int i = 0; i < count; i++) sum += slice[i].Position;
             centroid = sum / count;
+            return true;
+        }
+
+        // ECOSYSTEM HOOK — added for IntroductionCameraDirectorGPU, do not remove
+        /// <summary>
+        /// Reads the GPU state of the boids in the global buffer range [<paramref name="startIndex"/>,
+        /// startIndex + count) and returns BOTH their centre of mass and their mean velocity.
+        ///
+        /// The velocity is free. <see cref="TryGetBoidsCentroid"/> already pulls the whole
+        /// <see cref="BoidInfoGPU"/> struct back and then discards everything but Position — while
+        /// Direction and Speed are sitting in the very same bytes. Same readback, same GPU stall; the
+        /// only added cost is one multiply per fish.
+        ///
+        /// A caller that FOLLOWS a moving school needs both halves. The centroid says where the fish
+        /// were at the instant of the read, and the readback is deliberately throttled (it is a
+        /// synchronous stall), so a caller holding only the centroid is chasing a stale target that
+        /// jumps in steps. With the velocity it can extrapolate forward between reads and track the
+        /// school continuously instead.
+        ///
+        /// Returns false (and zeroes both outputs) if the buffers are not ready or the range is out
+        /// of bounds.
+        /// </summary>
+        public bool TryGetBoidsCentroidAndVelocity(int startIndex, int count, out Vector3 centroid, out Vector3 velocity)
+        {
+            centroid = Vector3.zero;
+            velocity = Vector3.zero;
+            if (count <= 0 || _boidsCount == 0) return false;
+            if (startIndex < 0 || startIndex + count > _boidsCount) return false;
+
+            // Original-order buffer: startIndex/count come from BoidSpawnerGPU.RenderingOffset, which only
+            // addresses this one. The sorted buffer is cell-order scratch.
+            ComputeBuffer readBuffer = _boidsComputeBuffer;
+            if (readBuffer == null) return false;
+
+            BoidInfoGPU[] slice = new BoidInfoGPU[count];
+            // GetData(dest, destOffset, sourceOffset, count) — read only this school's slice.
+            readBuffer.GetData(slice, 0, startIndex, count);
+
+            Vector3 positionSum = Vector3.zero;
+            Vector3 velocitySum = Vector3.zero;
+            for (int i = 0; i < count; i++)
+            {
+                positionSum += slice[i].Position;
+                // Direction is a unit vector and Speed is in m/s, so this is the fish's world velocity.
+                velocitySum += slice[i].Direction * slice[i].Speed;
+            }
+
+            centroid = positionSum / count;
+            velocity = velocitySum / count;
             return true;
         }
 
@@ -435,9 +497,9 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             if (count <= 0 || _boidsCount == 0) return false;
             if (startIndex < 0 || startIndex + count > _boidsCount) return false;
 
-            ComputeBuffer readBuffer = _sortedBoidsBufferIsOutput
-                ? _sortedBoidsComputeBuffer
-                : _boidsComputeBuffer;
+            // Original-order buffer: startIndex/count come from BoidSpawnerGPU.RenderingOffset, which only
+            // addresses this one. The sorted buffer is cell-order scratch.
+            ComputeBuffer readBuffer = _boidsComputeBuffer;
             if (readBuffer == null) return false;
 
             BoidInfoGPU[] slice = new BoidInfoGPU[count];
@@ -715,11 +777,15 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             _spatialPartitionGPU.UpdateGridOccupancy(_boidsComputeBuffer, _sortedBoidsComputeBuffer);
 
             // Dispatch the compute shader to execute another update of the GPU boid simulation.
+            //
+            // Fixed roles, never swapped (see the buffer declarations): the kernel READS the cell-sorted
+            // copy the line above just produced — its neighbour loop indexes _Boids with ranges out of
+            // _CellsOffsetsBuffer, which only address the rearranged layout — and WRITES back into the
+            // original-order buffer via _BoidsOutput[originalIndex], which is what rendering and the CPU
+            // readbacks slice by RenderingOffset.
             _spatialPartitionGPU.SetSpatialPartitionProperties(_boidsComputeShader, _boidsKernelId);
-            ComputeBuffer boidsInputDataBuffer = _sortedBoidsBufferIsOutput ? _sortedBoidsComputeBuffer : _boidsComputeBuffer;
-            ComputeBuffer boidsOutputDataBuffer = _sortedBoidsBufferIsOutput ? _boidsComputeBuffer : _sortedBoidsComputeBuffer;
-            _boidsComputeShader.SetBuffer(_boidsKernelId, "_Boids", boidsInputDataBuffer);
-            _boidsComputeShader.SetBuffer(_boidsKernelId, "_BoidsOutput", boidsOutputDataBuffer);
+            _boidsComputeShader.SetBuffer(_boidsKernelId, "_Boids", _sortedBoidsComputeBuffer);
+            _boidsComputeShader.SetBuffer(_boidsKernelId, "_BoidsOutput", _boidsComputeBuffer);
 
             // Moray cave freeze: hand the kernel the same rest anchors the render pose uses, so a settling
             // moray is eased onto its cave anchor and held there (a boid can't otherwise stop). Bound every
@@ -757,10 +823,8 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             foreach (BoidSpawnerGPU gpuBoidSpawner in _gpuBoidSpawners)
             {
                 if (!gpuBoidSpawner.IsActive) continue; // inactive species have no draw-args buffer
-                gpuBoidSpawner.RenderBoids(boidsOutputDataBuffer, _boidSchoolsRenderInfoBuffer, _simulationAreaBounds);
+                gpuBoidSpawner.RenderBoids(_boidsComputeBuffer, _boidSchoolsRenderInfoBuffer, _simulationAreaBounds);
             }
-
-            _sortedBoidsBufferIsOutput = !_sortedBoidsBufferIsOutput;
-        }      
+        }
     }
 }

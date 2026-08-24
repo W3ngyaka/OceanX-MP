@@ -14,18 +14,42 @@ namespace OceanX.BoidsGPU.Ecosystem
     /// fired inside AddSchool once the fish exist at the gate, and reads their live centre-of-mass back from
     /// the GPU via <see cref="EcosystemSimulationGPU.TryGetSchoolCentroid"/>.
     ///
-    /// SMOOTH FOLLOW: the raw GPU readback is throttled (a synchronous stall — don't do it every frame) and
-    /// the school centroid also jitters as fish mill about. So instead of snapping the proxy to each read,
-    /// the director SmoothDamps the proxy toward the latest read EVERY frame. That gives continuous, non-
-    /// stepped motion regardless of readback rate — the CinemachineCamera then Follows / LookAts the proxy.
+    /// SMOOTH FOLLOW: the raw GPU readback is throttled (a synchronous stall — don't do it every frame), so
+    /// between reads the director has no fresh position. It must NOT simply damp the proxy toward the last
+    /// read to cover that gap: chasing a value that is frozen three frames out of four left the proxy
+    /// permanently behind the fish AND lurching every time a read landed.
+    ///
+    /// So each read returns the school's centre AND its live velocity (one readback, see
+    /// EcosystemSimulationGPU.TryGetSchoolCentroidAndVelocity), and the target is EXTRAPOLATED forward from
+    /// the last read every frame: centre + velocity * timeSinceRead. That target moves continuously — no
+    /// steps to lurch over — and stays on the fish instead of trailing them.
+    ///
+    /// The proxy IS still smoothed, but aimed so the smoothing costs little lag. A school's centroid jitters
+    /// (fish mill about, and it is an average over many of them), so feeding it raw to the camera looks
+    /// nervous. The trick is WHERE the smoothing aims: the proxy is SmoothDamped toward a point led along the
+    /// school's heading — target = centre + velocity * (timeSinceRead + smoothTime * leadStrength). A damped
+    /// chase settles one smoothing time BEHIND whatever it aims at, so leading by that much cancels it.
+    ///
+    /// That cancellation is only EXACT at a steady speed, which entering fish are not: they sprint in at up
+    /// to MaxSpeed and then decelerate hard to cruising. The velocity reading is smoothed, so while they slow
+    /// it still reads high and a full-strength lead throws the proxy AHEAD of them (the camera aims at empty
+    /// water); while they accelerate it reads low and the proxy falls behind. Hence _leadStrength defaults
+    /// below 1: under-compensating slightly keeps the fish framed through both phases, because sitting a
+    /// little behind reads far better than looking ahead of them. It is the knob to turn if the framing is
+    /// consistently off in one direction.
     ///
     /// FRAMING MODE: <see cref="_framingMode"/> picks where the camera sits relative to the school —
     /// follow-behind (over their backs), a full side profile, or a 3/4 angle. The offset is authored in the
-    /// SCHOOL'S frame, then at shot start it's rotated by the direction the fish ENTER on and by which side
-    /// faces the camera, and baked into a fixed WORLD offset. So the framing is fish-relative (a side view is
-    /// a real broadside from whichever gate they use, on the near side), but the camera then HOLDS that spot
-    /// and simply TURNS to keep the fish framed as they swim in (aim damping) — rather than riding locked in
+    /// SCHOOL'S frame, then at shot start it's rotated by the school's heading and by which side faces the
+    /// camera, and baked into a fixed WORLD offset. So the framing is fish-relative (a side view is a real
+    /// broadside from whichever gate they use, on the near side), but the camera then HOLDS that spot and
+    /// simply TURNS to keep the fish framed as they swim in (aim damping) — rather than riding locked in
     /// their frame, which read as static. All set from code, so every scene gets it at runtime.
+    ///
+    /// That one baked offset is why the heading must be the direction the school is GOING, not the direction
+    /// it happens to point as the shot opens — see <see cref="ResolveHeading"/>. New fish spawn facing the
+    /// simulation centre and then steer onto a per-school randomised path, so a broadside built from their
+    /// opening heading skews off by a different amount every shot.
     ///
     /// SCENE WIRING (full checklist in the comment block at the bottom of this file): a CinemachineBrain on
     /// the Main Camera, an overview CinemachineCamera at the idle priority, an intro CinemachineCamera with a
@@ -96,14 +120,51 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Min(0.5f)]
         [SerializeField] private float _followDuration = 3.5f;
 
-        [Header("Smoothing")]
-        [Tooltip("How gently the proxy chases the fish. Higher = smoother but laggier. ~0.15-0.35 feels good. " +
-                 "This is what removes the stutter from the stepped GPU readback and the school's own jitter.")]
+        [Header("Tracking")]
+        // Renamed away from the old _positionSmoothTime on purpose: that value damped the proxy toward a
+        // STALE target, which is what made it lag. _followSmoothTime below damps toward a LED target
+        // instead, so it filters jitter without buying lag. The rename orphans the stale 0.25 saved in
+        // existing scenes so every scene picks up the new defaults.
+        [Tooltip("How hard to smooth out the school centroid's jitter (seconds). This does NOT make the " +
+                 "camera lag: the target is led by this same amount, which cancels the damping's delay. " +
+                 "Raise it if the shot looks nervous, lower it if the camera feels floaty. 0 = no filtering " +
+                 "(the proxy sits exactly on the raw centroid, jitter included).")]
         [Min(0f)]
-        [SerializeField] private float _positionSmoothTime = 0.25f;
+        [SerializeField] private float _followSmoothTime = 0.25f;
+
+        [Tooltip("How much to smooth the school's measured velocity before extrapolating with it (seconds). " +
+                 "Only steadies the SPEED reading, never the position, so it costs no tracking accuracy. " +
+                 "A wobbling velocity swings the extrapolation around, so this is the OTHER jitter knob: " +
+                 "raise it if the shot shimmers. But raise it too far and the reading is slow to notice the " +
+                 "fish slowing down after their entry sprint, which throws the camera AHEAD of them. 0 = raw.")]
+        [Min(0f)]
+        [SerializeField] private float _velocitySmoothTime = 0.18f;
+
+        [Tooltip("How much of the smoothing delay to cancel by leading the fish. THE FRAMING KNOB:\n" +
+                 "  camera looks AHEAD of the fish  -> lower it\n" +
+                 "  camera trails BEHIND the fish   -> raise it\n" +
+                 "1 = fully cancel the delay, which is exact only while the fish hold a steady speed; " +
+                 "entering fish sprint then slow down, so a full lead overshoots ahead as they settle. " +
+                 "0 = no lead at all (the proxy simply trails by the smoothing time).")]
+        [Range(0f, 1f)]
+        [SerializeField] private float _leadStrength = 0.6f;
+
+        [Tooltip("Extra seconds to LEAD the fish by, on top of catching up to now. 0 keeps the proxy exactly " +
+                 "on the school, which frames best — the camera AIMS at this proxy, so leading pushes the " +
+                 "fish off-centre backwards. Raise it only to pull the camera body in closer behind fast " +
+                 "fish, and expect to trade a little centring for it.")]
+        [Min(0f)]
+        [SerializeField] private float _velocityLeadTime = 0f;
+
+        [Tooltip("Safety cap on how STALE a reading may be counted as (seconds). Stops the proxy flying off " +
+                 "on an old velocity if readbacks fail for a while. Keep a little above the read interval. " +
+                 "The smoothing/lead terms are added on top of this and are not capped by it.")]
+        [Min(0.05f)]
+        [SerializeField] private float _maxExtrapolationTime = 0.4f;
 
         [Tooltip("Read the fish position back from the GPU every N frames (1 = every frame). The readback is " +
-                 "a synchronous GPU stall, so keep this at 3-5; the per-frame SmoothDamp hides the stepping.")]
+                 "a synchronous GPU stall, so keep this at 3-5 — the extrapolation covers the gap between " +
+                 "reads exactly, so reading MORE often buys accuracy you already have, at the cost of stalls.")]
         [Min(1)]
         [SerializeField] private int _readbackEveryNFrames = 4;
 
@@ -125,22 +186,71 @@ namespace OceanX.BoidsGPU.Ecosystem
         [Min(0f)]
         [SerializeField] private float _aimDamping = 0.5f;
 
+        [Tooltip("How long the camera BODY takes to reach its framing spot (Cinemachine Follow's Position " +
+                 "Damping, seconds). Pushed from code for the same reason as the binding mode and the aim " +
+                 "damping above — so every scene matches instead of carrying whatever was typed into it.\n" +
+                 "This is a lag on the camera itself, on top of any smoothing of the proxy, and it is what " +
+                 "makes the shot feel like it is forever ARRIVING rather than settled: at 1.5s the camera is " +
+                 "still most of a tank-length short of its mark while the fish are sprinting. 0.4-0.6 keeps " +
+                 "the move soft without the shot ending before it lands. Raise it for a lazier, more floated " +
+                 "camera; lower it toward 0.2 to lock on hard.")]
+        [Min(0f)]
+        [SerializeField] private float _cameraPositionDamping = 0.5f;
+
+        [Tooltip("Force the CinemachineBrain to evaluate in LateUpdate while this director is active.\n" +
+                 "The proxy is moved from a script (a coroutine), and the Brain's default Smart Update picks " +
+                 "between the physics rate and the render rate by WATCHING how the tracking target moves. A " +
+                 "script-driven target that sits frozen between shots is exactly the case it reads wrong, and " +
+                 "a wrong pick evaluates the camera at the physics rate (50Hz) while the fish are drawn at " +
+                 "frame rate — a small mismatch every frame, which looks like the camera constantly catching " +
+                 "up. LateUpdate is the correct setting for a target driven from script.\n" +
+                 "Only overrides Smart Update; a Brain deliberately set to Fixed or Manual is left alone.")]
+        [SerializeField] private bool _forceBrainLateUpdate = true;
+
+        [Tooltip("Take the framing heading from the direction of the school's swim TARGET rather than from " +
+                 "how the fish happen to be pointing as the shot opens. THIS IS WHY A SIDE VIEW SOMETIMES " +
+                 "ARRIVES AS A 3/4.\n" +
+                 "New fish are spawned pointing at the simulation centre (EcosystemSimulationGPU." +
+                 "ApplyEntrySpawnOrigin), but they immediately steer onto their school's own path, whose " +
+                 "centre, size, yaw and height are all randomised per school. So their opening heading is " +
+                 "NOT the direction they settle into, and the camera — which bakes one fixed world offset " +
+                 "from that heading and then only turns — watches its broadside skew away by a different " +
+                 "amount every shot. Aiming at the target instead frames the direction they are actually " +
+                 "going. Turn off to go back to reading the heading off their live velocity.")]
+        [SerializeField] private bool _aimHeadingAtTarget = true;
+
         [Tooltip("Below this speed (m/s) the freshly spawned school counts as 'milling', and the shot falls " +
                  "back to the camera's own facing to choose the entry angle instead of a noisy heading.")]
         [Min(0f)]
         [SerializeField] private float _minHeadingSpeed = 0.4f;
 
+        // Closer than this to its target, a school's school->target vector is too short to be a trustworthy
+        // heading (and it is about to turn away anyway), so the shot falls back to the measured velocity.
+        // Entry shots are never near this — the gate is off-screen and the target is inside the bounds.
+        private const float MinTargetHeadingDistance = 3f;
+
         // The intro camera's position + aim stages — cached so we can push the framing offset / aim damping on.
         private CinemachineFollow _introFollow;
         private CinemachineRotationComposer _introComposer;
+
+        // The Brain, cached so the director can set its update method. Its blend timing is left exactly as
+        // the scene authored it: that blend is the camera's real travel from the overview spot to the shot,
+        // often 20m+, so it needs its time — shortening it turns the approach into a whip-pan.
+        private CinemachineBrain _brain;
 
         // The species whose shot is currently playing, or null when idle. Guards against overlapping shots
         // (a second introduction while one is running is ignored rather than fighting over the proxy/camera).
         private SpeciesDataGPU _playing;
 
-        // Smoothing state: the raw target we chase, the smoothed position, and SmoothDamp's velocity memory.
-        private Vector3 _targetPos;
+        // Tracking state. Each frame the proxy is SmoothDamped toward
+        // (_lastReadCentroid + _schoolVelocity * (timeSinceRead + _followSmoothTime)) — i.e. toward where the
+        // fish will be one smoothing time from now, so the damping's own delay lands it back on where they
+        // are right now. _smoothVel is SmoothDamp's momentum; it is seeded with the school's real velocity at
+        // the start of a shot so the proxy never has to accelerate from a standstill while the fish sprint.
+        private Vector3 _lastReadCentroid;
+        private Vector3 _schoolVelocity;
         private Vector3 _smoothVel;
+        private float _timeSinceRead;
 
         // Entry framing, both captured ONCE per shot: the direction the school swims in on, and which side
         // (+1 = the fish's right, -1 = left) to sit on. From these the camera takes a FIXED world spot and
@@ -159,6 +269,7 @@ namespace OceanX.BoidsGPU.Ecosystem
 
             CacheFollow();
             ConfigureFollowBinding();
+            ApplyBrainUpdateMethod();
             ApplyFramingOffset();
 
             if (_introCamera != null)
@@ -168,13 +279,35 @@ namespace OceanX.BoidsGPU.Ecosystem
         // The offset is written in WORLD space, but it's COMPUTED each shot from the school's entry heading
         // (see FollowInRoutine), so the framing is fish-relative at entry yet the camera then holds that spot
         // and turns to the fish as they swim — instead of riding locked in their frame (which felt static).
-        // Also push the aim damping so that "turn to the fish" is smooth. Done in code so every scene matches.
+        // Also push the aim damping so that "turn to the fish" is smooth, and the body damping so the camera
+        // actually reaches its mark inside the shot. Done in code so every scene matches.
         private void ConfigureFollowBinding()
         {
             if (_introFollow != null)
+            {
                 _introFollow.TrackerSettings.BindingMode = BindingMode.WorldSpace;
+                _introFollow.TrackerSettings.PositionDamping = Vector3.one * _cameraPositionDamping;
+            }
             if (_introComposer != null)
                 _introComposer.Damping = new Vector2(_aimDamping, _aimDamping);
+        }
+
+        // Smart Update (the Brain's default) decides between the physics rate and the render rate by sampling
+        // how the tracking target moves. Our proxy is script-driven and frozen between shots, which is the
+        // case it misreads — and being evaluated at 50Hz while the fish draw at frame rate reads as a small,
+        // relentless catch-up. LateUpdate is right for a script-driven target and costs nothing else.
+        // A Brain deliberately set to FixedUpdate or ManualUpdate is respected and left as-is.
+        private void ApplyBrainUpdateMethod()
+        {
+            if (!_forceBrainLateUpdate) return;
+
+            Camera cam = Camera.main;
+            _brain = cam != null ? cam.GetComponent<CinemachineBrain>() : null;
+            if (_brain == null) _brain = FindAnyObjectByType<CinemachineBrain>();
+            if (_brain == null) return;
+
+            if (_brain.UpdateMethod == CinemachineBrain.UpdateMethods.SmartUpdate)
+                _brain.UpdateMethod = CinemachineBrain.UpdateMethods.LateUpdate;
         }
 
         private void OnDisable()
@@ -239,11 +372,14 @@ namespace OceanX.BoidsGPU.Ecosystem
             bool seeded = false;
             for (int i = 0; i < _maxSeedWaitFrames && !seeded; i++)
             {
-                if (_simulation.TryGetSchoolCentroid(species, FirstSchoolIndex, out Vector3 pos))
+                if (_simulation.TryGetSchoolCentroidAndVelocity(
+                        species, FirstSchoolIndex, out Vector3 pos, out Vector3 vel))
                 {
-                    _targetPos = pos;
+                    _lastReadCentroid = pos;
+                    _schoolVelocity = vel; // seed raw — there is no earlier reading to smooth against yet
+                    _smoothVel = vel;      // start with the fish's momentum, not from a standstill
+                    _timeSinceRead = 0f;
                     _followProxy.position = pos;
-                    _smoothVel = Vector3.zero;
                     seeded = true;
                 }
                 else yield return null;
@@ -262,27 +398,23 @@ namespace OceanX.BoidsGPU.Ecosystem
             //     direction abruptly" glitch: if the proxy sat frozen at the gate while the fish swam off, the
             //     shot would cut in aimed at the empty gate and then lurch to catch up. Gluing it means the
             //     camera cuts in already on the fish, moving with them.
-            Vector3 headingAccum = Vector3.zero;
-            Vector3 prevPos = _followProxy.position;
             for (int i = 0; i < _entrySettleFrames; i++)
             {
                 yield return null;
-                if (_simulation.TryGetSchoolCentroid(species, FirstSchoolIndex, out Vector3 pos))
+                if (_simulation.TryGetSchoolCentroidAndVelocity(
+                        species, FirstSchoolIndex, out Vector3 pos, out Vector3 vel))
                 {
-                    headingAccum += pos - prevPos;
-                    prevPos = pos;
-                    _targetPos = pos;
+                    _lastReadCentroid = pos;
+                    _schoolVelocity = BlendVelocity(_schoolVelocity, vel, Time.deltaTime);
+                    _timeSinceRead = 0f;
                     _followProxy.position = pos; // stay on the fish so there's no catch-up when the shot starts
-                    _smoothVel = Vector3.zero;
                 }
             }
 
-            // Averaged heading; fall back to the camera's own facing if the school barely moved (milling), so
-            // a noisy near-zero heading doesn't throw the entry angle off.
-            float minTravel = _minHeadingSpeed * _entrySettleFrames * Mathf.Max(Time.deltaTime, 1e-4f);
-            _heading = headingAccum.magnitude >= minTravel && headingAccum.sqrMagnitude > 1e-6f
-                ? headingAccum.normalized
-                : CameraForwardFlattened();
+            // Entry heading. Three sources, best first — see ResolveHeading: where the school is HEADED (its
+            // swim target), else how it is currently MOVING (measured velocity), else the camera's own facing
+            // if it is barely moving at all (milling), so a noisy near-zero heading can't throw the framing.
+            _heading = ResolveHeading(species);
 
             // 2) Pick the side to sit on: the side of the school facing where the camera is coming from, so the
             //    shot moves TOWARD the fish rather than swinging across to the far side. Then bake the framing
@@ -301,23 +433,41 @@ namespace OceanX.BoidsGPU.Ecosystem
             //    fish and turning onto them, which reads as the chosen angle).
             _introCamera.Priority = _activePriority;
 
-            // 4) Follow the live fish centre in. The GPU readback is throttled (a stall), but the proxy is
-            //    SmoothDamped toward the latest read EVERY frame, so the motion is continuous, not stepped.
+            // 4) Follow the live fish centre in. The GPU readback is throttled (a stall), so between reads the
+            //    proxy is carried forward on the school's own velocity — continuous, and still on the fish.
             float elapsed = 0f;
             int frame = 0;
             while (elapsed < _followDuration)
             {
+                _timeSinceRead += Time.deltaTime;
+
                 if (frame % _readbackEveryNFrames == 0 &&
-                    _simulation.TryGetSchoolCentroid(species, FirstSchoolIndex, out Vector3 pos))
+                    _simulation.TryGetSchoolCentroidAndVelocity(
+                        species, FirstSchoolIndex, out Vector3 pos, out Vector3 vel))
                 {
-                    _targetPos = pos; // keep last target on a failed readback
+                    // On a failed readback the centre and the velocity both keep their last values and the
+                    // extrapolation below simply carries on from them (capped), so a dropped read costs nothing.
+                    _schoolVelocity = BlendVelocity(_schoolVelocity, vel, _timeSinceRead);
+                    _lastReadCentroid = pos;
+                    _timeSinceRead = 0f;
                 }
 
-                // The camera holds its entry spot (fixed world offset) and follows the school's POSITION; the
-                // composer's aim damping turns it to keep the fish framed as they swim. No per-frame reframing —
-                // that's what made it feel locked/static before.
-                _followProxy.position = Vector3.SmoothDamp(
-                    _followProxy.position, _targetPos, ref _smoothVel, _positionSmoothTime);
+                // Aim point: where the fish are NOW (last read + however far they have swum since, capped in
+                // case reads dry up), pushed further along their heading to offset the damping below.
+                // SmoothDamp settles one smoothing time behind whatever it chases, so leading by that much
+                // would cancel the delay exactly — at a STEADY speed. Entering fish sprint and then slow, and
+                // the velocity reading lags that change, so a full lead overshoots ahead of them as they
+                // settle. _leadStrength scales it back to something that holds through both phases.
+                float stale = Mathf.Min(_timeSinceRead, _maxExtrapolationTime);
+                float lead  = _followSmoothTime * _leadStrength + _velocityLeadTime;
+                Vector3 aimPoint = _lastReadCentroid + _schoolVelocity * (stale + lead);
+
+                // Damping the POSITION is what filters the centroid's jitter (it wobbles — it is an average
+                // over a school of milling fish, sampled in steps). Because the aim point above is led, this
+                // costs no lag: it smooths without falling behind.
+                _followProxy.position = _followSmoothTime > 0f
+                    ? Vector3.SmoothDamp(_followProxy.position, aimPoint, ref _smoothVel, _followSmoothTime)
+                    : aimPoint;
 
                 frame++;
                 elapsed += Time.deltaTime;
@@ -327,6 +477,47 @@ namespace OceanX.BoidsGPU.Ecosystem
             // 5) Release — Priority back down, Brain blends home to the overview shot.
             _introCamera.Priority = _idlePriority;
             _playing = null;
+        }
+
+        // The direction the shot frames against — the axis the school-local framing offset is rotated onto,
+        // captured ONCE per shot. Three sources, best first:
+        //
+        //   1. The school's swim TARGET. This is where the fish are GOING, which is what the framing should
+        //      be built on. Their heading as the shot opens is not that: every new fish is spawned pointing
+        //      at the simulation centre, then steers onto a path whose centre / size / yaw / height are
+        //      randomised per school — so a broadside baked from the opening heading skews away over the
+        //      shot by an amount that differs every time. That is the "my side view came out 3/4" case.
+        //   2. The measured velocity, when there is no target yet (or the school is already sitting on it,
+        //      so the school->target vector is too short to mean anything).
+        //   3. The camera's own flattened facing, when the school is barely moving — a near-zero velocity
+        //      is direction noise, and assuming they swim roughly the way the camera looks beats framing
+        //      against a random axis.
+        private Vector3 ResolveHeading(SpeciesDataGPU species)
+        {
+            if (_aimHeadingAtTarget && _simulation != null)
+            {
+                EcosystemTargetGPU target = _simulation.GetSchoolTarget(species, FirstSchoolIndex);
+                if (target != null)
+                {
+                    Vector3 toTarget = target.transform.position - _followProxy.position;
+                    if (toTarget.magnitude >= MinTargetHeadingDistance)
+                        return toTarget.normalized;
+                }
+            }
+
+            if (_schoolVelocity.magnitude >= _minHeadingSpeed && _schoolVelocity.sqrMagnitude > 1e-6f)
+                return _schoolVelocity.normalized;
+
+            return CameraForwardFlattened();
+        }
+
+        // Exponential blend of the measured school velocity, framerate-independent. Steadies the reading (a
+        // school's mean velocity wobbles as fish mill about) WITHOUT damping the position, so it costs no
+        // tracking accuracy — the proxy still lands exactly on the centroid every time a read comes in.
+        private Vector3 BlendVelocity(Vector3 current, Vector3 fresh, float deltaTime)
+        {
+            if (_velocitySmoothTime <= 0f || deltaTime <= 0f) return fresh;
+            return Vector3.Lerp(current, fresh, 1f - Mathf.Exp(-deltaTime / _velocitySmoothTime));
         }
 
         // Where the camera is coming from when a shot starts — the live Brain output (Main Camera). Used to

@@ -14546,7 +14546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 10
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 1.4
     BoidMesh: {fileID: -5495902117074765545, guid: a0fcc6396a06d7b4f95663b47c11c381, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 0354574ddc1859f46b1ea79a5ff0eff3, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: bd1a24c798ea4234792ac8ea1088eb95, type: 2}
@@ -80814,7 +80814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 30
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 0
     BoidMesh: {fileID: -5495902117074765545, guid: b53e6c192d0900b4abb7e943db8f3b2a, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 55350834f76425e44b379150d17b845a, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: 483396255d0c66144a170ac118ace886, type: 2}
@@ -98701,7 +98701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 10
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 0
     BoidMesh: {fileID: -5495902117074765545, guid: dedbc5c2bfc257945bcc7067f0ebc5e7, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 39773805f62ba064ca2d09e2f702e263, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: 5d5b00a7955dac84b912a0370c1f8127, type: 2}
@@ -119588,7 +119588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 15
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 1.5
     BoidMesh: {fileID: -5495902117074765545, guid: 8c4b9a782adf20048be05b1f292b2f44, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 7f7400753ea24d34abc8f3f3b5638c16, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: c64b89b864aab2543b9ec7a38bb1b895, type: 2}
@@ -130268,7 +130268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 10
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 0
     BoidMesh: {fileID: -5495902117074765545, guid: 47b3ddb44b3e5b24aa0b7f58b966a117, type: 3}
     BoidMaterial: {fileID: 2100000, guid: c9e29ff78a29b4d4d82a3afb0a71cf51, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: 517a8e8c6fa54f74db04cccf9b550c11, type: 2}
@@ -155380,7 +155380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 10
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 1.2
     BoidMesh: {fileID: -5495902117074765545, guid: 5fef044e254662b4fb8ed64af7d0d23c, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 1afde69dd03c00149b0dec0c43cf58a8, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: 327a24430372e4c4ab63deec8788b84a, type: 2}
@@ -162331,7 +162331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 10
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 0
     BoidMesh: {fileID: -5495902117074765545, guid: f60fdc0d9046d3d4cbc89d8c82daea89, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 7dff81e87b438fc4d83aa659822cab62, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: 7d7db8c242b67fa45b8e02eac11014a6, type: 2}
@@ -238455,7 +238455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 10
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 0
     BoidMesh: {fileID: -5495902117074765545, guid: 5ca9e3f1b218aa245a2fe7bd85bb78c7, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 69c391ed679478c498b5ad38a4f1e1a0, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: 42aae863178549f48b9cfa822ded3cf1, type: 2}
@@ -256104,7 +256104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 10
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 0
     BoidMesh: {fileID: -5495902117074765545, guid: 12be1b48de0b04948b1ad671c9ea65f6, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 03d413f344b1372468453ae9848e03c3, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: e9c319e7ffd82de41ac64a16df907362, type: 2}
@@ -266327,7 +266327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 10
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 0
     BoidMesh: {fileID: -5495902117074765545, guid: abc72da2598c7164fb77221e0f1d6a83, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 4e93b0ff7b14add4bad2e9f1f5b8647d, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: 84cc7c7d47017b541a5d247e0cf89dc0, type: 2}
@@ -273930,7 +273930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidSpawnData:
     BoidsCount: 10
-    MinSpawnDistanceBetweenBoids: 0.5
+    MinSpawnDistanceBetweenBoids: 0
     BoidMesh: {fileID: -5495902117074765545, guid: 963e266e13d3950429e55c006f2e7798, type: 3}
     BoidMaterial: {fileID: 2100000, guid: 4a7ee81ec711fab40b5fc06591a267d7, type: 2}
     BoidEyeMaterial: {fileID: 2100000, guid: 0e7714754d5da44459ab997b7ef8b3fc, type: 2}

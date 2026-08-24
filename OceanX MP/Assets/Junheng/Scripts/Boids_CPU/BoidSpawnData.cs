@@ -13,7 +13,11 @@ namespace OceanX.BoidsCPU
         [Header("Spawn Info: ")]
         [Tooltip("How many boids will be spawned inside the simulation.")]
         [Range(10, 1000000)] public int BoidsCount;
-        [Tooltip("Minimal distance around a newly spawned boid where there are no other boids.")]
+        [Tooltip("Spacing between neighbouring fish when a school of this species spawns." +
+            "\n\n0 = AUTO: derive it from the species' SeparationRange, so the school arrives in a " +
+            "formation its own flocking already agrees with. Leave it at 0 unless that reads wrong " +
+            "for this species, then type the spacing you want in metres." +
+            "\n\nSpawn look only - it does not affect how the fish swim once they have settled.")]
         [Range(0, 10)] public float MinSpawnDistanceBetweenBoids;
 
         [Header("Fish Info: ")]

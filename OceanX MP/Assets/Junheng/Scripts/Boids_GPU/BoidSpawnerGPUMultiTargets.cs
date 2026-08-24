@@ -81,7 +81,7 @@ namespace OceanX.BoidsGPU
             _boids = new BoidInfoGPU[totalBoidsCount];
 
             // Spawn boids inside the simulation area, at random positions.
-            GroupOfBoidsSpawnData[] boidGroupsSpawnData = CalculateBoidsSpawnData(totalBoidsCount, simulationAreaBounds, _boidSpawnData.MinSpawnDistanceBetweenBoids, _initialGroupsCount);
+            GroupOfBoidsSpawnData[] boidGroupsSpawnData = CalculateBoidsSpawnData(totalBoidsCount, simulationAreaBounds, ResolvedMinSpawnDistance, _initialGroupsCount);
             int totalBoidsSpawned = 0;
             int currentBoidSubGroup = 0;
 

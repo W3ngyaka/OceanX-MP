@@ -56,10 +56,45 @@ namespace OceanX
         /// </summary>
         public Bounds FishSizeBounds { get => _boidSpawnData.BoidMesh.bounds; }
         /// <summary>
-        /// Reference to the boid spawn data structure that contains spawn properties 
+        /// Reference to the boid spawn data structure that contains spawn properties
         /// that define the boids spawned by this spawner inside this simulation.
         /// </summary>
         public BoidSpawnData SpawnData { get => _boidSpawnData; }
+        /// <summary>
+        /// How far apart to place this species' fish when a school spawns.
+        ///
+        /// MinSpawnDistanceBetweenBoids above 0 is taken as the spacing, exactly. At 0 it is derived from
+        /// the species' own SeparationRange — the distance at which its flocking starts pushing fish apart —
+        /// so a school spawns in a formation its behaviour already agrees with and no second number has to
+        /// be kept in sync by hand. Prefer leaving it at 0; type a number only for the species the derived
+        /// value lands wrong on.
+        ///
+        /// Why derived-by-default: the field used to be the only source, every spawner in the project
+        /// carried the same 0.5, and the authored SeparationRanges run from 0.35 (damselfish) to 3.0
+        /// (shark, grouper, parrotfish, moray). So all but the smallest species spawned two to six times
+        /// tighter than their own behaviour asks for — born overlapping, and unable to untangle before they
+        /// are on camera, because the entry sprint runs them in at MaxSpeed with a capped turn rate.
+        /// Damselfish looked fine purely because 0.5 happens to exceed its 0.35.
+        ///
+        /// Why an override rather than a floor: SeparationRange is where separation BEGINS pushing, and
+        /// cohesion pulls back against it, so a settled school sits somewhat tighter than that number — by
+        /// a margin that differs per species. A species whose range runs large for its body spawns looking
+        /// scattered; one whose range runs small still spawns touching. Both need correcting, in opposite
+        /// directions, so this cannot be a Max() — and it is deliberately kept out of SeparationRange
+        /// itself, which would change how the fish swim rather than just how they arrive.
+        /// </summary>
+        protected float ResolvedMinSpawnDistance
+        {
+            get
+            {
+                float authored = _boidSpawnData.MinSpawnDistanceBetweenBoids;
+                if (authored > 0f) return authored;
+
+                return _boidSpawnData.FishSchoolProperties != null
+                    ? _boidSpawnData.FishSchoolProperties.SeparationRange
+                    : 0f;
+            }
+        }
         /// <summary>
         /// ID of the boid group that this spawner spawned.
         /// </summary>

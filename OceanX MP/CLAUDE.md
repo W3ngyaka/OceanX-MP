@@ -60,7 +60,7 @@ Species start at **0 schools** (excluded from the sim). Add = +1 school, Remove 
 `spawner.SetSchoolConfiguration(schoolCount, fishPerSchool)` → `_simulation.ReinitializeBuffers()`
 
 `ReinitializeBuffers()` sequence:
-1. Read live GPU positions back to CPU (from correct ping-pong buffer; skipped when empty)
+1. Read live GPU positions back to CPU (from `_boidsComputeBuffer`, the original-order state buffer; skipped when empty)
 2. Slice per active spawner using `spawner.Boids.Length` (old count, not new)
 3. Call `spawner.StorePreservedBoids(slice)` on each spawner
 4. Tear down all GPU buffers (derived → base → spatial partition → spawners)

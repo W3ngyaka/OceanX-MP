@@ -1038,6 +1038,25 @@ namespace OceanX.BoidsGPU.Ecosystem
         public bool TryGetSchoolCentroid(SpeciesDataGPU species, int schoolIndex, out Vector3 centroid)
             => TrySchoolCentroid(species, schoolIndex, out centroid);
 
+        /// <summary>
+        /// Centre of mass AND mean velocity of one school, read back from the GPU in a single fetch.
+        /// Same cost as <see cref="TryGetSchoolCentroid"/> — the velocity rides along in bytes that
+        /// call already reads and throws away. Used by IntroductionCameraDirectorGPU so the intro
+        /// shot can extrapolate the school forward between throttled readbacks instead of chasing a
+        /// stale, stepped centroid. False when the buffers are not ready.
+        /// </summary>
+        public bool TryGetSchoolCentroidAndVelocity(SpeciesDataGPU species, int schoolIndex,
+                                                    out Vector3 centroid, out Vector3 velocity)
+        {
+            centroid = Vector3.zero;
+            velocity = Vector3.zero;
+            BoidSpawnerGPUMultiTargets spawner = FindSpawner(species);
+            if (spawner == null) return false;
+            int fishPerSchool = FishPerSchool(species);
+            int start = spawner.RenderingOffset + schoolIndex * fishPerSchool;
+            return _simulation.TryGetBoidsCentroidAndVelocity(start, fishPerSchool, out centroid, out velocity);
+        }
+
         // Centre of one school, read back from the GPU. Null when the buffers are not ready.
         private bool TrySchoolCentroid(SpeciesDataGPU species, int schoolIndex, out Vector3 centroid)
         {

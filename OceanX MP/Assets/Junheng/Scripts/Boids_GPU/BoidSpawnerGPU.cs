@@ -357,7 +357,7 @@ namespace OceanX.BoidsGPU
             int totalBoidsCount = _boidSpawnData.BoidsCount;
             _boids = new BoidInfoGPU[totalBoidsCount];
 
-            GroupOfBoidsSpawnData[] boidGroupsSpawnData = CalculateBoidsSpawnData(totalBoidsCount, simulationAreaBounds, _boidSpawnData.MinSpawnDistanceBetweenBoids, _initialGroupsCount);
+            GroupOfBoidsSpawnData[] boidGroupsSpawnData = CalculateBoidsSpawnData(totalBoidsCount, simulationAreaBounds, ResolvedMinSpawnDistance, _initialGroupsCount);
             int totalBoidsSpawned = 0;
             int currentBoidSubGroup = 0;
             foreach (GroupOfBoidsSpawnData groupOfBoidsSpawnData in boidGroupsSpawnData)

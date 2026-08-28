@@ -1156,7 +1156,31 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
             int cursor      = _MorayTrailCursor[morayLocal];
             float3 lastSample = _MorayTrail[morayBase + cursor].xyz;
             float3 delta      = boidInfo.position - lastSample;
-            if (dot(delta, delta) >= _MorayTrailSpacing * _MorayTrailSpacing)
+            float  d2         = dot(delta, delta);
+
+            // TELEPORT GUARD. Half a body span in ONE frame is not swimming — the head was moved by
+            // something outside the sim (a cave re-home, a respawn, a target reassignment, a scene edit).
+            // Appending a single sample there would leave the other K-1 samples at the OLD location and the
+            // render would lay the body along that gap: the eel's head snaps to the new spot and its body
+            // stretches across the whole scene. Re-lay the WHOLE ring as a straight tail behind the new
+            // head instead, so a teleported eel simply reappears straight and relaxes back into trailing.
+            float teleportDist = _MorayTrailSpacing * (float)_MorayTrailCount * 0.5;
+            if (d2 > teleportDist * teleportDist)
+            {
+                float3 seedDir = boidInfo.direction;
+                seedDir = (dot(seedDir, seedDir) < 1e-6) ? float3(0.0, 0.0, 1.0) : normalize(seedDir);
+                // Ring semantics: index (cursor - n) wrapped sits n * spacing behind the head, so writing the
+                // straight line from ring[cursor] backwards keeps the cursor valid (no cursor write needed).
+                // Walked with a decrement rather than a modulus (integer % is slow on some GPUs).
+                int sidx = cursor;
+                [loop] for (int sn = 0; sn < _MorayTrailCount; sn++)
+                {
+                    _MorayTrail[morayBase + sidx] =
+                        float4(boidInfo.position - seedDir * (_MorayTrailSpacing * (float)sn), 1.0);
+                    sidx = (sidx == 0) ? _MorayTrailCount - 1 : sidx - 1;
+                }
+            }
+            else if (d2 >= _MorayTrailSpacing * _MorayTrailSpacing)
             {
                 int next = cursor + 1;
                 if (next >= _MorayTrailCount) next = 0;

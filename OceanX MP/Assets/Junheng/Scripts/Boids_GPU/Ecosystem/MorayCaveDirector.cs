@@ -109,9 +109,16 @@ namespace OceanX.BoidsGPU.Ecosystem
         // Per-moray runtime state, keyed by the school's target (stable for the school's lifetime).
         private class MorayState
         {
-            public enum Phase { Travelling, InCave }
+            // Travelling  : steering to / being driven along the current cave's path (pin on once onPath).
+            // InCave      : settled at the rest spot, pinned.
+            // Retreating  : leaving - the head is driven BACK OUT along the same path it swam in, still
+            //               pinned, so it slithers out of the hole instead of being yanked toward the next cave.
+            // Releasing   : head is out at the path's approach point; the pin HOLDS there while the weight
+            //               eases to 0. Only once the pin is fully off may the target jump to the next cave.
+            public enum Phase { Travelling, InCave, Retreating, Releasing }
             public Phase   phase;
             public MorayCave cave;      // the cave this moray owns / is heading to (occupancy = any agent.cave == cave)
+            public MorayCave nextCave;  // cave reserved for after the retreat (Retreating/Releasing only), else null
             public float   dwell;       // seconds settled in the current cave
             public float   rollClock;   // seconds since the last leave-roll
             public float   nextPoll;    // Time.time at which we may next read the centroid
@@ -120,6 +127,14 @@ namespace OceanX.BoidsGPU.Ecosystem
             public float   cursorDist;  // arclength (m) the head has advanced along the path
             public Vector3 pinTarget;   // where the head is pinned this frame (published as this cave's anchor)
         }
+
+        // Hard cap (metres) on how far the published pin anchor may move in ONE frame while the pin is still
+        // engaged. The compute kernel lerps the head onto the anchor by restWeight, so an anchor that jumps
+        // drags the head with it - and the render lays the body along the head's recorded path, which then
+        // stretches across the gap. Anything above this is a logic error (a re-home, a cave destroyed, a path
+        // re-authored at runtime), so we drop the pin instead of teleporting the eel. Normal driven motion
+        // moves the anchor _pathSpeed * dt (~0.03 m/frame), so this is a very generous margin.
+        private const float MaxPinStepPerFrame = 5f;
 
         private readonly Dictionary<EcosystemTargetGPU, MorayState> _agents
             = new Dictionary<EcosystemTargetGPU, MorayState>();
@@ -250,6 +265,7 @@ namespace OceanX.BoidsGPU.Ecosystem
             {
                 phase      = MorayState.Phase.Travelling,
                 cave       = cave,
+                nextCave   = null,
                 dwell      = 0f,
                 rollClock  = 0f,
                 nextPoll   = Time.time + _centroidPollInterval,
@@ -267,17 +283,27 @@ namespace OceanX.BoidsGPU.Ecosystem
                 MorayCave replacement = FirstFreeCave();
                 if (replacement == null) return; // nowhere to go; leave the target where it is
                 state.cave       = replacement;
+                state.nextCave   = null;
                 state.phase      = MorayState.Phase.Travelling;
                 state.onPath     = false;
                 state.cursorDist = 0f;
+                state.restWeight = 0f; // the anchor is about to jump - unpin first (see MaxPinStepPerFrame)
             }
 
             MorayCave cave = state.cave;
 
+            // Where the pin sat last frame, so the guard at the bottom can tell a driven step from a jump.
+            Vector3 prevPin        = state.pinTarget;
+            float   prevRestWeight = state.restWeight;
+
             // restWeight drives BOTH the compute head-PIN (so the head is locked to pinTarget and driven
-            // directly, not steered) and the render undulation fade. It is on while on the path or resting,
-            // off while still steering toward the first point.
-            float weightTarget = (_enableRestPose && (state.onPath || state.phase == MorayState.Phase.InCave)) ? 1f : 0f;
+            // directly, not steered) and the render undulation fade. It is on while the head is being driven
+            // along the path (inward or outward) or resting; off while steering freely, and eased off during
+            // Releasing so the pin is gone before the target is allowed to jump to the next cave.
+            bool pinned = state.phase == MorayState.Phase.InCave
+                       || state.phase == MorayState.Phase.Retreating
+                       || (state.phase == MorayState.Phase.Travelling && state.onPath);
+            float weightTarget = (_enableRestPose && pinned) ? 1f : 0f;
             state.restWeight = Mathf.MoveTowards(state.restWeight, weightTarget, dt / Mathf.Max(0.05f, _restEaseSeconds));
 
             switch (state.phase)
@@ -342,16 +368,64 @@ namespace OceanX.BoidsGPU.Ecosystem
                                 MorayCave dest = PickFreeCaveOtherThan(state.cave);
                                 if (dest != null) // stay put if the other cave is occupied
                                 {
-                                    state.cave       = dest; // reserve dest, frees the old cave (occupancy is by agent.cave)
-                                    state.phase      = MorayState.Phase.Travelling;
-                                    state.onPath     = false; // steer out to the new cave's first point, then lock on
-                                    state.cursorDist = 0f;
+                                    // RESERVE dest but keep OWNING this cave until the eel is physically out of
+                                    // it. Retargeting straight to dest here is what used to snap the head across
+                                    // the scene: the pin was still at full weight, so the compute lerped the head
+                                    // onto the far anchor in a single frame and the body stretched after it.
+                                    state.nextCave   = dest;
+                                    state.phase      = MorayState.Phase.Retreating;
+                                    state.onPath     = true;                        // still head-driven, now outward
+                                    state.cursorDist = PathTotalLength(state.cave); // resume from the rest spot
                                 }
                             }
                         }
                     }
                     break;
+
+                case MorayState.Phase.Retreating:
+                    // Slither back OUT the way it came in: run the head cursor from the rest spot back down the
+                    // path to the approach point, still pinned so it follows the authored route (and still
+                    // skips the reef backstop, so it can clip out through the rock it clipped into).
+                    state.cursorDist -= _pathSpeed * dt;
+                    if (state.cursorDist <= 0f)
+                    {
+                        state.cursorDist = 0f;
+                        state.phase      = MorayState.Phase.Releasing;
+                    }
+                    state.pinTarget = PathPositionAtDistance(cave, state.cursorDist);
+                    target.AffecterPosition = state.pinTarget;
+                    break;
+
+                case MorayState.Phase.Releasing:
+                    // Head is back out at the approach point. HOLD the anchor exactly here while restWeight
+                    // eases 1 -> 0. Because the head is already AT the anchor, fading the weight moves it not at
+                    // all - the hand-off from driven to freely-swimming is positionally seamless. Only once the
+                    // pin is fully off do we hand the eel to the next cave, so its target may then jump across
+                    // the scene with nothing left pulling the head after it.
+                    state.pinTarget = FirstPathPoint(cave);
+                    target.AffecterPosition = state.pinTarget;
+                    if (state.restWeight <= 0.0001f)
+                    {
+                        state.cave       = state.nextCave != null ? state.nextCave : cave;
+                        state.nextCave   = null;
+                        state.phase      = MorayState.Phase.Travelling;
+                        state.onPath     = false; // steer to the new cave's first point, then lock on
+                        state.cursorDist = 0f;
+                        state.restWeight = 0f;
+                        // Adopt the new target this frame too, so the cave we just freed is not left publishing
+                        // a stale pin position for a frame.
+                        state.pinTarget = FirstPathPoint(state.cave);
+                        target.AffecterPosition = state.pinTarget;
+                    }
+                    break;
             }
+
+            // Invariant: a PINNED head is only ever moved by the small per-frame step the director drives. If
+            // the anchor jumped anyway (cave destroyed / re-homed / path re-authored at runtime), drop the pin
+            // rather than let the kernel lerp the head across the gap. The head then keeps its current position
+            // and simply swims to the new target - nothing stretches.
+            if (prevRestWeight > 0f && Vector3.Distance(state.pinTarget, prevPin) > MaxPinStepPerFrame)
+                state.restWeight = 0f;
         }
 
         private void EnterCave(MorayState state)
@@ -422,10 +496,13 @@ namespace OceanX.BoidsGPU.Ecosystem
             return pick;
         }
 
+        // A cave counts as taken if an agent currently owns it OR has reserved it as its retreat destination -
+        // otherwise a second moray could claim the cave a retreating one is already on its way to, and both
+        // would end up bound to the same anchor.
         private bool IsOccupied(MorayCave cave)
         {
             foreach (var kv in _agents)
-                if (kv.Value.cave == cave) return true;
+                if (kv.Value.cave == cave || kv.Value.nextCave == cave) return true;
             return false;
         }
     }

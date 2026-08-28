@@ -158204,7 +158204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1184151410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206753,6 +206753,7 @@ MonoBehaviour:
   introLine3: Please help me save it!
   introLineGap: 3
   waitForExperienceStart: 1
+  waitForTutorial: 1
 --- !u!114 &1546369839
 MonoBehaviour:
   m_ObjectHideFlags: 0

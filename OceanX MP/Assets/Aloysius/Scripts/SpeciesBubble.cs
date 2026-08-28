@@ -27,6 +27,8 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private Vector3 baseScale = Vector3.one;
     private Coroutine punchRoutine;
+    private bool _wasLocked = true;   // for detecting the unlock moment
+    private bool _lockInit = false;
     private bool locked = false;
 
     private SpeciesBubbleHoldRing _holdRing;
@@ -63,6 +65,14 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             isUnlocked = data.startUnlocked;
 
         locked = !isUnlocked;
+
+        // Celebrate the unlock moment with a pop (only on a real locked->unlocked flip at runtime).
+        if (Application.isPlaying)
+        {
+            if (_lockInit && _wasLocked && !locked) PlayUnlockPop();
+            _wasLocked = locked;
+            _lockInit = true;
+        }
 
         if (lockOverlay != null)
             lockOverlay.SetActive(locked);
@@ -193,6 +203,34 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         transform.localScale = baseScale;
         punchRoutine = StartCoroutine(TapPunch());
     }
+
+    // Bigger, bouncier pop when a species unlocks — distinct from the subtle tap punch.
+    public void PlayUnlockPop()
+    {
+        if (punchRoutine != null) StopCoroutine(punchRoutine);
+        transform.localScale = baseScale;
+        punchRoutine = StartCoroutine(UnlockPop());
+    }
+
+    System.Collections.IEnumerator UnlockPop()
+    {
+        Vector3 original = baseScale;
+        Vector3 big = original * 1.5f;      // grow well past normal
+        Vector3 settle = original * 1.08f;  // slight overshoot on the way back
+        // grow
+        float t = 0f;
+        while (t < 1f) { t += Time.unscaledDeltaTime / 0.18f; transform.localScale = Vector3.LerpUnclamped(original, big, EaseOut(Mathf.Clamp01(t))); yield return null; }
+        // spring back past normal
+        t = 0f;
+        while (t < 1f) { t += Time.unscaledDeltaTime / 0.16f; transform.localScale = Vector3.Lerp(big, settle, EaseOut(Mathf.Clamp01(t))); yield return null; }
+        // settle to normal
+        t = 0f;
+        while (t < 1f) { t += Time.unscaledDeltaTime / 0.12f; transform.localScale = Vector3.Lerp(settle, original, Mathf.Clamp01(t)); yield return null; }
+        transform.localScale = original;
+        punchRoutine = null;
+    }
+
+    static float EaseOut(float x) => 1f - Mathf.Pow(1f - x, 3f);
 
     System.Collections.IEnumerator TapPunch()
     {

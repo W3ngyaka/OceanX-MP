@@ -65,6 +65,9 @@ public class TutorialPanel : MonoBehaviour
     {
         if (_shownOnce) return;
         _shownOnce = true;
+        // New session: re-arm the tutorial gate so Alucia waits for THIS visitor to dismiss it.
+        var net = EcosystemNetworkManagerGPU.Instance;
+        if (net != null) net.SetTutorialDoneRpc(false);
         _autoShowPending = true;
         StartCoroutine(AutoShowAfterDelay());
     }
@@ -77,7 +80,13 @@ public class TutorialPanel : MonoBehaviour
     }
 
     public void Show() { SetVisible(true); }
-    public void Hide() { SetVisible(false); }
+    public void Hide()
+    {
+        SetVisible(false);
+        // Tell the host the how-to panel was dismissed, so Alucia can begin her intro.
+        var net = EcosystemNetworkManagerGPU.Instance;
+        if (net != null) net.SetTutorialDoneRpc(true);
+    }
 
     public void ResetForNewSession()
     {

@@ -42,6 +42,14 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         -1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public int ViewedSpecies => _viewedSpecies.Value;
     public event System.Action<int> OnViewedSpeciesChanged;
+
+    // ---- Tutorial gate (UI) ----
+    // Tablet flips this true when the visitor taps GOT IT! on the how-to panel, so the host can
+    // hold Alucia's intro narration until the tutorial is dismissed. Resets with the session.
+    private readonly NetworkVariable<bool> _tutorialDone = new NetworkVariable<bool>(
+        false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public bool TutorialDone => _tutorialDone.Value;
+    public event System.Action OnTutorialDone;
     public event System.Action OnStarted;   // fires on host + client when the flag turns true
 
     // Exhibit "fresh start": bumped by the server (SignalResetApplied) at the bubble transition's COVERED
@@ -71,6 +79,7 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
         // Both host and client watch the shared start flag so their screens leave the attract state together.
         _hasStarted.OnValueChanged += (_, now) => { if (now) OnStarted?.Invoke(); };
         _viewedSpecies.OnValueChanged += (_, now) => OnViewedSpeciesChanged?.Invoke(now);
+        _tutorialDone.OnValueChanged += (_, now) => { if (now) OnTutorialDone?.Invoke(); };
         // Fresh-start broadcast: fires on host + client the moment the server bumps the generation.
         _resetGeneration.OnValueChanged += (_, now) =>
         {
@@ -155,6 +164,13 @@ public class EcosystemNetworkManagerGPU : NetworkBehaviour
     // Called from the tablet's "Tap to Start" — runs on the host and flips the shared start flag
     // that both the large screen and tablet watch (via OnStarted / HasStarted).
     // Tablet tells the host which species its info modal is showing (-1 = closed).
+    // Tablet reports the how-to panel was dismissed, so the host can start Alucia's intro.
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SetTutorialDoneRpc(bool done)
+    {
+        _tutorialDone.Value = done;
+    }
+
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void SetViewedSpeciesRpc(int speciesIndex)
     {

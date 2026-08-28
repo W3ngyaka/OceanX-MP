@@ -173,8 +173,20 @@ public class AluciaController : MonoBehaviour
         StartCoroutine(FadeBoth(0f, 0.3f));
     }
 
+    [Tooltip("Wait for the tablet's how-to panel to be dismissed before the intro plays.")]
+    public bool waitForTutorial = true;
+
     IEnumerator IntroSequence()
     {
+        // Hold the intro until the visitor taps GOT IT! on the tablet tutorial, so Alucia
+        // isn't talking over the how-to panel. Falls through if the flag's already set.
+        if (waitForTutorial)
+        {
+            var net = EcosystemNetworkManagerGPU.Instance;
+            while (net != null && !net.TutorialDone)
+                yield return null;
+        }
+
         yield return new WaitForSeconds(introStartDelay);
         Say(AluciaLines.Get("intro.1", introLine1), Mood.Calm);
         yield return new WaitForSeconds(introLineGap);

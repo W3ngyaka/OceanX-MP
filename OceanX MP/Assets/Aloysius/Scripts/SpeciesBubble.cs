@@ -166,7 +166,7 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
 
         bool wasHold = _holdRing != null && _holdRing.EndHold();
-        if (wasHold) ContextNudge.DismissId("hold");
+        if (wasHold) { ContextNudge.DismissId("hold"); GuidedTutorial.NotifyHold(); }
         if (!wasHold)
             OnTap();
     }
@@ -174,6 +174,7 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     void OnTap()
     {
         ContextNudge.DismissId("tap");
+        GuidedTutorial.NotifyTap();
         if (locked)
         {
             ShowLockedHint();

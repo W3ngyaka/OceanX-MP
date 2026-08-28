@@ -94,6 +94,7 @@ public class SpeciesInfoPanel : MonoBehaviour
 
     void OpenModal()
     {
+        GuidedTutorial.NotifyViewDetails();
         if (ModalController.Instance == null || _data == null) return;
         CancelHintFallback();
         ViewedSpeciesReporter.Report(_index);

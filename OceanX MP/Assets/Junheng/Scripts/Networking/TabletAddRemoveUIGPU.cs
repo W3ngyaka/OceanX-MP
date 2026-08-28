@@ -99,6 +99,7 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
         _currentCooldown = firstTime ? firstAddCooldown : 0f;
 
         OptimisticPopulationStore.RegisterDelta(_index, +1);
+        GuidedTutorial.NotifyAdd();
         net.RequestAddSpeciesRpc(_index);
 
         // UI sound: a first-time add plays the "joining the reef" flourish; the add that tops a

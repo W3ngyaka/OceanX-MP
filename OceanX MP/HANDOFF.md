@@ -181,39 +181,59 @@ The tablet flips back to the title screen (no bubble wipe on the tablet — just
 
 **Superseded names — do not use:** Humphead wrasse, Crescent grunter, Lined surgeonfish (never had assets); Great barracuda (removed 2026-06-18). The prototype (`oceanx-prototype.html`) still uses placeholder names (Striped Mullet, Convict Surgeonfish, Reef Manta Ray, Malabar Grouper…) — these were **remapped to this canonical list when the unlock system was wired**.
 
+> ### ⚠ These tables are the WIRED links, not real-world diet (corrected 2026-08-29)
+> Every relationship below was re-read from the `PreySpecies` / `PredatorSpecies` lists in each `*_Data.asset` and verified symmetric in both directions. **This is what the simulation actually runs on** — `GetSpeciesStatus`, `PopulationPressure` and eco-health all read these lists and nothing else.
+>
+> The previous version of this table described *ecological* diet ("algae and organic detritus", "benthic crustaceans, mollusks, worms") and had **three rows that were simply wrong**: it listed the blacktip reef shark as preying on the grouper, moray and trevally. Those three have **empty `PredatorSpecies`** — nothing eats them in this sim, which matches Akil's research note that adults of those species do not hunt one another. That error mattered: it says a species can be OverPredated when the status enum can never report it (`GetSpeciesStatus` requires `predN > 0`), and Alucia lines were written against it.
+>
+> A grazer's food (algae, detritus, plankton) is **not modelled as a species link**, so their `PreySpecies` is empty and they can never be Starving. Their real-world diet is kept in the last column for content writing.
+
 ### Keystone Species
 
-| Species | Scientific Name | Preys On | Preyed Upon By |
+| Species | Scientific Name | Preys On (wired) | Preyed Upon By (wired) |
 |---------|----------------|----------|----------------|
-| Blacktip reef shark | *Carcharhinus melanopterus* | All species below | — |
+| Blacktip reef shark | *Carcharhinus melanopterus* | mullet, snapper, parrotfish, spinefoot, surgeonfish, scad, damselfish, ray **(all 8 non-apex)** | **— apex, nothing** |
 
 ### Tertiary Consumers
 
-| Species | Scientific Name | Preys On | Preyed Upon By |
+Role enum `Mesopredator` — the data does not separate tertiary from secondary; both are `SpeciesRoleGPU.Mesopredator`.
+
+| Species | Scientific Name | Preys On (wired) | Preyed Upon By (wired) |
 |---------|----------------|----------|----------------|
-| Brown-marbled grouper | *Epinephelus fuscoguttatus* | Secondary + primary consumers | Blacktip reef shark |
-| Giant moray | *Gymnothorax javanicus* | Secondary + primary consumers (nocturnal ambush) | Blacktip reef shark |
+| Brown-marbled grouper | *Epinephelus fuscoguttatus* | mullet, parrotfish, snapper, spinefoot, surgeonfish, scad, damselfish (7) | **— nothing** |
+| Giant moray | *Gymnothorax javanicus* | mullet, parrotfish, snapper, spinefoot, scad, surgeonfish, damselfish (7) | **— nothing** |
 
 ### Secondary Consumers
 
-| Species | Scientific Name | Preys On | Preyed Upon By |
+| Species | Scientific Name | Preys On (wired) | Preyed Upon By (wired) |
 |---------|----------------|----------|----------------|
-| Bluefin trevally | *Caranx melampygus* | Primary consumers, small fish | Blacktip reef shark, Brown-marbled grouper, Giant moray |
-| Russell's snapper | *Lutjanus russellii* | Small fish, crustaceans, benthic invertebrates | Blacktip reef shark, Brown-marbled grouper, Giant moray |
-| Yellowstripe scad | *Selaroides leptolepis* | Zooplankton, small invertebrates | Blacktip reef shark, Brown-marbled grouper, Giant moray, Bluefin trevally |
-| Bluespotted ribbontail ray | *Taeniura lymma* | Benthic crustaceans, mollusks, worms | Blacktip reef shark |
+| Bluefin trevally | *Caranx melampygus* | mullet, parrotfish, spinefoot, surgeonfish, scad, damselfish (6) | **— nothing** |
+| Russell's snapper | *Lutjanus russellii* | mullet, surgeonfish, damselfish (3) | shark, grouper, moray |
+| Yellowstripe scad | *Selaroides leptolepis* | damselfish (1) | shark, grouper, moray, trevally |
+| Bluespotted ribbontail ray | *Taeniura lymma* | **— none wired** (real: benthic crustaceans, molluscs, worms) | shark |
 
 ### Primary Consumers
 
-| Species | Scientific Name | Preys On | Preyed Upon By |
-|---------|----------------|----------|----------------|
-| Fringelip mullet | *Crenemugil crenilabis* | Algae and organic detritus | Blacktip reef shark, Brown-marbled grouper, Giant moray, Bluefin trevally |
-| Bullethead parrotfish | *Chlorurus sordidus* | Algae scraped from coral substrate | Blacktip reef shark, Brown-marbled grouper, Giant moray, Bluefin trevally |
-| Streaked spinefoot | *Siganus javus* | Algae and seagrass | Blacktip reef shark, Brown-marbled grouper, Giant moray, Bluefin trevally |
-| Eyestripe surgeonfish | *Acanthurus dussumieri* | Algae, detritus | Blacktip reef shark, Brown-marbled grouper, Giant moray, Bluefin trevally |
-| Reticulated damselfish | *Dascyllus reticulatus* | Algae, zooplankton, small invertebrates | Blacktip reef shark, Brown-marbled grouper, Giant moray, Bluefin trevally |
+All five are grazers with **no wired prey**, so none of them can ever be Starving.
+
+| Species | Scientific Name | Preyed Upon By (wired) | Real-world diet (not modelled) |
+|---------|----------------|----------------|----------------|
+| Fringelip mullet | *Crenemugil crenilabis* | shark, grouper, moray, trevally, **snapper** | benthic microalgae, zooplankton |
+| Bullethead parrotfish | *Chlorurus sordidus* | shark, grouper, moray, trevally | algae scraped from coral |
+| Streaked spinefoot | *Siganus javus* | shark, grouper, moray, trevally | benthic algae, phytoplankton |
+| Eyestripe surgeonfish | *Acanthurus dussumieri* | shark, grouper, moray, trevally, **snapper** | algae, detritus, diatoms |
+| Reticulated damselfish | *Dascyllus reticulatus* | shark, grouper, moray, trevally, **snapper**, **scad** | zooplankton, phytoplankton, algae |
 
 **Total: 12 species** — 1 Keystone, 2 Tertiary, 4 Secondary, 5 Primary.
+
+**Which species can reach which status** (from `GetSpeciesStatus`, and the reason the Alucia lines are split the way they are):
+
+| Status | Requires | Applies to |
+|---|---|---|
+| **Starving** | has wired prey, prey was once present, `prey ÷ own < RatioBandLow` | shark, grouper, moray, trevally, snapper, scad — the **6 with wired prey**. Also covers *competition*: more predators sharing the same prey pushes the ratio down. |
+| **OverPredated** | `predN > 0` and `own ÷ predators < RatioBandLow` | the **8 non-apex** species. Never shark, grouper, moray or trevally. |
+
+⚠ **Starving is tested BEFORE OverPredated**, so a species that is both hungry and outnumbered reports Starving. OverPredated only ever surfaces when a species has enough food but too many hunters.
 
 > ⚠ **Streaked spinefoot = "rabbitfish"** — *Siganus javus* is commonly called the rabbitfish, so the mesh/folder churn naming it `rabbitfish.fbx` (and akeel-h's *"FBX changes for damselfish and rabbitfish"* commit) is the **same species**, not a new one.
 

@@ -23,84 +23,80 @@ hint.withReq.2,,Calm,,Almost there! Just {req} and the {species} will appear.,
 hint.withReq.3,,Calm,,The {species} is waiting! {req}.,
 hint.withReq.4,,Calm,,Keep going! {req} to attract the {species}.,
 hint.fallback,,Calm,,Something new is almost ready to appear...,When there's no specific requirement to name
-species.overpopulated,,Warn,,"Uh oh, the {species} are overpopulating and nothing is keeping them in check! Try adding one of their predators to balance the reef.",Generic fallback
-species.overpredated,,Warn,,"Oh no, the {species} are being hunted too hard! Try removing one of their predators so they can recover.",Generic fallback
-species.starving,,Warn,,The {species} have run out of food! Try adding some of the fish they like to eat.,Generic fallback
-species.overpopulated,Blacktip Reef Shark,Warn,,"Wow, there are so many Blacktip Reef Sharks! As the top hunter they need lots to eat. Try adding more prey like Fringelip Mullet or Yellowstripe Scad, or remove a shark or two to balance the reef!",
-species.overpredated,Blacktip Reef Shark,Calm,,"The Blacktip Reef Sharks are the top hunters here, so nothing preys on them. If they look unhappy, it is usually because they are low on food!",
-species.starving,Blacktip Reef Shark,Warn,,"Oh no, the Blacktip Reef Sharks are going hungry! They have nothing to hunt. Try adding some Fringelip Mullet or Yellowstripe Scad for them to eat!",
-species.overpopulated,Bluefin trevally,Warn,,"Whoa, the Bluefin Trevally are taking over! They are a top hunter, so try adding more prey like Yellowstripe Scad for them, or remove a few to balance things out!",
-species.overpredated,Bluefin trevally,Calm,,"The Bluefin Trevally are fast top hunters, so nothing chases them. Keep an eye on their food instead!",
-species.starving,Bluefin trevally,Warn,,The Bluefin Trevally are starving! Try adding some Yellowstripe Scad or Fringelip Mullet so they have something to hunt!,
-species.overpopulated,Brown-marbled grouper,Warn,,"There sure are a lot of Brown Marbled Groupers! They are big hunters, so try adding more prey like Bullethead Parrotfish, or remove a grouper or two to keep balance!",
-species.overpredated,Brown-marbled grouper,Calm,,"The Brown Marbled Groupers are strong hunters with no predators of their own. If they struggle, check their food supply!",
-species.starving,Brown-marbled grouper,Warn,,"Uh oh, the Brown Marbled Groupers have run out of food! Try adding some Bullethead Parrotfish or Fringelip Mullet for them to eat!",
-species.overpopulated,Giant moray,Warn,,"So many Giant Morays! These sneaky hunters have no predators, so try adding more prey like Streaked Spinefoot, or remove a moray to balance the reef!",
-species.overpredated,Giant moray,Calm,,"The Giant Morays are ambush hunters that nothing preys on. If they are unhappy, they are probably hungry!",
-species.starving,Giant moray,Warn,,The Giant Morays are hungry with nothing to hunt! Try adding some Yellowstripe Scad or Streaked Spinefoot to feed them!,
-species.overpopulated,Bluespotted ribbontail ray,Warn,,"Wow, the Bluespotted Ribbontail Rays are everywhere and nothing is hunting them! Try adding a Blacktip Reef Shark to keep their numbers in check!",
-species.overpredated,Bluespotted ribbontail ray,Warn,,"Oh no, the Bluespotted Ribbontail Rays are getting eaten up fast! Try removing a Blacktip Reef Shark to give them a chance to recover!",
-species.starving,Bluespotted ribbontail ray,Calm,,"The Bluespotted Ribbontail Rays find their food buried in the sand, so they never go hungry here!",
-species.overpopulated,Bullethead parrotfish,Warn,,"Uh oh, the Bullethead Parrotfish are taking over the reef! Try adding a hunter like a Brown Marbled Grouper or a Bluefin Trevally to balance things out!",
-species.overpredated,Bullethead parrotfish,Warn,,"Yikes, the Bullethead Parrotfish are being hunted too hard! Try removing a Brown Marbled Grouper or a Bluefin Trevally so they can bounce back!",
-species.starving,Bullethead parrotfish,Calm,,"The Bullethead Parrotfish love scraping algae off the coral, so they always have plenty to eat!",
-species.overpopulated,Eyestripe surgeonfish,Warn,,So many Eyestripe Surgeonfish! With no predators around they just keep growing. Try adding a Giant Moray or a Russell's Snapper to hunt a few!,
-species.overpredated,Eyestripe surgeonfish,Warn,,"The Eyestripe Surgeonfish are disappearing fast, too many hunters are after them! Try removing a Giant Moray or a Russell's Snapper to give them a break!",
-species.starving,Eyestripe surgeonfish,Calm,,"The Eyestripe Surgeonfish graze on algae all day, so they always have plenty to munch on!",
-species.overpopulated,Fringelip mullet,Warn,,The Fringelip Mullet are booming and nothing is eating them! Try adding a Bluefin Trevally or a Brown Marbled Grouper to keep them balanced!,
-species.overpredated,Fringelip mullet,Warn,,"Oh no, the Fringelip Mullet are getting wiped out! Try removing a Bluefin Trevally or a Brown Marbled Grouper so they can recover!",
-species.starving,Fringelip mullet,Calm,,"The Fringelip Mullet sift tasty bits from the sand, so they always find enough to eat!",
-species.overpopulated,Reticulated damselfish,Warn,,"Whoa, the Reticulated Damselfish are everywhere! Try adding a Yellowstripe Scad or a Bluefin Trevally to snack on some and even things out!",
-species.overpredated,Reticulated damselfish,Warn,,The Reticulated Damselfish are vanishing fast! Try removing a Yellowstripe Scad or a Bluefin Trevally to ease the hunting!,
-species.starving,Reticulated damselfish,Calm,,"The Reticulated Damselfish nibble on algae and plankton, so they never run out of food!",
-species.overpopulated,Russell’s snapper,Warn,,The Russell's Snappers are overpopulating and nothing is hunting them! Try adding a Giant Moray or a Blacktip Reef Shark to keep them in check!,
-species.overpredated,Russell’s snapper,Warn,,"Uh oh, the Russell's Snappers are being eaten faster than they can recover! Try removing a Giant Moray or a Blacktip Reef Shark to help them out!",
-species.starving,Russell’s snapper,Warn,,The Russell's Snappers are going hungry! Try adding some Fringelip Mullet or Reticulated Damselfish for them to eat!,
-species.overpopulated,Streaked spinefoot,Warn,,Too many Streaked Spinefoot! Try adding a hunter like a Giant Moray or a Bluefin Trevally to balance the reef!,
-species.overpredated,Streaked spinefoot,Warn,,The Streaked Spinefoot are getting hunted too hard! Try removing a Giant Moray or a Bluefin Trevally so they can recover!,
-species.starving,Streaked spinefoot,Calm,,"The Streaked Spinefoot feast on algae and seagrass, so they always have plenty to eat!",
-species.overpopulated,Yellowstripe scad,Warn,,The Yellowstripe Scad are exploding in number! Try adding a Bluefin Trevally or a Blacktip Reef Shark to hunt a few and balance things out!,
-species.overpredated,Yellowstripe scad,Warn,,"Oh no! The Yellowstripe Scad are getting wiped out, too many hunters are after them! Try removing a Brown Marbled Grouper or a Bluefin Trevally to balance the ecosystem!",
-species.starving,Yellowstripe scad,Warn,,The Yellowstripe Scad have nothing to eat! Try adding some Reticulated Damselfish to feed them!,
+species.overpopulated,,Warn,,"So many {species}, the reef is crowded!",Generic fallback
+species.overpredated,,Warn,,"Uh oh, the {species} are being hunted hard!",Generic fallback
+species.starving,,Warn,,The {species} have run out of food!,Generic fallback
+species.overpopulated,Blacktip Reef Shark,Warn,,So many blacktip reef sharks patrolling the ledges!,
+species.starving,Blacktip Reef Shark,Warn,,The blacktip reef sharks have nothing to hunt.,
+species.overpopulated,Bluefin trevally,Warn,,Too many bluefin trevally are hunting the shallows!,
+species.starving,Bluefin trevally,Warn,,"Uh oh, the bluefin trevally are going hungry!",
+species.overpopulated,Brown-marbled grouper,Warn,,"Uh oh, brown-marbled groupers have claimed every ledge!",
+species.starving,Brown-marbled grouper,Warn,,The brown-marbled groupers wait on empty ledges.,
+species.overpopulated,Giant moray,Warn,,"So many giant morays, every crevice is taken!",
+species.starving,Giant moray,Warn,,The giant morays smell no prey in the crevices.,
+species.overpopulated,Bluespotted ribbontail ray,Warn,,Too many bluespotted rays are crowding the sand!,
+species.overpredated,Bluespotted ribbontail ray,Warn,,"Uh oh, the bluespotted rays are hunted hard!",
+species.starving,Bluespotted ribbontail ray,Calm,,"Bluespotted rays dig food from the sand, never hungry.",
+species.overpopulated,Bullethead parrotfish,Warn,,"Whoa, bullethead parrotfish are all over the coral!",
+species.overpredated,Bullethead parrotfish,Warn,,The bullethead parrotfish are vanishing fast!,
+species.starving,Bullethead parrotfish,Calm,,"Bullethead parrotfish scrape algae, always plenty.",
+species.overpopulated,Eyestripe surgeonfish,Warn,,So many eyestripe surgeonfish grazing the reef!,
+species.overpredated,Eyestripe surgeonfish,Warn,,Too few eyestripe surgeonfish are left grazing.,
+species.starving,Eyestripe surgeonfish,Calm,,Eyestripe surgeonfish graze algal films all day.,
+species.overpopulated,Fringelip mullet,Warn,,"Uh oh, the fringelip mullet schools keep growing!",
+species.overpredated,Fringelip mullet,Warn,,"Whoa, the fringelip mullet schools are thinning!",
+species.starving,Fringelip mullet,Calm,,"Fringelip mullet sift the sand, always well fed.",
+species.overpopulated,Reticulated damselfish,Warn,,Too many damselfish on every coral head!,
+species.overpredated,Reticulated damselfish,Warn,,The reticulated damselfish are disappearing!,
+species.starving,Reticulated damselfish,Calm,,"Reticulated damselfish pick plankton, never short.",
+species.overpopulated,Russell’s snapper,Warn,,So many Russell's snappers holding the reef!,
+species.overpredated,Russell’s snapper,Warn,,"Uh oh, Russell's snappers are being picked off!",
+species.starving,Russell’s snapper,Warn,,"Uh oh, Russell's snappers have nothing to hunt!",
+species.overpopulated,Streaked spinefoot,Warn,,"Whoa, streaked spinefoot are grazing everywhere!",
+species.overpredated,Streaked spinefoot,Warn,,The streaked spinefoot are being hunted hard!,
+species.starving,Streaked spinefoot,Calm,,"Streaked spinefoot graze algae, always plenty.",
+species.overpopulated,Yellowstripe scad,Warn,,Too many yellowstripe scad fill the open water!,
+species.overpredated,Yellowstripe scad,Warn,,So few yellowstripe scad left in open water!,
+species.starving,Yellowstripe scad,Warn,,The yellowstripe scad are running out of food.,
 species.extinct,,Warn,,The {species} are gone from the reef entirely.,Generic
 species.extinct,Blacktip Reef Shark,Warn,,"Without the sharks, nothing keeps the reef in balance. Watch what happens now!",Keystone lesson
 species.added,,Calm,,A new group of {species} just swam in!,Fires only on the first-ever add
 # hint.flavour,,,,Per-species 'fun fact' hint Alucia says while pointing to the next species to unlock. One is picked at random.,Captured from the SpeciesData assets (hint1/2/3).
-hint.flavour,Blacktip Reef Shark,Calm,1,The reef shark needs a fully functioning food web to return.,flavour hint 1
-hint.flavour,Blacktip Reef Shark,Calm,1,"You need Grouper x1, Moray x1, Trevally x2 and Scad x3.",flavour hint 2
-hint.flavour,Blacktip Reef Shark,Calm,1,"Almost there, the shark is close to returning to the reef!",flavour hint 3
-hint.flavour,Bluefin Trevally,Calm,1,Fast predators like trevally prey on mullets and parrotfish,flavour hint 1
-hint.flavour,Bluefin Trevally,Calm,1,You need Mullet x3 and Parrotfish x2 to attract trevally.,flavour hint 2
-hint.flavour,Bluefin Trevally,Calm,1,"Almost there, add more mullet and parrotfish.",flavour hint 3
-hint.flavour,Bluespotted Ribbontail Ray,Calm,1,Rays feed on the reef floor and need herbivores nearby.,flavour hint 1
-hint.flavour,Bluespotted Ribbontail Ray,Calm,1,You need Parrotfish x2 and Spinefoot x2 to attract rays.,flavour hint 2
-hint.flavour,Bluespotted Ribbontail Ray,Calm,1,"Almost there, add more parrotfish and spinefoot.",flavour hint 3
-hint.flavour,Brown-Marbled Grouper,Calm,1,Grouper are ambush predators that need schooling prey.,flavour hint 1
-hint.flavour,Brown-Marbled Grouper,Calm,1,"You need Scad x2, Trevally x1 and Snapper x1 to attract grouper.",flavour hint 2
-hint.flavour,Brown-Marbled Grouper,Calm,1,"Almost there, stabilise your secondary consumer population.",flavour hint 3
-hint.flavour,Bullethead Parrotfish,Calm,1,Parrotfish graze algae and keep coral healthy.,flavour hint 1
-hint.flavour,Bullethead Parrotfish,Calm,1,A stable parrotfish population supports larger reef predators.,flavour hint 2
-hint.flavour,Bullethead Parrotfish,Calm,1,More parrotfish will help attract secondary consumers.,flavour hint 3
-hint.flavour,Eyestripe Surgeonfish,Calm,1,Surgeonfish keep algae under control on the reef.,flavour hint 1
-hint.flavour,Eyestripe Surgeonfish,Calm,1,A stable surgeonfish population supports the next trophic level.,flavour hint 2
-hint.flavour,Eyestripe Surgeonfish,Calm,1,Add more surgeonfish to unlock secondary consumers.,flavour hint 3
-hint.flavour,Fringelip Mullet,Calm,1,Mullet are a key food source for larger reef predators.,flavour hint 1
-hint.flavour,Fringelip Mullet,Calm,1,Build up mullet numbers to attract secondary consumers.,flavour hint 2
-hint.flavour,Fringelip Mullet,Calm,1,Add more mullet to stabilise the base of the food web.,flavour hint 3
-hint.flavour,Giant Moray,Calm,1,"Moray eels hunt in reef crevices, targeting prey like Russell's snappers and parrotfish.",flavour hint 1
-hint.flavour,Giant Moray,Calm,1,You need Snapper x2 and Ray x1 to attract the giant moray.,flavour hint 2
-hint.flavour,Giant Moray,Calm,1,"Almost there, build up snapper and ray populations.",flavour hint 3
-hint.flavour,Reticulated Damselfish,Calm,1,Damselfish are small but vital prey for reef predators.,flavour hint 1
-hint.flavour,Reticulated Damselfish,Calm,1,Build damselfish numbers to attract schooling predators.,flavour hint 2
-hint.flavour,Reticulated Damselfish,Calm,1,More damselfish will unlock secondary consumers.,flavour hint 3
-hint.flavour,Russell's Snapper,Calm,1,Snappers are ambush predators that need prey on mullets and damselfish.,flavour hint 1
-hint.flavour,Russell's Snapper,Calm,1,You need Damselfish x2 and Surgeonfish x2 to attract snapper.,flavour hint 2
-hint.flavour,Russell's Snapper,Calm,1,"Almost there, build up damselfish and surgeonfish.",flavour hint 3
-hint.flavour,Seagrass,Calm,1,"Seagrass meadows are the foundation of the reef, feeding grazers and giving fish shelter.",flavour hint 1
-hint.flavour,Seagrass,Calm,1,Healthy seagrass supports herbivores like parrotfish and surgeonfish.,flavour hint 2
+hint.flavour,Blacktip Reef Shark,Calm,1,Try adding more yellowstripe scad to attract the blacktip reef shark.,flavour hint 1
+hint.flavour,Blacktip Reef Shark,Calm,1,The reef shark returns once the whole food web is working.,flavour hint 2
+hint.flavour,Blacktip Reef Shark,Calm,1,"Almost there, the shark is close to returning to the reef.",flavour hint 3
+hint.flavour,Bluefin Trevally,Calm,1,Try adding more fringelip mullet to attract the bluefin trevally.,flavour hint 1
+hint.flavour,Bluefin Trevally,Calm,1,Try adding more bullethead parrotfish to attract the bluefin trevally.,flavour hint 2
+hint.flavour,Bluefin Trevally,Calm,1,A healthier reef will help the bluefin trevally arrive.,flavour hint 3
+hint.flavour,Bluespotted Ribbontail Ray,Calm,1,Bluespotted rays glide over the sandy flats beside the reef.,flavour hint 1
+hint.flavour,Bluespotted Ribbontail Ray,Calm,1,Rays need a settled reef floor before they will move in.,flavour hint 2
+hint.flavour,Bluespotted Ribbontail Ray,Calm,1,"A well grazed, healthy reef will bring the bluespotted ray in.",flavour hint 3
+hint.flavour,Brown-Marbled Grouper,Calm,1,Try adding more yellowstripe scad to attract the brown-marbled grouper.,flavour hint 1
+hint.flavour,Brown-Marbled Grouper,Calm,1,Try adding more Russell's snappers to attract the brown-marbled grouper.,flavour hint 2
+hint.flavour,Brown-Marbled Grouper,Calm,1,Groupers claim a ledge once the reef has enough hunters.,flavour hint 3
+hint.flavour,Bullethead Parrotfish,Calm,1,Try adding more bullethead parrotfish to attract the bluefin trevally.,flavour hint 1
+hint.flavour,Bullethead Parrotfish,Calm,1,Try adding more bullethead parrotfish to attract the giant moray.,flavour hint 2
+hint.flavour,Bullethead Parrotfish,Calm,1,Parrotfish scrape algae off the coral and keep it clear.,flavour hint 3
+hint.flavour,Eyestripe Surgeonfish,Calm,1,Eyestripe surgeonfish graze algal films and keep coral clear.,flavour hint 1
+hint.flavour,Eyestripe Surgeonfish,Calm,1,Surgeonfish patrol fixed home ranges across the reef.,flavour hint 2
+hint.flavour,Eyestripe Surgeonfish,Calm,1,A steady surgeonfish population keeps reef algae in check.,flavour hint 3
+hint.flavour,Fringelip Mullet,Calm,1,Try adding more fringelip mullet to attract the bluefin trevally.,flavour hint 1
+hint.flavour,Fringelip Mullet,Calm,1,Try adding more fringelip mullet to attract Russell's snapper.,flavour hint 2
+hint.flavour,Fringelip Mullet,Calm,1,Fringelip mullet sift the sand for algae and detritus.,flavour hint 3
+hint.flavour,Giant Moray,Calm,1,Try adding more Russell's snappers to attract the giant moray.,flavour hint 1
+hint.flavour,Giant Moray,Calm,1,Try adding more bullethead parrotfish to attract the giant moray.,flavour hint 2
+hint.flavour,Giant Moray,Calm,1,A healthier reef will draw the giant moray from its crevice.,flavour hint 3
+hint.flavour,Reticulated Damselfish,Calm,1,Try adding more reticulated damselfish to attract Russell's snapper.,flavour hint 1
+hint.flavour,Reticulated Damselfish,Calm,1,Try adding more reticulated damselfish to attract the yellowstripe scad.,flavour hint 2
+hint.flavour,Reticulated Damselfish,Calm,1,Damselfish fiercely defend their own coral heads.,flavour hint 3
+hint.flavour,Russell's Snapper,Calm,1,Try adding more reticulated damselfish to attract Russell's snapper.,flavour hint 1
+hint.flavour,Russell's Snapper,Calm,1,Try adding more fringelip mullet to attract Russell's snapper.,flavour hint 2
+hint.flavour,Russell's Snapper,Calm,1,Russell's snappers school in loose groups over the reef.,flavour hint 3
+hint.flavour,Seagrass,Calm,1,Seagrass meadows feed the grazers and shelter young fish.,flavour hint 1
+hint.flavour,Seagrass,Calm,1,Healthy seagrass supports parrotfish and surgeonfish.,flavour hint 2
 hint.flavour,Seagrass,Calm,1,More seagrass helps the whole food web thrive.,flavour hint 3
-hint.flavour,Streaked Spinefoot,Calm,1,Spinefoot are algae grazers that support reef health.,flavour hint 1
-hint.flavour,Streaked Spinefoot,Calm,1,Stable herbivores attract secondary consumers like rays.,flavour hint 2
-hint.flavour,Streaked Spinefoot,Calm,1,Add more spinefoot to complete the primary consumer tier.,flavour hint 3
-hint.flavour,Yellowstripe Scad,Calm,1,Schooling fish like scad love small fish like damselfish.,flavour hint 1
-hint.flavour,Yellowstripe Scad,Calm,1,You need Damselfish x2 and Mullet x2 to attract scad.,flavour hint 2
+hint.flavour,Streaked Spinefoot,Calm,1,Streaked spinefoot graze algae and seagrass across the reef.,flavour hint 1
+hint.flavour,Streaked Spinefoot,Calm,1,Spinefoot school in small groups over the shallow reef.,flavour hint 2
+hint.flavour,Streaked Spinefoot,Calm,1,A steady spinefoot population helps the reef floor settle.,flavour hint 3
+hint.flavour,Yellowstripe Scad,Calm,1,Try adding more reticulated damselfish to attract the yellowstripe scad.,flavour hint 1
+hint.flavour,Yellowstripe Scad,Calm,1,Yellowstripe scad form dense schools in the open water.,flavour hint 2

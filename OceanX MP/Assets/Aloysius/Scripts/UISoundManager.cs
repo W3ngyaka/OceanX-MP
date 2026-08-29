@@ -16,7 +16,8 @@ public enum UISound
     Notification,
     Warning,
     Win,
-    Start
+    Start,
+    TutorialNext
 }
 
 public class UISoundManager : MonoBehaviour
@@ -123,8 +124,16 @@ public class UISoundManager : MonoBehaviour
     public void Play(UISound sound, float volumeScale = 1f)
     {
         if (muted || _voices == null) return;
+        // Fall back to the generic Tap click if a specific sound has no clip assigned yet
+        // (lets TutorialNext etc. work out of the box before a custom clip is added).
         if (!_lookup.TryGetValue(sound, out var e) || e.variants == null || e.variants.Length == 0)
-            return;
+        {
+            if (sound != UISound.Tap && _lookup.TryGetValue(UISound.Tap, out var tap)
+                && tap.variants != null && tap.variants.Length > 0)
+                e = tap;
+            else
+                return;
+        }
 
         AudioClip clip = e.variants.Length == 1
             ? e.variants[0]

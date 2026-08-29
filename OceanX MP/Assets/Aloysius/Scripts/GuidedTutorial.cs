@@ -14,7 +14,7 @@ public class GuidedTutorial : MonoBehaviour
 {
     public static GuidedTutorial Instance { get; private set; }
 
-    public enum Step { Welcome, TapFish, ReadInfo, ViewDetails, HoldFish, PressAdd, WatchHealth, OrganismsTab, Done }
+    public enum Step { Welcome, TapFish, ReadInfo, ViewDetails, HoldFish, PressAdd, WatchHealth, OrganismsTab, ExploreOrganisms, BackToFoodWeb, FreeExplore, Done }
 
     [Header("Refs")]
     public CanvasGroup group;         // whole overlay fade + input block
@@ -31,7 +31,8 @@ public class GuidedTutorial : MonoBehaviour
     public RectTransform infoPanelTarget;      // the side Info panel (name + desc + add)
     public RectTransform viewDetailsTarget;    // the VIEW DETAILS button
     public RectTransform modalTarget;          // the full-screen species modal
-    public RectTransform organismsPanelTarget; // the Current Organisms list
+    public RectTransform organismsPanelTarget; // the Current Organisms panel (container)
+    public RectTransform organismsListTarget;  // the list content (rows only)
 
     [Header("Behaviour")]
     public float autoShowDelay = 0.6f;
@@ -50,7 +51,13 @@ public class GuidedTutorial : MonoBehaviour
     public static void NotifyHold()     { if (Instance != null && Instance._running) Instance.OnAction(Step.HoldFish); }
     public static void NotifyAdd()      { if (Instance != null && Instance._running) Instance.OnAction(Step.PressAdd); }
     public static void NotifyViewDetails() { if (Instance != null && Instance._running) Instance._modalOpened = true; }
-    public static void NotifyTab(int i) { Debug.Log($"[GT DEBUG] NotifyTab({i}) running={(Instance!=null&&Instance._running)} step={(Instance!=null?Instance._step.ToString():"-")}"); if (Instance != null && Instance._running && i == 1) Instance.OnAction(Step.OrganismsTab); }
+    public static void NotifyTab(int i)
+    {
+        Debug.Log($"[GT DEBUG] NotifyTab({i}) running={(Instance!=null&&Instance._running)} step={(Instance!=null?Instance._step.ToString():"-")}");
+        if (Instance == null || !Instance._running) return;
+        if (i == 1) Instance.OnAction(Step.OrganismsTab);      // Organisms tab
+        else if (i == 0) Instance.OnAction(Step.BackToFoodWeb); // Food Web tab
+    }
     public static bool IsRunning => Instance != null && Instance._running;
 
     void Awake()
@@ -94,7 +101,7 @@ public class GuidedTutorial : MonoBehaviour
                 // Advance the tap-to-continue steps on any screen tap — but ignore taps for a short beat
         // after entering the step, so the tap that COMPLETED the previous action step doesn't also
         // skip through this one in the same frame.
-        if (_running && (_step == Step.Welcome || _step == Step.ReadInfo || _step == Step.WatchHealth))
+        if (_running && (_step == Step.Welcome || _step == Step.ReadInfo || _step == Step.WatchHealth || _step == Step.ExploreOrganisms || _step == Step.FreeExplore))
             if (Time.unscaledTime - _stepEnteredAt > 0.35f)
                 if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
                     Advance();
@@ -132,6 +139,9 @@ public class GuidedTutorial : MonoBehaviour
     public void Begin()
     {
         _running = true;
+        // Re-arm the Alucia gate: she stays quiet until this guided run finishes.
+        var net0 = EcosystemNetworkManagerGPU.Instance;
+        if (net0 != null) net0.SetTutorialDoneRpc(false);
         _step = Step.Welcome;
         SetVisible(true);
         ApplyStep();
@@ -146,6 +156,7 @@ public class GuidedTutorial : MonoBehaviour
     void Advance()
     {
         Debug.Log($"[GT DEBUG] Advance from {_step}");
+        if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.TutorialNext);
         _step = (Step)((int)_step + 1);
         if (_step == Step.Done) { Finish(); return; }
         ApplyStep();
@@ -178,7 +189,13 @@ public class GuidedTutorial : MonoBehaviour
             case Step.WatchHealth:
                 text = "Watch the Ecosystem Health rise. Add the right mix to restore balance."; target = healthTarget; break;
             case Step.OrganismsTab:
-                text = "Open the ORGANISMS tab \u2014 here you can see your reef and remove species."; target = organismsTabTarget; waitAction = true; break;
+                text = "Open the ORGANISMS tab to see your reef."; target = organismsTabTarget; waitAction = true; break;
+            case Step.ExploreOrganisms:
+                text = "This is your reef. Here you can check each species and remove any you don't want. Take a look, then tap to continue."; target = null; break;   // dim hidden this step
+            case Step.BackToFoodWeb:
+                text = "Now head back to the FOOD WEB tab to keep building your reef."; target = organismsTabTarget; waitAction = true; break;
+            case Step.FreeExplore:
+                text = "That's it \u2014 you're ready! Add species, watch the balance, and bring the reef back to life."; break;
         }
 
         _stepEnteredAt = Time.unscaledTime;
@@ -186,6 +203,11 @@ public class GuidedTutorial : MonoBehaviour
         if (instruction != null) instruction.text = text;
         if (tapToContinue != null) tapToContinue.gameObject.SetActive(!waitAction);
         MoveHighlight(target);
+
+        // On the 'explore your reef' step, hide the dim entirely so the organisms panel is fully
+        // visible (it's a masked scroll panel that can't be elevated above the dim like the others).
+        var dimObj = transform.Find("Dim");
+        if (dimObj != null) dimObj.gameObject.SetActive(_step != Step.ExploreOrganisms);
 
         // Dim always blocks; the spotlit element sits ABOVE the dim with its own raycaster, so it
         // still receives taps while everything behind stays blocked.
@@ -242,9 +264,14 @@ public class GuidedTutorial : MonoBehaviour
     {
         Debug.Log("[GT DEBUG] Finish() called");
         _running = false;
+        // If the visitor skipped while the species modal was open, close it too.
+        if (ModalController.Instance != null && ModalController.Instance.gameObject.activeSelf)
+            ModalController.Instance.Close();
+        _modalOpened = false;
         ClearSpotlight();
         CleanupTouched();
-        SetVisible(false);
+        var d = transform.Find("Dim"); if (d != null) d.gameObject.SetActive(true);
+        SetVisible(false, instant: true);   // hard hide — no lingering dim on Skip
         // Tell the host Alucia can talk now (same signal the panel used).
         var net = EcosystemNetworkManagerGPU.Instance;
         if (net != null) net.SetTutorialDoneRpc(true);

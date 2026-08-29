@@ -517,6 +517,61 @@ namespace OceanX.BoidsGPU.SpatialPartitionInstancedRendering
             return true;
         }
 
+        // ECOSYSTEM HOOK — added for EcosystemSimulationGPU, do not remove
+        /// <summary>
+        /// Re-arms the entry sprint for the boids in the global buffer range [<paramref name="startIndex"/>,
+        /// startIndex + count), so they rush back in at MaxSpeed instead of trickling home at cruising speed.
+        /// Used when an Add recalls a school that was already swimming out: its fish are parked off-screen at
+        /// an exit gate, and un-parking the target alone would have them amble back from there.
+        ///
+        /// Writes -1 into EntryBoostTimeRemaining, the same value BoidSpawnerGPU.SpawnBoids arms a freshly
+        /// spawned school with — "outside the bounds and on the way in". The kernel then flips it to
+        /// _EntryBoostDuration the frame the fish crosses back inside, exactly as it does for a real arrival,
+        /// so a recalled school and a new one behave identically from there on. A fish already inside the
+        /// bounds is left alone: writing -1 to it would make the kernel read it as a new arrival that never
+        /// crossed in, so it would sprint until it happened to wander out and back.
+        ///
+        /// This is a read-modify-write of a buffer slice, so it stalls the GPU twice. That is fine at the
+        /// frequency it runs — one visitor tap — but it must not be called per-frame.
+        /// Returns false if the buffers are not ready or the range is out of bounds.
+        /// </summary>
+        public bool TryRearmEntrySprint(int startIndex, int count)
+        {
+            if (count <= 0 || _boidsCount == 0) return false;
+            if (startIndex < 0 || startIndex + count > _boidsCount) return false;
+
+            // Original-order buffer, same as TryCountBoidsWithinRadius above: startIndex/count come from
+            // BoidSpawnerGPU.RenderingOffset, which only addresses this one.
+            ComputeBuffer buffer = _boidsComputeBuffer;
+            if (buffer == null) return false;
+
+            BoidInfoGPU[] slice = new BoidInfoGPU[count];
+            buffer.GetData(slice, 0, startIndex, count);
+
+            bool anyRearmed = false;
+            for (int i = 0; i < count; i++)
+            {
+                if (!IsStrictlyOutsideBounds(slice[i].Position)) continue; // already home — see above
+                slice[i].EntryBoostTimeRemaining = -1f;
+                anyRearmed = true;
+            }
+
+            if (!anyRearmed) return true; // nothing to write back; the school never left the bounds
+            buffer.SetData(slice, 0, startIndex, count);
+            return true;
+        }
+
+        // Mirrors IsStrictlyOutsideBounds in the compute shader, so the CPU and GPU agree on which fish
+        // count as "still out there" when a recall re-arms the sprint.
+        private bool IsStrictlyOutsideBounds(Vector3 position)
+        {
+            Vector3 min = _simulationAreaBounds.min;
+            Vector3 max = _simulationAreaBounds.max;
+            return position.x < min.x || position.x > max.x
+                || position.y < min.y || position.y > max.y
+                || position.z < min.z || position.z > max.z;
+        }
+
         /// <inheritdoc/>
         protected override void SpawnBoids()
         {

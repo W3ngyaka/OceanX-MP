@@ -174,6 +174,10 @@ namespace OceanX.BoidsGPU.Ecosystem
         // they have all reached their exit points, with no mid-flight buffer reindexing.
         private readonly Dictionary<SpeciesDataGPU, int> _exitingCount = new Dictionary<SpeciesDataGPU, int>();
 
+        // Species that currently have a BatchExitRoutine watching them. Guards against a second routine
+        // being started for the same species while one is still alive — see StartRemoveExitImmediate.
+        private readonly HashSet<SpeciesDataGPU> _exitRoutineActive = new HashSet<SpeciesDataGPU>();
+
         private bool IsExiting(SpeciesDataGPU species) => _exitingCount.TryGetValue(species, out int e) && e > 0;
         private int  ExitingCount(SpeciesDataGPU species) => _exitingCount.TryGetValue(species, out int e) ? e : 0;
 
@@ -262,6 +266,8 @@ namespace OceanX.BoidsGPU.Ecosystem
         private void OnDisable()
         {
             _exitingCount.Clear();
+            _exitRoutineActive.Clear(); // same reason: the dead routine never got to release its own entry,
+                                        // and a stale entry would stop any future routine from ever starting
         }
 
         private void Start()
@@ -313,6 +319,7 @@ namespace OceanX.BoidsGPU.Ecosystem
 
             // Forget per-species memory so the next visitor's build-up behaves like a fresh session.
             _foodWasPresent.Clear();
+            _everIntroduced.Clear();   // the next visitor gets every species' debut again
             _recentEntryOrigins.Clear();
             _lastEntryMarker = null;
 
@@ -334,17 +341,33 @@ namespace OceanX.BoidsGPU.Ecosystem
             q.Enqueue(delta);
         }
 
-        // Drains queued ops. Adds apply instantly; a queued remove starts an immediate swim-out. The pump
-        // is held off while the species is busy swimming schools out (BatchExitRoutine re-runs it once the
-        // batch commits) so queued Adds land after the exiting block is gone, not tangled up with it.
+        // Drains queued ops. Adds apply instantly; a queued remove starts an immediate swim-out.
+        //
+        // While the species is swimming schools out, an Add is served by RECALLING the newest exiting
+        // school rather than spawning a new one (see TryRecallExitingSchool for why that keeps the exiting
+        // block contiguous). This is what gives a visitor immediate feedback: spamming Remove then Add used
+        // to leave every Add sitting in this queue for the whole swim-out — the tablet's optimistic counter
+        // showed the taps while the ocean stayed empty, then the whole batch landed at once.
+        //
+        // Only a genuine NEW school still waits for the block to clear, because that one really would take
+        // an index above the exiting block. BatchExitRoutine re-runs the pump once the batch commits.
         private void PumpQueue(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
         {
-            if (IsExiting(species)) return; // busy swimming schools out; resumes after the batch commits
             if (!_opQueue.TryGetValue(species, out Queue<int> q)) return;
 
-            while (q.Count > 0 && !IsExiting(species))
+            while (q.Count > 0)
             {
-                int op = q.Dequeue();
+                int op = q.Peek();
+
+                if (IsExiting(species))
+                {
+                    // Recall serves an Add without creating a school, so no rebuild is needed. Anything
+                    // else (a Remove, or an Add with nothing left to recall) waits for the block to commit.
+                    if (op > 0 && TryRecallExitingSchool(species, spawner)) { q.Dequeue(); continue; }
+                    return;
+                }
+
+                q.Dequeue();
                 if (op > 0)
                 {
                     if (AddSchool(species, spawner))
@@ -430,6 +453,14 @@ namespace OceanX.BoidsGPU.Ecosystem
         // Per-species memory: has this species' food ever been present? Lets us tell a genuine collapse
         // ("prey ran out") apart from "prey were never introduced yet" (which must NOT read as starving).
         private readonly HashSet<SpeciesDataGPU> _foodWasPresent = new HashSet<SpeciesDataGPU>();
+
+        // Per-species memory: has this species ever had its debut? Latching, like _foodWasPresent above.
+        // A species' school count reaching 0 -> 1 is NOT enough to call it an introduction: a species that
+        // was driven extinct and is then added back hits 0 -> 1 again, and without this it would replay the
+        // reveal card and the camera fly-in as though the visitor had never seen it. Note the auto-growth
+        // tick (see the population dynamics below) adds schools too, so that replay could fire with no
+        // visitor input at all. Cleared only by ResetToEmpty — the exhibit's fresh start for the next visitor.
+        private readonly HashSet<SpeciesDataGPU> _everIntroduced = new HashSet<SpeciesDataGPU>();
 
         /// <summary>Cause-aware status for a species (committed counts). See <see cref="SpeciesStatus"/>.</summary>
         public SpeciesStatus GetSpeciesStatus(SpeciesDataGPU species)
@@ -783,9 +814,22 @@ namespace OceanX.BoidsGPU.Ecosystem
         private bool AddSchool(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
         {
             int n = _schoolCount.TryGetValue(species, out int current) ? current : 0;
+
+            // Deliberately the RAW count, not the committed one. It is tempting to cap on committed so that
+            // schools already swimming out stop blocking an Add — but each species reserves exactly
+            // MaxSchools flock IDs (see SetupAllSpecies) and a school's ID is base + index, so letting the
+            // raw count exceed the cap aliases a school's flock onto the NEXT species' reservation and
+            // silently merges two species into one shoal. The population tick calls this directly, without
+            // going through PumpQueue, so a committed-based cap really could overshoot here.
+            // It costs nothing to keep raw: while any school is exiting, PumpQueue serves an Add by
+            // recalling one (TryRecallExitingSchool) and never reaches this method. By the time it does,
+            // nothing is exiting and the raw and committed counts are equal anyway.
             if (n >= MaxSchoolsOf(species)) return false; // at cap — no-op
 
-            bool wasFirstIntroduction = (n == 0); // 0 -> 1 means this species is entering the scene fresh
+            // A debut is 0 -> 1 AND never having debuted before. HashSet.Add both tests and records in one
+            // call: it returns false if the species is already in the set, so this fires exactly once per
+            // species per session. Short-circuits on (n == 0), so a plain 1 -> 2 add never touches the set.
+            bool wasFirstIntroduction = (n == 0) && _everIntroduced.Add(species);
 
             int fishPerSchool = FishPerSchool(species);
 
@@ -848,10 +892,55 @@ namespace OceanX.BoidsGPU.Ecosystem
             exitingTarget.ParkAt(PickExitPoint());
             _exitingCount[species] = alreadyExiting + 1;
 
-            // Start the batch cull coroutine only on the 0 -> 1 transition. If one is already running it
+            // Start the batch cull coroutine only if one is not already watching this species; a running one
             // picks up this newly parked school on its next poll (it reads the live exiting count).
-            if (alreadyExiting == 0)
+            // This tracks the ROUTINE, not the count. Testing `alreadyExiting == 0` instead used to be
+            // equivalent, because the count only ever reached 0 inside the routine itself, in the same frame
+            // it broke out. A recall (TryRecallExitingSchool) can now zero it from outside, while the routine
+            // is asleep between polls — and a Remove landing in that window would start a SECOND routine on
+            // the same species, with both eventually culling the block.
+            if (!_exitRoutineActive.Contains(species))
+            {
+                _exitRoutineActive.Add(species);
                 StartCoroutine(BatchExitRoutine(species, spawner));
+            }
+        }
+
+        /// <summary>
+        /// Turns the most recently removed school of this species around, if one is still swimming out.
+        /// Returns false when nothing is exiting, so the caller falls through to spawning a new school.
+        ///
+        /// This is what makes Add feel instant during a removal spree. Adds used to be parked in the op
+        /// queue for the whole swim-out (up to _exitTimeoutSeconds) because a new school takes sub-group
+        /// index n — ABOVE the exiting block — which breaks the "exiting schools are the contiguous TOP
+        /// block" invariant that BatchExitRoutine and CommitRemoveSchools both rely on. Recalling sidesteps
+        /// that entirely: removal parks downward from the top (see StartRemoveExitImmediate), so the newest
+        /// exit is the block's LOWEST index, n - e. Un-parking exactly that one shrinks the block from the
+        /// bottom to [n-e+1, n-1] — still a contiguous top block. The invariant is preserved, not fought.
+        ///
+        /// Cheap by comparison, too: no school is created or destroyed, so there is no GPU buffer rebuild.
+        /// </summary>
+        private bool TryRecallExitingSchool(SpeciesDataGPU species, BoidSpawnerGPUMultiTargets spawner)
+        {
+            int e = ExitingCount(species);
+            if (e <= 0) return false;
+
+            int n = CountGroups(species);
+            int newestExiting = n - e; // the block is [n-e, n-1]; its lowest index was parked last
+            if (newestExiting < 0 || newestExiting >= n) return false;
+
+            EcosystemTargetGPU target = GetTargetAt(species, newestExiting);
+            if (target == null) return false; // no target to hand back — let the caller add normally
+
+            target.Unpark();                        // the path animator drags it back in-bounds
+            _exitingCount[species] = e - 1;         // committed count rises now, so the tablet lands at once
+
+            // The recalled fish are parked off-screen at an exit gate. Re-arm the entry sprint so they rush
+            // back the way a new school would, instead of ambling home from outside the bounds at cruising
+            // speed. Best-effort: if the buffers are not readable this frame they simply swim back normally.
+            _simulation.TryRearmEntrySprint(spawner.RenderingOffset + newestExiting * FishPerSchool(species),
+                                            FishPerSchool(species));
+            return true;
         }
 
         // Watches every swimming-out school of this species and culls the whole top block the instant ALL
@@ -882,6 +971,11 @@ namespace OceanX.BoidsGPU.Ecosystem
                 if (n <= 0) { _exitingCount[species] = 0; break; } // nothing left
 
                 if (e > trackedExiting) { deadline = Time.time + _exitTimeoutSeconds; trackedExiting = e; }
+                // The block can also SHRINK now, when an Add recalls the newest exiting school
+                // (TryRecallExitingSchool). Follow it down, otherwise trackedExiting stays at the old high
+                // water mark and a later Remove that grows the block back to — but not past — that mark
+                // would not reset the deadline, leaving the fresh school to inherit the leftover window.
+                else if (e < trackedExiting) { trackedExiting = e; }
 
                 e = Mathf.Min(e, n);
                 int firstExiting = n - e; // exiting schools are the contiguous top block [firstExiting, n-1]
@@ -919,6 +1013,9 @@ namespace OceanX.BoidsGPU.Ecosystem
                     break;
                 }
             }
+
+            // Released BEFORE the pump, so a Remove the pump drains can start a fresh routine.
+            _exitRoutineActive.Remove(species);
 
             // Resume any Adds that were queued while this species was busy swimming schools out.
             PumpQueue(species, spawner);

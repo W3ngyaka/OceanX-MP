@@ -13,7 +13,7 @@ namespace OceanX.BoidsGPU
         /// <summary>
         /// Total size of the struct, in bytes. Manually pre-calculated.
         /// </summary>
-        public const int Size = sizeof(float) * 20;
+        public const int Size = sizeof(float) * 21;
 
         /// <summary>
         /// Sensing distance of other fish around this one, for moving in line with them.
@@ -102,5 +102,13 @@ namespace OceanX.BoidsGPU
         /// (This slot used to be EmptyFiller, so the struct size is unchanged.)
         /// </summary>
         public float HorizontalAvoidBias;
+        /// <summary>
+        /// Turn-rate cap (degrees/s) used ONLY while a boid is sprinting in from an entry gate or out to an
+        /// exit point. 0 falls back to <see cref="MaxAngularVelocity"/>.
+        /// See <see cref="FishMovementProperties.MaxTurnAngularVelocity"/> for why those two moves need
+        /// their own, higher rate. Appended at the END on purpose: the HLSL BoidSchoolInfo must match this
+        /// layout field-for-field, and adding to the tail leaves every existing offset untouched.
+        /// </summary>
+        public float MaxTurnAngularVelocity;
     }
 }

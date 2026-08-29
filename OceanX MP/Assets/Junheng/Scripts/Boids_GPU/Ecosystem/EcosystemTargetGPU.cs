@@ -52,5 +52,36 @@ namespace OceanX.BoidsGPU.Ecosystem
             transform.position = worldPosition;
             AffecterPosition   = worldPosition;
         }
+
+        /// <summary>
+        /// Undo of <see cref="ParkAt"/>: hands the target back to its path animator so it is dragged
+        /// in-bounds again. The compute shader decides "this school is exiting" purely from whether its
+        /// target sits outside the simulation bounds, so the school stops beelining for the exit on the
+        /// very next frame it is back inside — nothing per-fish has to be told. Called by
+        /// <see cref="EcosystemSimulationGPU"/> when an Add arrives while this school is still swimming
+        /// out: rather than spawn a new school on top of one that is leaving, the leaving one is recalled.
+        /// No-op on a target that was never parked.
+        /// </summary>
+        public void Unpark()
+        {
+            if (_animator == null) return; // nothing to hand the target back to — leave it where it is
+
+            _animator.enabled = true;
+
+            // Put the target back ON its path, don't just switch the animator on. The animator steps the
+            // target from wherever it currently is toward its next waypoint — it never snaps to the path —
+            // so an un-parked target would set off from the off-screen exit point and crawl home at
+            // MovementSpeed, with its school following it around the exit gate the whole way. Resetting
+            // the animation drops the target straight back onto the start of its path, in-bounds, which is
+            // both what the fish should be swimming toward and what makes the shader stop reading the
+            // school as "exiting" (that test is purely: is this target outside the simulation bounds).
+            _animator.ResetAnimation();
+
+            // The affecter caches its own copy of the position; resync it from the transform the animator
+            // just moved, so the GPU sees the in-bounds target on the very next dispatch rather than one
+            // frame later. AffecterPosition's setter writes the transform, so read-then-write is a no-op
+            // on the transform itself and only refreshes the cached value.
+            AffecterPosition = transform.position;
+        }
     }
 }

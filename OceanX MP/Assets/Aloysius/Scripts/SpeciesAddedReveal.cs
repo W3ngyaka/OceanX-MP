@@ -28,6 +28,10 @@ public class SpeciesAddedReveal : MonoBehaviour
         public float hintDelayAfterAdd = 0.4f;
 
     [Header("Behaviour")]
+        // Show a species' card only on its very first add. The sim is the real authority here — it stops
+        // firing OnSpeciesFirstIntroduced after a species' debut, so a re-add after extinction never
+        // reaches this script at all. This stays as a local backstop for any other caller of SubmitReveal.
+        // Untick to show the card on every introduction event this script receives.
         public bool onlyFirstTime = true;
 
     [Header("Card image")]
@@ -38,6 +42,7 @@ public class SpeciesAddedReveal : MonoBehaviour
     private readonly Dictionary<int, SpeciesData> _indexToData = new Dictionary<int, SpeciesData>();
     private readonly Dictionary<SpeciesDataGPU, SpeciesData> _gpuToData = new Dictionary<SpeciesDataGPU, SpeciesData>();
     private readonly Dictionary<SpeciesData, Sprite> _dataToSprite = new Dictionary<SpeciesData, Sprite>();
+    private readonly HashSet<SpeciesData> _shownOnce = new HashSet<SpeciesData>();
 
     void Awake()
     {
@@ -109,6 +114,8 @@ public class SpeciesAddedReveal : MonoBehaviour
     void SubmitReveal(SpeciesData species)
     {
         if (species == null) return;
+        // HashSet.Add returns false if it is already there, so this both tests and records in one call.
+        if (onlyFirstTime && !_shownOnce.Add(species)) return;
         RevealQueue.Get().Enqueue(
             revealGroup,
             () =>
@@ -167,6 +174,7 @@ public class SpeciesAddedReveal : MonoBehaviour
 
     public void ResetShownHistory()
     {
+        _shownOnce.Clear();   // next visitor sees every card again
         if (revealGroup != null) revealGroup.alpha = 0f;
     }
 }

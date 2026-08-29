@@ -83,6 +83,29 @@ namespace OceanX
 
         private void Start()
         {
+            ResetAnimation();
+        }
+
+        /// <summary>
+        /// Snaps the target back onto the start of this animator's path and re-seeds the waypoint state to
+        /// match. Runs on <see cref="Start"/>, and again whenever the target has to be handed BACK to the
+        /// animator after something else moved it — see <c>EcosystemTargetGPU.Unpark</c>, where a school
+        /// that was parked at an off-screen exit point is recalled.
+        ///
+        /// This has to reposition the target, not just re-enable the animation. The Move* methods below
+        /// step the target from wherever it currently IS toward the next waypoint; they never snap to the
+        /// path. So a target left at an exit point simply crawls home from out there at MovementSpeed,
+        /// dragging its school along with it — the fish hang around the exit gate instead of rejoining the
+        /// reef. Re-seeding the waypoint at the same time matters too: position and next-waypoint are a
+        /// pair, and setting only the position would have the target set off toward a stale corner.
+        /// </summary>
+        public void ResetAnimation()
+        {
+            if (TargetTransform == null)
+            {
+                return;
+            }
+
             // Initialize the starting position of the target transform and all required movement properties based on the
             // movement pattern that the transform will follow.
             Vector3 shapeCenter = transform.position;
@@ -100,6 +123,7 @@ namespace OceanX
                     // destination point at the same point so it would be automatically updated to the next when the simulation starts.
                     TargetTransform.position = shapeCenter + shapeRightAxis * CircleRadius;
                     _nextCircleTargetPoint = shapeCenter + shapeRightAxis * CircleRadius;
+                    _currentCircleTargetPointAngle = 0f; // re-seed the sweep too, so a re-run starts a clean lap
                     break;
                 case PositionAnimationShape.Line:
                     // Initialize movement with the target transform placed in the center of the line and setting

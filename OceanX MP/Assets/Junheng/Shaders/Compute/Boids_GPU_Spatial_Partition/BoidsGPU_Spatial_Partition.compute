@@ -554,8 +554,29 @@ void UpdateMovementSpeed(bool shouldAccelerate, BoidSchoolInfo boidSchoolInfo, i
 
 // Function updates the current movement direction of the boid toward the target direction it would like to move
 // based on the current angular acceleration and movement speed.
-void UpdateMovementDirection(float3 targetDirection, BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo, bool snapTurn)
+// The angular-velocity ceiling (degrees/s) a boid may use this frame. `boosted` is true only while it is
+// sprinting in from an entry gate or out to an exit point; everything else it does — cruising, flocking,
+// hunting, obstacle avoidance — keeps the species' ordinary maxAngularVelocity. A maxTurnAngularVelocity
+// of 0 means the species never set one, so the cap falls back and behaves exactly as it did before.
+float ResolveTurnCap(bool boosted, BoidSchoolInfo boidSchoolInfo)
 {
+    if(boosted && boidSchoolInfo.maxTurnAngularVelocity > 0.0)
+    {
+        return max(boidSchoolInfo.maxTurnAngularVelocity, boidSchoolInfo.maxAngularVelocity);
+    }
+    return boidSchoolInfo.maxAngularVelocity;
+}
+
+// turnCap is the angular-velocity ceiling (degrees/s) this boid may use THIS frame — see ResolveTurnCap.
+void UpdateMovementDirection(float3 targetDirection, float turnCap, BoidSchoolInfo boidSchoolInfo, inout BoidInfo boidInfo, bool snapTurn)
+{
+    // Scale the angular ramp by however much the cap was raised, so a boid granted a faster turn actually
+    // reaches it in the same time it used to reach its ordinary one. Raising the ceiling alone would leave
+    // the fish accelerating into its turn for the whole entry and arriving before it ever got there.
+    float turnBoost = turnCap / max(boidSchoolInfo.maxAngularVelocity, 1e-4);
+    float maxAngularAcceleration = boidSchoolInfo.maxAngularAcceleration * turnBoost;
+    float angularJerkScaled      = boidSchoolInfo.angularJerk * turnBoost;
+
     // Calculate the angle that the fish would need to steer in order to face the desired movement direction.
     quaternion rotationTowardTarget = LookRotation(targetDirection, float3(0, 1, 0));
     quaternion currentRotation = LookRotation(boidInfo.direction, float3(0, 1, 0));
@@ -563,16 +584,16 @@ void UpdateMovementDirection(float3 targetDirection, BoidSchoolInfo boidSchoolIn
 
     // Based on the angle the fish needs to steer, check if we need to increase the angular acceleration or not.
     // Using 50 degrees as an angle threshold for starting to speed up at maximum acceleration.
-    float currentAngularJerk = boidInfo.angularVelocity < angleTowardTarget ? lerp(0.0, boidSchoolInfo.angularJerk, (angleTowardTarget - boidInfo.angularVelocity) / 50.0) : 0.0;
+    float currentAngularJerk = boidInfo.angularVelocity < angleTowardTarget ? lerp(0.0, angularJerkScaled, (angleTowardTarget - boidInfo.angularVelocity) / 50.0) : 0.0;
     float angularDeceleration = currentAngularJerk > 0.0 ? 0.0 : boidSchoolInfo.angularDeceleration;
     // Update the current angular acceleration and speed.
-    float currentAngularAcceleration = clamp(boidInfo.angularAcceleration + (currentAngularJerk - angularDeceleration) * _TimeDelta, 0.0, boidSchoolInfo.maxAngularAcceleration);
-    float currentAngularVelocity = clamp(boidInfo.angularVelocity + currentAngularAcceleration * _TimeDelta, 0.0, boidSchoolInfo.maxAngularVelocity);
+    float currentAngularAcceleration = clamp(boidInfo.angularAcceleration + (currentAngularJerk - angularDeceleration) * _TimeDelta, 0.0, maxAngularAcceleration);
+    float currentAngularVelocity = clamp(boidInfo.angularVelocity + currentAngularAcceleration * _TimeDelta, 0.0, turnCap);
 
     // Affecter reaction snap: bypass the ramp entirely — turn at a high multiple of max angular
     // velocity and apply the rotation fully — so the boid whips toward the escape heading the frame
     // it enters the zone. Turn-rate only; linear speed is handled separately (no speed-up here).
-    float appliedAngularVelocity = snapTurn ? boidSchoolInfo.maxAngularVelocity * AVOID_TURN_MULTIPLIER : currentAngularVelocity;
+    float appliedAngularVelocity = snapTurn ? turnCap * AVOID_TURN_MULTIPLIER : currentAngularVelocity;
     float rotationSmoothing = snapTurn ? 1.0 : 0.85;
 
     // Rotate the direction toward the desired one based on the (possibly boosted) angular velocity.
@@ -583,13 +604,13 @@ void UpdateMovementDirection(float3 targetDirection, BoidSchoolInfo boidSchoolIn
     // Keep angular velocity primed while snapping so the reaction stays instant across the whole zone.
     if(snapTurn)
     {
-        currentAngularVelocity = boidSchoolInfo.maxAngularVelocity;
+        currentAngularVelocity = turnCap;
     }
 
     // If we haven't increased the angular acceleration this frame, this means that the angular velocity should slowly deteriorate.
     if(currentAngularJerk <= 0.0)
     {
-        currentAngularVelocity = clamp(currentAngularVelocity - boidSchoolInfo.angularVelocityReduction * _TimeDelta, 0.0, boidSchoolInfo.maxAngularVelocity);
+        currentAngularVelocity = clamp(currentAngularVelocity - boidSchoolInfo.angularVelocityReduction * _TimeDelta, 0.0, turnCap);
     }
 
     // Update the current movement acceleration based on the percentage of the angular acceleration for this frame. 
@@ -871,7 +892,10 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
         // turning circle. Sizing it from the cruising rate made a slow-turning species claim to have
         // arrived while still tens of metres out — a shark at 22 deg/s stopped 42m short, which can be
         // inside the bounds and in full view — and freeze there.
-        float turnRateRadians = radians(max(boidSchoolInfo.maxAngularVelocity, 1.0)) * AVOID_TURN_MULTIPLIER;
+        // Uses the EXIT turn cap (ResolveTurnCap with boosted = true, which is what an exiting boid gets),
+        // not the plain one. Sizing this from a rate the boid no longer turns at would over-estimate the
+        // radius and bring back the very failure described above, just with different numbers.
+        float turnRateRadians = radians(max(ResolveTurnCap(true, boidSchoolInfo), 1.0)) * AVOID_TURN_MULTIPLIER;
         float captureRadius = max(_ExitStopDistance, 1.2 * boidInfo.speed / turnRateRadians);
         if(distToExit <= captureRadius)
         {
@@ -1070,8 +1094,16 @@ void BoidSimulationKernel (uint3 id : SV_DispatchThreadID)
         entrySprint = false;
     }
 
+    // Turn-rate ceiling for this frame. Entering and exiting boids get the species' maxTurnAngularVelocity
+    // (0 = not set, so fall back to the ordinary cap and behave exactly as before). Those are the two moves
+    // that sprint, and turning circle is speed / turn rate — so without a matching lift in turn rate a
+    // sprinting fish arcs far wider than it ever does cruising, and a slow turner like the shark cannot come
+    // about inside the box at all. Everything else — cruising, flocking, hunting, obstacle avoidance — is
+    // untouched and still turns at maxAngularVelocity.
+    float turnCap = ResolveTurnCap(entrySprint || exiting, boidSchoolInfo);
+
     // Steer the boid toward the desired movement direction (snapping instantly when reacting to an affecter).
-    UpdateMovementDirection(desiredMovementDirection, boidSchoolInfo, boidInfo, reactingToAffecter);
+    UpdateMovementDirection(desiredMovementDirection, turnCap, boidSchoolInfo, boidInfo, reactingToAffecter);
 
     if(reachedExit)
     {

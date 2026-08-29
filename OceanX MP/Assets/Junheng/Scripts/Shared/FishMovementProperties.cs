@@ -45,6 +45,23 @@ namespace OceanX
         /// </summary>
         public float MaxAngularVelocity = 180.0f;
         /// <summary>
+        /// Maximum angular velocity (degrees/s) this species may turn at while it is swimming IN from an
+        /// off-screen entry gate or OUT to an exit point — the add/remove animations. Nothing else uses it:
+        /// ordinary cruising, flocking and hunting all stay on <see cref="MaxAngularVelocity"/> above.
+        ///
+        /// Those two moves are the ones that have to cover ground on a schedule, and they are also the ones
+        /// where the fish sprints — and a boid's turning circle is speed / turn rate, so sprinting at the
+        /// species' ordinary turn rate makes the arc enormous. A slow-turning species (the shark at 22 deg/s)
+        /// ends up with a turning circle wider than the simulation box, so it cannot come about inside the
+        /// tank at all: it sails in, overshoots, and swings back through frame before it settles.
+        ///
+        /// Leave at 0 to fall back to <see cref="MaxAngularVelocity"/>, i.e. the behaviour before this
+        /// existed. Otherwise set it ABOVE MaxAngularVelocity; the simulation scales the angular
+        /// acceleration and jerk by the same ratio, so the fish reaches the higher rate just as promptly as
+        /// it used to reach its normal one, rather than spending the whole entry ramping up to it.
+        /// </summary>
+        public float MaxTurnAngularVelocity = 0f;
+        /// <summary>
         /// How fast does the angular velocity reduces over time after the fish stops turning.
         /// </summary>
         public float AngularVelocityReduction = 200.0f;

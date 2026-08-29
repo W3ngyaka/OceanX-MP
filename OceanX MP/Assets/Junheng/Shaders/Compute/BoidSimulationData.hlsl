@@ -124,6 +124,14 @@ struct BoidSchoolInfo {
     // each rock accumulates until the fish is at the surface — which is what this exists to stop.
     // (Was emptyFiller; reusing it keeps the struct size unchanged.)
     float horizontalAvoidBias;
+    // Turn-rate cap (degrees/s) used ONLY while a boid sprints in from an entry gate or out to an exit
+    // point — the add/remove animations. 0 falls back to maxAngularVelocity. Those two moves are the ones
+    // that sprint, and a turning circle is speed / turn rate, so at the species' ordinary rate a sprinting
+    // fish carves an arc far wider than it does when cruising — wider than the whole box, for the slowest
+    // turners. Appended at the END to match the C# BoidSchoolInfoGPU, which grew the same way; every
+    // existing field keeps its offset. (21 floats now, so the struct is no longer a clean multiple of 16
+    // bytes — fine for a StructuredBuffer stride, same as BoidInfo above.)
+    float maxTurnAngularVelocity;
 };
 
 // Structure defining information about the simulation affecter that affects the 

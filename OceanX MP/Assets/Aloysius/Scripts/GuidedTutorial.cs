@@ -139,6 +139,9 @@ public class GuidedTutorial : MonoBehaviour
     public void Begin()
     {
         _running = true;
+        // Re-arm the Alucia gate: she stays quiet until this guided run finishes.
+        var net0 = EcosystemNetworkManagerGPU.Instance;
+        if (net0 != null) net0.SetTutorialDoneRpc(false);
         _step = Step.Welcome;
         SetVisible(true);
         ApplyStep();

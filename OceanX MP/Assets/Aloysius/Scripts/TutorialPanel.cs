@@ -83,9 +83,8 @@ public class TutorialPanel : MonoBehaviour
     public void Hide()
     {
         SetVisible(false);
-        // Tell the host the how-to panel was dismissed, so Alucia can begin her intro.
-        var net = EcosystemNetworkManagerGPU.Instance;
-        if (net != null) net.SetTutorialDoneRpc(true);
+        // NOTE: Alucia's intro is now gated on the GUIDED tutorial finishing (GuidedTutorial.Finish),
+        // not on this panel — so she doesn't talk over the guided steps. No SetTutorialDoneRpc here.
     }
 
     public void ResetForNewSession()

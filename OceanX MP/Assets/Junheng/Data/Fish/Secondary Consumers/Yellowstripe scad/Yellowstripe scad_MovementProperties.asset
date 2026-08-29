@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Yellowstripe scad_MovementProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMovementProperties
   CruisingSpeed: 2.2
-  MaxSpeed: 10
+  MaxSpeed: 24
   WaterFriction: 0.45
-  Deceleration: 15
+  Deceleration: 100
   MaxAcceleration: 20
   MovementJerk: 1000
   MaxAngularVelocity: 180

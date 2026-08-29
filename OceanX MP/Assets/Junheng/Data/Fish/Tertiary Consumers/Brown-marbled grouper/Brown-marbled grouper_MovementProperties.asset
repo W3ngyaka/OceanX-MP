@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Brown-marbled grouper_MovementProperties
   m_EditorClassIdentifier: Assembly-CSharp::OceanX.FishMovementProperties
   CruisingSpeed: 0.5
-  MaxSpeed: 6
+  MaxSpeed: 13
   WaterFriction: 0.45
-  Deceleration: 15
+  Deceleration: 100
   MaxAcceleration: 20
   MovementJerk: 1000
   MaxAngularVelocity: 20

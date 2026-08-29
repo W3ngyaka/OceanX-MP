@@ -261,10 +261,14 @@ public class GuidedTutorial : MonoBehaviour
     {
         Debug.Log("[GT DEBUG] Finish() called");
         _running = false;
+        // If the visitor skipped while the species modal was open, close it too.
+        if (ModalController.Instance != null && ModalController.Instance.gameObject.activeSelf)
+            ModalController.Instance.Close();
+        _modalOpened = false;
         ClearSpotlight();
         CleanupTouched();
         var d = transform.Find("Dim"); if (d != null) d.gameObject.SetActive(true);
-        SetVisible(false);
+        SetVisible(false, instant: true);   // hard hide — no lingering dim on Skip
         // Tell the host Alucia can talk now (same signal the panel used).
         var net = EcosystemNetworkManagerGPU.Instance;
         if (net != null) net.SetTutorialDoneRpc(true);

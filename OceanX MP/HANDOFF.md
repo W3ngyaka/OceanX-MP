@@ -1,6 +1,6 @@
 # Restore the Reef — Handoff Document
 
-_Last updated: 2026-08-18 — reflects all commits through 21a01f9f (2026-08-11), plus the uncommitted shark waypoint patrol (§7.25)_
+_Last updated: 2026-08-29 — sim/backend sections caught up through `23c2751c`. **Not yet documented:** `GuidedTutorial.cs` (new, `18478329`, Aloysius) and the 2026-08-28 moray cave changes (`d4beee0c`, Akil) — §7.18 and §7.24 are stale by their owners' work._
 
 > This is the single source of truth for the project. Update the date above whenever you edit this file.
 > Formerly named **OceanX MP** / **Balance the Ocean** — renamed to **Restore the Reef** 2026-07-26.
@@ -391,6 +391,15 @@ Historically had THREE `Boids_Demo` / `SCENE_MainScene` copies (JunHeng had the 
 
 ## 7.2 Population Dynamics + Eco-Health (ratio-driven, global)
 
+> ### ⚠ AS SHIPPED, THE AUTOMATIC TICK IS OFF (verified 2026-08-29)
+> `_enablePopulationDynamics` is **`0` in all three production scenes** (`Host.unity`, `Trifold.unity`, `SCENE_MainScene.unity`) — the C# default is `true`, so the scenes override it. **Populations therefore only ever change from manual Add/Remove.** Nothing grows, shrinks or goes extinct on its own.
+>
+> Everything described in the rest of this section is implemented and correct, but **dormant** unless someone re-ticks that box. Read it as "how the model works if switched on", not "what the visitor sees".
+>
+> Two things that are easy to get wrong here:
+> - **Eco-health still works.** `EcoHealth01` is a computed property (`ComputeEcoHealth01()`, evaluated on demand), not something the tick writes. It reads live school counts, so the health bar responds to manual Add/Remove exactly as before.
+> - **Shoaling still runs.** `RunShoalingTick()` is called from `PopulationTickRoutine` *outside* the `_enablePopulationDynamics` gate, on purpose — merging reshuffles which schools swim together but never changes how many fish exist, so it is not the population master switch's business. The tick coroutine is therefore still running even when dynamics are off.
+
 **⚠ Natural births/deaths (Week 8) AND per-species starvation fields (Week 9) are gone.** `ReproductionRate` / `NaturalDeathRate` / `StarvationDeathRate` / `StarvationThreshold` were all deleted from `SpeciesDataGPU`. Balance is now **global**; per-species behaviour comes from `FishPerSchool` / `MaxSchools` / prey/predator lists.
 
 **Symmetric ratio-driven predator/prey dynamics:**
@@ -575,7 +584,8 @@ Fish flocking + numbers were **re-tuned from the research doc** (Akil Hussain, `
 `IntroductionCameraDirectorGPU.cs` — cinematic shot that catches a species' **first** school at its off-screen entry gate and follows the real fish as they swim in, then releases so the `CinemachineBrain` blends back to the overview camera.
 
 **Driven by two hooks on `EcosystemSimulationGPU`:**
-- **`OnSpeciesFirstIntroduced`** (`event Action<SpeciesDataGPU>`) — fires inside `AddSchool` **only on the 0→1 transition** (fresh species entering), after the fish exist at the gate. Not fired for subsequent adds or automatic population-tick growth.
+- **`OnSpeciesFirstIntroduced`** (`event Action<SpeciesDataGPU>`) — fires inside `AddSchool` on a species' **debut only**: 0→1 **and** never having debuted before this session. The "never before" half is a latching `HashSet<SpeciesDataGPU> _everIntroduced`, tested and recorded in one call (`(n == 0) && _everIntroduced.Add(species)`), cleared only by `ResetToEmpty` so the next visitor gets every intro again. Not fired for subsequent adds.
+  - **⚠ Corrected 2026-08-29.** This bullet used to read "*only on the 0→1 transition … not fired for subsequent adds or automatic population-tick growth*". Both halves were wrong. **0→1 alone is not a debut** — a species driven to extinction and added back hits 0→1 again, and replayed the whole reveal card + camera fly-in as though the visitor had never seen it (the reported bug, fixed in `23c2751c`). And the tick claim was never true at all: auto-growth calls the same `AddSchool`, so it fired the intro too. In practice that never surfaced because the population tick is switched off in every production scene (see §7.2) — but the guard now covers it either way, so re-enabling dynamics cannot resurrect the bug.
 - **`TryGetSchoolCentroid(species, schoolIndex, out Vector3)`** — public wrapper over the private `TrySchoolCentroid`; synchronous GPU readback of one school's live centre-of-mass. ⚠ Throttle callers — do **not** poll every frame.
 
 **Smooth follow:** readback is throttled + the centroid jitters, so the director `SmoothDamp`s a proxy transform toward the latest read every frame; the intro camera Follows/LookAts the proxy (continuous motion regardless of readback rate).
@@ -589,6 +599,29 @@ Fish flocking + numbers were **re-tuned from the research doc** (Akil Hussain, `
 - Framing offsets re-authored into the school's local frame and **renamed** (`…OffsetLocal`) so stale world-space values in existing scenes are orphaned and every scene picks up the new defaults, while staying inspector-tunable.
 - **New tunables:** `_aimDamping` (turn smoothness), `_entrySettleFrames`, `_minHeadingSpeed` (milling fallback). Binding mode (World Space) + aim damping forced from code so all scenes match.
 - ⚠ **Test in Play mode** — runtime-forced binding/damping don't show in the editor Solo preview.
+
+### Tracking rework — lead the fish, don't chase them (`dd609a87`, 2026-08-24)
+
+The shot used to feel like it was permanently *arriving* rather than settled. Root cause was a stack of small delays that all pointed the same way, so they added up instead of cancelling:
+
+- **The proxy was damped toward a STALE target.** It `SmoothDamp`ed toward the last readback, so it lagged by the smoothing time *on top of* the readback age. Now the target is **extrapolated** — `_lastReadCentroid + _schoolVelocity * (timeSinceRead + _followSmoothTime)` — i.e. aimed at where the fish *will* be one smoothing time from now, so the damping's own delay lands it back on the present. Filtering costs no tracking accuracy any more.
+- **`_leadStrength` (0–1, default 0.6) is THE framing knob.** Camera looking ahead of the fish → lower it; trailing behind → raise it. `1` fully cancels the delay, which is only exact at a *steady* speed — entering fish sprint then decelerate, so a full lead overshoots as they settle.
+- **`_velocitySmoothTime`** steadies the speed reading only, never the position — the second jitter knob. Too high and it is slow to notice the post-sprint deceleration, which throws the camera ahead.
+- **`_readbackEveryNFrames`** (default 4). The readback is a **synchronous GPU stall**; the extrapolation covers the gap exactly, so reading more often buys accuracy you already have at the cost of stalls. `_maxExtrapolationTime` caps how stale a reading may be counted as, so a run of failed readbacks can't fly the proxy off.
+- **`_cameraPositionDamping`** (default 0.5) — pushed from code like the aim damping. This was the single biggest contributor to "forever arriving": at 1.5s the camera is still most of a tank-length short of its mark while the fish are already sprinting.
+- **`_forceBrainLateUpdate`** — the Brain's default Smart Update picks its rate by *watching how the tracking target moves*, and a script-driven proxy that sits frozen between shots is exactly the case it reads wrong. A wrong pick evaluates the camera at the physics rate (50 Hz) while fish are drawn at frame rate — a small mismatch every frame that reads as relentless catch-up. Only overrides Smart Update; a Brain deliberately set to Fixed or Manual is left alone.
+- **`_aimHeadingAtTarget`** — **this is why a SideView sometimes arrived as a 3/4.** New fish are spawned pointing at the simulation centre, then immediately steer onto their school's own randomised path, so their opening heading is *not* the direction they settle into — and the camera bakes one fixed world offset from that opening heading. Aiming at the school's swim *target* instead frames the direction they are actually going.
+- The same commit fixed the sim advancing only every other frame — see §9.18. Entry jitter had two separate causes and both had to go.
+
+### Per-species framing distance (`18eea1c3`, 2026-08-24)
+
+`_speciesFramingOverrides` — one shared offset has to frame twelve species whose bodies are nothing like the same size, so a distance that suits a damselfish school crops a shark. The override is a **scale multiplier on the whole offset**, so the angle you authored is preserved exactly and the camera only sits further out along it. Species left out frame at 1× and are unchanged.
+
+⚠ **Dial this in on the real display, not the editor Game view.** Cinemachine's FOV is *vertical*, so a narrow viewport (a trifold panel) shows less to the sides than a wide one at the same setting and crops a broadside sooner.
+
+### Aim down the body, not the nose (`1e820fc1`, 2026-08-24)
+
+`AimOffsetBehind` on the framing override — metres *behind* the school centre to aim at. Added for the giant moray: it is long and thin, so centring on the school centroid put most of the animal out of frame behind the focus point. Resolved once per shot (not per frame) and applied from the first proxy placement, so the shot never slides into place. `0` for every species not listed.
 
 ## 7.9 Big-Screen Reveal & Unlock Cards
 
@@ -958,6 +991,52 @@ The following components latched `_played` / `_shownOnce` / `_initialized` and n
   - `_entrySpawnMinSeparation` (default `3`) — preferred gap between a new origin and recent ones.
 - ⚠ **With only ONE entry marker under heavy spam** there's a hard space limit — add more entry markers (they round-robin) or raise the jitter radius.
 
+### Fish spawning inside each other WITHIN one school (`989cfb77`, 2026-08-24)
+
+Different problem from the anti-stacking above, and fixed separately. That one spread **schools** apart; this one is about fish **inside a single school** overlapping at birth. All in `BoidSpawnUtility`.
+
+- **`GenerateEquidistantPointsInsideSphere` never actually guaranteed the spacing** it was named for. Replaced with **`GenerateSeparatedPoints`** — a jittered lattice whose pitch *is* the minimum spawn distance, so separation is enforced rather than hoped for.
+- **`minSpawnDistanceBetweenBoids` now floors at the species' own `SeparationRange`** (`BoidSpawnerBase.ResolvedMinSpawnDistance`). Fish were being born tighter than their own flocking rules want them, so the school's first act was to shove itself apart.
+- **The bounds reduction was half what it needed to be.** It reserved `spawnAreaDimensionSize * 0.5`, but the cluster centre is picked *inside* the reduced bounds and the offsets reach half a cluster width in *each* direction — so the outer fish spawned **through the boundary**, where the compute shader reads them as a school on its way out. Now reserves the cluster's **full** width, `Vector3.Max(..., zero)`-clamped so a cluster wider than the tank degrades to "spawn at the centre" rather than inverting the range.
+
+### Add during a swim-out = RECALL, not a new school (`23c2751c`, 2026-08-29)
+
+**Symptom:** spam Remove to extinction, then spam Add — the tablet number climbed to the cap over a visibly empty ocean, then the whole batch of schools arrived at once seconds later.
+
+**Cause:** two separate things, both real.
+- `PumpQueue` opened with `if (IsExiting(species)) return;`, so **every Add sat in the op queue for the entire swim-out** (up to `_exitTimeoutSeconds` = 25s). Meanwhile `OptimisticPopulationStore` on the tablet had already counted the taps, so the displayed number was a promise the sim had not accepted.
+- `AddSchool`'s cap test used the **raw** count, which still includes schools mid-swim-out. At 8 of 8 leaving, `n` was still 8 and the tap was silently swallowed by fish that had already stopped counting for the visitor.
+
+**Why the pump blocked in the first place** — this is the load-bearing constraint, do not "simplify" it away: `CommitRemoveSchools` requires that *exiting schools are the contiguous TOP block* `[n-e, n-1]`, so culling them leaves every survivor's sub-group index unchanged, and `BatchExitRoutine` recomputes `firstExiting = n - e` on every poll. A **new** school takes index `n` — *above* the block — which breaks contiguity, and the routine would then poll and cull the wrong schools, including the newcomer.
+
+**Fix — `TryRecallExitingSchool`.** While anything is exiting, an Add is served by turning the newest departure around instead of spawning a school. Removal parks *downward* from the top (`StartRemoveExitImmediate` parks `settled - 1`), so the newest exit is the block's **lowest** index, `n - e`. Un-parking exactly that one shrinks the block from the bottom to `[n-e+1, n-1]` — **still a contiguous top block**. The invariant is worked *with*, not fought. Nothing is created or destroyed, so there is **no `ReinitializeBuffers()`** — a recall is far cheaper than an add.
+
+Spam-remove-then-spam-add ×12 against 10 exiting resolves as 10 recalls (instant) then 2 ordinary adds, which proceed immediately because `_exitingCount` is now 0.
+
+- **`EcosystemTargetGPU.Unpark()`** — mirror of `ParkAt`. Re-enables the animator, calls **`TransformAnimator.ResetAnimation()`**, then resyncs `AffecterPosition` from the transform.
+  - ⚠ **The reset is not optional.** `TransformAnimator.Update` steps the target from wherever it currently *is* toward its next waypoint — it never snaps to the path. Just re-enabling the animator left the target at the off-screen exit point, crawling home at `MovementSpeed` (2 m/s) with its whole school in tow, milling around the gate. `ResetAnimation()` (extracted from `Start`, so both share one code path) drops it straight back onto the path start **and** re-seeds the waypoint state — position and next-waypoint are a pair, and setting only the position sends the target off toward a stale corner.
+  - The `AffecterPosition` resync matters for timing: the affecter caches its own copy, so without it the GPU sees the exit-point position for one more dispatch — and the shader decides "exiting" purely from `IsStrictlyOutsideBounds(exitTarget.position)`, so the school would read as exiting for an extra frame.
+- **`BoidSimulationGPU.TryRearmEntrySprint(startIndex, count)`** — recalled fish are parked off-screen, and would otherwise amble home at cruising speed. Writes `-1` into `EntryBoostTimeRemaining` (the same value `BoidSpawnerGPU.SpawnBoids` arms a fresh school with) so they rush back at MaxSpeed, and the kernel flips it to `_EntryBoostDuration` when they cross in, exactly as for a real arrival. **Skips fish already inside the bounds** — writing `-1` to one of those makes the kernel read it as an arrival that never crossed in, so it would sprint until it happened to wander out and back. Read-modify-write of a buffer slice = **two GPU stalls**, fine at one-visitor-tap frequency, never call it per frame.
+- **`_exitRoutineActive` guard.** A recall can now zero `_exitingCount` **from outside `BatchExitRoutine`, while it is asleep between polls.** A Remove landing in that window used to see `alreadyExiting == 0` and start a **second** routine on the same species — both would then cull the block. Routine start now keys off this set, not the count. Released just before the tail `PumpQueue`, and cleared in `OnDisable` for the same reason that method already clears `_exitingCount`: a killed coroutine never runs its own cleanup, and a stale entry would permanently stop any future routine from starting. **Deliberately NOT cleared in `ResetToEmpty`** — a live routine there self-releases on its next poll, and clearing it early would re-open the very race the guard exists to close.
+- **The cap check deliberately stays on the RAW count.** It is tempting to switch it to `CountCommittedGroups` so departing fish stop blocking an Add — **don't.** Each species reserves exactly `MaxSchools` flock IDs (`SetupAllSpecies`) and a school's ID is `base + index`, so a raw overshoot aliases a flock onto the **next species' reservation** and silently merges two species into one shoal. The population tick calls `AddSchool` directly, bypassing the pump, so a committed-based cap really could overshoot. It costs nothing to keep raw: the pump recalls before ever reaching `AddSchool`, and by the time it gets there nothing is exiting and the two counts are equal.
+
+### Faster turning for entry / exit only (`23c2751c`, 2026-08-29)
+
+**`FishMovementProperties.MaxTurnAngularVelocity`** (deg/s) — the turn-rate cap used **only** while a boid sprints in from an entry gate or out to an exit point. `0` falls back to `MaxAngularVelocity`, i.e. pre-existing behaviour. Cruising, flocking, hunting and obstacle avoidance are untouched.
+
+Turning circle is `speed / turn rate`, and entry/exit are exactly the two moves that *sprint* — so at the species' ordinary turn rate the arc becomes enormous. The blacktip shark at 22°/s and 22 m/s had a **57 m turning radius, a 114 m circle — wider than the whole 74 m box**, so it physically could not come about inside the tank: it sailed in, overshot, and swung back through frame.
+
+- Resolved by `ResolveTurnCap(boosted, schoolInfo)` in the compute shader, used in two places: `UpdateMovementDirection` (via a new `turnCap` parameter) and the **exit capture radius**, which is sized from the turn rate — leaving that on the old rate would over-estimate the radius and reproduce the documented "shark stopped 42 m short, in full view, and froze" bug with new numbers.
+- Angular **acceleration and jerk scale by the same ratio** (`turnCap / maxAngularVelocity`). Raising the ceiling alone would leave the fish still ramping into its turn for the whole entry and arriving before it ever got there — the same trap as raising a speed cap without the acceleration to reach it.
+- Current values give every species a turning radius comfortably inside the ~33 m box half-width: shark `70` (57.3 m → 18.0 m), grouper `70` (37.2 → 10.6), ray `70` (28.6 → 9.8), trevally `110` (31.0 → 13.5), mid-tier `110` (~20 → ~9.5), the three 180°/s species `260` (4–8 → 4–5).
+
+> ### ⚠ `BoidSchoolInfo` grew from 20 to 21 floats
+> `MaxTurnAngularVelocity` was appended at the **tail** of both `BoidSchoolInfoGPU.cs` and the HLSL `BoidSchoolInfo` in `BoidSimulationData.hlsl`, so every existing field keeps its offset. **The two must always be changed together, field-for-field, and `BoidSchoolInfoGPU.Size` updated to match** (it is the `ComputeBuffer` stride). A mismatch produces *garbage behaviour, not a compile error*.
+>
+> The struct is no longer a clean multiple of 16 bytes. That is fine for a `StructuredBuffer` stride — `BoidInfo` has been 18 floats for a while — the 16-byte note at the top of the file is a footprint nicety, not a correctness requirement.
+>
+> `BoidsGPU_Brute.compute` shares the same include, so its struct grows identically and its stride still matches; its own `UpdateMovementDirection` keeps the old signature and simply ignores the new field.
+
 ### Swim-out anti-freeze timeout (fixes §10.4)
 - **`_exitTimeoutSeconds`** (default **25s**, serialised, in "Removal animation (swim-out)" group).
 - Was: `BatchExitRoutine` had a `while(true)` with no timeout — one fish snagged on a reef obstacle never reached its exit radius, so `_exitingCount` never cleared, `IsExiting` stayed true, and that species ignored **Add and Remove for the rest of the session**.
@@ -1304,6 +1383,16 @@ Both clear `_spriteCache` **without destroying** the Sprites or their Texture2Ds
 
 A smaller adjacent leak was fixed 2026-07-16: `ContentService.LoadSprite` now destroys the throwaway Texture2D when a PNG fails to decode (was re-leaking on every card open, since misses aren't cached).
 
+## 9.18 Ping-ponging the boid buffer against the sort scratch — sim ran at half rate (`dd609a87`, 2026-08-24)
+
+- **Symptom:** a visible half-rate stutter, worst while fish were entering — which is why it read as "entry jitter" and got chased in the camera code first. It was neither the camera nor the entry logic.
+- **Cause:** the two buffers are **not interchangeable**, and the code was alternating between them as if they were:
+  - `_boidsComputeBuffer` — the **original-order state buffer**, the actual simulation result.
+  - `_sortedBoidsComputeBuffer` — **cell-order scratch**, rewritten from scratch every frame by the grid's `ReArrangeBoids` kernel.
+- Swapping them alternately broke both halves at once. On the frames that read the sorted buffer, the sort had **already overwritten the previous frame's simulation result** with a re-sort of stale state — so **every other frame's work was discarded and the fish only advanced once per two frames**.
+- **Rule:** simulation state lives in `_boidsComputeBuffer`, full stop. The sorted buffer is scratch — never read it expecting last frame's result, and never treat the pair as a ping-pong. Anything doing a CPU readback of school state (`TryCountBoidsWithinRadius`, `TryGetSchoolCentroid`, `TryRearmEntrySprint`) must address the original-order buffer, which is what `BoidSpawnerGPU.RenderingOffset` indexes into.
+- ⚠ Worth remembering as a debugging lesson too: the symptom appeared in the *camera*, the bug was in *buffer management*. Two independent causes were producing one visual, and fixing the camera alone never would have resolved it.
+
 ---
 
 # 10. Known Issues / Watchpoints
@@ -1361,6 +1450,8 @@ A smaller adjacent leak was fixed 2026-07-16: `ContentService.LoadSprite` now de
 - **Eco-health does NOT allocate** and its per-frame cost is fine — `_committedScratch` is reused and every enumerator is a struct. (Real latent defect: `BuildCommittedCounts` hands callers a *shared mutable* dictionary — aliasing hazard.)
 - **Unlock events are instance events, not static** — no cross-scene-reload subscriber leak. Singleton guard is correct.
 - **Two compute-shader bugs previously flagged are already fixed** — cell Z-stride now correctly reads `_CellCountX * _CellCountY`, and cohesion averaging divides by `neighborsCount + 1`.
+- **§7.8 "`OnSpeciesFirstIntroduced` … not fired for subsequent adds or automatic population-tick growth"** — was wrong on **both** halves (corrected 2026-08-29, `23c2751c`). 0→1 alone is not a debut: a species driven extinct and added back hit 0→1 again and replayed the reveal card + camera fly-in. And auto-growth calls the same `AddSchool`, so it fired the intro too — that just never surfaced because the population tick is off in every production scene. Now latched per session by `_everIntroduced`.
+- **The population tick is DISABLED as shipped** — `_enablePopulationDynamics: 0` in all three production scenes, so §7.2's ratio dynamics are dormant and populations move only on manual Add/Remove (verified 2026-08-29). Eco-health and shoaling both still work; see the banner at the top of §7.2 for why.
 
 ---
 
@@ -1457,6 +1548,22 @@ Update the "Last updated" date at the top of this file whenever you edit it, so 
 - **`UseSpineDeformation`** — bool, moray-only. See §7.6.
 
 Tune the global band/rates live in Play mode by watching whether the reef settles or collapses.
+
+## Movement tuning — add/remove feel (each `*_MovementProperties.asset`)
+
+Retuned 2026-08-29 (`5f17204e`, `23c2751c`) because schools took too long to arrive on camera after an Add. The three knobs interact, so change them as a set:
+
+| Field | Value | What it governs |
+|---|---|---|
+| `MaxSpeed` | 12–26 by species | **Arrival time.** The gate→bounds leg runs pinned at `MaxSpeed` the whole way (jerk `1000` and terminal `MaxAcceleration/WaterFriction` ≈ 44 m/s mean it saturates the cap within a frame or two), so time-to-arrive is simply `distance / MaxSpeed`. |
+| `Deceleration` | `100` (was 15) | How fast the boid stops **pushing** — bleeds `acceleration` to 0 in `MaxAcceleration / Deceleration` = 0.2s (was 1.33s). Does not touch cruising or max speed. |
+| `MaxTurnAngularVelocity` | 70–260 by species | Entry/exit turn cap only. See §7.19. `0` = fall back to `MaxAngularVelocity`. |
+
+⚠ **`Deceleration` is nearly spent as a knob and `MaxSpeed` has a hard ceiling.**
+- Deceleration only bleeds *acceleration*. Once that hits 0 the remaining slowdown is pure water friction (`0.45`, a **2.2s time constant**) and no deceleration value can touch it — a fish dropping 18 → 2 m/s still takes `ln(18/2)/0.45` ≈ 4.9s. Above roughly `1200` it is instant at 60 fps and further increases do literally nothing. **`WaterFriction` is the knob that actually owns that tail** (0.45 → 0.9 halves it), at the cost of making *all* speed changes snappier.
+- `MaxSpeed` is bounded by turning circle (`speed / turn rate`) against the ~33 m box half-width — which is exactly what `MaxTurnAngularVelocity` exists to relieve. Push speed up without it and fish overshoot the bounds on entry and swing back through frame.
+
+> **`_simulationSpeedMultiplier` is `0.5` in `Host.unity` and `Trifold.unity`, but `1` in `SCENE_MainScene.unity`.** `BoidSimulationBase` does `timeDelta = Time.deltaTime * _simulationSpeedMultiplier`, so **the two scenes you test in run the whole sim at half speed** — every fish moves at half its authored m/s in real time. The field is declared `[Range(1.0f, 10.0f)]`, so **0.5 is below its own minimum** and cannot be reached with the Inspector slider; it predates the attribute or was set from script. Anyone who nudges that slider snaps it to 1 and silently doubles the entire simulation. Decide whether the 0.5 is deliberate slow-motion for the exhibit and make all three scenes agree.
 
 ## 100% eco-health recipe
 

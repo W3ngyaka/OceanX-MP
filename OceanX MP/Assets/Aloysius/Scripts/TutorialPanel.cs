@@ -44,7 +44,7 @@ public class TutorialPanel : MonoBehaviour
         var net = EcosystemNetworkManagerGPU.Instance;
         if (net == null) return;
 
-        if (!_subscribed) { _subscribed = true; net.OnStarted += TryAutoShow; }
+        if (!_subscribed) { _subscribed = true; net.OnStarted += TryAutoShow; net.OnReset += HandleReset; }
 
         if (_rearmPending)
         {
@@ -58,7 +58,16 @@ public class TutorialPanel : MonoBehaviour
     void OnDestroy()
     {
         var net = EcosystemNetworkManagerGPU.Instance;
-        if (net != null) net.OnStarted -= TryAutoShow;
+        if (net != null) { net.OnStarted -= TryAutoShow; net.OnReset -= HandleReset; }
+    }
+
+    void HandleReset()
+    {
+        // F9 reset: re-arm only. The panel goes back behind the start screen; Update() shows it
+        // again once the next visitor taps to start (HasStarted true). Don't show it now.
+        _rearmPending = true;
+        _shownOnce = false;
+        Hide();   // make sure it's not visible on the start screen
     }
 
     void TryAutoShow()

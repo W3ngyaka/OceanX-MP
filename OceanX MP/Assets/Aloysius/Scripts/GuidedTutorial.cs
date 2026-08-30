@@ -14,7 +14,7 @@ public class GuidedTutorial : MonoBehaviour
 {
     public static GuidedTutorial Instance { get; private set; }
 
-    public enum Step { Welcome, TapFish, ReadInfo, ViewDetails, HoldFish, PressAdd, WatchHealth, OrganismsTab, ExploreOrganisms, BackToFoodWeb, FreeExplore, Done }
+    public enum Step { Welcome, TapFish, ReadInfo, ViewDetails, HoldFish, PressAdd, WatchHealth, UnlockGoal, OrganismsTab, ExploreOrganisms, BackToFoodWeb, HintsTab, FreeExplore, Done }
 
     [Header("Refs")]
     public CanvasGroup group;         // whole overlay fade + input block
@@ -24,7 +24,8 @@ public class GuidedTutorial : MonoBehaviour
     public Button skipButton;         // let staff/visitors bail out
 
     [Header("Targets to spotlight")]
-    public RectTransform tapFishTarget;    // a fish bubble
+    public RectTransform tapFishTarget;
+    public RectTransform lockedFishTarget;    // a locked species (to explain unlocking)    // a fish bubble
     public RectTransform addButtonTarget;  // the + button
     public RectTransform healthTarget;     // the health gauge
     public RectTransform organismsTabTarget;
@@ -78,6 +79,7 @@ public class GuidedTutorial : MonoBehaviour
                 _subscribed = true;
                 if (net.HasStarted) BeginSoon();
                 else net.OnStarted += BeginSoon;
+                net.OnReset += HandleReset;   // F9 reset -> replay the tutorial for the next visitor
             }
         }
 
@@ -101,7 +103,7 @@ public class GuidedTutorial : MonoBehaviour
                 // Advance the tap-to-continue steps on any screen tap — but ignore taps for a short beat
         // after entering the step, so the tap that COMPLETED the previous action step doesn't also
         // skip through this one in the same frame.
-        if (_running && (_step == Step.Welcome || _step == Step.ReadInfo || _step == Step.WatchHealth || _step == Step.ExploreOrganisms || _step == Step.FreeExplore))
+        if (_running && (_step == Step.Welcome || _step == Step.ReadInfo || _step == Step.WatchHealth || _step == Step.UnlockGoal || _step == Step.HintsTab || _step == Step.ExploreOrganisms || _step == Step.FreeExplore))
             if (Time.unscaledTime - _stepEnteredAt > 0.35f)
                 if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
                     Advance();
@@ -110,7 +112,31 @@ public class GuidedTutorial : MonoBehaviour
     void OnDestroy()
     {
         var net = EcosystemNetworkManagerGPU.Instance;
-        if (net != null) net.OnStarted -= BeginSoon;
+        if (net != null) { net.OnStarted -= BeginSoon; net.OnReset -= HandleReset; }
+    }
+
+        void HandleReset()
+    {
+        Debug.Log("[GT DEBUG] HandleReset - re-arming tutorial");
+        StopAllCoroutines();
+        _running = false;
+        ClearSpotlight();
+        CleanupTouched();
+        if (ModalController.Instance != null && ModalController.Instance.gameObject.activeSelf)
+            ModalController.Instance.Close();
+        var d = transform.Find("Dim"); if (d != null) d.gameObject.SetActive(true);
+        SetVisible(false, instant: true);
+        // Wait for the next visitor to tap START before replaying (don't run on the title screen).
+        StartCoroutine(WaitForRestartThenBegin());
+    }
+
+    IEnumerator WaitForRestartThenBegin()
+    {
+        var net = EcosystemNetworkManagerGPU.Instance;
+        // wait until it has gone back to not-started, then started again
+        while (net != null && net.HasStarted) yield return null;   // back on the start screen
+        while (net != null && !net.HasStarted) yield return null;  // visitor tapped START
+        yield return BeginAfterDelay();
     }
 
     void BeginSoon()
@@ -122,15 +148,23 @@ public class GuidedTutorial : MonoBehaviour
     [Tooltip("Wait for the HOW TO PLAY panel to be dismissed before the guided steps start.")]
     public bool waitForPanel = true;
 
-    IEnumerator BeginAfterDelay()
+        IEnumerator BeginAfterDelay()
     {
         yield return new WaitForSecondsRealtime(autoShowDelay);
-        // Let the HOW TO PLAY panel be read + dismissed first, so the two don't overlap.
-        if (waitForPanel)
+
+        if (waitForPanel && TutorialPanel.Instance != null && TutorialPanel.Instance.showOnStart)
         {
+            // Give the panel a chance to OPEN first (it has its own show delay), so we don't slip
+            // in before it appears and run on top of it.
+            float waited = 0f;
+            while (!TutorialPanel.Instance.IsOpen && waited < 3f)
+            {
+                waited += Time.unscaledDeltaTime;
+                yield return null;
+            }
+            // Now wait for it to be dismissed.
             while (TutorialPanel.Instance != null && TutorialPanel.Instance.IsOpen)
                 yield return null;
-            // If the panel never showed (already dismissed / disabled), fall straight through.
             yield return new WaitForSecondsRealtime(0.35f);
         }
         Begin();
@@ -188,12 +222,16 @@ public class GuidedTutorial : MonoBehaviour
                 text = "Press + to add it to the reef."; target = infoPanelTarget; waitAction = true; break;
             case Step.WatchHealth:
                 text = "Watch the Ecosystem Health rise. Add the right mix to restore balance."; target = healthTarget; break;
+            case Step.UnlockGoal:
+                text = "Locked species like this unlock as your reef grows healthier and the right species are present. Bring them all back!"; target = lockedFishTarget; break;
             case Step.OrganismsTab:
                 text = "Open the ORGANISMS tab to see your reef."; target = organismsTabTarget; waitAction = true; break;
             case Step.ExploreOrganisms:
                 text = "This is your reef. Here you can check each species and remove any you don't want. Take a look, then tap to continue."; target = null; break;   // dim hidden this step
             case Step.BackToFoodWeb:
                 text = "Now head back to the FOOD WEB tab to keep building your reef."; target = organismsTabTarget; waitAction = true; break;
+            case Step.HintsTab:
+                text = "Stuck at any point? Open the HINTS tab \u2014 it'll tell you what your reef needs next."; target = organismsTabTarget; break;
             case Step.FreeExplore:
                 text = "That's it \u2014 you're ready! Add species, watch the balance, and bring the reef back to life."; break;
         }

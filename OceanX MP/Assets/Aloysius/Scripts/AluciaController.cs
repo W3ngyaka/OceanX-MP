@@ -63,6 +63,7 @@ public class AluciaController : MonoBehaviour
 
     private bool _started;
     private bool _introPlayed;
+    private bool _tutorialDoneThisSession;
     private bool _subscribed;
 
     private bool _muted;
@@ -90,6 +91,7 @@ public class AluciaController : MonoBehaviour
             {
                 _subscribed = true;
                 net.OnStarted += HandleStarted;
+        net.OnTutorialDone += () => _tutorialDoneThisSession = true;
                 if (net.HasStarted) HandleStarted();
             }
         }
@@ -126,6 +128,9 @@ public class AluciaController : MonoBehaviour
         _muted = true;
         _started = false;
         _introPlayed = false;
+        _tutorialDoneThisSession = false;
+        // Re-arm the tutorial gate so the intro waits for the NEXT visitor's tutorial to finish.
+        { var n = EcosystemNetworkManagerGPU.Instance; if (n != null) n.SetTutorialDoneRpc(false); }  // re-arm
 
         if (bubbleGroup != null) bubbleGroup.alpha = 0f;
         if (characterGroup != null) characterGroup.alpha = 0f;
@@ -182,8 +187,9 @@ public class AluciaController : MonoBehaviour
         // isn't talking over the how-to panel. Falls through if the flag's already set.
         if (waitForTutorial)
         {
-            var net = EcosystemNetworkManagerGPU.Instance;
-            while (net != null && !net.TutorialDone)
+            // Wait for the tutorial to be completed THIS session (event-driven), so a stale
+            // 'done=true' left over from the previous visitor doesn't let the intro start early.
+            while (!_tutorialDoneThisSession)
                 yield return null;
         }
 

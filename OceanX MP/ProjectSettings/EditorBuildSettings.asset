@@ -35,7 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main Scenes/Start scene.unity
     guid: b3af2dcd7576f8b409d0cec18c70bbc6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Main Scenes/Host.unity
     guid: 7236dcbc3e82d5948812ee993bdc186f
   - enabled: 0
@@ -44,7 +44,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Main Scenes/Trifold.unity
     guid: bfbd5cd3507994e49affd5cbc47e2e2c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Main Scenes/Tablet Final.unity
     guid: b569bd4bb5b64d441ab6eaa04eae50c3
   m_configObjects:

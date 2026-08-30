@@ -157,7 +157,7 @@ public class GuidedTutorial : MonoBehaviour
             // Give the panel a chance to OPEN first (it has its own show delay), so we don't slip
             // in before it appears and run on top of it.
             float waited = 0f;
-            while (!TutorialPanel.Instance.IsOpen && waited < 3f)
+            while (!TutorialPanel.Instance.IsOpen && waited < 1.2f)
             {
                 waited += Time.unscaledDeltaTime;
                 yield return null;

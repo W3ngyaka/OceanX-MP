@@ -20474,7 +20474,7 @@ MonoBehaviour:
   modalTarget: {fileID: 1415037589}
   organismsPanelTarget: {fileID: 2062397094}
   organismsListTarget: {fileID: 2120253109}
-  autoShowDelay: 1.1
+  autoShowDelay: 0.3
   fadeDuration: 0.3
   showOnStart: 1
   waitForPanel: 1

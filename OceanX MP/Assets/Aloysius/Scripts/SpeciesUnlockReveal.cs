@@ -103,6 +103,7 @@ public class SpeciesUnlockReveal : MonoBehaviour
         if (alucia == null || _mgr == null) return;
 
         SpeciesData best = null;
+        int fewestBlocked = int.MaxValue;
         int fewestUnmet = int.MaxValue;
         string bestHint = null;
         string bestAudio = null;
@@ -116,11 +117,22 @@ public class SpeciesUnlockReveal : MonoBehaviour
             _mgr.GetLockInfo(sp, out healthMet, out minHealth, out curHealth, out reqs);
 
             int unmet = healthMet ? 0 : 1;
+            int blocked = 0;
             if (reqs != null)
-                foreach (var r in reqs) if (!r.Met) unmet++;
+                foreach (var r in reqs)
+                    if (!r.Met)
+                    {
+                        unmet++;
+                        // Requirement the player cannot act on yet — the species it asks for is
+                        // itself still locked, so this is not one step away, it is two or more.
+                        // See HintsPanel for the worked example (moray vs ray).
+                        if (r.Species != null && !_mgr.IsUnlocked(r.Species)) blocked++;
+                    }
 
-            if (unmet < fewestUnmet)
+            // Reachable species first, then fewest steps.
+            if (blocked < fewestBlocked || (blocked == fewestBlocked && unmet < fewestUnmet))
             {
+                fewestBlocked = blocked;
                 fewestUnmet = unmet;
                 best = sp;
                 bestHint = BuildHint(sp, out bestAudio);

@@ -17,13 +17,9 @@ public class WinScreen : MonoBehaviour
     public string thankYou = "You did it — thank you for bringing the reef back to life!";
     public Sprite aluciaWinSprite;
 
-    [Header("Voice line (optional)")]
-    [Tooltip("Alucia reading the win message aloud. Plays once alongside the card, on top of the UISound.Win " +
-             "sting. Leave empty and nothing extra plays — the card still shows and the sting still fires.\n\n" +
-             "Keep this in sync with the win.thankyou text in the sheet: if the wording there changes, the " +
-             "clip has to be re-recorded or the two will disagree.")]
-    public AudioClip thankYouVoice;
-    [Range(0f, 1f)] public float thankYouVoiceVolume = 1f;
+    [Tooltip("Alucia, so the corner bubble can be silenced while this card is up. Leave empty and it is " +
+             "found in the scene on Awake.")]
+    public AluciaController alucia;
 
     public float fadeDuration = 0.6f;
 
@@ -33,6 +29,7 @@ public class WinScreen : MonoBehaviour
     void Awake()
     {
         if (group == null) group = GetComponent<CanvasGroup>();
+        if (alucia == null) alucia = FindFirstObjectByType<AluciaController>();
         SetVisible(false, instant: true);
     }
 
@@ -54,6 +51,13 @@ public class WinScreen : MonoBehaviour
         if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.Win);
         if (titleText != null) titleText.text = title;
 
+        // MUST come before the thank-you plays. This card shows Alucia full-size across the whole
+        // display, so the little corner bubble talking underneath reads as two of her. SetMuted clears
+        // that bubble and stops whatever line it was in the middle of — and because it stops the shared
+        // AluciaVoice source, calling it AFTER TryPlay below would cut off the thank-you itself. Mute
+        // first, then speak: muting only gates Alucia's own Say(), not this direct TryPlay.
+        if (alucia != null) alucia.SetMuted(true);
+
         // GetLine, not Get: Get() returns text only, so the row's Audio column would be lost and
         // the thank-you would appear in silence. Looked up outside the messageText null-check so
         // she still speaks even if the label isn't wired.
@@ -64,13 +68,6 @@ public class WinScreen : MonoBehaviour
         if (AluciaVoice.Instance != null) AluciaVoice.Instance.TryPlay(winLine.Audio);
         if (aluciaImage != null && aluciaWinSprite != null) aluciaImage.sprite = aluciaWinSprite;
 
-        // Voice line, if one has been assigned. Routed through AdaptiveMusicSystem.PlayIntro because that
-        // is the project's existing one-shot voice path (it ducks against the music bed and respects the
-        // master volume), rather than a second AudioSource on this canvas.
-        // The null check is deliberate and must stay: PlayIntro falls back to PlaySwell() when handed a
-        // null clip, which would fire the swell sting on top of the UISound.Win sting above.
-        if (thankYouVoice != null && AdaptiveMusicSystem.Instance != null)
-            AdaptiveMusicSystem.Instance.PlayIntro(thankYouVoice, thankYouVoiceVolume);
         SetVisible(true);
     }
 
@@ -78,6 +75,10 @@ public class WinScreen : MonoBehaviour
     {
         _shown = visible;
         gameObject.SetActive(true);
+        // Card going away: hand Alucia back her voice. Show() muted her, and without this she would
+        // stay silent for the rest of the session. Safe on the exhibit reset path too, which re-mutes
+        // her itself via ResetForNewSession.
+        if (!visible && alucia != null) alucia.SetMuted(false);
         if (_fade != null) StopCoroutine(_fade);
         if (instant || group == null)
         {

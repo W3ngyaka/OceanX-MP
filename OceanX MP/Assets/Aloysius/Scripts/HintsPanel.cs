@@ -44,6 +44,7 @@ public class HintsPanel : MonoBehaviour
         }
 
         SpeciesData best = null;
+        int fewestBlocked = int.MaxValue;
         int fewestUnmet = int.MaxValue;
         string bestHint = null;
         bool anyLocked = false;
@@ -58,11 +59,28 @@ public class HintsPanel : MonoBehaviour
             _mgr.GetLockInfo(sp, out healthMet, out minHealth, out curHealth, out reqs);
 
             int unmet = healthMet ? 0 : 1;
+            int blocked = 0;
             if (reqs != null)
-                foreach (var r in reqs) if (!r.Met) unmet++;
+                foreach (var r in reqs)
+                    if (!r.Met)
+                    {
+                        unmet++;
+                        // A requirement the player CANNOT act on yet, because the species it asks
+                        // for is itself still locked. Counting these as ordinary unmet steps is what
+                        // made the panel recommend dead ends: the Giant moray needs 2 Russell's
+                        // snapper and 1 parrotfish, so with a parrotfish already in the water it
+                        // scores a single unmet step and wins — even though snapper is locked, so
+                        // there is no way to act on it. The ray (2 parrotfish + 2 spinefoot, both
+                        // available from the start) scores 2 and loses, despite being the only one
+                        // you can actually make progress on.
+                        if (r.Species != null && !_mgr.IsUnlocked(r.Species)) blocked++;
+                    }
 
-            if (unmet < fewestUnmet)
+            // Reachable species first, then fewest steps. A species with any blocked requirement
+            // only wins if nothing reachable is locked at all.
+            if (blocked < fewestBlocked || (blocked == fewestBlocked && unmet < fewestUnmet))
             {
+                fewestBlocked = blocked;
                 fewestUnmet = unmet;
                 best = sp;
                 bestHint = BuildHint(sp, healthMet, minHealth, reqs);

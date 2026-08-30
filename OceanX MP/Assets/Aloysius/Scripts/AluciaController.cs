@@ -83,6 +83,26 @@ public class AluciaController : MonoBehaviour
 
     private bool _muted;
 
+    // Intro gate. HandleStarted clears _muted the instant the session starts, but IntroSequence is a
+    // coroutine that then waits — first for the tablet tutorial to be dismissed, then through three
+    // paced lines. Without this, everything in that window (ecology events, unlock hints) went straight
+    // through Say and either jumped ahead of intro.1 or landed between the intro lines. With voice that
+    // is not just out of order: Say hands a new clip name to AluciaVoice, cutting the intro off mid-word.
+    // _speakingIntro is the exemption that lets IntroSequence's own lines past its own gate.
+    private bool _introComplete;
+    private bool _speakingIntro;
+
+    /// <summary>
+    /// How hard a line is willing to push in while Alucia is already speaking. Deliberately only two
+    /// tiers — anything finer becomes guesswork about which advisory line matters more.
+    /// <c>Normal</c> is dropped while she is mid-line; <c>High</c> cuts in, and is for moments that are
+    /// irreversible or are the point of the exhibit (a keystone species going extinct).
+    /// </summary>
+    public enum Priority { Normal = 0, High = 1 }
+
+    // Priority of the line currently playing, so a Normal line cannot displace a High one.
+    private Priority _currentPriority = Priority.Normal;
+
     void Awake()
     {
         if (bubbleGroup != null) { bubbleGroup.alpha = 0f; _bubbleBg = bubbleGroup.GetComponent<Image>(); }
@@ -143,6 +163,13 @@ public class AluciaController : MonoBehaviour
         _muted = true;
         _started = false;
         _introPlayed = false;
+        // Re-close the intro gate too, so the next visitor also gets silence until their intro
+        // has run. StopAllCoroutines above may have killed IntroSequence part-way through, which
+        // would otherwise leave _speakingIntro stuck true and let anything speak.
+        _introComplete = false;
+        _speakingIntro = false;
+        // Otherwise a High line from the previous session would keep blocking Normal ones for the next.
+        _currentPriority = Priority.Normal;
         // Kill any line still playing — otherwise the next visitor walks into the tail of the
         // previous session's voice-over with no bubble on screen to explain it.
         if (AluciaVoice.Instance != null) AluciaVoice.Instance.StopSpeaking();
@@ -167,11 +194,30 @@ public class AluciaController : MonoBehaviour
     /// autoHideSeconds — so she stops talking and the bubble clears together. Falls back to
     /// autoHideSeconds whenever there is no clip, which is what lets VO be filled in gradually.
     /// </summary>
-    public void Say(string message, Mood mood = Mood.Calm, bool sticky = false, string audioName = null)
+    public bool Say(string message, Mood mood = Mood.Calm, bool sticky = false, string audioName = null,
+                    Priority priority = Priority.Normal)
     {
         Debug.Log($"[Alucia] Say(\"{message}\") started={_started} muted={_muted} sticky={sticky}.", this);
-        if (_muted) return;
-        if (Time.unscaledTime - _lastMsgTime < minGapBetweenMessages && !sticky) return;
+        if (_muted) return false;
+        // Nothing but the intro itself may speak until the intro has finished. See _introComplete.
+        // Safe against a permanent mute: HandleStarted only skips IntroSequence when _introPlayed is
+        // already true, which means the intro DID run and set this — do not "optimise" that branch.
+        if (!_introComplete && !_speakingIntro) return false;
+
+        // Don't talk over herself. minGapBetweenMessages alone was not enough: it measures wall-clock
+        // since the last line, so a 1.5s gap let anything cut into a 5s clip a third of the way in, and
+        // AluciaVoice.TryPlay always Stop()s whatever was playing. A clipped word reads as a bug to a
+        // visitor, so a busy line is DROPPED rather than queued — queueing would have her narrating a
+        // problem the visitor already fixed, since the ecology tick re-evaluates and will simply say it
+        // again if it is still true. High priority still interrupts (extinction, and other
+        // irreversible moments worth cutting in for).
+        // Degrades correctly while the VO is incomplete: with no clip IsSpeaking is false, so lines that
+        // have no Audio cell yet behave exactly as they did before.
+        if (!sticky && priority <= _currentPriority
+            && AluciaVoice.Instance != null && AluciaVoice.Instance.IsSpeaking) return false;
+
+        if (Time.unscaledTime - _lastMsgTime < minGapBetweenMessages && !sticky) return false;
+        _currentPriority = priority;
         _lastMsgTime = Time.unscaledTime;
         _sticky = sticky;
 
@@ -200,6 +246,7 @@ public class AluciaController : MonoBehaviour
         _lastSpokenSeconds = spoken > 0f ? spoken + voiceTailSeconds : autoHideSeconds;
 
         if (!sticky) _hideRoutine = StartCoroutine(HideAfter(_lastSpokenSeconds));
+        return true;
     }
 
     public void Hide()
@@ -208,16 +255,40 @@ public class AluciaController : MonoBehaviour
     }
 
     /// <summary>
+    /// Silence Alucia and clear her off screen, or let her resume. Used by the win screen: that card
+    /// shows her full-size across the whole display, so the little corner bubble talking at the same
+    /// time reads as two Alucias.
+    ///
+    /// Muting alone is not enough. Say() returns early on _muted, but a bubble ALREADY on screen when
+    /// the win fires would just sit there, and a voice clip already playing would keep talking over the
+    /// win narration - so this also hides the bubble and stops the clip, the same pair
+    /// ResetForNewSession uses.
+    /// </summary>
+    public void SetMuted(bool muted)
+    {
+        if (_muted == muted) return;
+        _muted = muted;
+        if (!muted) return;
+
+        if (_hideRoutine != null) { StopCoroutine(_hideRoutine); _hideRoutine = null; }
+        _sticky = false;
+        _currentPriority = Priority.Normal;   // nothing is playing any more; don't block the next line
+        Hide();
+        if (AluciaVoice.Instance != null) AluciaVoice.Instance.StopSpeaking();
+    }
+
+    /// <summary>
     /// Look a line up by event key and say it, carrying its Audio column through to the voice
     /// player. Use this instead of Say(AluciaLines.Get(...)) — Get() returns only the text, so
     /// the randomly-picked variant's clip name would be lost and the line would stay silent.
     /// </summary>
-    public void SayEvent(string eventKey, string fallback, Mood mood = Mood.Calm,
-                         string species = null, bool sticky = false)
+    public bool SayEvent(string eventKey, string fallback, Mood mood = Mood.Calm,
+                         string species = null, bool sticky = false,
+                         Priority priority = Priority.Normal)
     {
         AluciaLines.Line line = AluciaLines.GetLine(eventKey, species);
         string text = line.Found && !string.IsNullOrEmpty(line.Text) ? line.Text : fallback;
-        Say(text, mood, sticky, line.Audio);
+        return Say(text, mood, sticky, line.Audio, priority);
     }
 
     [Tooltip("Wait for the tablet's how-to panel to be dismissed before the intro plays.")]
@@ -236,6 +307,8 @@ public class AluciaController : MonoBehaviour
         }
 
         yield return new WaitForSeconds(introStartDelay);
+        // Hold everything else back until all three lines have been SPOKEN, not merely issued.
+        _speakingIntro = true;
         // Each line waits for the PREVIOUS one to actually finish speaking. With voice present
         // that's the clip length + tail; without it, autoHideSeconds. introLineGap is now only
         // the extra breath BETWEEN lines, not the whole spacing, so lines can't overlap.
@@ -244,6 +317,10 @@ public class AluciaController : MonoBehaviour
         SayEvent("intro.2", introLine2, Mood.Warn);
         yield return new WaitForSeconds(_lastSpokenSeconds + introLineGap);
         SayEvent("intro.3", introLine3, Mood.Calm);
+        // Wait out the LAST line too, otherwise the first hint lands on top of its tail.
+        yield return new WaitForSeconds(_lastSpokenSeconds);
+        _speakingIntro = false;
+        _introComplete = true;
     }
 
     void EvaluateHealth(float h)

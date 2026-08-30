@@ -16,7 +16,6 @@ health.critical,,Warn,1,"It's falling apart out here, we have to act now!",Extra
 health.unstable.up,,Calm,,It's stabilising a little... keep going!,
 health.unstable.down,,Warn,,"Things are slipping, the balance is breaking down.",
 health.healthy,,Calm,,The reef's looking much healthier now!,
-health.thriving,,Win,,You did it! The ecosystem is thriving again!,Stays on screen (win)
 notify.unlocked,,Calm,,You've unlocked the {species}!,{species} = the fish name
 hint.withReq.1,,Calm,,"To bring in the {species}, you'll need to {req}.",
 hint.withReq.2,,Calm,,Almost there! Just {req} and the {species} will appear.,

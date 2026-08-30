@@ -230,7 +230,13 @@ public class AluciaController : MonoBehaviour
                 Say(AluciaLines.Get("health.healthy", "The reef's looking much healthier now!"), Mood.Calm);
                 break;
             case Band.Thriving:
-                Say(AluciaLines.Get("health.thriving", "You did it — the ecosystem is thriving again! \ud83e\udea8"), Mood.Win, sticky: true);
+                // Deliberately silent. The win is already shown as a full congratulation image, so a
+                // speech bubble on top of it was duplicate praise - and this one was sticky:true, so it
+                // sat over the artwork until something else replaced it.
+                // The band still matters: _lastBand is updated above, so dropping back to Healthy still
+                // fires the Healthy line, and BandFor hysteresis keeps treating Thriving as a high band.
+                // The health.thriving row was removed from alucia_lines (sheet + CSV) at the same time.
+                // Do NOT re-add a Say here without removing the image, or both will show at once.
                 break;
         }
     }

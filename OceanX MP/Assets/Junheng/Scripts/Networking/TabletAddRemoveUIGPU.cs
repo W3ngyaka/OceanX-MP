@@ -100,6 +100,11 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
 
         OptimisticPopulationStore.RegisterDelta(_index, +1);
         GuidedTutorial.NotifyAdd();
+        // Visual feedback: floating +1 at the add button, and a punch on the species' bubble.
+        var bubbleRT = SpeciesBubble.RectForIndex(_index);
+        if (AddFeedback.Instance != null && bubbleRT != null)
+            AddFeedback.Instance.PlusOneAt(bubbleRT);          // +1 pops over the bubble
+        SpeciesBubble.PunchForIndex(_index);                   // and the bubble pops
         net.RequestAddSpeciesRpc(_index);
 
         // UI sound: a first-time add plays the "joining the reef" flourish; the add that tops a

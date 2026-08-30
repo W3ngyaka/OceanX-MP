@@ -278,4 +278,30 @@ public class SpeciesBubble : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             GameState.Instance.tapCounts[data.speciesName] = taps + 1;
         }
     }
+
+    // Pop the bubble whose species matches this sim index (used for add feedback).
+    // Get the bubble's RectTransform for a sim index (for positioning add feedback).
+    public static RectTransform RectForIndex(int index)
+    {
+        if (index < 0 || TabletEcosystemUIGPU.Instance == null) return null;
+        foreach (var b in FindObjectsByType<SpeciesBubble>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (b == null || b.data == null || b.data.gpuSpecies == null) continue;
+            if (TabletEcosystemUIGPU.Instance.GetSpeciesIndex(b.data.gpuSpecies) == index)
+                return b.transform as RectTransform;
+        }
+        return null;
+    }
+
+    public static void PunchForIndex(int index)
+    {
+        if (index < 0 || TabletEcosystemUIGPU.Instance == null) return;
+        foreach (var b in FindObjectsByType<SpeciesBubble>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (b == null || b.data == null || b.data.gpuSpecies == null) continue;
+            int idx = TabletEcosystemUIGPU.Instance.GetSpeciesIndex(b.data.gpuSpecies);
+            if (idx == index) { b.PlayPunchPublic(); return; }
+        }
+    }
+    public void PlayPunchPublic() { PlayPunch(); }
 }

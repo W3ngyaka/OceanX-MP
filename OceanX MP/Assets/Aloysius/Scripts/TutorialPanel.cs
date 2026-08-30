@@ -88,9 +88,16 @@ public class TutorialPanel : MonoBehaviour
         Show();
     }
 
-    public void Show() { SetVisible(true); }
+    public void Show()
+    {
+        // Edge-guarded like ModalController: Show() is also called by the auto-show path,
+        // so without this an already-open panel would re-sound.
+        if (!_open && UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.GuideOpen);
+        SetVisible(true);
+    }
     public void Hide()
     {
+        if (_open && UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.GuideClose);
         SetVisible(false);
         // NOTE: Alucia's intro is now gated on the GUIDED tutorial finishing (GuidedTutorial.Finish),
         // not on this panel — so she doesn't talk over the guided steps. No SetTutorialDoneRpc here.

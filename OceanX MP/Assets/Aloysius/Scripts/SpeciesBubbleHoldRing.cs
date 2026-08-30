@@ -41,12 +41,19 @@ public class SpeciesBubbleHoldRing : MonoBehaviour
         if (holdRingSprite != null) CreateHoldRing();
     }
 
+    // Fraction of holdDuration a press must survive before it counts as a HOLD for audio.
+    // BeginHold() fires on EVERY pointer-down, taps included, so sounding there would
+    // double up with the tap sound on every single bubble press.
+    private const float HoldSoundThreshold = 0.15f;
+    private bool _holdSoundPlayed;
+
     public void BeginHold()
     {
         EnsureResolved();
         _isHolding = true;
         _holdTimer = 0f;
         _longPressTriggered = false;
+        _holdSoundPlayed = false;
     }
 
     public void Tick()
@@ -57,6 +64,12 @@ public class SpeciesBubbleHoldRing : MonoBehaviour
 
         float progress = Mathf.Clamp01(_holdTimer / holdDuration);
         SetHoldRing(progress);
+
+        if (!_holdSoundPlayed && progress >= HoldSoundThreshold)
+        {
+            _holdSoundPlayed = true;
+            if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.HoldStart);
+        }
 
         if (progress >= 1f)
         {

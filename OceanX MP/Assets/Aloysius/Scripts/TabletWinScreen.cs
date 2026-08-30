@@ -51,6 +51,11 @@ public class TabletWinScreen : MonoBehaviour
 
     void Show()
     {
+        // Mirrors WinScreen.Show() on the big screen. The tablet needs its own call because
+        // UISoundManager is a per-scene singleton that only lives in the Tablet scene — the
+        // big screen's WinScreen fires the same sound but finds a null Instance there.
+        // Update() only reaches Show() on the !_shown edge, so this plays once per win.
+        if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.Win);
         if (continueButton != null) continueButton.interactable = true;
         Compose();
         SetVisible(true);
@@ -60,6 +65,9 @@ public class TabletWinScreen : MonoBehaviour
     {
         if (!_shown) return;
 
+        // Past the _shown guard so a stray call can't sound. The button is disabled on the
+        // next line, so this can't double-fire from a rapid second tap either.
+        if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.Restart);
         if (continueButton != null) continueButton.interactable = false;
 
         var reset = exhibitReset != null

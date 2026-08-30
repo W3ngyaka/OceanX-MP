@@ -129,7 +129,7 @@ public class TabletAddRemoveUIGPU : MonoBehaviour
 
         OptimisticPopulationStore.RegisterDelta(_index, -1);
         net.RequestRemoveSpeciesRpc(_index);
-        UISoundManager.Instance?.Play(UISound.Remove);   // no clip assigned yet — safely no-ops
+        UISoundManager.Instance?.Play(UISound.Remove);
         RefreshButtons();
     }
 

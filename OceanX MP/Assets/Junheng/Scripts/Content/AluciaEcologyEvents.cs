@@ -182,7 +182,10 @@ public class AluciaEcologyEvents : MonoBehaviour
         string text = line.Found ? line.Text : DefaultFor(evt, name);
         text = text.Replace("{species}", name).Replace("{count}", count.ToString());
 
-        alucia.Say(text, ParseMood(line.Found ? line.Mood : "Warn"));
+        // line.Audio carries the picked variant's clip name, so the bubble is held for the
+        // length of THAT recording. Rows here are authored per species, so a clip that names
+        // the fish out loud still matches the text after the {species} substitution above.
+        alucia.Say(text, ParseMood(line.Found ? line.Mood : "Warn"), false, line.Audio);
         _lastSpokeAt[s] = now;
         return true;
     }

@@ -88,45 +88,17 @@ public class HintsPanel : MonoBehaviour
         if (!healthMet && minHealth > 0)
             return "Raise the ecosystem's health to " + minHealth + "% to unlock the " + sp.speciesName + ".";
 
-        EcosystemUnlockManagerGPU.RequirementStatus? focus = null;
-        int worstGap = -1;
-        if (reqs != null)
-            foreach (var r in reqs)
-                if (!r.Met && r.Species != null)
-                {
-                    int gap = Mathf.Max(0, r.Required - r.Current);
-                    if (gap > worstGap) { worstGap = gap; focus = r; }
-                }
-
-        if (focus == null)
-        {
-
-            var fl = AluciaLines.GetVariants("hint.flavour", sp.speciesName);
-            if (fl.Count > 0) return fl[0];
-            if (!string.IsNullOrEmpty(sp.hint1)) return sp.hint1;
-            return "Something new is almost ready to appear...";
-        }
-
-        var r2 = focus.Value;
-        int need = Mathf.Max(0, r2.Required - r2.Current);
-        string prey = r2.Species.speciesName;
-        string name = sp.speciesName;
-
-        if (need >= 3 || r2.Current == 0)
-        {
-
-            return AluciaLines.Get("hint.needs", "{species} prey on {prey}.")
-                     .Replace("{species}", name).Replace("{prey}", prey);
-        }
-        else if (need == 2)
-        {
-            return AluciaLines.Get("hint.close", "Almost there \u2014 add a few more {prey}!")
-                     .Replace("{species}", name).Replace("{prey}", prey);
-        }
-        else
-        {
-            return AluciaLines.Get("hint.one", "Just 1 more {prey} and the {species} will appear!")
-                     .Replace("{species}", name).Replace("{prey}", prey);
-        }
+        // The prey-count variants (hint.needs / hint.close / hint.one) were removed: they
+        // interpolate the species and prey names at runtime, so they can never be voiced, and
+        // they read in a different register from the rest of Alucia's writing. The flavour lines
+        // cover the same ground ("Try adding more X to attract Y") and are the set with recordings.
+        //
+        // The which-requirement-is-closest scan that used to sit here went with them: it existed
+        // only to choose between those three wordings. The health gate above still short-circuits,
+        // and 'reqs' is kept in the signature for callers.
+        var fl = AluciaLines.GetVariants("hint.flavour", sp.speciesName);
+        if (fl.Count > 0) return fl[0];
+        if (!string.IsNullOrEmpty(sp.hint1)) return sp.hint1;
+        return "Something new is almost ready to appear...";
     }
 }

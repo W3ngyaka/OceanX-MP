@@ -19,7 +19,18 @@ public class AluciaController : MonoBehaviour
         public EcosystemSimulationGPU simulation;
 
     [Header("Timing")]
+    [Tooltip("How long the bubble stays up for a line with NO voice clip. Lines that DO have " +
+             "voice ignore this and use the clip's own length instead.")]
     public float autoHideSeconds = 5.2f;
+
+    [Tooltip("Extra beat the bubble lingers after the voice finishes, so the last word isn't " +
+             "cut off visually the instant the audio ends.")]
+    public float voiceTailSeconds = 0.6f;
+
+    // How long the most recent Say() will hold — clip length + tail, or autoHideSeconds.
+    // IntroSequence paces itself on this so the three intro lines follow the voice rather
+    // than a fixed gap that is wrong for every line of a different length.
+    private float _lastSpokenSeconds;
     public float minGapBetweenMessages = 1.5f;
     public float introStartDelay = 0.6f;
 
@@ -47,7 +58,11 @@ public class AluciaController : MonoBehaviour
     [TextArea] public string introLine1 = "Hey, my name's Alucia!";
     [TextArea] public string introLine2 = "As you can see, this ecosystem isn't doing too well...";
     [TextArea] public string introLine3 = "Please help me save it!";
-    public float introLineGap = 3f;
+    [Tooltip("Pause BETWEEN intro lines, on top of however long the line took. It is ADDITIVE, " +
+             "not the total spacing — each line already waits for its own voice clip (or " +
+             "autoHideSeconds when it has none) before this gap starts. Keep it under a second; " +
+             "at 3 the intro drags for ~21s with 3.6s of silence between lines.")]
+    public float introLineGap = 0.4f;
 
     [Header("Start gating")]
         public bool waitForExperienceStart = true;
@@ -128,6 +143,9 @@ public class AluciaController : MonoBehaviour
         _muted = true;
         _started = false;
         _introPlayed = false;
+        // Kill any line still playing — otherwise the next visitor walks into the tail of the
+        // previous session's voice-over with no bubble on screen to explain it.
+        if (AluciaVoice.Instance != null) AluciaVoice.Instance.StopSpeaking();
         _tutorialDoneThisSession = false;
         // Re-arm the tutorial gate so the intro waits for the NEXT visitor's tutorial to finish.
         { var n = EcosystemNetworkManagerGPU.Instance; if (n != null) n.SetTutorialDoneRpc(false); }  // re-arm
@@ -143,7 +161,13 @@ public class AluciaController : MonoBehaviour
         _bandInit = false;
     }
 
-    public void Say(string message, Mood mood = Mood.Calm, bool sticky = false)
+    /// <summary>
+    /// Show a line. When <paramref name="audioName"/> names a clip in AluciaVoice, the bubble
+    /// is held for the CLIP's length (plus voiceTailSeconds) instead of the fixed
+    /// autoHideSeconds — so she stops talking and the bubble clears together. Falls back to
+    /// autoHideSeconds whenever there is no clip, which is what lets VO be filled in gradually.
+    /// </summary>
+    public void Say(string message, Mood mood = Mood.Calm, bool sticky = false, string audioName = null)
     {
         Debug.Log($"[Alucia] Say(\"{message}\") started={_started} muted={_muted} sticky={sticky}.", this);
         if (_muted) return;
@@ -170,12 +194,30 @@ public class AluciaController : MonoBehaviour
         if (_hideRoutine != null) StopCoroutine(_hideRoutine);
         StartCoroutine(FadeBoth(1f, 0.3f));
 
-        if (!sticky) _hideRoutine = StartCoroutine(HideAfter(autoHideSeconds));
+        // Start the voice BEFORE choosing the hold time — TryPlay returns the clip length,
+        // or -1 when this line has no VO.
+        float spoken = AluciaVoice.Instance != null ? AluciaVoice.Instance.TryPlay(audioName) : -1f;
+        _lastSpokenSeconds = spoken > 0f ? spoken + voiceTailSeconds : autoHideSeconds;
+
+        if (!sticky) _hideRoutine = StartCoroutine(HideAfter(_lastSpokenSeconds));
     }
 
     public void Hide()
     {
         StartCoroutine(FadeBoth(0f, 0.3f));
+    }
+
+    /// <summary>
+    /// Look a line up by event key and say it, carrying its Audio column through to the voice
+    /// player. Use this instead of Say(AluciaLines.Get(...)) — Get() returns only the text, so
+    /// the randomly-picked variant's clip name would be lost and the line would stay silent.
+    /// </summary>
+    public void SayEvent(string eventKey, string fallback, Mood mood = Mood.Calm,
+                         string species = null, bool sticky = false)
+    {
+        AluciaLines.Line line = AluciaLines.GetLine(eventKey, species);
+        string text = line.Found && !string.IsNullOrEmpty(line.Text) ? line.Text : fallback;
+        Say(text, mood, sticky, line.Audio);
     }
 
     [Tooltip("Wait for the tablet's how-to panel to be dismissed before the intro plays.")]
@@ -194,11 +236,14 @@ public class AluciaController : MonoBehaviour
         }
 
         yield return new WaitForSeconds(introStartDelay);
-        Say(AluciaLines.Get("intro.1", introLine1), Mood.Calm);
-        yield return new WaitForSeconds(introLineGap);
-        Say(AluciaLines.Get("intro.2", introLine2), Mood.Warn);
-        yield return new WaitForSeconds(introLineGap);
-        Say(AluciaLines.Get("intro.3", introLine3), Mood.Calm);
+        // Each line waits for the PREVIOUS one to actually finish speaking. With voice present
+        // that's the clip length + tail; without it, autoHideSeconds. introLineGap is now only
+        // the extra breath BETWEEN lines, not the whole spacing, so lines can't overlap.
+        SayEvent("intro.1", introLine1, Mood.Calm);
+        yield return new WaitForSeconds(_lastSpokenSeconds + introLineGap);
+        SayEvent("intro.2", introLine2, Mood.Warn);
+        yield return new WaitForSeconds(_lastSpokenSeconds + introLineGap);
+        SayEvent("intro.3", introLine3, Mood.Calm);
     }
 
     void EvaluateHealth(float h)
@@ -220,14 +265,14 @@ public class AluciaController : MonoBehaviour
         switch (band)
         {
             case Band.Critical:
-                Say(AluciaLines.Get("health.critical", "The reef is collapsing — we're losing species fast!"), Mood.Warn);
+                SayEvent("health.critical", "The reef is collapsing — we're losing species fast!", Mood.Warn);
                 break;
             case Band.Unstable:
-                if (improving) Say(AluciaLines.Get("health.unstable.up", "It's stabilising a little... keep going!"), Mood.Calm);
-                else Say(AluciaLines.Get("health.unstable.down", "Things are slipping — the balance is breaking down."), Mood.Warn);
+                if (improving) SayEvent("health.unstable.up", "It's stabilising a little... keep going!", Mood.Calm);
+                else SayEvent("health.unstable.down", "Things are slipping — the balance is breaking down.", Mood.Warn);
                 break;
             case Band.Healthy:
-                Say(AluciaLines.Get("health.healthy", "The reef's looking much healthier now!"), Mood.Calm);
+                SayEvent("health.healthy", "The reef's looking much healthier now!", Mood.Calm);
                 break;
             case Band.Thriving:
                 // Deliberately silent. The win is already shown as a full congratulation image, so a

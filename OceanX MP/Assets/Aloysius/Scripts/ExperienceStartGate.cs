@@ -54,6 +54,10 @@ public class ExperienceStartGate : MonoBehaviour
         var net = EcosystemNetworkManagerGPU.Instance;
         if (net == null) return;
         _requested = true;
+        // Past the guards, so this fires once on the real start — not on repeat taps.
+        // Host/Trifold return early on the mode check above, which is just as well:
+        // UISoundManager only exists in the Tablet scene.
+        if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.Start);
         if (tapToStart != null) tapToStart.SetActive(false);
         net.RequestStartRpc();
     }

@@ -19465,6 +19465,41 @@ MonoBehaviour:
     - {fileID: 8300000, guid: cb2413cd79db437a816eec3938212e97, type: 3}
     volume: 1
     pitchJitter: 0
+  - id: 13
+    variants:
+    - {fileID: 8300000, guid: 8b5566b67fc86a74c98f2fea93bf633b, type: 3}
+    volume: 0.8
+    pitchJitter: 0
+  - id: 14
+    variants:
+    - {fileID: 8300000, guid: 35019756d1cfd9941b2a9afb8693e87b, type: 3}
+    volume: 0.4
+    pitchJitter: 0.04
+  - id: 15
+    variants:
+    - {fileID: 8300000, guid: f7836791057d5964f90dbb930b6427bd, type: 3}
+    volume: 0.5
+    pitchJitter: 0
+  - id: 16
+    variants:
+    - {fileID: 8300000, guid: 334cb1dc58f8fd94b9fc160fcd679613, type: 3}
+    volume: 0.4
+    pitchJitter: 0
+  - id: 17
+    variants:
+    - {fileID: 8300000, guid: 4c96adcec4281d941a0386e5be2b03de, type: 3}
+    volume: 0.4
+    pitchJitter: 0
+  - id: 18
+    variants:
+    - {fileID: 8300000, guid: 0927679893907e543885984c1b407c8a, type: 3}
+    volume: 0.45
+    pitchJitter: 0.03
+  - id: 19
+    variants:
+    - {fileID: 8300000, guid: 0d499c903c8b4c4469bc247761feaf97, type: 3}
+    volume: 0.7
+    pitchJitter: 0
   voiceCount: 4
   autoLoadFromResources: 1
   resourcesFolder: UISounds

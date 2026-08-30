@@ -10,6 +10,10 @@ public static class AluciaLines
         public string Text;
         public string Mood;
         public bool Found;
+        /// <summary>File name (no extension) of this line's voice clip in Assets/Sounds/Alucia,
+        /// or empty when the line has no VO. Carried per-VARIANT, not per-event: variants are
+        /// picked at random, so the clip has to travel with the exact line that was chosen.</summary>
+        public string Audio;
     }
 
     private struct Variant
@@ -18,6 +22,7 @@ public static class AluciaLines
         public string Mood;
         public int Weight;
         public string Text;
+        public string Audio;
     }
 
     private const string FileName = "alucia_lines.csv";
@@ -62,7 +67,45 @@ public static class AluciaLines
         Variant v = Pick(pool, eventKey.ToLowerInvariant() + "|" + (species ?? ""));
         result.Text = v.Text;
         result.Mood = string.IsNullOrEmpty(v.Mood) ? "Calm" : v.Mood;
+        result.Audio = v.Audio;
         result.Found = true;
+        return result;
+    }
+
+    /// <summary>
+    /// Same selection as <see cref="GetVariants"/>, but returns the whole Line so the caller
+    /// keeps each variant's Audio name. Needed wherever a caller picks a variant ITSELF (by
+    /// rotation index, say) rather than letting GetLine pick — GetVariants returns bare strings,
+    /// so the chosen line's clip would be lost and it would display in silence.
+    /// </summary>
+    public static List<Line> GetVariantLines(string eventKey, string species)
+    {
+        EnsureLoaded();
+        var result = new List<Line>();
+        if (_events == null || string.IsNullOrEmpty(eventKey)) return result;
+        if (!_events.TryGetValue(eventKey.Trim().ToLowerInvariant(), out List<Variant> variants) || variants.Count == 0)
+            return result;
+
+        List<Variant> scoped = null, generic = null;
+        for (int i = 0; i < variants.Count; i++)
+        {
+            if (!string.IsNullOrEmpty(species) &&
+                string.Equals(variants[i].Species, species, System.StringComparison.OrdinalIgnoreCase))
+            {
+                if (scoped == null) scoped = new List<Variant>();
+                scoped.Add(variants[i]);
+            }
+            else if (string.IsNullOrEmpty(variants[i].Species))
+            {
+                if (generic == null) generic = new List<Variant>();
+                generic.Add(variants[i]);
+            }
+        }
+
+        List<Variant> pool = scoped ?? generic ?? variants;
+        for (int i = 0; i < pool.Count; i++)
+            if (!string.IsNullOrEmpty(pool[i].Text))
+                result.Add(new Line { Text = pool[i].Text, Mood = pool[i].Mood, Audio = pool[i].Audio, Found = true });
         return result;
     }
 
@@ -159,6 +202,9 @@ public static class AluciaLines
         int cMood    = CsvUtil.ColumnIndex(header, "Mood");
         int cWeight  = CsvUtil.ColumnIndex(header, "Weight");
         int cText    = CsvUtil.ColumnIndex(header, "Text");
+        // Optional. CsvUtil.Cell returns "" for index -1, so an older sheet without this
+        // column still loads fine - those lines simply have no VO and keep timed hiding.
+        int cAudio   = CsvUtil.ColumnIndex(header, "Audio");
 
         if (cEvent < 0 || cText < 0)
         {
@@ -179,7 +225,8 @@ public static class AluciaLines
                 Species = CsvUtil.Cell(row, cSpecies).Trim(),
                 Mood    = CsvUtil.Cell(row, cMood).Trim(),
                 Weight  = ParseWeight(CsvUtil.Cell(row, cWeight)),
-                Text    = body
+                Text    = body,
+                Audio   = CsvUtil.Cell(row, cAudio).Trim()
             };
 
             string key = evt.ToLowerInvariant();

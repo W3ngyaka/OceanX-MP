@@ -86525,6 +86525,10 @@ PrefabInstance:
       value: SM_Landscape
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d86554486e98a7f4d98d20b17a502b80, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d86554486e98a7f4d98d20b17a502b80, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -126174,6 +126178,102 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0862fa10ad4f8c248a1668b24e395950, type: 3}
   m_PrefabInstance: {fileID: 953591253}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &954076185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687272641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab33d4bf597646f685d3094be748996d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AluciaVoice
+  clips:
+  - {fileID: 8300000, guid: 394e9fae2a16d1b4488f7d34c3e3154e, type: 3}
+  - {fileID: 8300000, guid: 4a95020f9d3150e4a8c5a0c8446f2f54, type: 3}
+  - {fileID: 8300000, guid: 294596e5bf8af524cb2f35cefde9e4e4, type: 3}
+  - {fileID: 8300000, guid: ccd10f5be299e8c4987a7deb212ac113, type: 3}
+  - {fileID: 8300000, guid: 9ed0fd4d2b09210409a1d606d5729c6a, type: 3}
+  - {fileID: 8300000, guid: 713878eafdbfcf94fa015b82dddd77d7, type: 3}
+  - {fileID: 8300000, guid: 5cad42c074bc7d94686feddf1fda9ec5, type: 3}
+  - {fileID: 8300000, guid: fed452b27e8f89541a3ddc1e5a357823, type: 3}
+  - {fileID: 8300000, guid: 47ed35b201f2d534bb50ef7abbd5da16, type: 3}
+  - {fileID: 8300000, guid: 24594260701383e41bef37dc5b390109, type: 3}
+  - {fileID: 8300000, guid: 23a5a76a4d14f034ebb809ebcf890eed, type: 3}
+  - {fileID: 8300000, guid: e60a2a0a462cdd445a905dfa56d5842e, type: 3}
+  - {fileID: 8300000, guid: 425e3ba29da24964b9c380d958d3eb44, type: 3}
+  - {fileID: 8300000, guid: 350160e09ec4f0c47842c614ea7eb733, type: 3}
+  - {fileID: 8300000, guid: 9f405481210c55847b613c6bc4b13b31, type: 3}
+  - {fileID: 8300000, guid: f285a0e2535172146b322ff6d09f7395, type: 3}
+  - {fileID: 8300000, guid: 94a33d78d9e0cdb4ca81babf054cbd75, type: 3}
+  - {fileID: 8300000, guid: 95141f89a95962e44a97ab4fd43e17f8, type: 3}
+  - {fileID: 8300000, guid: 4fb1b27446a51ab439ef9abaccceec7a, type: 3}
+  - {fileID: 8300000, guid: ef06497424251df469f4304bb566ba94, type: 3}
+  - {fileID: 8300000, guid: 51be2272b6f5d184b8022f268e83d900, type: 3}
+  - {fileID: 8300000, guid: 2513cc040a19ca34cb8c965a7d86d051, type: 3}
+  - {fileID: 8300000, guid: 59cbdb9691312ab4f9d9e6fdde8b5718, type: 3}
+  - {fileID: 8300000, guid: 2da923edb6c386441ba87772e3f5086a, type: 3}
+  - {fileID: 8300000, guid: ccdd8726a7035a444a0633119ae67597, type: 3}
+  - {fileID: 8300000, guid: 5ab0edfa1ed8318419e514012455d6bc, type: 3}
+  - {fileID: 8300000, guid: c77990388f0f4c847a5f218960bd6d7f, type: 3}
+  - {fileID: 8300000, guid: 15d3328b8efb8784da2fb8d629db792e, type: 3}
+  - {fileID: 8300000, guid: 460fbb51c6886174eb97eef3e5e4883a, type: 3}
+  - {fileID: 8300000, guid: bffde7cadaa0c4a4cb154389819a00e9, type: 3}
+  - {fileID: 8300000, guid: b33c7fb2b14eded45bb9e15c4e30c99a, type: 3}
+  - {fileID: 8300000, guid: e6121b2071ef40a4886c3a67fe54b781, type: 3}
+  - {fileID: 8300000, guid: f0a8d10d2d5503e4c92c011287af5320, type: 3}
+  - {fileID: 8300000, guid: a4dc3b379a9af7f419256174ff3fe943, type: 3}
+  - {fileID: 8300000, guid: 12fcfe3da5e30d540ba64d8778e8b468, type: 3}
+  - {fileID: 8300000, guid: f7472a315b53a3f428833da950cf1c53, type: 3}
+  - {fileID: 8300000, guid: 2ad8f694c05eb9e409d17e29a120bd0f, type: 3}
+  - {fileID: 8300000, guid: 84216b7871c970c4396f20084c11b178, type: 3}
+  - {fileID: 8300000, guid: f7e4b6242d6108e41a2317661c6ae8d0, type: 3}
+  - {fileID: 8300000, guid: 449ee4c125acc954cbf420fea738ed80, type: 3}
+  - {fileID: 8300000, guid: 2d36c3d08c077ca48af48aeff91168bf, type: 3}
+  - {fileID: 8300000, guid: cad11d9f551060a4e8d2246997abc92f, type: 3}
+  - {fileID: 8300000, guid: 2890b4f8cd1461b4db53b523d8aee1a9, type: 3}
+  - {fileID: 8300000, guid: 12e3ca69b5fee6c409fc9365f0f4b894, type: 3}
+  - {fileID: 8300000, guid: fcfb20695ab9acd42afceb9ef728fb3b, type: 3}
+  - {fileID: 8300000, guid: 117a8400a59bb604889ae9b192e976f3, type: 3}
+  - {fileID: 8300000, guid: 3c95655df95f6994a88adf4c762f75e3, type: 3}
+  - {fileID: 8300000, guid: 36ff898020c858045a7ea07a384ebd44, type: 3}
+  - {fileID: 8300000, guid: d9596bd9a39444845b7657ee62012e97, type: 3}
+  - {fileID: 8300000, guid: f6989d647f195404f905a668e97a96d8, type: 3}
+  - {fileID: 8300000, guid: b00292071735a6f4d87965a3e530ed06, type: 3}
+  - {fileID: 8300000, guid: 8649081ff9280e746b91c50f13c6d81b, type: 3}
+  - {fileID: 8300000, guid: 8b7dd5089e98a9340aee5aea7ffcce1b, type: 3}
+  - {fileID: 8300000, guid: 073c4a936682d8f4e8843850ff3b21d4, type: 3}
+  - {fileID: 8300000, guid: fe38fce18c1950841b6f5934d70b8d18, type: 3}
+  - {fileID: 8300000, guid: 0937b78dce92dcf4b87c97632e5bd4e9, type: 3}
+  - {fileID: 8300000, guid: b9188ecf8bfb5f54792774279458654f, type: 3}
+  - {fileID: 8300000, guid: 3e99373a611ecb94c95f6ef58cab256a, type: 3}
+  - {fileID: 8300000, guid: 573bbba67b5c96449b3d2effdccdaea3, type: 3}
+  - {fileID: 8300000, guid: e00be08431c32b64e97dc2a1f0917559, type: 3}
+  - {fileID: 8300000, guid: a669dc932bd59c54f94e0b42137894af, type: 3}
+  - {fileID: 8300000, guid: ed73da7864e42e84faf4125aba283672, type: 3}
+  - {fileID: 8300000, guid: df41b3329abf9b4489fa75468625edb7, type: 3}
+  - {fileID: 8300000, guid: 847aca2df23f46646bbfb83d65526cba, type: 3}
+  - {fileID: 8300000, guid: f75b433f7983be84eaaffd8f1e8dbf4d, type: 3}
+  - {fileID: 8300000, guid: ad3994f20e704be408c33b0a9a7249d4, type: 3}
+  - {fileID: 8300000, guid: 945fd12e6353a9d479ecbeb5d65176fd, type: 3}
+  - {fileID: 8300000, guid: beae158d68d6c254186bfcfa7c0f2fc5, type: 3}
+  - {fileID: 8300000, guid: 352e61c7523f865489d1fa8ea5918102, type: 3}
+  - {fileID: 8300000, guid: cbe16d0ecc9922c459a2983611086a08, type: 3}
+  - {fileID: 8300000, guid: c0e6b8735e36fcc40ae1842884e6168a, type: 3}
+  - {fileID: 8300000, guid: 687dc816e3ed89147b89bd7f1bf7111c, type: 3}
+  - {fileID: 8300000, guid: b9b178da0a434944ea5a8f8d14d3b692, type: 3}
+  - {fileID: 8300000, guid: c71636279c0fcf447b047c5ce52426f4, type: 3}
+  - {fileID: 8300000, guid: 3b647fab59eaee746977928f7bdafe51, type: 3}
+  - {fileID: 8300000, guid: 6c2abfc746df163459393c7dc90ef34b, type: 3}
+  - {fileID: 8300000, guid: cdad3de72c56f39468fd23c81f92ea53, type: 3}
+  - {fileID: 8300000, guid: 8683bfedca1e4b64f9c62198f80add68, type: 3}
+  - {fileID: 8300000, guid: b83557e2edc23c943843493428e50747, type: 3}
+  - {fileID: 8300000, guid: 5e271463c4254b128584ee5c22031514, type: 3}
+  - {fileID: 8300000, guid: 901ceeb7b6a14866808da613390d5656, type: 3}
+  volume: 1
+  warnOnMissingClip: 1
 --- !u!1001 &954652679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -187156,6 +187256,8 @@ MonoBehaviour:
   title: ECOSYSTEM RESTORED
   thankYou: "You did it \u2014 thank you for bringing the reef back to life!"
   aluciaWinSprite: {fileID: 21300000, guid: 1bf59f66bcfdfc8428036af0b7189ba7, type: 3}
+  thankYouVoice: {fileID: 0}
+  thankYouVoiceVolume: 1
   fadeDuration: 0.6
 --- !u!114 &1400155370
 MonoBehaviour:
@@ -206896,6 +206998,7 @@ MonoBehaviour:
   bubbleText: {fileID: 1754703266}
   simulation: {fileID: 69854442}
   autoHideSeconds: 3
+  voiceTailSeconds: 0.6
   minGapBetweenMessages: 1.5
   introStartDelay: 0.6
   criticalMax: 35
@@ -206912,7 +207015,7 @@ MonoBehaviour:
   introLine1: Hey, my name's Alucia!
   introLine2: As you can see, this ecosystem isn't doing too well...
   introLine3: Please help me save it!
-  introLineGap: 3
+  introLineGap: 0.4
   waitForExperienceStart: 1
   waitForTutorial: 1
 --- !u!114 &1546369839
@@ -225701,6 +225804,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1687272643}
   - component: {fileID: 1687272642}
+  - component: {fileID: 954076185}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged

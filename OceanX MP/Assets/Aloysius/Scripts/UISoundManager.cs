@@ -17,7 +17,15 @@ public enum UISound
     Warning,
     Win,
     Start,
-    TutorialNext
+    TutorialNext,
+    // ⚠ APPEND ONLY — never insert or reorder. The scene serialises Entry.id as the
+    // enum's integer value, so shifting a name remaps every clip already wired in
+    // the Inspector (ids 0-12 in Tablet.unity) onto the wrong sound.
+    HoldStart,
+    GuideOpen,
+    GuideClose,
+    NudgeAppear,
+    Restart
 }
 
 public class UISoundManager : MonoBehaviour

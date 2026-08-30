@@ -81,6 +81,9 @@ public class ContextNudge : MonoBehaviour
         while (SlotBlocked()) yield return null;
         if (_dismissed) yield break;
 
+        // First appearance only. The autoHideAfter loop below re-Fades this same nudge back in
+        // after a slot-block clears, which shouldn't re-announce it.
+        if (UISoundManager.Instance != null) UISoundManager.Instance.Play(UISound.NudgeAppear);
         Fade(1f);
         bool visible = true;
         if (autoHideAfter > 0f)

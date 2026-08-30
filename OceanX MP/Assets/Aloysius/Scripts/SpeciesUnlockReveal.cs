@@ -105,6 +105,7 @@ public class SpeciesUnlockReveal : MonoBehaviour
         SpeciesData best = null;
         int fewestUnmet = int.MaxValue;
         string bestHint = null;
+        string bestAudio = null;
 
         foreach (var sp in allSpecies)
         {
@@ -122,59 +123,46 @@ public class SpeciesUnlockReveal : MonoBehaviour
             {
                 fewestUnmet = unmet;
                 best = sp;
-                bestHint = BuildHint(sp, healthMet, minHealth, reqs);
+                bestHint = BuildHint(sp, out bestAudio);
             }
         }
 
+        // Every flavour line has a recording, so bestAudio is normally set; it is null only for
+        // the ScriptableObject hint1-3 fallbacks, where Say falls back to timed hiding.
         if (best != null && !string.IsNullOrEmpty(bestHint))
-            alucia.Say(bestHint, AluciaController.Mood.Calm);
+            alucia.Say(bestHint, AluciaController.Mood.Calm, false, bestAudio);
     }
 
-    string BuildHint(SpeciesData sp, bool healthMet, int minHealth,
-                     List<EcosystemUnlockManagerGPU.RequirementStatus> reqs)
+    // Only the hint.flavour lines are used here now.
+    //
+    // The requirement-phrase variants were dropped from this path: they interpolate the species
+    // and requirement names at runtime, so no fixed recording can voice them, and the old
+    // rotation alternated INTO them every odd turn — meaning Alucia fell silent on every other
+    // hint once VO existed. Most flavour lines already carry the same guidance
+    // ("Try adding more X to attract Y"), so the player still learns what to do, and hears it.
+    string BuildHint(SpeciesData sp, out string audioName)
     {
-
-        var parts = new List<string>();
-        if (!healthMet && minHealth > 0)
-            parts.Add("get eco-health to " + minHealth + "%");
-        if (reqs != null)
-            foreach (var r in reqs)
-                if (!r.Met && r.Species != null)
-                {
-                    int need = Mathf.Max(0, r.Required - r.Current);
-                    string nm = r.Species.speciesName;
-                    parts.Add(need == 1 ? ("one more " + nm) : (need + " more " + nm));
-                }
-        string reqPhrase = parts.Count > 0 ? string.Join(", and ", parts) : null;
+        audioName = null;
 
         int rot = 0;
         if (_hintRotation.TryGetValue(sp, out int v)) rot = v;
         _hintRotation[sp] = rot + 1;
 
-        string name = sp.speciesName;
-        string rp = reqPhrase ?? "";
-
-        string[] withReq = new string[]
-        {
-            AluciaLines.Get("hint.withReq.1", "To bring in the {species}, you'll need to {req}.").Replace("{species}", name).Replace("{req}", rp),
-            AluciaLines.Get("hint.withReq.2", "Almost there! Just {req} and the {species} will appear.").Replace("{species}", name).Replace("{req}", rp),
-            AluciaLines.Get("hint.withReq.3", "The {species} is waiting \u2014 {req}.").Replace("{species}", name).Replace("{req}", rp),
-            AluciaLines.Get("hint.withReq.4", "Keep going! {req} to attract the {species}.").Replace("{species}", name).Replace("{req}", rp),
-        };
-
-        var flavour = AluciaLines.GetVariants("hint.flavour", name);
+        // GetVariantLines, not GetVariants: this method picks the variant itself by rotation
+        // index, so it needs each line's Audio name to survive the lookup.
+        var flavour = AluciaLines.GetVariantLines("hint.flavour", sp.speciesName);
         if (flavour.Count == 0)
         {
-            if (!string.IsNullOrEmpty(sp.hint1)) flavour.Add(sp.hint1);
-            if (!string.IsNullOrEmpty(sp.hint2)) flavour.Add(sp.hint2);
-            if (!string.IsNullOrEmpty(sp.hint3)) flavour.Add(sp.hint3);
+            // ScriptableObject fallbacks have no recordings — Audio stays null.
+            if (!string.IsNullOrEmpty(sp.hint1)) flavour.Add(new AluciaLines.Line { Text = sp.hint1 });
+            if (!string.IsNullOrEmpty(sp.hint2)) flavour.Add(new AluciaLines.Line { Text = sp.hint2 });
+            if (!string.IsNullOrEmpty(sp.hint3)) flavour.Add(new AluciaLines.Line { Text = sp.hint3 });
         }
+        if (flavour.Count == 0)
+            return AluciaLines.Get("hint.fallback", "Something new is almost ready to appear...");
 
-        if (reqPhrase == null)
-            return flavour.Count > 0 ? flavour[rot % flavour.Count] : AluciaLines.Get("hint.fallback", "Something new is almost ready to appear...");
-
-        if (flavour.Count > 0 && rot % 2 == 0)
-            return flavour[(rot / 2) % flavour.Count];
-        return withReq[rot % withReq.Length];
+        AluciaLines.Line pick = flavour[rot % flavour.Count];
+        audioName = pick.Audio;
+        return pick.Text;
     }
 }
